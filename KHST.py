@@ -10,15 +10,15 @@ from tkinter.constants import END, FLAT, LEFT, RIGHT, Y
 def RunEdit():
     pass
  # Youtube Button
-def Youtube():
+def open_youtube():
     pass
     return webbrowser.open("http://youtube.com",new = 2)
  # Facebook Button
-def Facebook():
+def open_facebook():
     pass
     return webbrowser.open("https://facebook.com", new = 2)
  # Visual Studio Code Button
-def VScode():
+def open_vscode():
     return os.system(r"VScode\Code.exe")
     pass
  # Check code Button
@@ -69,19 +69,19 @@ frameYT = Frame(MainWindow)
 frameYT.place(relx = 0.15, rely = 0.82, relwidth = 0.17, relheight = 0.05)
 photoYT = PhotoImage(file = r"icon\youtubeButton.png")
 photoimageYT = photoYT.subsample(3, str(3))
-Button(frameYT, image = photoimageYT, relief = FLAT, command = lambda: Youtube()).place(x = 0, y =0)
+Button(frameYT, image = photoimageYT, relief = FLAT, command = lambda: open_youtube()).place(x = 0, y =0)
 
 frameFB = Frame(MainWindow)
 frameFB.place(relx = 0.65, rely = 0.82, relwidth = 0.17, relheight = 0.05)
 photoFB = PhotoImage(file = r"icon\facebookButton.png")
 photoimageFB = photoFB.subsample(3, str(3)) 
-Button(frameFB, image = photoimageFB, relief = FLAT, command = lambda: Facebook()).place(x = 0, y =0)
+Button(frameFB, image = photoimageFB, relief = FLAT, command = lambda: open_facebook()).place(x = 0, y =0)
 
 frameVS = Frame(MainWindow)
 frameVS.place(relx = 0.4, rely = 0.82, relwidth = 0.17, relheight = 0.05)
 photoVS = PhotoImage(file = r"icon\VScode.png")
 photoimageVS = photoVS.subsample(3, str(3)) 
-Button(frameVS, image = photoimageVS, relief = FLAT, command = lambda: VScode()).place(x = 0, y =0)
+Button(frameVS, image = photoimageVS, relief = FLAT, command = lambda: open_vscode()).place(x = 0, y =0)
 
 frameCheck = Frame(MainWindow)
 frameCheck.place(relx = 0.4, rely = 0.9, relwidth = 0.198, relheight = 0.06)

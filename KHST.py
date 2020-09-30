@@ -11,16 +11,13 @@ def RunEdit():
     pass
  # Youtube Button
 def open_youtube():
-    pass
     return webbrowser.open("http://youtube.com",new = 2)
  # Facebook Button
 def open_facebook():
-    pass
     return webbrowser.open("https://facebook.com", new = 2)
  # Visual Studio Code Button
 def open_vscode():
     return os.system(r"VScode\Code.exe")
-    pass
  # Check code Button
 def test():
     pass

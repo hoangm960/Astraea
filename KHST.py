@@ -1,8 +1,10 @@
 import os
 import webbrowser
-from tkinter import (Button, Canvas, Frame, Listbox, OptionMenu, PhotoImage, Scrollbar, StringVar,
-                     Tk)
+from tkinter import (Button, Canvas, Frame, Listbox, OptionMenu, PhotoImage,
+                     Scrollbar, StringVar, Tk)
 from tkinter.constants import END, FLAT, LEFT, RIGHT, Y
+import subprocess
+import pygetwindow as gw
 
 
 # Command on Button---------------
@@ -16,11 +18,18 @@ def open_youtube():
 def open_facebook():
     return webbrowser.open("https://facebook.com", new = 2)
  # Visual Studio Code Button
-def open_vscode():
-    return os.system(r"VScode\Code.exe")
+
+# def open_vscode():
+#     return os.system(r"VScode\Code.exe")
  # Check code Button
 def test():
     pass
+
+def open_vscode():
+    file = os.path.expandvars("%LOCALAPPDATA%/Programs/Microsoft VS Code/Code.exe")
+    subprocess.call(file)
+    vs_window = gw.getWindowsWithTitle("Visual Studio Code")[0]
+    vs_window.moveTo(0, 0)
 #---------------
 root = Tk()
 root.resizable(0,0)
@@ -31,6 +40,8 @@ MainWindow = Canvas (root, width = 350, height = 700, bg = 'lightblue')
 MainWindow.pack()
 #root.overrideredirect(1)
 root.attributes('-toolwindow',1)
+
+open_vscode()
 
 # Button---------------
 frameOption = Frame(MainWindow)
@@ -74,11 +85,11 @@ photoFB = PhotoImage(file = r"icon\facebookButton.png")
 photoimageFB = photoFB.subsample(3, str(3)) 
 Button(frameFB, image = photoimageFB, relief = FLAT, command = lambda: open_facebook()).place(x = 0, y =0)
 
-frameVS = Frame(MainWindow)
-frameVS.place(relx = 0.4, rely = 0.82, relwidth = 0.17, relheight = 0.05)
-photoVS = PhotoImage(file = r"icon\VScode.png")
-photoimageVS = photoVS.subsample(3, str(3)) 
-Button(frameVS, image = photoimageVS, relief = FLAT, command = lambda: open_vscode()).place(x = 0, y =0)
+# frameVS = Frame(MainWindow)
+# frameVS.place(relx = 0.4, rely = 0.82, relwidth = 0.17, relheight = 0.05)
+# photoVS = PhotoImage(file = r"icon\VScode.png")
+# photoimageVS = photoVS.subsample(3, str(3)) 
+# Button(frameVS, image = photoimageVS, relief = FLAT, command = lambda: open_vscode()).place(x = 0, y =0)
 
 frameCheck = Frame(MainWindow)
 frameCheck.place(relx = 0.4, rely = 0.9, relwidth = 0.198, relheight = 0.06)

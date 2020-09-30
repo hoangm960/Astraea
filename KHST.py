@@ -12,11 +12,11 @@ def RunEdit():
  # Youtube Button
 def Youtube():
     pass
-    #return webbrowser.open("http://youtube.com",new = 2)
+    return webbrowser.open("http://youtube.com",new = 2)
  # Facebook Button
 def Facebook():
     pass
-    #return webbrowser.open("https://facebook.com", new = 2)
+    return webbrowser.open("https://facebook.com", new = 2)
  # Visual Studio Code Button
 def VScode():
     return os.system(r"VScode\Code.exe")

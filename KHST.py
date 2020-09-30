@@ -30,6 +30,12 @@ def open_vscode():
     subprocess.call(file)
     vs_window = gw.getWindowsWithTitle("Visual Studio Code")[0]
     vs_window.moveTo(0, 0)
+
+def read_file(filename):
+    f = open(filename)
+    text = f.read()
+    f.close()
+    return text
 #---------------
 root = Tk()
 root.resizable(0,0)
@@ -85,19 +91,13 @@ photoFB = PhotoImage(file = r"icon\facebookButton.png")
 photoimageFB = photoFB.subsample(3, str(3)) 
 Button(frameFB, image = photoimageFB, relief = FLAT, command = lambda: open_facebook()).place(x = 0, y =0)
 
-# frameVS = Frame(MainWindow)
-# frameVS.place(relx = 0.4, rely = 0.82, relwidth = 0.17, relheight = 0.05)
-# photoVS = PhotoImage(file = r"icon\VScode.png")
-# photoimageVS = photoVS.subsample(3, str(3)) 
-# Button(frameVS, image = photoimageVS, relief = FLAT, command = lambda: open_vscode()).place(x = 0, y =0)
-
 frameCheck = Frame(MainWindow)
 frameCheck.place(relx = 0.4, rely = 0.9, relwidth = 0.198, relheight = 0.06)
 buttonCheck = Button(frameCheck, width = 8, height = 2, bg = 'green', command = test, text = 'CHECK',
 activebackground = 'lightgreen', relief = FLAT)
 buttonCheck.place(relx = 0, rely =0)
 #---------------
-text = 'Lesson 1:'
+text = read_file("Text.txt")
 frame = Frame(MainWindow)
 frame.place(relx = 0.1, rely = 0.1, relwidth = 0.8, relheight = 0.7)
   

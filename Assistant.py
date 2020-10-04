@@ -1,10 +1,8 @@
-from tkinter import *
-from tkinter import messagebox
-import time
-from tqdm import tqdm
-import sys
-import codecs
+
 import webbrowser
+from tkinter import (Button, Canvas, Entry, Label, OptionMenu, PhotoImage,
+                     StringVar, Tk, messagebox)
+from tkinter.constants import FLAT
 
 chrome_path = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s'
 
@@ -18,17 +16,17 @@ def sign():
     SignInBox = Canvas(SignRoot, width = 750, height = 500, bg = 'lightblue')
     Textbox = Label(SignInBox, text = 'SIGN UP YOUR NEW USER', bg = 'lightblue', fg = 'blue', font = ('Arial Bold',20))
     Textbox.place(relx = 0.5, rely = 0.1, anchor = 'n')
-    Name = Label(SignInBox, text = 'Your name *:', fg = 'black', bg = 'lightblue', font = 50)
+    Name = Label(SignInBox, text = 'Your name *:', fg = 'black', bg = 'lightblue', font = str(50))
     Name.place(relx = 0.25, rely = 0.25)
-    Nameentry = Entry(SignInBox, font = 40)
+    Nameentry = Entry(SignInBox, font = str(40))
     Nameentry.place(relx = 0.5, rely=0.3, relwidth = 0.45, relheight = 0.08, anchor = 'n')
-    Name = Label(SignInBox, text = 'Your facebook link: (skip to default: facebook.com)', fg = 'black', bg = 'lightblue', font = 50)
+    Name = Label(SignInBox, text = 'Your facebook link: (skip to default: facebook.com)', fg = 'black', bg = 'lightblue', font = str(50))
     Name.place(relx = 0.25, rely = 0.4)
-    FBentry = Entry(SignInBox, font = 40)
+    FBentry = Entry(SignInBox, font = str(40))
     FBentry.place(relx = 0.5, rely=0.45, relwidth = 0.45, relheight = 0.08, anchor = 'n')
-    Name = Label(SignInBox, text = 'Your email link: (skip to default: gmail.com)', fg = 'black', bg = 'lightblue', font = 50)
+    Name = Label(SignInBox, text = 'Your email link: (skip to default: gmail.com)', fg = 'black', bg = 'lightblue', font = str(50))
     Name.place(relx = 0.25, rely = 0.55)
-    EMentry = Entry(SignInBox, font = 40)
+    EMentry = Entry(SignInBox, font = str(40))
     EMentry.place(relx = 0.5, rely=0.6, relwidth = 0.45, relheight = 0.08, anchor = 'n')
     Webname = StringVar(SignInBox)
     Webname.set('Choose your Webbrowser:')
@@ -41,15 +39,15 @@ def sign():
             newname = Nameentry.get()
             error = Label(SignInBox)
             if newname == '':
-                error = Label(SignInBox, text = "You should sign up your Name", bg = 'lightblue', fg = 'red', font = 30)
+                error = Label(SignInBox, text = "You should sign up your Name", bg = 'lightblue', fg = 'red', font = str(30))
                 error.place(relx = 0.4, rely = 0.25, relwidth = 0.45)  
             elif Webname.get() == 'Choose your Webbrowser:':
-                error = Label(SignInBox, text = "You have to choose Webbrowser", bg = 'lightblue', fg = 'red', font = 30)
+                error = Label(SignInBox, text = "You have to choose Webbrowser", bg = 'lightblue', fg = 'red', font = str(30))
                 error.place(relx = 0.4, rely = 0.25, relwidth = 0.45)
             else:
                 for i in newname:
                     if i not in 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890 ':
-                        error = Label(SignInBox, text = "Your name musn't contain any special characters", bg = 'lightblue', fg = 'red', font = 30)
+                        error = Label(SignInBox, text = "Your name musn't contain any special characters", bg = 'lightblue', fg = 'red', font = str(30))
                         error.place(relx = 0.4, rely = 0.25)
                         again = False
                 if again == True:
@@ -76,13 +74,12 @@ def sign():
 
 
 #------Root
-with open('data/User.txt','r') as f:
+    f = open('data/User.txt','r')
     check = f.readline()
     User = ['','','','']
     if str(check) == '':
         sign()
-    f.close()
-with open('data/User.txt','r') as f:
+        
     User[0] = (f.readline().replace('\n',''))
     User[1] = (f.readline().replace('\n',''))
     User[2] = (f.readline().replace('\n',''))
@@ -105,8 +102,8 @@ BackgroundMain = Canvas(root, width = 300, height = 750, bg = 'lightblue')
 BackgroundMain.pack()
 
 #-----Function
-YTphoto = PhotoImage(file = 'icons\youtubeButton.png')
-photoYT = YTphoto.subsample(3,3)
+YTphoto = PhotoImage(file = 'icons/youtubeButton.png')
+photoYT = YTphoto.subsample(3, str(3))
 FB = Button(BackgroundMain, image = photoYT, relief = FLAT, command = lambda: webbrowser.get(web_path).open('youtube.com'))
 FB.place(relx = 0.2, rely =0.3)
 

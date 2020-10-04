@@ -1,2 +1,3 @@
-def main(x, y):
-    return x + y
+x = 10
+y = 250
+print(x + y)

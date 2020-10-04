@@ -5,6 +5,7 @@ from tkinter import (Button, Canvas, Frame, Listbox, OptionMenu, PhotoImage,
 from tkinter.constants import END, FLAT, LEFT, RIGHT, Y
 import subprocess
 import pygetwindow as gw
+import Assistant
 
 
 # Command on Button---------------

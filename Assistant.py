@@ -45,11 +45,11 @@ def sign():
                 error = Label(SignInBox, text = "You have to choose Webbrowser", bg = 'lightblue', fg = 'red', font = str(30))
                 error.place(relx = 0.4, rely = 0.25, relwidth = 0.45)
             else:
-                for i in newname:
-                    if i not in 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890 ':
-                        error = Label(SignInBox, text = "Your name musn't contain any special characters", bg = 'lightblue', fg = 'red', font = str(30))
-                        error.place(relx = 0.4, rely = 0.25)
-                        again = False
+                # for i in newname:
+                #     if i not in 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890 ':
+                #         error = Label(SignInBox, text = "Your name musn't contain any special characters", bg = 'lightblue', fg = 'red', font = str(30))
+                #         error.place(relx = 0.4, rely = 0.25)
+                #         again = False
                 if again == True:
                     f.write(newname)
                     newlink = '\n' + FBentry.get()
@@ -77,7 +77,7 @@ def sign():
 def main():
     f = open('data/User.txt','r')
     check = f.readline()
-    User = ['','','','']
+    User = ['', '', '', '']
     if str(check) == '':
         sign()
 

@@ -74,38 +74,39 @@ def sign():
 
 
 #------Root
-f = open('data/User.txt','r')
-check = f.readline()
-User = ['','','','']
-if str(check) == '':
-    sign()
+def main():
+    f = open('data/User.txt','r')
+    check = f.readline()
+    User = ['','','','']
+    if str(check) == '':
+        sign()
 
-User[0] = (f.readline().replace('\n',''))
-User[1] = (f.readline().replace('\n',''))
-User[2] = (f.readline().replace('\n',''))
-User[3] = (f.readline().replace('\n',''))
-if User[0] == '': 
-    messagebox.showinfo('Notification','You have to complete this form.')
-    exit()
-if User[3] == 'Google Chrome':
-    web_path = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s'
-elif User[3] == 'Internet Explorer':
-    web_path = 'C:/Program Files/internet explorer/iexplore.exe %s'
-f.close()
+    User[0] = (f.readline().replace('\n',''))
+    User[1] = (f.readline().replace('\n',''))
+    User[2] = (f.readline().replace('\n',''))
+    User[3] = (f.readline().replace('\n',''))
+    if User[0] == '': 
+        messagebox.showinfo('Notification','You have to complete this form.')
+        exit()
+    if User[3] == 'Google Chrome':
+        web_path = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s'
+    elif User[3] == 'Internet Explorer':
+        web_path = 'C:/Program Files/internet explorer/iexplore.exe %s'
+    f.close()
 
-root = Tk()
-root.title('Assistant')
-root.resizable(0,0)
-root.geometry('300x735+1055+0')
-root.attributes('-toolwindow',1)
-BackgroundMain = Canvas(root, width = 300, height = 750, bg = 'lightblue')
-BackgroundMain.pack()
+    root = Tk()
+    root.title('Assistant')
+    root.resizable(0,0)
+    root.geometry('300x735+1055+0')
+    root.attributes('-toolwindow',1)
+    BackgroundMain = Canvas(root, width = 300, height = 750, bg = 'lightblue')
+    BackgroundMain.pack()
 
-#-----Function
-YTphoto = PhotoImage(file = 'icons/youtubeButton.png')
-photoYT = YTphoto.subsample(3, str(3))
-FB = Button(BackgroundMain, image = photoYT, relief = FLAT, command = lambda: webbrowser.get(web_path).open('youtube.com'))
-FB.place(relx = 0.2, rely =0.3)
+    #-----Function
+    YTphoto = PhotoImage(file = 'icons/youtubeButton.png')
+    photoYT = YTphoto.subsample(3, str(3))
+    FB = Button(BackgroundMain, image = photoYT, relief = FLAT, command = lambda: webbrowser.get(web_path).open('youtube.com'))
+    FB.place(relx = 0.2, rely =0.3)
 
-root.mainloop()
-root.wait_window
+    root.mainloop()
+    root.wait_window

@@ -18,11 +18,7 @@ def open_youtube():
  # Facebook Button
 def open_facebook():
     return webbrowser.open("https://facebook.com", new = 2)
- # Visual Studio Code Button
 
-# def open_vscode():
-#     return os.system(r"VScode\Code.exe")
- # Check code Button
 def test():
     pass
 
@@ -39,6 +35,7 @@ def read_file(filename):
     return text
 def main():
     #---------------
+    Assistant.main()
     root = Tk()
     root.resizable(0,0)
     root.title('Pylearn')
@@ -57,7 +54,7 @@ def main():
     variable1 = StringVar(frameOption)
 
     variable1.set('Option1')
-    #variable1.trace('w', RunEdit)
+    variable1.trace('w', RunEdit)
     MenuOption1 =  OptionMenu(frameOption, variable1, "TextBox", "Settings")
     MenuOption1.pack(side = LEFT)
 

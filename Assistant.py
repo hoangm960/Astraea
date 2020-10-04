@@ -93,20 +93,3 @@ def main():
     elif User[3] == 'Internet Explorer':
         web_path = 'C:/Program Files/internet explorer/iexplore.exe %s'
     f.close()
-
-    root = Tk()
-    root.title('Assistant')
-    root.resizable(0,0)
-    root.geometry('300x735+1055+0')
-    root.attributes('-toolwindow',1)
-    BackgroundMain = Canvas(root, width = 300, height = 750, bg = 'lightblue')
-    BackgroundMain.pack()
-
-    #-----Function
-    YTphoto = PhotoImage(file = 'icons/youtubeButton.png')
-    photoYT = YTphoto.subsample(3, str(3))
-    FB = Button(BackgroundMain, image = photoYT, relief = FLAT, command = lambda: webbrowser.get(web_path).open('youtube.com'))
-    FB.place(relx = 0.2, rely =0.3)
-
-    root.mainloop()
-    root.wait_window

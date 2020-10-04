@@ -43,7 +43,6 @@ def main():
     root.geometry('350x700+1010+0')
     MainWindow = Canvas (root, width = 350, height = 700, bg = 'lightblue')
     MainWindow.pack()
-    #root.overrideredirect(1)
     root.attributes('-toolwindow',1)
 
     open_vscode()
@@ -80,13 +79,13 @@ def main():
     #----------------------
     frameYT = Frame(MainWindow)
     frameYT.place(relx = 0.15, rely = 0.82, relwidth = 0.17, relheight = 0.05)
-    photoYT = PhotoImage(file = r"icon\youtubeButton.png")
+    photoYT = PhotoImage(file = r"icons\youtubeButton.png")
     photoimageYT = photoYT.subsample(3, str(3))
     Button(frameYT, image = photoimageYT, relief = FLAT, command = lambda: open_youtube()).place(x = 0, y =0)
 
     frameFB = Frame(MainWindow)
     frameFB.place(relx = 0.65, rely = 0.82, relwidth = 0.17, relheight = 0.05)
-    photoFB = PhotoImage(file = r"icon\facebookButton.png")
+    photoFB = PhotoImage(file = r"icons\facebookButton.png")
     photoimageFB = photoFB.subsample(3, str(3)) 
     Button(frameFB, image = photoimageFB, relief = FLAT, command = lambda: open_facebook()).place(x = 0, y =0)
 

@@ -1,20 +1,28 @@
 import os
+
 import gui
 
 
-def main():
+def main(file, inputs, tests, vars, ans):
+    def get_file_content(file):
+        f = open(file, "r")
+        content = f.readlines()
+        f.close()
+        return content
+
+    def get_testcases_file():
+        f = open(os.path.splitext(inputs)[0] + "-Copy.txt", "w+")
+        for i in get_file_content(inputs):
+            f.write(i)
+
+    def del_testcases_file():
+        os.remove(os.path.splitext(inputs)[0] + "-Copy.txt")
 
     def check_file(file, ans):
-        def get_file_content():
-            f = open(file, "r")
-            content = f.readlines()
-            f.close()
-            return content
-
-        def make_check_file():
+        def make_check_file(test):
             f = open(os.path.splitext(file)[0] + "-Copy.py", "w+")
             f.write(
-"""\
+                """\
 import sys
 from io import StringIO
 class Capturing(list):
@@ -30,31 +38,49 @@ class Capturing(list):
 
 
 with Capturing() as output:  
-""")
-            for i in get_file_content():
+"""
+            )
+            for i in get_file_content(file):
                 f.write("   " + i)
 
             f.write(
-"""\
+                """\
 try:
-    assert output[0] == str(""" + str(ans) + ")\n"
-"""\
+    assert output[0] == str("""
+                + open(ans, "r").readlines()[test]
+                + ")\n"
+                """\
     print("Correct!")
 except AssertionError:
     print("Wrong!")
-""")
+"""
+            )
             f.close()
 
         def run_check_file():
-            os.system('python test-Copy.py')
-            os.remove('test-Copy.py')
+            os.system(
+                "python " + os.path.splitext(file)[0] + "-Copy.py" + " < " + os.path.splitext(inputs)[0] + "-Copy.txt"
+            )
+            os.remove("test-Copy.py")
 
-        make_check_file()
-        run_check_file()
+        def delete_done_testcases():
+            with open(os.path.splitext(inputs)[0] + "-Copy.txt", "r") as f:
+                lines = f.readlines()
+            for _ in range(vars):
+                del lines[0]
+            with open(os.path.splitext(inputs)[0] + "-Copy.txt", "w+") as f:
+                for line in lines:
+                    f.write(line)
 
+        for test in range(tests):
+            make_check_file(test)
+            run_check_file()
+            delete_done_testcases()
 
-    check_file("test.py", 40)
+    get_testcases_file()
+    check_file(file, ans)
+    del_testcases_file()
 
 
 # gui.Main()
-main()
+main("test.py", "Inputs.txt", 2, 2, "Ans.txt")

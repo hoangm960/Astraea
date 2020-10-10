@@ -1,3 +1,3 @@
-x = 10
-y = 250
+x = int(input())
+y = int(input())
 print(x + y)

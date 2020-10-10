@@ -3,7 +3,7 @@ import os
 import gui
 
 
-def main(file, inputs, tests, vars, ans):
+def main(file, inputs, ans, tests, vars):
     def get_file_content(file):
         f = open(file, "r")
         content = f.readlines()
@@ -83,4 +83,9 @@ except AssertionError:
 
 
 # gui.Main()
-main("test.py", "Inputs.txt", 2, 2, "Ans.txt")
+test_file = "test.py"
+input_file = "Inputs.txt"
+ans_file = "Ans.txt"
+test_cases = 2
+vars = 2
+main(test_file, input_file, ans_file, test_cases, vars)

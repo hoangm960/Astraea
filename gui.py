@@ -1,13 +1,14 @@
 import os
 import webbrowser
-from tkinter import (Button, Canvas, Frame, Listbox, OptionMenu, PhotoImage,
-                     Scrollbar, StringVar, Tk)
-from tkinter.constants import END, FLAT, LEFT, RIGHT, Y
+# from tkinter import (Button, Canvas, Frame, Listbox, OptionMenu, PhotoImage,
+#                      Scrollbar, StringVar, Tk)
+# from tkinter.constants import END, FLAT, LEFT, RIGHT, Y
+from tkinter import *
 import subprocess
 import pygetwindow as gw
 import Assistant
 
-
+Assistant.main()
 # Command on Button---------------
  # Edit Button
 def RunEdit():
@@ -33,7 +34,7 @@ def read_file(filename):
     text = f.read()
     f.close()
     return text
-def main():
+def Main():
     #---------------
     Assistant.main()
     root = Tk()

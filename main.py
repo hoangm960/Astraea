@@ -1,22 +1,19 @@
 import os
-import sys
-from io import StringIO
-import time
-
 import gui
-gui.main()
 
 
-def check_file(file, ans):
-    def get_file_content():
-        f = open(file, "r")
-        content = f.readlines()
-        f.close()
-        return content
+def main():
 
-    def make_check_file():
-        f = open(os.path.splitext(file)[0] + "-Copy.py", "w+")
-        f.write(
+    def check_file(file, ans):
+        def get_file_content():
+            f = open(file, "r")
+            content = f.readlines()
+            f.close()
+            return content
+
+        def make_check_file():
+            f = open(os.path.splitext(file)[0] + "-Copy.py", "w+")
+            f.write(
 """\
 import sys
 from io import StringIO
@@ -34,10 +31,10 @@ class Capturing(list):
 
 with Capturing() as output:  
 """)
-        for i in get_file_content():
-            f.write("   " + i)
+            for i in get_file_content():
+                f.write("   " + i)
 
-        f.write(
+            f.write(
 """\
 try:
     assert output[0] == str(""" + str(ans) + ")\n"
@@ -46,14 +43,18 @@ try:
 except AssertionError:
     print("Wrong!")
 """)
-        f.close()
+            f.close()
 
-    def run_check_file():
-        os.system('python test-Copy.py')
-        os.remove('test-Copy.py')
+        def run_check_file():
+            os.system('python test-Copy.py')
+            os.remove('test-Copy.py')
 
-    make_check_file()
-    run_check_file()
+        make_check_file()
+        run_check_file()
 
 
-check_file("test.py", 40)
+    check_file("test.py", 40)
+
+
+# gui.Main()
+main()

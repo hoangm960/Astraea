@@ -57,7 +57,7 @@ def sign():
         def DK():
             SignInBoxs. destroy()
             SignInBox = Canvas(SignRoot, width = 750, height = 500, bg = 'lightblue')
-            Textbox = Label(SignInBox, text = 'ĐĂNG KÝ TÀI KHOẢN', bg = 'lightblue', fg = 'blue', font = ('Arial Bold','20'))
+            Textbox = Label(SignInBox, text = 'ĐĂNG KÝ TÀI KHOẢN', bg = 'lightblue', fg = 'blue', font = ('Arial Bold', 20))
             Textbox.place(relx = 0.5, rely = 0.1, anchor = 'n')
             Name = Label(SignInBox, text = 'Tên đăng nhập *:', fg = 'black', bg = 'lightblue', font = str(50))
             Name.place(relx = 0.25, rely = 0.25)

@@ -2,7 +2,7 @@ import os
 import webbrowser
 from tkinter import (Button, Canvas, Frame, Listbox, OptionMenu, PhotoImage,
                       Scrollbar, StringVar, Text, Tk, messagebox)
-from tkinter.constants import DISABLED, END, FLAT, LEFT, RIGHT, Y
+from tkinter.constants import DISABLED, END, FLAT, LEFT, RIGHT, WORD, Y
 import subprocess
 import pygetwindow as gw
 
@@ -33,7 +33,6 @@ def read_file(filename):
     return text
 def Main():
     #---------------
-    # open_vscode()
     
     root = Tk()
     root.resizable(0,0)
@@ -43,6 +42,8 @@ def Main():
     MainWindow = Canvas (root, width = 350, height = 700, bg = 'gray')
     MainWindow.pack()
     root.attributes('-toolwindow',1)
+    
+    open_vscode()
     
     # Button---------------
     frameOption = Frame(MainWindow)
@@ -95,10 +96,11 @@ def Main():
     frame.place(relx = 0.1, rely = 0.1, relwidth = 0.8, relheight = 0.7)
 
     Sb = Scrollbar(frame)
-    Sb.pack(side = RIGHT, fill = Y)    
-    text = Text(frame, yscrollcommand=Sb.set, font="Arial", )
+    Sb.pack(side = RIGHT, fill = Y)
+    text = Text(frame)
     with open("Text.txt", "r") as f:
         text.insert(END, f.read())
+    text.configure(yscrollcommand=Sb.set, font=("Times New Roman", 12), wrap=WORD, state=DISABLED)
     text.pack() 
 
     # def on_closing():
@@ -106,7 +108,5 @@ def Main():
     #         root.destroy()
     #         os.system("TASKKILL /F /IM Code.exe")
     # root.protocol("WM_DELETE_WINDOW", on_closing)
-    
+
     root.mainloop()
-    
-Main()

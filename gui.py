@@ -1,9 +1,8 @@
 import os
 import webbrowser
 from tkinter import (Button, Canvas, Frame, Listbox, OptionMenu, PhotoImage,
-                      Scrollbar, StringVar, Tk, messagebox)
-from tkinter.constants import END, FLAT, LEFT, RIGHT, Y
-from tkinter import *
+                      Scrollbar, StringVar, Text, Tk, messagebox)
+from tkinter.constants import DISABLED, END, FLAT, LEFT, RIGHT, Y
 import subprocess
 import pygetwindow as gw
 
@@ -34,7 +33,7 @@ def read_file(filename):
     return text
 def Main():
     #---------------
-    open_vscode()
+    # open_vscode()
     
     root = Tk()
     root.resizable(0,0)
@@ -92,20 +91,22 @@ def Main():
     activebackground = 'lightgreen', relief = FLAT)
     buttonCheck.place(relx = 0, rely =0)
     #---------------
-    text = read_file("Text.txt")
     frame = Frame(MainWindow)
     frame.place(relx = 0.1, rely = 0.1, relwidth = 0.8, relheight = 0.7)
 
     Sb = Scrollbar(frame)
     Sb.pack(side = RIGHT, fill = Y)    
-    mylist = Listbox(frame, width = 45, height =32, yscrollcommand = Sb.set )  
-    mylist.insert(END, text)
-    mylist.pack(side = LEFT)  
-    Sb.config(command = mylist.yview)
-    def on_closing():
-        if messagebox.askokcancel("Thông báo", "Xác nhận đóng chương trình?"):
-            root.destroy()
-            os.system("TASKKILL /F /IM Code.exe")
-    root.protocol("WM_DELETE_WINDOW", on_closing)
+    text = Text(frame, yscrollcommand=Sb.set, font="Arial", )
+    with open("Text.txt", "r") as f:
+        text.insert(END, f.read())
+    text.pack() 
+
+    # def on_closing():
+    #     if messagebox.askokcancel("Thông báo", "Xác nhận đóng chương trình?"):
+    #         root.destroy()
+    #         os.system("TASKKILL /F /IM Code.exe")
+    # root.protocol("WM_DELETE_WINDOW", on_closing)
+    
     root.mainloop()
     
+Main()

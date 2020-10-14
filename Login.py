@@ -158,7 +158,6 @@ def sign():
                             file.write(textname)
                             file.close()
                     SignRoot.destroy()
-                    gui.Main()
                 f.close()
         SaveButton = Button(SignInBoxs, text = 'Đăng nhập', activebackground = 'lightgreen', command = lambda: check(), relief = FLAT)
         SaveButton.place(relx = 0.5, rely = 0.62, relwidth = 0.15, relheight = 0.08, anchor = 'n')
@@ -166,6 +165,7 @@ def sign():
         buttonDK.place(relx = 0.5, rely = 0.8, relwidth = 0.4, relheight = 0.035, anchor = 'n')
     DN()
     SignRoot.wait_window()
+
 # --------------------------------------
 changenumber = 1
 def main():

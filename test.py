@@ -1,8 +1,3 @@
-import tkinter as tk
-root = tk.Tk()
-readOnlyText = tk.Text(root)
-readOnlyText.insert(1.0,"ABCDEF")
-readOnlyText.configure(state='disabled')
-readOnlyText.pack()
-
-root.mainloop()
+x = int(input())
+y = int(input())
+print(x + y)

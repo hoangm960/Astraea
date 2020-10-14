@@ -44,7 +44,7 @@ def Main():
     root.attributes('-toolwindow',1)
     
     open_vscode()
-    
+
     # Button---------------
     frameOption = Frame(MainWindow)
     frameOption.place(relx = 0.01, rely = 0.01, relwidth = 9.6, relheight = 0.04)
@@ -100,7 +100,7 @@ def Main():
     text = Text(frame)
     with open("Text.txt", "r") as f:
         text.insert(END, f.read())
-    text.configure(yscrollcommand=Sb.set, font=("Times New Roman", 12), wrap=WORD, state=DISABLED)
+    text.configure(yscrollcommand=Sb.set, font=("Times New Roman", 10), wrap=WORD, state=DISABLED)
     text.pack() 
 
     # def on_closing():

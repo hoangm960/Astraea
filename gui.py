@@ -35,6 +35,7 @@ def read_file(filename):
 def Main():
     #---------------
     open_vscode()
+    
     root = Tk()
     root.resizable(0,0)
     root.title('Pylearn')

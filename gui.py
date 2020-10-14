@@ -1,14 +1,12 @@
 import os
 import webbrowser
-# from tkinter import (Button, Canvas, Frame, Listbox, OptionMenu, PhotoImage,
-#                      Scrollbar, StringVar, Tk)
-# from tkinter.constants import END, FLAT, LEFT, RIGHT, Y
+from tkinter import (Button, Canvas, Frame, Listbox, OptionMenu, PhotoImage,
+                      Scrollbar, StringVar, Tk, messagebox)
+from tkinter.constants import END, FLAT, LEFT, RIGHT, Y
 from tkinter import *
 import subprocess
 import pygetwindow as gw
-import Assistant
 
-Assistant.main()
 # Command on Button---------------
  # Edit Button
 def RunEdit():
@@ -36,18 +34,18 @@ def read_file(filename):
     return text
 def Main():
     #---------------
-    Assistant.main()
+    
     root = Tk()
     root.resizable(0,0)
     root.title('Pylearn')
     root.wm_attributes("-topmost", 1)
     root.geometry('350x700+1010+0')
-    MainWindow = Canvas (root, width = 350, height = 700, bg = 'lightblue')
+    MainWindow = Canvas (root, width = 350, height = 700, bg = 'gray')
     MainWindow.pack()
     root.attributes('-toolwindow',1)
-
+    
     open_vscode()
-
+    
     # Button---------------
     frameOption = Frame(MainWindow)
     frameOption.place(relx = 0.01, rely = 0.01, relwidth = 9.6, relheight = 0.04)
@@ -80,13 +78,12 @@ def Main():
     #----------------------
     frameYT = Frame(MainWindow)
     frameYT.place(relx = 0.15, rely = 0.82, relwidth = 0.17, relheight = 0.05)
-    photoYT = PhotoImage(file = r"icons\youtubeButton.png")
+    photoYT = PhotoImage(file = r"icons/youtubeButton.png")
     photoimageYT = photoYT.subsample(3, str(3))
     Button(frameYT, image = photoimageYT, relief = FLAT, command = lambda: open_youtube()).place(x = 0, y =0)
-
     frameFB = Frame(MainWindow)
     frameFB.place(relx = 0.65, rely = 0.82, relwidth = 0.17, relheight = 0.05)
-    photoFB = PhotoImage(file = r"icons\facebookButton.png")
+    photoFB = PhotoImage(file = r"icons/facebookButton.png")
     photoimageFB = photoFB.subsample(3, str(3)) 
     Button(frameFB, image = photoimageFB, relief = FLAT, command = lambda: open_facebook()).place(x = 0, y =0)
 
@@ -106,6 +103,10 @@ def Main():
     mylist.insert(END, text)
     mylist.pack(side = LEFT)  
     Sb.config(command = mylist.yview)
-
+    def on_closing():
+        if messagebox.askokcancel("Thông báo", "Xác nhận đóng chương trình?"):
+            root.destroy()
+            os.system("TASKKILL /F /IM Code.exe")
+    root.protocol("WM_DELETE_WINDOW", on_closing)
     root.mainloop()
-
+    

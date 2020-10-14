@@ -5,7 +5,7 @@ from tkinter import colorchooser
 import win32api
 
 root = Tk()
-root.title('Pylearn - Sửa đổi')
+root.title('Codemy.com - TextPad!')
 root.geometry("1200x710")
 
 
@@ -228,32 +228,6 @@ def night_on():
 	options_menu.config(bg=main_color, fg=text_color)
 
 
-# Turn Off Night Mode:
-def night_off():
-	main_color = "SystemButtonFace"
-	second_color = "SystemButtonFace"
-	text_color = "black"
-
-	root.config(bg=main_color)
-	status_bar.config(bg=main_color, fg=text_color)
-	my_text.config(bg="white")
-	toolbar_frame.config(bg=main_color)
-	# toolbar buttons
-	bold_button.config(bg=second_color)
-	italics_button.config(bg=second_color)
-	redo_button.config(bg=second_color)
-	undo_button.config(bg=second_color)
-	color_text_button.config(bg=second_color)
-	# file menu colors
-	file_menu.config(bg=main_color, fg=text_color)
-	edit_menu.config(bg=main_color, fg=text_color)
-	color_menu.config(bg=main_color, fg=text_color)
-	options_menu.config(bg=main_color, fg=text_color)
-
-
-
-
-
 # Create a toolbar frame
 toolbar_frame = Frame(root)
 toolbar_frame.pack(fill=X)
@@ -311,12 +285,6 @@ my_menu.add_cascade(label="Colors", menu=color_menu)
 color_menu.add_command(label="Selected Text", command=text_color)
 color_menu.add_command(label="All Text", command=all_text_color)
 color_menu.add_command(label="Background", command=bg_color)
-
-# Add Options Menu
-options_menu = Menu(my_menu, tearoff=False)
-my_menu.add_cascade(label="Options", menu=options_menu)
-options_menu.add_command(label="Night Mode On", command=night_on)
-options_menu.add_command(label="Night Mode Off", command=night_off)
 
 
 # Add Status Bar To Bottom Of App

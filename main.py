@@ -1,6 +1,4 @@
 import os
-import sys
-from io import StringIO
 import gui, Login
 
 

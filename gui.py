@@ -34,7 +34,7 @@ def read_file(filename):
     return text
 def Main():
     #---------------
-    
+    open_vscode()
     root = Tk()
     root.resizable(0,0)
     root.title('Pylearn')
@@ -43,8 +43,6 @@ def Main():
     MainWindow = Canvas (root, width = 350, height = 700, bg = 'gray')
     MainWindow.pack()
     root.attributes('-toolwindow',1)
-    
-    open_vscode()
     
     # Button---------------
     frameOption = Frame(MainWindow)

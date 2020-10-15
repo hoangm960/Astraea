@@ -5,7 +5,7 @@ from tkinter.constants import BOTTOM, END, RIGHT, E, X, Y
 root = Tk()
 root.title("Pylearn Editor")
 root.iconbitmap("icons/logo.ico")
-root.geometry("1200x690")
+root.geometry("1200x690+250+100")
 
 
 def new_file():

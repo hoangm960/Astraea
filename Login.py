@@ -1,6 +1,7 @@
-from tkinter import Button, Canvas, Entry, Label, PhotoImage, Tk, messagebox
-from tkinter.constants import FLAT
-
+from tkinter import BooleanVar, Button, Canvas, Entry, IntVar, Label, PhotoImage, Tk, messagebox, Checkbutton
+from tkinter.constants import ACTIVE, DISABLED, FLAT
+from tkinter.font import NORMAL
+import gui
 #----------------------------------------------------------------
 #SignBox
 def sign():
@@ -67,25 +68,20 @@ def sign():
             Name.place(relx = 0.25, rely = 0.4)
             Passentry = Entry(SignInBox, font = str(40))
             Passentry.place(relx = 0.5, rely=0.45, relwidth = 0.45, relheight = 0.08, anchor = 'n')                
-                
-            PlayUp = PhotoImage(file=r'icons/tick.png')
-            PlayUp = PlayUp.subsample(2,'2')
-            PlayDown = PhotoImage(file=r'icons/untick.png')
-            PlayDown = PlayDown.subsample(2,'2')
-            def change():
-                global changenumber
-                if changenumber == 1:
-                    changenumber = 0
-                    TickButton.config(image = PlayUp)
+
+            TickLabel = Label(SignInBox, text = 'Bạn là ?', bg = 'lightblue')
+            TickLabel.place(relx = 0.3, rely = 0.55)
+            var1 = BooleanVar()
+            var2 = BooleanVar()
+            def click(button, var):
+                if var.get():
+                    button.config(state = DISABLED)
                 else:
-                    changenumber = 1
-                    TickButton.config(image = PlayDown)
-            TickLabel = Label(SignInBox, text = 'Bạn là ?      giáo viên          học sinh      ', bg = 'lightblue')
-            TickLabel.place(relx = 0.5, rely = 0.55, anchor = 'n')
-            TickButton1 = Button(TickLabel, photo = PlayDown, command = lambda: change(), relief = FLAT)
-            TickButton1.place(relx = 0.6, rely = 0)
-            TickButton2 = Button(TickLabel, photo = PlayUp, command = lambda: change(), relief = FLAT)
-            TickButton2.place(relx = 0.97, rely = 0)
+                    button.config(state = NORMAL)
+            TickButton1 = Checkbutton(SignInBox, text = 'học sinh : ', onvalue = True, offvalue = False, variable = var1, command = lambda: click(TickButton2, var1))
+            TickButton1.place(relx = 0.48, rely = 0.55)
+            TickButton2 = Checkbutton(SignInBox, text = 'giáo viên ', onvalue = True, offvalue = False, variable = var2, command = lambda: click(TickButton1, var2))
+            TickButton2.place(relx = 0.67, rely = 0.55)
             def Quayve():
                 SignInBox.destroy()
                 DN()
@@ -177,6 +173,7 @@ def sign():
                             file.write(textname)
                             file.close()
                     SignRoot.destroy()
+                    gui.Main()
                 f.close()
         SaveButton = Button(SignInBoxs, text = 'Đăng nhập', activebackground = 'lightgreen', command = lambda: check(), relief = FLAT)
         SaveButton.place(relx = 0.5, rely = 0.62, relwidth = 0.15, relheight = 0.08, anchor = 'n')
@@ -187,6 +184,7 @@ def sign():
 
 # --------------------------------------
 changenumber = 1
+change_number = False
 def main():
     #------Root
     sign()

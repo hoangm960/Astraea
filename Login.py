@@ -79,9 +79,9 @@ def sign():
                 else:
                     button.config(state = NORMAL)
             TickButton1 = Checkbutton(SignInBox, text = 'học sinh : ', onvalue = True, offvalue = False, variable = var1, command = lambda: click(TickButton2, var1))
-            TickButton1.place(relx = 0.48, rely = 0.55)
+            TickButton1.place(relx = 0.38, rely = 0.55)
             TickButton2 = Checkbutton(SignInBox, text = 'giáo viên ', onvalue = True, offvalue = False, variable = var2, command = lambda: click(TickButton1, var2))
-            TickButton2.place(relx = 0.67, rely = 0.55)
+            TickButton2.place(relx = 0.57, rely = 0.55)
             def Quayve():
                 SignInBox.destroy()
                 DN()
@@ -91,7 +91,7 @@ def sign():
             """ Kiểm tra thông tin đăng ký """
             def saves():
                 again = True
-                with open(r'data/User.txt','a') as f:
+                with open(r'data/User.txt','a+') as f:
                     newname = Nameentry.get()
                     password = Passentry.get() 
                     error =  Label(SignInBox)
@@ -131,12 +131,12 @@ def sign():
                             error.place(relx = 0.5, rely = 0.6, relwidth = 0.45, anchor = 'n')
                             again = False
                         if again == True:
-                            if var1.get() == True:
-                                newname+='_Student'
-                            else:
-                                newname+='_Teacher'
                             newname = newname + '\n'
                             f.write(newname)
+                            if var1.get() == False:
+                                with open('HostList.txt','a+') as file_host:
+                                    file_host.write(newname)
+                                    file_host.close()
                             password = password + '\n'
                             f.write(password)
                             SignInBox.destroy()
@@ -196,9 +196,3 @@ change_number = False
 def main():
     #------Root
     sign()
-    with open('data/User.txt','r') as f:
-        User = ['','']
-        User[0] = f.readline().replace('\n','')
-        User[0].replace('_Teacher','')
-        User[1] = f.readline().replace('\n','')
-        f.close()

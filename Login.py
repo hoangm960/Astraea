@@ -60,7 +60,7 @@ def sign():
             SignInBox = Canvas(SignRoot, width = 750, height = 500, bg = 'lightblue')
             Textbox = Label(SignInBox, text = 'ĐĂNG KÝ TÀI KHOẢN', bg = 'lightblue', fg = 'blue', font = ('Arial Bold', 20))
             Textbox.place(relx = 0.5, rely = 0.1, anchor = 'n')
-            Name = Label(SignInBox, text = 'Tên đăng nhập *:', fg = 'black', bg = 'lightblue', font = str(50))
+            Name = Label(SignInBox, text = 'Tên tài khoản*:', fg = 'black', bg = 'lightblue', font = str(50))
             Name.place(relx = 0.25, rely = 0.25)
             Nameentry = Entry(SignInBox, font = str(40))
             Nameentry.place(relx = 0.5, rely=0.3, relwidth = 0.45, relheight = 0.08, anchor = 'n')
@@ -96,12 +96,12 @@ def sign():
                     password = Passentry.get() 
                     error =  Label(SignInBox)
                     if newname == '':
-                        error = Label(SignInBox, text = "Yêu cầu nhập Tên", bg = 'lightblue', fg = 'red', font = str(30))
-                        error.place(relx = 0.4, rely = 0.25, relwidth = 0.45)
+                        error = Label(SignInBox, text = "                  Yêu cầu nhập Tên             ", bg = 'lightblue', fg = 'red', font = str(30))
+                        error.place(relx = 0.47, rely = 0.25)
                         again = False
                     if password == '':  
-                        error = Label(SignInBox, text = "Yêu cầu nhập password", bg = 'lightblue', fg = 'red', font = str(30))
-                        error.place(relx = 0.4, rely = 0.4, relwidth = 0.45)
+                        error = Label(SignInBox, text = "                    Yêu cầu nhập password       ", bg = 'lightblue', fg = 'red', font = str(30))
+                        error.place(relx = 0.47, rely = 0.4)
                         again = False
                     else:
                         for i in newname.lower():
@@ -116,17 +116,25 @@ def sign():
                                 again = False
                         if len(password) < 3:
                             error = Label(SignInBox, text = "Mật khẩu tối thiểu 3 kí tự", bg = 'lightblue', fg = 'red', font = str(30))
-                            error.place(relx = 0.5, rely = 0.55, relwidth = 0.45, anchor = 'n')
+                            error.place(relx = 0.5, rely = 0.6, relwidth = 0.45, anchor = 'n')
                             again = False
                         if len(newname)<7:
                             error = Label(SignInBox, text = "Tên tài khoản tối thiểu 7 kí tự", bg = 'lightblue', fg = 'red', font = str(30))
-                            error.place(relx = 0.5, rely = 0.55, relwidth = 0.45, anchor = 'n')
+                            error.place(relx = 0.5, rely = 0.6, relwidth = 0.45, anchor = 'n')
                             again = False
                         if newname in dataAccount.keys() and newname != '':
                             error = Label(SignInBox, text = "Tên tài khoản đã tồn tại.", bg = 'lightblue', fg = 'red', font = str(30))
-                            error.place(relx = 0.5, rely = 0.55, relwidth = 0.45, anchor = 'n')
+                            error.place(relx = 0.5, rely = 0.6, relwidth = 0.45, anchor = 'n')
+                            again = False
+                        if not var1.get() and not var2.get():
+                            error = Label(SignInBox, text = "Chưa xác định học sinh hay giáo viên.", bg = 'lightblue', fg = 'red', font = str(30))
+                            error.place(relx = 0.5, rely = 0.6, relwidth = 0.45, anchor = 'n')
                             again = False
                         if again == True:
+                            if var1.get() == True:
+                                newname+='_Student'
+                            else:
+                                newname+='_Teacher'
                             newname = newname + '\n'
                             f.write(newname)
                             password = password + '\n'
@@ -142,7 +150,7 @@ def sign():
                     SignRoot.destroy()
             SignRoot.protocol("WM_DELETE_WINDOW", on_closing)
             SaveButton = Button(SignInBox, text = 'Đăng ký', activebackground = 'lightgreen', command = lambda: saves(), relief = FLAT)
-            SaveButton.place(relx = 0.5, rely = 0.6, relwidth = 0.15, relheight = 0.08, anchor = 'n')
+            SaveButton.place(relx = 0.5, rely = 0.68, relwidth = 0.15, relheight = 0.08, anchor = 'n')
         
         """"""""""""""""""" Kiểm tra thông tin đăng nhập """""""""""""""""""""""""
         def check():
@@ -191,5 +199,6 @@ def main():
     with open('data/User.txt','r') as f:
         User = ['','']
         User[0] = f.readline().replace('\n','')
+        User[0].replace('_Teacher','')
         User[1] = f.readline().replace('\n','')
         f.close()

@@ -134,7 +134,7 @@ def sign():
                             newname = newname + '\n'
                             f.write(newname)
                             if var1.get() == False:
-                                with open('HostList.txt','a+') as file_host:
+                                with open('data/HostList.txt','a+') as file_host:
                                     file_host.write(newname)
                                     file_host.close()
                             password = password + '\n'

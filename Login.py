@@ -67,6 +67,25 @@ def sign():
             Name.place(relx = 0.25, rely = 0.4)
             Passentry = Entry(SignInBox, font = str(40))
             Passentry.place(relx = 0.5, rely=0.45, relwidth = 0.45, relheight = 0.08, anchor = 'n')                
+                
+            PlayUp = PhotoImage(file=r'icons/tick.png')
+            PlayUp = PlayUp.subsample(2,'2')
+            PlayDown = PhotoImage(file=r'icons/untick.png')
+            PlayDown = PlayDown.subsample(2,'2')
+            def change():
+                global changenumber
+                if changenumber == 1:
+                    changenumber = 0
+                    TickButton.config(image = PlayUp)
+                else:
+                    changenumber = 1
+                    TickButton.config(image = PlayDown)
+            TickLabel = Label(SignInBox, text = 'Bạn là ?      giáo viên          học sinh      ', bg = 'lightblue')
+            TickLabel.place(relx = 0.5, rely = 0.55, anchor = 'n')
+            TickButton1 = Button(TickLabel, photo = PlayDown, command = lambda: change(), relief = FLAT)
+            TickButton1.place(relx = 0.6, rely = 0)
+            TickButton2 = Button(TickLabel, photo = PlayUp, command = lambda: change(), relief = FLAT)
+            TickButton2.place(relx = 0.97, rely = 0)
             def Quayve():
                 SignInBox.destroy()
                 DN()

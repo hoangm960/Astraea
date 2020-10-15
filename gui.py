@@ -50,14 +50,13 @@ def Main():
 
     #----------------------
     frame = Frame(MainWindow)
-    frame.place(relx = 0.15, rely = 0.82, relwidth = 0.17, relheight = 0.05)
+    frame.place(relx = 0, rely = 0.97, relwidth = 1, relheight = 0.03)
     photoYT = PhotoImage(file = r"icons/youtubeButton.png")
-    photoimageYT = photoYT.subsample(3, str(3))
-    Button(frame, image = photoimageYT, relief = FLAT, command = lambda: open_youtube()).place(x = 0, y =0)
-    frame.place(relx = 0.65, rely = 0.82, relwidth = 0.17, relheight = 0.05)
+    photoimageYT = photoYT.subsample(7,'7')
+    Button(frame, image = photoimageYT, relief = FLAT, command = lambda: open_youtube()).place(relx = 0, rely =0)
     photoFB = PhotoImage(file = r"icons/facebookButton.png")
-    photoimageFB = photoFB.subsample(3, str(3)) 
-    Button(frame, image = photoimageFB, relief = FLAT, command = lambda: open_facebook()).place(x = 0, y =0)
+    photoimageFB = photoFB.subsample(7, '7') 
+    Button(frame, image = photoimageFB, relief = FLAT, command = lambda: open_facebook()).place(relx =0.08, rely =0)
 
     frameCheck = Frame(MainWindow)
     frameCheck.place(relx = 0.4, rely = 0.9, relwidth = 0.198, relheight = 0.06)
@@ -83,7 +82,3 @@ def Main():
     # root.protocol("WM_DELETE_WINDOW", on_closing)
 
     root.mainloop()
-<<<<<<< HEAD
-=======
-
->>>>>>> 69f9934919c86c33a8d81afd746d538124f67956

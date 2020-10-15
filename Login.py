@@ -1,11 +1,14 @@
-from tkinter import (Button, Canvas, Entry, Label, PhotoImage, Tk, messagebox)
+from tkinter import Button, Canvas, Entry, Label, PhotoImage, Tk, messagebox
 from tkinter.constants import FLAT
+
 import gui
+
 #----------------------------------------------------------------
 #SignBox
 hello Tien 
 def sign():
     hokasdkfskadf
+    holollll
     SignRoot = Tk()
     SignRoot.resizable(0,0)
     SignRoot.wm_attributes("-topmost",1)

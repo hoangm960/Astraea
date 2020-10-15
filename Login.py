@@ -3,7 +3,7 @@ from tkinter.constants import FLAT
 import gui
 #----------------------------------------------------------------
 #SignBox
-
+hello minh leo
 def sign():
     SignRoot = Tk()
     SignRoot.resizable(0,0)

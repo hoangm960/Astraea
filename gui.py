@@ -47,45 +47,17 @@ def Main():
     open_vscode()
 
     # Button---------------
-    frameOption = Frame(MainWindow)
-    frameOption.place(relx = 0.01, rely = 0.01, relwidth = 9.6, relheight = 0.04)
-    variable1 = StringVar(frameOption)
-
-    variable1.set('Option1')
-    variable1.trace('w', RunEdit)
-    MenuOption1 =  OptionMenu(frameOption, variable1, "TextBox", "Settings")
-    MenuOption1.pack(side = LEFT)
-
-    variable2 = StringVar(frameOption)
-    variable2.set('Option2')
-    #variable2.trace('w', affect)
-    MenuOption2 = OptionMenu(frameOption, variable2, "TextBox2","Settings2")
-    MenuOption2.pack(side = LEFT)
-
-    variable3 = StringVar(frameOption)
-    variable3.set('Option3')
-    #variable2.trace('w', affect)
-    MenuOption3 = OptionMenu(frameOption, variable3, "TextBox3","Settings3")
-    MenuOption3.pack(side = LEFT)
-
-
-    variable4 = StringVar(frameOption)
-    variable4.set('Option4')
-    #variable2.trace('w', affect)
-    MenuOption4 = OptionMenu(frameOption, variable4, "TextBox4","Settings4")
-    MenuOption4.pack(side = LEFT)
 
     #----------------------
-    frameYT = Frame(MainWindow)
-    frameYT.place(relx = 0.15, rely = 0.82, relwidth = 0.17, relheight = 0.05)
+    frame = Frame(MainWindow)
+    frame.place(relx = 0.15, rely = 0.82, relwidth = 0.17, relheight = 0.05)
     photoYT = PhotoImage(file = r"icons/youtubeButton.png")
     photoimageYT = photoYT.subsample(3, str(3))
-    Button(frameYT, image = photoimageYT, relief = FLAT, command = lambda: open_youtube()).place(x = 0, y =0)
-    frameFB = Frame(MainWindow)
-    frameFB.place(relx = 0.65, rely = 0.82, relwidth = 0.17, relheight = 0.05)
+    Button(frame, image = photoimageYT, relief = FLAT, command = lambda: open_youtube()).place(x = 0, y =0)
+    frame.place(relx = 0.65, rely = 0.82, relwidth = 0.17, relheight = 0.05)
     photoFB = PhotoImage(file = r"icons/facebookButton.png")
     photoimageFB = photoFB.subsample(3, str(3)) 
-    Button(frameFB, image = photoimageFB, relief = FLAT, command = lambda: open_facebook()).place(x = 0, y =0)
+    Button(frame, image = photoimageFB, relief = FLAT, command = lambda: open_facebook()).place(x = 0, y =0)
 
     frameCheck = Frame(MainWindow)
     frameCheck.place(relx = 0.4, rely = 0.9, relwidth = 0.198, relheight = 0.06)
@@ -111,5 +83,3 @@ def Main():
     # root.protocol("WM_DELETE_WINDOW", on_closing)
 
     root.mainloop()
-
-Main()

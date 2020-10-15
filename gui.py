@@ -37,6 +37,7 @@ def Main():
     root = Tk()
     root.resizable(0,0)
     root.title('Pylearn')
+    root.iconbitmap('icons/logo.ico')
     root.wm_attributes("-topmost", 1)
     root.geometry('350x700+1010+0')
     MainWindow = Canvas (root, width = 350, height = 700, bg = 'gray')
@@ -100,7 +101,7 @@ def Main():
     text = Text(frame)
     with open("Text.txt", "r") as f:
         text.insert(END, f.read())
-    text.configure(yscrollcommand=Sb.set, font=("Times New Roman", 10), wrap=WORD, state=DISABLED)
+    text.configure(yscrollcommand=Sb.set, font=("Times New Roman", 10, "normal"), wrap=WORD, state=DISABLED)
     text.pack() 
 
     # def on_closing():
@@ -110,3 +111,5 @@ def Main():
     # root.protocol("WM_DELETE_WINDOW", on_closing)
 
     root.mainloop()
+
+Main()

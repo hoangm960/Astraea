@@ -112,4 +112,3 @@ def Main():
 
     root.mainloop()
 
-Main()

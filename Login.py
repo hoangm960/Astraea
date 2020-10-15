@@ -1,8 +1,6 @@
 from tkinter import Button, Canvas, Entry, Label, PhotoImage, Tk, messagebox
 from tkinter.constants import FLAT
 
-import gui
-
 #----------------------------------------------------------------
 #SignBox
 def sign():

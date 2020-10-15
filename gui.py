@@ -83,3 +83,7 @@ def Main():
     # root.protocol("WM_DELETE_WINDOW", on_closing)
 
     root.mainloop()
+<<<<<<< HEAD
+=======
+
+>>>>>>> 69f9934919c86c33a8d81afd746d538124f67956

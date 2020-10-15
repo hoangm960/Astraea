@@ -5,7 +5,7 @@ import gui
 #SignBox
 hello Tien 
 def sign():
-    ho
+    hokasdkfskadf
     SignRoot = Tk()
     SignRoot.resizable(0,0)
     SignRoot.wm_attributes("-topmost",1)

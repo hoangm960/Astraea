@@ -50,9 +50,9 @@ try:
                 + open(ans, "r").readlines()[test]
                 + ")\n"
                 """\
-    print("Correct!")
+    print("Đúng!")
 except AssertionError:
-    print("Wrong!")
+    print("Sai!")
 """
             )
             f.close()
@@ -82,8 +82,8 @@ except AssertionError:
     del_testcases_file()
 
 
-Login.main()
-gui.Main()
+# Login.main()
+# gui.Main()
 
 test_file = "test.py"
 input_file = "Inputs.txt"

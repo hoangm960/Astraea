@@ -35,7 +35,7 @@ def sign():
         Nameentry.place(relx = 0.5, rely=0.3, relwidth = 0.45, relheight = 0.08, anchor = 'n')
         Name = Label(SignInBoxs, text = 'Mật khẩu:', fg = 'black', bg = 'lightblue', font = str(50))
         Name.place(relx = 0.25, rely = 0.4)
-        Passentry = Entry(SignInBoxs, font = str(40))
+        Passentry = Entry(SignInBoxs, font = str(40), show = '●')
         Passentry.place(relx = 0.5, rely=0.45, relwidth = 0.45, relheight = 0.08, anchor = 'n')
         with open('data/Autosave.txt','r') as f:
             textname = f.read()
@@ -73,7 +73,7 @@ def sign():
             Nameentry.place(relx = 0.5, rely=0.3, relwidth = 0.45, relheight = 0.08, anchor = 'n')
             Name = Label(SignInBox, text = 'Mật khẩu*:', fg = 'black', bg = 'lightblue', font = str(50))
             Name.place(relx = 0.25, rely = 0.4)
-            Passentry = Entry(SignInBox, font = str(40))
+            Passentry = Entry(SignInBox, font = str(40), show = '●')
             Passentry.place(relx = 0.5, rely=0.45, relwidth = 0.45, relheight = 0.08, anchor = 'n')                
 
             TickLabel = Label(SignInBox, text = 'Bạn là ?', bg = 'lightblue')

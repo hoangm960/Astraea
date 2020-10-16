@@ -1,3 +1,10 @@
-from colour import Color
-red = Color("red")
-colors = list(red.range_to(Color("green"),10))
+import getpass
+import sys
+
+if sys.stdin.isatty():
+    p = getpass.getpass('Using getpass: ')
+else:
+    print ('Using readline')
+    p = sys.stdin.readline().rstrip()
+
+print ('Read: ', p)

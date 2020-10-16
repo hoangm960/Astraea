@@ -88,10 +88,10 @@ class GUI:
 
         Sb = Scrollbar(frame)
         Sb.pack(side = RIGHT, fill = Y)
-        text = Text(frame)
+        text = Text(frame, height= 100, width=100)
         with open("Text.txt", "r") as f:
             text.insert(END, f.read())
-        text.configure(yscrollcommand=Sb.set, font=("Times New Roman", 10, "normal"), wrap=WORD, state=DISABLED)
+        text.configure(yscrollcommand=Sb.set, font=("Arial", 12), wrap=WORD, state=DISABLED)
         text.pack() 
 
         # def on_closing():

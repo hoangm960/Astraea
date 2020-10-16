@@ -4,10 +4,13 @@ from tkinter.font import NORMAL
 import gui_Teacher, gui_Student
 #----------------------------------------------------------------
 #SignBox
-def on_enter(eButton, colour):
-    eButton['background'] = colour
-def on_leave(eButton, colour):
-    eButton['background'] = colour
+def enter_leave(button_name, colour1, colour2):
+    def on_enter(e):
+        button_name['background'] = colour1
+    def on_leave(e):
+        button_name['background'] = colour2
+    button_name.bind("<Enter>", on_enter)
+    button_name.bind("<Leave>", on_leave)
 def sign():
     SignRoot = Tk()
     SignRoot.resizable(0,0)
@@ -153,9 +156,9 @@ def sign():
                 if messagebox.askokcancel("Thông báo", "Thoát giao diện đăng nhập?"):
                     SignRoot.destroy()
             SignRoot.protocol("WM_DELETE_WINDOW", on_closing)
-            SaveButton = Button(SignInBox, text = 'Đăng ký', activebackground = 'lightgreen', command = lambda: saves(), relief = FLAT)
+            SaveButton = Button(SignInBox, text = 'Đăng ký', bg = 'white', command = lambda: saves(), relief = FLAT)
             SaveButton.place(relx = 0.5, rely = 0.68, relwidth = 0.15, relheight = 0.08, anchor = 'n')
-        
+            enter_leave(SaveButton, '#00b594', 'white')
         """"""""""""""""""" Kiểm tra thông tin đăng nhập """""""""""""""""""""""""
         def check():
             if Nameentry.get() == '' or Passentry.get() == '':
@@ -203,8 +206,9 @@ def sign():
                         hostf.close()
                 f.close()
                 
-        SaveButton = Button(SignInBoxs, text = 'Đăng nhập', activebackground = 'lightgreen', command = lambda: check(), relief = FLAT)
+        SaveButton = Button(SignInBoxs, text = 'Đăng nhập', bg = 'white', command = lambda: check(), relief = FLAT)
         SaveButton.place(relx = 0.5, rely = 0.62, relwidth = 0.15, relheight = 0.08, anchor = 'n')
+        enter_leave(SaveButton,'#00b594','white')
         buttonDK = Button(SignInBoxs, text = 'Chưa có tài khoản? Đăng ký ngay', fg = 'blue', command = lambda: DK(), relief = FLAT)
         buttonDK.place(relx = 0.5, rely = 0.8, relwidth = 0.4, relheight = 0.035, anchor = 'n')
     DN()

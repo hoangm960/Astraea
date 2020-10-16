@@ -61,13 +61,10 @@ def Main():
       
     buttonEdit = Button(MainWindow, bg = '#347d6c', command = test, text = 'Sửa đổi', fg = 'white', font = ('Arial Bold',10))
     buttonEdit.place(relx = 0.5, rely = 0.84, relwidth = 0.2, relheight = 0.05, anchor = 'n')
-    buttonEdit.bind("<Enter>", Login.on_enter(buttonEdit, '#41a38c'))
-    buttonEdit.bind("<Leave>", Login.on_leave(buttonEdit, '#347d6c'))
-    
+    Login.enter_leave(buttonEdit, '#41a38c', '#347d6c')
     buttonCheck = Button(MainWindow, bg = '#39c459', command = test, text = 'Kiểm tra', fg = 'white', font = ('Arial Bold',10))
     buttonCheck.place(relx = 0.5, rely = 0.9, relwidth = 0.2, relheight = 0.05, anchor = 'n')
-    buttonCheck.bind("<Enter>", Login.on_enter(buttonCheck, '#41a38c'))
-    buttonCheck.bind("<Leave>", Login.on_leave(buttonCheck, '#39c459'))
+    Login.enter_leave(buttonCheck, '#41a38c', '#39c459')
     #---------------
     frame = Frame(MainWindow)
     frame.place(relx = 0.1, rely = 0.1, relwidth = 0.8, relheight = 0.7)

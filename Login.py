@@ -1,9 +1,13 @@
 from tkinter import BooleanVar, Button, Canvas, Entry, IntVar, Label, PhotoImage, Tk, messagebox, Checkbutton
 from tkinter.constants import ACTIVE, DISABLED, FLAT
 from tkinter.font import NORMAL
-import gui
+import gui_Teacher, gui_Student
 #----------------------------------------------------------------
 #SignBox
+def on_enter(eButton, colour):
+    eButton['background'] = colour
+def on_leave(eButton, colour):
+    eButton['background'] = colour
 def sign():
     SignRoot = Tk()
     SignRoot.resizable(0,0)
@@ -175,14 +179,30 @@ def sign():
                     checkmk = False
                     checktk = False
                 if checkmk == True and checktk == True:
+                    global nameAccount
+                    nameAccount = Nameentry.get()
                     if changenumber == 0:
                         with open('data/Autosave.txt','w') as file:
-                            textname = Nameentry.get()
-                            file.write(textname)
+                            file.write(nameAccount)
                             file.close()
-                    SignRoot.destroy()
-                    gui.Main()
+                    with open('data/HostList.txt','r') as hostf:
+                        HostAccount = list()
+                        while True:
+                            name = hostf.readline().replace('\n','')
+                            if name == '':
+                                break
+                            else:
+                                HostAccount.append(name)
+                        nameAccount = Nameentry.get()
+                        if nameAccount in HostAccount:
+                            SignRoot.destroy()
+                            gui_Teacher.Main()
+                        else:
+                            SignRoot.destroy()
+                            gui_Student.Main()
+                        hostf.close()
                 f.close()
+                
         SaveButton = Button(SignInBoxs, text = 'Đăng nhập', activebackground = 'lightgreen', command = lambda: check(), relief = FLAT)
         SaveButton.place(relx = 0.5, rely = 0.62, relwidth = 0.15, relheight = 0.08, anchor = 'n')
         buttonDK = Button(SignInBoxs, text = 'Chưa có tài khoản? Đăng ký ngay', fg = 'blue', command = lambda: DK(), relief = FLAT)
@@ -193,6 +213,11 @@ def sign():
 # --------------------------------------
 changenumber = 1
 change_number = False
+nameAccount = ''
 def main():
     #------Root
     sign()
+    
+        
+        
+        

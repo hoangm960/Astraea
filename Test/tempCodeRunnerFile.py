@@ -3,7 +3,7 @@ import tkinter as tk
 def on_enter(e):
     myButton['background'] = '#00ff45'
 
-def on_leave(e,myButton):
+def on_leave(e):
     myButton['background'] = '#32a852'
 
 root = tk.Tk()

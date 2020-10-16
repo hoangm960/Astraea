@@ -1,14 +1,16 @@
-from gui_Teacher import Main
 import os
 import webbrowser
-from tkinter import (Button, Canvas, Frame, Listbox, OptionMenu, PhotoImage,
-                      Scrollbar, StringVar, Text, Tk, messagebox)
-from tkinter.constants import DISABLED, END, FLAT, LEFT, RIGHT, WORD, Y
+from tkinter import (Button, Canvas, Frame, PhotoImage,
+                      Scrollbar, Text, Tk)
+from tkinter.constants import DISABLED, END, FLAT, RIGHT, WORD, Y
 import subprocess
 import pygetwindow as gw
 import Login
 
 class GUI:
+    def __init__(self, role):
+        self.role = role
+
     # Command on Button---------------
     # Edit Button
     def RunEdit(self):
@@ -44,6 +46,16 @@ class GUI:
         photoimageFB = photoFB.subsample(7, '7') 
         Button(frame, image = photoimageFB, relief = FLAT, command = lambda: self.open_facebook()).place(relx =0.08, rely =0)
 
+    def create_edit_button(self, MainWindow):
+        buttonEdit = Button(MainWindow, bg = '#347d6c', text = 'Sửa đổi', fg = 'white', font = ('Arial Bold',10))
+        buttonEdit.place(relx = 0.5, rely = 0.84, relwidth = 0.2, relheight = 0.05, anchor = 'n')
+        Login.enter_leave(buttonEdit, '#41a38c', '#347d6c')
+
+    def create_test_button(self, MainWindow):
+        buttonCheck = Button(MainWindow, bg = '#39c459', text = 'Kiểm tra', fg = 'white', font = ('Arial Bold',10))
+        buttonCheck.place(relx = 0.5, rely = 0.84, relwidth = 0.2, relheight = 0.05, anchor = 'n')
+        Login.enter_leave(buttonCheck, '#30e651', '#39c459')
+
     def Main(self):
         #---------------
         
@@ -68,6 +80,11 @@ class GUI:
         #---------------
         frame = Frame(MainWindow)
         frame.place(relx = 0.1, rely = 0.1, relwidth = 0.8, relheight = 0.7)
+        
+        if self.role.lower() == 'teacher':
+            self.create_edit_button(MainWindow)
+        elif self.role.lower() == 'student':
+            self.create_test_button(MainWindow)
 
         Sb = Scrollbar(frame)
         Sb.pack(side = RIGHT, fill = Y)
@@ -85,17 +102,4 @@ class GUI:
 
         root.mainloop()
 
-class Teacher(GUI):
-    def create_edit_button(self):
-        MainWindow = super().Main.MainWindow
-        buttonEdit = Button(MainWindow, bg = '#347d6c', text = 'Sửa đổi', fg = 'white', font = ('Arial Bold',10))
-        buttonEdit.place(relx = 0.5, rely = 0.84, relwidth = 0.2, relheight = 0.05, anchor = 'n')
-        Login.enter_leave(buttonEdit, '#41a38c', '#347d6c')
-
-class Student(GUI):
-    def create_test_button(self):
-        MainWindow = super().Main.MainWindow
-        buttonCheck = Button(MainWindow, bg = '#39c459', text = 'Kiểm tra', fg = 'white', font = ('Arial Bold',10))
-        buttonCheck.place(relx = 0.5, rely = 0.84, relwidth = 0.2, relheight = 0.05, anchor = 'n')
-        Login.enter_leave(buttonCheck, '#30e651', '#39c459')
         

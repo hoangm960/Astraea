@@ -1,7 +1,7 @@
 from tkinter import BooleanVar, Button, Canvas, Entry, IntVar, Label, PhotoImage, Tk, messagebox, Checkbutton
 from tkinter.constants import ACTIVE, DISABLED, FLAT
 from tkinter.font import NORMAL
-import gui_Teacher, gui_Student
+from gui import GUI
 #----------------------------------------------------------------
 #SignBox
 def enter_leave(button_name, colour1, colour2):
@@ -199,10 +199,10 @@ def main():
                         nameAccount = Nameentry.get()
                         if nameAccount in HostAccount:
                             SignRoot.destroy()
-                            gui_Teacher.Main()
+                            GUI("teacher").Main()
                         else:
                             SignRoot.destroy()
-                            gui_Student.Main()
+                            GUI("student").Main()
                         hostf.close()
                 f.close()
                 

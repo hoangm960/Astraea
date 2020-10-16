@@ -1,8 +1,7 @@
 from tkinter import Canvas
-from tkinter.constants import HORIZONTAL, NW, X
+from tkinter.constants import HORIZONTAL, NW, W, X
 
-from PIL import Image, ImageDraw
-from PIL import ImageTk
+from PIL import Image, ImageDraw, ImageTk
 
 basestring = str
 
@@ -89,11 +88,11 @@ class GradientFrame(Canvas):
         self.create_image(0, 0, anchor=NW, image=self._gradient_photoimage)
 
 if __name__ == "__main__":
-    from tkinter import Tk, Label
+    from tkinter import Label, Tk
 
     root = Tk()
 
     Label(root, text="Gradient 1:").pack(anchor=W)
-    GradientFrame(root, from_color="#a8edea", to_color="#fed6e3", height=100).pack(fill=X)
+    GradientFrame(root, from_color="#fed6e3", to_color="#a8edea", height=100).pack(fill=X)
 
     root.mainloop()

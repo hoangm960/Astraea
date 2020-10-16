@@ -54,17 +54,17 @@ def Main():
     frame.place(relx = 0, rely = 0.97, relwidth = 1, relheight = 0.03)
     photoYT = PhotoImage(file = r"icons/youtubeButton.png")
     photoimageYT = photoYT.subsample(7,'7')
-    Button(frame, image = photoimageYT, relief = FLAT, command = lambda: open_youtube()).place(relx = 0, rely =0)
+    Button(frame, image = photoimageYT, relief = FLAT, command = lambda: open_youtube()).place(relx= 0, rely= 0)
     photoFB = PhotoImage(file = r"icons/facebookButton.png")
     photoimageFB = photoFB.subsample(7, '7') 
     Button(frame, image = photoimageFB, relief = FLAT, command = lambda: open_facebook()).place(relx =0.08, rely =0)
 
-    buttonEdit = Button(MainWindow, bg = '#d1d446', command = test, text = 'Làm bài', fg = 'white', font = ('Arial Bold',10))
-    buttonEdit.place(relx = 0.5, rely = 0.84, relwidth = 0.2, relheight = 0.05, anchor = 'n')
-    Login.enter_leave(buttonEdit, '#bbbf0a', '#d1d446')
+    # buttonEdit = Button(MainWindow, bg = '#d1d446', command = test, text = 'Làm bài', fg = 'white', font = ('Arial Bold',10))
+    # buttonEdit.place(relx = 0.5, rely = 0.84, relwidth = 0.2, relheight = 0.05, anchor = 'n')
+    # Login.enter_leave(buttonEdit, '#bbbf0a', '#d1d446')
 
-    buttonCheck = Button(MainWindow, bg = '#39c459', command = test, text = 'Kiểm tra', fg = 'white', font = ('Arial Bold',10))
-    buttonCheck.place(relx = 0.5, rely = 0.9, relwidth = 0.2, relheight = 0.05, anchor = 'n')
+    buttonCheck = Button(MainWindow, bg = '#39c459', text = 'Kiểm tra', fg = 'white', font = ('Arial Bold',10))
+    buttonCheck.place(relx = 0.5, rely = 0.84, relwidth = 0.2, relheight = 0.05, anchor = 'n')
     Login.enter_leave(buttonCheck, '#30e651', '#39c459')
     
     #---------------

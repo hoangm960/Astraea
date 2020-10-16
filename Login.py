@@ -11,7 +11,7 @@ def enter_leave(button_name, colour1, colour2):
         button_name['background'] = colour2
     button_name.bind("<Enter>", on_enter)
     button_name.bind("<Leave>", on_leave)
-def sign():
+def main():
     SignRoot = Tk()
     SignRoot.resizable(0,0)
     SignRoot.wm_attributes("-topmost",1)
@@ -218,10 +218,6 @@ def sign():
 changenumber = 1
 change_number = False
 nameAccount = ''
-def main():
-    #------Root
-    sign()
+        
     
-        
-        
         

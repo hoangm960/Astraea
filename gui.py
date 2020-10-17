@@ -1,8 +1,8 @@
 import os
 import webbrowser
-from tkinter import (Button, Canvas, Frame, PhotoImage,
+from tkinter import (Button, Canvas, Checkbutton, Frame, Listbox, PhotoImage,
                       Scrollbar, Text, Tk)
-from tkinter.constants import DISABLED, END, FLAT, RIGHT, WORD, Y
+from tkinter.constants import BOTH, DISABLED, END, FLAT, LEFT, RIGHT, WORD, Y
 import subprocess
 import pygetwindow as gw
 import Login
@@ -70,7 +70,7 @@ class GUI:
         MainWindow.pack()
         root.attributes('-toolwindow',1)
         
-        self.open_vscode()
+        # self.open_vscode()
 
         # Button---------------
 
@@ -89,12 +89,16 @@ class GUI:
         frame.place(relx = 0.1, rely = 0.1, relwidth = 0.8, relheight = 0.4)
         
         Sb = Scrollbar(frame)
+        text = Text(frame, height= 50, width=100, yscrollcommand= Sb.set)
+        Sb.config(command= text.yview)
         Sb.pack(side = RIGHT, fill = Y)
-        text = Text(frame, height= 50, width=100)
+        text.pack(side= LEFT, fill= BOTH, expand= True)
         with open("Text.txt", "r",encoding = 'utf8') as f:
-            text.insert(END, f.read())
-        text.configure(yscrollcommand=Sb.set, font=("Arial", 12), wrap=WORD, state=DISABLED)
-        text.pack()
+            lines = f.readlines()
+            for line in lines:
+                Tickbox = Checkbutton(frame, activebackground= '#43e64b', text= line, justify= LEFT, wraplength= 200)
+                text.window_create(END, window= Tickbox)
+                text.insert(END, "\n")
         
         
         frame2 = Frame(MainWindow)
@@ -115,5 +119,4 @@ class GUI:
         # root.protocol("WM_DELETE_WINDOW", on_closing)
 
         root.mainloop()
-
-        
+    

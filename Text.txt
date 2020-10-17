@@ -1,7 +1,5 @@
-                 python
 Bài 1: Cho 1 chiếc xe buýt có 15 người. Hãy thống kê số người trên xe mang áo hình con gấu
-Bài 2: Cho một viên sỏi rơi từ A có độ cao 30 m xuống đất là B. Hỏi nếu dưới đất đang có một người đang đứng múa vinahouse, có chiều cao 1m52, đỉnh đầu của người đó được đặt tại điểm C.
-Hỏi nếu sử dụng phép vị tự F(AB,1/2)(M) thì mất bao nhiêu lâu để viên sỏi chạm trúng đầu người đó? Biết gia tốc rơi tự do 9.8 m/s2 và phương rơi của viên sỏi trùng phương của người đó.
+Bài 2: Cho một viên sỏi rơi từ A có độ cao 30 m xuống đất là B. Hỏi nếu dưới đất đang có một người đang đứng múa vinahouse, có chiều cao 1m52, đỉnh đầu của người đó được đặt tại điểm C. Hỏi nếu sử dụng phép vị tự F(AB,1/2)(M) thì mất bao nhiêu lâu để viên sỏi chạm trúng đầu người đó? Biết gia tốc rơi tự do 9.8 m/s2 và phương rơi của viên sỏi trùng phương của người đó.
 
 
 

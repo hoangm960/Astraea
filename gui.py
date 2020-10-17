@@ -37,14 +37,15 @@ class GUI:
         f.close()
         return text
 
-    def create_social_button(self, frame):
-        frame.place(relx = 0, rely = 0.97, relwidth = 1, relheight = 0.03)
+    def create_social_button(self, canvas):
+        infoframe = Frame(canvas)
+        infoframe.place(relx = 0, rely = 0.97, relwidth = 1, relheight = 0.03)
         photoYT = PhotoImage(file = r"icons/youtubeButton.png")
         photoimageYT = photoYT.subsample(7,'7')
-        Button(frame, image = photoimageYT, relief = FLAT, command = lambda: self.open_youtube()).place(relx = 0, rely =0)
+        Button(infoframe, image = photoimageYT, relief = FLAT, command = lambda: self.open_youtube()).place(relx = 0, rely =0)
         photoFB = PhotoImage(file = r"icons/facebookButton.png")
         photoimageFB = photoFB.subsample(7, '7') 
-        Button(frame, image = photoimageFB, relief = FLAT, command = lambda: self.open_facebook()).place(relx =0.08, rely =0)
+        Button(infoframe, image = photoimageFB, relief = FLAT, command = lambda: self.open_facebook()).place(relx =0.08, rely =0)
 
     def create_edit_button(self, MainWindow):
         buttonEdit = Button(MainWindow, bg = '#347d6c', text = 'Sửa đổi', fg = 'white', font = ('Arial Bold',10))
@@ -53,7 +54,7 @@ class GUI:
 
     def create_test_button(self, MainWindow):
         buttonCheck = Button(MainWindow, bg = '#39c459', text = 'Kiểm tra', fg = 'white', font = ('Arial Bold',10))
-        buttonCheck.place(relx = 0.5, rely = 0.84, relwidth = 0.2, relheight = 0.05, anchor = 'n')
+        buttonCheck.place(relx = 0.5, rely = 0.88, relwidth = 0.2, relheight = 0.05, anchor = 'n')
         Login.enter_leave(buttonCheck, '#30e651', '#39c459')
 
     def Main(self):
@@ -74,25 +75,38 @@ class GUI:
         # Button---------------
 
         #----------------------
-        frame = Frame(MainWindow)
-        self.create_social_button(frame)
+        self.create_social_button(MainWindow)
         
         #---------------
-        frame = Frame(MainWindow)
-        frame.place(relx = 0.1, rely = 0.1, relwidth = 0.8, relheight = 0.7)
         
         if self.role.lower() == 'teacher':
             self.create_edit_button(MainWindow)
         elif self.role.lower() == 'student':
             self.create_test_button(MainWindow)
 
+        
+        frame = Frame(MainWindow)
+        frame.place(relx = 0.1, rely = 0.1, relwidth = 0.8, relheight = 0.4)
+        
         Sb = Scrollbar(frame)
         Sb.pack(side = RIGHT, fill = Y)
-        text = Text(frame, height= 100, width=100)
-        with open("Text.txt", "r") as f:
+        text = Text(frame, height= 50, width=100)
+        with open("Text.txt", "r",encoding = 'utf8') as f:
             text.insert(END, f.read())
         text.configure(yscrollcommand=Sb.set, font=("Arial", 12), wrap=WORD, state=DISABLED)
-        text.pack() 
+        text.pack()
+        
+        
+        frame2 = Frame(MainWindow)
+        frame2.place(relx = 0.1, rely = 0.55, relwidth = 0.8, relheight = 0.3)
+        
+        Sb2 = Scrollbar(frame2)
+        Sb2.pack(side = RIGHT, fill = Y)
+        text2 = Text(frame2, height= 50, width=100)
+        with open("Text2.txt", "r", encoding = 'utf8') as f:
+            text2.insert(END, f.read())
+        text2.configure(yscrollcommand=Sb.set, font=("Arial", 12), wrap=WORD, state=DISABLED)
+        text2.pack() 
 
         # def on_closing():
         #     if messagebox.askokcancel("Thông báo", "Xác nhận đóng chương trình?"):

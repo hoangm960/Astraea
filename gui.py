@@ -48,8 +48,8 @@ class GUI:
         Button(infoframe, image = photoimageFB, relief = FLAT, command = lambda: self.open_facebook()).place(relx =0.08, rely =0)
 
     def create_edit_button(self, MainWindow):
-        buttonEdit = Button(MainWindow, bg = '#347d6c', text = 'Sửa đổi', fg = 'white', font = ('Arial Bold',10))
-        buttonEdit.place(relx = 0.5, rely = 0.84, relwidth = 0.2, relheight = 0.05, anchor = 'n')
+        buttonEdit = Button(MainWindow, bg = '#347d6c', text = 'Sửa đổi', fg = 'white', font = ('Arial Bold',10), command = lambda: self.Edit())
+        buttonEdit.place(relx = 0.5, rely = 0.88, relwidth = 0.2, relheight = 0.05, anchor = 'n')
         Login.enter_leave(buttonEdit, '#41a38c', '#347d6c')
 
     def create_test_button(self, MainWindow):
@@ -81,7 +81,15 @@ class GUI:
         Content1 = Label(ContentFrame1, text ='Bài tập 1', bg = '#88d6f7', fg = '#00344a', font = ('Arial Bold',10))
         Content1.place(relx = 0.03, rely = 0.1, relwidth = 0.95)
         
-        
+    def Edit(self):
+        RootEdit = Tk()
+        RootEdit.title('Cửa sổ chỉnh sửa bài tập')
+        RootEdit.geometry('700x500+250+100')
+        RootEdit.resizable(0,0)
+        EditBG = Canvas(RootEdit, bg = 'white', width = 800, height = 600)
+        EditBG.pack()
+
+
     def Main(self):
         #---------------
         

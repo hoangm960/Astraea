@@ -13,7 +13,7 @@ def main(file, inputs, ans, tests, vars):
     def get_testcases_file():
         f = open(os.path.splitext(inputs)[0] + "-Copy.txt", "w+")
         for i in get_file_content(inputs):
-            f.write(i)
+            f.write(i)  
 
     def del_testcases_file():
         os.remove(os.path.splitext(inputs)[0] + "-Copy.txt")

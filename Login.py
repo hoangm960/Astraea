@@ -85,7 +85,7 @@ def main():
                     button.config(state = DISABLED)
                 else:
                     button.config(state = NORMAL)
-            TickButton1 = Checkbutton(SignInBox, text = 'học sinh : ', onvalue = True, offvalue = False, variable = var1, command = lambda: click(TickButton2, var1))
+            TickButton1 = Checkbutton(SignInBox, text = 'học sinh ', onvalue = True, offvalue = False, variable = var1, command = lambda: click(TickButton2, var1))
             TickButton1.place(relx = 0.38, rely = 0.55)
             TickButton2 = Checkbutton(SignInBox, text = 'giáo viên ', onvalue = True, offvalue = False, variable = var2, command = lambda: click(TickButton1, var2))
             TickButton2.place(relx = 0.57, rely = 0.55)
@@ -107,7 +107,7 @@ def main():
                         error.place(relx = 0.47, rely = 0.25)
                         again = False
                     if password == '':  
-                        error = Label(SignInBox, text = "                    Yêu cầu nhập password       ", bg = 'lightblue', fg = 'red', font = str(30))
+                        error = Label(SignInBox, text = "                    Yêu cầu nhập password         ", bg = 'lightblue', fg = 'red', font = str(30))
                         error.place(relx = 0.47, rely = 0.4)
                         again = False
                     else:

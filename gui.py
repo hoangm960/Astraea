@@ -1,6 +1,6 @@
 import os
 import webbrowser
-from tkinter import (Button, Canvas, Checkbutton, Frame, Listbox, PhotoImage,
+from tkinter import (Button, Canvas, Checkbutton, Frame, Label, Listbox, PhotoImage,
                       Scrollbar, Text, Tk)
 from tkinter.constants import BOTH, DISABLED, END, FLAT, LEFT, RIGHT, WORD, Y
 import subprocess
@@ -59,7 +59,36 @@ class GUI:
             buttonCheck = Button(self.root, bg = '#39c459', text = 'Kiểm tra', fg = 'white', font = ('Arial Bold',10))
             buttonCheck.place(relx = 0.5, rely = 0.88, relwidth = 0.2, relheight = 0.05, anchor = 'n')
             highlight_button(buttonCheck, '#30e651', '#39c459')
+    
+
+    class Scoreboard(Frame):
+        def __init__(self, root, *args, **kwargs):
+            Frame.__init__(self, root, *args, **kwargs)
+            self.root = root     
+        def get_canvas(self):
+            RootMark = Tk()
+            RootMark.title('Kết quả bài làm')
+            RootMark.geometry('700x500+250+100')
+            RootMark.resizable(0,0)
+            RootMark.wm_attributes("-topmost", 1)
+            RootMark.attributes('-toolwindow',1)
+            MarkBG = Canvas(RootMark, bg = '#6292bf', width = 800, height = 600)
+            MarkBG.pack()
+
+            LessonFrame = Frame(MarkBG, bg = '#6292bf')
+            LessonFrame.place(relx = 0.01, rely = 0.01, relwidth = 0.95, relheight = 0.04)
+            Lesson = Label(LessonFrame, text = 'Lesson 1 : GETTING STARTED', bg = '#6292bf', fg = 'white', font = ('Arial Bold',10))
+            Lesson.place(relx = 0,rely = 0)
             
+            ContentFrame1 = Frame(RootMark, bg = '#addcf0')
+            ContentFrame1.place(relx = 0.01, rely = 0.05, relwidth = 0.98, relheight = 0.04)
+            Content1 = Label(ContentFrame1, text =' Bài tập với lệnh print', bg = '#addcf0', fg = 'white', font = ('Arial Bold',10))
+            Content1.place(relx = 0.03,rely = 0.01)
+
+            ContentFrame1 = Frame(RootMark, bg = 'white')
+            ContentFrame1.place(relx = 0.01, rely = 0.1, relwidth = 0.98, relheight = 0.1)
+            Content1 = Label(ContentFrame1, text ='Bài tập 1', bg = '#88d6f7', fg = '#00344a', font = ('Arial Bold',10))
+            Content1.place(relx = 0.03, rely = 0.1, relwidth = 0.95)
 
     def __init__(self, role):
         self.role = role
@@ -87,6 +116,8 @@ class GUI:
         Sb.pack(side = RIGHT, fill = Y)
         text.pack(side= LEFT, fill= BOTH, expand= True)
 
+        
+        
     def Main(self):
         #---------------
         
@@ -149,5 +180,6 @@ class GUI:
         #         os.system("TASKKILL /F /IM Code.exe")
         # root.protocol("WM_DELETE_WINDOW", on_closing)
 
+        self.Scoreboard(MainWindow).get_canvas()
         root.mainloop()
     

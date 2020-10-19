@@ -4,13 +4,14 @@ from tkinter.font import NORMAL
 from gui import GUI
 #----------------------------------------------------------------
 #SignBox
-def enter_leave(button_name, colour1, colour2):
+def highlight_button(button_name, colour1, colour2):
     def on_enter(e):
         button_name['background'] = colour1
     def on_leave(e):
         button_name['background'] = colour2
     button_name.bind("<Enter>", on_enter)
     button_name.bind("<Leave>", on_leave)
+
 def main():
     SignRoot = Tk()
     SignRoot.resizable(0,0)
@@ -37,29 +38,20 @@ def main():
         Name.place(relx = 0.25, rely = 0.4)
         Passentry = Entry(SignInBoxs, font = str(40), show = '●')
         Passentry.place(relx = 0.5, rely=0.45, relwidth = 0.45, relheight = 0.08, anchor = 'n')
+        
+        checked = BooleanVar()
+        AutosaveButton = Checkbutton(SignInBoxs, background= 'lightblue', text= 'Lưu mật khẩu?', variable= checked, onvalue= True, offvalue= False)
+        AutosaveButton.place(relx = 0.65, rely = 0.72)
+        
         with open('data/Autosave.txt','r') as f:
             textname = f.read()
             if textname != '':
                 Nameentry.insert(0,textname)
                 textpass = dataAccount[textname]
                 Passentry.insert(0,textpass)
+                AutosaveButton.select()
             f.close()
-        PlayUp = PhotoImage(file=r'icons/tick.png')
-        PlayUp = PlayUp.subsample(2,'2')
-        PlayDown = PhotoImage(file=r'icons/untick.png')
-        PlayDown = PlayDown.subsample(2,'2')
-        def change():
-            global changenumber
-            if changenumber == 1:
-                changenumber = 0
-                TickButton.config(image = PlayUp)
-            else:
-                changenumber = 1
-                TickButton.config(image = PlayDown)
-        TickLabel = Label(SignInBoxs, text = 'Lưu mật khẩu?', bg = 'lightblue')
-        TickLabel.place(relx = 0.52, rely = 0.73 )
-        TickButton = Button(SignInBoxs, image = PlayDown, command = lambda: change(), relief = FLAT)
-        TickButton.place(relx = 0.65, rely = 0.72, relheight = 0.05, relwidth = 0.05)
+
         SignInBoxs.pack()
         """"""""""""""""""" Chuyển trang đăng ký """""""""""""""""""""""""
         def DK():
@@ -78,13 +70,13 @@ def main():
 
             TickLabel = Label(SignInBox, text = 'Bạn là ?', bg = 'lightblue')
             TickLabel.place(relx = 0.3, rely = 0.55)
-            var1 = BooleanVar()
-            var2 = BooleanVar()
             def click(button, var):
                 if var.get():
                     button.config(state = DISABLED)
                 else:
                     button.config(state = NORMAL)
+            var1 = BooleanVar()
+            var2 = BooleanVar()
             TickButton1 = Checkbutton(SignInBox, text = 'học sinh : ', onvalue = True, offvalue = False, variable = var1, command = lambda: click(TickButton2, var1))
             TickButton1.place(relx = 0.38, rely = 0.55)
             TickButton2 = Checkbutton(SignInBox, text = 'giáo viên ', onvalue = True, offvalue = False, variable = var2, command = lambda: click(TickButton1, var2))
@@ -174,7 +166,7 @@ def main():
             SignRoot.protocol("WM_DELETE_WINDOW", on_closing)
             SaveButton = Button(SignInBox, text = 'Đăng ký', bg = 'white', command = lambda: saves(), relief = FLAT)
             SaveButton.place(relx = 0.5, rely = 0.68, relwidth = 0.15, relheight = 0.08, anchor = 'n')
-            enter_leave(SaveButton, '#00b594', 'white')
+            highlight_button(SaveButton, '#00b594', 'white')
         """"""""""""""""""" Kiểm tra thông tin đăng nhập """""""""""""""""""""""""
         def check():
             if Nameentry.get() == '' or Passentry.get() == '':
@@ -198,12 +190,16 @@ def main():
                     checkmk = False
                     checktk = False
                 if checkmk == True and checktk == True:
-                    global nameAccount
                     nameAccount = Nameentry.get()
-                    if changenumber == 0:
+                    if checked.get() == True:
                         with open('data/Autosave.txt','w') as file:
                             file.write(nameAccount)
                             file.close()
+                    else:
+                        with open('data/Autosave.txt','w') as file:
+                            file.write('')
+                            file.close()
+
                     with open('data/HostList.txt','r') as hostf:
                         HostAccount = list()
                         while True:
@@ -224,16 +220,11 @@ def main():
                 
         SaveButton = Button(SignInBoxs, text = 'Đăng nhập', bg = 'white', command = lambda: check(), relief = FLAT)
         SaveButton.place(relx = 0.5, rely = 0.62, relwidth = 0.15, relheight = 0.08, anchor = 'n')
-        enter_leave(SaveButton,'#00b594','white')
+        highlight_button(SaveButton,'#00b594','white')
         buttonDK = Button(SignInBoxs, text = 'Chưa có tài khoản? Đăng ký ngay', fg = 'blue', command = lambda: DK(), relief = FLAT)
         buttonDK.place(relx = 0.5, rely = 0.8, relwidth = 0.4, relheight = 0.035, anchor = 'n')
     DN()
     SignRoot.wait_window()
 
-# --------------------------------------
-changenumber = 1
-change_number = False
-nameAccount = ''
         
-    
         

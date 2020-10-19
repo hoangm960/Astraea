@@ -1,6 +1,6 @@
 import os
 import webbrowser
-from tkinter import (Button, Canvas, Checkbutton, Frame, Listbox, PhotoImage,
+from tkinter import (Button, Canvas, Checkbutton, Frame, Label, Listbox, PhotoImage,
                       Scrollbar, Text, Tk)
 from tkinter.constants import BOTH, DISABLED, END, FLAT, LEFT, RIGHT, WORD, Y
 import subprocess
@@ -53,10 +53,35 @@ class GUI:
         Login.enter_leave(buttonEdit, '#41a38c', '#347d6c')
 
     def create_test_button(self, MainWindow):
-        buttonCheck = Button(MainWindow, bg = '#39c459', text = 'Kiểm tra', fg = 'white', font = ('Arial Bold',10))
+        buttonCheck = Button(MainWindow, bg = '#39c459', text = 'Kiểm tra', fg = 'white', font = ('Arial Bold',10), command = lambda: self.Create_Mark())
         buttonCheck.place(relx = 0.5, rely = 0.88, relwidth = 0.2, relheight = 0.05, anchor = 'n')
         Login.enter_leave(buttonCheck, '#30e651', '#39c459')
+    def Create_Mark(self):
+        RootMark = Tk()
+        RootMark.title('Kết quả bài làm')
+        RootMark.geometry('700x500+250+100')
+        RootMark.resizable(0,0)
+        RootMark.wm_attributes("-topmost", 1)
+        RootMark.attributes('-toolwindow',1)
+        MarkBG = Canvas(RootMark, bg = '#6292bf', width = 800, height = 600)
+        MarkBG.pack()
 
+        LessonFrame = Frame(MarkBG, bg = '#6292bf')
+        LessonFrame.place(relx = 0.01, rely = 0.01, relwidth = 0.95, relheight = 0.04)
+        Lesson = Label(LessonFrame, text = 'Lesson 1 : GETTING STARTED', bg = '#6292bf', fg = 'white', font = ('Arial Bold',10))
+        Lesson.place(relx = 0,rely = 0)
+        
+        ContentFrame1 = Frame(RootMark, bg = '#addcf0')
+        ContentFrame1.place(relx = 0.01, rely = 0.05, relwidth = 0.98, relheight = 0.04)
+        Content1 = Label(ContentFrame1, text =' Bài tập với lệnh print', bg = '#addcf0', fg = 'white', font = ('Arial Bold',10))
+        Content1.place(relx = 0.03,rely = 0.01)
+
+        ContentFrame1 = Frame(RootMark, bg = 'white')
+        ContentFrame1.place(relx = 0.01, rely = 0.1, relwidth = 0.98, relheight = 0.1)
+        Content1 = Label(ContentFrame1, text ='Bài tập 1', bg = '#88d6f7', fg = '#00344a', font = ('Arial Bold',10))
+        Content1.place(relx = 0.03, rely = 0.1, relwidth = 0.95)
+        
+        
     def Main(self):
         #---------------
         

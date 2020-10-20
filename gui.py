@@ -1,8 +1,9 @@
 import os
 import webbrowser
 from tkinter import (Button, Canvas, Checkbutton, Entry, Frame, Label, Listbox, PhotoImage,
-                      Scrollbar, Text, Tk, messagebox)
-from tkinter.constants import BOTH, DISABLED, END, FLAT, LEFT, RIGHT, WORD, Y
+                      Scrollbar, Text, Tk, Toplevel)
+from PIL import Image, ImageDraw, ImageTk
+from tkinter.constants import BOTH, BOTTOM, DISABLED, END, FLAT, HORIZONTAL, LEFT, NW, RIGHT, VERTICAL, WORD, X, Y
 import subprocess
 import pygetwindow as gw
 
@@ -14,10 +15,6 @@ def highlight_button(button_name, colour1, colour2):
     button_name.bind("<Enter>", on_enter)
     button_name.bind("<Leave>", on_leave)
 
-from tkinter import Canvas
-from tkinter.constants import *
-
-from PIL import Image, ImageDraw, ImageTk
 
 basestring = str
 
@@ -152,7 +149,7 @@ class GUI:
             highlight_button(self, '#30e651', '#39c459')
     
     class EditBoard():
-        class EditTk(Tk):
+        class EditWindow(Tk):
             class TitleFrame(Frame):
                 def __init__(self, root, *args, **kwargs):
                     Frame.__init__(self, root, *args, **kwargs)
@@ -172,20 +169,47 @@ class GUI:
                 def check(self, Content):
                     try:
                         self.ContentNum = int(Content.get())
-                    except:
+                        self.create_window()
+                    except ValueError:
                         Error = Label(self, text = 'Số liệu không phù hợp', fg = 'red', font = ('Arial Bold',10), bg = '#6292bf')
                         Error.place(relx = 0.5, rely = 0.72, anchor = 'n')
                     
+<<<<<<< HEAD
+=======
+                def create_window(self): 
+                    class ConfigFrame(Frame):
+                        def __init__(self, root, *args, **kwargs):
+                            Frame.__init__(self, root, *args, **kwargs)
+                            self.place(relx = 0.01, rely = 0.1, relwidth = 0.98, relheight = 0.4)
+
+                            Button1 = Button(self)
+                            Button1.place(relx = 0, rely = 0, relwidth= 0.1, relheight= 0.1)
+
+
+                    t = Toplevel()
+                    t.title('Cửa sổ chỉnh sửa')
+                    t.geometry('700x500+250+100')
+                    t.resizable(0,0)
+                    
+                    ConfigCanvas = Canvas(t, bg = '#6292bf', width = 800, height = 600)
+                    Sb = Scrollbar(ConfigCanvas, orient=VERTICAL)
+                    Sb.pack(side= RIGHT, fill= Y)
+                    Sb.config(command= ConfigCanvas.yview)
+                    ConfigCanvas.config(yscrollcommand= Sb.set)
+                    ConfigCanvas.pack(side=LEFT, expand=True, fill=BOTH)
+                    # for i in range(self.ContentNum):
+                    ConfigFrame(ConfigCanvas)
+                    t.mainloop()
+            
+>>>>>>> 0d8aa1c53b52cedf27baa68d7b877b9e6c5f69b7
 
             def __init__(self, *args, **kwargs):
                 Tk.__init__(self, *args, **kwargs)
                 self.title('Cửa sổ chỉnh sửa')
                 self.geometry('700x500+250+100')
                 self.resizable(0,0)
-                self.wm_attributes("-topmost", 1)
-                self.attributes('-toolwindow',1)
                 self.get_canvas()
-                self.mainloop()
+                # self.destroy()
 
             def get_canvas(self):
                 MarkBG = Canvas(self, bg = '#6292bf', width = 800, height = 600)
@@ -193,43 +217,12 @@ class GUI:
                 self.TitleFrame(MarkBG,bg = '#6292bf')
                 self.NumFrame(MarkBG, bg = '#6292bf')
 
-        class ConfigTk(Tk):
-            class ContentFrame(Frame):
-                def __init__(self, root, y, *args, **kwargs):
-                    Frame.__init__(self, root, *args, **kwargs)
-                    self.place(relx = 0, y = 0, anchor = 'n')
-                    # Box1 = Entry(self)
-                    # Box1.place(x =  20, y = 0, height = 40)
-                    # Box2 = Entry(self)
-                    # Box2.place(x = 50, y = 0, height = 40)
-                    # Box3 = Entry(self)
-                    # Box3.place(x = 80, y = 0, height = 40)
-                    # Box4 = Entry(self)
-                    # Box4.place(x = 110, y = 0, height = 40)
-                    # Box5 = Entry(self)
-                    # Box5.place(x = 140, y = 0, height = 40)   
-            
-            def __init__(self, *args, **kwargs):
-                Tk.__init__(self, *args, **kwargs)
-                self.title('Cửa sổ chỉnh sửa')
-                self.geometry('700x500+250+100')
-                self.resizable(0,0)
-                self.wm_attributes("-topmost", 1)
-                self.attributes('-toolwindow',1)
-                self.get_canvas()
-                self.mainloop()
-
-            def get_canvas(self):
-                ConfigCanvas = Canvas(self, bg = '#6292bf', width = 800, height = 600)
-                ConfigCanvas.pack()
-                self.ContentFrame(ConfigCanvas, 0)
 
         def __init__(self):
-            self.EditTk()
-            self.ConfigTk()
+            self.EditWindow()
             
                     
-    class Scoreboard(Tk):
+    class Scoreboard(Toplevel):
         class TitleFrame(Frame):
             def __init__(self, root, *args, **kwargs):
                 Frame.__init__(self, root, *args, **kwargs)
@@ -248,12 +241,10 @@ class GUI:
                 Content.place(relx = 0.03, rely = 0.18, relwidth = 0.95)    
                 
         def __init__(self):
-            Tk.__init__(self)
+            Toplevel.__init__(self)
             self.title('Kết quả bài làm')
             self.geometry('700x500+250+100')
             self.resizable(0,0)
-            self.wm_attributes("-topmost", 1)
-            self.attributes('-toolwindow',1)
 
         def get_canvas(self):
             MarkBG = Canvas(self, bg = '#6292bf', width = 800, height = 600)
@@ -268,7 +259,7 @@ class GUI:
 
         def get_frame(self):
             Sb = Scrollbar(self)
-            text = Text(self, height= 50, width=100, yscrollcommand= Sb.set, state= DISABLED)
+            text = Text(self, height= 50, width=100, yscrollcommand= Sb.set, font=("Arial", 12), wrap=WORD,state= DISABLED)
             Sb.config(command= text.yview)
             Sb.pack(side = RIGHT, fill = Y)
             text.pack(side= LEFT, fill= BOTH, expand= True)
@@ -288,12 +279,13 @@ class GUI:
         
         def get_frame(self):
             Sb = Scrollbar(self)
-            text = Text(self, height= 50, width=100, yscrollcommand=Sb.set, font=("Arial", 12), wrap=WORD, state=DISABLED)
+            text = Text(self, height= 50, width=100, yscrollcommand= Sb.set, font= ("Arial", 12), wrap= WORD)
             Sb.config(command= text.yview)
             Sb.pack(side = RIGHT, fill = Y)
             text.pack(side= LEFT, fill= BOTH, expand= True) 
             with open("text2.txt", "r", encoding = 'utf8') as f:
                 text.insert(END, f.read())
+            text.config(state= DISABLED)
 
 
     def __init__(self, role):
@@ -305,22 +297,6 @@ class GUI:
         subprocess.call(file)
         vs_window = gw.getWindowsWithTitle("Visual Studio Code")[0]
         vs_window.moveTo(0, 0)
-
-    def read_file(self, filename):
-        f = open(filename)
-        text = f.read()
-        f.close()
-        return text
-
-    def create_text(self, MainWindow, relx, rely, relwidth, relheight):
-        frame = Frame(MainWindow)
-        frame.place(relx = relx, rely = rely, relwidth = relwidth, relheight = relheight)
-        
-        Sb = Scrollbar(frame)
-        text = Text(frame, height= 50, width=100, yscrollcommand= Sb.set)
-        Sb.config(command= text.yview)
-        Sb.pack(side = RIGHT, fill = Y)
-        text.pack(side= LEFT, fill= BOTH, expand= True)
         
     def Main(self):
         #---------------
@@ -333,7 +309,6 @@ class GUI:
         root.geometry('350x700+1010+0')
         MainWindow = GradientFrame(root, from_color="#00ffa9", to_color="#0d4dff", height=1000)
         MainWindow.pack()
-        root.attributes('-toolwindow',1)
         
         # self.open_vscode()
 

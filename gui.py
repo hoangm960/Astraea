@@ -150,17 +150,6 @@ class GUI:
             Button.__init__(self, root, *args, **kwargs)
             self.place(relx = 0.5, rely = 0.88, relwidth = 0.2, relheight = 0.05, anchor = 'n')
             highlight_button(self, '#30e651', '#39c459')
-<<<<<<< HEAD
-                
-            
-    class EditBoard(Tk):
-        class TitleFrame(Frame):
-            def __init__(self, root, *args, **kwargs):
-                Frame.__init__(self, root, *args, **kwargs)
-                self.place(relx = 0.01, rely = 0.05, relwidth = 0.98, relheight = 0.3)
-                Content = Label(self, text =' Số bài tập', bg = '#addcf0', fg = 'white', font = ('Arial Bold',10))
-                Content.place(relx = 0.5,rely = 0, relheight = 0.25, anchor = 'n')
-=======
     
     class EditBoard():
         class EditTk(Tk):
@@ -187,7 +176,6 @@ class GUI:
                         Error = Label(self, text = 'Số liệu không phù hợp', fg = 'red', font = ('Arial Bold',10), bg = '#6292bf')
                         Error.place(relx = 0.5, rely = 0.72, anchor = 'n')
                     
->>>>>>> c564054eabc8ecad4825c9a950e1b561f44046ea
 
             def __init__(self, *args, **kwargs):
                 Tk.__init__(self, *args, **kwargs)

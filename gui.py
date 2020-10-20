@@ -1,6 +1,6 @@
 import os
 import webbrowser
-from tkinter import (Button, Canvas, Checkbutton, Frame, Label, Listbox, PhotoImage,
+from tkinter import (Button, Canvas, Checkbutton, Entry, Frame, Label, Listbox, PhotoImage,
                       Scrollbar, Text, Tk)
 from tkinter.constants import BOTH, DISABLED, END, FLAT, LEFT, RIGHT, WORD, Y
 import subprocess
@@ -21,31 +21,30 @@ class GUI:
         class YoutubeButton(Button):
             def __init__(self, root, *args, **kwargs):
                 Button.__init__(self, root, *args, **kwargs)
-                self.place(relx = 0, rely =0)
+                self.place(relx = 0, rely = 0)
                 photoYT = PhotoImage(file = r"icons/youtubeButton.png")
                 photoimageYT = photoYT.subsample(7,'7')
                 self.config(image= photoimageYT, command = lambda: self.open_youtube())
+                
 
             def open_youtube(self):
                 return webbrowser.open("http://youtube.com",new = 2)
-
+        
         class FacebookButton(Button):
+            def open_facebook(self):
+                return webbrowser.open("https://facebook.com", new = 2)
             def __init__(self, root, *args, **kwargs):
                 Button.__init__(self, root, *args, **kwargs)
-                self.place(relx =0.08, rely =0)
+                self.place(relx = 0.1, rely = 0)
                 photoFB = PhotoImage(file = r"icons/facebookButton.png")
                 photoimageFB = photoFB.subsample(7, '7') 
                 self.config(image = photoimageFB, command = lambda: self.open_facebook())
 
-            def open_facebook(self):
-                return webbrowser.open("https://facebook.com", new = 2)
-
         def __init__(self, root, *args, **kwargs):
             Frame.__init__(self, root, *args, **kwargs)
-            self.place(relx = 0.5, rely = 0.84, relwidth = 0.2, relheight = 0.05, anchor = 'n')
+            self.place(relx = 0, rely = 0.97, relwidth = 1, relheight = 0.03)
 
         def get_button(self):
-            self.place(relx = 0, rely = 0.97, relwidth = 1, relheight = 0.03)
             self.YoutubeButton(self, relief = FLAT)
             self.FacebookButton(self, relief = FLAT)
 
@@ -53,7 +52,7 @@ class GUI:
     class EditButton(Button):
         def __init__(self, root, *args, **kwargs):
             Button.__init__(self, root, *args, **kwargs)
-            self.place(relx = 0.5, rely = 0.84, relwidth = 0.2, relheight = 0.05, anchor = 'n')
+            self.place(relx = 0.5, rely = 0.88, relwidth = 0.2, relheight = 0.05, anchor = 'n')
             highlight_button(self, '#41a38c', '#347d6c')
 
 
@@ -63,37 +62,84 @@ class GUI:
             self.place(relx = 0.5, rely = 0.88, relwidth = 0.2, relheight = 0.05, anchor = 'n')
             highlight_button(self, '#30e651', '#39c459')
     
-
-    class Scoreboard(Tk):
-        class LessonFrame(Frame):
-            def __init__(self, root, *args, **kwargs):
-                Frame.__init__(self, root, *args, **kwargs)
-                self.place(relx = 0.01, rely = 0.01, relwidth = 0.95, relheight = 0.04)
-            
-            def get_content(self):
-                Lesson = Label(self, text = 'Lesson 1 : GETTING STARTED', bg = '#6292bf', fg = 'white', font = ('Arial Bold',10))
-                Lesson.place(relx = 0,rely = 0)
+    class EditBoard(Tk):
         class TitleFrame(Frame):
             def __init__(self, root, *args, **kwargs):
                 Frame.__init__(self, root, *args, **kwargs)
-                self.place(relx = 0.01, rely = 0.05, relwidth = 0.98, relheight = 0.04)
-            
-            def get_content(self):
+                self.place(relx = 0.01, rely = 0.05, relwidth = 0.98, relheight = 0.3)
+                Content = Label(self, text =' Số bài tập', bg = '#addcf0', fg = 'white', font = ('Arial Bold',10))
+                Content.place(relx = 0.5,rely = 0, relheight = 0.25, anchor = 'n')
+
+        class NumFrame(Frame):
+            def __init__(self, root, *args, **kwargs):
+                Frame.__init__(self, root, *args, **kwargs)
+                self.place(relx = 0.01, rely = 0.1, relwidth = 0.98, relheight = 0.4)
+                Content = Entry(self, font = ('Arial Bold',10))
+                Content.place(relx = 0.5, rely = 0.3, relwidth = 0.5, relheight = 0.3, anchor = 'n')    
+                OKButton = Button(self, text = 'OK', font = ('Arial bold',10), relief = FLAT, command = lambda: self.check(Content))
+                highlight_button(OKButton, '#2efff8', 'white')
+                OKButton.place(relx = 0.5 , rely = 0.83, anchor = 'n')
+            def check(self, Content):
+                try:
+                    self.ContentNum = int(Content.get())
+                    Frame.destroy() 
+                except:
+                    Error = Label(self, text = 'Số liệu không phù hợp', fg = 'red', font = ('Arial Bold',10), bg = '#6292bf')
+                    Error.place(relx = 0.5, rely = 0.72, anchor = 'n')
+                
+        
+        class ContentFrame(Frame):
+            def __init__(self, root, y, *args, **kwargs):
+                Frame.__init__(self, root, *args, **kwargs)
+                self.place(x = 20, y = y, anchor = 'n')
+                Box1 = Entry(self)
+                Box1.place(x =  20, y = 0, height = 40)
+                Box2 = Entry(self)
+                Box2.place(x = 50, y = 0, height = 40)
+                Box3 = Entry(self)
+                Box3.place(x = 80, y = 0, height = 40)
+                Box4 = Entry(self)
+                Box4.place(x = 110, y = 0, height = 40)
+                Box5 = Entry(self)
+                Box5.place(x = 140, y = 0, height = 40)    
+        def __init__(self, *args, **kwargs):
+            Tk.__init__(self, *args, **kwargs)
+            self.title('Cửa sổ chỉnh sửa')
+            self.geometry('700x500+250+100')
+            self.resizable(0,0)
+            self.wm_attributes("-topmost", 1)
+            self.attributes('-toolwindow',1)
+
+        def get_canvas(self):
+            MarkBG = Canvas(self, bg = '#6292bf', width = 800, height = 600)
+            MarkBG.pack()
+            self.TitleFrame(MarkBG,bg = '#6292bf')
+            self.NumFrame(MarkBG, bg = '#6292bf')
+            # Sb = Scrollbar(MarkBG)
+            # Sb.pack()
+            self.ContentFrame(MarkBG, 0)
+           
+                    
+    class Scoreboard(Tk):
+        class TitleFrame(Frame):
+            def __init__(self, root, *args, **kwargs):
+                Frame.__init__(self, root, *args, **kwargs)
+                self.place(relx = 0.01, rely = 0.01, relwidth = 0.97, relheight = 0.2)
+                Lesson = Label(self, text = 'Lesson 1 : GETTING STARTED', bg = '#6292bf', fg = 'white', font = ('Arial Bold',10))
+                Lesson.place(relx = 0, rely = 0, relwidth = 0.97)
+
                 Content = Label(self, text =' Bài tập với lệnh print', bg = '#addcf0', fg = 'white', font = ('Arial Bold',10))
-                Content.place(relx = 0.03,rely = 0.01)
+                Content.place(relx = 0.03, rely = 0.2)
 
         class ContentFrame(Frame):
             def __init__(self, root, *args, **kwargs):
                 Frame.__init__(self, root, *args, **kwargs)
-                self.place(relx = 0.01, rely = 0.1, relwidth = 0.98, relheight = 0.1)
-            
-            def get_content(self):
+                self.place(relx = 0.01, rely = 0.1, relwidth = 0.98, relheight = 0.8)
                 Content = Label(self, text ='Bài tập 1', bg = '#88d6f7', fg = '#00344a', font = ('Arial Bold',10))
-                Content.place(relx = 0.03, rely = 0.1, relwidth = 0.95)
-
-
-        def __init__(self, *args, **kwargs):
-            Tk.__init__(self, *args, **kwargs)
+                Content.place(relx = 0.03, rely = 0.18, relwidth = 0.95)    
+                
+        def __init__(self):
+            Tk.__init__(self)
             self.title('Kết quả bài làm')
             self.geometry('700x500+250+100')
             self.resizable(0,0)
@@ -103,13 +149,8 @@ class GUI:
         def get_canvas(self):
             MarkBG = Canvas(self, bg = '#6292bf', width = 800, height = 600)
             MarkBG.pack()
-
-            self.LessonFrame(MarkBG, bg = '#6292bf').get_content()
-            
-            self.TitleFrame(self, bg = '#addcf0').get_content()
-
-            self.ContentFrame(self, bg = 'white').get_content()
-
+            self.TitleFrame(MarkBG, bg = '#6292bf')
+            self.ContentFrame(MarkBG)
 
     class Tasks_frame(Frame):
         def __init__(self, root, *args, **kwargs):
@@ -171,7 +212,6 @@ class GUI:
         Sb.config(command= text.yview)
         Sb.pack(side = RIGHT, fill = Y)
         text.pack(side= LEFT, fill= BOTH, expand= True)
-
         
     def Main(self):
         #---------------
@@ -191,14 +231,14 @@ class GUI:
         # Button---------------
 
         #----------------------
-        self.SocialFrame(MainWindow).get_button()
+        # self.SocialFrame(MainWindow).get_button()
         
         #---------------
         
         if self.role.lower() == 'teacher':
-            self.EditButton(MainWindow, bg = '#347d6c', text = 'Sửa đổi', fg = 'white', font = ('Arial Bold',10))
+            self.EditButton(MainWindow, bg = '#347d6c', text = 'Sửa đổi', fg = 'white', font = ('Arial Bold',10),command = lambda: self.EditBoard().get_canvas())
         elif self.role.lower() == 'student':
-            self.CheckButton(MainWindow, bg = '#39c459', text = 'Kiểm tra', fg = 'white', font = ('Arial Bold',10))
+            self.CheckButton(MainWindow, bg = '#39c459', text = 'Kiểm tra', fg = 'white', font = ('Arial Bold',10), command = lambda: self.Scoreboard().get_canvas())
 
         self.Tasks_frame(MainWindow).get_frame()
         
@@ -210,6 +250,6 @@ class GUI:
         #         os.system("TASKKILL /F /IM Code.exe")
         # root.protocol("WM_DELETE_WINDOW", on_closing)
 
-        self.Scoreboard().get_canvas()
+        root.wait_window()
         root.mainloop()
     

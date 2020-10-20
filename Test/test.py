@@ -1,24 +1,21 @@
-import tkinter as tk
+import tkinter
 
+DIM = 100
 
-class Example(tk.Frame):
-    def __init__(self, root, *args, **kwargs):
-        tk.Frame.__init__(self, root, *args, **kwargs)
-        self.root = root
+root = tkinter.Tk()
+frame = tkinter.Frame(root)
 
-        self.vsb = tk.Scrollbar(self, orient="vertical")
-        self.text = tk.Text(self, width=40, height=20, 
-                            yscrollcommand=self.vsb.set)
-        self.vsb.config(command=self.text.yview)
-        self.vsb.pack(side="right", fill="y")
-        self.text.pack(side="left", fill="both", expand=True)
+circle = tkinter.Canvas(frame)
+circle.create_oval(5, 5, DIM-5, DIM-5, fill="red")
 
-        for i in range(1000):
-            cb = tk.Checkbutton(self, text="checkbutton #%s" % i)
-            self.text.window_create("end", window=cb)
-            self.text.insert("end", "\n") # to force one checkbox per line
+frame.grid()
+circle.grid(row=1, column=1)
 
-if __name__ == "__main__":
-    root = tk.Tk()
-    Example(root).pack(side="top", fill="both", expand=True)
-    root.mainloop()
+##################################
+def click(event):
+    root.quit()
+
+circle.bind("<Button-1>", click)
+##################################
+
+root.mainloop()

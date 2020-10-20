@@ -174,8 +174,6 @@ class GUI:
                         Error = Label(self, text = 'Số liệu không phù hợp', fg = 'red', font = ('Arial Bold',10), bg = '#6292bf')
                         Error.place(relx = 0.5, rely = 0.72, anchor = 'n')
                     
-<<<<<<< HEAD
-=======
                 def create_window(self): 
                     class ConfigFrame(Frame):
                         def __init__(self, root, *args, **kwargs):
@@ -201,7 +199,6 @@ class GUI:
                     ConfigFrame(ConfigCanvas)
                     t.mainloop()
             
->>>>>>> 0d8aa1c53b52cedf27baa68d7b877b9e6c5f69b7
 
             def __init__(self, *args, **kwargs):
                 Tk.__init__(self, *args, **kwargs)

@@ -46,7 +46,7 @@ class GUI:
         
         def get_button(self):
             buttonEdit = Button(self.root, bg = '#347d6c', text = 'Sửa đổi', fg = 'white', font = ('Arial Bold',10))
-            buttonEdit.place(relx = 0.5, rely = 0.84, relwidth = 0.2, relheight = 0.05, anchor = 'n')
+            buttonEdit.place(relx = 0.5, rely = 0.88, relwidth = 0.2, relheight = 0.05, anchor = 'n')
             highlight_button(buttonEdit, '#41a38c', '#347d6c')
 
     class CheckButton(Frame):
@@ -56,7 +56,7 @@ class GUI:
 
         
         def get_button(self):
-            buttonCheck = Button(self.root, bg = '#39c459', text = 'Kiểm tra', fg = 'white', font = ('Arial Bold',10))
+            buttonCheck = Button(self.root, bg = '#39c459', text = 'Kiểm tra', fg = 'white', font = ('Arial Bold',10), command = lambda: self.Scoreboard().get_canvas())
             buttonCheck.place(relx = 0.5, rely = 0.88, relwidth = 0.2, relheight = 0.05, anchor = 'n')
             highlight_button(buttonCheck, '#30e651', '#39c459')
     
@@ -106,45 +106,9 @@ class GUI:
         f.close()
         return text
 
-<<<<<<< HEAD
-    def create_social_button(self, canvas):
-        infoframe = Frame(canvas)
-        infoframe.place(relx = 0, rely = 0.97, relwidth = 1, relheight = 0.03)
-        photoYT = PhotoImage(file = r"icons/youtubeButton.png")
-        photoimageYT = photoYT.subsample(7,'7')
-        Button(infoframe, image = photoimageYT, relief = FLAT, command = lambda: self.open_youtube()).place(relx = 0, rely =0)
-        photoFB = PhotoImage(file = r"icons/facebookButton.png")
-        photoimageFB = photoFB.subsample(7, '7') 
-        Button(infoframe, image = photoimageFB, relief = FLAT, command = lambda: self.open_facebook()).place(relx =0.08, rely =0)
-
-    def create_edit_button(self, MainWindow):
-        buttonEdit = Button(MainWindow, bg = '#347d6c', text = 'Sửa đổi', fg = 'white', font = ('Arial Bold',10), command = lambda: self.Edit())
-        buttonEdit.place(relx = 0.5, rely = 0.88, relwidth = 0.2, relheight = 0.05, anchor = 'n')
-        Login.enter_leave(buttonEdit, '#41a38c', '#347d6c')
-
-    def create_test_button(self, MainWindow):
-        buttonCheck = Button(MainWindow, bg = '#39c459', text = 'Kiểm tra', fg = 'white', font = ('Arial Bold',10), command = lambda: self.Create_Mark())
-        buttonCheck.place(relx = 0.5, rely = 0.88, relwidth = 0.2, relheight = 0.05, anchor = 'n')
-        Login.enter_leave(buttonCheck, '#30e651', '#39c459')
-    def Create_Mark(self):
-        RootMark = Tk()
-        RootMark.title('Kết quả bài làm')
-        RootMark.geometry('700x500+250+100')
-        RootMark.resizable(0,0)
-        RootMark.wm_attributes("-topmost", 1)
-        RootMark.attributes('-toolwindow',1)
-        MarkBG = Canvas(RootMark, bg = '#6292bf', width = 800, height = 600)
-        MarkBG.pack()
-
-        LessonFrame = Frame(MarkBG, bg = '#6292bf')
-        LessonFrame.place(relx = 0.01, rely = 0.01, relwidth = 0.95, relheight = 0.04)
-        Lesson = Label(LessonFrame, text = 'Lesson 1 : GETTING STARTED', bg = '#6292bf', fg = 'white', font = ('Arial Bold',10))
-        Lesson.place(relx = 0,rely = 0)
-=======
     def create_text(self, MainWindow, relx, rely, relwidth, relheight):
         frame = Frame(MainWindow)
         frame.place(relx = relx, rely = rely, relwidth = relwidth, relheight = relheight)
->>>>>>> fd78b09d078fb39b75145aceface39e4e694a40a
         
         Sb = Scrollbar(frame)
         text = Text(frame, height= 50, width=100, yscrollcommand= Sb.set)
@@ -224,6 +188,6 @@ class GUI:
         #         os.system("TASKKILL /F /IM Code.exe")
         # root.protocol("WM_DELETE_WINDOW", on_closing)
 
-        self.Scoreboard(MainWindow).get_canvas()
+        
         root.mainloop()
     

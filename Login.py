@@ -75,13 +75,9 @@ def main():
                     button.config(state = DISABLED)
                 else:
                     button.config(state = NORMAL)
-<<<<<<< HEAD
-            TickButton1 = Checkbutton(SignInBox, text = 'học sinh ', onvalue = True, offvalue = False, variable = var1, command = lambda: click(TickButton2, var1))
-=======
             var1 = BooleanVar()
             var2 = BooleanVar()
             TickButton1 = Checkbutton(SignInBox, text = 'học sinh : ', onvalue = True, offvalue = False, variable = var1, command = lambda: click(TickButton2, var1))
->>>>>>> fd78b09d078fb39b75145aceface39e4e694a40a
             TickButton1.place(relx = 0.38, rely = 0.55)
             TickButton2 = Checkbutton(SignInBox, text = 'giáo viên ', onvalue = True, offvalue = False, variable = var2, command = lambda: click(TickButton1, var2))
             TickButton2.place(relx = 0.57, rely = 0.55)

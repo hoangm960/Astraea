@@ -198,7 +198,7 @@ class GUI:
                     # for i in range(self.ContentNum):
                     ConfigFrame(ConfigCanvas)
                     t.mainloop()
-                    
+            
 
             def __init__(self, *args, **kwargs):
                 Tk.__init__(self, *args, **kwargs)
@@ -319,7 +319,11 @@ class GUI:
         if self.role.lower() == 'teacher':
             self.EditButton(MainWindow, bg = '#347d6c', text = 'Sửa đổi', fg = 'white', font = ('Arial Bold',10),command = lambda: self.EditBoard())
         elif self.role.lower() == 'student':
-            self.CheckButton(MainWindow, bg = '#39c459', text = 'Kiểm tra', fg = 'white', font = ('Arial Bold',10), command = lambda: self.Scoreboard().get_canvas())
+            def EditFunction():
+                self.Scoreboard().get_canvas()
+                root.destroy()
+                
+            self.CheckButton(MainWindow, bg = '#39c459', text = 'Kiểm tra', fg = 'white', font = ('Arial Bold',10), command = lambda: EditFunction())
 
         self.Tasks_frame(MainWindow).get_frame()
         

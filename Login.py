@@ -1,5 +1,7 @@
+from os import system
 from tkinter import BooleanVar, Button, Canvas, Entry, IntVar, Label, PhotoImage, Tk, messagebox, Checkbutton
-from tkinter.constants import ACTIVE, DISABLED, FLAT
+from tkinter.constants import ACTIVE, BOTH, DISABLED, FLAT, NW, YES
+from PIL import ImageTk
 from tkinter.font import NORMAL
 from gui import GUI
 #----------------------------------------------------------------
@@ -27,7 +29,10 @@ def main():
                 dataAccount[name] = f.readline().replace('\n','')
                 if name == '':
                     break
-        SignInBoxs  = Canvas(SignRoot, width = 750, height = 500, bg = 'lightblue')
+        SignInBoxs  = Canvas(SignRoot, width = 750, height = 500)
+        SignInBoxs.pack(expand = YES, fill = BOTH)
+        image = ImageTk.PhotoImage(file = r"icons/hello.png")
+        SignInBoxs.create_image(0,0, image = image, anchor = NW)
         Textbox = Label(SignInBoxs, text = 'ĐĂNG NHẬP TÀI KHOẢN', bg = 'lightblue', fg = 'blue', font = ('Arial Bold',20))
         Textbox.place(relx = 0.5, rely = 0.1, anchor = 'n')
         Name = Label(SignInBoxs, text = 'Tên đăng nhập:', fg = 'black', bg = 'lightblue', font = str(50))
@@ -61,6 +66,8 @@ def main():
             Textbox.place(relx = 0.5, rely = 0.1, anchor = 'n')
             Name = Label(SignInBox, text = 'Tên tài khoản*:', fg = 'black', bg = 'lightblue', font = str(50))
             Name.place(relx = 0.25, rely = 0.25)
+            label1.Parent = pictureBox1;
+            label1.BackColor = Color.Transparent;
             Nameentry = Entry(SignInBox, font = str(40))
             Nameentry.place(relx = 0.5, rely=0.3, relwidth = 0.45, relheight = 0.08, anchor = 'n')
             Name = Label(SignInBox, text = 'Mật khẩu*:', fg = 'black', bg = 'lightblue', font = str(50))
@@ -223,8 +230,9 @@ def main():
         highlight_button(SaveButton,'#00b594','white')
         buttonDK = Button(SignInBoxs, text = 'Chưa có tài khoản? Đăng ký ngay', fg = 'blue', command = lambda: DK(), relief = FLAT)
         buttonDK.place(relx = 0.5, rely = 0.8, relwidth = 0.4, relheight = 0.035, anchor = 'n')
+        SignRoot.wait_window()
     DN()
-    SignRoot.wait_window()
+    
 
         
         

@@ -1,7 +1,7 @@
 import os
 import webbrowser
 from tkinter import (Button, Canvas, Checkbutton, Entry, Frame, Label, Listbox, PhotoImage,
-                      Scrollbar, Text, Tk)
+                      Scrollbar, Text, Tk, messagebox)
 from tkinter.constants import BOTH, DISABLED, END, FLAT, LEFT, RIGHT, WORD, Y
 import subprocess
 import pygetwindow as gw
@@ -150,7 +150,8 @@ class GUI:
             Button.__init__(self, root, *args, **kwargs)
             self.place(relx = 0.5, rely = 0.88, relwidth = 0.2, relheight = 0.05, anchor = 'n')
             highlight_button(self, '#30e651', '#39c459')
-    
+                
+            
     class EditBoard(Tk):
         class TitleFrame(Frame):
             def __init__(self, root, *args, **kwargs):
@@ -327,7 +328,11 @@ class GUI:
         if self.role.lower() == 'teacher':
             self.EditButton(MainWindow, bg = '#347d6c', text = 'Sửa đổi', fg = 'white', font = ('Arial Bold',10),command = lambda: self.EditBoard().get_canvas())
         elif self.role.lower() == 'student':
-            self.CheckButton(MainWindow, bg = '#39c459', text = 'Kiểm tra', fg = 'white', font = ('Arial Bold',10), command = lambda: self.Scoreboard().get_canvas())
+            def EditFunction():
+                self.Scoreboard().get_canvas()
+                root.destroy()
+                
+            self.CheckButton(MainWindow, bg = '#39c459', text = 'Kiểm tra', fg = 'white', font = ('Arial Bold',10), command = lambda: EditFunction())
 
         self.Tasks_frame(MainWindow).get_frame()
         

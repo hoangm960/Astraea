@@ -151,63 +151,83 @@ class GUI:
             self.place(relx = 0.5, rely = 0.88, relwidth = 0.2, relheight = 0.05, anchor = 'n')
             highlight_button(self, '#30e651', '#39c459')
     
-    class EditBoard(Tk):
-        class TitleFrame(Frame):
-            def __init__(self, root, *args, **kwargs):
-                Frame.__init__(self, root, *args, **kwargs)
-                self.place(relx = 0.01, rely = 0.05, relwidth = 0.98, relheight = 0.3)
-                Content = Label(self, text =' Số bài tập', bg = '#addcf0', fg = 'white', font = ('Arial Bold',10))
-                Content.place(relx = 0.5,rely = 0, relheight = 0.25, anchor = 'n')
+    class EditBoard():
+        class EditTk(Tk):
+            class TitleFrame(Frame):
+                def __init__(self, root, *args, **kwargs):
+                    Frame.__init__(self, root, *args, **kwargs)
+                    self.place(relx = 0.01, rely = 0.05, relwidth = 0.98, relheight = 0.3)
+                    Content = Label(self, text =' Số bài tập', bg = '#addcf0', fg = 'white', font = ('Arial Bold',10))
+                    Content.place(relx = 0.5,rely = 0, relheight = 0.25, anchor = 'n')
 
-        class NumFrame(Frame):
-            def __init__(self, root, *args, **kwargs):
-                Frame.__init__(self, root, *args, **kwargs)
-                self.place(relx = 0.01, rely = 0.1, relwidth = 0.98, relheight = 0.4)
-                Content = Entry(self, font = ('Arial Bold',10))
-                Content.place(relx = 0.5, rely = 0.3, relwidth = 0.5, relheight = 0.3, anchor = 'n')    
-                OKButton = Button(self, text = 'OK', font = ('Arial bold',10), relief = FLAT, command = lambda: self.check(Content))
-                highlight_button(OKButton, '#2efff8', 'white')
-                OKButton.place(relx = 0.5 , rely = 0.83, anchor = 'n')
-            def check(self, Content):
-                try:
-                    self.ContentNum = int(Content.get())
-                    Frame.destroy() 
-                except:
-                    Error = Label(self, text = 'Số liệu không phù hợp', fg = 'red', font = ('Arial Bold',10), bg = '#6292bf')
-                    Error.place(relx = 0.5, rely = 0.72, anchor = 'n')
-                
-        
-        class ContentFrame(Frame):
-            def __init__(self, root, y, *args, **kwargs):
-                Frame.__init__(self, root, *args, **kwargs)
-                self.place(x = 20, y = y, anchor = 'n')
-                Box1 = Entry(self)
-                Box1.place(x =  20, y = 0, height = 40)
-                Box2 = Entry(self)
-                Box2.place(x = 50, y = 0, height = 40)
-                Box3 = Entry(self)
-                Box3.place(x = 80, y = 0, height = 40)
-                Box4 = Entry(self)
-                Box4.place(x = 110, y = 0, height = 40)
-                Box5 = Entry(self)
-                Box5.place(x = 140, y = 0, height = 40)    
-        def __init__(self, *args, **kwargs):
-            Tk.__init__(self, *args, **kwargs)
-            self.title('Cửa sổ chỉnh sửa')
-            self.geometry('700x500+250+100')
-            self.resizable(0,0)
-            self.wm_attributes("-topmost", 1)
-            self.attributes('-toolwindow',1)
+            class NumFrame(Frame):
+                def __init__(self, root, *args, **kwargs):
+                    Frame.__init__(self, root, *args, **kwargs)
+                    self.place(relx = 0.01, rely = 0.1, relwidth = 0.98, relheight = 0.4)
+                    Content = Entry(self, font = ('Arial Bold',10))
+                    Content.place(relx = 0.5, rely = 0.3, relwidth = 0.5, relheight = 0.3, anchor = 'n')    
+                    OKButton = Button(self, text = 'OK', font = ('Arial bold',10), relief = FLAT, command = lambda: self.check(Content))
+                    highlight_button(OKButton, '#2efff8', 'white')
+                    OKButton.place(relx = 0.5 , rely = 0.83, anchor = 'n')
+                def check(self, Content):
+                    try:
+                        self.ContentNum = int(Content.get())
+                    except:
+                        Error = Label(self, text = 'Số liệu không phù hợp', fg = 'red', font = ('Arial Bold',10), bg = '#6292bf')
+                        Error.place(relx = 0.5, rely = 0.72, anchor = 'n')
+                    
 
-        def get_canvas(self):
-            MarkBG = Canvas(self, bg = '#6292bf', width = 800, height = 600)
-            MarkBG.pack()
-            self.TitleFrame(MarkBG,bg = '#6292bf')
-            self.NumFrame(MarkBG, bg = '#6292bf')
-            # Sb = Scrollbar(MarkBG)
-            # Sb.pack()
-            self.ContentFrame(MarkBG, 0)
-           
+            def __init__(self, *args, **kwargs):
+                Tk.__init__(self, *args, **kwargs)
+                self.title('Cửa sổ chỉnh sửa')
+                self.geometry('700x500+250+100')
+                self.resizable(0,0)
+                self.wm_attributes("-topmost", 1)
+                self.attributes('-toolwindow',1)
+                self.get_canvas()
+                self.mainloop()
+
+            def get_canvas(self):
+                MarkBG = Canvas(self, bg = '#6292bf', width = 800, height = 600)
+                MarkBG.pack()
+                self.TitleFrame(MarkBG,bg = '#6292bf')
+                self.NumFrame(MarkBG, bg = '#6292bf')
+
+        class ConfigTk(Tk):
+            class ContentFrame(Frame):
+                def __init__(self, root, y, *args, **kwargs):
+                    Frame.__init__(self, root, *args, **kwargs)
+                    self.place(relx = 0, y = 0, anchor = 'n')
+                    # Box1 = Entry(self)
+                    # Box1.place(x =  20, y = 0, height = 40)
+                    # Box2 = Entry(self)
+                    # Box2.place(x = 50, y = 0, height = 40)
+                    # Box3 = Entry(self)
+                    # Box3.place(x = 80, y = 0, height = 40)
+                    # Box4 = Entry(self)
+                    # Box4.place(x = 110, y = 0, height = 40)
+                    # Box5 = Entry(self)
+                    # Box5.place(x = 140, y = 0, height = 40)   
+            
+            def __init__(self, *args, **kwargs):
+                Tk.__init__(self, *args, **kwargs)
+                self.title('Cửa sổ chỉnh sửa')
+                self.geometry('700x500+250+100')
+                self.resizable(0,0)
+                self.wm_attributes("-topmost", 1)
+                self.attributes('-toolwindow',1)
+                self.get_canvas()
+                self.mainloop()
+
+            def get_canvas(self):
+                ConfigCanvas = Canvas(self, bg = '#6292bf', width = 800, height = 600)
+                ConfigCanvas.pack()
+                self.ContentFrame(ConfigCanvas, 0)
+
+        def __init__(self):
+            self.EditTk()
+            self.ConfigTk()
+            
                     
     class Scoreboard(Tk):
         class TitleFrame(Frame):
@@ -325,7 +345,7 @@ class GUI:
         #---------------
         
         if self.role.lower() == 'teacher':
-            self.EditButton(MainWindow, bg = '#347d6c', text = 'Sửa đổi', fg = 'white', font = ('Arial Bold',10),command = lambda: self.EditBoard().get_canvas())
+            self.EditButton(MainWindow, bg = '#347d6c', text = 'Sửa đổi', fg = 'white', font = ('Arial Bold',10),command = lambda: self.EditBoard())
         elif self.role.lower() == 'student':
             self.CheckButton(MainWindow, bg = '#39c459', text = 'Kiểm tra', fg = 'white', font = ('Arial Bold',10), command = lambda: self.Scoreboard().get_canvas())
 
@@ -339,6 +359,6 @@ class GUI:
         #         os.system("TASKKILL /F /IM Code.exe")
         # root.protocol("WM_DELETE_WINDOW", on_closing)
 
-        root.wait_window()
+        # root.wait_window()
         root.mainloop()
     

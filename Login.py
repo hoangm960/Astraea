@@ -1,6 +1,6 @@
 from os import system
 from tkinter import BooleanVar, Button, Canvas, Entry, IntVar, Label, PhotoImage, Tk, messagebox, Checkbutton
-from tkinter.constants import ACTIVE, BOTH, DISABLED, FLAT, NW, YES
+from tkinter.constants import ACTIVE, BOTH, CENTER, DISABLED, FLAT, NW, YES
 from PIL import ImageTk
 from tkinter.font import NORMAL
 from gui import GUI
@@ -31,15 +31,18 @@ def main():
                     break
         SignInBoxs  = Canvas(SignRoot, width = 750, height = 500)
         SignInBoxs.pack(expand = YES, fill = BOTH)
-        image = ImageTk.PhotoImage(file = r"icons/weibooo.png")
+        image = ImageTk.PhotoImage(file = r"icons/bg2/Sakura.png")
         SignInBoxs.create_image(0,0, image = image, anchor = NW)
-        Textbox = Label(SignInBoxs, text = 'ĐĂNG NHẬP TÀI KHOẢN', bg = 'white', fg = 'blue', font = ('Arial Bold',20))
+        imageA = PhotoImage(file = r'icons/bg2/Sakura-piece1.png')
+        Textbox = Label(SignInBoxs, text = 'ĐĂNG NHẬP TÀI KHOẢN', image = imageA, compound = CENTER, fg = 'blue', font = ('Arial Bold',20))
         Textbox.place(relx = 0.5, rely = 0.1, anchor = 'n')
-        Name = Label(SignInBoxs, text = 'Tên đăng nhập:', fg = 'black', bg = 'white', font = str(50))
+        imageB = PhotoImage(file = r'icons/bg2/Sakura-piece2.png')
+        Name = Label(SignInBoxs, text = 'Tên đăng nhập:', image = imageB, fg = 'blue', compound = CENTER, font = ('Arial Bold',10))
         Name.place(relx = 0.25, rely = 0.25)
         Nameentry = Entry(SignInBoxs, font = str(40))
         Nameentry.place(relx = 0.5, rely=0.3, relwidth = 0.45, relheight = 0.08, anchor = 'n')
-        Name = Label(SignInBoxs, text = 'Mật khẩu:', fg = 'black', bg = 'white', font = str(50))
+        imageC = PhotoImage(file = r'icons/bg2/Sakura-piece3.png')
+        Name = Label(SignInBoxs, text = 'Mật khẩu:', image = imageC, fg = 'blue', compound = CENTER, font = ('Arial Bold',10))
         Name.place(relx = 0.25, rely = 0.4)
         Passentry = Entry(SignInBoxs, font = str(40), show = '●')
         Passentry.place(relx = 0.5, rely=0.45, relwidth = 0.45, relheight = 0.08, anchor = 'n')
@@ -63,15 +66,18 @@ def main():
             SignInBoxs. destroy()
             SignInBox = Canvas(SignRoot, width = 750, height = 500, bg = 'white')
             SignInBox.pack(expand = YES, fill = BOTH)
-            image = ImageTk.PhotoImage(file = r'icons/vio.png')
-            SignInBox.create_image(0,0,image = image, anchor = NW)
-            Textbox = Label(SignInBox, text = 'ĐĂNG KÝ TÀI KHOẢN', bg = 'white', fg = 'blue', font = ('Arial Bold', 20))
+            imageA = ImageTk.PhotoImage(file = r'icons/bg1/vio.png')
+            SignInBox.create_image(0,0,image = imageA, anchor = NW)
+            imageB = ImageTk.PhotoImage(file = r'icons/bg1/vio-piece1.png')
+            Textbox = Label(SignInBox, text = 'ĐĂNG KÝ TÀI KHOẢN', image = imageB, compound = CENTER, fg = 'Purple', font = ('Arial Bold', 20))
             Textbox.place(relx = 0.5, rely = 0.1, anchor = 'n')
-            Name = Label(SignInBox, text = 'Tên tài khoản*:', fg = 'black', bg = 'white', font = str(50))
+            ImageC = ImageTk.PhotoImage(file = r'icons/bg1/vio-piece2.png')
+            Name = Label(SignInBox, text = 'Tên tài khoản*:', fg = 'purple', image = ImageC,compound = CENTER, font = ('Arial Bold',10))
             Name.place(relx = 0.25, rely = 0.25)
             Nameentry = Entry(SignInBox, font = str(40))
             Nameentry.place(relx = 0.5, rely=0.3, relwidth = 0.45, relheight = 0.08, anchor = 'n')
-            Name = Label(SignInBox, text = 'Mật khẩu*:', fg = 'black', bg = 'white', font = str(50))
+            ImageD = ImageTk.PhotoImage(file = r'icons/bg1/vio-piece3.png')
+            Name = Label(SignInBox, text = 'Mật khẩu*:', fg = 'purple', image = ImageD, compound = CENTER,font = ('Arial Bold',10))
             Name.place(relx = 0.25, rely = 0.4)
             Passentry = Entry(SignInBox, font = str(40), show = '●')
             Passentry.place(relx = 0.5, rely=0.45, relwidth = 0.45, relheight = 0.08, anchor = 'n')                
@@ -168,7 +174,6 @@ def main():
                             SaveButton = Button(SignRoot, text = 'Quay về', font = ('Arial Bold',10), activebackground = 'white', command = lambda: DN(), relief = FLAT)
                             SaveButton.place(relx = 0.5, rely = 0.6, relwidth = 0.2, relheight = 0.08, anchor = 'n')
                             f.close()
-            SignRoot.wait_window()
             def on_closing():
                 if messagebox.askokcancel("Thông báo", "Thoát giao diện đăng nhập?"):
                     SignRoot.destroy()
@@ -176,6 +181,7 @@ def main():
             SaveButton = Button(SignInBox, text = 'Đăng ký', bg = 'white', command = lambda: saves(), relief = FLAT)
             SaveButton.place(relx = 0.5, rely = 0.68, relwidth = 0.15, relheight = 0.08, anchor = 'n')
             highlight_button(SaveButton, '#00b594', 'white')
+            SignRoot.wait_window()
         """"""""""""""""""" Kiểm tra thông tin đăng nhập """""""""""""""""""""""""
         def check():
             if Nameentry.get() == '' or Passentry.get() == '':

@@ -1,5 +1,5 @@
 from os import system
-from tkinter import BooleanVar, Button, Canvas, Entry, IntVar, Label, PhotoImage, Tk, messagebox, Checkbutton
+from tkinter import BooleanVar, Button, Canvas, Entry, Frame, IntVar, Label, PhotoImage, Tk, messagebox, Checkbutton
 from tkinter.constants import ACTIVE, BOTH, CENTER, DISABLED, FLAT, NW, YES
 from PIL import ImageTk
 from tkinter.font import NORMAL
@@ -14,13 +14,17 @@ def highlight_button(button_name, colour1, colour2):
     button_name.bind("<Enter>", on_enter)
     button_name.bind("<Leave>", on_leave)
 
+
 def main():
     SignRoot = Tk()
-    SignRoot.resizable(0,0)
+    # SignRoot.resizable(0,0)
     SignRoot.wm_attributes("-topmost",1)
     SignRoot.title('Cửa sổ đăng nhập - Pylearn')
     SignRoot.iconbitmap('icons/logo.ico')
-    SignRoot.geometry('750x500+250+100')
+    # SignRoot.geometry('1980x720+0+0')
+    w, h = SignRoot.winfo_screenwidth(), SignRoot.winfo_screenheight()
+    SignRoot.geometry("%dx%d+0+0" % (w, h))
+
     def DN():
         dataAccount = dict()
         with open('data/User.txt','r') as f:
@@ -31,24 +35,23 @@ def main():
                     break
         SignInBoxs  = Canvas(SignRoot, width = 750, height = 500)
         SignInBoxs.pack(expand = True, fill = BOTH)
-        image = ImageTk.PhotoImage(file = r"icons/bg2/Sakura.png")
-        SignInBoxs.create_image(0,0, image = image, anchor = NW)
-        imageA = PhotoImage(file = r'icons/bg2/Sakura-piece1.png')
-        Textbox = Label(SignInBoxs, text = 'ĐĂNG NHẬP TÀI KHOẢN', image = imageA, compound = CENTER, fg = 'blue', font = ('Arial Bold',20), bd = -2)
+        # image = ImageTk.PhotoImage(file = r"icons/bg2/Sakura.png")
+        # SignInBoxs.create_image(0,0, image = image, anchor = NW)
+        SignInFrame = Frame(SignInBoxs)
+        SignInFrame.place(relx = 0.05, rely = 0.35, relwidth= 0.5, relheight= 0.5)
+        Textbox = Label(SignInFrame, text = 'ĐĂNG NHẬP TÀI KHOẢN', compound = CENTER, fg = 'blue', font = ('Arial Bold',20), bd = -2)
         Textbox.place(relx = 0.5, rely = 0.1, anchor = 'n')
-        imageB = PhotoImage(file = r'icons/bg2/Sakura-piece2.png')
-        Name = Label(SignInBoxs, text = 'Tên đăng nhập:', image = imageB, fg = 'blue', compound = CENTER, font = ('Arial Bold',10), bd = -2)
+        Name = Label(SignInFrame, text = 'Tên đăng nhập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',10), bd = -2)
         Name.place(relx = 0.25, rely = 0.25)
-        Nameentry = Entry(SignInBoxs, font = str(40))
+        Nameentry = Entry(SignInFrame, font = str(40))
         Nameentry.place(relx = 0.5, rely=0.3, relwidth = 0.45, relheight = 0.08, anchor = 'n')
-        imageC = PhotoImage(file = r'icons/bg2/Sakura-piece3.png')
-        Name = Label(SignInBoxs, text = 'Mật khẩu:', image = imageC, fg = 'blue', compound = CENTER, font = ('Arial Bold',10), bd = -2)
+        Name = Label(SignInFrame, text = 'Mật khẩu:', fg = 'blue', compound = CENTER, font = ('Arial Bold',10), bd = -2)
         Name.place(relx = 0.25, rely = 0.4)
-        Passentry = Entry(SignInBoxs, font = str(40), show = '●')
+        Passentry = Entry(SignInFrame, font = str(40), show = '●')
         Passentry.place(relx = 0.5, rely=0.45, relwidth = 0.45, relheight = 0.08, anchor = 'n')
         
         checked = BooleanVar()
-        AutosaveButton = Checkbutton(SignInBoxs, background= 'white', text= 'Lưu mật khẩu?', variable= checked, onvalue= True, offvalue= False)
+        AutosaveButton = Checkbutton(SignInFrame, background= 'white', text= 'Lưu mật khẩu?', variable= checked, onvalue= True, offvalue= False)
         AutosaveButton.place(relx = 0.65, rely = 0.72)
         
         with open('data/Autosave.txt','r') as f:
@@ -60,6 +63,11 @@ def main():
                 AutosaveButton.select()
             f.close()
 
+        SaveButton = Button(SignInFrame, text = 'Đăng nhập', bg = 'white', command = lambda: check(), relief = FLAT)
+        SaveButton.place(relx = 0.5, rely = 0.62, relwidth = 0.15, relheight = 0.08, anchor = 'n')
+        highlight_button(SaveButton,'#00b594','white')
+        buttonDK = Button(SignInFrame, text = 'Chưa có tài khoản? Đăng ký ngay', fg = 'blue', command = lambda: DK(), relief = FLAT)
+        buttonDK.place(relx = 0.5, rely = 0.8, relwidth = 0.4, relheight = 0.035, anchor = 'n')
         SignInBoxs.pack()
         """"""""""""""""""" Chuyển trang đăng ký """""""""""""""""""""""""
         def DK():
@@ -233,11 +241,6 @@ def main():
                         hostf.close()
                 f.close()
                 
-        SaveButton = Button(SignInBoxs, text = 'Đăng nhập', bg = 'white', command = lambda: check(), relief = FLAT)
-        SaveButton.place(relx = 0.5, rely = 0.62, relwidth = 0.15, relheight = 0.08, anchor = 'n')
-        highlight_button(SaveButton,'#00b594','white')
-        buttonDK = Button(SignInBoxs, text = 'Chưa có tài khoản? Đăng ký ngay', fg = 'blue', command = lambda: DK(), relief = FLAT)
-        buttonDK.place(relx = 0.5, rely = 0.8, relwidth = 0.4, relheight = 0.035, anchor = 'n')
         SignRoot.wait_window()
     DN()
     

@@ -1,22 +1,51 @@
-import tkinter as tk
+from tkinter import Button, Entry, Label, StringVar, Toplevel
 
-class MainWindow(tk.Frame):
-    counter = 0
-    def __init__(self, *args, **kwargs):
-        tk.Frame.__init__(self, *args, **kwargs)
-        self.button = tk.Button(self, text="Create new window", 
-                                command=self.create_window)
-        self.button.pack(side="top")
 
-    def create_window(self):
-        self.counter += 1
-        t = tk.Toplevel(self)
-        t.wm_title("Window #%s" % self.counter)
-        l = tk.Label(t, text="This is window #%s" % self.counter)
-        l.pack(side="top", fill="both", expand=True, padx=100, pady=100)
+def register():
 
-if __name__ == "__main__":
-    root = tk.Tk()
-    main = MainWindow(root)
-    main.pack(side="top", fill="both", expand=True)
-    root.mainloop()
+# The Toplevel widget work pretty much like Frame,
+# but it is displayed in a separate, top-level window. 
+#Such windows usually have title bars, borders, and other “window decorations”.
+# And in argument we have to pass global screen variable
+    
+    register_screen = Toplevel(main_screen) 
+    register_screen.title("Register")
+    register_screen.geometry("300x250")
+
+# Set text variables
+    username = StringVar()
+    password = StringVar()
+
+# Set label for user's instruction
+    Label(register_screen, text="Please enter details below", bg="blue").pack()
+    Label(register_screen, text="").pack()
+    
+# Set username label
+    username_lable = Label(register_screen, text="Username * ")
+    username_lable.pack()
+
+# Set username entry
+# The Entry widget is a standard Tkinter widget used to enter or display a single line of text.
+    
+    username_entry = Entry(register_screen, textvariable=username)
+    username_entry.pack()
+   
+# Set password label
+    password_lable = Label(register_screen, text="Password * ")
+    password_lable.pack()
+    
+# Set password entry
+    password_entry = Entry(register_screen, textvariable=password, show='*')
+    password_entry.pack()
+    
+    Label(register_screen, text="").pack()
+    
+# Set register button
+    Button(register_screen, text="Register", width=10, height=1, bg="blue").pack()
+
+
+global main_screen
+
+# add command=register in button widget
+
+Button(text="Register", height="2", width="30", command=register).pack()

@@ -2,7 +2,6 @@ import os
 import webbrowser
 from tkinter import (Button, Canvas, Checkbutton, Entry, Frame, Label, Listbox, PhotoImage,
                       Scrollbar, Text, Tk, Toplevel)
-from PIL import Image, ImageDraw, ImageTk
 from tkinter.constants import BOTH, BOTTOM, DISABLED, END, FLAT, HORIZONTAL, LEFT, NW, RIGHT, VERTICAL, WORD, X, Y
 import subprocess
 import pygetwindow as gw
@@ -34,71 +33,73 @@ def hex2rgb(str_rgb):
     return tuple(int(v, 16) for v in (r, g, b))
 
 class GradientFrame(Canvas):
+    __tag = "GradientFrame"
 
-    def __init__(self, master, from_color, to_color, width=None, height=None, orient=HORIZONTAL, steps=None, **kwargs):
-        Canvas.__init__(self, master, **kwargs)
-        if steps is None:
-            if orient == HORIZONTAL:
-                steps = height
-            else:
-                steps = width
+    hex_format = "#%04x%04x%04x"
+    top2bottom = 1
+    left2right = 2
 
-        if isinstance(from_color, basestring):
-            from_color = hex2rgb(from_color)
-            
-        if isinstance(to_color, basestring):
-            to_color = hex2rgb(to_color)
 
-        r,g,b = from_color
-        dr = float(to_color[0] - r)/steps
-        dg = float(to_color[1] - g)/steps
-        db = float(to_color[2] - b)/steps
-
-        if orient == HORIZONTAL:
-            if height is None:
-                raise ValueError("height can not be None")
-            
-            self.configure(height=height)
-            
-            if width is not None:
-                self.configure(width=width)
-
-            img_height = height
-            img_width = self.winfo_screenwidth()
-
-            image = Image.new("RGB", (img_width, img_height), "#FFFFFF")
-            draw = ImageDraw.Draw(image)
-
-            for i in range(steps):
-                r,g,b = r+dr, g+dg, b+db
-                y0 = int(float(img_height * i)/steps)
-                y1 = int(float(img_height * (i+1))/steps)
-
-                draw.rectangle((0, y0, img_width, y1), fill=(int(r),int(g),int(b)))
-        else:
-            if width is None:
-                raise ValueError("width can not be None")
-            self.configure(width=width)
-            
-            if height is not None:
-                self.configure(height=height)
-
-            img_height = self.winfo_screenheight()
-            img_width = width
-            
-            image = Image.new("RGB", (img_width, img_height), "#FFFFFF")
-            draw = ImageDraw.Draw(image)
-
-            for i in range(steps):
-                r,g,b = r+dr, g+dg, b+db
-                x0 = int(float(img_width * i)/steps)
-                x1 = int(float(img_width * (i+1))/steps)
-
-                draw.rectangle((x0, 0, x1, img_height), fill=(int(r),int(g),int(b)))
+    def __init__(self,parent,geometry,colors=("red","black"),direction=top2bottom,**kw):
         
-        self._gradient_photoimage = ImageTk.PhotoImage(image)
+        Canvas.__init__(self,parent,width=geometry[0],height=geometry[1],**kw)
 
-        self.create_image(0, 0, anchor=NW, image=self._gradient_photoimage)
+        self.__geometry = geometry
+        self.__colors = colors
+        self.__direction = direction
+
+        self.__drawGradient()
+
+        
+    def __drawGradient(self):
+
+        self.delete(self.__tag)
+
+        limit = self.__geometry[0] if self.__direction == self.left2right else self.__geometry[1]
+       
+        red1,green1,blue1 = self.winfo_rgb(self.__colors[0])
+        red2,green2,blue2 = self.winfo_rgb(self.__colors[1])
+
+        r_ratio = float(red2 - red1) / limit
+        g_ratio = float(green2 - green1) / limit
+        b_ratio = float(blue2 - blue1) / limit
+
+        for pixel in range(limit):
+            
+            red = int( red1 + ( r_ratio * pixel ) )
+            green = int( green1 + ( g_ratio * pixel ) )
+            blue = int( blue1 + ( b_ratio * pixel ) )
+
+            color = self.hex_format % (red,green,blue)
+
+            x1 = pixel if self.__direction == self.left2right else 0
+            y1 = 0 if self.__direction == self.left2right else pixel
+            x2 = pixel if self.__direction == self.left2right else self.__geometry[0]
+            y2 = self.__geometry[1] if self.__direction == self.left2right else pixel
+
+            self.create_line(x1,y1,x2,y2 , tag=self.__tag , fill=color)
+
+
+    def setColors(self,colors):
+
+        self.__colors = colors
+        self.__drawGradient()
+
+
+    def setDirection(self,direction):
+
+        if direction in (self.left2right,self.top2bottom):
+            self.__direction = direction
+            self.__drawGradient()
+        else:
+            raise ValueError('The "direction" parameter must be self.left2right or self.top2bottom')
+        
+
+    def setGeometry(self,geometry):
+
+        self.config(width=geometry[0],height=geometry[1])
+        self.__geometry = geometry
+        self.__drawGradient()
 
 class GUI:
 
@@ -304,7 +305,7 @@ class GUI:
         root.iconbitmap('icons/logo.ico')
         root.wm_attributes("-topmost", 1)
         root.geometry('350x700+1010+0')
-        MainWindow = GradientFrame(root, from_color="#00ffa9", to_color="#0d4dff", height=1000)
+        MainWindow = GradientFrame(root,[350,700],colors = ("#00ffa9","#0d4dff"))
         MainWindow.pack()
         
         # self.open_vscode()

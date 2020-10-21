@@ -1,7 +1,6 @@
 from os import system
 from tkinter import BooleanVar, Button, Canvas, Entry, Frame, IntVar, Label, PhotoImage, Tk, messagebox, Checkbutton
 from tkinter.constants import ACTIVE, BOTH, CENTER, DISABLED, FLAT, NW, YES
-from PIL import ImageTk
 from tkinter.font import NORMAL
 from gui import GUI
 #----------------------------------------------------------------

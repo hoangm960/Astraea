@@ -30,7 +30,7 @@ def main():
                 if name == '':
                     break
         SignInBoxs  = Canvas(SignRoot, width = 750, height = 500)
-        SignInBoxs.pack(expand = YES, fill = BOTH)
+        SignInBoxs.pack(expand = True, fill = BOTH)
         image = ImageTk.PhotoImage(file = r"icons/bg2/Sakura.png")
         SignInBoxs.create_image(0,0, image = image, anchor = NW)
         imageA = PhotoImage(file = r'icons/bg2/Sakura-piece1.png')
@@ -63,9 +63,9 @@ def main():
         SignInBoxs.pack()
         """"""""""""""""""" Chuyển trang đăng ký """""""""""""""""""""""""
         def DK():
-            SignInBoxs. destroy()
+            SignInBoxs.destroy()
             SignInBox = Canvas(SignRoot, width = 750, height = 500, bg = 'white')
-            SignInBox.pack(expand = YES, fill = BOTH)
+            SignInBox.pack(expand = True, fill = BOTH)
             imageA = ImageTk.PhotoImage(file = r'icons/bg1/vio.png')
             SignInBox.create_image(0,0,image = imageA, anchor = NW)
             imageB = ImageTk.PhotoImage(file = r'icons/bg1/vio-piece1.png')

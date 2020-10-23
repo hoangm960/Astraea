@@ -1,10 +1,14 @@
 import os
-import webbrowser
-from tkinter import (Button, Canvas, Checkbutton, Entry, Frame, Label, Listbox, PhotoImage,
-                      Scrollbar, Text, Tk, Toplevel)
-from tkinter.constants import ALL, BOTH, BOTTOM, DISABLED, END, FLAT, HORIZONTAL, LEFT, NW, RIGHT, VERTICAL, WORD, X, Y
 import subprocess
+import webbrowser
+from tkinter import (Button, Canvas, Checkbutton, Entry, Frame, Label, Listbox,
+                     PhotoImage, Scrollbar, Text, Tk, Toplevel, messagebox)
+from tkinter.constants import (ALL, BOTH, BOTTOM, DISABLED, END, FLAT,
+                               HORIZONTAL, LEFT, NW, RIGHT, VERTICAL, WORD, X,
+                               Y)
+
 import pygetwindow as gw
+
 
 def highlight_button(button_name, colour1, colour2):
     def on_enter(e):
@@ -278,7 +282,7 @@ class GUI:
         MainWindow = GradientFrame(root,[350,700],colors = ("#00ffa9","#0d4dff"))
         MainWindow.pack()
         
-        # self.open_vscode()
+        self.open_vscode()
 
         # Button---------------
 
@@ -290,22 +294,18 @@ class GUI:
         if self.role.lower() == 'teacher':
             self.EditButton(MainWindow, bg = '#347d6c', text = 'Sửa đổi', fg = 'white', font = ('Arial Bold',10),command = lambda: self.EditWindow())
         elif self.role.lower() == 'student':
-            def EditFunction():
-                self.Scoreboard().get_canvas()
-                root.destroy()
-                
-            self.CheckButton(MainWindow, bg = '#39c459', text = 'Kiểm tra', fg = 'white', font = ('Arial Bold',10), command = lambda: EditFunction())
+            self.CheckButton(MainWindow, bg = '#39c459', text = 'Kiểm tra', fg = 'white', font = ('Arial Bold',10), command = lambda: self.Scoreboard().get_canvas())
 
         self.Tasks_frame(MainWindow).get_frame()
         
         self.Tutorial_Frame(MainWindow).get_frame()
 
-        # def on_closing():
-        #     if messagebox.askokcancel("Thông báo", "Xác nhận đóng chương trình?"):
-        #         root.destroy()
-        #         os.system("TASKKILL /F /IM Code.exe")
-        # root.protocol("WM_DELETE_WINDOW", on_closing)
+        def on_closing():
+            if messagebox.askokcancel("Thông báo", "Xác nhận đóng chương trình?"):
+                root.destroy()
+                os.system("TASKKILL /F /IM Code.exe")
+        root.protocol("WM_DELETE_WINDOW", on_closing)
 
-        # root.wait_window()
+        root.wait_window()
         root.mainloop()
     

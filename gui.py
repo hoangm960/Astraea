@@ -8,6 +8,7 @@ from tkinter.constants import (ALL, BOTH, BOTTOM, DISABLED, END, FLAT,
                                Y)
 
 import pygetwindow as gw
+import check_algorithm
 
 
 def highlight_button(button_name, colour1, colour2):

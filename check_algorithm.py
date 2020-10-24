@@ -43,9 +43,9 @@ with Capturing() as output:
             f.write(
                 """\
 try:
-    assert output[0] == str("""
+    assert output[0] == '"""
                 + open(ans, "r").readlines()[test]
-                + ")\n"
+                + "'\n"
                 """\
     print("Đúng!")
 except AssertionError:
@@ -77,3 +77,10 @@ except AssertionError:
     get_testcases_file()
     check_file(file, ans)
     del_testcases_file()
+
+test_file = "test.py"
+input_file = "Inputs.txt"
+ans_file = "Ans.txt"
+test_cases = 1
+vars = 1
+main(test_file, input_file, ans_file, test_cases, vars)

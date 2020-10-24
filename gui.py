@@ -163,12 +163,10 @@ class GUI:
             self.geometry('700x500+250+100')
             self.resizable(0,0)
 
-            EditCanvas = Canvas(self, bg = '#6292bf', width = 800, height = 600)
-            EditCanvas.pack()
-            EditFrame = GradientFrame(EditCanvas,[800,600],colors = ("#7df5db","#ffdc42"),direction= 2)
+            self.EditCanvas = Canvas(self, bg = '#6292bf', width = 800, height = 600)
+            self.EditCanvas.pack()
+            EditFrame = GradientFrame(self.EditCanvas,[800,600],colors = ("#7df5db","#ffdc42"),direction= 2)
             EditFrame.pack()
-            Textbox = Label()
-            Textbox.place(relx = 0.5, rely = 0.1, anchor = 'n')
             Name = Label(EditFrame, text = 'Tên bài tập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',15), bd = -2)
             Name.place(relx = 0.15, rely = 0.3)
             Nameentry = Entry(EditFrame, justify = CENTER, font = str(40))
@@ -293,7 +291,7 @@ class GUI:
         MainWindow = GradientFrame(root,[350,700],colors = ("#00ffa9","#0d4dff"))
         MainWindow.pack()
         
-        self.open_vscode()
+        # self.open_vscode()
 
         # Button---------------
 

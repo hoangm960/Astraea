@@ -217,8 +217,6 @@ class GUI:
             self.title('Kết quả bài làm')
             self.geometry('700x500+250+100')
             self.resizable(0,0)
-
-        def get_canvas(self):
             MarkBG = Canvas(self, bg = '#6292bf', width = 800, height = 600)
             MarkBG.pack()
             self.TitleFrame(MarkBG, bg = '#6292bf')
@@ -294,17 +292,17 @@ class GUI:
         if self.role.lower() == 'teacher':
             self.EditButton(MainWindow, bg = '#347d6c', text = 'Sửa đổi', fg = 'white', font = ('Arial Bold',10),command = lambda: self.EditWindow())
         elif self.role.lower() == 'student':
-            self.CheckButton(MainWindow, bg = '#39c459', text = 'Kiểm tra', fg = 'white', font = ('Arial Bold',10), command = lambda: self.Scoreboard().get_canvas())
+            self.CheckButton(MainWindow, bg = '#39c459', text = 'Kiểm tra', fg = 'white', font = ('Arial Bold',10), command = lambda: self.Scoreboard())
 
         self.Tasks_frame(MainWindow).get_frame()
         
         self.Tutorial_Frame(MainWindow).get_frame()
 
-        def on_closing():
-            if messagebox.askokcancel("Thông báo", "Xác nhận đóng chương trình?"):
-                root.destroy()
-                os.system("TASKKILL /F /IM Code.exe")
-        root.protocol("WM_DELETE_WINDOW", on_closing)
+        # def on_closing():
+        #     if messagebox.askokcancel("Thông báo", "Xác nhận đóng chương trình?"):
+        #         root.destroy()
+        #         os.system("TASKKILL /F /IM Code.exe")
+        # root.protocol("WM_DELETE_WINDOW", on_closing)
 
         root.wait_window()
         root.mainloop()

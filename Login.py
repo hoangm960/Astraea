@@ -13,6 +13,9 @@ def highlight_button(button_name, colour1, colour2):
     button_name.bind("<Enter>", on_enter)
     button_name.bind("<Leave>", on_leave)
 
+def destroy(frame):
+    for widget in frame.winfo_children():
+        widget.destroy()
 
 def main():
     SignRoot = Tk()
@@ -24,9 +27,12 @@ def main():
     w, h = SignRoot.winfo_screenwidth(), SignRoot.winfo_screenheight()
     SignRoot.geometry("%dx%d+0+0" % (w, h))
 
-    SignInBoxs  = Canvas(SignRoot, width = w, height = h)
-    SignInBoxs.pack(expand = True, fill = BOTH)
+    SignInBoxes  = Canvas(SignRoot, width = w, height = h)
+    SignInBoxes.pack(expand = True, fill = BOTH)
+    SignInFrame = Frame(SignInBoxes, bg = 'white')
+    SignInFrame.place(relx = 0.2, rely = 0.35, relwidth= 0.5, relheight= 0.5)
     def DN():
+        destroy(SignInFrame)
         dataAccount = dict()
         with open('data/User.txt','r') as f:
             while True:
@@ -34,8 +40,6 @@ def main():
                 dataAccount[name] = f.readline().replace('\n','')
                 if name == '':
                     break
-        SignInFrame = Frame(SignInBoxs)
-        SignInFrame.place(relx = 0.05, rely = 0.35, relwidth= 0.5, relheight= 0.5)
         Textbox = Label(SignInFrame, text = 'ĐĂNG NHẬP TÀI KHOẢN', compound = CENTER, fg = 'blue', font = ('Arial Bold',20), bd = -2)
         Textbox.place(relx = 0.5, rely = 0.1, anchor = 'n')
         Name = Label(SignInFrame, text = 'Tên đăng nhập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',10), bd = -2)
@@ -65,12 +69,9 @@ def main():
         highlight_button(SaveButton,'#00b594','white')
         buttonDK = Button(SignInFrame, text = 'Chưa có tài khoản? Đăng ký ngay', fg = 'blue', command = lambda: DK(), relief = FLAT)
         buttonDK.place(relx = 0.5, rely = 0.8, relwidth = 0.4, relheight = 0.035, anchor = 'n')
-        SignInBoxs.pack()
         """"""""""""""""""" Chuyển trang đăng ký """""""""""""""""""""""""
         def DK():
-            SignInBoxs.delete("all")
-            SignInFrame = Frame(SignInBoxs)
-            SignInFrame.place(relx = 0.05, rely = 0.35, relwidth= 0.5, relheight= 0.5)
+            destroy(SignInFrame)
             Textbox = Label(SignInFrame, text = 'ĐĂNG KÝ TÀI KHOẢN', compound = CENTER, fg = 'Purple', font = ('Arial Bold', 20), bd = -2)
             Textbox.place(relx = 0.5, rely = 0.1, anchor = 'n')
             Name = Label(SignInFrame, text = 'Tên tài khoản*:', fg = 'purple', compound = CENTER, font = ('Arial Bold',10), bd = -2)
@@ -95,12 +96,8 @@ def main():
             TickButton1.place(relx = 0.38, rely = 0.55)
             TickButton2 = Checkbutton(SignInFrame, text = 'giáo viên ', onvalue = True, offvalue = False, variable = var2, command = lambda: click(TickButton1, var2))
             TickButton2.place(relx = 0.57, rely = 0.55)
-            def Quayve():
-                SignInBoxs.delete("all")
-                DN()
-            buttonDK = Button(SignInFrame, text = 'Đã có tài khoản? Quay trở về trang đăng nhập.', fg = 'blue', command = lambda: Quayve(), relief = FLAT)
+            buttonDK = Button(SignInFrame, text = 'Đã có tài khoản? Quay trở về trang đăng nhập.', fg = 'blue', command = lambda: DN(), relief = FLAT)
             buttonDK.place(relx = 0.5, rely = 0.8, relwidth = 0.4, relheight = 0.035, anchor = 'n')                
-            SignInBoxs.pack()
             """ Kiểm tra thông tin đăng ký """
             def saves():
                 again = True
@@ -152,7 +149,7 @@ def main():
                                     file_host.close()
                             password = password + '\n'
                             f.write(password)
-                            SignInBoxs.destroy()
+                            destroy(SignInFrame)
                             # NextSignBox = Canvas(SignRoot, bg = 'white')
                             # Name = Label(NextSignBox, text = 'Đặt tên người dùng:', fg = 'black', bg = 'white', font = ('Arial Bold','10'))
                             # Name.place(relx = 0.25, rely = 0.25)

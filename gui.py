@@ -122,7 +122,6 @@ class GUI:
             self.YoutubeButton(self, relief = FLAT)
             self.FacebookButton(self, relief = FLAT)
 
-
     class EditButton(Button):
         def __init__(self, root, *args, **kwargs):
             Button.__init__(self, root, *args, **kwargs)
@@ -155,8 +154,7 @@ class GUI:
 
             def create_frames(self, num):
                 for _ in range(num):
-                    self.EditFrame(self, bg= 'black')
-                    
+                    self.EditFrame(self, bg= 'white ')                    
 
         def __init__(self, *args, **kwargs):
             Tk.__init__(self, *args, **kwargs)
@@ -194,7 +192,7 @@ class GUI:
             ConfigCanvas.configure(scrollregion= ConfigCanvas.bbox("all"))
             ConfigCanvas.create_frames(self.ContentNum)
 
-     
+
     class Scoreboard(Toplevel):
         class TitleFrame(Frame):
             def __init__(self, root, *args, **kwargs):
@@ -293,7 +291,16 @@ class GUI:
         if self.role.lower() == 'teacher':
             self.EditButton(MainWindow, bg = '#347d6c', text = 'Sửa đổi', fg = 'white', font = ('Arial Bold',10),command = lambda: self.EditWindow())
         elif self.role.lower() == 'student':
-            self.CheckButton(MainWindow, bg = '#39c459', text = 'Kiểm tra', fg = 'white', font = ('Arial Bold',10), command = lambda: self.Scoreboard())
+            def destroyMain():
+                if messagebox.askokcancel("Thông báo", "Xác nhận Kết thúc bài làm? \n(Chú ý không thể chỉnh sửa)"):
+                    MainWindow.destroy()
+                    MainWindow_new = GradientFrame(root,[350,700],colors = ("#00ffa9","#0d4dff"))
+                    MainWindow_new.pack()
+                    Label(MainWindow_new,text = ' Bạn đã nộp bài.', font = ('Arial Bold',20)).place(relx = 0.5, rely = 0.5, anchor = 'n')
+                    self.Scoreboard()
+
+            self.CheckButton(MainWindow, bg = '#39c459', text = 'Kiểm tra', fg = 'white', font = ('Arial Bold',10), command = lambda: destroyMain())
+
 
         self.Tasks_frame(MainWindow).get_frame()
         

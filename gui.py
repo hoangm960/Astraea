@@ -1,9 +1,10 @@
+from ctypes import alignment
 import os
 import subprocess
 import webbrowser
 from tkinter import (Button, Canvas, Checkbutton, Entry, Frame, Label, Listbox,
                      PhotoImage, Scrollbar, Text, Tk, Toplevel, messagebox)
-from tkinter.constants import (ALL, BOTH, BOTTOM, DISABLED, END, FLAT,
+from tkinter.constants import (ALL, BOTH, BOTTOM, CENTER, DISABLED, END, FLAT,
                                HORIZONTAL, LEFT, NW, RIGHT, VERTICAL, WORD, X,
                                Y)
 
@@ -162,21 +163,34 @@ class GUI:
             self.geometry('700x500+250+100')
             self.resizable(0,0)
 
-            self.EditCanvas = Canvas(self, bg = '#6292bf', width = 800, height = 600)
-            self.EditCanvas.pack()
+            EditCanvas = Canvas(self, bg = '#6292bf', width = 800, height = 600)
+            EditCanvas.pack()
+            EditFrame = GradientFrame(EditCanvas,[800,600],colors = ("#7df5db","#ffdc42"),direction= 2)
+            EditFrame.pack()
+            Textbox = Label()
+            Textbox.place(relx = 0.5, rely = 0.1, anchor = 'n')
+            Name = Label(EditFrame, text = 'Tên bài tập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',15), bd = -2)
+            Name.place(relx = 0.15, rely = 0.3)
+            Nameentry = Entry(EditFrame, justify = CENTER, font = str(40))
+            Nameentry.place(relx = 0.55, rely=0.3, relwidth = 0.45, relheight = 0.08, anchor = 'n')
+            Name = Label(EditFrame, text = 'Số bài tập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',15), bd = -2)
+            Name.place(relx = 0.15, rely = 0.5)
+            Passentry = Entry(EditFrame, justify = CENTER, font = str(40))
+            Passentry.place(relx = 0.55, rely=0.5, relwidth = 0.25, relheight = 0.08, anchor = 'n')
+            OKButton = Button(EditFrame, text = 'NEXT')
+            OKButton.place(relx = 0.7, rely = 0.8, relwidth = 0.2, relheight = 0.1)
+            # TitleFrame = Frame(self.EditCanvas, bg = '#6292bf')
+            # TitleFrame.place(relx = 0.01, rely = 0.05, relwidth = 0.98, relheight = 0.3)
+            # Content = Label(TitleFrame, text ='Số bài tập', bg = '#addcf0', fg = 'white', font = ('Arial Bold',10))
+            # Content.place(relx = 0.5,rely = 0, relheight = 0.25, anchor = 'n')
 
-            TitleFrame = Frame(self.EditCanvas, bg = '#6292bf')
-            TitleFrame.place(relx = 0.01, rely = 0.05, relwidth = 0.98, relheight = 0.3)
-            Content = Label(TitleFrame, text =' Số bài tập', bg = '#addcf0', fg = 'white', font = ('Arial Bold',10))
-            Content.place(relx = 0.5,rely = 0, relheight = 0.25, anchor = 'n')
-
-            NumFrame = Frame(self.EditCanvas, bg = '#6292bf')
-            NumFrame.place(relx = 0.01, rely = 0.1, relwidth = 0.98, relheight = 0.4)
-            Content = Entry(NumFrame, font = ('Arial Bold',10))
-            Content.place(relx = 0.5, rely = 0.3, relwidth = 0.5, relheight = 0.3, anchor = 'n')    
-            OKButton = Button(NumFrame, text = 'OK', font = ('Arial bold',10), relief = FLAT, command = lambda: self.check(Content))
-            highlight_button(OKButton, '#2efff8', 'white')
-            OKButton.place(relx = 0.5 , rely = 0.83, anchor = 'n')
+            # NumFrame = Frame(self.EditCanvas, bg = '#6292bf')
+            # NumFrame.place(relx = 0.01, rely = 0.1, relwidth = 0.98, relheight = 0.4)
+            # Content = Entry(NumFrame, font = ('Arial Bold',10))
+            # Content.place(relx = 0.5, rely = 0.3, relwidth = 0.5, relheight = 0.3, anchor = 'n')    
+            # OKButton = Button(NumFrame, text = 'OK', font = ('Arial bold',10), relief = FLAT, command = lambda: self.check(Content))
+            # highlight_button(OKButton, '#2efff8', 'white')
+            # OKButton.place(relx = 0.5 , rely = 0.83, anchor = 'n')
 
         def check(self, Content):
             try:

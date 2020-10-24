@@ -1,3 +1,4 @@
+from ctypes import alignment
 import os
 import subprocess
 import webbrowser
@@ -162,21 +163,22 @@ class GUI:
             self.geometry('700x500+250+100')
             self.resizable(0,0)
 
-            self.EditCanvas = Canvas(self, bg = '#6292bf', width = 800, height = 600)
-            self.EditCanvas.pack()
-            
-            EditFrame = GradientFrame(self,[350,700],colors = ("#7df5db","#ffdc42"))
+            EditCanvas = Canvas(self, bg = '#6292bf', width = 800, height = 600)
+            EditCanvas.pack()
+            EditFrame = GradientFrame(EditCanvas,[800,600],colors = ("#7df5db","#ffdc42"),direction= 2)
+            EditFrame.pack()
             Textbox = Label()
             Textbox.place(relx = 0.5, rely = 0.1, anchor = 'n')
-            Name = Label(EditFrame, text = 'Tên bài tập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',10), bd = -2)
-            Name.place(relx = 0.25, rely = 0.25)
-            Nameentry = Entry(EditFrame, font = str(40))
-            Nameentry.place(relx = 0.5, rely=0.3, relwidth = 0.45, relheight = 0.08, anchor = 'n')
-            Name = Label(EditFrame, text = 'Số bài tập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',10), bd = -2)
-            Name.place(relx = 0.25, rely = 0.4)
-            Passentry = Entry(EditFrame, font = str(40), show = '●')
-            Passentry.place(relx = 0.5, rely=0.45, relwidth = 0.45, relheight = 0.08, anchor = 'n')
-            
+            Name = Label(EditFrame, text = 'Tên bài tập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',15), bd = -2)
+            Name.place(relx = 0.15, rely = 0.3)
+            Nameentry = Entry(EditFrame, justify = CENTER, font = str(40))
+            Nameentry.place(relx = 0.55, rely=0.3, relwidth = 0.45, relheight = 0.08, anchor = 'n')
+            Name = Label(EditFrame, text = 'Số bài tập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',15), bd = -2)
+            Name.place(relx = 0.15, rely = 0.5)
+            Passentry = Entry(EditFrame, justify = CENTER, font = str(40))
+            Passentry.place(relx = 0.55, rely=0.5, relwidth = 0.25, relheight = 0.08, anchor = 'n')
+            OKButton = Button(EditFrame, text = 'NEXT')
+            OKButton.place(relx = 0.7, rely = 0.8, relwidth = 0.2, relheight = 0.1)
             # TitleFrame = Frame(self.EditCanvas, bg = '#6292bf')
             # TitleFrame.place(relx = 0.01, rely = 0.05, relwidth = 0.98, relheight = 0.3)
             # Content = Label(TitleFrame, text ='Số bài tập', bg = '#addcf0', fg = 'white', font = ('Arial Bold',10))

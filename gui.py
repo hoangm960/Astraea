@@ -248,7 +248,7 @@ class GUI:
             with open("Text.txt", "r",encoding = 'utf8') as f:
                 lines = f.readlines()
                 for line in lines:
-                    Tickbox = Checkbutton(self, activebackground= '#43e64b', bg= 'white', text= line, justify= LEFT, wraplength= 200)
+                    Tickbox = Checkbutton(self, activebackground= '#43e64b', bg= 'white', text= line, justify= LEFT, wraplength= 230)
                     text.window_create(END, window= Tickbox)
                     text.insert(END, "\n")
 

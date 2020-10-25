@@ -1,1 +1,5 @@
 tempCodeRunnerFile.py
+__pycache__/
+.vscode/
+Test/
+.gitignore/

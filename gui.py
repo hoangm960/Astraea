@@ -1,6 +1,8 @@
 from ctypes import alignment
 import os
 import subprocess
+import tkinter
+from tkinter import ttk
 import webbrowser
 from tkinter import (Button, Canvas, Checkbutton, Entry, Frame, Label, Listbox,
                      PhotoImage, Scrollbar, Text, Tk, Toplevel, messagebox)
@@ -143,8 +145,6 @@ class GUI:
                     Frame.__init__(self, root, *args, **kwargs)
                     self.pack(expand=True, fill=BOTH)
 
-                    Button(self, text= 'hello').pack()
-
             def __init__(self, root, *args, **kwargs):
                 Canvas.__init__(self, root, *args, **kwargs)
                 Sb = Scrollbar(self, orient=VERTICAL)
@@ -152,11 +152,19 @@ class GUI:
                 Sb.config(command= self.yview)
                 self.configure(yscrollcommand= Sb.set)
                 self.pack(side=LEFT, expand=True, fill=BOTH)
-
             def create_frames(self, num):
+                LessonFrame = Frame(self)
+                LessonFrame.pack(side = 'ABOVE')
+                img1 = tkinter.PhotoImage('frameFocusBorder', file = '')
+                style = ttk.Style()
+                style.element_create("RoundedFrame","image","frameBorder",
+                ("focus", "frameFocusBorder"), border = 16 , sticky = "nsew")
+                style.layout("RoundedFrame",[("RoundedFrame", {"sticky":"nsew"})])
+                LogoFrame = (LessonFrame, )
                 for _ in range(num):
-                    self.EditFrame(self, bg= 'white ')                    
+                    framelessoni = Frame(self)
 
+                    
         def __init__(self, *args, **kwargs):
             Tk.__init__(self, *args, **kwargs)
             self.title('Cửa sổ chỉnh sửa')
@@ -175,7 +183,7 @@ class GUI:
             Name.place(relx = 0.15, rely = 0.5)
             Passentry = Entry(EditFrame, justify = CENTER, font = str(40))
             Passentry.place(relx = 0.55, rely=0.5, relwidth = 0.25, relheight = 0.08, anchor = 'n')
-            OKButton = Button(EditFrame, text = 'NEXT')
+            OKButton = Button(EditFrame, text = 'NEXT', command = lambda: self.create_frames())
             OKButton.place(relx = 0.7, rely = 0.8, relwidth = 0.2, relheight = 0.1)
             # TitleFrame = Frame(self.EditCanvas, bg = '#6292bf')
             # TitleFrame.place(relx = 0.01, rely = 0.05, relwidth = 0.98, relheight = 0.3)

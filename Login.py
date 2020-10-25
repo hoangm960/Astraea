@@ -131,7 +131,7 @@ def main():
                 dataAccount[name] = f.readline().replace('\n','')
                 if name == '':
                     break
-        Textbox = Label(SignInFrame, text = 'ĐĂNG NHẬP TÀI KHOẢN', compound = CENTER, fg = 'blue', font = ('Arial Bold',20), bd = -2)
+        Textbox = Label(SignInFrame, text = 'ĐĂNG NHẬP TÀI KHOẢN', compound = CENTER, bg = 'white', fg = 'blue', font = ('Arial Bold',20), bd = -2)
         Textbox.place(relx = 0.5, rely = 0.1, anchor = 'n')
         Name = Label(SignInFrame, text = 'Tên đăng nhập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',10), bd = -2)
         Name.place(relx = 0.25, rely = 0.25)
@@ -150,17 +150,17 @@ def main():
 
         # Nameentry.place(relx = 0.5, rely=0.3, relwidth = 0.45, relheight = 0.08, anchor = 'n')
         
-        Name = Label(SignInFrame, text = 'Mật khẩu:', fg = 'blue', compound = CENTER, font = ('Arial Bold',10), bd = -2)
+        Name = Label(SignInFrame, text = 'Mật khẩu:', fg = 'blue', bg = 'white', compound = CENTER, font = ('Arial Bold',10), bd = -2)
         Name.place(relx = 0.25, rely = 0.45)
         # Passentry = Entry(SignInFrame, font = str(40), show = '●')
         # Passentry.place(relx = 0.5, rely=0.45, relwidth = 0.45, relheight = 0.08, anchor = 'n')
         
-        Nameframe = ttk.Frame(SignInFrame, style="RoundedFrame", padding=10)
-        Nameframe.place(relx = 0.5, rely = 0.5, relwidth = 0.45, relheight = 0.12, anchor = 'n')
-        Passentry = tk.Entry(Nameframe, borderwidth=0, show = '●', font = ('Arial Bold', 10), bg = "white", highlightthickness=0)
+        Passframe = ttk.Frame(SignInFrame, style="RoundedFrame", padding=10)
+        Passframe.place(relx = 0.5, rely = 0.5, relwidth = 0.45, relheight = 0.12, anchor = 'n')
+        Passentry = tk.Entry(Passframe, borderwidth=0, show = '●', font = ('Arial Bold', 10), bg = "white", highlightthickness=0)
         Passentry.pack(fill = 'both', expand = True)
-        Passentry.bind("<FocusIn>", lambda evt: Nameframe.state(["focus"]))
-        Passentry.bind("<FocusOut>", lambda evt: Nameframe.state(["!focus"]))
+        Passentry.bind("<FocusIn>", lambda evt: Passframe.state(["focus"]))
+        Passentry.bind("<FocusOut>", lambda evt: Passframe.state(["!focus"]))
         
         checked = BooleanVar()
         AutosaveButton = Checkbutton(SignInFrame, background= 'white', text= 'Lưu mật khẩu?', variable= checked, onvalue= True, offvalue= False)

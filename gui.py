@@ -147,21 +147,8 @@ class GUI:
 
             def __init__(self, root, *args, **kwargs):
                 Canvas.__init__(self, root, *args, **kwargs)
-                Sb = Scrollbar(self, orient=VERTICAL)
-                Sb.pack(side= RIGHT, fill= Y)
-                Sb.config(command= self.yview)
-                self.configure(yscrollcommand= Sb.set)
                 self.pack(side=LEFT, expand=True, fill=BOTH)
             def create_frames(self, num):
-                LessonFrame = Frame(self)
-                LessonFrame.pack(side = 'ABOVE')
-                img1 = tkinter.PhotoImage('frameFocusBorder', file = 'logo.ico')
-                style = ttk.Style()
-                style.element_create("RoundedFrame","image","frameBorder",
-                ("focus", "frameFocusBorder"), border = 16 , sticky = "nsew")
-                style.layout("RoundedFrame",[("RoundedFrame", {"sticky":"nsew"})])
-                LogoFrame = (LessonFrame, style = 'RoudedFrame')
-                LogoFrame.pack(side = 'BELOVE')
                 for _ in range(num):
                     framelessoni = Frame(self)
 
@@ -184,7 +171,7 @@ class GUI:
             Name.place(relx = 0.15, rely = 0.5)
             Passentry = Entry(EditFrame, justify = CENTER, font = str(40))
             Passentry.place(relx = 0.55, rely=0.5, relwidth = 0.25, relheight = 0.08, anchor = 'n')
-            OKButton = Button(EditFrame, text = 'NEXT', command = lambda: self.create_frames())
+            OKButton = Button(EditFrame, text = 'NEXT', command = lambda: self.MainCanvas(self).create_frames(self.ContentNum))
             OKButton.place(relx = 0.7, rely = 0.8, relwidth = 0.2, relheight = 0.1)
             # TitleFrame = Frame(self.EditCanvas, bg = '#6292bf')
             # TitleFrame.place(relx = 0.01, rely = 0.05, relwidth = 0.98, relheight = 0.3)

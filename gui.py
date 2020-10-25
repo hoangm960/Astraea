@@ -155,12 +155,13 @@ class GUI:
             def create_frames(self, num):
                 LessonFrame = Frame(self)
                 LessonFrame.pack(side = 'ABOVE')
-                img1 = tkinter.PhotoImage('frameFocusBorder', file = '')
+                img1 = tkinter.PhotoImage('frameFocusBorder', file = 'logo.ico')
                 style = ttk.Style()
                 style.element_create("RoundedFrame","image","frameBorder",
                 ("focus", "frameFocusBorder"), border = 16 , sticky = "nsew")
                 style.layout("RoundedFrame",[("RoundedFrame", {"sticky":"nsew"})])
-                LogoFrame = (LessonFrame, )
+                LogoFrame = (LessonFrame, style = 'RoudedFrame')
+                LogoFrame.pack(side = 'BELOVE')
                 for _ in range(num):
                     framelessoni = Frame(self)
 

@@ -239,8 +239,6 @@ class GUI:
         def __init__(self, root, *args, **kwargs):
             Frame.__init__(self, root, *args, **kwargs)
             self.place(relx = 0.1, rely = 0.1, relwidth = 0.8, relheight = 0.4)
-
-        def get_frame(self):
             Sb = Scrollbar(self)
             text = Text(self, height= 50, width=100, yscrollcommand= Sb.set, font=("Arial", 12), wrap=WORD,state= DISABLED)
             Sb.config(command= text.yview)
@@ -259,8 +257,6 @@ class GUI:
         def __init__(self, root, *args, **kwargs):
             Frame.__init__(self, root, *args, **kwargs)
             self.place(relx = 0.1, rely = 0.55, relwidth = 0.8, relheight = 0.3)
-        
-        def get_frame(self):
             Sb = Scrollbar(self)
             text = Text(self, height= 50, width=100, yscrollcommand= Sb.set, font= ("Arial", 12), wrap= WORD)
             Sb.config(command= text.yview)
@@ -316,9 +312,8 @@ class GUI:
             self.CheckButton(MainWindow, bg = '#39c459', text = 'Kiểm tra', fg = 'white', font = ('Arial Bold',10), command = lambda: destroyMain())
 
 
-        self.Tasks_frame(MainWindow).get_frame()
-        
-        self.Tutorial_Frame(MainWindow).get_frame()
+        self.Tasks_frame(MainWindow)        
+        self.Tutorial_Frame(MainWindow)
 
         # def on_closing():
         #     if messagebox.askokcancel("Thông báo", "Xác nhận đóng chương trình?"):

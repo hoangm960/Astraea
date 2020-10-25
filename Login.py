@@ -28,9 +28,9 @@ def main():
     SignRoot.geometry("%dx%d+0+0" % (w, h))
 
     SignInBoxes  = Canvas(SignRoot, width = w, height = h)
-    SignInBoxes.pack(expand = True, fill = BOTH)
+    SignInBoxes.pack(expand = True, fill = BOTH, relx = 0.2, rely = 0.6)
     SignInFrame = Frame(SignInBoxes, bg = 'white')
-    SignInFrame.place(relx = 0.2, rely = 0.35, relwidth= 0.5, relheight= 0.5)
+    SignInFrame.place(relx = 0.5, relwidth= 0.5, relheight= 0.5)
     def DN():
         destroy(SignInFrame)
         dataAccount = dict()

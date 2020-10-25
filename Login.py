@@ -144,8 +144,8 @@ def main():
                 
         Nameframe = ttk.Frame(SignInFrame, style="RoundedFrame", padding=10)
         Nameframe.place(relx = 0.5, rely = 0.3, relwidth = 0.45, relheight = 0.12, anchor = 'n')
-        NameBox = tk.Entry(Nameframe, borderwidth=0, font = ('Arial Both',str(10)), bg = "white", highlightthickness=0)
-        NameBox.pack(fill = 'both', expand = 1)
+        NameBox = tk.Entry(Nameframe, borderwidth=0, font = ('Arial Bold', 10), bg = "white", highlightthickness=0)
+        NameBox.pack(fill = 'both', expand = True)
         NameBox.bind("<FocusIn>", lambda evt: Nameframe.state(["focus"]))
         NameBox.bind("<FocusOut>", lambda evt: Nameframe.state(["!focus"]))
 
@@ -158,8 +158,8 @@ def main():
         
         Nameframe = ttk.Frame(SignInFrame, style="RoundedFrame", padding=10)
         Nameframe.place(relx = 0.5, rely = 0.5, relwidth = 0.45, relheight = 0.12, anchor = 'n')
-        Passentry = tk.Entry(Nameframe, borderwidth=0, show = '●', font = ('Arial Both',str(10)), bg = "white", highlightthickness=0)
-        Passentry.pack(fill = 'both', expand = 1)
+        Passentry = tk.Entry(Nameframe, borderwidth=0, show = '●', font = ('Arial Bold', 10), bg = "white", highlightthickness=0)
+        Passentry.pack(fill = 'both', expand = True)
         Passentry.bind("<FocusIn>", lambda evt: Nameframe.state(["focus"]))
         Passentry.bind("<FocusOut>", lambda evt: Nameframe.state(["!focus"]))
         

@@ -1,5 +1,0 @@
-entry = ttk.Entry(frame)
-entry.pack(fill='x')
-entry.bind("<FocusIn>", lambda evt: frame.state(["focus"]))
-entry.bind("<FocusOut>", lambda evt: frame.state(["!focus"]))
-text = tk.Text(frame2, borderwidth=0, bg="white", highlightthickness=0)

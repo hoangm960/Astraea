@@ -1,5 +1,5 @@
 from os import system
-from tkinter import BooleanVar, Button, Canvas, Entry, Frame, IntVar, Label, PhotoImage, Tk, messagebox, Checkbutton
+from tkinter import BooleanVar, Button, Canvas, Entry, Frame, IntVar, Label, PhotoImage, Text, Tk, messagebox, Checkbutton
 from tkinter import ttk
 import tkinter as tk
 from tkinter.constants import ACTIVE, BOTH, CENTER, DISABLED, FLAT, NW, RAISED, SUNKEN, YES
@@ -131,16 +131,37 @@ def main():
                 dataAccount[name] = f.readline().replace('\n','')
                 if name == '':
                     break
+        print(dataAccount)
         Textbox = Label(SignInFrame, text = 'ĐĂNG NHẬP TÀI KHOẢN', compound = CENTER, fg = 'blue', font = ('Arial Bold',20), bd = -2)
         Textbox.place(relx = 0.5, rely = 0.1, anchor = 'n')
         Name = Label(SignInFrame, text = 'Tên đăng nhập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',10), bd = -2)
         Name.place(relx = 0.25, rely = 0.25)
-        Nameentry = Entry(SignInFrame, font = str(40))
-        Nameentry.place(relx = 0.5, rely=0.3, relwidth = 0.45, relheight = 0.08, anchor = 'n')
+        
+        # TextFrame = ttk.Frame(SignInFrame, style="RoundedFrame")
+        # TextFrame.place(relx = 0.5, rely = 0.3, relwidth = 0.45, relheight = 0.08, anchor = 'n')
+        # NameBox = Text(TextFrame, borderwidth = 0, highlightthickness = 0, bg = 'white', font = str(40))
+        # NameBox.pack(fill = 'both', expand = 1)
+                
+        Nameframe = ttk.Frame(SignInFrame, style="RoundedFrame", padding=10)
+        Nameframe.place(relx = 0.5, rely = 0.3, relwidth = 0.45, relheight = 0.12, anchor = 'n')
+        NameBox = tk.Entry(Nameframe, borderwidth=0, font = ('Arial Both',str(10)), bg = "white", highlightthickness=0)
+        NameBox.pack(fill = 'both', expand = 1)
+        NameBox.bind("<FocusIn>", lambda evt: Nameframe.state(["focus"]))
+        NameBox.bind("<FocusOut>", lambda evt: Nameframe.state(["!focus"]))
+
+        # Nameentry.place(relx = 0.5, rely=0.3, relwidth = 0.45, relheight = 0.08, anchor = 'n')
+        
         Name = Label(SignInFrame, text = 'Mật khẩu:', fg = 'blue', compound = CENTER, font = ('Arial Bold',10), bd = -2)
-        Name.place(relx = 0.25, rely = 0.4)
-        Passentry = Entry(SignInFrame, font = str(40), show = '●')
-        Passentry.place(relx = 0.5, rely=0.45, relwidth = 0.45, relheight = 0.08, anchor = 'n')
+        Name.place(relx = 0.25, rely = 0.45)
+        # Passentry = Entry(SignInFrame, font = str(40), show = '●')
+        # Passentry.place(relx = 0.5, rely=0.45, relwidth = 0.45, relheight = 0.08, anchor = 'n')
+        
+        Nameframe = ttk.Frame(SignInFrame, style="RoundedFrame", padding=10)
+        Nameframe.place(relx = 0.5, rely = 0.5, relwidth = 0.45, relheight = 0.12, anchor = 'n')
+        Passentry = tk.Entry(Nameframe, borderwidth=0, show = '●', font = ('Arial Both',str(10)), bg = "white", highlightthickness=0)
+        Passentry.pack(fill = 'both', expand = 1)
+        Passentry.bind("<FocusIn>", lambda evt: Nameframe.state(["focus"]))
+        Passentry.bind("<FocusOut>", lambda evt: Nameframe.state(["!focus"]))
         
         checked = BooleanVar()
         AutosaveButton = Checkbutton(SignInFrame, background= 'white', text= 'Lưu mật khẩu?', variable= checked, onvalue= True, offvalue= False)
@@ -149,17 +170,17 @@ def main():
         with open('data/Autosave.txt','r') as f:
             textname = f.read()
             if textname != '':
-                Nameentry.insert(0,textname)
+                NameBox.insert(0,textname)
                 textpass = dataAccount[textname]
                 Passentry.insert(0,textpass)
                 AutosaveButton.select()
             f.close()
 
         SaveButton = Button(SignInFrame, text = 'Đăng nhập', bg = 'white', command = lambda: check(), relief = FLAT)
-        SaveButton.place(relx = 0.5, rely = 0.62, relwidth = 0.15, relheight = 0.08, anchor = 'n')
+        SaveButton.place(relx = 0.5, rely = 0.7, relwidth = 0.15, relheight = 0.08, anchor = 'n')
         highlight_button(SaveButton,'#00b594','white')
         buttonDK = Button(SignInFrame, text = 'Chưa có tài khoản? Đăng ký ngay', fg = 'blue', command = lambda: DK(), relief = FLAT)
-        buttonDK.place(relx = 0.5, rely = 0.8, relwidth = 0.4, relheight = 0.035, anchor = 'n')
+        buttonDK.place(relx = 0.5, rely = 0.85, relwidth = 0.4, relheight = 0.035, anchor = 'n')
         """"""""""""""""""" Chuyển trang đăng ký """""""""""""""""""""""""
         def DK():
             destroy(SignInFrame)
@@ -241,22 +262,6 @@ def main():
                             password = password + '\n'
                             f.write(password)
                             destroy(SignInFrame)
-                            # NextSignBox = Canvas(SignRoot, bg = 'white')
-                            # Name = Label(NextSignBox, text = 'Đặt tên người dùng:', fg = 'black', bg = 'white', font = ('Arial Bold','10'))
-                            # Name.place(relx = 0.25, rely = 0.25)
-                            # Nameentry = Entry(NextSignBox, font = str(40))
-                            # Nameentry.place(relx = 0.5, rely=0.3, relwidth = 0.45, relheight = 0.08, anchor = 'n')
-                            
-                            # ClassName = Label(NextSignBox, text = 'Lớp :', fg = 'black', bg = 'white', font = ('Arial Bold','10'))
-                            # ClassName.place(relx = 0.25, rely = 0.25)
-                            # Classentry = Entry(NextSignBox, font = str(40))
-                            # Classentry.place(relx = 0.5, rely=0.3, relwidth = 0.45, relheight = 0.08, anchor = 'n')
-                            
-                            # with open('data/Profile.txt','a',encoding = 'utf8') as file:
-                            #     data = Nameentry.get()+'\n' + Classentry.get() + '\n'
-                            #     file.write(data)
-                            #     file.close()
-                            # NextSignBox.destroy()
                             complete = Label(SignInFrame, text = 'Đăng ký đã hoàn thành.', bg = 'white', fg = 'blue', font = ('Arial Bold',20))
                             complete.place(relx = 0.5, rely = 0.4, anchor = 'n')
                             SaveButton = Button(SignInFrame, text = 'Quay về', font = ('Arial Bold',10), activebackground = 'white', command = lambda: DN(), relief = FLAT)
@@ -272,28 +277,28 @@ def main():
             SignRoot.wait_window()
         """"""""""""""""""" Kiểm tra thông tin đăng nhập """""""""""""""""""""""""
         def check():
-            if Nameentry.get() == '' or Passentry.get() == '':
+            if NameBox.get() == '' or Passentry.get() == '':
                 error = Label(SignInFrame, text = "Điền đẩy đủ trường thông tin", bg = 'white', fg = 'red', font = str(30))
-                error.place(relx = 0.5, rely = 0.55, relwidth = 0.45, anchor = 'n')
+                error.place(relx = 0.5, rely = 0.65, relwidth = 0.45, anchor = 'n')
             else:            
                 checktk = False
                 checkmk = False
-                if Nameentry.get() in dataAccount.keys():
+                if NameBox.get() in dataAccount.keys():
                     checktk = True
-                    if dataAccount[Nameentry.get()] == Passentry.get():
+                    if dataAccount[NameBox.get()] == Passentry.get():
                         checkmk = True
                     else:
                         error = Label(SignInFrame, text = "Mật khẩu không chính xác", bg = 'white', fg = 'red', font = str(30))
-                        error.place(relx = 0.5, rely = 0.55, relwidth = 0.45, anchor = 'n')
+                        error.place(relx = 0.5, rely = 0.65, relwidth = 0.45, anchor = 'n')
                         checkmk = False
                         checktk = False
                 else:
                     error = Label(SignInFrame, text = "Tài khoản không tồn tại", bg = 'white', fg = 'red', font = str(30))
-                    error.place(relx = 0.5, rely = 0.55, relwidth = 0.45, anchor = 'n')
+                    error.place(relx = 0.5, rely = 0.65, relwidth = 0.45, anchor = 'n')
                     checkmk = False
                     checktk = False
                 if checkmk == True and checktk == True:
-                    nameAccount = Nameentry.get()
+                    nameAccount = NameBox.get()
                     if checked.get() == True:
                         with open('data/Autosave.txt','w') as file:
                             file.write(nameAccount)
@@ -311,7 +316,7 @@ def main():
                                 break
                             else:
                                 HostAccount.append(name)
-                        nameAccount = Nameentry.get()
+                        nameAccount = NameBox.get()
                         if nameAccount in HostAccount:
                             SignRoot.destroy()
                             GUI("teacher").Main()

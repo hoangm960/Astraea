@@ -1,21 +1,32 @@
-import sys
-from io import StringIO
-class Capturing(list):
-    def __enter__(self):
-        self._stdout = sys.stdout
-        sys.stdout = self._stringio = StringIO()
-        return self
-
-    def __exit__(self, *args):
-        self.extend(self._stringio.getvalue().splitlines())
-        del self._stringio
-        sys.stdout = self._stdout
+import tkinter as tk
+from tkinter import ttk
 
 
-with Capturing() as output: 
-    print('Hello')
-try:    
-    assert output[0] == 'Hello')
-    print("Đúng!")
-except AssertionError:
-    print("Sai!")
+class ScrollableFrame(ttk.Frame):
+    def __init__(self, container, *args, **kwargs):
+        super().__init__(container, *args, **kwargs)
+        self.canvas = tk.Canvas(self)
+        scrollbar = ttk.Scrollbar(self, orient="vertical", command=self.canvas.yview)
+        self.scrollable_frame = ttk.Frame(self.canvas)
+        
+
+        self.canvas.bind_all("<Configure>", self.onFrameConfigure)
+        
+        self.canvas.bind_all("<MouseWheel>", lambda e: self.canvas.yview_scroll(int(-1*(e.delta/120)), "units"))
+
+        self.canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
+
+        self.canvas.configure(yscrollcommand=scrollbar.set)
+
+        self.canvas.pack(side="left", fill="both", expand=True)
+        scrollbar.pack(side="right", fill="y")
+    
+    def onFrameConfigure(self, event):
+        self.canvas.configure(scrollregion = self.canvas.bbox("all"))
+    
+root = tk.Tk()
+frame = ScrollableFrame(root)
+for i in range(50):
+    ttk.Label(frame.scrollable_frame, text="Sample scrolling label").pack()
+frame.pack()
+root.mainloop()

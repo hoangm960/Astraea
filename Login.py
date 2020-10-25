@@ -4,6 +4,7 @@ from tkinter import ttk
 import tkinter as tk
 from tkinter.constants import ACTIVE, BOTH, CENTER, DISABLED, FLAT, NW, RAISED, SUNKEN, YES
 from tkinter.font import NORMAL
+from tkinter.ttk import Style
 from gui import GUI
 #----------------------------------------------------------------
 #SignBox
@@ -110,7 +111,7 @@ def main():
     BnEBCQTggAUGGKCB0ktr0PTTTEfttNRQT22ABR4EkEABDXgnGUEn31ZABglE
     EEAAWaeN9tpqt832221HEEECW6M3wc+Hga3SBgtMODBABw00UEEBgxdO+OGG
     J4744oZzXUEDHQxwN7F5G7QRdXxPoPkAnHfu+eeghw665n1vIKhJBQUEADs=""")
-    style = ttk.Style()
+    style = Style()
     style.element_create("RoundedFrame", "image", "frameBorder",
         ("focus", "frameFocusBorder"), border=16
         , sticky="nsew")
@@ -118,7 +119,7 @@ def main():
 
     SignInBoxes  = Canvas(SignRoot, width = w, height = h)
     SignInBoxes.pack(expand = True, fill = BOTH)
-    SignInFrame = ttk.Frame(SignInBoxes, style="RoundedFrame")
+    SignInFrame = ttk.Frame(SignInBoxes, style= "RoundedFrame")
     SignInFrame.place(relx = 0.08, rely = 0.36, relwidth = 0.5, relheight = 0.5)
     # SignInFrame = Frame(SignInBoxes, bg = 'white')
     # SignInFrame.place(relx = 0.08, rely = 0.36, relwidth= 0.5, relheight= 0.5)

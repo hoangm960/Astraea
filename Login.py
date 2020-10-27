@@ -6,7 +6,9 @@ from tkinter.constants import ACTIVE, BOTH, CENTER, DISABLED, FLAT, NW, RAISED, 
 from tkinter.font import NORMAL
 from tkinter.ttk import Style
 from gui import GUI
-from PIL import Image, ImageTk
+import encription
+from PIL import ImageTk, Image
+
 #----------------------------------------------------------------
 #SignBox
 
@@ -88,8 +90,13 @@ def main():
     SignInFrame.place(relx = 0.08, rely = 0.36, relwidth = 0.5, relheight = 0.5)
     # SignInFrame = Frame(SignInBoxes, bg = 'white')
     # SignInFrame.place(relx = 0.08, rely = 0.36, relwidth= 0.5, relheight= 0.5)
+    
+    ENCRIPTED_PATH = 'data/User.encrypted'
+    DECRIPTED_PATH = 'data/User.txt'
+
     def DN():
         destroy(SignInFrame)
+        encription.decript(ENCRIPTED_PATH, DECRIPTED_PATH)
         dataAccount = dict()
         with open('data/User.txt','r') as f:
             while True:
@@ -97,6 +104,8 @@ def main():
                 dataAccount[name] = f.readline().replace('\n','')
                 if name == '':
                     break
+        encription.get_key()
+        encription.encript(DECRIPTED_PATH, ENCRIPTED_PATH)
         Textbox = Label(SignInFrame, text = 'ĐĂNG NHẬP TÀI KHOẢN', compound = CENTER, fg = 'blue', font = ('Arial Bold',20), bd = -2)
         Textbox.place(relx = 0.5, rely = 0.1, anchor = 'n')
         Name = Label(SignInFrame, text = 'Tên đăng nhập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',10), bd = -2)

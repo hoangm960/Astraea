@@ -75,6 +75,10 @@ def main():
     WOBBAAkU0EB9oBGUdXIFZJBABAEEsPjmmnfO+eeeh/55BBEk0Ph/E8Q9meQq
     bbDABAN00EADFRRQ++2254777rr3jrvjFTTQwQCpz7u6QRut5/oEzA/g/PPQ
     Ry/99NIz//oGrZpUUEAAOw==""")
+<<<<<<< HEAD
+    img2 = tk.PhotoImage("frameBorder", file = 'icons/trán.png')
+    style = ttk.Style()
+=======
     img2 = tk.PhotoImage("frameBorder", data="""
     R0lGODlhQABAAPcAAHx+fMTCxKSipOTi5JSSlNTS1LSytPTy9IyKjMzKzKyq
     rOzq7JyanNza3Ly6vPz6/ISChMTGxKSmpOTm5JSWlNTW1LS2tPT29IyOjMzO
@@ -113,9 +117,9 @@ def main():
     EEAAWaeN9tpqt832221HEEECW6M3wc+Hga3SBgtMODBABw00UEEBgxdO+OGG
     J4744oZzXUEDHQxwN7F5G7QRdXxPoPkAnHfu+eeghw665n1vIKhJBQUEADs=""")
     style = Style()
+>>>>>>> 32cf5fcce16f5926f452cbf5458f67fe5eb9e259
     style.element_create("RoundedFrame", "image", "frameBorder",
-        ("focus", "frameFocusBorder"), border=16
-        , sticky="nsew")
+        ("focus", "frameFocusBorder"), sticky="nsew")
     style.layout("RoundedFrame", [("RoundedFrame", {"sticky": "nsew"})])
 
     SignInBoxes  = Canvas(SignRoot, width = w, height = h)

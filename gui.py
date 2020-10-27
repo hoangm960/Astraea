@@ -1,18 +1,18 @@
 from ctypes import alignment
 import os
 import subprocess
-import tkinter
 from tkinter import ttk
+import tkinter as tk
+import typing
 import webbrowser
 from tkinter import (Button, Canvas, Checkbutton, Entry, Frame, Label, Listbox,
                      PhotoImage, Scrollbar, Text, Tk, Toplevel, messagebox)
 from tkinter.constants import (ALL, BOTH, BOTTOM, CENTER, DISABLED, END, FLAT,
-                               HORIZONTAL, LEFT, NW, RIGHT, VERTICAL, WORD, X,
+                               HORIZONTAL, LEFT, NW, RIGHT, TOP, VERTICAL, WORD, X,
                                Y)
-
+from PIL import ImageTk, Image
 import pygetwindow as gw
 import check_algorithm
-
 
 def highlight_button(button_name, colour1, colour2):
     def on_enter(e):
@@ -138,6 +138,57 @@ class GUI:
             self.place(relx = 0.5, rely = 0.88, relwidth = 0.2, relheight = 0.05, anchor = 'n')
             highlight_button(self, '#30e651', '#39c459')
     
+<<<<<<< HEAD
+    # class EditWindow(Tk):
+        # class MainCanvas(Canvas):
+        #     class EditFrame(Frame):
+        #         def __init__(self, root, *args, **kwargs):
+        #             Frame.__init__(self, root, *args, **kwargs)
+        #             self.pack(expand=True, fill=BOTH)
+
+        #             Button(self, text= 'hello').pack()
+
+        #     def __init__(self, root, *args, **kwargs):
+        #         Canvas.__init__(self, root, *args, **kwargs)
+        #         self.pack(side=LEFT, expand=True, fill=BOTH)
+
+        #     def create_frames(self, num):
+        #         for _ in range(num):
+        #             self.EditFrame(self, bg= 'white')                
+
+        # def __init__(self, *args, **kwargs):
+        #     Tk.__init__(self, *args, **kwargs)
+        #     
+    def MainCanvas():    
+        EditWindow = Toplevel()
+        EditWindow.title('Cửa sổ chỉnh sửa')
+        EditWindow.geometry('700x500+250+100')
+        EditWindow.resizable(0,0)
+
+        EditCanvas = Canvas(EditWindow, bg = '#6292bf', width = 800, height = 600,borderwidth=0, highlightthickness=0)
+        EditCanvas.pack()
+        EditFrame = GradientFrame(EditCanvas,[800,600],colors = ("#7df5db","#ffdc42"),direction= 2,borderwidth=0, highlightthickness=0)
+        EditFrame.pack()
+        NameLesson = Label(EditFrame, text = 'Tên bài tập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',15), bd = -2)
+        NameLesson.place(relx = 0.15, rely = 0.3)
+        Lessonentry = Entry(EditFrame, justify = CENTER, font = str(40))
+        Lessonentry.place(relx = 0.55, rely=0.3, relwidth = 0.45, relheight = 0.08, anchor = 'n')
+        NumFrame = Label(EditFrame, text = 'Số bài tập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',15), bd = -2)
+        NumFrame.place(relx = 0.15, rely = 0.5)
+        Content = Entry(EditFrame, justify = CENTER, font = str(40))
+        Content.place(relx = 0.55, rely=0.5, relwidth = 0.25, relheight = 0.08, anchor = 'n')
+
+        # def create_config_canvas():    
+        #     # ConfigCanvas = self.MainCanvas(self, bg = '#6292bf', width = 800, height = 600)
+        #     # ConfigCanvas.configure(scrollregion= ConfigCanvas.bbox("all"))
+        #     # ConfigCanvas.create_frames(self.ContentNum)
+        #     ConfigCanvas = Canvas(self, bg = '#6292bf', width = 800, height = 600)
+        #     ConfigCanvas.pack()
+        #     ConfigFrame =GradientFrame(ConfigCanvas,[800,600],colors = ("#7df5db","#ffdc42"),direction= 2, borderwidth=0, highlightthickness=0)
+        #     ConfigFrame.pack()
+            
+        def check(Content):
+=======
     class EditWindow(Tk):
         class MainCanvas(Canvas):
             class EditFrame(Frame):
@@ -187,19 +238,20 @@ class GUI:
             # OKButton.place(relx = 0.5 , rely = 0.83, anchor = 'n')
 
         def check(self, Content):
+>>>>>>> 32cf5fcce16f5926f452cbf5458f67fe5eb9e259
             try:
-                self.ContentNum = int(Content.get())
-                self.EditCanvas.destroy()
-                self.create_config_canvas()
+                ContentNum = int(Content.get())
+                EditFrame.destroy
+                # create_config_canvas()
+                photo = PhotoImage(file = 'icons/trán.png')
+                Label(EditFrame, image = photo).place(relx = 0.1, rely = 0.1)
             except ValueError:
-                Error = Label(self.EditCanvas, text = 'Số liệu không phù hợp', fg = 'red', font = ('Arial Bold',10), bg = '#6292bf')
+                Error = Label(EditCanvas, text = 'Số liệu không phù hợp', fg = 'red', font = ('Arial Bold',10), bg = 'white')
                 Error.place(relx = 0.5, rely = 0.72, anchor = 'n')
             
-        def create_config_canvas(self):    
-            ConfigCanvas = self.MainCanvas(self, bg = '#6292bf', width = 800, height = 600)
-            ConfigCanvas.configure(scrollregion= ConfigCanvas.bbox("all"))
-            ConfigCanvas.create_frames(self.ContentNum)
-
+        
+        OKButton = Button(EditFrame, text = 'Tiếp tục', command = lambda: check(Content))
+        OKButton.place(relx = 0.7, rely = 0.8, relwidth = 0.2, relheight = 0.1)
 
     class Scoreboard(Toplevel):
         class TitleFrame(Frame):
@@ -224,7 +276,7 @@ class GUI:
             self.title('Kết quả bài làm')
             self.geometry('700x500+250+100')
             self.resizable(0,0)
-            MarkBG = Canvas(self, bg = '#6292bf', width = 800, height = 600)
+            MarkBG = Canvas(self, bg = '#6292bf', width = 800, height = 600,borderwidth=0, highlightthickness=0)
             MarkBG.pack()
             self.TitleFrame(MarkBG, bg = '#6292bf')
             self.ContentFrame(MarkBG)
@@ -293,7 +345,7 @@ class GUI:
         #---------------
         
         if self.role.lower() == 'teacher':
-            self.EditButton(MainWindow, bg = '#347d6c', text = 'Sửa đổi', fg = 'white', font = ('Arial Bold',10),command = lambda: self.EditWindow())
+            self.EditButton(MainWindow, bg = '#347d6c', text = 'Sửa đổi', fg = 'white', font = ('Arial Bold',10),command = lambda: GUI.MainCanvas())
         elif self.role.lower() == 'student':
             def destroyMain():
                 if messagebox.askokcancel("Thông báo", "Xác nhận Kết thúc bài làm? \n(Chú ý không thể chỉnh sửa)"):

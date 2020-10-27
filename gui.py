@@ -10,7 +10,7 @@ from tkinter import (Button, Canvas, Checkbutton, Entry, Frame, Label, Listbox,
 from tkinter.constants import (ALL, BOTH, BOTTOM, CENTER, DISABLED, END, FLAT,
                                HORIZONTAL, LEFT, NW, RIGHT, TOP, VERTICAL, WORD, X,
                                Y)
-from PIL import ImageTk, Image
+# from PIL import ImageTk, Image
 import pygetwindow as gw
 import check_algorithm
 
@@ -161,18 +161,18 @@ class GUI:
 
             self.EditCanvas = Canvas(self, bg = '#6292bf', width = 800, height = 600)
             self.EditCanvas.pack()
-            EditFrame = GradientFrame(self.EditCanvas,[800,600],colors = ("#7df5db","#ffdc42"),direction= 2)
-            EditFrame.pack()
-            Name = Label(EditFrame, text = 'Tên bài tập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',15), bd = -2)
+            self.EditFrame = GradientFrame(self.EditCanvas,[800,600],colors = ("#7df5db","#ffdc42"),direction= 2)
+            self.EditFrame.pack()
+            Name = Label(self.EditFrame, text = 'Tên bài tập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',15), bd = -2)
             Name.place(relx = 0.15, rely = 0.3)
-            Nameentry = Entry(EditFrame, justify = CENTER, font = str(40))
+            Nameentry = Entry(self.EditFrame, justify = CENTER, font = str(40))
             Nameentry.place(relx = 0.55, rely=0.3, relwidth = 0.45, relheight = 0.08, anchor = 'n')
-            Name = Label(EditFrame, text = 'Số bài tập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',15), bd = -2)
+            Name = Label(self.EditFrame, text = 'Số bài tập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',15), bd = -2)
             Name.place(relx = 0.15, rely = 0.5)
-            Passentry = Entry(EditFrame, justify = CENTER, font = str(40))
+            Passentry = Entry(self.EditFrame, justify = CENTER, font = str(40))
             Passentry.place(relx = 0.55, rely=0.5, relwidth = 0.25, relheight = 0.08, anchor = 'n')
-            OKButton = Button(EditFrame, text = 'NEXT', command = lambda: self.MainCanvas(self).create_frames(self.ContentNum))
-            OKButton.place(relx = 0.7, rely = 0.8, relwidth = 0.2, relheight = 0.1)
+            # OKButton = Button(self.EditFrame, text = 'NEXT', command = lambda: self.MainCanvas(self).create_frames(self.ContentNum))
+            # OKButton.place(relx = 0.7, rely = 0.8, relwidth = 0.2, relheight = 0.1)
             # TitleFrame = Frame(self.EditCanvas, bg = '#6292bf')
             # TitleFrame.place(relx = 0.01, rely = 0.05, relwidth = 0.98, relheight = 0.3)
             # Content = Label(TitleFrame, text ='Số bài tập', bg = '#addcf0', fg = 'white', font = ('Arial Bold',10))
@@ -185,21 +185,20 @@ class GUI:
             # OKButton = Button(NumFrame, text = 'OK', font = ('Arial bold',10), relief = FLAT, command = lambda: self.check(Content))
             # highlight_button(OKButton, '#2efff8', 'white')
             # OKButton.place(relx = 0.5 , rely = 0.83, anchor = 'n')
+            OKButton = Button(self.EditFrame, text = 'Tiếp tục', command = lambda: self.check(self.ContentNum))
+            OKButton.place(relx = 0.7, rely = 0.8, relwidth = 0.2, relheight = 0.1)
 
         def check(self, Content):
             try:
-                ContentNum = int(Content.get())
-                EditFrame.destroy
+                self.ContentNum = int(Content.get())
+                self.EditFrame.destroy
                 # create_config_canvas()
-                photo = PhotoImage(file = 'icons/trán.png')
-                Label(EditFrame, image = photo).place(relx = 0.1, rely = 0.1)
+                # photo = PhotoImage(file = 'icons/trán.png')
+                # Label(self.EditFrame, image = photo).place(relx = 0.1, rely = 0.1)
             except ValueError:
-                Error = Label(EditCanvas, text = 'Số liệu không phù hợp', fg = 'red', font = ('Arial Bold',10), bg = 'white')
+                Error = Label(self.EditCanvas, text = 'Số liệu không phù hợp', fg = 'red', font = ('Arial Bold',10), bg = 'white')
                 Error.place(relx = 0.5, rely = 0.72, anchor = 'n')
             
-        
-        OKButton = Button(EditFrame, text = 'Tiếp tục', command = lambda: check(Content))
-        OKButton.place(relx = 0.7, rely = 0.8, relwidth = 0.2, relheight = 0.1)
 
     class Scoreboard(Toplevel):
         class TitleFrame(Frame):
@@ -293,7 +292,7 @@ class GUI:
         #---------------
         
         if self.role.lower() == 'teacher':
-            self.EditButton(MainWindow, bg = '#347d6c', text = 'Sửa đổi', fg = 'white', font = ('Arial Bold',10),command = lambda: GUI.MainCanvas())
+            self.EditButton(MainWindow, bg = '#347d6c', text = 'Sửa đổi', fg = 'white', font = ('Arial Bold',10), command = lambda: self.EditWindow)
         elif self.role.lower() == 'student':
             def destroyMain():
                 if messagebox.askokcancel("Thông báo", "Xác nhận Kết thúc bài làm? \n(Chú ý không thể chỉnh sửa)"):
@@ -315,6 +314,6 @@ class GUI:
         #         os.system("TASKKILL /F /IM Code.exe")
         # root.protocol("WM_DELETE_WINDOW", on_closing)
 
-        root.wait_window()
+        # root.wait_window()
         root.mainloop()
     

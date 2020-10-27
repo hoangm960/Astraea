@@ -4,8 +4,6 @@ from pathlib import Path
 from cryptography.fernet import Fernet, InvalidToken
 
 KEY_PATH  = 'data/key.key'
-ENCRIPTED_PATH = 'data/User.encrypted'
-DECRIPTED_PATH = 'data/User.txt'
 
 def get_key():
     key = Fernet.generate_key()
@@ -55,6 +53,3 @@ def decript(input_file, output_file):
 
         os.remove(input_file)
 
-# get_key()
-# encript(DECRIPTED_PATH, ENCRIPTED_PATH)
-# decript(ENCRIPTED_PATH, DECRIPTED_PATH)

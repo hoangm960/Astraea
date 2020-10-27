@@ -7,7 +7,6 @@ from tkinter.font import NORMAL
 from tkinter.ttk import Style
 from gui import GUI
 import encription
-from PIL import ImageTk, Image
 
 #----------------------------------------------------------------
 #SignBox
@@ -105,7 +104,6 @@ def main():
                 dataAccount[name] = f.readline().replace('\n','')
                 if name == '':
                     break
-        print(dataAccount)
         encription.get_key()
         encription.encript(DECRIPTED_PATH, ENCRIPTED_PATH)
         Textbox = Label(SignInFrame, text = 'ĐĂNG NHẬP TÀI KHOẢN', compound = CENTER, fg = 'blue', font = ('Arial Bold',20), bd = -2)

@@ -82,7 +82,7 @@ def main():
     style.layout("RoundedFrame", [("RoundedFrame", {"sticky": "nsew"})])
 
     SignInBoxes  = Canvas(SignRoot, width = w, height = h)
-    SignInBoxes.create_image(0,0,image = ImageTk.PhotoImage(Image.open(file = 'icons/Background.png')))
+    SignInBoxes.create_image(0,0,image = ImageTk.PhotoImage(Image.open('icons/Background.png')))
     SignInBoxes.pack(expand = True, fill = BOTH)
     SignInFrame = ttk.Frame(SignInBoxes, style= "RoundedFrame")
     SignInFrame.place(relx = 0.08, rely = 0.36, relwidth = 0.5, relheight = 0.5)

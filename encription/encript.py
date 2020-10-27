@@ -16,4 +16,3 @@ def main(input_file, output_file):
         f.write(encrypted)
     
     os.remove(input_file)
-

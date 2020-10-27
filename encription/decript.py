@@ -1,5 +1,7 @@
 from pathlib import Path
+
 from cryptography.fernet import Fernet, InvalidToken
+
 
 def main(input_file, output_file):
     input_file_path = Path(input_file)
@@ -23,3 +25,4 @@ def main(input_file, output_file):
         except InvalidToken as e:
             print("Invalid Key - Unsuccessfully decrypted")
 
+# main('encription/user.encrypted', 'data/User.txt')

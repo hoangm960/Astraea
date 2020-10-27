@@ -189,6 +189,7 @@ def main():
             """ Kiểm tra thông tin đăng ký """
             def saves():
                 again = True
+                encription.decript(ENCRIPTED_PATH, DECRIPTED_PATH)
                 with open(r'data/User.txt','a+') as f:
                     newname = Nameentry.get()
                     password = Passentry.get() 
@@ -242,7 +243,9 @@ def main():
                             complete.place(relx = 0.5, rely = 0.4, anchor = 'n')
                             SaveButton = Button(SignInFrame, text = 'Quay về', font = ('Arial Bold',10), activebackground = 'white', command = lambda: DN(), relief = FLAT)
                             SaveButton.place(relx = 0.5, rely = 0.6, relwidth = 0.2, relheight = 0.08, anchor = 'n')
-                            f.close()
+                encription.get_key()
+                encription.encript(DECRIPTED_PATH, ENCRIPTED_PATH)
+
             def on_closing():
                 if messagebox.askokcancel("Thông báo", "Thoát giao diện đăng nhập?"):
                     SignRoot.destroy()

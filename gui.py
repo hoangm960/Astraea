@@ -98,7 +98,7 @@ class GUI:
         class YoutubeButton(Button):
             def __init__(self, root, *args, **kwargs):
                 Button.__init__(self, root, *args, **kwargs)
-                self.place(relx = 0, rely = 0)  
+                self.place(relx = 0, rely = 0)
                 photoYT = PhotoImage(file = r"icons/youtubeButton.png")
                 photoimageYT = photoYT.subsample(7,'7')
                 self.config(image= photoimageYT, command = lambda: self.open_youtube())
@@ -158,6 +158,7 @@ class GUI:
         # def __init__(self, *args, **kwargs):
         #     Tk.__init__(self, *args, **kwargs)
         #     
+<<<<<<< HEAD
     def MainCanvas(self):    
         EditWindow = Toplevel()
         EditWindow.title('Cửa sổ chỉnh sửa')
@@ -191,6 +192,8 @@ class GUI:
             except ValueError:
                 Error = Label(self.EditFrame, text = 'Số liệu không phù hợp', fg = 'red', font = ('Arial Bold',10), bg = '#6292bf')
                 Error.place(relx = 0.5, rely = 0.72, anchor = 'n')
+=======
+>>>>>>> 846d7259d4f8cb36802a4205bafd61436a86eb77
             
 
     class Scoreboard(Toplevel):

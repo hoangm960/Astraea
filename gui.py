@@ -158,7 +158,7 @@ class GUI:
         # def __init__(self, *args, **kwargs):
         #     Tk.__init__(self, *args, **kwargs)
         #     
-    def MainCanvas():    
+    def MainCanvas(self):    
         EditWindow = Toplevel()
         EditWindow.title('Cửa sổ chỉnh sửa')
         EditWindow.geometry('700x500+250+100')
@@ -190,7 +190,7 @@ class GUI:
             try:
                 ContentNum = int(Content.get())
                 EditCanvas.destroy()
-                create_config_canvas()
+                # create_config_canvas()
             except ValueError:
                 Error = Label(EditCanvas, text = 'Số liệu không phù hợp', fg = 'red', font = ('Arial Bold',10), bg = '#6292bf')
                 Error.place(relx = 0.5, rely = 0.72, anchor = 'n')
@@ -288,7 +288,7 @@ class GUI:
         #---------------
         
         if self.role.lower() == 'teacher':
-            self.EditButton(MainWindow, bg = '#347d6c', text = 'Sửa đổi', fg = 'white', font = ('Arial Bold',10), command = lambda: self.EditWindow)
+            self.EditButton(MainWindow, bg = '#347d6c', text = 'Sửa đổi', fg = 'white', font = ('Arial Bold',10), command = lambda: self.MainCanvas())
         elif self.role.lower() == 'student':
             def destroyMain():
                 if messagebox.askokcancel("Thông báo", "Xác nhận Kết thúc bài làm? \n(Chú ý không thể chỉnh sửa)"):

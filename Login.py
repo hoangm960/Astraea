@@ -82,10 +82,11 @@ def main():
     style.element_create("RoundedFrame", "image", "frameBorder",
         ("focus", "frameFocusBorder"),border = 30,  sticky="nsew")
     style.layout("RoundedFrame", [("RoundedFrame", {"sticky": "nsew"})])
-
     SignInBoxes  = Canvas(SignRoot, width = w, height = h)
-    SignInBoxes.create_image(0,0,image = ImageTk.PhotoImage(Image.open('icons/Background.png')))
     SignInBoxes.pack(expand = True, fill = BOTH)
+    image = tk.PhotoImage(file="icons/Background.png")
+    SignInBoxes.create_image(0,0, image = image, anchor = 'n')
+    
     SignInFrame = ttk.Frame(SignInBoxes, style= "RoundedFrame")
     SignInFrame.place(relx = 0.08, rely = 0.36, relwidth = 0.5, relheight = 0.5)
     # SignInFrame = Frame(SignInBoxes, bg = 'white')
@@ -104,6 +105,7 @@ def main():
                 dataAccount[name] = f.readline().replace('\n','')
                 if name == '':
                     break
+        print(dataAccount)
         encription.get_key()
         encription.encript(DECRIPTED_PATH, ENCRIPTED_PATH)
         Textbox = Label(SignInFrame, text = 'ĐĂNG NHẬP TÀI KHOẢN', compound = CENTER, fg = 'blue', font = ('Arial Bold',20), bd = -2)

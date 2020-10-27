@@ -13,6 +13,7 @@ from tkinter.constants import (ALL, BOTH, BOTTOM, CENTER, DISABLED, END, FLAT,
 # from PIL import ImageTk, Image
 import pygetwindow as gw
 import check_algorithm
+import Login
 
 def highlight_button(button_name, colour1, colour2):
     def on_enter(e):
@@ -138,62 +139,54 @@ class GUI:
             self.place(relx = 0.5, rely = 0.88, relwidth = 0.2, relheight = 0.05, anchor = 'n')
             highlight_button(self, '#30e651', '#39c459')
     
-    # class EditWindow(Tk):
-        # class MainCanvas(Canvas):
-        #     class EditFrame(Frame):
-        #         def __init__(self, root, *args, **kwargs):
-        #             Frame.__init__(self, root, *args, **kwargs)
-        #             self.pack(expand=True, fill=BOTH)
+    class EditWindow(Tk):
+        class MainCanvas(Canvas):
+            class EditFrame(Frame):
+                def __init__(self, root, *args, **kwargs):
+                    Frame.__init__(self, root, *args, **kwargs)
+                    self.pack(expand=True, fill=BOTH)
 
-        #             Button(self, text= 'hello').pack()
+                    Button(self, text= 'hello').pack()
 
-        #     def __init__(self, root, *args, **kwargs):
-        #         Canvas.__init__(self, root, *args, **kwargs)
-        #         self.pack(side=LEFT, expand=True, fill=BOTH)
+            def __init__(self, root, *args, **kwargs):
+                Canvas.__init__(self, root, *args, **kwargs)
+                self.pack(side=LEFT, expand=True, fill=BOTH)
 
-        #     def create_frames(self, num):
-        #         for _ in range(num):
-        #             self.EditFrame(self, bg= 'white')                
+            def create_frames(self, num):
+                for _ in range(num):
+                    self.EditFrame(self, bg= 'white')                
 
-        # def __init__(self, *args, **kwargs):
-        #     Tk.__init__(self, *args, **kwargs)
-        #     
-<<<<<<< HEAD
-    def MainCanvas(self):    
-        EditWindow = Toplevel()
-        EditWindow.title('Cửa sổ chỉnh sửa')
-        EditWindow.geometry('700x500+250+100')
-        EditWindow.resizable(0,0)
+        def __init__(self, *args, **kwargs):
+            Tk.__init__(self, *args, **kwargs)
+            self.title('Cửa sổ chỉnh sửa')
+            self.resizable(0,0)
 
-        EditCanvas = Canvas(EditWindow, bg = '#6292bf', width = 800, height = 600,borderwidth=0, highlightthickness=0)
-        EditCanvas.pack()
-        EditFrame = GradientFrame(EditCanvas,[800,600],colors = ("#7df5db","#ffdc42"),direction= 2,borderwidth=0, highlightthickness=0)
-        EditFrame.pack()
-        NameLesson = Label(EditFrame, text = 'Tên bài tập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',15), bd = -2)
-        NameLesson.place(relx = 0.15, rely = 0.3)
-        Lessonentry = Entry(EditFrame, justify = CENTER, font = str(40))
-        Lessonentry.place(relx = 0.55, rely=0.3, relwidth = 0.45, relheight = 0.08, anchor = 'n')
-        NumFrame = Label(EditFrame, text = 'Số bài tập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',15), bd = -2)
-        NumFrame.place(relx = 0.15, rely = 0.5)
-        Content = Entry(EditFrame, justify = CENTER, font = str(40))
-        Content.place(relx = 0.55, rely=0.5, relwidth = 0.25, relheight = 0.08, anchor = 'n')
-
-        # def create_config_canvas():    
+            self.EditCanvas = Canvas(self, bg = '#6292bf', width = 800, height = 600,borderwidth=0, highlightthickness=0)
+            self.EditCanvas.pack()
+            self.EditFrame = GradientFrame(self.EditCanvas,[800,600],colors = ("#7df5db","#ffdc42"),direction= 2,borderwidth=0, highlightthickness=0)
+            self.EditFrame.pack()
+            NameLesson = Label(self.EditFrame, text = 'Tên bài tập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',15), bd = -2)
+            NameLesson.place(relx = 0.15, rely = 0.3)
+            Lessonentry = Entry(self.EditFrame, justify = CENTER, font = str(40))
+            Lessonentry.place(relx = 0.55, rely=0.3, relwidth = 0.45, relheight = 0.08, anchor = 'n')
+            NumFrame = Label(self.EditFrame, text = 'Số bài tập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',15), bd = -2)
+            NumFrame.place(relx = 0.15, rely = 0.5)
+            self.Content = Entry(self.EditFrame, justify = CENTER, font = str(40))
+            self.Content.place(relx = 0.55, rely=0.5, relwidth = 0.25, relheight = 0.08, anchor = 'n')
+            ButtonNext = Button(self.EditFrame, text = 'Tiếp tục', fg = 'blue', bg = 'white', command = lambda: self.check())
+            ButtonNext.place(relx = 0.65, rely = 0.8, relwidth = 0.23, relheight = 0.1)
+           # def create_config_canvas():    
         #     ConfigCanvas = self.MainCanvas(self, bg = '#6292bf', width = 800, height = 600)
         #     ConfigCanvas.configure(scrollregion= ConfigCanvas.bbox("all"))
         #     ConfigCanvas.create_frames(self.ContentNum)
-
-            
-        def check(Content):
+        def check(self):
             try:
-                ContentNum = int(Content.get())
-                EditCanvas.destroy()
+                ContentNum = int(self.Content.get())
+                Login.destroy(self.EditFrame)
                 # create_config_canvas()
             except ValueError:
-                Error = Label(self.EditFrame, text = 'Số liệu không phù hợp', fg = 'red', font = ('Arial Bold',10), bg = '#6292bf')
+                Error = Label(self.EditFrame, text = 'Số liệu không phù hợp', fg = 'red', font = ('Arial Bold',10), bg = 'white')
                 Error.place(relx = 0.5, rely = 0.72, anchor = 'n')
-=======
->>>>>>> 846d7259d4f8cb36802a4205bafd61436a86eb77
             
 
     class Scoreboard(Toplevel):
@@ -288,7 +281,7 @@ class GUI:
         #---------------
         
         if self.role.lower() == 'teacher':
-            self.EditButton(MainWindow, bg = '#347d6c', text = 'Sửa đổi', fg = 'white', font = ('Arial Bold',10), command = lambda: self.MainCanvas())
+            self.EditButton(MainWindow, bg = '#347d6c', text = 'Sửa đổi', fg = 'white', font = ('Arial Bold',10), command = lambda: self.EditWindow())
         elif self.role.lower() == 'student':
             def destroyMain():
                 if messagebox.askokcancel("Thông báo", "Xác nhận Kết thúc bài làm? \n(Chú ý không thể chỉnh sửa)"):

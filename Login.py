@@ -4,6 +4,7 @@ from tkinter import ttk
 import tkinter as tk
 from tkinter.constants import ACTIVE, BOTH, CENTER, DISABLED, FLAT, NW, RAISED, SUNKEN, YES
 from tkinter.font import NORMAL
+from tkinter.ttk import Style
 from gui import GUI
 #----------------------------------------------------------------
 #SignBox
@@ -73,15 +74,56 @@ def main():
     WOBBAAkU0EB9oBGUdXIFZJBABAEEsPjmmnfO+eeeh/55BBEk0Ph/E8Q9meQq
     bbDABAN00EADFRRQ++2254777rr3jrvjFTTQwQCpz7u6QRut5/oEzA/g/PPQ
     Ry/99NIz//oGrZpUUEAAOw==""")
+<<<<<<< HEAD
     img2 = tk.PhotoImage("frameBorder", file = 'icons/trán.png')
     style = ttk.Style()
+=======
+    img2 = tk.PhotoImage("frameBorder", data="""
+    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""")
+    style = Style()
+>>>>>>> 32cf5fcce16f5926f452cbf5458f67fe5eb9e259
     style.element_create("RoundedFrame", "image", "frameBorder",
         ("focus", "frameFocusBorder"), sticky="nsew")
     style.layout("RoundedFrame", [("RoundedFrame", {"sticky": "nsew"})])
 
     SignInBoxes  = Canvas(SignRoot, width = w, height = h)
     SignInBoxes.pack(expand = True, fill = BOTH)
-    SignInFrame = ttk.Frame(SignInBoxes, style="RoundedFrame")
+    SignInFrame = ttk.Frame(SignInBoxes, style= "RoundedFrame")
     SignInFrame.place(relx = 0.08, rely = 0.36, relwidth = 0.5, relheight = 0.5)
     # SignInFrame = Frame(SignInBoxes, bg = 'white')
     # SignInFrame.place(relx = 0.08, rely = 0.36, relwidth= 0.5, relheight= 0.5)
@@ -94,7 +136,8 @@ def main():
                 dataAccount[name] = f.readline().replace('\n','')
                 if name == '':
                     break
-        Textbox = Label(SignInFrame, text = 'ĐĂNG NHẬP TÀI KHOẢN', compound = CENTER, bg = 'white', fg = 'blue', font = ('Arial Bold',20), bd = -2)
+        print(dataAccount)
+        Textbox = Label(SignInFrame, text = 'ĐĂNG NHẬP TÀI KHOẢN', compound = CENTER, fg = 'blue', font = ('Arial Bold',20), bd = -2)
         Textbox.place(relx = 0.5, rely = 0.1, anchor = 'n')
         Name = Label(SignInFrame, text = 'Tên đăng nhập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',10), bd = -2)
         Name.place(relx = 0.25, rely = 0.25)
@@ -113,17 +156,17 @@ def main():
 
         # Nameentry.place(relx = 0.5, rely=0.3, relwidth = 0.45, relheight = 0.08, anchor = 'n')
         
-        Name = Label(SignInFrame, text = 'Mật khẩu:', fg = 'blue', bg = 'white', compound = CENTER, font = ('Arial Bold',10), bd = -2)
+        Name = Label(SignInFrame, text = 'Mật khẩu:', fg = 'blue', compound = CENTER, font = ('Arial Bold',10), bd = -2)
         Name.place(relx = 0.25, rely = 0.45)
         # Passentry = Entry(SignInFrame, font = str(40), show = '●')
         # Passentry.place(relx = 0.5, rely=0.45, relwidth = 0.45, relheight = 0.08, anchor = 'n')
         
-        Passframe = ttk.Frame(SignInFrame, style="RoundedFrame", padding=10)
-        Passframe.place(relx = 0.5, rely = 0.5, relwidth = 0.45, relheight = 0.12, anchor = 'n')
-        Passentry = tk.Entry(Passframe, borderwidth=0, show = '●', font = ('Arial Bold', 10), bg = "white", highlightthickness=0)
+        Nameframe = ttk.Frame(SignInFrame, style="RoundedFrame", padding=10)
+        Nameframe.place(relx = 0.5, rely = 0.5, relwidth = 0.45, relheight = 0.12, anchor = 'n')
+        Passentry = tk.Entry(Nameframe, borderwidth=0, show = '●', font = ('Arial Bold', 10), bg = "white", highlightthickness=0)
         Passentry.pack(fill = 'both', expand = True)
-        Passentry.bind("<FocusIn>", lambda evt: Passframe.state(["focus"]))
-        Passentry.bind("<FocusOut>", lambda evt: Passframe.state(["!focus"]))
+        Passentry.bind("<FocusIn>", lambda evt: Nameframe.state(["focus"]))
+        Passentry.bind("<FocusOut>", lambda evt: Nameframe.state(["!focus"]))
         
         checked = BooleanVar()
         AutosaveButton = Checkbutton(SignInFrame, background= 'white', text= 'Lưu mật khẩu?', variable= checked, onvalue= True, offvalue= False)

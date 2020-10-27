@@ -138,65 +138,61 @@ class GUI:
             self.place(relx = 0.5, rely = 0.88, relwidth = 0.2, relheight = 0.05, anchor = 'n')
             highlight_button(self, '#30e651', '#39c459')
     
-    class EditWindow(Tk):
-        class MainCanvas(Canvas):
-            class EditFrame(Frame):
-                def __init__(self, root, *args, **kwargs):
-                    Frame.__init__(self, root, *args, **kwargs)
-                    self.pack(expand=True, fill=BOTH)
+    # class EditWindow(Tk):
+        # class MainCanvas(Canvas):
+        #     class EditFrame(Frame):
+        #         def __init__(self, root, *args, **kwargs):
+        #             Frame.__init__(self, root, *args, **kwargs)
+        #             self.pack(expand=True, fill=BOTH)
 
-            def __init__(self, root, *args, **kwargs):
-                Canvas.__init__(self, root, *args, **kwargs)
-                self.pack(side=LEFT, expand=True, fill=BOTH)
-            def create_frames(self, num):
-                for _ in range(num):
-                    framelessoni = Frame(self)
+        #             Button(self, text= 'hello').pack()
 
-                    
-        def __init__(self, *args, **kwargs):
-            Tk.__init__(self, *args, **kwargs)
-            self.title('Cửa sổ chỉnh sửa')
-            self.geometry('700x500+250+100')
-            self.resizable(0,0)
+        #     def __init__(self, root, *args, **kwargs):
+        #         Canvas.__init__(self, root, *args, **kwargs)
+        #         self.pack(side=LEFT, expand=True, fill=BOTH)
 
-            self.EditCanvas = Canvas(self, bg = '#6292bf', width = 800, height = 600)
-            self.EditCanvas.pack()
-            self.EditFrame = GradientFrame(self.EditCanvas,[800,600],colors = ("#7df5db","#ffdc42"),direction= 2)
-            self.EditFrame.pack()
-            Name = Label(self.EditFrame, text = 'Tên bài tập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',15), bd = -2)
-            Name.place(relx = 0.15, rely = 0.3)
-            Nameentry = Entry(self.EditFrame, justify = CENTER, font = str(40))
-            Nameentry.place(relx = 0.55, rely=0.3, relwidth = 0.45, relheight = 0.08, anchor = 'n')
-            Name = Label(self.EditFrame, text = 'Số bài tập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',15), bd = -2)
-            Name.place(relx = 0.15, rely = 0.5)
-            Passentry = Entry(self.EditFrame, justify = CENTER, font = str(40))
-            Passentry.place(relx = 0.55, rely=0.5, relwidth = 0.25, relheight = 0.08, anchor = 'n')
-            # OKButton = Button(self.EditFrame, text = 'NEXT', command = lambda: self.MainCanvas(self).create_frames(self.ContentNum))
-            # OKButton.place(relx = 0.7, rely = 0.8, relwidth = 0.2, relheight = 0.1)
-            # TitleFrame = Frame(self.EditCanvas, bg = '#6292bf')
-            # TitleFrame.place(relx = 0.01, rely = 0.05, relwidth = 0.98, relheight = 0.3)
-            # Content = Label(TitleFrame, text ='Số bài tập', bg = '#addcf0', fg = 'white', font = ('Arial Bold',10))
-            # Content.place(relx = 0.5,rely = 0, relheight = 0.25, anchor = 'n')
+        #     def create_frames(self, num):
+        #         for _ in range(num):
+        #             self.EditFrame(self, bg= 'white')                
 
-            # NumFrame = Frame(self.EditCanvas, bg = '#6292bf')
-            # NumFrame.place(relx = 0.01, rely = 0.1, relwidth = 0.98, relheight = 0.4)
-            # Content = Entry(NumFrame, font = ('Arial Bold',10))
-            # Content.place(relx = 0.5, rely = 0.3, relwidth = 0.5, relheight = 0.3, anchor = 'n')    
-            # OKButton = Button(NumFrame, text = 'OK', font = ('Arial bold',10), relief = FLAT, command = lambda: self.check(Content))
-            # highlight_button(OKButton, '#2efff8', 'white')
-            # OKButton.place(relx = 0.5 , rely = 0.83, anchor = 'n')
-            OKButton = Button(self.EditFrame, text = 'Tiếp tục', command = lambda: self.check(self.ContentNum))
-            OKButton.place(relx = 0.7, rely = 0.8, relwidth = 0.2, relheight = 0.1)
+        # def __init__(self, *args, **kwargs):
+        #     Tk.__init__(self, *args, **kwargs)
+        #     
+    def MainCanvas():    
+        EditWindow = Toplevel()
+        EditWindow.title('Cửa sổ chỉnh sửa')
+        EditWindow.geometry('700x500+250+100')
+        EditWindow.resizable(0,0)
 
-        def check(self, Content):
+        EditCanvas = Canvas(EditWindow, bg = '#6292bf', width = 800, height = 600,borderwidth=0, highlightthickness=0)
+        EditCanvas.pack()
+        EditFrame = GradientFrame(EditCanvas,[800,600],colors = ("#7df5db","#ffdc42"),direction= 2,borderwidth=0, highlightthickness=0)
+        EditFrame.pack()
+        NameLesson = Label(EditFrame, text = 'Tên bài tập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',15), bd = -2)
+        NameLesson.place(relx = 0.15, rely = 0.3)
+        Lessonentry = Entry(EditFrame, justify = CENTER, font = str(40))
+        Lessonentry.place(relx = 0.55, rely=0.3, relwidth = 0.45, relheight = 0.08, anchor = 'n')
+        NumFrame = Label(EditFrame, text = 'Số bài tập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',15), bd = -2)
+        NumFrame.place(relx = 0.15, rely = 0.5)
+        Content = Entry(EditFrame, justify = CENTER, font = str(40))
+        Content.place(relx = 0.55, rely=0.5, relwidth = 0.25, relheight = 0.08, anchor = 'n')
+
+        # def create_config_canvas():    
+        #     # ConfigCanvas = self.MainCanvas(self, bg = '#6292bf', width = 800, height = 600)
+        #     # ConfigCanvas.configure(scrollregion= ConfigCanvas.bbox("all"))
+        #     # ConfigCanvas.create_frames(self.ContentNum)
+        #     ConfigCanvas = Canvas(self, bg = '#6292bf', width = 800, height = 600)
+        #     ConfigCanvas.pack()
+        #     ConfigFrame =GradientFrame(ConfigCanvas,[800,600],colors = ("#7df5db","#ffdc42"),direction= 2, borderwidth=0, highlightthickness=0)
+        #     ConfigFrame.pack()
+            
+        def check(Content):
             try:
-                self.ContentNum = int(Content.get())
-                self.EditFrame.destroy
-                # create_config_canvas()
-                # photo = PhotoImage(file = 'icons/trán.png')
-                # Label(self.EditFrame, image = photo).place(relx = 0.1, rely = 0.1)
+                ContentNum = int(Content.get())
+                EditCanvas.destroy()
+                create_config_canvas()
             except ValueError:
-                Error = Label(self.EditCanvas, text = 'Số liệu không phù hợp', fg = 'red', font = ('Arial Bold',10), bg = 'white')
+                Error = Label(EditCanvas, text = 'Số liệu không phù hợp', fg = 'red', font = ('Arial Bold',10), bg = '#6292bf')
                 Error.place(relx = 0.5, rely = 0.72, anchor = 'n')
             
 

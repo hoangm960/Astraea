@@ -98,7 +98,7 @@ class GUI:
         class YoutubeButton(Button):
             def __init__(self, root, *args, **kwargs):
                 Button.__init__(self, root, *args, **kwargs)
-                self.place(relx = 0, rely = 0)
+                self.place(relx = 0, rely = 0)  
                 photoYT = PhotoImage(file = r"icons/youtubeButton.png")
                 photoimageYT = photoYT.subsample(7,'7')
                 self.config(image= photoimageYT, command = lambda: self.open_youtube())

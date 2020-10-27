@@ -6,7 +6,6 @@ from tkinter.constants import ACTIVE, BOTH, CENTER, DISABLED, FLAT, NW, RAISED, 
 from tkinter.font import NORMAL
 from tkinter.ttk import Style
 from gui import GUI
-from encription import decript, encript, key
 #----------------------------------------------------------------
 #SignBox
 
@@ -127,17 +126,14 @@ def main():
     def DN():
         destroy(SignInFrame)
         dataAccount = dict()
-        decript.main('encription/user.encrypted', 'data/User.txt')
         with open('data/User.txt','r') as f:
             while True:
                 name = f.readline().replace('\n','')
                 dataAccount[name] = f.readline().replace('\n','')
                 if name == '':
                     break
-        key.main()
-        encript.main('data/User.txt', 'encription/user.encrypted')
-        
-        Textbox = Label(SignInFrame, text = 'ĐĂNG NHẬP TÀI KHOẢN', compound = CENTER, bg = 'white', fg = 'blue', font = ('Arial Bold',20), bd = -2)
+        print(dataAccount)
+        Textbox = Label(SignInFrame, text = 'ĐĂNG NHẬP TÀI KHOẢN', compound = CENTER, fg = 'blue', font = ('Arial Bold',20), bd = -2)
         Textbox.place(relx = 0.5, rely = 0.1, anchor = 'n')
         Name = Label(SignInFrame, text = 'Tên đăng nhập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',10), bd = -2)
         Name.place(relx = 0.25, rely = 0.25)
@@ -156,17 +152,17 @@ def main():
 
         # Nameentry.place(relx = 0.5, rely=0.3, relwidth = 0.45, relheight = 0.08, anchor = 'n')
         
-        Name = Label(SignInFrame, text = 'Mật khẩu:', fg = 'blue', bg = 'white', compound = CENTER, font = ('Arial Bold',10), bd = -2)
+        Name = Label(SignInFrame, text = 'Mật khẩu:', fg = 'blue', compound = CENTER, font = ('Arial Bold',10), bd = -2)
         Name.place(relx = 0.25, rely = 0.45)
         # Passentry = Entry(SignInFrame, font = str(40), show = '●')
         # Passentry.place(relx = 0.5, rely=0.45, relwidth = 0.45, relheight = 0.08, anchor = 'n')
         
-        Passframe = ttk.Frame(SignInFrame, style="RoundedFrame", padding=10)
-        Passframe.place(relx = 0.5, rely = 0.5, relwidth = 0.45, relheight = 0.12, anchor = 'n')
-        Passentry = tk.Entry(Passframe, borderwidth=0, show = '●', font = ('Arial Bold', 10), bg = "white", highlightthickness=0)
+        Nameframe = ttk.Frame(SignInFrame, style="RoundedFrame", padding=10)
+        Nameframe.place(relx = 0.5, rely = 0.5, relwidth = 0.45, relheight = 0.12, anchor = 'n')
+        Passentry = tk.Entry(Nameframe, borderwidth=0, show = '●', font = ('Arial Bold', 10), bg = "white", highlightthickness=0)
         Passentry.pack(fill = 'both', expand = True)
-        Passentry.bind("<FocusIn>", lambda evt: Passframe.state(["focus"]))
-        Passentry.bind("<FocusOut>", lambda evt: Passframe.state(["!focus"]))
+        Passentry.bind("<FocusIn>", lambda evt: Nameframe.state(["focus"]))
+        Passentry.bind("<FocusOut>", lambda evt: Nameframe.state(["!focus"]))
         
         checked = BooleanVar()
         AutosaveButton = Checkbutton(SignInFrame, background= 'white', text= 'Lưu mật khẩu?', variable= checked, onvalue= True, offvalue= False)
@@ -217,7 +213,6 @@ def main():
             buttonDK.place(relx = 0.5, rely = 0.8, relwidth = 0.4, relheight = 0.035, anchor = 'n')                
             """ Kiểm tra thông tin đăng ký """
             def saves():
-                decript.main('encription/user.encrypted', 'data/User.txt')
                 again = True
                 with open(r'data/User.txt','a+') as f:
                     newname = Nameentry.get()
@@ -273,9 +268,6 @@ def main():
                             SaveButton = Button(SignInFrame, text = 'Quay về', font = ('Arial Bold',10), activebackground = 'white', command = lambda: DN(), relief = FLAT)
                             SaveButton.place(relx = 0.5, rely = 0.6, relwidth = 0.2, relheight = 0.08, anchor = 'n')
                             f.close()
-                            key.main()
-                            encript.main('data/User.txt', 'encription/user.encrypted')
-
             def on_closing():
                 if messagebox.askokcancel("Thông báo", "Thoát giao diện đăng nhập?"):
                     SignRoot.destroy()
@@ -334,7 +326,7 @@ def main():
                             GUI("student").Main()
                         hostf.close()
                 f.close()
-
+                
         SignRoot.wait_window()
     DN()
     

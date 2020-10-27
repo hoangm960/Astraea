@@ -1,18 +1,18 @@
 from ctypes import alignment
 import os
 import subprocess
-import tkinter
 from tkinter import ttk
+import tkinter as tk
+import typing
 import webbrowser
 from tkinter import (Button, Canvas, Checkbutton, Entry, Frame, Label, Listbox,
                      PhotoImage, Scrollbar, Text, Tk, Toplevel, messagebox)
 from tkinter.constants import (ALL, BOTH, BOTTOM, CENTER, DISABLED, END, FLAT,
-                               HORIZONTAL, LEFT, NW, RIGHT, VERTICAL, WORD, X,
+                               HORIZONTAL, LEFT, NW, RIGHT, TOP, VERTICAL, WORD, X,
                                Y)
-
+from PIL import ImageTk, Image
 import pygetwindow as gw
 import check_algorithm
-
 
 def highlight_button(button_name, colour1, colour2):
     def on_enter(e):
@@ -188,18 +188,18 @@ class GUI:
 
         def check(self, Content):
             try:
-                self.ContentNum = int(Content.get())
-                self.EditCanvas.destroy()
-                self.create_config_canvas()
+                ContentNum = int(Content.get())
+                EditFrame.destroy
+                # create_config_canvas()
+                photo = PhotoImage(file = 'icons/trán.png')
+                Label(EditFrame, image = photo).place(relx = 0.1, rely = 0.1)
             except ValueError:
-                Error = Label(self.EditCanvas, text = 'Số liệu không phù hợp', fg = 'red', font = ('Arial Bold',10), bg = '#6292bf')
+                Error = Label(EditCanvas, text = 'Số liệu không phù hợp', fg = 'red', font = ('Arial Bold',10), bg = 'white')
                 Error.place(relx = 0.5, rely = 0.72, anchor = 'n')
             
-        def create_config_canvas(self):    
-            ConfigCanvas = self.MainCanvas(self, bg = '#6292bf', width = 800, height = 600)
-            ConfigCanvas.configure(scrollregion= ConfigCanvas.bbox("all"))
-            ConfigCanvas.create_frames(self.ContentNum)
-
+        
+        OKButton = Button(EditFrame, text = 'Tiếp tục', command = lambda: check(Content))
+        OKButton.place(relx = 0.7, rely = 0.8, relwidth = 0.2, relheight = 0.1)
 
     class Scoreboard(Toplevel):
         class TitleFrame(Frame):
@@ -224,7 +224,7 @@ class GUI:
             self.title('Kết quả bài làm')
             self.geometry('700x500+250+100')
             self.resizable(0,0)
-            MarkBG = Canvas(self, bg = '#6292bf', width = 800, height = 600)
+            MarkBG = Canvas(self, bg = '#6292bf', width = 800, height = 600,borderwidth=0, highlightthickness=0)
             MarkBG.pack()
             self.TitleFrame(MarkBG, bg = '#6292bf')
             self.ContentFrame(MarkBG)
@@ -293,7 +293,7 @@ class GUI:
         #---------------
         
         if self.role.lower() == 'teacher':
-            self.EditButton(MainWindow, bg = '#347d6c', text = 'Sửa đổi', fg = 'white', font = ('Arial Bold',10),command = lambda: self.EditWindow())
+            self.EditButton(MainWindow, bg = '#347d6c', text = 'Sửa đổi', fg = 'white', font = ('Arial Bold',10),command = lambda: GUI.MainCanvas())
         elif self.role.lower() == 'student':
             def destroyMain():
                 if messagebox.askokcancel("Thông báo", "Xác nhận Kết thúc bài làm? \n(Chú ý không thể chỉnh sửa)"):

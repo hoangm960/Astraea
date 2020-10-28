@@ -143,12 +143,14 @@ class GUI:
         class MainCanvas(Canvas):
             class EditFrame(Frame):
                 def __init__(self, root, *args, **kwargs):
+                    # Sửa Frame từng bài ở đây
                     Frame.__init__(self, root, *args, **kwargs)
                     self.pack(expand=True, fill=BOTH)
 
                     Button(self, text= 'hello').pack()
 
             def __init__(self, root, *args, **kwargs):
+                # Sửa Canvas của frame từng bài ở đây
                 Canvas.__init__(self, root, *args, **kwargs)
                 self.pack(side=LEFT, expand=True, fill=BOTH)
 
@@ -175,15 +177,12 @@ class GUI:
             self.Content.place(relx = 0.55, rely=0.5, relwidth = 0.25, relheight = 0.08, anchor = 'n')
             ButtonNext = Button(self.EditFrame, text = 'Tiếp tục', fg = 'blue', bg = 'white', command = lambda: self.check())
             ButtonNext.place(relx = 0.65, rely = 0.8, relwidth = 0.23, relheight = 0.1)
-           # def create_config_canvas():    
-        #     ConfigCanvas = self.MainCanvas(self, bg = '#6292bf', width = 800, height = 600)
-        #     ConfigCanvas.configure(scrollregion= ConfigCanvas.bbox("all"))
-        #     ConfigCanvas.create_frames(self.ContentNum)
         def check(self):
             try:
-                ContentNum = int(self.Content.get())
-                Login.destroy(self.EditFrame)
-                # create_config_canvas()
+                self.ContentNum = int(self.Content.get())
+                for widget in self.EditFrame.winfo_children():
+                    widget.destroy()
+                self.MainCanvas(self.EditFrame).create_frames(self.ContentNum)
             except ValueError:
                 Error = Label(self.EditFrame, text = 'Số liệu không phù hợp', fg = 'red', font = ('Arial Bold',10), bg = 'white')
                 Error.place(relx = 0.5, rely = 0.72, anchor = 'n')

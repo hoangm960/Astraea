@@ -1,5 +1,5 @@
 from os import system
-from tkinter import BooleanVar, Button, Canvas, Entry, Frame, IntVar, Label, PhotoImage, Text, Tk, messagebox, Checkbutton
+from tkinter import BooleanVar, Button, Canvas, Entry, Frame, Image, IntVar, Label, PhotoImage, Text, Tk, messagebox, Checkbutton
 from tkinter import ttk
 import tkinter as tk
 from tkinter.constants import ACTIVE, BOTH, CENTER, DISABLED, FLAT, NW, RAISED, SUNKEN, YES
@@ -7,6 +7,7 @@ from tkinter.font import NORMAL
 from tkinter.ttk import Style
 from gui import GUI
 import encription
+from PIL import Image, ImageTk
 
 #----------------------------------------------------------------
 #SignBox
@@ -26,8 +27,8 @@ class ImageLabel(tk.Label):
             kwargs['image'] = self.photo
 
         super().__init__(parent, **kwargs)
-class set(tk.Tk):
-    def __init__(self,img, frame, w, h):
+class set():
+    def __init__(self,img, frame, w, h, x, y):
         self.path = img
         self.framee = frame
         super().__init__()
@@ -36,7 +37,7 @@ class set(tk.Tk):
         lab=ImageLabel(self.framee, 
                     path= img,
                     resize=(w, h))
-        lab.grid()
+        lab.place(relx = x, rely = y)
 
 def hightlight_border(obj,frame):
     obj.bind("<FocusIn>", lambda evt: frame.state(["focus"]))
@@ -110,7 +111,7 @@ def main():
     style.layout("RoundedFrame", [("RoundedFrame", {"sticky": "nsew"})])
     SignInBoxes  = Canvas(SignRoot, width = w, height = h)
     SignInBoxes.pack(expand = True, fill = BOTH)
-    set('icons/Background.png', SignInBoxes, w, h) 
+    set('icons/Background.png', SignInBoxes, w, h,0 ,0) 
     SignInFrame = ttk.Frame(SignInBoxes, style= "RoundedFrame")
     SignInFrame.place(relx = 0.02, rely = 0.3, relwidth = 0.5, relheight = 0.5)
     # SignInFrame = Frame(SignInBoxes, bg = 'white')

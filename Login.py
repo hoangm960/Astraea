@@ -11,6 +11,33 @@ from PIL import ImageTk, Image
 
 #----------------------------------------------------------------
 #SignBox
+"""    Giao diện, Background, Image     """
+        
+class ImageLabel(tk.Label):
+    def __init__(self, parent, **kwargs):
+        path = kwargs.pop('path', None) 
+        if path is not None:
+            image  = Image.open(path) 
+
+            resize = kwargs.pop('resize', None)
+            if resize is not None:
+                image = image.resize(resize, Image.LANCZOS)
+            
+            self.photo = ImageTk.PhotoImage(image)
+            kwargs['image'] = self.photo
+
+        super().__init__(parent, **kwargs)
+class set(tk.Tk):
+    def __init__(self,img, frame, w, h):
+        self.path = img
+        self.framee = frame
+        super().__init__()
+
+
+        lab=ImageLabel(self.framee, 
+                    path= img,
+                    resize=(w, h))
+        lab.grid()
 
 def hightlight_border(obj,frame):
     obj.bind("<FocusIn>", lambda evt: frame.state(["focus"]))
@@ -84,11 +111,9 @@ def main():
     style.layout("RoundedFrame", [("RoundedFrame", {"sticky": "nsew"})])
     SignInBoxes  = Canvas(SignRoot, width = w, height = h)
     SignInBoxes.pack(expand = True, fill = BOTH)
-    image = tk.PhotoImage(file="icons/Background.png")
-    SignInBoxes.create_image(0,0, image = image, anchor = 'n')
-    
+    set('icons/Background.png', SignInBoxes, w, h) 
     SignInFrame = ttk.Frame(SignInBoxes, style= "RoundedFrame")
-    SignInFrame.place(relx = 0.08, rely = 0.36, relwidth = 0.5, relheight = 0.5)
+    SignInFrame.place(relx = 0.02, rely = 0.3, relwidth = 0.5, relheight = 0.5)
     # SignInFrame = Frame(SignInBoxes, bg = 'white')
     # SignInFrame.place(relx = 0.08, rely = 0.36, relwidth= 0.5, relheight= 0.5)
     

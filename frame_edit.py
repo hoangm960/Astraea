@@ -5,6 +5,7 @@ from PIL import Image, ImageTk
 from tkinter import messagebox
 
 def EditWindow():
+    global ContentLesson, ContentNum
     tk = Toplevel()    
     tk.title('Cửa sổ chỉnh sửa')
     tk.resizable(0,0)
@@ -16,7 +17,7 @@ def EditWindow():
     EditFrame = GradientFrame(EditCanvas,[800,600],colors = ("#7df5db","#ffdc42"),direction= 2,borderwidth=0, highlightthickness=0)
     EditFrame.pack()
         
-    def EditWindow():
+    def EditWindow_Canvas():
         Login.destroy(EditFrame)
         NameLesson = Label(EditFrame, text = 'Tên bài tập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',15), bd = -2)
         NameLesson.place(relx = 0.15, rely = 0.3)
@@ -44,7 +45,7 @@ def EditWindow():
             label.place(relx = 0.2, rely = 0.25, relwidth = 0.6, relheight = 0.5)
             def TurnBack():
                 if messagebox.askokcancel('Thông báo','Hủy các thiết lập hiện tại?'):
-                    EditWindow()
+                    EditWindow_Canvas()
             TurnbackButton = Button(FrameLesson, text = 'Trở lại', command = lambda: TurnBack(), fg = 'blue', bg = 'white', relief = FLAT)
             TurnbackButton.place(relx = 0.85, rely = 0.25, relwidth = 0.1, relheight = 0.4)
             height = 0
@@ -67,4 +68,4 @@ def EditWindow():
             except ValueError:
                 Error = Label(EditFrame, text = 'Số liệu không phù hợp', fg = 'red', font = ('Arial Bold',10), bg = 'white')
                 Error.place(relx = 0.5, rely = 0.72, anchor = 'n')
-    EditWindow()
+    EditWindow_Canvas()

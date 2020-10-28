@@ -139,7 +139,7 @@ class GUI:
             self.place(relx = 0.5, rely = 0.88, relwidth = 0.2, relheight = 0.05, anchor = 'n')
             highlight_button(self, '#30e651', '#39c459')
     
-    class EditWindow(Tk):
+    #class EditWindow(Tk):
         class MainCanvas(Canvas):
             class EditFrame(Frame):
                 def __init__(self, root, *args, **kwargs):

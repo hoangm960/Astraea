@@ -6,9 +6,13 @@ from tkinter import messagebox
 
 def EditWindow():
     global ContentLesson, ContentNum
-    tk = Toplevel()    
+    tk = Toplevel()
+        
     tk.title('Cửa sổ chỉnh sửa')
     tk.resizable(0,0)
+    w, h = tk.winfo_screenwidth(), tk.winfo_screenheight()
+    w, h = int(w/8), int(h/10)
+    tk.geometry("800x600+%s+%s" % (w, h))
     tk.iconbitmap('icons/logo.ico')
     ContentLesson = ''
     ContentNum = 1
@@ -16,7 +20,7 @@ def EditWindow():
     EditCanvas.pack()
     EditFrame = GradientFrame(EditCanvas,[800,600],colors = ("#7df5db","#ffdc42"),direction= 2,borderwidth=0, highlightthickness=0)
     EditFrame.pack()
-        
+      
     def EditWindow_Canvas():
         Login.destroy(EditFrame)
         NameLesson = Label(EditFrame, text = 'Tên bài tập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',15), bd = -2)

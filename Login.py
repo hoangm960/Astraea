@@ -57,11 +57,9 @@ def destroy(frame):
 
 def main():
     SignRoot = Tk()
-    # SignRoot.resizable(0,0)
     SignRoot.wm_attributes("-topmost",1)
     SignRoot.title('Cửa sổ đăng nhập - Pylearn')
     SignRoot.iconbitmap('icons/logo.ico')
-    # SignRoot.geometry('1980x720+0+0')
     w, h = SignRoot.winfo_screenwidth(), SignRoot.winfo_screenheight()
     SignRoot.geometry("%dx%d+0+0" % (w, h))
 
@@ -104,18 +102,19 @@ def main():
     WOBBAAkU0EB9oBGUdXIFZJBABAEEsPjmmnfO+eeeh/55BBEk0Ph/E8Q9meQq
     bbDABAN00EADFRRQ++2254777rr3jrvjFTTQwQCpz7u6QRut5/oEzA/g/PPQ
     Ry/99NIz//oGrZpUUEAAOw==""")
-    img2 = tk.PhotoImage("frameBorder", file = 'icons/trán.png')
+    img2 = tk.PhotoImage("frameBorder", file = 'icons/f2e.png')
     style = Style()
     style.element_create("RoundedFrame", "image", "frameBorder",
         ("focus", "frameFocusBorder"),border = 30,  sticky="nsew")
     style.layout("RoundedFrame", [("RoundedFrame", {"sticky": "nsew"})])
-    SignInBoxes  = Canvas(SignRoot, width = w, height = h)
+    SignInBoxes = Canvas(SignRoot, width = w, height = h)
     SignInBoxes.pack(expand = True, fill = BOTH)
-    set('icons/Background.png', SignInBoxes, w, h,0 ,0) 
-    SignInFrame = ttk.Frame(SignInBoxes, style= "RoundedFrame")
+    photo = Image.open('icons/Background.png')
+    photo = ImageTk.PhotoImage(photo.resize((w,h), Image.ANTIALIAS))
+    SignInBoxes.create_image(0,0, image = photo, anchor = NW)
+    # set('icons/Background.png', SignInBoxes, w, h,0 ,0) 
+    SignInFrame = ttk.Label(SignInBoxes, style= "RoundedFrame")
     SignInFrame.place(relx = 0.02, rely = 0.3, relwidth = 0.5, relheight = 0.5)
-    # SignInFrame = Frame(SignInBoxes, bg = 'white')
-    # SignInFrame.place(relx = 0.08, rely = 0.36, relwidth= 0.5, relheight= 0.5)
     
     ENCRIPTED_PATH = 'data/User.encrypted'
     DECRIPTED_PATH = 'data/User.txt'
@@ -156,12 +155,12 @@ def main():
         # Passentry = Entry(SignInFrame, font = str(40), show = '●')
         # Passentry.place(relx = 0.5, rely=0.45, relwidth = 0.45, relheight = 0.08, anchor = 'n')
         
-        Nameframe = ttk.Frame(SignInFrame, style="RoundedFrame", padding=10)
-        Nameframe.place(relx = 0.5, rely = 0.5, relwidth = 0.45, relheight = 0.12, anchor = 'n')
-        Passentry = tk.Entry(Nameframe, borderwidth=0, show = '●', font = ('Arial Bold', 10), bg = "white", highlightthickness=0)
+        Passframe = ttk.Frame(SignInFrame, style="RoundedFrame", padding=10)
+        Passframe.place(relx = 0.5, rely = 0.5, relwidth = 0.45, relheight = 0.12, anchor = 'n')
+        Passentry = tk.Entry(Passframe, borderwidth=0, show = '●', font = ('Arial Bold', 10), bg = "white", highlightthickness=0)
         Passentry.pack(fill = 'both', expand = True)
-        Passentry.bind("<FocusIn>", lambda evt: Nameframe.state(["focus"]))
-        Passentry.bind("<FocusOut>", lambda evt: Nameframe.state(["!focus"]))
+        Passentry.bind("<FocusIn>", lambda evt: Passframe.state(["focus"]))
+        Passentry.bind("<FocusOut>", lambda evt: Passframe.state(["!focus"]))
         
         checked = BooleanVar()
         AutosaveButton = Checkbutton(SignInFrame, background= 'white', text= 'Lưu mật khẩu?', variable= checked, onvalue= True, offvalue= False)

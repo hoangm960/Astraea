@@ -139,54 +139,6 @@ class GUI:
             self.place(relx = 0.5, rely = 0.88, relwidth = 0.2, relheight = 0.05, anchor = 'n')
             highlight_button(self, '#30e651', '#39c459')
     
-    #class EditWindow(Tk):
-        class MainCanvas(Canvas):
-            class EditFrame(Frame):
-                def __init__(self, root, *args, **kwargs):
-                    # Sửa Frame từng bài ở đây
-                    Frame.__init__(self, root, *args, **kwargs)
-                    self.pack(expand=True, fill=BOTH)
-
-                    Button(self, text= 'hello').pack()
-
-            def __init__(self, root, *args, **kwargs):
-                # Sửa Canvas của frame từng bài ở đây
-                Canvas.__init__(self, root, *args, **kwargs)
-                self.pack(side=LEFT, expand=True, fill=BOTH)
-
-            def create_frames(self, num):
-                for _ in range(num):
-                    self.EditFrame(self, bg= 'white')                
-
-        def __init__(self, *args, **kwargs):
-            Tk.__init__(self, *args, **kwargs)
-            self.title('Cửa sổ chỉnh sửa')
-            self.resizable(0,0)
-
-            self.EditCanvas = Canvas(self, bg = '#6292bf', width = 800, height = 600,borderwidth=0, highlightthickness=0)
-            self.EditCanvas.pack()
-            self.EditFrame = GradientFrame(self.EditCanvas,[800,600],colors = ("#7df5db","#ffdc42"),direction= 2,borderwidth=0, highlightthickness=0)
-            self.EditFrame.pack()
-            NameLesson = Label(self.EditFrame, text = 'Tên bài tập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',15), bd = -2)
-            NameLesson.place(relx = 0.15, rely = 0.3)
-            Lessonentry = Entry(self.EditFrame, justify = CENTER, font = str(40))
-            Lessonentry.place(relx = 0.55, rely=0.3, relwidth = 0.45, relheight = 0.08, anchor = 'n')
-            NumFrame = Label(self.EditFrame, text = 'Số bài tập:', fg = 'blue', compound = CENTER, font = ('Arial Bold',15), bd = -2)
-            NumFrame.place(relx = 0.15, rely = 0.5)
-            self.Content = Entry(self.EditFrame, justify = CENTER, font = str(40))
-            self.Content.place(relx = 0.55, rely=0.5, relwidth = 0.25, relheight = 0.08, anchor = 'n')
-            ButtonNext = Button(self.EditFrame, text = 'Tiếp tục', fg = 'blue', bg = 'white', command = lambda: self.check())
-            ButtonNext.place(relx = 0.65, rely = 0.8, relwidth = 0.23, relheight = 0.1)
-        def check(self):
-            try:
-                self.ContentNum = int(self.Content.get())
-                for widget in self.EditFrame.winfo_children():
-                    widget.destroy()
-                self.MainCanvas(self.EditFrame).create_frames(self.ContentNum)
-            except ValueError:
-                Error = Label(self.EditFrame, text = 'Số liệu không phù hợp', fg = 'red', font = ('Arial Bold',10), bg = 'white')
-                Error.place(relx = 0.5, rely = 0.72, anchor = 'n')
-            
 
     class Scoreboard(Toplevel):
         class TitleFrame(Frame):

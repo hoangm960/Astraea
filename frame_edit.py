@@ -29,9 +29,13 @@ class ScrollableFrame(ttk.Frame):
 
 def EditWindow():
     global ContentLesson, ContentNum
-    tk = Toplevel()    
+    tk = Toplevel()
+        
     tk.title('Cửa sổ chỉnh sửa')
     tk.resizable(0,0)
+    w, h = tk.winfo_screenwidth(), tk.winfo_screenheight()
+    w, h = int(w/8), int(h/10)
+    tk.geometry("800x600+%s+%s" % (w, h))
     tk.iconbitmap('icons/logo.ico')
     ContentLesson = ''
     ContentNum = 1

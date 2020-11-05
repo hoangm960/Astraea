@@ -1,8 +1,31 @@
 from tkinter import *
+from tkinter import ttk
 import Login 
 from gui import GradientFrame
 from PIL import Image, ImageTk
 from tkinter import messagebox
+
+class ScrollableFrame(ttk.Frame):
+    def __init__(self, container, *args, **kwargs):
+        super().__init__(container, *args, **kwargs)
+        self.canvas = Canvas(self)
+        scrollbar = ttk.Scrollbar(self, orient="vertical", command=self.canvas.yview)
+        self.scrollable_frame = ttk.Frame(self.canvas)
+        
+
+        self.canvas.bind_all("<Configure>", self.onFrameConfigure)
+        
+        self.canvas.bind_all("<MouseWheel>", lambda e: self.canvas.yview_scroll(int(-1*(e.delta/120)), "units"))
+
+        self.canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
+
+        self.canvas.configure(yscrollcommand=scrollbar.set)
+
+        self.canvas.pack(side="left", fill="both", expand=True)
+        scrollbar.pack(side="right", fill="y")
+    
+    def onFrameConfigure(self, event):
+        self.canvas.configure(scrollregion = self.canvas.bbox("all"))
 
 def EditWindow():
     global ContentLesson, ContentNum
@@ -16,6 +39,7 @@ def EditWindow():
     EditCanvas.pack()
     EditFrame = GradientFrame(EditCanvas,[800,600],colors = ("#7df5db","#ffdc42"),direction= 2,borderwidth=0, highlightthickness=0)
     EditFrame.pack()
+    ScrollableFrame(EditFrame)
         
     def EditWindow_Canvas():
         Login.destroy(EditFrame)

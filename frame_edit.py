@@ -43,7 +43,6 @@ def EditWindow():
     EditCanvas.pack()
     EditFrame = GradientFrame(EditCanvas,[800,600],colors = ("#7df5db","#ffdc42"),direction= 2,borderwidth=0, highlightthickness=0)
     EditFrame.pack()
-    ScrollableFrame(EditFrame)
         
     def EditWindow_Canvas():
         Login.destroy(EditFrame)
@@ -77,10 +76,11 @@ def EditWindow():
             TurnbackButton = Button(FrameLesson, text = 'Trở lại', command = lambda: TurnBack(), fg = 'blue', bg = 'white', relief = FLAT)
             TurnbackButton.place(relx = 0.85, rely = 0.25, relwidth = 0.1, relheight = 0.4)
             height = 0
+            contentFrameScrollable = ScrollableFrame(EditFrame)
             for _ in range(ContentNum):
-                height += 0.25
-                frame = Frame(EditFrame, bg = 'white')
-                frame.place(relx = 0.1, rely = height, relwidth = 0.6, relheight = 0.15)   
+                frame = Frame(contentFrameScrollable.scrollable_frame).pack()   
+                contentLabel = Label(frame, text= 'stuff').pack()
+            contentFrameScrollable.place(relx = 0, rely = 0.2, relwidth = 1, relheight = 0.9)  
         def check():
             global ContentLesson
             global ContentNum

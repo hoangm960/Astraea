@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'main.ui'
+# Form implementation generated from reading ui file 'd:\Programming\Python\Pylearn\new gui\gui-new.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.1
 #
@@ -15,7 +15,6 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1000, 650)
-        MainWindow.move(150, 50)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -25,7 +24,7 @@ class Ui_MainWindow(object):
         MainWindow.setMaximumSize(QtCore.QSize(1000, 650))
         MainWindow.setFocusPolicy(QtCore.Qt.NoFocus)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../Pylearn/icons/logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("d:\\Programming\\Python\\Pylearn\\new gui\\../Pylearn/icons/logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setDocumentMode(False)
         MainWindow.setDockNestingEnabled(False)
@@ -42,8 +41,9 @@ class Ui_MainWindow(object):
         self.bg.setSizeIncrement(QtCore.QSize(100, 100))
         self.bg.setBaseSize(QtCore.QSize(1000, 650))
         self.bg.setContextMenuPolicy(QtCore.Qt.NoContextMenu)
+        self.bg.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.bg.setText("")
-        self.bg.setPixmap(QtGui.QPixmap("../Pylearn/icons/Background.png"))
+        self.bg.setPixmap(QtGui.QPixmap("d:\\Programming\\Python\\Pylearn\\new gui\\../Pylearn/icons/Background.png"))
         self.bg.setScaledContents(True)
         self.bg.setObjectName("bg")
         self.SignInFrame = QtWidgets.QFrame(self.centralwidget)
@@ -203,8 +203,8 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(10)
         self.SignInFrame.setFont(font)
-        self.SignInFrame.setFrameShape(QtWidgets.QFrame.WinPanel)
-        self.SignInFrame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.SignInFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.SignInFrame.setFrameShadow(QtWidgets.QFrame.Plain)
         self.SignInFrame.setLineWidth(10)
         self.SignInFrame.setMidLineWidth(10)
         self.SignInFrame.setObjectName("SignInFrame")
@@ -234,7 +234,7 @@ class Ui_MainWindow(object):
         self.pass_title.setGeometry(QtCore.QRect(50, 170, 91, 16))
         self.pass_title.setObjectName("pass_title")
         self.sign_button = QtWidgets.QPushButton(self.SignInFrame)
-        self.sign_button.setGeometry(QtCore.QRect(180, 240, 75, 23))
+        self.sign_button.setGeometry(QtCore.QRect(180, 240, 71, 31))
         self.sign_button.setObjectName("sign_button")
         self.check_autosign = QtWidgets.QCheckBox(self.SignInFrame)
         self.check_autosign.setGeometry(QtCore.QRect(310, 270, 111, 21))
@@ -581,7 +581,7 @@ class Ui_MainWindow(object):
         self.pass_title_2.setGeometry(QtCore.QRect(50, 170, 91, 16))
         self.pass_title_2.setObjectName("pass_title_2")
         self.signup_button = QtWidgets.QPushButton(self.SignUpFrame)
-        self.signup_button.setGeometry(QtCore.QRect(190, 270, 75, 23))
+        self.signup_button.setGeometry(QtCore.QRect(190, 270, 71, 31))
         self.signup_button.setObjectName("signup_button")
         self.tosignin_button = QtWidgets.QPushButton(self.SignUpFrame)
         self.tosignin_button.setGeometry(QtCore.QRect(70, 300, 281, 31))
@@ -603,7 +603,6 @@ class Ui_MainWindow(object):
         self.Student = QtWidgets.QRadioButton(self.role_check)
         self.Student.setGeometry(QtCore.QRect(90, 10, 82, 18))
         self.Student.setObjectName("Student")
-        self.SignUpFrame.hide()
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1000, 20))
@@ -638,13 +637,3 @@ class Ui_MainWindow(object):
         self.Teacher.setText(_translate("MainWindow", "Giáo viên"))
         self.label.setText(_translate("MainWindow", "Bạn là:"))
         self.Student.setText(_translate("MainWindow", "Học sinh"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())

@@ -301,6 +301,9 @@ QPushButton:hover {
                <property name="editTriggers">
                 <set>QAbstractItemView::NoEditTriggers</set>
                </property>
+               <property name="tabKeyNavigation">
+                <bool>true</bool>
+               </property>
                <property name="showDropIndicator" stdset="0">
                 <bool>false</bool>
                </property>
@@ -312,6 +315,9 @@ QPushButton:hover {
                  <width>10</width>
                  <height>10</height>
                 </size>
+               </property>
+               <property name="isWrapping" stdset="0">
+                <bool>true</bool>
                </property>
                <property name="uniformItemSizes">
                 <bool>true</bool>
@@ -372,10 +378,10 @@ QPushButton:hover {
                 <bool>false</bool>
                </property>
                <property name="readOnly">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="textInteractionFlags">
-                <set>Qt::TextEditorInteraction</set>
+                <set>Qt::TextSelectableByMouse</set>
                </property>
               </widget>
              </item>

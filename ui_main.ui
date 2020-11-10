@@ -291,12 +291,15 @@ QPushButton:hover {
               <number>0</number>
              </property>
              <item>
-              <widget class="QListView" name="list_assignment">
+              <widget class="QListWidget" name="list_assignments">
+               <property name="font">
+                <font>
+                 <family>Corbel</family>
+                 <pointsize>14</pointsize>
+                </font>
+               </property>
                <property name="editTriggers">
                 <set>QAbstractItemView::NoEditTriggers</set>
-               </property>
-               <property name="tabKeyNavigation">
-                <bool>true</bool>
                </property>
                <property name="showDropIndicator" stdset="0">
                 <bool>false</bool>
@@ -304,20 +307,26 @@ QPushButton:hover {
                <property name="defaultDropAction">
                 <enum>Qt::IgnoreAction</enum>
                </property>
-               <property name="alternatingRowColors">
-                <bool>true</bool>
-               </property>
                <property name="iconSize">
                 <size>
                  <width>10</width>
                  <height>10</height>
                 </size>
                </property>
+               <property name="uniformItemSizes">
+                <bool>true</bool>
+               </property>
                <property name="wordWrap">
                 <bool>true</bool>
                </property>
                <property name="selectionRectVisible">
                 <bool>true</bool>
+               </property>
+               <property name="currentRow">
+                <number>-1</number>
+               </property>
+               <property name="sortingEnabled">
+                <bool>false</bool>
                </property>
               </widget>
              </item>
@@ -349,27 +358,15 @@ QPushButton:hover {
               <number>0</number>
              </property>
              <item>
-              <widget class="QListView" name="list_hint">
-               <property name="editTriggers">
-                <set>QAbstractItemView::NoEditTriggers</set>
+              <widget class="QTextEdit" name="assignment_details">
+               <property name="tabChangesFocus">
+                <bool>true</bool>
                </property>
-               <property name="showDropIndicator" stdset="0">
+               <property name="undoRedoEnabled">
                 <bool>false</bool>
                </property>
-               <property name="defaultDropAction">
-                <enum>Qt::IgnoreAction</enum>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>10</width>
-                 <height>10</height>
-                </size>
-               </property>
-               <property name="wordWrap">
-                <bool>true</bool>
-               </property>
-               <property name="selectionRectVisible">
-                <bool>true</bool>
+               <property name="textInteractionFlags">
+                <set>Qt::NoTextInteraction</set>
                </property>
               </widget>
              </item>

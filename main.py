@@ -12,6 +12,7 @@ from PyQt5.QtWidgets import (QApplication, QGraphicsDropShadowEffect,
 from main import *
 from ui_main import Ui_MainWindow
 
+
 class MainWindow(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
@@ -19,7 +20,7 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
 
         UIFunctions.uiDefinitions(self)
-        UIFunctions.open_vscode()
+
 
 class UIFunctions(MainWindow):
     def uiDefinitions(self):
@@ -36,6 +37,13 @@ class UIFunctions(MainWindow):
         self.ui.btn_minimize.clicked.connect(lambda: self.showMinimized())
         self.ui.btn_quit.clicked.connect(lambda: UIFunctions.close_pg(self))
 
+        UIFunctions.open_vscode()
+        #fix here
+        UIFunctions.load_assignments(self, "Text.txt")
+        with open("text2.txt") as f:
+            self.ui.assignment_details.setDocument(f.read())
+        
+
     @classmethod
     def open_vscode(cls):
         file = os.path.expandvars("%LOCALAPPDATA%/Programs/Microsoft VS Code/Code.exe")
@@ -50,6 +58,13 @@ class UIFunctions(MainWindow):
     def close_pg(cls, self):
         win32gui.PostMessage(cls.pg, win32con.WM_CLOSE,0,0)
         self.close()
+
+    @classmethod
+    def load_assignments(cls, self, filename):
+        with open(filename) as f:
+            lines = f.readlines()
+            for line in lines:
+                self.ui.list_assignments.addItem(line)
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'd:\Programming\Python\Pylearn\new gui\ui_main.ui'
+# Form implementation generated from reading ui file 'd:\Programming\Python\Pylearn\ui_main.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.1
 #
@@ -118,17 +118,20 @@ class Ui_MainWindow(object):
         self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_5.setSpacing(0)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
-        self.list_assignment = QtWidgets.QListView(self.frame_content_assignment)
-        self.list_assignment.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
-        self.list_assignment.setTabKeyNavigation(True)
-        self.list_assignment.setProperty("showDropIndicator", False)
-        self.list_assignment.setDefaultDropAction(QtCore.Qt.IgnoreAction)
-        self.list_assignment.setAlternatingRowColors(True)
-        self.list_assignment.setIconSize(QtCore.QSize(10, 10))
-        self.list_assignment.setWordWrap(True)
-        self.list_assignment.setSelectionRectVisible(True)
-        self.list_assignment.setObjectName("list_assignment")
-        self.verticalLayout_5.addWidget(self.list_assignment)
+        self.list_assignments = QtWidgets.QListWidget(self.frame_content_assignment)
+        font = QtGui.QFont()
+        font.setFamily("Corbel")
+        font.setPointSize(14)
+        self.list_assignments.setFont(font)
+        self.list_assignments.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.list_assignments.setProperty("showDropIndicator", False)
+        self.list_assignments.setDefaultDropAction(QtCore.Qt.IgnoreAction)
+        self.list_assignments.setIconSize(QtCore.QSize(10, 10))
+        self.list_assignments.setUniformItemSizes(True)
+        self.list_assignments.setWordWrap(True)
+        self.list_assignments.setSelectionRectVisible(True)
+        self.list_assignments.setObjectName("list_assignments")
+        self.verticalLayout_5.addWidget(self.list_assignments)
         self.verticalLayout_3.addWidget(self.frame_content_assignment)
         self.frame_content_hint = QtWidgets.QFrame(self.frame_content)
         self.frame_content_hint.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -138,15 +141,12 @@ class Ui_MainWindow(object):
         self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_4.setSpacing(0)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
-        self.list_hint = QtWidgets.QListView(self.frame_content_hint)
-        self.list_hint.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
-        self.list_hint.setProperty("showDropIndicator", False)
-        self.list_hint.setDefaultDropAction(QtCore.Qt.IgnoreAction)
-        self.list_hint.setIconSize(QtCore.QSize(10, 10))
-        self.list_hint.setWordWrap(True)
-        self.list_hint.setSelectionRectVisible(True)
-        self.list_hint.setObjectName("list_hint")
-        self.verticalLayout_4.addWidget(self.list_hint)
+        self.assignment_details = QtWidgets.QTextEdit(self.frame_content_hint)
+        self.assignment_details.setTabChangesFocus(True)
+        self.assignment_details.setUndoRedoEnabled(False)
+        self.assignment_details.setTextInteractionFlags(QtCore.Qt.NoTextInteraction)
+        self.assignment_details.setObjectName("assignment_details")
+        self.verticalLayout_4.addWidget(self.assignment_details)
         self.verticalLayout_3.addWidget(self.frame_content_hint)
         self.verticalLayout_6.addWidget(self.frame_content)
         self.frame_main_btn = QtWidgets.QFrame(self.bg_frame)
@@ -179,6 +179,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
+        self.list_assignments.setCurrentRow(-1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -187,4 +188,5 @@ class Ui_MainWindow(object):
         self.title.setText(_translate("MainWindow", "Pylearn"))
         self.btn_minimize.setToolTip(_translate("MainWindow", "Minimize"))
         self.btn_quit.setToolTip(_translate("MainWindow", "Close"))
+        self.list_assignments.setSortingEnabled(False)
         self.main_btn.setText(_translate("MainWindow", "Main Button"))

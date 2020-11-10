@@ -23,6 +23,8 @@ class MainWindow(QMainWindow):
 
 
 class UIFunctions(MainWindow):
+    pg = None
+
     def uiDefinitions(self):
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
@@ -37,11 +39,9 @@ class UIFunctions(MainWindow):
         self.ui.btn_minimize.clicked.connect(lambda: self.showMinimized())
         self.ui.btn_quit.clicked.connect(lambda: UIFunctions.close_pg(self))
 
-        UIFunctions.open_vscode()
-        #fix here
+        # UIFunctions.open_vscode()
         UIFunctions.load_assignments(self, "Text.txt")
-        with open("text2.txt") as f:
-            self.ui.assignment_details.setDocument(f.read())
+        self.ui.list_assignments.itemActivated.connect(lambda: UIFunctions.load_details(self, 'text2.txt'))
         
 
     @classmethod
@@ -56,7 +56,8 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def close_pg(cls, self):
-        win32gui.PostMessage(cls.pg, win32con.WM_CLOSE,0,0)
+        if cls.pg:
+            win32gui.PostMessage(cls.pg, win32con.WM_CLOSE,0,0)
         self.close()
 
     @classmethod
@@ -64,8 +65,12 @@ class UIFunctions(MainWindow):
         with open(filename) as f:
             lines = f.readlines()
             for line in lines:
-                self.ui.list_assignments.addItem(line)
-
+                self.ui.list_assignments.addItem(line.rstrip("\n"))
+    
+    @classmethod
+    def load_details(cls, self, filename):
+        with open(filename) as f:
+            self.ui.assignment_details.setText(f.readlines()[self.ui.list_assignments.currentRow()])
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

@@ -100,7 +100,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.addWidget(self.frame_2)
         self.frame_3 = QtWidgets.QFrame(self.frame)
         self.frame_3.setEnabled(True)
-        self.frame_3.setContextMenuPolicy(QtCore.Qt.PreventContextMenu)
+        self.frame_3.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
         self.frame_3.setStyleSheet("background-color: none;\n"
 "border: none;\n"
 "visible: false;")
@@ -314,6 +314,9 @@ class Ui_MainWindow(object):
 "}\n"
 "QPushButton:hover {\n"
 "background-color: rbg(249, 219, 255);\n"
+"border-radius: 8px;\n"
+"color: rgb(255, 255, 255);\n"
+"font: bold;\n"
 "}")
         self.LoginButton_3.setFlat(True)
         self.LoginButton_3.setObjectName("LoginButton_3")
@@ -359,13 +362,15 @@ class Ui_MainWindow(object):
         self.ConvertButton_3.setAutoRepeat(True)
         self.ConvertButton_3.setObjectName("ConvertButton_3")
         self.radioButton = QtWidgets.QRadioButton(self.Login_Frame_2)
-        self.radioButton.setEnabled(True)
-        self.radioButton.setGeometry(QtCore.QRect(100, 170, 82, 17))
-        self.radioButton.setAutoExclusive(False)
+        self.radioButton.setGeometry(QtCore.QRect(110, 170, 82, 17))
+        self.radioButton.setStyleSheet("color: rgb(255, 255, 255);\n"
+"font: bold;")
+        self.radioButton.setChecked(True)
         self.radioButton.setObjectName("radioButton")
         self.radioButton_2 = QtWidgets.QRadioButton(self.Login_Frame_2)
         self.radioButton_2.setGeometry(QtCore.QRect(220, 170, 82, 17))
-        self.radioButton_2.setAutoExclusive(True)
+        self.radioButton_2.setStyleSheet("font: bold;\n"
+"color: rgb(255, 255, 255)")
         self.radioButton_2.setObjectName("radioButton_2")
         self.ConvertButton_3.raise_()
         self.label_7.raise_()
@@ -421,8 +426,8 @@ class Ui_MainWindow(object):
         self.label_8.setText(_translate("MainWindow", "Mật khẩu:"))
         self.label_9.setText(_translate("MainWindow", "Tên tài khoản:"))
         self.ConvertButton_3.setText(_translate("MainWindow", "Quay trở về khung đăng nhập"))
-        self.radioButton.setText(_translate("MainWindow", "RadioButton"))
-        self.radioButton_2.setText(_translate("MainWindow", "RadioButton"))
+        self.radioButton.setText(_translate("MainWindow", "Học sinh"))
+        self.radioButton_2.setText(_translate("MainWindow", "Giáo viên"))
 
 
 if __name__ == "__main__":

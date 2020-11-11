@@ -12,6 +12,7 @@ from PyQt5.QtWidgets import (QApplication, QDialogButtonBox,
 
 from main import *
 from ui_main import Ui_MainWindow
+import pickle
 
 
 class MainWindow(QMainWindow):
@@ -42,7 +43,7 @@ class UIFunctions(MainWindow):
 
         # UIFunctions.open_vscode()
         UIFunctions.load_assignments(self, "assignments.txt")
-        self.ui.list_assignments.itemActivated.connect(lambda: UIFunctions.load_details(self, 'assignment_details.txt'))
+        self.ui.list_assignments.itemActivated.connect(lambda: UIFunctions.load_details(self, 'assignment_details.list'))
 
         UIFunctions.define_role(self)
         
@@ -72,8 +73,9 @@ class UIFunctions(MainWindow):
     
     @classmethod
     def load_details(cls, self, filename):
-        with open(filename) as f:
-            self.ui.assignment_details.setText(f.readlines()[self.ui.list_assignments.currentRow()].rstrip('\n'))
+        with open(filename, 'rb') as f:
+            details = pickle.load(f)
+            self.ui.assignment_details.setText(details[self.ui.list_assignments.currentRow()].rstrip('\n'))
 
     @classmethod
     def define_role(cls, self):
@@ -93,14 +95,14 @@ class UIFunctions(MainWindow):
         self.ui.confirmButton.setStandardButtons(QDialogButtonBox.Ok)
         self.ui.confirmButton.setObjectName("confirmButton")
         self.ui.verticalLayout_4.addWidget(self.ui.confirmButton)
-        self.ui.confirmButton.accepted.connect(lambda: save_text('text2.txt'))
+        self.ui.confirmButton.accepted.connect(lambda: save_text('assignment_details.list'))
         
         def save_text(filename):
-            with open(filename, 'r') as f:
-                data = f.readlines()
-            data[self.ui.list_assignments.currentRow()] = self.ui.assignment_details.toPlainText() + "\n"
-            with open(filename, 'w') as f:
-                f.writelines(data)
+            with open(filename, 'rb') as f:
+                details = pickle.load(f)
+            details[self.ui.list_assignments.currentRow()] = self.ui.assignment_details.toPlainText()
+            with open(filename, 'wb') as f:    
+                pickle.dump(details, f)
    
     @classmethod
     def student_gui_config(cls, self):

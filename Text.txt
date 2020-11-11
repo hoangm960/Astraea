@@ -1,2 +1,2 @@
-Bài 1: Viết một đoạn lệnh in ra màn hình: Hello world!
-Bài 2: Viết chương trình tính 1+2+...+100
+Bài 1: Câu Hello World đầu tiên!
+Bài 2: Tổng liên tiếp

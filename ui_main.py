@@ -147,7 +147,7 @@ class Ui_MainWindow(object):
         self.frame_content_hint.setObjectName("frame_content_hint")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.frame_content_hint)
         self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_4.setSpacing(0)
+        self.verticalLayout_4.setSpacing(5)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.assignment_details = QtWidgets.QTextEdit(self.frame_content_hint)
         font = QtGui.QFont()

@@ -7,7 +7,7 @@ import win32gui
 from PyQt5 import QtCore
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (QApplication, QDialogButtonBox,
-                             QGraphicsDropShadowEffect, QMainWindow,
+                             QGraphicsDropShadowEffect, QMainWindow, QMessageBox,
                              QPushButton, QSizeGrip, QWidget)
 
 from main import *
@@ -98,12 +98,33 @@ class UIFunctions(MainWindow):
         self.ui.confirmButton.accepted.connect(lambda: save_text('assignment_details.list'))
         
         def save_text(filename):
+            save_text.changed = True
             with open(filename, 'rb') as f:
-                details = pickle.load(f)
-            details[self.ui.list_assignments.currentRow()] = self.ui.assignment_details.toPlainText()
-            with open(filename, 'wb') as f:    
-                pickle.dump(details, f)
-   
+                save_text.details = pickle.load(f)
+            if save_text.details[self.ui.list_assignments.currentRow()] != self.ui.assignment_details.toPlainText():
+                show_confirm_mess(filename)
+            save_text.details[self.ui.list_assignments.currentRow()] = self.ui.assignment_details.toPlainText()
+            if save_text.changed:
+                with open(filename, 'wb') as f:    
+                    pickle.dump(save_text.details, f)
+            else:
+                cls.load_details(self, filename)
+
+
+        def show_confirm_mess(filename):
+            msg = QMessageBox()
+            msg.setWindowTitle("Thành công sửa đổi bài tập")
+            msg.setText("Chi tiết câu đã được chỉnh sửa")
+            with open(filename) as f:
+                msg.setDetailedText(f'{save_text.details[self.ui.list_assignments.currentRow()]}\n ---> {self.ui.assignment_details.toPlainText()}')
+            msg.setIcon(QMessageBox.Information)
+            msg.setStandardButtons(QMessageBox.Ok|QMessageBox.Cancel)
+            msg.buttonClicked.connect(popup_button)
+            msg.exec_()
+
+        def popup_button(i):
+            save_text.changed = False if i.text().lower() == "cancel" else True
+
     @classmethod
     def student_gui_config(cls, self):
         self.ui.main_btn.setText('Kiểm tra')

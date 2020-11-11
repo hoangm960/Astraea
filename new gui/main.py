@@ -2,7 +2,7 @@ import sys
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
-from ui_main import Ui_MainWindow
+from ui_main import Ui_MainWindo    w
 from ui_functions import *
 
 class MainWindow(QMainWindow):
@@ -27,7 +27,7 @@ class MainWindow(QMainWindow):
     def mousePressEvent(self, event):
         self.dragPos = event.globalPos()
 
-
+    
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MainWindow()

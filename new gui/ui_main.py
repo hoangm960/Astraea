@@ -288,7 +288,7 @@ class Ui_MainWindow(object):
         self.btn_quit.setToolTip(_translate("MainWindow", "Close"))
         self.label.setText(_translate("MainWindow", "Bruh"))
         self.label_3.setText(_translate("MainWindow", "This"))
-        self.label_4.setText(_translate("MainWindow", "Cool"))
+        self.label_4.setText(_translate("MainWindow", "Coo"))
         self.label_credits.setText(_translate("MainWindow", "Copyrights By Nhat Minh @2020"))
 
 

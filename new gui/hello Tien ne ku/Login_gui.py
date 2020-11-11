@@ -14,16 +14,24 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 600)
+        MainWindow.resize(1000, 788)
+        font = QtGui.QFont()
+        font.setKerning(True)
+        MainWindow.setFont(font)
+        MainWindow.setWindowOpacity(1.0)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
-        self.verticalLayout.setObjectName("verticalLayout")
+        self.horizontalLayout = QtWidgets.QHBoxLayout(self.centralwidget)
+        self.horizontalLayout.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout.setSpacing(0)
+        self.horizontalLayout.setObjectName("horizontalLayout")
         self.frame = QtWidgets.QFrame(self.centralwidget)
         self.frame.setStyleSheet("QFrame{\n"
-"    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0.591, stop:0.227273 rgba(0, 47, 95, 255), stop:1 rgba(0, 0, 45, 255)); border-radius:20px;"
+"    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0.591, stop:0.227273 rgba(94, 0, 95, 255), stop:1 rgba(0, 0, 45, 255));\n"
+" border: none;\n"
 "}")
-        self.frame.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.frame)
@@ -32,10 +40,11 @@ class Ui_MainWindow(object):
         self.frame_2.setMaximumSize(QtCore.QSize(16777215, 60))
         self.frame_2.setLayoutDirection(QtCore.Qt.RightToLeft)
         self.frame_2.setStyleSheet("background-color:none;")
-        self.frame_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_2.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_2.setObjectName("frame_2")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.frame_2)
+        self.verticalLayout_3.setContentsMargins(-1, -1, 0, -1)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.frame_bttn = QtWidgets.QFrame(self.frame_2)
         self.frame_bttn.setMaximumSize(QtCore.QSize(100, 50))
@@ -90,13 +99,16 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.addWidget(self.frame_bttn)
         self.verticalLayout_2.addWidget(self.frame_2)
         self.frame_3 = QtWidgets.QFrame(self.frame)
-        self.frame_3.setStyleSheet("background-color: none;")
+        self.frame_3.setEnabled(True)
+        self.frame_3.setContextMenuPolicy(QtCore.Qt.PreventContextMenu)
+        self.frame_3.setStyleSheet("background-color: none;\n"
+"border: none;\n"
+"visible: false;")
         self.frame_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_3.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_3.setObjectName("frame_3")
         self.Login_Frame = QtWidgets.QFrame(self.frame_3)
-        self.Login_Frame.setGeometry(QtCore.QRect(30, 149, 391, 241))
-        self.Login_Frame.setMaximumSize(QtCore.QSize(430, 250))
+        self.Login_Frame.setGeometry(QtCore.QRect(10, 170, 401, 271))
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
         self.Login_Frame.setFont(font)
@@ -140,7 +152,7 @@ class Ui_MainWindow(object):
         self.lineEdit_3.setAlignment(QtCore.Qt.AlignCenter)
         self.lineEdit_3.setObjectName("lineEdit_3")
         self.LoginButton = QtWidgets.QPushButton(self.Login_Frame)
-        self.LoginButton.setGeometry(QtCore.QRect(160, 180, 81, 21))
+        self.LoginButton.setGeometry(QtCore.QRect(160, 190, 81, 21))
         self.LoginButton.setStyleSheet("QPushButton{\n"
 "background-color: rgb(255, 85, 255,160);\n"
 "border-radius: 8px;\n"
@@ -174,12 +186,12 @@ class Ui_MainWindow(object):
 "")
         self.label_4.setObjectName("label_4")
         self.checkBox = QtWidgets.QCheckBox(self.Login_Frame)
-        self.checkBox.setGeometry(QtCore.QRect(260, 170, 111, 21))
+        self.checkBox.setGeometry(QtCore.QRect(240, 170, 111, 21))
         self.checkBox.setStyleSheet("font: bold;\n"
 "text: \"Lưu đăng nhập?\";")
         self.checkBox.setObjectName("checkBox")
         self.ConvertButton = QtWidgets.QPushButton(self.Login_Frame)
-        self.ConvertButton.setGeometry(QtCore.QRect(80, 210, 251, 21))
+        self.ConvertButton.setGeometry(QtCore.QRect(70, 220, 251, 21))
         font = QtGui.QFont()
         font.setBold(True)
         font.setItalic(False)
@@ -198,11 +210,186 @@ class Ui_MainWindow(object):
 "}")
         self.ConvertButton.setAutoRepeat(True)
         self.ConvertButton.setObjectName("ConvertButton")
+        self.Complete_Frame_3 = QtWidgets.QFrame(self.frame_3)
+        self.Complete_Frame_3.setEnabled(True)
+        self.Complete_Frame_3.setGeometry(QtCore.QRect(10, 170, 401, 271))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        self.Complete_Frame_3.setFont(font)
+        self.Complete_Frame_3.setStyleSheet("QFrame { \n"
+"background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0.0227273 rgba(150, 0, 183, 150), stop:1 rgba(255, 255, 255, 150));\n"
+"border-radius: 8px;\n"
+"\n"
+"}")
+        self.Complete_Frame_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.Complete_Frame_3.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.Complete_Frame_3.setObjectName("Complete_Frame_3")
+        self.label_10 = QtWidgets.QLabel(self.Complete_Frame_3)
+        self.label_10.setGeometry(QtCore.QRect(0, 110, 381, 41))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.label_10.setFont(font)
+        self.label_10.setStyleSheet("color: rgb(225, 255, 255);\n"
+"background-color: none;\n"
+"text-align: center;\n"
+"")
+        self.label_10.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_10.setObjectName("label_10")
+        self.ConvertButton_4 = QtWidgets.QPushButton(self.Complete_Frame_3)
+        self.ConvertButton_4.setEnabled(True)
+        self.ConvertButton_4.setGeometry(QtCore.QRect(70, 190, 251, 21))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setUnderline(False)
+        font.setWeight(75)
+        font.setStrikeOut(False)
+        self.ConvertButton_4.setFont(font)
+        self.ConvertButton_4.setStyleSheet("QPushButton{\n"
+"background-color: rgb(255, 85, 255,0);\n"
+"border-radius: 8px;\n"
+"color: rgb(170, 170, 255);\n"
+"}\n"
+"QPushButton:hover {\n"
+"background-color: none;\n"
+"color: rgb(255,255,255);\n"
+"}")
+        self.ConvertButton_4.setAutoRepeat(True)
+        self.ConvertButton_4.setObjectName("ConvertButton_4")
+        self.Login_Frame_2 = QtWidgets.QFrame(self.frame_3)
+        self.Login_Frame_2.setEnabled(True)
+        self.Login_Frame_2.setGeometry(QtCore.QRect(10, 170, 401, 271))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        self.Login_Frame_2.setFont(font)
+        self.Login_Frame_2.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
+        self.Login_Frame_2.setStyleSheet("QFrame { \n"
+"background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0.0227273 rgba(150, 0, 183, 150), stop:1 rgba(255, 255, 255, 150));\n"
+"border-radius: 8px;\n"
+"}")
+        self.Login_Frame_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.Login_Frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.Login_Frame_2.setObjectName("Login_Frame_2")
+        self.label_7 = QtWidgets.QLabel(self.Login_Frame_2)
+        self.label_7.setEnabled(True)
+        self.label_7.setGeometry(QtCore.QRect(10, 20, 381, 41))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.label_7.setFont(font)
+        self.label_7.setStyleSheet("color: rgb(225, 255, 255);\n"
+"background-color: none;\n"
+"text-align: center;\n"
+"")
+        self.label_7.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_7.setObjectName("label_7")
+        self.lineEdit_5 = QtWidgets.QLineEdit(self.Login_Frame_2)
+        self.lineEdit_5.setEnabled(True)
+        self.lineEdit_5.setGeometry(QtCore.QRect(70, 90, 261, 21))
+        self.lineEdit_5.setStyleSheet("QLineEdit {\n"
+"background-color: rgba(188, 183, 255, 160);\n"
+"border-radius: 10px;\n"
+"border-color: rgb(0, 255, 255);\n"
+"color: rgb(255,255,255);\n"
+"}")
+        self.lineEdit_5.setAlignment(QtCore.Qt.AlignCenter)
+        self.lineEdit_5.setObjectName("lineEdit_5")
+        self.lineEdit_6 = QtWidgets.QLineEdit(self.Login_Frame_2)
+        self.lineEdit_6.setGeometry(QtCore.QRect(70, 140, 261, 21))
+        self.lineEdit_6.setStyleSheet("QLineEdit {\n"
+"background-color: rgba(188, 183, 255, 160);\n"
+"border-radius: 10px;\n"
+"border-color: rgb(0, 255, 255);\n"
+"color: rgb(255,255,255);\n"
+"}")
+        self.lineEdit_6.setAlignment(QtCore.Qt.AlignCenter)
+        self.lineEdit_6.setObjectName("lineEdit_6")
+        self.LoginButton_3 = QtWidgets.QPushButton(self.Login_Frame_2)
+        self.LoginButton_3.setGeometry(QtCore.QRect(160, 200, 81, 21))
+        self.LoginButton_3.setStyleSheet("QPushButton{\n"
+"background-color: rgb(255, 85, 255,160);\n"
+"border-radius: 8px;\n"
+"color: rgb(255, 255, 255);\n"
+"font: bold;\n"
+"}\n"
+"QPushButton:hover {\n"
+"background-color: rbg(249, 219, 255);\n"
+"}")
+        self.LoginButton_3.setFlat(True)
+        self.LoginButton_3.setObjectName("LoginButton_3")
+        self.label_8 = QtWidgets.QLabel(self.Login_Frame_2)
+        self.label_8.setGeometry(QtCore.QRect(70, 120, 61, 16))
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_8.setFont(font)
+        self.label_8.setStyleSheet("background-color: none;\n"
+"color: rgb(255,255,255);\n"
+"")
+        self.label_8.setObjectName("label_8")
+        self.label_9 = QtWidgets.QLabel(self.Login_Frame_2)
+        self.label_9.setGeometry(QtCore.QRect(70, 60, 101, 31))
+        font = QtGui.QFont()
+        font.setPointSize(8)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_9.setFont(font)
+        self.label_9.setStyleSheet("background-color: none;\n"
+"color: rgb(255,255,255);\n"
+"")
+        self.label_9.setObjectName("label_9")
+        self.ConvertButton_3 = QtWidgets.QPushButton(self.Login_Frame_2)
+        self.ConvertButton_3.setGeometry(QtCore.QRect(80, 230, 251, 21))
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setItalic(False)
+        font.setUnderline(False)
+        font.setWeight(75)
+        font.setStrikeOut(False)
+        self.ConvertButton_3.setFont(font)
+        self.ConvertButton_3.setStyleSheet("QPushButton{\n"
+"background-color: rgb(255, 85, 255,0);\n"
+"border-radius: 8px;\n"
+"color: rgb(170, 170, 255);\n"
+"}\n"
+"QPushButton:hover {\n"
+"background-color: none;\n"
+"color: rgb(255,255,255);\n"
+"}")
+        self.ConvertButton_3.setAutoRepeat(True)
+        self.ConvertButton_3.setObjectName("ConvertButton_3")
+        self.radioButton = QtWidgets.QRadioButton(self.Login_Frame_2)
+        self.radioButton.setEnabled(True)
+        self.radioButton.setGeometry(QtCore.QRect(100, 170, 82, 17))
+        self.radioButton.setAutoExclusive(False)
+        self.radioButton.setObjectName("radioButton")
+        self.radioButton_2 = QtWidgets.QRadioButton(self.Login_Frame_2)
+        self.radioButton_2.setGeometry(QtCore.QRect(220, 170, 82, 17))
+        self.radioButton_2.setAutoExclusive(True)
+        self.radioButton_2.setObjectName("radioButton_2")
+        self.ConvertButton_3.raise_()
+        self.label_7.raise_()
+        self.lineEdit_5.raise_()
+        self.lineEdit_6.raise_()
+        self.LoginButton_3.raise_()
+        self.label_8.raise_()
+        self.label_9.raise_()
+        self.radioButton.raise_()
+        self.radioButton_2.raise_()
+        self.Complete_Frame_3.raise_()
+        self.Login_Frame.raise_()
+        self.Login_Frame_2.raise_()
         self.verticalLayout_2.addWidget(self.frame_3)
-        self.verticalLayout.addWidget(self.frame)
+        self.horizontalLayout.addWidget(self.frame)
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
+        self.ConvertButton.clicked.connect(self.Login_Frame.hide)
+        self.ConvertButton.clicked.connect(self.Login_Frame_2.show)
+        self.ConvertButton_3.clicked.connect(self.Login_Frame.show)
+        self.ConvertButton_3.clicked.connect(self.Login_Frame_2.hide)
+        self.ConvertButton_4.clicked.connect(self.Login_Frame.show)
+        self.ConvertButton_4.clicked.connect(self.Complete_Frame_3.hide)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -222,6 +409,20 @@ class Ui_MainWindow(object):
         self.label_4.setText(_translate("MainWindow", "Tên tài khoản:"))
         self.checkBox.setText(_translate("MainWindow", "Lưu đăng nhập?"))
         self.ConvertButton.setText(_translate("MainWindow", "Không có tài khoản? Đăng ký ngay"))
+        self.label_10.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:18pt; font-weight:600;\">ĐĂNG KÝ HOÀN TẤT</span></p></body></html>"))
+        self.ConvertButton_4.setText(_translate("MainWindow", "Trở về"))
+        self.label_7.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600;\">ĐĂNG KÍ TÀI KHOẢN</span></p></body></html>"))
+        self.lineEdit_6.setToolTip(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+        self.LoginButton_3.setText(_translate("MainWindow", "Đăng kí"))
+        self.label_8.setText(_translate("MainWindow", "Mật khẩu:"))
+        self.label_9.setText(_translate("MainWindow", "Tên tài khoản:"))
+        self.ConvertButton_3.setText(_translate("MainWindow", "Quay trở về khung đăng nhập"))
+        self.radioButton.setText(_translate("MainWindow", "RadioButton"))
+        self.radioButton_2.setText(_translate("MainWindow", "RadioButton"))
 
 
 if __name__ == "__main__":
@@ -232,4 +433,3 @@ if __name__ == "__main__":
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
-    

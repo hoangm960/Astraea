@@ -80,7 +80,7 @@ class UIFunctions(MainWindow):
         if self.role.lower() == 'teacher':
             cls.teacher_gui_config(self)
         if self.role.lower() == 'student':
-            pass
+            cls.student_gui_config(self)
     
     @classmethod
     def teacher_gui_config(cls, self):
@@ -102,8 +102,16 @@ class UIFunctions(MainWindow):
             with open(filename, 'w') as f:
                 f.writelines(data)
    
+    @classmethod
+    def student_gui_config(cls, self):
+        self.ui.main_btn.setText('Kiểm tra')
+        self.ui.main_btn.setStyleSheet('''QPushButton {background-color: rgb(224, 150, 0);}
+        QPushButton:hover {background-color: rgba(224, 150, 0, 150);}''')
+
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+    # role = 'student'
     role = 'teacher'
     window = MainWindow(role)
     window.move(1070, 0)

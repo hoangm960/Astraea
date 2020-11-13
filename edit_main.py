@@ -9,32 +9,30 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5 import uic
 
+EDIT_FORM_PATH = "UI_Files/edit_form.ui"
+EDIT_WIDGET1_PATH = "UI_Files/edit_widget1.ui"
+EDIT_WIDGET2_PATH = "UI_Files/edit_widget2.ui"
+
 
 class EditFrame1(QWidget):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        uic.loadUi("UI_Files/edit_widget1.ui", self)
+        uic.loadUi(EDIT_WIDGET1_PATH, self)
 
 
 class EditFrame2(QWidget):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        uic.loadUi("UI_Files/edit_widget2.ui", self)
+        uic.loadUi(EDIT_WIDGET2_PATH, self)
 
     def change_lesson_title(self, title):
-       self.lesson_title.setText(title if title else 'Bài học không tên')
+        self.lesson_title.setText(title if title else "Bài học không tên")
 
 
 class EditWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi("UI_Files/edit_form.ui", self)
-        self.first = EditFrame1()
-        self.stackedWidget.insertWidget(0, self.first)
-        self.first.confirm_button.clicked.connect(lambda: self.go_to_second())
-        self.second = EditFrame2()
-        self.stackedWidget.insertWidget(1, self.second)
-        self.stackedWidget.setCurrentIndex(0)
+        uic.loadUi(EDIT_FORM_PATH, self)
 
         def moveWindow(event):
             if UIFunctions.returnStatus() == True:
@@ -50,10 +48,6 @@ class EditWindow(QMainWindow):
 
     def mousePressEvent(self, event):
         self.dragPos = event.globalPos()
-
-    def go_to_second(self):
-        self.second.change_lesson_title(self.first.name_entry.text())
-        self.stackedWidget.setCurrentIndex(1)
 
 
 class UIFunctions(EditWindow):
@@ -80,6 +74,18 @@ class UIFunctions(EditWindow):
             "QSizeGrip { width: 20px; height: 20px; margin: 5px; border-radius: 10px; } QSizeGrip:hover { background-color: rgb(201, 21, 8) }"
         )
         self.sizegrip.setToolTip("Resize Window")
+
+        self.first = EditFrame1()
+        self.stackedWidget.insertWidget(0, self.first)
+        self.first.confirm_button.clicked.connect(lambda: cls.go_to_second(self))
+        self.second = EditFrame2()
+        self.stackedWidget.insertWidget(1, self.second)
+        self.stackedWidget.setCurrentIndex(0)
+
+    @classmethod
+    def go_to_second(cls, self):
+        self.second.change_lesson_title(self.first.name_entry.text())
+        self.stackedWidget.setCurrentIndex(1)
 
     @classmethod
     def returnStatus(cls):

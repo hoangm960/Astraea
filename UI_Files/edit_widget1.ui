@@ -114,12 +114,12 @@
         </property>
         <property name="styleSheet">
          <string notr="true">QSpinBox::up-button {
-	background-color: rgb(240, 240, 240);
+	background-color: rgb(255, 255, 255);
 	border-radius: 10px;
 }
 
 QSpinBox::up-button:hover {
-	background-color: rgba(240, 240, 240, 150);
+	background-color: rgb(223, 223, 223);
 }
 
 QSpinBox::up-button:pressed {
@@ -127,12 +127,12 @@ QSpinBox::up-button:pressed {
 }
 
 QSpinBox::down-button {
-	background-color: rgb(240, 240, 240);
+	background-color: rgb(255, 255, 255);
 	border-radius: 10px;
 }
 
 QSpinBox::down-button:hover {
-	background-color: rgba(240, 240, 240, 150);
+	background-color: rgb(223, 223, 223);
 }
 
 QSpinBox::down-button:pressed {

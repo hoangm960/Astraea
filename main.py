@@ -24,16 +24,18 @@ from edit_main import EditWindow
 from PyQt5 import uic
 from UI_Files import Resources
 
-
+UI_MAIN_PATH = "UI_Files/ui_main.ui"
 class MainWindow(QMainWindow):
     def __init__(self, role):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
-        uic.loadUi("UI_Files/ui_main.ui", self)
+        uic.loadUi(UI_MAIN_PATH, self)
         self.role = role
         UIFunctions.uiDefinitions(self)
 
 
 class UIFunctions(MainWindow):
+    ASSIGNMENTS_PATH = "data/Lesson/assignments.txt"
+    DETAILS_PATH = "data/Lesson/assignment_details.list"
     @classmethod
     def uiDefinitions(cls, self):
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
@@ -51,9 +53,9 @@ class UIFunctions(MainWindow):
 
         # UIFunctions.open_vscode()
 
-        UIFunctions.load_assignments(self, "data/Lesson/assignments.txt")
+        UIFunctions.load_assignments(self, cls.ASSIGNMENTS_PATH)
         self.list_assignments.itemActivated.connect(
-            lambda: UIFunctions.load_details(self, "data/Lesson/assignment_details.list")
+            lambda: UIFunctions.load_details(self, cls.DETAILS_PATH)
         )
 
         UIFunctions.define_role(self)
@@ -114,7 +116,7 @@ class UIFunctions(MainWindow):
         self.confirmButton.setObjectName("confirmButton")
         self.verticalLayout_4.addWidget(self.confirmButton)
         self.confirmButton.accepted.connect(
-            lambda: save_text("assignment_details.list")
+            lambda: save_text(cls.DETAILS_PATH)
         )
 
         def save_text(filename):

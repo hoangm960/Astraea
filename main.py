@@ -15,22 +15,21 @@ from win32api import GetSystemMetrics
 
 from edit_main import EditWindow
 from main import *
-from ui_main import Ui_MainWindow
+from PyQt5 import uic
 
 
 class MainWindow(QMainWindow):
     def __init__(self, role):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)
+        uic.loadUi('ui_main.ui', self)
         self.role = role
         UIFunctions.uiDefinitions(self)
 
 
 class UIFunctions(MainWindow):
-    pg = None
 
-    def uiDefinitions(self):
+    @classmethod
+    def uiDefinitions(cls, self):
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 
@@ -39,14 +38,15 @@ class UIFunctions(MainWindow):
         self.shadow.setXOffset(0)
         self.shadow.setYOffset(0)
         self.shadow.setColor(QColor(0, 0, 0, 100))
-        self.ui.bg_frame.setGraphicsEffect(self.shadow)
+        self.bg_frame.setGraphicsEffect(self.shadow)
 
-        self.ui.btn_minimize.clicked.connect(lambda: self.showMinimized())
-        self.ui.btn_quit.clicked.connect(lambda: UIFunctions.close_pg(self))
+        self.btn_minimize.clicked.connect(lambda: self.showMinimized())
+        self.btn_quit.clicked.connect(lambda: cls.close_pg(self))
 
-        UIFunctions.open_vscode()
+        # UIFunctions.open_vscode()
+
         UIFunctions.load_assignments(self, "assignments.txt")
-        self.ui.list_assignments.itemActivated.connect(lambda: UIFunctions.load_details(self, 'assignment_details.list'))
+        self.list_assignments.itemActivated.connect(lambda: UIFunctions.load_details(self, 'assignment_details.list'))
 
         UIFunctions.define_role(self)
         
@@ -63,8 +63,11 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def close_pg(cls, self):
-        if cls.pg:
+        try:
             win32gui.PostMessage(cls.pg, win32con.WM_CLOSE,0,0)
+        except:
+            pass
+
         self.close()
 
     @classmethod
@@ -72,13 +75,13 @@ class UIFunctions(MainWindow):
         with open(filename) as f:
             lines = f.readlines()
             for line in lines:
-                self.ui.list_assignments.addItem(line.rstrip("\n"))
+                self.list_assignments.addItem(line.rstrip("\n"))
     
     @classmethod
     def load_details(cls, self, filename):
         with open(filename, 'rb') as f:
             details = pickle.load(f)
-            self.ui.assignment_details.setText(details[self.ui.list_assignments.currentRow()].rstrip('\n'))
+            self.assignment_details.setText(details[self.list_assignments.currentRow()].rstrip('\n'))
 
     @classmethod
     def define_role(cls, self):
@@ -89,25 +92,25 @@ class UIFunctions(MainWindow):
     
     @classmethod
     def teacher_gui_config(cls, self):
-        self.ui.main_btn.setText('Sửa đổi')
-        self.ui.main_btn.setStyleSheet('''QPushButton {background-color: rgb(59, 143, 14);}
+        self.main_btn.setText('Sửa đổi')
+        self.main_btn.setStyleSheet('''QPushButton {background-color: rgb(59, 143, 14);}
         QPushButton:hover {background-color: rgba(59, 143, 14, 150);}''')
-        self.ui.main_btn.clicked.connect(lambda: open_edit_form())
+        self.main_btn.clicked.connect(lambda: open_edit_form())
 
-        self.ui.assignment_details.setReadOnly(False)
-        self.ui.confirmButton = QDialogButtonBox(self.ui.frame_content_hint)
-        self.ui.confirmButton.setStandardButtons(QDialogButtonBox.Ok)
-        self.ui.confirmButton.setObjectName("confirmButton")
-        self.ui.verticalLayout_4.addWidget(self.ui.confirmButton)
-        self.ui.confirmButton.accepted.connect(lambda: save_text('assignment_details.list'))
+        self.assignment_details.setReadOnly(False)
+        self.confirmButton = QDialogButtonBox(self.frame_content_hint)
+        self.confirmButton.setStandardButtons(QDialogButtonBox.Ok)
+        self.confirmButton.setObjectName("confirmButton")
+        self.verticalLayout_4.addWidget(self.confirmButton)
+        self.confirmButton.accepted.connect(lambda: save_text('assignment_details.list'))
         
         def save_text(filename):
             save_text.changed = True
             with open(filename, 'rb') as f:
                 save_text.details = pickle.load(f)
-            if save_text.details[self.ui.list_assignments.currentRow()] != self.ui.assignment_details.toPlainText():
+            if save_text.details[self.list_assignments.currentRow()] != self.assignment_details.toPlainText():
                 show_confirm_mess(filename)
-            save_text.details[self.ui.list_assignments.currentRow()] = self.ui.assignment_details.toPlainText()
+            save_text.details[self.list_assignments.currentRow()] = self.assignment_details.toPlainText()
             if save_text.changed:
                 with open(filename, 'wb') as f:    
                     pickle.dump(save_text.details, f)
@@ -120,7 +123,7 @@ class UIFunctions(MainWindow):
             msg.setWindowTitle("Thành công sửa đổi bài tập")
             msg.setText("Chi tiết câu đã được chỉnh sửa")
             with open(filename) as f:
-                msg.setDetailedText(f'Chi tiết gốc:\n{save_text.details[self.ui.list_assignments.currentRow()]}\n\nChi tiết sau khi sửa đổi:\n{self.ui.assignment_details.toPlainText()}')
+                msg.setDetailedText(f'Chi tiết gốc:\n{save_text.details[self.list_assignments.currentRow()]}\n\nChi tiết sau khi sửa đổi:\n{self.assignment_details.toPlainText()}')
             msg.setIcon(QMessageBox.Information)
             msg.setStandardButtons(QMessageBox.Ok|QMessageBox.Cancel)
             msg.buttonClicked.connect(popup_button)
@@ -136,8 +139,8 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def student_gui_config(cls, self):
-        self.ui.main_btn.setText('Kiểm tra')
-        self.ui.main_btn.setStyleSheet('''QPushButton {background-color: rgb(224, 150, 0);}
+        self.main_btn.setText('Kiểm tra')
+        self.main_btn.setStyleSheet('''QPushButton {background-color: rgb(224, 150, 0);}
         QPushButton:hover {background-color: rgba(224, 150, 0, 150);}''')
 
 

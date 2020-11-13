@@ -25,6 +25,8 @@ from PyQt5 import uic
 from UI_Files import Resources
 
 UI_MAIN_PATH = "UI_Files/ui_main.ui"
+
+
 class MainWindow(QMainWindow):
     def __init__(self, role):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
@@ -36,6 +38,7 @@ class MainWindow(QMainWindow):
 class UIFunctions(MainWindow):
     ASSIGNMENTS_PATH = "data/Lesson/assignments.txt"
     DETAILS_PATH = "data/Lesson/assignment_details.list"
+
     @classmethod
     def uiDefinitions(cls, self):
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
@@ -115,9 +118,7 @@ class UIFunctions(MainWindow):
         self.confirmButton.setStandardButtons(QDialogButtonBox.Ok)
         self.confirmButton.setObjectName("confirmButton")
         self.verticalLayout_4.addWidget(self.confirmButton)
-        self.confirmButton.accepted.connect(
-            lambda: save_text(cls.DETAILS_PATH)
-        )
+        self.confirmButton.accepted.connect(lambda: save_text(cls.DETAILS_PATH))
 
         def save_text(filename):
             save_text.changed = True

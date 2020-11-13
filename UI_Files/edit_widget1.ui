@@ -56,6 +56,9 @@
         <property name="alignment">
          <set>Qt::AlignCenter</set>
         </property>
+        <property name="cursorMoveStyle">
+         <enum>Qt::VisualMoveStyle</enum>
+        </property>
        </widget>
       </item>
      </layout>
@@ -153,6 +156,9 @@ QSpinBox::down-arrow {
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
+        </property>
+        <property name="suffix">
+         <string/>
         </property>
         <property name="minimum">
          <number>1</number>

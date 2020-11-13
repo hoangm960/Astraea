@@ -7,15 +7,42 @@ import win32gui
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import (QApplication, QDialogButtonBox,
-                             QGraphicsDropShadowEffect, QMainWindow, QMessageBox,
-                             QPushButton, QSizeGrip, QWidget)
+from PyQt5.QtWidgets import (
+    QApplication,
+    QDialogButtonBox,
+    QGraphicsDropShadowEffect,
+    QMainWindow,
+    QMessageBox,
+    QPushButton,
+    QSizeGrip,
+    QWidget,
+)
 from PyQt5 import uic
+
+
+class EditFrame1(QWidget):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        uic.loadUi("edit_widget1.ui", self)
+
+
+class EditFrame2(QWidget):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        uic.loadUi("edit_widget2.ui", self)
+
 
 class EditWindow(QMainWindow):
     def __init__(self):
-        QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
-        uic.loadUi('edit_form.ui', self)
+        super().__init__()
+        uic.loadUi("edit_form.ui", self)
+        self.first = EditFrame1()
+        self.stackedWidget.insertWidget(0, self.first)
+        self.first.confirm_button.clicked.connect(lambda: self.go_to_second())
+        self.second = EditFrame2()
+        self.stackedWidget.insertWidget(1, self.second)
+        self.stackedWidget.setCurrentIndex(0)
+
 
         def moveWindow(event):
             if UIFunctions.returnStatus() == True:
@@ -29,13 +56,14 @@ class EditWindow(QMainWindow):
 
         UIFunctions.uiDefinitions(self)
 
-
     def mousePressEvent(self, event):
         self.dragPos = event.globalPos()
-        
+
+    def go_to_second(self):
+        self.stackedWidget.setCurrentIndex(1)
+
 class UIFunctions(EditWindow):
     GLOBAL_STATE = False
-
 
     @classmethod
     def uiDefinitions(cls, self):
@@ -54,15 +82,10 @@ class UIFunctions(EditWindow):
         self.btn_quit.clicked.connect(lambda: self.close())
 
         self.sizegrip = QSizeGrip(self.frame_grip)
-        self.sizegrip.setStyleSheet("QSizeGrip { width: 20px; height: 20px; margin: 5px; border-radius: 10px; } QSizeGrip:hover { background-color: rgb(201, 21, 8) }")
+        self.sizegrip.setStyleSheet(
+            "QSizeGrip { width: 20px; height: 20px; margin: 5px; border-radius: 10px; } QSizeGrip:hover { background-color: rgb(201, 21, 8) }"
+        )
         self.sizegrip.setToolTip("Resize Window")
-
-        self.confirm_button.clicked.connect(lambda: cls.change_scene(self))
-
-    @classmethod
-    def change_scene(cls, self):
-        self.centralwidget = Ui_Form()
-        self.centralwidget.setupUi(self)
 
     @classmethod
     def returnStatus(cls):
@@ -76,14 +99,18 @@ class UIFunctions(EditWindow):
             self.showMaximized()
 
             cls.GLOBAL_STATE = True
-            
+
             self.bg_layout.setContentsMargins(0, 0, 0, 0)
-            self.bg_frame.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0.341, x2:1, y2:0.897, stop:0 rgba(97, 152, 255, 255), stop:0.514124 rgba(186, 38, 175, 255), stop:1 rgba(255, 0, 0, 255)); border-radius: 0px;")
+            self.bg_frame.setStyleSheet(
+                "background-color: qlineargradient(spread:pad, x1:0, y1:0.341, x2:1, y2:0.897, stop:0 rgba(97, 152, 255, 255), stop:0.514124 rgba(186, 38, 175, 255), stop:1 rgba(255, 0, 0, 255)); border-radius: 0px;"
+            )
             self.btn_maximize.setToolTip("Restore")
         else:
             cls.GLOBAL_STATE = False
             self.showNormal()
             self.resize(self.width() + 1, self.height() + 1)
             self.bg_layout.setContentsMargins(10, 10, 10, 10)
-            self.bg_frame.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0.341, x2:1, y2:0.897, stop:0 rgba(97, 152, 255, 255), stop:0.514124 rgba(186, 38, 175, 255), stop:1 rgba(255, 0, 0, 255)); border-radius: 20px;")
+            self.bg_frame.setStyleSheet(
+                "background-color: qlineargradient(spread:pad, x1:0, y1:0.341, x2:1, y2:0.897, stop:0 rgba(97, 152, 255, 255), stop:0.514124 rgba(186, 38, 175, 255), stop:1 rgba(255, 0, 0, 255)); border-radius: 20px;"
+            )
             self.btn_maximize.setToolTip("Maximize")

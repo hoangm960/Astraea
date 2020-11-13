@@ -13,19 +13,22 @@ from PyQt5 import uic
 class EditFrame1(QWidget):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        uic.loadUi("UI Files/edit_widget1.ui", self)
+        uic.loadUi("UI_Files/edit_widget1.ui", self)
 
 
 class EditFrame2(QWidget):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        uic.loadUi("UI Files/edit_widget2.ui", self)
+        uic.loadUi("UI_Files/edit_widget2.ui", self)
+
+    def change_lesson_title(self, title):
+       self.lesson_title.setText(title if title else 'Bài học không tên')
 
 
 class EditWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi("UI Files/edit_form.ui", self)
+        uic.loadUi("UI_Files/edit_form.ui", self)
         self.first = EditFrame1()
         self.stackedWidget.insertWidget(0, self.first)
         self.first.confirm_button.clicked.connect(lambda: self.go_to_second())
@@ -49,6 +52,7 @@ class EditWindow(QMainWindow):
         self.dragPos = event.globalPos()
 
     def go_to_second(self):
+        self.second.change_lesson_title(self.first.name_entry.text())
         self.stackedWidget.setCurrentIndex(1)
 
 

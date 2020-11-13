@@ -22,12 +22,13 @@ from win32api import GetSystemMetrics
 
 from edit_main import EditWindow
 from PyQt5 import uic
+from UI_Files import Resources
 
 
 class MainWindow(QMainWindow):
     def __init__(self, role):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
-        uic.loadUi("UI Files/ui_main.ui", self)
+        uic.loadUi("UI_Files/ui_main.ui", self)
         self.role = role
         UIFunctions.uiDefinitions(self)
 
@@ -50,9 +51,9 @@ class UIFunctions(MainWindow):
 
         # UIFunctions.open_vscode()
 
-        UIFunctions.load_assignments(self, "data/assignments.txt")
+        UIFunctions.load_assignments(self, "data/Lesson/assignments.txt")
         self.list_assignments.itemActivated.connect(
-            lambda: UIFunctions.load_details(self, "data/assignment_details.list")
+            lambda: UIFunctions.load_details(self, "data/Lesson/assignment_details.list")
         )
 
         UIFunctions.define_role(self)

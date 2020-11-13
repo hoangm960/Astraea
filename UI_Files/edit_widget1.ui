@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">border-radius: 10px;</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QFrame" name="name_frame">
@@ -109,6 +112,45 @@
           <pointsize>22</pointsize>
          </font>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QSpinBox::up-button {
+	background-color: rgb(240, 240, 240);
+	border-radius: 10px;
+}
+
+QSpinBox::up-button:hover {
+	background-color: rgba(240, 240, 240, 150);
+}
+
+QSpinBox::up-button:pressed {
+	background-color: rgb(207, 207, 207);
+}
+
+QSpinBox::down-button {
+	background-color: rgb(240, 240, 240);
+	border-radius: 10px;
+}
+
+QSpinBox::down-button:hover {
+	background-color: rgba(240, 240, 240, 150);
+}
+
+QSpinBox::down-button:pressed {
+	background-color: rgb(207, 207, 207);
+}
+
+QSpinBox::up-arrow {
+	image: url(:/images/plus.png);
+    width: 20px;
+    height: 20px;
+}
+
+QSpinBox::down-arrow {
+	image: url(:/images/minus.png);
+    width: 20px;
+    height: 20px;
+}</string>
+        </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
         </property>
@@ -149,6 +191,7 @@
         <property name="styleSheet">
          <string notr="true">QPushButton {
 	background-color: rgb(102, 146, 251);
+	border-radius: 10px;
 }
 
 QPushButton:hover {
@@ -165,6 +208,8 @@ QPushButton:hover {
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="Resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -14,7 +14,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(300, 730)
+        MainWindow.resize(300, 728)
+        MainWindow.setMinimumSize(QtCore.QSize(300, 728))
+        MainWindow.setMaximumSize(QtCore.QSize(300, 728))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
@@ -53,8 +55,10 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.title = QtWidgets.QLabel(self.frame_title)
         font = QtGui.QFont()
-        font.setFamily("Corbel")
-        font.setPointSize(14)
+        font.setFamily("Montserrat")
+        font.setPointSize(17)
+        font.setBold(True)
+        font.setWeight(75)
         font.setKerning(True)
         self.title.setFont(font)
         self.title.setScaledContents(False)
@@ -120,8 +124,10 @@ class Ui_MainWindow(object):
         self.verticalLayout_5.setObjectName("verticalLayout_5")
         self.list_assignments = QtWidgets.QListWidget(self.frame_content_assignment)
         font = QtGui.QFont()
-        font.setFamily("Corbel")
+        font.setFamily("iCiel Effra")
         font.setPointSize(14)
+        font.setBold(False)
+        font.setWeight(50)
         self.list_assignments.setFont(font)
         self.list_assignments.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.list_assignments.setAutoScroll(False)
@@ -151,8 +157,10 @@ class Ui_MainWindow(object):
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.assignment_details = QtWidgets.QTextEdit(self.frame_content_hint)
         font = QtGui.QFont()
-        font.setFamily("Corbel")
+        font.setFamily("iCiel Effra")
         font.setPointSize(14)
+        font.setBold(False)
+        font.setWeight(50)
         self.assignment_details.setFont(font)
         self.assignment_details.setTabChangesFocus(True)
         self.assignment_details.setUndoRedoEnabled(False)
@@ -165,6 +173,9 @@ class Ui_MainWindow(object):
         self.frame_main_btn = QtWidgets.QFrame(self.bg_frame)
         self.frame_main_btn.setMinimumSize(QtCore.QSize(0, 100))
         self.frame_main_btn.setMaximumSize(QtCore.QSize(16777215, 100))
+        font = QtGui.QFont()
+        font.setPointSize(8)
+        self.frame_main_btn.setFont(font)
         self.frame_main_btn.setStyleSheet("background-color: none;\n"
 "")
         self.frame_main_btn.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -175,8 +186,13 @@ class Ui_MainWindow(object):
         self.main_btn = QtWidgets.QPushButton(self.frame_main_btn)
         self.main_btn.setMinimumSize(QtCore.QSize(0, 40))
         self.main_btn.setMaximumSize(QtCore.QSize(80, 16777215))
+        font = QtGui.QFont()
+        font.setFamily("Montserrat")
+        font.setPointSize(8)
+        self.main_btn.setFont(font)
         self.main_btn.setStyleSheet("QPushButton {\n"
 "    background-color: rgb(255, 255, 255);\n"
+"    border-radius: 5px;\n"
 "}\n"
 "\n"
 "QPushButton:hover {\n"
@@ -198,7 +214,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.title.setText(_translate("MainWindow", "Pylearn"))
+        self.title.setText(_translate("MainWindow", "PYLEARN"))
         self.btn_minimize.setToolTip(_translate("MainWindow", "Minimize"))
         self.btn_quit.setToolTip(_translate("MainWindow", "Close"))
         self.list_assignments.setSortingEnabled(False)

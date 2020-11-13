@@ -40,10 +40,10 @@
      <widget class="QFrame" name="bg_frame">
       <property name="font">
        <font>
-        <family>Corbel</family>
+        <family>Montserrat</family>
         <pointsize>14</pointsize>
-        <weight>50</weight>
-        <bold>false</bold>
+        <weight>75</weight>
+        <bold>true</bold>
        </font>
       </property>
       <property name="styleSheet">
@@ -118,14 +118,14 @@ border-radius: 10px;</string>
               <widget class="QLabel" name="title_label">
                <property name="font">
                 <font>
-                 <family>Corbel</family>
+                 <family>Montserrat Semi Bold</family>
                  <pointsize>22</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
                </property>
                <property name="text">
-                <string>Pylearn</string>
+                <string>PYLEARN</string>
                </property>
               </widget>
              </item>
@@ -254,6 +254,13 @@ QPushButton:hover {
        </item>
        <item>
         <widget class="QFrame" name="content_frame">
+         <property name="font">
+          <font>
+           <family>iCiel Effra</family>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
          <property name="styleSheet">
           <string notr="true">background-color: none</string>
          </property>
@@ -277,7 +284,7 @@ QPushButton:hover {
               <widget class="QLabel" name="name_label">
                <property name="font">
                 <font>
-                 <family>Corbel</family>
+                 <family>iCiel Effra</family>
                  <pointsize>22</pointsize>
                 </font>
                </property>
@@ -330,7 +337,7 @@ QPushButton:hover {
                </property>
                <property name="font">
                 <font>
-                 <family>Corbel</family>
+                 <family>iCiel Effra</family>
                  <pointsize>22</pointsize>
                 </font>
                </property>

@@ -1,9 +1,12 @@
+import os
+from pathlib import Path
 import sys
 from PyQt5 import QtCore
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (
     QApplication,
+    QFileDialog,
     QGraphicsDropShadowEffect,
     QLayout,
     QListWidgetItem,
@@ -33,6 +36,17 @@ class EditWidget2(QWidget):
             super().__init__(*args, **kwargs)
             uic.loadUi(EDIT_FRAME_PATH, self)
 
+            self.test_file_btn.clicked.connect(lambda: self.showDialog(self.test_file_entry))
+            self.input_file_btn.clicked.connect(lambda: self.showDialog(self.input_file_entry))
+            self.ans_file_btn.clicked.connect(lambda: self.showDialog(self.ans_file_entry))
+
+        def showDialog(self, entry):
+            HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
+            file_name = QFileDialog.getOpenFileName(self, "Open file", HOME_PATH)
+
+            if file_name[0]:
+                entry.setText(file_name[0])
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         uic.loadUi(EDIT_WIDGET2_PATH, self)
@@ -44,10 +58,16 @@ class EditWidget2(QWidget):
         for _ in range(num):
             self.widget_item = QListWidgetItem()
             self.frame = self.EditFrame()
-            self.widget_item.setSizeHint(self.frame.sizeHint())
+            self.widget_item.setSizeHint(self.sizeHint())
 
             self.list_widget.addItem(self.widget_item)
             self.list_widget.setItemWidget(self.widget_item, self.frame)
+
+        def sizeHint(self):
+            s = QSize()
+            s.setHeight(super(self.list_widget, self).sizeHint().height())
+            s.setWidth(self.sizeHintForColumn(0))
+            return s
 
 
 class EditWindow(QMainWindow):
@@ -102,17 +122,17 @@ class UIFunctions(EditWindow):
 
         # Change scene
         self.first = EditWidget1()
-        self.stackedWidget.insertWidget(0, self.first)
+        self.stacked_widget.insertWidget(0, self.first)
         self.first.confirm_button.clicked.connect(lambda: cls.go_to_second(self))
         self.second = EditWidget2()
-        self.stackedWidget.insertWidget(1, self.second)
-        self.stackedWidget.setCurrentIndex(0)
+        self.stacked_widget.insertWidget(1, self.second)
+        self.stacked_widget.setCurrentIndex(0)
 
     @classmethod
     def go_to_second(cls, self):
         self.second.change_lesson_title(self.first.name_entry.text())
         self.second.put_frame_in_list(self.first.num_entry.value())
-        self.stackedWidget.setCurrentIndex(1)
+        self.stacked_widget.setCurrentIndex(1)
 
     @classmethod
     def returnStatus(cls):

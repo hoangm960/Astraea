@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>736</width>
-    <height>388</height>
+    <width>759</width>
+    <height>512</height>
    </rect>
   </property>
   <property name="font">
@@ -51,7 +51,7 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="title_label">
         <property name="font">
          <font>
           <family>iCiel Effra</family>
@@ -67,7 +67,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit">
+       <widget class="QLineEdit" name="title_entry">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);
 border-radius: 12px;</string>
@@ -93,20 +93,48 @@ border-radius: 12px;</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <widget class="QLabel" name="label_2">
+       <widget class="QLabel" name="test_file_label">
         <property name="text">
          <string>Địa chỉ file cần kiểm tra:</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_2">
+       <widget class="QLineEdit" name="test_file_entry">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);
 border-radius: 12px;</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="test_file_btn">
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+	background-color: rgb(255, 255, 255);
+	border-radius: 5px;
+	image: url(:/images/folder_open.png);
+}
+
+QPushButton:hover {
+	background-color: rgb(223, 223, 223);
+}
+
+QPushButton:pressed {
+	background-color: rgb(207, 207, 207);
+}</string>
+        </property>
+        <property name="text">
+         <string/>
         </property>
        </widget>
       </item>
@@ -126,20 +154,48 @@ border-radius: 12px;</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
-       <widget class="QLabel" name="label_3">
+       <widget class="QLabel" name="input_file_label">
         <property name="text">
          <string>Địa chỉ file bộ test:</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_3">
+       <widget class="QLineEdit" name="input_file_entry">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);
 border-radius: 12px;</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="input_file_btn">
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+	background-color: rgb(255, 255, 255);
+	border-radius: 5px;
+	image: url(:/images/folder_open.png);
+}
+
+QPushButton:hover {
+	background-color: rgb(223, 223, 223);
+}
+
+QPushButton:pressed {
+	background-color: rgb(207, 207, 207);
+}</string>
+        </property>
+        <property name="text">
+         <string/>
         </property>
        </widget>
       </item>
@@ -159,20 +215,48 @@ border-radius: 12px;</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
       <item>
-       <widget class="QLabel" name="label_4">
+       <widget class="QLabel" name="ans_file_label">
         <property name="text">
          <string>Địa chỉ file đáp án:</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_4">
+       <widget class="QLineEdit" name="ans_file_entry">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);
 border-radius: 12px;</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="ans_file_btn">
+        <property name="maximumSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+	background-color: rgb(255, 255, 255);
+	border-radius: 5px;
+	image: url(:/images/folder_open.png);
+}
+
+QPushButton:hover {
+	background-color: rgb(223, 223, 223);
+}
+
+QPushButton:pressed {
+	background-color: rgb(207, 207, 207);
+}</string>
+        </property>
+        <property name="text">
+         <string/>
         </property>
        </widget>
       </item>
@@ -201,14 +285,20 @@ border-radius: 12px;</string>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_6">
          <item>
-          <widget class="QLabel" name="label_5">
+          <widget class="QLabel" name="test_num_label">
            <property name="text">
             <string>Số test:</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="spinBox">
+          <widget class="QSpinBox" name="test_num_entry">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="styleSheet">
             <string notr="true">QSpinBox {
 	background-color: rgb(255, 255, 255);
@@ -271,14 +361,20 @@ QSpinBox::down-arrow {
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_7">
          <item>
-          <widget class="QLabel" name="label_6">
+          <widget class="QLabel" name="test_var_label">
            <property name="text">
             <string>Số biến:</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="spinBox_2">
+          <widget class="QSpinBox" name="test_var_entry">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="styleSheet">
             <string notr="true">QSpinBox {
 	background-color: rgb(255, 255, 255);
@@ -332,16 +428,6 @@ QSpinBox::down-arrow {
        </widget>
       </item>
      </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QTableView" name="tableView">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(209, 209, 209);</string>
-     </property>
-     <attribute name="verticalHeaderDefaultSectionSize">
-      <number>31</number>
-     </attribute>
     </widget>
    </item>
   </layout>

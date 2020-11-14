@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>736</width>
-    <height>418</height>
+    <width>780</width>
+    <height>546</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -284,15 +284,45 @@ QPushButton:hover {
            <number>0</number>
           </property>
           <property name="bottomMargin">
-           <number>0</number>
+           <number>6</number>
           </property>
           <item>
-           <widget class="QStackedWidget" name="stackedWidget">
-            <property name="styleSheet">
-             <string notr="true">border-radius: 1px;</string>
+           <widget class="QFrame" name="stacked_frame">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
             </property>
-            <widget class="QWidget" name="edit_frame1"/>
-            <widget class="QWidget" name="edit_frame2"/>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QStackedWidget" name="stacked_widget">
+               <property name="styleSheet">
+                <string notr="true">border-radius: 1px;</string>
+               </property>
+               <property name="currentIndex">
+                <number>0</number>
+               </property>
+               <widget class="QWidget" name="edit_frame1"/>
+               <widget class="QWidget" name="edit_frame2"/>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>
@@ -303,7 +333,7 @@ QPushButton:hover {
          <property name="minimumSize">
           <size>
            <width>30</width>
-           <height>0</height>
+           <height>30</height>
           </size>
          </property>
          <property name="maximumSize">

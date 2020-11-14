@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'c:\Users\Administrator\Documents\GitHub\pylearn\Pylearn\new gui\hello Tien ne ku\Login_gui.ui'
+# Form implementation generated from reading ui file 'c:\Users\Administrator\Documents\GitHub\pylearn\Pylearn\new gui\NewGUI_Login\Login_gui.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.1
 #
@@ -165,6 +165,7 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
         self.PassBox_SI.setFont(font)
+        self.PassBox_SI.setToolTip("")
         self.PassBox_SI.setStyleSheet("QLineEdit {\n"
 "background-color: rgba(188, 183, 255, 160);\n"
 "border-radius: 10px;\n"
@@ -237,12 +238,10 @@ class Ui_MainWindow(object):
         self.ConvertButton.setStyleSheet("QPushButton{\n"
 "background-color: rgba(255, 85, 255,0);\n"
 "border-radius: 8px;\n"
-"color: rgb(170, 170, 255);\n"
+"color: rgb(255, 255, 255);\n"
 "}\n"
 "QPushButton:hover {\n"
-"border-radius: 8px;\n"
-"background-color: none;\n"
-"color: rgb(255,255,255);\n"
+"color: rgb(170, 255, 255);\n"
 "}")
         self.ConvertButton.setAutoRepeat(True)
         self.ConvertButton.setObjectName("ConvertButton")
@@ -346,6 +345,7 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
         self.PassBox_SU.setFont(font)
+        self.PassBox_SU.setToolTip("")
         self.PassBox_SU.setStyleSheet("QLineEdit {\n"
 "background-color: rgba(188, 183, 255, 160);\n"
 "border-radius: 10px;\n"
@@ -412,12 +412,10 @@ class Ui_MainWindow(object):
         self.ConvertButton_3.setStyleSheet("QPushButton{\n"
 "background-color: rgba(255, 85, 255,0);\n"
 "border-radius: 8px;\n"
-"color: rgb(170, 170, 255);\n"
+"color: rgb(255, 255, 255);\n"
 "}\n"
 "QPushButton:hover {\n"
-"border-radius: 8px;\n"
-"background-color: none;\n"
-"color: rgb(255,255,255);\n"
+"color: rgb(170, 255, 255);\n"
 "}")
         self.ConvertButton_3.setAutoRepeat(True)
         self.ConvertButton_3.setObjectName("ConvertButton_3")
@@ -478,7 +476,7 @@ class Ui_MainWindow(object):
         self.OkCancelFrame = QtWidgets.QFrame(self.frame)
         self.OkCancelFrame.setGeometry(QtCore.QRect(290, 200, 400, 180))
         self.OkCancelFrame.setStyleSheet("QFrame {\n"
-"background-color: qlineargradient(spread:pad, x1:0, y1:0.551, x2:1, y2:0.579, stop:0 rgba(210, 93, 255, 255), stop:0.642045 rgba(142, 32, 201, 255));\n"
+"background-color: qlineargradient(spread:pad, x1:0, y1:0.551, x2:1, y2:0.579, stop:0 rgba(210, 93, 255, 160), stop:0.642045 rgba(142, 32, 201, 160));\n"
 "color: rgb(170, 255, 255);\n"
 "border-radius: 50px;\n"
 "}")
@@ -576,11 +574,6 @@ class Ui_MainWindow(object):
         self.label_11.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600;\">PyLearn - Đăng nhập hệ thống</span></p></body></html>"))
         self.label.setText(_translate("MainWindow", "<STRONG>ĐĂNG NHẬP TÀI KHOẢN</STRONG>"))
         self.NameBox_SI.setPlaceholderText(_translate("MainWindow", "Nhập tên tài khoản của bạn"))
-        self.PassBox_SI.setToolTip(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.PassBox_SI.setPlaceholderText(_translate("MainWindow", "Nhập mật khẩu của bạn"))
         self.SignIn_Bt.setText(_translate("MainWindow", "Đăng nhập"))
         self.label_3.setText(_translate("MainWindow", "Mật khẩu:"))
@@ -591,11 +584,6 @@ class Ui_MainWindow(object):
         self.ConvertButton_4.setText(_translate("MainWindow", "Trở về"))
         self.label_7.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600;\">ĐĂNG KÍ TÀI KHOẢN</span></p></body></html>"))
         self.NameBox_SU.setPlaceholderText(_translate("MainWindow", "Nhập tên tài khoản đăng ký của bạn"))
-        self.PassBox_SU.setToolTip(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.PassBox_SU.setPlaceholderText(_translate("MainWindow", "Nhập mật khẩu đăng ký của bạn"))
         self.SignUp_Bt.setText(_translate("MainWindow", "Đăng kí"))
         self.label_8.setText(_translate("MainWindow", "Mật khẩu:"))

@@ -357,11 +357,7 @@ border: 2px solid rgb(255, 255, 255);
             </font>
            </property>
            <property name="toolTip">
-            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string/>
            </property>
            <property name="styleSheet">
             <string notr="true">QLineEdit {
@@ -512,12 +508,10 @@ color: rgb(255, 255, 255)</string>
             <string notr="true">QPushButton{
 background-color: rgba(255, 85, 255,0);
 border-radius: 8px;
-color: rgb(170, 170, 255);
+color: rgb(255, 255, 255);
 }
 QPushButton:hover {
-border-radius: 8px;
-background-color: none;
-color: rgb(255,255,255);
+color: rgb(170, 255, 255);
 }</string>
            </property>
            <property name="text">
@@ -749,11 +743,7 @@ border: 2px solid rgb(255, 255, 255);
             </font>
            </property>
            <property name="toolTip">
-            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string/>
            </property>
            <property name="styleSheet">
             <string notr="true">QLineEdit {
@@ -884,12 +874,10 @@ color: rgb(255,255,255);
             <string notr="true">QPushButton{
 background-color: rgba(255, 85, 255,0);
 border-radius: 8px;
-color: rgb(170, 170, 255);
+color: rgb(255, 255, 255);
 }
 QPushButton:hover {
-border-radius: 8px;
-background-color: none;
-color: rgb(255,255,255);
+color: rgb(170, 255, 255);
 }</string>
            </property>
            <property name="text">
@@ -1052,7 +1040,7 @@ font-size: 12px;</string>
           </property>
           <property name="styleSheet">
            <string notr="true">QFrame {
-background-color: qlineargradient(spread:pad, x1:0, y1:0.551, x2:1, y2:0.579, stop:0 rgba(210, 93, 255, 255), stop:0.642045 rgba(142, 32, 201, 255));
+background-color: qlineargradient(spread:pad, x1:0, y1:0.551, x2:1, y2:0.579, stop:0 rgba(210, 93, 255, 160), stop:0.642045 rgba(142, 32, 201, 160));
 color: rgb(170, 255, 255);
 border-radius: 50px;
 }</string>

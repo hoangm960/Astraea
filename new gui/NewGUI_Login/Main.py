@@ -18,7 +18,7 @@ class Loading_Screen(QMainWindow):
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground) 
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.progress)
-        self.timer.start(10)
+        self.timer.start(20)
         self.show()
     def progress(self):
         global counter

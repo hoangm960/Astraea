@@ -34,7 +34,7 @@ class MainWindow(QMainWindow):
         self.role = role
         UIFunctions.uiDefinitions(self)
 
-
+    
 class UIFunctions(MainWindow):
     ASSIGNMENTS_PATH = "data/Lesson/assignments.txt"
     DETAILS_PATH = "data/Lesson/assignment_details.list"
@@ -165,7 +165,6 @@ class UIFunctions(MainWindow):
             """QPushButton {background-color: rgb(224, 150, 0);}
         QPushButton:hover {background-color: rgba(224, 150, 0, 150);}"""
         )
-
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

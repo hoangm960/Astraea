@@ -74,8 +74,9 @@ class LoginWindow(QMainWindow):
         password = self.PassBox_SI.text().lower()
         if name == '' or password == '':
             self.frameError.show()
-            self.Error_NamePass.show()    
-     
+            self.Error_NamePass.show()
+        else:
+            self.close() 
     def check_SU(self):
         check = True
         self.Default_Check()

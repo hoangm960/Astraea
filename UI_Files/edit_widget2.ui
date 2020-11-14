@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>705</width>
-    <height>423</height>
+    <width>736</width>
+    <height>418</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,11 +17,14 @@
    <property name="spacing">
     <number>0</number>
    </property>
+   <property name="sizeConstraint">
+    <enum>QLayout::SetDefaultConstraint</enum>
+   </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
    <property name="topMargin">
-    <number>9</number>
+    <number>0</number>
    </property>
    <property name="rightMargin">
     <number>0</number>
@@ -39,15 +42,60 @@
        <bold>true</bold>
       </font>
      </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
      <property name="text">
       <string>TextLabel</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QListWidget" name="listWidget">
+    <widget class="QListWidget" name="list_widget">
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
      <property name="styleSheet">
-      <string notr="true">background-color: transparent;</string>
+      <string notr="true">QListWidget {
+	border-radius: 1px;
+	background-color: rgb(255, 255, 255);
+} 
+QListWidget::item { 
+	margin: 20px;
+	background-color: rgb(130, 245, 255); 
+	border-color: rgb(0, 0, 0);
+	border-width: 10px;
+}</string>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAsNeeded</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="showDropIndicator" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="dragDropMode">
+      <enum>QAbstractItemView::NoDragDrop</enum>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="verticalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
+     </property>
+     <property name="movement">
+      <enum>QListView::Free</enum>
+     </property>
+     <property name="selectionRectVisible">
+      <bool>true</bool>
+     </property>
+     <property name="currentRow">
+      <number>-1</number>
      </property>
     </widget>
    </item>

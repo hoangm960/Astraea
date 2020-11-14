@@ -6,22 +6,43 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>672</width>
-    <height>416</height>
+    <width>736</width>
+    <height>388</height>
    </rect>
   </property>
   <property name="font">
    <font>
     <family>iCiel Effra</family>
     <pointsize>14</pointsize>
+    <weight>50</weight>
+    <italic>false</italic>
+    <bold>false</bold>
    </font>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">font: 14pt &quot;iCiel Effra&quot;;</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>6</number>
+   </property>
+   <property name="topMargin">
+    <number>6</number>
+   </property>
+   <property name="rightMargin">
+    <number>6</number>
+   </property>
+   <property name="bottomMargin">
+    <number>6</number>
+   </property>
    <item>
     <widget class="QFrame" name="title_frame">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(209, 209, 209);</string>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -35,6 +56,9 @@
          <font>
           <family>iCiel Effra</family>
           <pointsize>14</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
          </font>
         </property>
         <property name="text">
@@ -43,13 +67,24 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit"/>
+       <widget class="QLineEdit" name="lineEdit">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius: 12px;</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
    </item>
    <item>
     <widget class="QFrame" name="test_file_frame">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(209, 209, 209);</string>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -65,13 +100,24 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_2"/>
+       <widget class="QLineEdit" name="lineEdit_2">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius: 12px;</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
    </item>
    <item>
     <widget class="QFrame" name="input_file_frame">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(209, 209, 209);</string>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -87,13 +133,24 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_3"/>
+       <widget class="QLineEdit" name="lineEdit_3">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius: 12px;</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
    </item>
    <item>
     <widget class="QFrame" name="ans_file_frame">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(209, 209, 209);</string>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -109,13 +166,24 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_4"/>
+       <widget class="QLineEdit" name="lineEdit_4">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius: 12px;</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
    </item>
    <item>
     <widget class="QFrame" name="test_case_frame">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(209, 209, 209);</string>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -140,7 +208,55 @@
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="spinBox"/>
+          <widget class="QSpinBox" name="spinBox">
+           <property name="styleSheet">
+            <string notr="true">QSpinBox {
+	background-color: rgb(255, 255, 255);
+	border-radius: 5px;
+}
+
+QSpinBox::up-button {
+	background-color: rgb(255, 255, 255);
+	border-radius: 5px;
+}
+
+QSpinBox::up-button:hover {
+	background-color: rgb(223, 223, 223);
+}
+
+QSpinBox::up-button:pressed {
+	background-color: rgb(207, 207, 207);
+}
+
+QSpinBox::down-button {
+	background-color: rgb(255, 255, 255);
+	border-radius: 5px;
+}
+
+QSpinBox::down-button:hover {
+	background-color: rgb(223, 223, 223);
+}
+
+QSpinBox::down-button:pressed {
+	background-color: rgb(207, 207, 207);
+}
+
+QSpinBox::up-arrow {
+	image: url(:/images/plus.png);
+    width: 5px;
+    height: 5px;
+}
+
+QSpinBox::down-arrow {
+	image: url(:/images/minus.png);
+    width: 5px;
+    height: 5px;
+}</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -162,7 +278,55 @@
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="spinBox_2"/>
+          <widget class="QSpinBox" name="spinBox_2">
+           <property name="styleSheet">
+            <string notr="true">QSpinBox {
+	background-color: rgb(255, 255, 255);
+	border-radius: 5px;
+}
+
+QSpinBox::up-button {
+	background-color: rgb(255, 255, 255);
+	border-radius: 5px;
+}
+
+QSpinBox::up-button:hover {
+	background-color: rgb(223, 223, 223);
+}
+
+QSpinBox::up-button:pressed {
+	background-color: rgb(207, 207, 207);
+}
+
+QSpinBox::down-button {
+	background-color: rgb(255, 255, 255);
+	border-radius: 5px;
+}
+
+QSpinBox::down-button:hover {
+	background-color: rgb(223, 223, 223);
+}
+
+QSpinBox::down-button:pressed {
+	background-color: rgb(207, 207, 207);
+}
+
+QSpinBox::up-arrow {
+	image: url(:/images/plus.png);
+    width: 5px;
+    height: 5px;
+}
+
+QSpinBox::down-arrow {
+	image: url(:/images/minus.png);
+    width: 5px;
+    height: 5px;
+}</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -172,6 +336,9 @@
    </item>
    <item>
     <widget class="QTableView" name="tableView">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(209, 209, 209);</string>
+     </property>
      <attribute name="verticalHeaderDefaultSectionSize">
       <number>31</number>
      </attribute>
@@ -179,6 +346,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="Resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

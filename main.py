@@ -57,7 +57,7 @@ class UIFunctions(MainWindow):
         # UIFunctions.open_vscode()
 
         UIFunctions.load_assignments(self, cls.ASSIGNMENTS_PATH)
-        self.list_assignments.itemActivated.connect(
+        self.list_assignments.itemPressed.connect(
             lambda: UIFunctions.load_details(self, cls.DETAILS_PATH)
         )
 

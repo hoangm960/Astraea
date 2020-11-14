@@ -81,11 +81,11 @@ class LoginWindow(QMainWindow):
         self.Default_Check()
         name = self.NameBox_SU.text().lower()
         password = self.PassBox_SU.text().lower()
-        if len(name)<6:
+        if len(name) < 6:
             self.frameError.show()
             self.Error_NameRan.show()
             check = False
-        elif len(password)<3:
+        elif len(password) < 8:
             self.Error_PassRan.show()
             self.frameError.show()
             check = False
@@ -97,7 +97,7 @@ class LoginWindow(QMainWindow):
                     check = False     
                 else:
                     for word in password:
-                        if word not in 'qwertyuiopasdfghjklzxcvbnm1234567890':
+                        if word not in 'qwertyuiopasdfghjklzxcvbnm1234567890 ':
                             self.Error_SpecialCr.show()
                             self.frameError.show()
                             check = False

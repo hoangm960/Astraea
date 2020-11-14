@@ -77,3 +77,5 @@ except AssertionError:
     get_testcases_file()
     check_file(file, ans)
     del_testcases_file()
+
+main('test.py', 'Inputs.txt', 'Ans.txt', 1, 0)

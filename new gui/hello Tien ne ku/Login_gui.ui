@@ -210,8 +210,7 @@ QPushButton:hover {
          </property>
          <property name="styleSheet">
           <string notr="true">background-color: none;
-border: none;
-visible: false;</string>
+border: none;</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -237,7 +236,6 @@ visible: false;</string>
            <string notr="true">QFrame { 
 background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0.0227273 rgba(150, 0, 183, 150), stop:1 rgba(255, 255, 255, 150));
 border-radius: 8px;
-
 }</string>
           </property>
           <property name="frameShape">
@@ -333,13 +331,16 @@ color: rgb(255,255,255);
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton{
-background-color: rgb(255, 85, 255,160);
+background-color: rgba(255, 85, 255,160);
 border-radius: 8px;
 color: rgb(255, 255, 255);
 font: bold;
 }
 QPushButton:hover {
-background-color: rbg(249, 219, 255);
+background-color: rbga(249, 219, 255,160);
+border-radius: 8px;
+color: rgb(255, 255, 255);
+font: bold;
 }</string>
            </property>
            <property name="text">
@@ -409,7 +410,7 @@ color: rgb(255,255,255);
            </property>
            <property name="styleSheet">
             <string notr="true">font: bold;
-text: &quot;Lưu đăng nhập?&quot;;</string>
+color: rgb(255, 255, 255)</string>
            </property>
            <property name="text">
             <string>Lưu đăng nhập?</string>
@@ -435,11 +436,12 @@ text: &quot;Lưu đăng nhập?&quot;;</string>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton{
-background-color: rgb(255, 85, 255,0);
+background-color: rgba(255, 85, 255,0);
 border-radius: 8px;
 color: rgb(170, 170, 255);
 }
 QPushButton:hover {
+border-radius: 8px;
 background-color: none;
 color: rgb(255,255,255);
 }</string>
@@ -473,7 +475,6 @@ color: rgb(255,255,255);
            <string notr="true">QFrame { 
 background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0.0227273 rgba(150, 0, 183, 150), stop:1 rgba(255, 255, 255, 150));
 border-radius: 8px;
-
 }</string>
           </property>
           <property name="frameShape">
@@ -499,7 +500,6 @@ border-radius: 8px;
            <property name="styleSheet">
             <string notr="true">color: rgb(225, 255, 255);
 background-color: none;
-text-align: center;
 </string>
            </property>
            <property name="text">
@@ -533,7 +533,7 @@ text-align: center;
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton{
-background-color: rgb(255, 85, 255,0);
+background-color: rgba(255, 85, 255,0);
 border-radius: 8px;
 color: rgb(170, 170, 255);
 }
@@ -675,16 +675,13 @@ color: rgb(255,255,255);
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton{
-background-color: rgb(255, 85, 255,160);
+background-color: rgba(255, 85, 255,160);
 border-radius: 8px;
 color: rgb(255, 255, 255);
 font: bold;
 }
-QPushButton:hover {
+QPushButton::hover {
 background-color: rbg(249, 219, 255);
-border-radius: 8px;
-color: rgb(255, 255, 255);
-font: bold;
 }</string>
            </property>
            <property name="text">
@@ -763,11 +760,12 @@ color: rgb(255,255,255);
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton{
-background-color: rgb(255, 85, 255,0);
+background-color: rgba(255, 85, 255,0);
 border-radius: 8px;
 color: rgb(170, 170, 255);
 }
 QPushButton:hover {
+border-radius: 8px;
 background-color: none;
 color: rgb(255,255,255);
 }</string>
@@ -846,12 +844,12 @@ color: rgb(255, 255, 255)</string>
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>372</x>
-     <y>379</y>
+     <x>339</x>
+     <y>465</y>
     </hint>
     <hint type="destinationlabel">
      <x>154</x>
-     <y>228</y>
+     <y>418</y>
     </hint>
    </hints>
   </connection>
@@ -862,8 +860,8 @@ color: rgb(255, 255, 255)</string>
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>288</x>
-     <y>373</y>
+     <x>297</x>
+     <y>465</y>
     </hint>
     <hint type="destinationlabel">
      <x>721</x>
@@ -882,8 +880,8 @@ color: rgb(255, 255, 255)</string>
      <y>479</y>
     </hint>
     <hint type="destinationlabel">
-     <x>511</x>
-     <y>195</y>
+     <x>419</x>
+     <y>270</y>
     </hint>
    </hints>
   </connection>
@@ -914,8 +912,8 @@ color: rgb(255, 255, 255)</string>
      <y>452</y>
     </hint>
     <hint type="destinationlabel">
-     <x>474</x>
-     <y>157</y>
+     <x>419</x>
+     <y>245</y>
     </hint>
    </hints>
   </connection>
@@ -926,12 +924,44 @@ color: rgb(255, 255, 255)</string>
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>222</x>
-     <y>465</y>
+     <x>231</x>
+     <y>455</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
      <y>500</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>LoginButton_3</sender>
+   <signal>clicked()</signal>
+   <receiver>Complete_Frame_3</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>574</x>
+     <y>448</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>365</x>
+     <y>429</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>LoginButton_3</sender>
+   <signal>clicked()</signal>
+   <receiver>Login_Frame_2</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>616</x>
+     <y>451</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>775</x>
+     <y>258</y>
     </hint>
    </hints>
   </connection>

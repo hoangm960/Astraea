@@ -102,8 +102,7 @@ class Ui_MainWindow(object):
         self.frame_3.setEnabled(True)
         self.frame_3.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
         self.frame_3.setStyleSheet("background-color: none;\n"
-"border: none;\n"
-"visible: false;")
+"border: none;")
         self.frame_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_3.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_3.setObjectName("frame_3")
@@ -115,7 +114,6 @@ class Ui_MainWindow(object):
         self.Login_Frame.setStyleSheet("QFrame { \n"
 "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0.0227273 rgba(150, 0, 183, 150), stop:1 rgba(255, 255, 255, 150));\n"
 "border-radius: 8px;\n"
-"\n"
 "}")
         self.Login_Frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.Login_Frame.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -154,13 +152,16 @@ class Ui_MainWindow(object):
         self.LoginButton = QtWidgets.QPushButton(self.Login_Frame)
         self.LoginButton.setGeometry(QtCore.QRect(160, 190, 81, 21))
         self.LoginButton.setStyleSheet("QPushButton{\n"
-"background-color: rgb(255, 85, 255,160);\n"
+"background-color: rgba(255, 85, 255,160);\n"
 "border-radius: 8px;\n"
 "color: rgb(255, 255, 255);\n"
 "font: bold;\n"
 "}\n"
 "QPushButton:hover {\n"
-"background-color: rbg(249, 219, 255);\n"
+"background-color: rbga(249, 219, 255,160);\n"
+"border-radius: 8px;\n"
+"color: rgb(255, 255, 255);\n"
+"font: bold;\n"
 "}")
         self.LoginButton.setFlat(True)
         self.LoginButton.setObjectName("LoginButton")
@@ -188,7 +189,7 @@ class Ui_MainWindow(object):
         self.checkBox = QtWidgets.QCheckBox(self.Login_Frame)
         self.checkBox.setGeometry(QtCore.QRect(240, 170, 111, 21))
         self.checkBox.setStyleSheet("font: bold;\n"
-"text: \"Lưu đăng nhập?\";")
+"color: rgb(255, 255, 255)")
         self.checkBox.setObjectName("checkBox")
         self.ConvertButton = QtWidgets.QPushButton(self.Login_Frame)
         self.ConvertButton.setGeometry(QtCore.QRect(70, 220, 251, 21))
@@ -200,11 +201,12 @@ class Ui_MainWindow(object):
         font.setStrikeOut(False)
         self.ConvertButton.setFont(font)
         self.ConvertButton.setStyleSheet("QPushButton{\n"
-"background-color: rgb(255, 85, 255,0);\n"
+"background-color: rgba(255, 85, 255,0);\n"
 "border-radius: 8px;\n"
 "color: rgb(170, 170, 255);\n"
 "}\n"
 "QPushButton:hover {\n"
+"border-radius: 8px;\n"
 "background-color: none;\n"
 "color: rgb(255,255,255);\n"
 "}")
@@ -219,7 +221,6 @@ class Ui_MainWindow(object):
         self.Complete_Frame_3.setStyleSheet("QFrame { \n"
 "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0.0227273 rgba(150, 0, 183, 150), stop:1 rgba(255, 255, 255, 150));\n"
 "border-radius: 8px;\n"
-"\n"
 "}")
         self.Complete_Frame_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.Complete_Frame_3.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -231,7 +232,6 @@ class Ui_MainWindow(object):
         self.label_10.setFont(font)
         self.label_10.setStyleSheet("color: rgb(225, 255, 255);\n"
 "background-color: none;\n"
-"text-align: center;\n"
 "")
         self.label_10.setAlignment(QtCore.Qt.AlignCenter)
         self.label_10.setObjectName("label_10")
@@ -247,7 +247,7 @@ class Ui_MainWindow(object):
         font.setStrikeOut(False)
         self.ConvertButton_4.setFont(font)
         self.ConvertButton_4.setStyleSheet("QPushButton{\n"
-"background-color: rgb(255, 85, 255,0);\n"
+"background-color: rgba(255, 85, 255,0);\n"
 "border-radius: 8px;\n"
 "color: rgb(170, 170, 255);\n"
 "}\n"
@@ -307,13 +307,13 @@ class Ui_MainWindow(object):
         self.LoginButton_3 = QtWidgets.QPushButton(self.Login_Frame_2)
         self.LoginButton_3.setGeometry(QtCore.QRect(160, 200, 81, 21))
         self.LoginButton_3.setStyleSheet("QPushButton{\n"
-"background-color: rgb(255, 85, 255,160);\n"
+"background-color: rgba(255, 85, 255,160);\n"
 "border-radius: 8px;\n"
 "color: rgb(255, 255, 255);\n"
 "font: bold;\n"
 "}\n"
 "QPushButton:hover {\n"
-"background-color: rbg(249, 219, 255);\n"
+"background-color: rbga(249, 219, 255, 160);\n"
 "border-radius: 8px;\n"
 "color: rgb(255, 255, 255);\n"
 "font: bold;\n"
@@ -351,11 +351,12 @@ class Ui_MainWindow(object):
         font.setStrikeOut(False)
         self.ConvertButton_3.setFont(font)
         self.ConvertButton_3.setStyleSheet("QPushButton{\n"
-"background-color: rgb(255, 85, 255,0);\n"
+"background-color: rgba(255, 85, 255,0);\n"
 "border-radius: 8px;\n"
 "color: rgb(170, 170, 255);\n"
 "}\n"
 "QPushButton:hover {\n"
+"border-radius: 8px;\n"
 "background-color: none;\n"
 "color: rgb(255,255,255);\n"
 "}")
@@ -395,6 +396,8 @@ class Ui_MainWindow(object):
         self.ConvertButton_3.clicked.connect(self.Login_Frame_2.hide)
         self.ConvertButton_4.clicked.connect(self.Login_Frame.show)
         self.ConvertButton_4.clicked.connect(self.Complete_Frame_3.hide)
+        self.LoginButton_3.clicked.connect(self.Complete_Frame_3.show)
+        self.LoginButton_3.clicked.connect(self.Login_Frame_2.hide)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

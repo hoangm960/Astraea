@@ -23,7 +23,7 @@ from win32api import GetSystemMetrics
 from edit_main import EditWindow
 from PyQt5 import uic
 from UI_Files import Resources
-from login_main import *
+import login_main
 
 
 UI_MAIN_PATH = "UI_Files/ui_main.ui"
@@ -168,11 +168,17 @@ class UIFunctions(MainWindow):
         QPushButton:hover {background-color: rgba(224, 150, 0, 150);}"""
         )
 
+
 def main():
-    # role = 'student'
+    # window = MainWindow("teacher" if login_main.LoginWindow().Teacher_SU.isChecked() else "student")
     role = "teacher"
+    # role = "student"
     window = MainWindow(role)
     window.move(GetSystemMetrics(0) - 300, 0)
     window.show()
 
 
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    main()
+    sys.exit(app.exec_())

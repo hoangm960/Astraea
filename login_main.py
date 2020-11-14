@@ -16,7 +16,7 @@ class LoginWindow(QMainWindow):
         uic.loadUi("UI_Files/Login_gui.ui", self)
         self.OkCancelFrame.hide()
         self.Accept.clicked.connect(lambda: self.close())
-        self.move(round(GetSystemMetrics(0) / 10), round(GetSystemMetrics(1)/ 50))
+        self.move(round(GetSystemMetrics(0) / 10), round(GetSystemMetrics(1) / 50))
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         # <> Set Toolbar Button
@@ -117,11 +117,14 @@ class Loading_Screen(QMainWindow):
             self.close()
         self.counter += 1
 
-done = False
+
 def main():
-    done = True
     app = QApplication(sys.argv)
     splash_window = Loading_Screen()
     splash_window.move(round(GetSystemMetrics(0) / 4), round(GetSystemMetrics(1) / 4))
     splash_window.show()
     sys.exit(app.exec_())
+
+
+if __name__ == "__main__":
+    main()

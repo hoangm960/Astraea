@@ -13,10 +13,11 @@ class LoginWindow(QMainWindow):
     USER_PATH = "data/Users/User.txt"
     AUTO_SAVE_PATH = "data/Users/Autosave.txt"
     TEACHER_USER_PATH = "data/Users/Teacher_User.txt"
+    UI_PATH = "UI_Files/Login_gui.ui"
 
     def __init__(self):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
-        uic.loadUi("UI_Files/Login_gui.ui", self)
+        uic.loadUi(self.UI_PATH, self)
         self.OkCancelFrame.hide()
         self.Accept.clicked.connect(lambda: self.close())
         self.move(round(GetSystemMetrics(0) / 10), round(GetSystemMetrics(1) / 50))

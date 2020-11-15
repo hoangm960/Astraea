@@ -28,22 +28,17 @@ class LoginWindow(QMainWindow):
         #         self.showNormal()
         self.btn_minimize.clicked.connect(lambda: self.showMinimized())
         self.btn_quit.clicked.connect(lambda: self.OkCancelFrame.show())
-
+        self.eyeButton_SU.hide()
+        self.eyeButton_SI.hide()
         self.sizegrip = QSizeGrip(self.frame_grip)
         self.sizegrip.setStyleSheet(
             "QSizeGrip { background-color: none; width: 20px; height: 20px; margin: 5px; border-radius: 10px; } QSizeGrip:hover { background-color: rgb(66, 0, 99);}"
         )
         self.sizegrip.setToolTip("This was locked")
-        def change_eye(name_Box):
-            global state_echoPass
-            if state_echoPass == True:
-                name_Box.setEchoMode(QtWidgets.QLineEdit.Normal)
-                state_echoPass = False
-            elif state_echoPass == False:
-                state_echoPass = True
-                name_Box.setEchoMode(QtWidgets.QLineEdit.Password)
-        self.eyeButton_SI.clicked.connect(lambda: change_eye(self.PassBox_SI))
-        self.eyeButton_SU.clicked.connect(lambda: change_eye(self.PassBox_SU))
+        self.eyeButton_SI.clicked.connect(lambda: self.PassBox_SI.setEchoMode(QtWidgets.QLineEdit.Password))
+        self.eyeButton_SU.clicked.connect(lambda: self.PassBox_SU.setEchoMode(QtWidgets.QLineEdit.Password))
+        self.eyeButton_SI_2.clicked.connect(lambda: self.PassBox_SI.setEchoMode(QtWidgets.QLineEdit.Normal))
+        self.eyeButton_SU_2.clicked.connect(lambda: self.PassBox_SU.setEchoMode(QtWidgets.QLineEdit.Normal))
         self.SignIn_Bt.clicked.connect(lambda: self.check_SI())
         self.SignUp_Bt.clicked.connect(lambda: self.check_SU())
         def default():

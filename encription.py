@@ -13,7 +13,7 @@ def get_key():
     file.close()
 
 
-def encript(input_file, output_file):
+def encrypt(input_file, output_file):
     with open(KEY_PATH, 'rb') as f:
         key = f.read() 
 
@@ -29,7 +29,7 @@ def encript(input_file, output_file):
     os.remove(input_file)
 
 
-def decript(input_file, output_file):
+def decrypt(input_file, output_file):
     input_file_path = Path(input_file)
     if not input_file_path.is_file():
         open(output_file, 'w').close()
@@ -53,3 +53,6 @@ def decript(input_file, output_file):
 
         os.remove(input_file)
 
+if __name__ == "__main__":
+    # encrypt("data/User.txt", "data/User.encrypted")
+    decrypt("data/User.encrypted", "data/User.txt")

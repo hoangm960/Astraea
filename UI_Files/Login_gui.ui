@@ -309,21 +309,21 @@ text-align: center;
              <x>70</x>
              <y>90</y>
              <width>261</width>
-             <height>28</height>
+             <height>32</height>
             </rect>
            </property>
            <property name="font">
             <font>
-             <pointsize>-1</pointsize>
+             <family>Segoe UI</family>
+             <pointsize>10</pointsize>
             </font>
            </property>
            <property name="styleSheet">
             <string notr="true">QLineEdit {
 background-color: rgba(188, 183, 255, 160);
-border-radius: 12px;
+border-radius: 16px;
 border-color: rgb(0, 255, 255);
 color: rgb(255,255,255);
-font-size: 13px;
 }
 QLineEdit:hover{
 border: 2px solid rgb(255, 255, 255);
@@ -349,12 +349,13 @@ border: 2px solid rgb(255, 255, 255);
              <x>70</x>
              <y>150</y>
              <width>261</width>
-             <height>28</height>
+             <height>32</height>
             </rect>
            </property>
            <property name="font">
             <font>
-             <pointsize>-1</pointsize>
+             <family>Segoe UI</family>
+             <pointsize>10</pointsize>
             </font>
            </property>
            <property name="toolTip">
@@ -363,10 +364,9 @@ border: 2px solid rgb(255, 255, 255);
            <property name="styleSheet">
             <string notr="true">QLineEdit {
 background-color: rgba(188, 183, 255, 160);
-border-radius: 12px;
+border-radius: 16px;
 border-color: rgb(0, 255, 255);
 color: rgb(255,255,255);
-font-size: 13px;
 }
 QLineEdit:hover{
 border: 2px solid rgb(255, 255, 255);
@@ -471,7 +471,7 @@ color: rgb(255,255,255);
             <string>Tên tài khoản:</string>
            </property>
           </widget>
-          <widget class="QCheckBox" name="checkBox">
+          <widget class="QCheckBox" name="SavePass">
            <property name="geometry">
             <rect>
              <x>240</x>
@@ -485,13 +485,13 @@ color: rgb(255,255,255);
 color: rgb(255, 255, 255)</string>
            </property>
            <property name="text">
-            <string>Lưu đăng nhập?</string>
+            <string>Lưu mật khẩu?</string>
            </property>
           </widget>
           <widget class="QPushButton" name="ConvertButton">
            <property name="geometry">
             <rect>
-             <x>70</x>
+             <x>80</x>
              <y>250</y>
              <width>251</width>
              <height>21</height>
@@ -521,6 +521,42 @@ color: rgb(170, 255, 255);
            </property>
            <property name="autoRepeat">
             <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="eyeButton_SI">
+           <property name="geometry">
+            <rect>
+             <x>340</x>
+             <y>150</y>
+             <width>30</width>
+             <height>30</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton:enabled{
+image: url(:/images/visibility.png);
+}</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="eyeButton_SI_2">
+           <property name="geometry">
+            <rect>
+             <x>340</x>
+             <y>150</y>
+             <width>30</width>
+             <height>30</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton:enabled {
+image: url(:/images/invisible.png);
+}</string>
+           </property>
+           <property name="text">
+            <string/>
            </property>
           </widget>
          </widget>
@@ -697,12 +733,12 @@ text-align: center;
              <x>70</x>
              <y>90</y>
              <width>261</width>
-             <height>28</height>
+             <height>32</height>
             </rect>
            </property>
            <property name="font">
             <font>
-             <pointsize>-1</pointsize>
+             <pointsize>10</pointsize>
             </font>
            </property>
            <property name="toolTip">
@@ -711,10 +747,9 @@ text-align: center;
            <property name="styleSheet">
             <string notr="true">QLineEdit {
 background-color: rgba(188, 183, 255, 160);
-border-radius: 12px;
+border-radius: 16px;
 border-color: rgb(0, 255, 255);
 color: rgb(255,255,255);
-font-size: 13px;
 }
 QLineEdit:hover{
 border: 2px solid rgb(255, 255, 255);
@@ -737,12 +772,12 @@ border: 2px solid rgb(255, 255, 255);
              <x>70</x>
              <y>150</y>
              <width>261</width>
-             <height>28</height>
+             <height>32</height>
             </rect>
            </property>
            <property name="font">
             <font>
-             <pointsize>-1</pointsize>
+             <pointsize>10</pointsize>
             </font>
            </property>
            <property name="toolTip">
@@ -751,10 +786,9 @@ border: 2px solid rgb(255, 255, 255);
            <property name="styleSheet">
             <string notr="true">QLineEdit {
 background-color: rgba(188, 183, 255, 160);
-border-radius: 12px;
+border-radius: 16px;
 border-color: rgb(0, 255, 255);
 color: rgb(255,255,255);
-font-size: 13px;
 }
 QLineEdit:hover{
 border: 2px solid rgb(255, 255, 255);
@@ -856,7 +890,7 @@ color: rgb(255,255,255);
             <string>Tên tài khoản:</string>
            </property>
           </widget>
-          <widget class="QPushButton" name="ConvertButton_3">
+          <widget class="QPushButton" name="ConvertButton_SU">
            <property name="geometry">
             <rect>
              <x>80</x>
@@ -928,7 +962,43 @@ color: rgb(255, 255, 255)</string>
             <string>Giáo viên</string>
            </property>
           </widget>
-          <zorder>ConvertButton_3</zorder>
+          <widget class="QPushButton" name="eyeButton_SU">
+           <property name="geometry">
+            <rect>
+             <x>340</x>
+             <y>150</y>
+             <width>30</width>
+             <height>30</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton:enabled{
+image: url(:/images/visibility.png);
+}</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="eyeButton_SU_2">
+           <property name="geometry">
+            <rect>
+             <x>340</x>
+             <y>150</y>
+             <width>30</width>
+             <height>30</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton:enabled {
+image: url(:/images/invisible.png);
+}</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+          <zorder>ConvertButton_SU</zorder>
           <zorder>label_7</zorder>
           <zorder>NameBox_SU</zorder>
           <zorder>PassBox_SU</zorder>
@@ -937,6 +1007,8 @@ color: rgb(255, 255, 255)</string>
           <zorder>label_9</zorder>
           <zorder>Student_SU</zorder>
           <zorder>Teacher_SU</zorder>
+          <zorder>eyeButton_SU</zorder>
+          <zorder>eyeButton_SU_2</zorder>
          </widget>
          <widget class="QFrame" name="frameError">
           <property name="geometry">
@@ -1032,11 +1104,65 @@ font-size: 12px;</string>
             <string>Yêu cầu nhập đầy đủ tên tài khoản, mật khẩu</string>
            </property>
           </widget>
+          <widget class="QLabel" name="Error_NameExist">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>10</y>
+             <width>281</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background: none;
+font: bold;
+font-size: 12px;</string>
+           </property>
+           <property name="text">
+            <string>Tên tài khoản đã tồn tại, hãy chọn tên khác</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="Error_NamenotExist">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>10</y>
+             <width>281</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background: none;
+font: bold;
+font-size: 12px;</string>
+           </property>
+           <property name="text">
+            <string>Tên tài khoản không tồn tại. Hãy nhập lại</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="Error_MissPass">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>10</y>
+             <width>281</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background: none;
+font: bold;
+font-size: 12px;</string>
+           </property>
+           <property name="text">
+            <string>Mật khẩu không chính xác. Hãy nhập lại</string>
+           </property>
+          </widget>
          </widget>
          <widget class="QFrame" name="OkCancelFrame">
           <property name="geometry">
            <rect>
-            <x>290</x>
+            <x>300</x>
             <y>200</y>
             <width>400</width>
             <height>180</height>
@@ -1181,7 +1307,9 @@ border-radius: 12px;
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="Resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>ConvertButton</sender>
@@ -1190,12 +1318,12 @@ border-radius: 12px;
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>358</x>
-     <y>520</y>
+     <x>377</x>
+     <y>545</y>
     </hint>
     <hint type="destinationlabel">
      <x>154</x>
-     <y>418</y>
+     <y>408</y>
     </hint>
    </hints>
   </connection>
@@ -1206,8 +1334,8 @@ border-radius: 12px;
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>520</y>
+     <x>335</x>
+     <y>545</y>
     </hint>
     <hint type="destinationlabel">
      <x>469</x>
@@ -1216,14 +1344,14 @@ border-radius: 12px;
    </hints>
   </connection>
   <connection>
-   <sender>ConvertButton_3</sender>
+   <sender>ConvertButton_SU</sender>
    <signal>clicked()</signal>
    <receiver>SignIn_Frame</receiver>
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>379</x>
-     <y>535</y>
+     <y>336</y>
     </hint>
     <hint type="destinationlabel">
      <x>438</x>
@@ -1232,18 +1360,18 @@ border-radius: 12px;
    </hints>
   </connection>
   <connection>
-   <sender>ConvertButton_3</sender>
+   <sender>ConvertButton_SU</sender>
    <signal>clicked()</signal>
    <receiver>SignUp_Frame</receiver>
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>379</x>
-     <y>535</y>
+     <y>336</y>
     </hint>
     <hint type="destinationlabel">
      <x>469</x>
-     <y>461</y>
+     <y>262</y>
     </hint>
    </hints>
   </connection>
@@ -1303,7 +1431,7 @@ border-radius: 12px;
    <hints>
     <hint type="sourcelabel">
      <x>289</x>
-     <y>505</y>
+     <y>325</y>
     </hint>
     <hint type="destinationlabel">
      <x>318</x>
@@ -1319,7 +1447,7 @@ border-radius: 12px;
    <hints>
     <hint type="sourcelabel">
      <x>289</x>
-     <y>505</y>
+     <y>325</y>
     </hint>
     <hint type="destinationlabel">
      <x>300</x>
@@ -1335,7 +1463,7 @@ border-radius: 12px;
    <hints>
     <hint type="sourcelabel">
      <x>289</x>
-     <y>505</y>
+     <y>325</y>
     </hint>
     <hint type="destinationlabel">
      <x>548</x>
@@ -1350,12 +1478,12 @@ border-radius: 12px;
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>275</x>
-     <y>505</y>
+     <x>294</x>
+     <y>545</y>
     </hint>
     <hint type="destinationlabel">
      <x>379</x>
-     <y>395</y>
+     <y>196</y>
     </hint>
    </hints>
   </connection>
@@ -1366,44 +1494,12 @@ border-radius: 12px;
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>251</x>
-     <y>511</y>
+     <x>270</x>
+     <y>545</y>
     </hint>
     <hint type="destinationlabel">
      <x>379</x>
-     <y>445</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>ConvertButton_3</sender>
-   <signal>clicked()</signal>
-   <receiver>NameBox_SI</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>379</x>
-     <y>535</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>281</x>
-     <y>390</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>ConvertButton_3</sender>
-   <signal>clicked()</signal>
-   <receiver>PassBox_SI</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>379</x>
-     <y>535</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>231</x>
-     <y>438</y>
+     <y>246</y>
     </hint>
    </hints>
   </connection>
@@ -1414,12 +1510,12 @@ border-radius: 12px;
    <slot>toggle()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>216</x>
-     <y>518</y>
+     <x>235</x>
+     <y>545</y>
     </hint>
     <hint type="destinationlabel">
      <x>240</x>
-     <y>471</y>
+     <y>291</y>
     </hint>
    </hints>
   </connection>
@@ -1430,8 +1526,8 @@ border-radius: 12px;
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>579</x>
-     <y>411</y>
+     <x>539</x>
+     <y>424</y>
     </hint>
     <hint type="destinationlabel">
      <x>625</x>
@@ -1446,12 +1542,220 @@ border-radius: 12px;
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>401</x>
-     <y>414</y>
+     <x>369</x>
+     <y>424</y>
     </hint>
     <hint type="destinationlabel">
      <x>521</x>
      <y>387</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ConvertButton</sender>
+   <signal>clicked()</signal>
+   <receiver>frameError</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>174</x>
+     <y>542</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>242</x>
+     <y>292</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ConvertButton_SU</sender>
+   <signal>clicked()</signal>
+   <receiver>frameError</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>379</x>
+     <y>355</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>245</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ConvertButton_4</sender>
+   <signal>clicked()</signal>
+   <receiver>PassBox_SU</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>279</x>
+     <y>483</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>333</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ConvertButton_4</sender>
+   <signal>clicked()</signal>
+   <receiver>NameBox_SU</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>263</x>
+     <y>481</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>374</x>
+     <y>188</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ConvertButton_4</sender>
+   <signal>clicked()</signal>
+   <receiver>Student_SU</receiver>
+   <slot>toggle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>246</x>
+     <y>487</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>179</x>
+     <y>287</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eyeButton_SU_2</sender>
+   <signal>clicked()</signal>
+   <receiver>eyeButton_SU_2</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>449</x>
+     <y>243</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>440</x>
+     <y>248</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eyeButton_SU_2</sender>
+   <signal>clicked()</signal>
+   <receiver>eyeButton_SU</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>433</x>
+     <y>244</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>408</x>
+     <y>248</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eyeButton_SU</sender>
+   <signal>clicked()</signal>
+   <receiver>eyeButton_SU_2</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>403</x>
+     <y>248</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>435</x>
+     <y>248</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eyeButton_SU</sender>
+   <signal>clicked()</signal>
+   <receiver>eyeButton_SU</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>402</x>
+     <y>239</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>406</x>
+     <y>243</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eyeButton_SI</sender>
+   <signal>clicked()</signal>
+   <receiver>eyeButton_SI_2</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>405</x>
+     <y>454</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>437</x>
+     <y>454</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eyeButton_SI</sender>
+   <signal>clicked()</signal>
+   <receiver>eyeButton_SI</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>411</x>
+     <y>461</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>401</x>
+     <y>459</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eyeButton_SI_2</sender>
+   <signal>clicked()</signal>
+   <receiver>eyeButton_SI_2</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>453</x>
+     <y>462</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>441</x>
+     <y>463</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eyeButton_SI_2</sender>
+   <signal>clicked()</signal>
+   <receiver>eyeButton_SI</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>443</x>
+     <y>460</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>398</x>
+     <y>462</y>
     </hint>
    </hints>
   </connection>

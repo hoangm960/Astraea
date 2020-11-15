@@ -309,20 +309,21 @@ text-align: center;
              <x>70</x>
              <y>90</y>
              <width>261</width>
-             <height>21</height>
+             <height>28</height>
             </rect>
            </property>
            <property name="font">
             <font>
-             <family>Segoe UI</family>
+             <pointsize>-1</pointsize>
             </font>
            </property>
            <property name="styleSheet">
             <string notr="true">QLineEdit {
 background-color: rgba(188, 183, 255, 160);
-border-radius: 10px;
+border-radius: 12px;
 border-color: rgb(0, 255, 255);
 color: rgb(255,255,255);
+font-size: 13px;
 }
 QLineEdit:hover{
 border: 2px solid rgb(255, 255, 255);
@@ -346,14 +347,14 @@ border: 2px solid rgb(255, 255, 255);
            <property name="geometry">
             <rect>
              <x>70</x>
-             <y>140</y>
+             <y>150</y>
              <width>261</width>
-             <height>21</height>
+             <height>28</height>
             </rect>
            </property>
            <property name="font">
             <font>
-             <family>Segoe UI</family>
+             <pointsize>-1</pointsize>
             </font>
            </property>
            <property name="toolTip">
@@ -362,9 +363,10 @@ border: 2px solid rgb(255, 255, 255);
            <property name="styleSheet">
             <string notr="true">QLineEdit {
 background-color: rgba(188, 183, 255, 160);
-border-radius: 10px;
+border-radius: 12px;
 border-color: rgb(0, 255, 255);
 color: rgb(255,255,255);
+font-size: 13px;
 }
 QLineEdit:hover{
 border: 2px solid rgb(255, 255, 255);
@@ -394,7 +396,7 @@ border: 2px solid rgb(255, 255, 255);
            <property name="geometry">
             <rect>
              <x>160</x>
-             <y>190</y>
+             <y>220</y>
              <width>81</width>
              <height>21</height>
             </rect>
@@ -424,7 +426,7 @@ background-color:rgb(255, 170, 255);
            <property name="geometry">
             <rect>
              <x>70</x>
-             <y>120</y>
+             <y>130</y>
              <width>61</width>
              <height>16</height>
             </rect>
@@ -473,7 +475,7 @@ color: rgb(255,255,255);
            <property name="geometry">
             <rect>
              <x>240</x>
-             <y>170</y>
+             <y>190</y>
              <width>111</width>
              <height>21</height>
             </rect>
@@ -490,7 +492,7 @@ color: rgb(255, 255, 255)</string>
            <property name="geometry">
             <rect>
              <x>70</x>
-             <y>220</y>
+             <y>250</y>
              <width>251</width>
              <height>21</height>
             </rect>
@@ -554,7 +556,7 @@ border-radius: 8px;
           <widget class="QLabel" name="label_10">
            <property name="geometry">
             <rect>
-             <x>30</x>
+             <x>0</x>
              <y>110</y>
              <width>381</width>
              <height>41</height>
@@ -583,7 +585,7 @@ background-color: none;
            </property>
            <property name="geometry">
             <rect>
-             <x>100</x>
+             <x>80</x>
              <y>190</y>
              <width>251</width>
              <height>21</height>
@@ -695,12 +697,12 @@ text-align: center;
              <x>70</x>
              <y>90</y>
              <width>261</width>
-             <height>21</height>
+             <height>28</height>
             </rect>
            </property>
            <property name="font">
             <font>
-             <family>Segoe UI</family>
+             <pointsize>-1</pointsize>
             </font>
            </property>
            <property name="toolTip">
@@ -709,9 +711,10 @@ text-align: center;
            <property name="styleSheet">
             <string notr="true">QLineEdit {
 background-color: rgba(188, 183, 255, 160);
-border-radius: 10px;
+border-radius: 12px;
 border-color: rgb(0, 255, 255);
 color: rgb(255,255,255);
+font-size: 13px;
 }
 QLineEdit:hover{
 border: 2px solid rgb(255, 255, 255);
@@ -732,14 +735,14 @@ border: 2px solid rgb(255, 255, 255);
            <property name="geometry">
             <rect>
              <x>70</x>
-             <y>140</y>
+             <y>150</y>
              <width>261</width>
-             <height>21</height>
+             <height>28</height>
             </rect>
            </property>
            <property name="font">
             <font>
-             <family>Segoe UI</family>
+             <pointsize>-1</pointsize>
             </font>
            </property>
            <property name="toolTip">
@@ -748,9 +751,10 @@ border: 2px solid rgb(255, 255, 255);
            <property name="styleSheet">
             <string notr="true">QLineEdit {
 background-color: rgba(188, 183, 255, 160);
-border-radius: 10px;
+border-radius: 12px;
 border-color: rgb(0, 255, 255);
 color: rgb(255,255,255);
+font-size: 13px;
 }
 QLineEdit:hover{
 border: 2px solid rgb(255, 255, 255);
@@ -777,7 +781,7 @@ border: 2px solid rgb(255, 255, 255);
            <property name="geometry">
             <rect>
              <x>160</x>
-             <y>200</y>
+             <y>220</y>
              <width>81</width>
              <height>21</height>
             </rect>
@@ -807,7 +811,7 @@ background-color:rgb(255, 170, 255);
            <property name="geometry">
             <rect>
              <x>70</x>
-             <y>120</y>
+             <y>130</y>
              <width>61</width>
              <height>16</height>
             </rect>
@@ -856,7 +860,7 @@ color: rgb(255,255,255);
            <property name="geometry">
             <rect>
              <x>80</x>
-             <y>230</y>
+             <y>250</y>
              <width>251</width>
              <height>21</height>
             </rect>
@@ -891,7 +895,7 @@ color: rgb(170, 255, 255);
            <property name="geometry">
             <rect>
              <x>110</x>
-             <y>170</y>
+             <y>190</y>
              <width>82</width>
              <height>17</height>
             </rect>
@@ -911,7 +915,7 @@ font: bold;</string>
            <property name="geometry">
             <rect>
              <x>220</x>
-             <y>170</y>
+             <y>190</y>
              <width>82</width>
              <height>17</height>
             </rect>

@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="images">
+    <file>invisible.png</file>
+    <file>visibility.png</file>
     <file>folder_open.png</file>
     <file>minus.png</file>
     <file>plus.png</file>

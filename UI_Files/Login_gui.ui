@@ -485,7 +485,7 @@ color: rgb(255,255,255);
 color: rgb(255, 255, 255)</string>
            </property>
            <property name="text">
-            <string>Lưu đăng nhập?</string>
+            <string>Lưu mật khẩu?</string>
            </property>
           </widget>
           <widget class="QPushButton" name="ConvertButton">
@@ -626,8 +626,8 @@ color: rgb(255,255,255);
           </property>
           <property name="geometry">
            <rect>
-            <x>40</x>
-            <y>210</y>
+            <x>400</x>
+            <y>209</y>
             <width>421</width>
             <height>291</height>
            </rect>
@@ -854,7 +854,7 @@ color: rgb(255,255,255);
             <string>Tên tài khoản:</string>
            </property>
           </widget>
-          <widget class="QPushButton" name="ConvertButton_3">
+          <widget class="QPushButton" name="ConvertButton_SU">
            <property name="geometry">
             <rect>
              <x>80</x>
@@ -926,7 +926,7 @@ color: rgb(255, 255, 255)</string>
             <string>Giáo viên</string>
            </property>
           </widget>
-          <zorder>ConvertButton_3</zorder>
+          <zorder>ConvertButton_SU</zorder>
           <zorder>label_7</zorder>
           <zorder>NameBox_SU</zorder>
           <zorder>PassBox_SU</zorder>
@@ -1088,7 +1088,7 @@ font-size: 12px;</string>
          <widget class="QFrame" name="OkCancelFrame">
           <property name="geometry">
            <rect>
-            <x>290</x>
+            <x>300</x>
             <y>200</y>
             <width>400</width>
             <height>180</height>
@@ -1194,11 +1194,47 @@ color: rgb(255, 255, 255);</string>
            </property>
           </widget>
          </widget>
+         <widget class="QPushButton" name="eyeButton_SI">
+          <property name="geometry">
+           <rect>
+            <x>140</x>
+            <y>50</y>
+            <width>75</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background: none;
+image: url(:/images/visibility.png);
+</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="eyeButton_SU">
+          <property name="geometry">
+           <rect>
+            <x>240</x>
+            <y>50</y>
+            <width>30</width>
+            <height>30</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">image: url(:/images/visibility.png);</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
          <zorder>Complete_Frame</zorder>
          <zorder>SignIn_Frame</zorder>
          <zorder>SignUp_Frame</zorder>
          <zorder>frameError</zorder>
          <zorder>OkCancelFrame</zorder>
+         <zorder>eyeButton_SI</zorder>
+         <zorder>eyeButton_SU</zorder>
         </widget>
        </item>
        <item row="2" column="1">
@@ -1233,7 +1269,9 @@ border-radius: 12px;
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="Resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>ConvertButton</sender>
@@ -1243,11 +1281,11 @@ border-radius: 12px;
    <hints>
     <hint type="sourcelabel">
      <x>377</x>
-     <y>375</y>
+     <y>255</y>
     </hint>
     <hint type="destinationlabel">
      <x>154</x>
-     <y>238</y>
+     <y>118</y>
     </hint>
    </hints>
   </connection>
@@ -1259,7 +1297,7 @@ border-radius: 12px;
    <hints>
     <hint type="sourcelabel">
      <x>335</x>
-     <y>375</y>
+     <y>255</y>
     </hint>
     <hint type="destinationlabel">
      <x>469</x>
@@ -1268,29 +1306,29 @@ border-radius: 12px;
    </hints>
   </connection>
   <connection>
-   <sender>ConvertButton_3</sender>
+   <sender>ConvertButton_SU</sender>
    <signal>clicked()</signal>
    <receiver>SignIn_Frame</receiver>
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>709</x>
+     <x>379</x>
      <y>535</y>
     </hint>
     <hint type="destinationlabel">
      <x>438</x>
-     <y>325</y>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>ConvertButton_3</sender>
+   <sender>ConvertButton_SU</sender>
    <signal>clicked()</signal>
    <receiver>SignUp_Frame</receiver>
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>709</x>
+     <x>379</x>
      <y>535</y>
     </hint>
     <hint type="destinationlabel">
@@ -1311,7 +1349,7 @@ border-radius: 12px;
     </hint>
     <hint type="destinationlabel">
      <x>438</x>
-     <y>300</y>
+     <y>10</y>
     </hint>
    </hints>
   </connection>
@@ -1354,8 +1392,8 @@ border-radius: 12px;
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>619</x>
-     <y>525</y>
+     <x>459</x>
+     <y>524</y>
     </hint>
     <hint type="destinationlabel">
      <x>318</x>
@@ -1370,8 +1408,8 @@ border-radius: 12px;
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>619</x>
-     <y>525</y>
+     <x>459</x>
+     <y>524</y>
     </hint>
     <hint type="destinationlabel">
      <x>300</x>
@@ -1386,8 +1424,8 @@ border-radius: 12px;
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>619</x>
-     <y>525</y>
+     <x>459</x>
+     <y>524</y>
     </hint>
     <hint type="destinationlabel">
      <x>548</x>
@@ -1403,10 +1441,10 @@ border-radius: 12px;
    <hints>
     <hint type="sourcelabel">
      <x>294</x>
-     <y>375</y>
+     <y>255</y>
     </hint>
     <hint type="destinationlabel">
-     <x>709</x>
+     <x>379</x>
      <y>395</y>
     </hint>
    </hints>
@@ -1419,27 +1457,11 @@ border-radius: 12px;
    <hints>
     <hint type="sourcelabel">
      <x>270</x>
-     <y>375</y>
+     <y>255</y>
     </hint>
     <hint type="destinationlabel">
-     <x>709</x>
+     <x>379</x>
      <y>445</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>ConvertButton_3</sender>
-   <signal>clicked()</signal>
-   <receiver>NameBox_SI</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>709</x>
-     <y>535</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>281</x>
-     <y>210</y>
     </hint>
    </hints>
   </connection>
@@ -1451,11 +1473,11 @@ border-radius: 12px;
    <hints>
     <hint type="sourcelabel">
      <x>235</x>
-     <y>375</y>
+     <y>255</y>
     </hint>
     <hint type="destinationlabel">
-     <x>570</x>
-     <y>491</y>
+     <x>410</x>
+     <y>490</y>
     </hint>
    </hints>
   </connection>
@@ -1466,8 +1488,8 @@ border-radius: 12px;
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>579</x>
-     <y>411</y>
+     <x>539</x>
+     <y>424</y>
     </hint>
     <hint type="destinationlabel">
      <x>625</x>
@@ -1482,28 +1504,12 @@ border-radius: 12px;
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>401</x>
-     <y>414</y>
+     <x>369</x>
+     <y>424</y>
     </hint>
     <hint type="destinationlabel">
      <x>521</x>
      <y>387</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>ConvertButton_3</sender>
-   <signal>clicked()</signal>
-   <receiver>PassBox_SI</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>709</x>
-     <y>535</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>231</x>
-     <y>268</y>
     </hint>
    </hints>
   </connection>
@@ -1515,7 +1521,7 @@ border-radius: 12px;
    <hints>
     <hint type="sourcelabel">
      <x>174</x>
-     <y>372</y>
+     <y>252</y>
     </hint>
     <hint type="destinationlabel">
      <x>242</x>
@@ -1524,50 +1530,18 @@ border-radius: 12px;
    </hints>
   </connection>
   <connection>
-   <sender>ConvertButton_3</sender>
+   <sender>ConvertButton_SU</sender>
    <signal>clicked()</signal>
    <receiver>frameError</receiver>
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>709</x>
-     <y>555</y>
+     <x>379</x>
+     <y>554</y>
     </hint>
     <hint type="destinationlabel">
      <x>245</x>
      <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>ConvertButton_4</sender>
-   <signal>clicked()</signal>
-   <receiver>NameBox_SI</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>213</x>
-     <y>479</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>199</x>
-     <y>217</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>ConvertButton_4</sender>
-   <signal>clicked()</signal>
-   <receiver>PassBox_SI</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>170</x>
-     <y>479</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>168</x>
-     <y>270</y>
     </hint>
    </hints>
   </connection>
@@ -1582,7 +1556,7 @@ border-radius: 12px;
      <y>483</y>
     </hint>
     <hint type="destinationlabel">
-     <x>663</x>
+     <x>333</x>
      <y>465</y>
     </hint>
    </hints>
@@ -1598,7 +1572,7 @@ border-radius: 12px;
      <y>481</y>
     </hint>
     <hint type="destinationlabel">
-     <x>704</x>
+     <x>374</x>
      <y>387</y>
     </hint>
    </hints>
@@ -1614,7 +1588,7 @@ border-radius: 12px;
      <y>487</y>
     </hint>
     <hint type="destinationlabel">
-     <x>509</x>
+     <x>349</x>
      <y>486</y>
     </hint>
    </hints>

@@ -6,18 +6,26 @@ from PyQt5.QtCore import Qt
 from PyQt5 import uic
 from win32api import GetSystemMetrics
 import main_ui
+import time
 
+class User():
+    def __init__(self, name, password, role, auto_saved):
+        self.name = name
+        self.password = password
+        self.role = role
+        self.auto_saved = auto_saved
 
 class LoginWindow(QMainWindow):
     STATE_ECHOPASS = True
     USER_PATH = "data/Users/User.txt"
-    AUTO_SAVE_PATH = "data/Users/Autosave.txt"
-    TEACHER_USER_PATH = "data/Users/Teacher_User.txt"
     UI_PATH = "UI_Files/Login_gui.ui"
+    users = []
 
     def __init__(self):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(self.UI_PATH, self)
+        self.load_users()
+
         self.OkCancelFrame.hide()
         self.Accept.clicked.connect(lambda: self.close())
         self.move(round(GetSystemMetrics(0) / 10), round(GetSystemMetrics(1) / 50))
@@ -53,36 +61,17 @@ class LoginWindow(QMainWindow):
 
         self.ConvertButton.clicked.connect(lambda: default())
         self.ConvertButton_SU.clicked.connect(lambda: default())
-        self.check_data()
-        with open(self.AUTO_SAVE_PATH, "a+") as file:
-            file.close()
-        with open(self.AUTO_SAVE_PATH, "r") as file:
-            data_name = file.readline().replace("\n", "")
-            if data_name != "":
-                self.NameBox_SI.setText(data_name)
-                self.PassBox_SI.setText(self.account_data[data_name])
+
+        for user in self.users:
+            if user.auto_saved:
+                self.NameBox_SI.setText(user.name)
+                self.PassBox_SI.setText(user.password)
                 self.SavePass.setChecked(True)
-            file.close()
+                break
 
         self.Complete_Frame.hide()
         self.SignUp_Frame.hide()
         self.Default_Check()
-
-    # Check information from: User.txt
-    def check_data(self):
-        self.account_data = dict()
-        with open(self.USER_PATH, "a+") as file:
-            file.close()
-        with open(self.USER_PATH, "r", encoding="utf8") as file:
-            while True:
-                data_name = file.readline().replace("\n", "")
-                if data_name == "":
-                    break
-                data_password = file.readline().replace("\n", "")
-                self.account_data[data_name] = data_password
-            file.close()
-
-    # complete
 
     def Default_Check(self):
         self.frameError.hide()
@@ -93,74 +82,103 @@ class LoginWindow(QMainWindow):
         self.Error_NameExist.hide()
         self.Error_NamenotExist.hide()
         self.Error_MissPass.hide()
+        
+    def load_users(self):
+        self.users.clear()
+        with open(self.USER_PATH) as f:
+            lines = f.readlines()
+            for user in lines:
+                username = user.split(' ')[0]
+                password = user.split(' ')[1]
+                role = user.split(' ')[2]
+                auto_saved = user.split(' ')[3]
+                self.users.append(User(username, password, role, auto_saved))
 
-    # Check your signing in
+
+    # Check sign in
     def check_SI(self):
-        self.check_data()
         self.Default_Check()
+        self.load_users()
         name = self.NameBox_SI.text()
         password = self.PassBox_SI.text()
-        if name == "" or password == "":
-            self.frameError.show()
-            self.Error_NamePass.show()
-        elif name not in self.account_data.keys():
-            self.frameError.show()
-            self.Error_NamenotExist.show()
-        elif password != self.account_data[name]:
-            self.frameError.show()
-            self.Error_MissPass.show()
-        else:
-            if self.SavePass.isChecked():
-                with open(self.AUTO_SAVE_PATH, "w") as file_write:
-                    file_write.write(name)
-                    file_write.close()
-            self.close()
-            main_ui.main()
+        for user in self.users:
+            check = True
+            if name == "" or password == "":
+                self.frameError.show()
+                self.Error_NamePass.show()
+                check = False
+
+            if check and name not in user.name:
+                self.frameError.show()
+                self.Error_NamenotExist.show()
+                check = False
+
+            if check and password != user.password:
+                self.frameError.show()
+                self.Error_MissPass.show()
+                check = False
+            
+            if check:
+                if self.SavePass.isChecked() and not user.auto_saved:
+                    user.auto_saved = True
+                with open(self.USER_PATH, "a") as f:
+                    f.write(f"{user.name} {user.password} {user.role} {user.auto_saved}\n")
+
+                self.close()
+                main_ui.main(user.role)
+                break
 
     # Check your signing up
     def check_SU(self):
         check = True
-        self.check_data()
         self.Default_Check()
+        self.load_users()
         name = self.NameBox_SU.text().lower()
         password = self.PassBox_SU.text().lower()
-        if len(name) < 6:
-            self.frameError.show()
-            self.Error_NameRan.show()
-            check = False
-        elif name in self.account_data.keys():
-            self.frameError.show()
-            self.Error_NameExist.show()
-            check = False
-        elif len(password) < 3:
-            self.Error_PassRan.show()
-            self.frameError.show()
-            check = False
-        else:
-            for word in name:
-                if word not in "qwertyuiopasdfghjklzxcvbnm1234567890 ":
-                    self.frameError.show()
-                    self.Error_SpecialCr.show()
-                    check = False
-                else:
-                    for word in password:
-                        if word not in "qwertyuiopasdfghjklzxcvbnm1234567890 ":
-                            self.Error_SpecialCr.show()
-                            self.frameError.show()
-                            check = False
-        if check == True:
-            with open(self.USER_PATH, "a+") as file_write:
-                name = self.NameBox_SU.text() + "\n"
-                password = self.PassBox_SU.text() + "\n"
-                file_write.write(name)
-                file_write.write(password)
-                file_write.close()
+        for user in self.users:
+            if len(name) < 6:
+                self.frameError.show()
+                self.Error_NameRan.show()
+                check = False
+
+            elif name in user.name:
+                self.frameError.show()
+                self.Error_NameExist.show()
+                check = False
+
+            elif len(password) < 8:
+                self.Error_PassRan.show()
+                self.frameError.show()
+                check = False
+
+            else:
+                for word in name:
+                    if word not in "qwertyuiopasdfghjklzxcvbnm1234567890 ":
+                        self.frameError.show()
+                        self.Error_SpecialCr.show()
+                        check = False
+                    else:
+                        for word in password:
+                            if word not in "qwertyuiopasdfghjklzxcvbnm1234567890 ":
+                                self.Error_SpecialCr.show()
+                                self.frameError.show()
+                                check = False
+
+        if check:
+            with open(self.USER_PATH, "a") as f:
+                name = self.NameBox_SU.text()
+                password = self.PassBox_SU.text()
+                role = "teacher" if self.Teacher_SU.isChecked() else "student"
+                self.users.append(User(name, password, role, False))
+                f.write(f"{name} {password} {role} False\n")
+            
             self.SignUp_Frame.hide()
             self.Complete_Frame.show()
-            with open(self.TEACHER_USER_PATH, "a+") as file_write:
-                if self.Teacher_SU.isChecked():
-                    file_write.write(name)
-                file_write.close()
+            time.sleep(5)
+
+            self.close
+            main_ui.main()
+
 
 
 # </>-------------------

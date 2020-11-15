@@ -169,10 +169,7 @@ class UIFunctions(MainWindow):
         )
 
 
-def main():
-    # window = MainWindow("teacher" if login_main.LoginWindow().Teacher_SU.isChecked() else "student")
-    role = "teacher"
-    # role = "student"
+def main(role):
     window = MainWindow(role)
     window.move(GetSystemMetrics(0) - 300, 0)
     window.show()

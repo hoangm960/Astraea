@@ -8,12 +8,14 @@ from win32api import GetSystemMetrics
 import main_ui
 import time
 
-class User():
+
+class User:
     def __init__(self, name, password, role, auto_saved):
         self.name = name
         self.password = password
         self.role = role
         self.auto_saved = auto_saved
+
 
 class LoginWindow(QMainWindow):
     STATE_ECHOPASS = True
@@ -24,7 +26,6 @@ class LoginWindow(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(self.UI_PATH, self)
-        self.load_users()
 
         self.OkCancelFrame.hide()
         self.Accept.clicked.connect(lambda: self.close())
@@ -62,12 +63,14 @@ class LoginWindow(QMainWindow):
         self.ConvertButton.clicked.connect(lambda: default())
         self.ConvertButton_SU.clicked.connect(lambda: default())
 
+        self.load_users()
         for user in self.users:
             if user.auto_saved:
                 self.NameBox_SI.setText(user.name)
                 self.PassBox_SI.setText(user.password)
                 self.SavePass.setChecked(True)
                 break
+            
 
         self.Complete_Frame.hide()
         self.SignUp_Frame.hide()
@@ -82,18 +85,17 @@ class LoginWindow(QMainWindow):
         self.Error_NameExist.hide()
         self.Error_NamenotExist.hide()
         self.Error_MissPass.hide()
-        
+
     def load_users(self):
         self.users.clear()
         with open(self.USER_PATH) as f:
             lines = f.readlines()
             for user in lines:
-                username = user.split(' ')[0]
-                password = user.split(' ')[1]
-                role = user.split(' ')[2]
-                auto_saved = user.split(' ')[3]
+                username = user.split(" ")[0]
+                password = user.split(" ")[1]
+                role = user.split(" ")[2]
+                auto_saved = True if user.split(" ")[3].strip("\n") == "True" else False
                 self.users.append(User(username, password, role, auto_saved))
-
 
     # Check sign in
     def check_SI(self):
@@ -117,12 +119,19 @@ class LoginWindow(QMainWindow):
                 self.frameError.show()
                 self.Error_MissPass.show()
                 check = False
-            
+
             if check:
                 if self.SavePass.isChecked() and not user.auto_saved:
                     user.auto_saved = True
-                with open(self.USER_PATH, "a") as f:
-                    f.write(f"{user.name} {user.password} {user.role} {user.auto_saved}\n")
+                elif not self.SavePass.isChecked() and user.auto_saved:
+                    user.auto_saved = False
+                f = open(self.USER_PATH, "r")
+                lines = f.readlines()
+                lines[self.users.index(user)] = f"{user.name} {user.password} {user.role} {user.auto_saved}\n"
+                
+                f = open(self.USER_PATH, "w")
+                f.writelines(lines)
+                f.close()
 
                 self.close()
                 main_ui.main(user.role)
@@ -170,15 +179,14 @@ class LoginWindow(QMainWindow):
                 password = self.PassBox_SU.text()
                 role = "teacher" if self.Teacher_SU.isChecked() else "student"
                 self.users.append(User(name, password, role, False))
-                f.write(f"{name} {password} {role} False\n")
-            
+                f.write(f"\n{name} {password} {role} False")
+
             self.SignUp_Frame.hide()
             self.Complete_Frame.show()
             time.sleep(5)
 
             self.close
             main_ui.main()
-
 
 
 # </>-------------------

@@ -1,12 +1,7 @@
-.gitignore
-User.txt/
-Teacher_User.txt/
-AutoSave.txt/
 __pycache__/
 Test/
 old gui/
-test.py/
-UI_Files/
-temp.py
 .vscode/
+.gitignore
+temp.py
 data/

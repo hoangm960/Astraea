@@ -86,7 +86,7 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def load_assignments(cls, self, filename):
-        with open(filename) as f:
+        with open(filename, encoding='utf-8') as f:
             lines = f.readlines()
             for line in lines:
                 self.list_assignments.addItem(line.rstrip("\n"))

@@ -107,23 +107,18 @@ class LoginWindow(QMainWindow):
         name = self.NameBox_SI.text()
         password = self.PassBox_SI.text()
         for user in self.users:
-            check = True
             if name == "" or password == "":
                 self.frameError.show()
                 self.Error_NamePass.show()
-                check = False
-
-            if check and name not in user.name:
+            elif name not in user.name:
                 self.frameError.show()
                 self.Error_NamenotExist.show()
-                check = False
 
-            if check and password != user.password:
+            elif password != user.password:
                 self.frameError.show()
                 self.Error_MissPass.show()
-                check = False
 
-            if check:
+            else:
                 if self.SavePass.isChecked() and not user.auto_saved:
                     user.auto_saved = True
                 elif not self.SavePass.isChecked() and user.auto_saved:

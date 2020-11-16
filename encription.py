@@ -54,5 +54,6 @@ def decrypt(input_file, output_file):
         os.remove(input_file)
 
 if __name__ == "__main__":
-    # encrypt("data/User.txt", "data/User.encrypted")
-    decrypt("data/User.encrypted", "data/User.txt")
+    # get_key()
+    # encrypt("data/Users/User.txt", "data/Users/User.encrypted")
+    decrypt("data/Users/User.encrypted", "data/Users/User.txt")

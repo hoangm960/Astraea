@@ -95,7 +95,7 @@ border-radius: 12px;</string>
       <item>
        <widget class="QLabel" name="test_file_label">
         <property name="text">
-         <string>Địa chỉ file cần kiểm tra:</string>
+         <string>File cần kiểm tra:</string>
         </property>
        </widget>
       </item>
@@ -156,7 +156,7 @@ QPushButton:pressed {
       <item>
        <widget class="QLabel" name="input_file_label">
         <property name="text">
-         <string>Địa chỉ file bộ test:</string>
+         <string>File test:</string>
         </property>
        </widget>
       </item>
@@ -217,7 +217,7 @@ QPushButton:pressed {
       <item>
        <widget class="QLabel" name="ans_file_label">
         <property name="text">
-         <string>Địa chỉ file đáp án:</string>
+         <string>File đáp án:</string>
         </property>
        </widget>
       </item>

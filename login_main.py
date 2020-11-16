@@ -7,6 +7,7 @@ from PyQt5 import uic
 from win32api import GetSystemMetrics
 import main_ui
 import time
+import pickle
 
 
 class User:
@@ -95,14 +96,9 @@ class LoginWindow(QMainWindow):
 
     def load_users(self):
         self.users.clear()
-        with open(self.USER_PATH) as f:
-            lines = f.readlines()
-            for user in lines:
-                username = user.split(" ")[0]
-                password = user.split(" ")[1]
-                role = user.split(" ")[2]
-                auto_saved = True if user.split(" ")[3].strip("\n") == "True" else False
-                self.users.append(User(username, password, role, auto_saved))
+        with open(self.USER_PATH, 'rb') as f:
+            unpickler = pickle.Unpickler(f)
+            self.users = unpickler.load()
 
     # Check sign in
     def check_SI(self):
@@ -132,13 +128,8 @@ class LoginWindow(QMainWindow):
                     user.auto_saved = True
                 elif not self.SavePass.isChecked() and user.auto_saved:
                     user.auto_saved = False
-                f = open(self.USER_PATH, "r")
-                lines = f.readlines()
-                lines[self.users.index(user)] = f"{user.name} {user.password} {user.role} {user.auto_saved}\n"
-                
-                f = open(self.USER_PATH, "w")
-                f.writelines(lines)
-                f.close()
+                with open(self.USER_PATH, "wb") as f:
+                    pickle.dump(self.users, f)
 
                 self.close()
                 main_ui.main(user.role)
@@ -181,19 +172,16 @@ class LoginWindow(QMainWindow):
                                 check = False
 
         if check:
-            with open(self.USER_PATH, "a") as f:
+            with open(self.USER_PATH, "wb") as f:
                 name = self.NameBox_SU.text()
                 password = self.PassBox_SU.text()
                 role = "teacher" if self.Teacher_SU.isChecked() else "student"
                 self.users.append(User(name, password, role, False))
-                f.write(f"\n{name} {password} {role} False")
+                pickle.dump(self.users, f)
 
             self.SignUp_Frame.hide()
             self.Complete_Frame.show()
-            time.sleep(5)
-
             self.close
-            main_ui.main()
 
 
 # </>-------------------

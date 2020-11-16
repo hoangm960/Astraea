@@ -80,8 +80,8 @@ background-color:none;</string>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
         <widget class="QFrame" name="title_bar">
          <property name="minimumSize">
           <size>
@@ -229,7 +229,7 @@ text-align: left;
          </layout>
         </widget>
        </item>
-       <item row="1" column="0" colspan="2">
+       <item>
         <widget class="QFrame" name="frame">
          <property name="enabled">
           <bool>true</bool>
@@ -700,7 +700,7 @@ border-radius: 8px;
            </property>
            <property name="geometry">
             <rect>
-             <x>10</x>
+             <x>20</x>
              <y>20</y>
              <width>381</width>
              <height>41</height>
@@ -1163,7 +1163,7 @@ font-size: 12px;</string>
           <property name="geometry">
            <rect>
             <x>300</x>
-            <y>200</y>
+            <y>170</y>
             <width>400</width>
             <height>180</height>
            </rect>
@@ -1275,7 +1275,7 @@ color: rgb(255, 255, 255);</string>
          <zorder>OkCancelFrame</zorder>
         </widget>
        </item>
-       <item row="2" column="1">
+       <item>
         <widget class="QFrame" name="frame_grip">
          <property name="maximumSize">
           <size>
@@ -1351,7 +1351,7 @@ border-radius: 12px;
    <hints>
     <hint type="sourcelabel">
      <x>379</x>
-     <y>336</y>
+     <y>535</y>
     </hint>
     <hint type="destinationlabel">
      <x>438</x>
@@ -1367,11 +1367,11 @@ border-radius: 12px;
    <hints>
     <hint type="sourcelabel">
      <x>379</x>
-     <y>336</y>
+     <y>535</y>
     </hint>
     <hint type="destinationlabel">
      <x>469</x>
-     <y>262</y>
+     <y>337</y>
     </hint>
    </hints>
   </connection>
@@ -1431,7 +1431,7 @@ border-radius: 12px;
    <hints>
     <hint type="sourcelabel">
      <x>289</x>
-     <y>325</y>
+     <y>505</y>
     </hint>
     <hint type="destinationlabel">
      <x>318</x>
@@ -1447,7 +1447,7 @@ border-radius: 12px;
    <hints>
     <hint type="sourcelabel">
      <x>289</x>
-     <y>325</y>
+     <y>505</y>
     </hint>
     <hint type="destinationlabel">
      <x>300</x>
@@ -1463,7 +1463,7 @@ border-radius: 12px;
    <hints>
     <hint type="sourcelabel">
      <x>289</x>
-     <y>325</y>
+     <y>505</y>
     </hint>
     <hint type="destinationlabel">
      <x>548</x>
@@ -1483,7 +1483,7 @@ border-radius: 12px;
     </hint>
     <hint type="destinationlabel">
      <x>379</x>
-     <y>196</y>
+     <y>375</y>
     </hint>
    </hints>
   </connection>
@@ -1498,8 +1498,8 @@ border-radius: 12px;
      <y>545</y>
     </hint>
     <hint type="destinationlabel">
-     <x>379</x>
-     <y>246</y>
+     <x>334</x>
+     <y>444</y>
     </hint>
    </hints>
   </connection>
@@ -1515,7 +1515,7 @@ border-radius: 12px;
     </hint>
     <hint type="destinationlabel">
      <x>240</x>
-     <y>291</y>
+     <y>475</y>
     </hint>
    </hints>
   </connection>
@@ -1526,8 +1526,8 @@ border-radius: 12px;
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>539</x>
-     <y>424</y>
+     <x>548</x>
+     <y>394</y>
     </hint>
     <hint type="destinationlabel">
      <x>625</x>
@@ -1542,8 +1542,8 @@ border-radius: 12px;
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>369</x>
-     <y>424</y>
+     <x>378</x>
+     <y>394</y>
     </hint>
     <hint type="destinationlabel">
      <x>521</x>
@@ -1575,7 +1575,7 @@ border-radius: 12px;
    <hints>
     <hint type="sourcelabel">
      <x>379</x>
-     <y>355</y>
+     <y>535</y>
     </hint>
     <hint type="destinationlabel">
      <x>245</x>
@@ -1594,8 +1594,8 @@ border-radius: 12px;
      <y>483</y>
     </hint>
     <hint type="destinationlabel">
-     <x>333</x>
-     <y>266</y>
+     <x>334</x>
+     <y>444</y>
     </hint>
    </hints>
   </connection>
@@ -1610,8 +1610,8 @@ border-radius: 12px;
      <y>481</y>
     </hint>
     <hint type="destinationlabel">
-     <x>374</x>
-     <y>188</y>
+     <x>379</x>
+     <y>375</y>
     </hint>
    </hints>
   </connection>
@@ -1626,8 +1626,8 @@ border-radius: 12px;
      <y>487</y>
     </hint>
     <hint type="destinationlabel">
-     <x>179</x>
-     <y>287</y>
+     <x>188</x>
+     <y>475</y>
     </hint>
    </hints>
   </connection>
@@ -1638,12 +1638,12 @@ border-radius: 12px;
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>449</x>
-     <y>243</y>
+     <x>371</x>
+     <y>444</y>
     </hint>
     <hint type="destinationlabel">
-     <x>440</x>
-     <y>248</y>
+     <x>371</x>
+     <y>444</y>
     </hint>
    </hints>
   </connection>
@@ -1654,12 +1654,12 @@ border-radius: 12px;
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>433</x>
-     <y>244</y>
+     <x>371</x>
+     <y>444</y>
     </hint>
     <hint type="destinationlabel">
-     <x>408</x>
-     <y>248</y>
+     <x>369</x>
+     <y>444</y>
     </hint>
    </hints>
   </connection>
@@ -1670,12 +1670,12 @@ border-radius: 12px;
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>403</x>
-     <y>248</y>
+     <x>364</x>
+     <y>444</y>
     </hint>
     <hint type="destinationlabel">
-     <x>435</x>
-     <y>248</y>
+     <x>371</x>
+     <y>444</y>
     </hint>
    </hints>
   </connection>
@@ -1686,12 +1686,12 @@ border-radius: 12px;
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>402</x>
-     <y>239</y>
+     <x>363</x>
+     <y>444</y>
     </hint>
     <hint type="destinationlabel">
-     <x>406</x>
-     <y>243</y>
+     <x>367</x>
+     <y>444</y>
     </hint>
    </hints>
   </connection>
@@ -1706,8 +1706,8 @@ border-radius: 12px;
      <y>454</y>
     </hint>
     <hint type="destinationlabel">
-     <x>437</x>
-     <y>454</y>
+     <x>418</x>
+     <y>464</y>
     </hint>
    </hints>
   </connection>
@@ -1734,12 +1734,12 @@ border-radius: 12px;
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>453</x>
-     <y>462</y>
+     <x>418</x>
+     <y>464</y>
     </hint>
     <hint type="destinationlabel">
-     <x>441</x>
-     <y>463</y>
+     <x>418</x>
+     <y>464</y>
     </hint>
    </hints>
   </connection>
@@ -1750,8 +1750,8 @@ border-radius: 12px;
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>443</x>
-     <y>460</y>
+     <x>418</x>
+     <y>464</y>
     </hint>
     <hint type="destinationlabel">
      <x>398</x>

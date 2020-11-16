@@ -1,3 +1,0 @@
-import Login
-
-Login.main()

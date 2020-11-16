@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import QApplication, QMainWindow, QSizeGrip, QWidget
+from PyQt5.QtWidgets import QApplication, QGraphicsDropShadowEffect, QMainWindow, QSizeGrip, QWidget
 import sys
 from PyQt5.QtCore import Qt
 from PyQt5 import uic
@@ -24,7 +24,7 @@ class LoginWindow(QMainWindow):
     users = []
 
     def __init__(self):
-        QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
+        QMainWindow.__init__(self)
         uic.loadUi(self.UI_PATH, self)
 
         self.OkCancelFrame.hide()
@@ -32,6 +32,13 @@ class LoginWindow(QMainWindow):
         self.move(round(GetSystemMetrics(0) / 10), round(GetSystemMetrics(1) / 50))
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+
+        self.shadow = QGraphicsDropShadowEffect(self)
+        self.shadow.setBlurRadius(50)
+        self.shadow.setXOffset(0)
+        self.shadow.setYOffset(0)
+        self.shadow.setColor(QColor(0, 0, 0, 200))
+        self.bg_frame.setGraphicsEffect(self.shadow)
 
         self.btn_minimize.clicked.connect(lambda: self.showMinimized())
         self.btn_quit.clicked.connect(lambda: self.OkCancelFrame.show())

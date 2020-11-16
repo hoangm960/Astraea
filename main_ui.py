@@ -47,10 +47,10 @@ class UIFunctions(MainWindow):
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 
         self.shadow = QGraphicsDropShadowEffect(self)
-        self.shadow.setBlurRadius(20)
+        self.shadow.setBlurRadius(50)
         self.shadow.setXOffset(0)
         self.shadow.setYOffset(0)
-        self.shadow.setColor(QColor(0, 0, 0, 100))
+        self.shadow.setColor(QColor(0, 0, 0, 200))
         self.bg_frame.setGraphicsEffect(self.shadow)
 
         self.btn_minimize.clicked.connect(lambda: self.showMinimized())
@@ -177,5 +177,5 @@ def main(role):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    main()
+    main("teacher")
     sys.exit(app.exec_())

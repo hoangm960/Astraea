@@ -36,9 +36,15 @@ class EditWidget2(QWidget):
             super().__init__(*args, **kwargs)
             uic.loadUi(EDIT_FRAME_PATH, self)
 
-            self.test_file_btn.clicked.connect(lambda: self.showDialog(self.test_file_entry))
-            self.input_file_btn.clicked.connect(lambda: self.showDialog(self.input_file_entry))
-            self.ans_file_btn.clicked.connect(lambda: self.showDialog(self.ans_file_entry))
+            self.test_file_btn.clicked.connect(
+                lambda: self.showDialog(self.test_file_entry)
+            )
+            self.input_file_btn.clicked.connect(
+                lambda: self.showDialog(self.input_file_entry)
+            )
+            self.ans_file_btn.clicked.connect(
+                lambda: self.showDialog(self.ans_file_entry)
+            )
 
         def showDialog(self, entry):
             HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
@@ -72,7 +78,7 @@ class EditWidget2(QWidget):
 
 class EditWindow(QMainWindow):
     def __init__(self):
-        super().__init__()
+        QMainWindow.__init__(self)
         uic.loadUi(EDIT_FORM_PATH, self)
 
         def moveWindow(event):

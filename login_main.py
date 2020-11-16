@@ -129,6 +129,7 @@ class LoginWindow(QMainWindow):
         else:
             for word in name:
                 if word not in "qwertyuiopasdfghjklzxcvbnm1234567890 ":
+                    self.Default_Check()
                     self.frameError.show()
                     self.Error_SpecialCr.show()
                     check = False
@@ -163,7 +164,7 @@ class Loading_Screen(QMainWindow):
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.progress)
-        self.timer.start(20)
+        self.timer.start(100)
         self.show()
 
     def progress(self):

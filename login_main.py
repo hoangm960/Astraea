@@ -100,6 +100,7 @@ class LoginFunctions(LoginWindow):
         self.SignUp_Bt.clicked.connect(lambda: cls.check_SU(self))
         self.ConvertButton.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(1))
         self.ConvertButton_SU.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(0))
+        self.ConvertButton_4.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(0))
 
         def default():
             self.STATE_ECHOPASS = True

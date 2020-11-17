@@ -80,8 +80,8 @@ background-color:none;</string>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
         <widget class="QFrame" name="title_bar">
          <property name="minimumSize">
           <size>
@@ -229,7 +229,7 @@ text-align: left;
          </layout>
         </widget>
        </item>
-       <item>
+       <item row="1" column="0" colspan="2">
         <widget class="QFrame" name="frame">
          <property name="enabled">
           <bool>true</bool>
@@ -702,7 +702,7 @@ border-radius: 8px;
            </property>
            <property name="geometry">
             <rect>
-             <x>20</x>
+             <x>10</x>
              <y>20</y>
              <width>381</width>
              <height>41</height>
@@ -1062,7 +1062,7 @@ font-size: 12px;</string>
           <property name="geometry">
            <rect>
             <x>300</x>
-            <y>170</y>
+            <y>200</y>
             <width>400</width>
             <height>180</height>
            </rect>
@@ -1174,7 +1174,7 @@ color: rgb(255, 255, 255);</string>
          <zorder>OkCancelFrame</zorder>
         </widget>
        </item>
-       <item>
+       <item row="2" column="1">
         <widget class="QFrame" name="frame_grip">
          <property name="maximumSize">
           <size>
@@ -1270,7 +1270,7 @@ border-radius: 12px;
     </hint>
     <hint type="destinationlabel">
      <x>469</x>
-     <y>337</y>
+     <y>262</y>
     </hint>
    </hints>
   </connection>
@@ -1361,8 +1361,8 @@ border-radius: 12px;
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>548</x>
-     <y>394</y>
+     <x>539</x>
+     <y>424</y>
     </hint>
     <hint type="destinationlabel">
      <x>625</x>
@@ -1377,8 +1377,8 @@ border-radius: 12px;
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>378</x>
-     <y>394</y>
+     <x>369</x>
+     <y>424</y>
     </hint>
     <hint type="destinationlabel">
      <x>521</x>

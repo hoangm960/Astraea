@@ -615,46 +615,6 @@ background-color: none;
             <set>Qt::AlignCenter</set>
            </property>
           </widget>
-          <widget class="QPushButton" name="ConvertButton_4">
-           <property name="enabled">
-            <bool>true</bool>
-           </property>
-           <property name="geometry">
-            <rect>
-             <x>80</x>
-             <y>190</y>
-             <width>251</width>
-             <height>21</height>
-            </rect>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>12</pointsize>
-             <weight>75</weight>
-             <italic>false</italic>
-             <bold>true</bold>
-             <underline>false</underline>
-             <strikeout>false</strikeout>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QPushButton{
-background-color: rgba(255, 85, 255,0);
-border-radius: 8px;
-color: rgb(170, 170, 255);
-}
-QPushButton:hover {
-background-color: none;
-color: rgb(255,255,255);
-}</string>
-           </property>
-           <property name="text">
-            <string>Trở về</string>
-           </property>
-           <property name="autoRepeat">
-            <bool>true</bool>
-           </property>
-          </widget>
          </widget>
          <widget class="QFrame" name="SignUp_Frame">
           <property name="enabled">
@@ -1376,38 +1336,6 @@ border-radius: 12px;
    </hints>
   </connection>
   <connection>
-   <sender>ConvertButton_4</sender>
-   <signal>clicked()</signal>
-   <receiver>SignIn_Frame</receiver>
-   <slot>show()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>316</x>
-     <y>495</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>438</x>
-     <y>300</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>ConvertButton_4</sender>
-   <signal>clicked()</signal>
-   <receiver>Complete_Frame</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>280</x>
-     <y>495</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>190</x>
-     <y>500</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>frameError</sender>
    <signal>customContextMenuRequested(QPoint)</signal>
    <receiver>Error_SpecialCr</receiver>
@@ -1580,54 +1508,6 @@ border-radius: 12px;
     <hint type="destinationlabel">
      <x>245</x>
      <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>ConvertButton_4</sender>
-   <signal>clicked()</signal>
-   <receiver>PassBox_SU</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>279</x>
-     <y>483</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>333</x>
-     <y>266</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>ConvertButton_4</sender>
-   <signal>clicked()</signal>
-   <receiver>NameBox_SU</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>263</x>
-     <y>481</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>374</x>
-     <y>188</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>ConvertButton_4</sender>
-   <signal>clicked()</signal>
-   <receiver>Student_SU</receiver>
-   <slot>toggle()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>246</x>
-     <y>487</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>179</x>
-     <y>287</y>
     </hint>
    </hints>
   </connection>

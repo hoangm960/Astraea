@@ -20,6 +20,8 @@ class User:
 
 class LoginWindow(QMainWindow):
     STATE_ECHOPASS = True
+    with open('data/Users/User.txt','a+') as f:
+        f.close()
     USER_PATH = "data/Users/User.txt"
     UI_PATH = "UI_Files/Login_gui.ui"
     users = []
@@ -173,7 +175,7 @@ class Loading_Screen(QMainWindow):
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.progress)
-        self.timer.start(1)
+        self.timer.start(10)
         self.show()
     def delay(self, point, wait):
         if self.counter == point :

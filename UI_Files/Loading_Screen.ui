@@ -118,9 +118,9 @@ QProgressBar::chunk {
       <widget class="QLabel" name="Loading_label">
        <property name="geometry">
         <rect>
-         <x>350</x>
+         <x>200</x>
          <y>200</y>
-         <width>261</width>
+         <width>351</width>
          <height>41</height>
         </rect>
        </property>
@@ -132,7 +132,10 @@ font-size: 18px;
 }</string>
        </property>
        <property name="text">
-        <string>loading ...</string>
+        <string>đang tải ...</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
       <widget class="QLabel" name="label_credits">

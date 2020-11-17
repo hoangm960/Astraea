@@ -523,36 +523,38 @@ color: rgb(170, 255, 255);
             <bool>true</bool>
            </property>
           </widget>
-          <widget class="QPushButton" name="eyeButton_SI">
+          <widget class="QPushButton" name="eyeButton_SI_2">
            <property name="geometry">
             <rect>
              <x>340</x>
              <y>150</y>
-             <width>30</width>
-             <height>30</height>
+             <width>32</width>
+             <height>32</height>
             </rect>
            </property>
            <property name="styleSheet">
-            <string notr="true">QPushButton:enabled{
-image: url(:/images/visibility.png);
+            <string notr="true">QPushButton {
+image: url(:/images/invisible.png);
+border-radius: 16px;
 }</string>
            </property>
            <property name="text">
             <string/>
            </property>
           </widget>
-          <widget class="QPushButton" name="eyeButton_SI_2">
+          <widget class="QPushButton" name="eyeButton_SI">
            <property name="geometry">
             <rect>
              <x>340</x>
              <y>150</y>
-             <width>30</width>
-             <height>30</height>
+             <width>32</width>
+             <height>32</height>
             </rect>
            </property>
            <property name="styleSheet">
-            <string notr="true">QPushButton:enabled {
-image: url(:/images/invisible.png);
+            <string notr="true">QPushButton {
+image:url(:/images/visibility.png);
+border-radius: 16px;
 }</string>
            </property>
            <property name="text">
@@ -962,36 +964,38 @@ color: rgb(255, 255, 255)</string>
             <string>Giáo viên</string>
            </property>
           </widget>
-          <widget class="QPushButton" name="eyeButton_SU">
+          <widget class="QPushButton" name="eyeButton_SU_2">
            <property name="geometry">
             <rect>
              <x>340</x>
              <y>150</y>
-             <width>30</width>
-             <height>30</height>
+             <width>32</width>
+             <height>32</height>
             </rect>
            </property>
            <property name="styleSheet">
-            <string notr="true">QPushButton:enabled{
-image: url(:/images/visibility.png);
+            <string notr="true">QPushButton {
+image:url(:/images/visibility.png);
+border-radius: 16px;
 }</string>
            </property>
            <property name="text">
             <string/>
            </property>
           </widget>
-          <widget class="QPushButton" name="eyeButton_SU_2">
+          <widget class="QPushButton" name="eyeButton_SU">
            <property name="geometry">
             <rect>
              <x>340</x>
              <y>150</y>
-             <width>30</width>
-             <height>30</height>
+             <width>32</width>
+             <height>32</height>
             </rect>
            </property>
            <property name="styleSheet">
-            <string notr="true">QPushButton:enabled {
+            <string notr="true">QPushButton {
 image: url(:/images/invisible.png);
+border-radius: 16px;
 }</string>
            </property>
            <property name="text">
@@ -1007,8 +1011,8 @@ image: url(:/images/invisible.png);
           <zorder>label_9</zorder>
           <zorder>Student_SU</zorder>
           <zorder>Teacher_SU</zorder>
-          <zorder>eyeButton_SU</zorder>
           <zorder>eyeButton_SU_2</zorder>
+          <zorder>eyeButton_SU</zorder>
          </widget>
          <widget class="QFrame" name="frameError">
           <property name="geometry">
@@ -1032,12 +1036,12 @@ border-radius: 25px;
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
           </property>
-          <widget class="QLabel" name="Error_SpecialCr">
+          <widget class="QLabel" name="Error_Content">
            <property name="geometry">
             <rect>
-             <x>50</x>
+             <x>0</x>
              <y>10</y>
-             <width>281</width>
+             <width>311</width>
              <height>31</height>
             </rect>
            </property>
@@ -1047,115 +1051,10 @@ font: bold;
 font-size: 12px;</string>
            </property>
            <property name="text">
-            <string>Yêu cầu không chứa kí tự đặc biệt</string>
+            <string>Error_text</string>
            </property>
-          </widget>
-          <widget class="QLabel" name="Error_PassRan">
-           <property name="geometry">
-            <rect>
-             <x>40</x>
-             <y>10</y>
-             <width>281</width>
-             <height>31</height>
-            </rect>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background: none;
-font: bold;
-font-size: 12px;</string>
-           </property>
-           <property name="text">
-            <string>Yêu cầu độ dài mật khẩu ít nhất 3 kí tự</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="Error_NameRan">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>10</y>
-             <width>281</width>
-             <height>31</height>
-            </rect>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background: none;
-font: bold;
-font-size: 12px;</string>
-           </property>
-           <property name="text">
-            <string>Yêu cầu độ dài tên tài khoản ít nhất 6 kí tự</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="Error_NamePass">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>10</y>
-             <width>281</width>
-             <height>31</height>
-            </rect>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background: none;
-font: bold;
-font-size: 12px;</string>
-           </property>
-           <property name="text">
-            <string>Yêu cầu nhập đầy đủ tên tài khoản, mật khẩu</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="Error_NameExist">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>10</y>
-             <width>281</width>
-             <height>31</height>
-            </rect>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background: none;
-font: bold;
-font-size: 12px;</string>
-           </property>
-           <property name="text">
-            <string>Tên tài khoản đã tồn tại, hãy chọn tên khác</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="Error_NamenotExist">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>10</y>
-             <width>281</width>
-             <height>31</height>
-            </rect>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background: none;
-font: bold;
-font-size: 12px;</string>
-           </property>
-           <property name="text">
-            <string>Tên tài khoản không tồn tại. Hãy nhập lại</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="Error_MissPass">
-           <property name="geometry">
-            <rect>
-             <x>20</x>
-             <y>10</y>
-             <width>281</width>
-             <height>31</height>
-            </rect>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background: none;
-font: bold;
-font-size: 12px;</string>
-           </property>
-           <property name="text">
-            <string>Mật khẩu không chính xác. Hãy nhập lại</string>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
            </property>
           </widget>
          </widget>
@@ -1350,7 +1249,7 @@ border-radius: 12px;
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>379</x>
+     <x>679</x>
      <y>535</y>
     </hint>
     <hint type="destinationlabel">
@@ -1366,7 +1265,7 @@ border-radius: 12px;
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>379</x>
+     <x>679</x>
      <y>535</y>
     </hint>
     <hint type="destinationlabel">
@@ -1408,70 +1307,6 @@ border-radius: 12px;
    </hints>
   </connection>
   <connection>
-   <sender>frameError</sender>
-   <signal>customContextMenuRequested(QPoint)</signal>
-   <receiver>Error_SpecialCr</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>480</x>
-     <y>273</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>494</x>
-     <y>295</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>SignUp_Bt</sender>
-   <signal>clicked()</signal>
-   <receiver>Error_NameRan</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>289</x>
-     <y>505</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>318</x>
-     <y>278</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>SignUp_Bt</sender>
-   <signal>clicked()</signal>
-   <receiver>Error_SpecialCr</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>289</x>
-     <y>505</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>300</x>
-     <y>281</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>SignUp_Bt</sender>
-   <signal>clicked()</signal>
-   <receiver>Error_PassRan</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>289</x>
-     <y>505</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>548</x>
-     <y>276</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>ConvertButton</sender>
    <signal>clicked()</signal>
    <receiver>NameBox_SU</receiver>
@@ -1482,7 +1317,7 @@ border-radius: 12px;
      <y>545</y>
     </hint>
     <hint type="destinationlabel">
-     <x>379</x>
+     <x>679</x>
      <y>375</y>
     </hint>
    </hints>
@@ -1498,7 +1333,7 @@ border-radius: 12px;
      <y>545</y>
     </hint>
     <hint type="destinationlabel">
-     <x>334</x>
+     <x>634</x>
      <y>444</y>
     </hint>
    </hints>
@@ -1514,7 +1349,7 @@ border-radius: 12px;
      <y>545</y>
     </hint>
     <hint type="destinationlabel">
-     <x>240</x>
+     <x>540</x>
      <y>475</y>
     </hint>
    </hints>
@@ -1574,7 +1409,7 @@ border-radius: 12px;
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>379</x>
+     <x>679</x>
      <y>535</y>
     </hint>
     <hint type="destinationlabel">
@@ -1594,7 +1429,7 @@ border-radius: 12px;
      <y>483</y>
     </hint>
     <hint type="destinationlabel">
-     <x>334</x>
+     <x>634</x>
      <y>444</y>
     </hint>
    </hints>
@@ -1610,7 +1445,7 @@ border-radius: 12px;
      <y>481</y>
     </hint>
     <hint type="destinationlabel">
-     <x>379</x>
+     <x>679</x>
      <y>375</y>
     </hint>
    </hints>
@@ -1626,72 +1461,8 @@ border-radius: 12px;
      <y>487</y>
     </hint>
     <hint type="destinationlabel">
-     <x>188</x>
-     <y>475</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>eyeButton_SU_2</sender>
-   <signal>clicked()</signal>
-   <receiver>eyeButton_SU_2</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>371</x>
-     <y>444</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>371</x>
-     <y>444</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>eyeButton_SU_2</sender>
-   <signal>clicked()</signal>
-   <receiver>eyeButton_SU</receiver>
-   <slot>show()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>371</x>
-     <y>444</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>369</x>
-     <y>444</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>eyeButton_SU</sender>
-   <signal>clicked()</signal>
-   <receiver>eyeButton_SU_2</receiver>
-   <slot>show()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>364</x>
-     <y>444</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>371</x>
-     <y>444</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>eyeButton_SU</sender>
-   <signal>clicked()</signal>
-   <receiver>eyeButton_SU</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>363</x>
-     <y>444</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>367</x>
-     <y>444</y>
+     <x>580</x>
+     <y>491</y>
     </hint>
    </hints>
   </connection>
@@ -1700,30 +1471,30 @@ border-radius: 12px;
    <signal>clicked()</signal>
    <receiver>eyeButton_SI_2</receiver>
    <slot>show()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>405</x>
-     <y>454</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>418</x>
-     <y>464</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>eyeButton_SI</sender>
-   <signal>clicked()</signal>
-   <receiver>eyeButton_SI</receiver>
-   <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>411</x>
-     <y>461</y>
+     <y>449</y>
     </hint>
     <hint type="destinationlabel">
-     <x>401</x>
-     <y>459</y>
+     <x>397</x>
+     <y>448</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eyeButton_SI</sender>
+   <signal>clicked()</signal>
+   <receiver>eyeButton_SI</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>405</x>
+     <y>449</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>404</x>
+     <y>456</y>
     </hint>
    </hints>
   </connection>
@@ -1734,12 +1505,12 @@ border-radius: 12px;
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>418</x>
-     <y>464</y>
+     <x>391</x>
+     <y>451</y>
     </hint>
     <hint type="destinationlabel">
-     <x>418</x>
-     <y>464</y>
+     <x>398</x>
+     <y>448</y>
     </hint>
    </hints>
   </connection>
@@ -1750,11 +1521,75 @@ border-radius: 12px;
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>418</x>
-     <y>464</y>
+     <x>394</x>
+     <y>459</y>
     </hint>
     <hint type="destinationlabel">
-     <x>398</x>
+     <x>411</x>
+     <y>456</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eyeButton_SU_2</sender>
+   <signal>clicked()</signal>
+   <receiver>eyeButton_SU_2</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>768</x>
+     <y>456</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>769</x>
+     <y>457</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eyeButton_SU_2</sender>
+   <signal>clicked()</signal>
+   <receiver>eyeButton_SU</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>767</x>
+     <y>450</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>765</x>
+     <y>415</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eyeButton_SU</sender>
+   <signal>clicked()</signal>
+   <receiver>eyeButton_SU</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>758</x>
+     <y>424</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>762</x>
+     <y>414</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eyeButton_SU</sender>
+   <signal>clicked()</signal>
+   <receiver>eyeButton_SU_2</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>774</x>
+     <y>419</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>778</x>
      <y>462</y>
     </hint>
    </hints>

@@ -25,9 +25,6 @@ class User:
         self.auto_saved = auto_saved
 
 class LoginWindow(QMainWindow):
-    STATE_ECHOPASS = True
-    with open('data/Users/User.txt','a+') as f:
-        f.close()
     USER_PATH = "data/Users/User.txt"
     UI_PATH = "UI_Files/Login_gui.ui"
     users = []
@@ -54,15 +51,15 @@ class LoginWindow(QMainWindow):
 class LoginFunctions(LoginWindow):
     users = []
     GLOBAL_STATE = False
+    STATE_ECHOPASS = True
 
     @classmethod
     def uiDefinitions(cls, self):
         self.OkCancelFrame.hide()
-        self.Complete_Frame.hide()
-        self.SignUp_Frame.hide()
+        self.frameError.hide()
         self.eyeButton_SU.hide()
         self.eyeButton_SI.hide()
-        cls.Default_Check(self)
+        self.stacked_widget.setCurrentIndex(0)
 
         self.move(round(GetSystemMetrics(0) / 10), round(GetSystemMetrics(1) / 50))
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
@@ -101,8 +98,8 @@ class LoginFunctions(LoginWindow):
         )
         self.SignIn_Bt.clicked.connect(lambda: cls.check_SI(self))
         self.SignUp_Bt.clicked.connect(lambda: cls.check_SU(self))
-        self.ConvertButton.clicked.connect(lambda: default())
-        self.ConvertButton_SU.clicked.connect(lambda: default())
+        self.ConvertButton.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(1))
+        self.ConvertButton_SU.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(0))
 
         def default():
             self.STATE_ECHOPASS = True
@@ -134,35 +131,21 @@ class LoginFunctions(LoginWindow):
         status = cls.GLOBAL_STATE
 
         if status == False:
-            self.showMaximized()
-
             cls.GLOBAL_STATE = True
-
+            self.showMaximized()
             self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-            self.bg_frame.setStyleSheet(
-                "background-color: qlineargradient(spread:pad, x1:0, y1:0.341, x2:1, y2:0.897, stop:0 rgba(97, 152, 255, 255), stop:0.514124 rgba(186, 38, 175, 255), stop:1 rgba(255, 0, 0, 255)); border-radius: 0px;"
-            )
             self.btn_maximize.setToolTip("Restore")
         else:
             cls.GLOBAL_STATE = False
             self.showNormal()
             self.resize(self.width() + 1, self.height() + 1)
             self.verticalLayout.setContentsMargins(10, 10, 10, 10)
-            self.bg_frame.setStyleSheet(
-                "background-color: qlineargradient(spread:pad, x1:0, y1:0.341, x2:1, y2:0.897, stop:0 rgba(97, 152, 255, 255), stop:0.514124 rgba(186, 38, 175, 255), stop:1 rgba(255, 0, 0, 255)); border-radius: 20px;"
-            )
             self.btn_maximize.setToolTip("Maximize")
 
     @classmethod
-    def Default_Check(cls, self):
-        self.frameError.hide()
-        self.Error_PassRan.hide()
-        self.Error_NameRan.hide()
-        self.Error_SpecialCr.hide()
-        self.Error_NamePass.hide()
-        self.Error_NameExist.hide()
-        self.Error_NamenotExist.hide()
-        self.Error_MissPass.hide()
+    def Error(cls, self, text):
+        self.frameError.show()
+        self.Error_Content.setText(text)
 
     @classmethod
     def load_users(cls, self):
@@ -174,17 +157,16 @@ class LoginFunctions(LoginWindow):
 
     @classmethod
     def check_SI(cls, self):
-        cls.Default_Check(self)
         cls.load_users(self)
         name = self.NameBox_SI.text()
         password = self.PassBox_SI.text()
         for user in cls.users:
             if name == "" or password == "":
-                self.Error('Chưa điền đầy đủ thông tin đăng nhập')
+                cls.Error(self, 'Chưa điền đầy đủ thông tin đăng nhập')
             elif name not in user.name:
-                self.Error('Tên tài khoản không tồn tại. Hãy nhập lại.')
+                cls.Error(self, 'Tên tài khoản không tồn tại. Hãy nhập lại.')
             elif password != user.password:
-                self.Error('Mật khẩu không chính xác. Hãy nhập lại.')
+                cls.Error(self, 'Mật khẩu không chính xác. Hãy nhập lại.')
             else:
                 for i in range(len(cls.users)):
                     cls.users[i].auto_saved = False
@@ -202,32 +184,31 @@ class LoginFunctions(LoginWindow):
     @classmethod
     def check_SU(cls, self):
         check = True
-        cls.Default_Check(self)
         cls.load_users(self)
         name = self.NameBox_SU.text().lower()
         password = self.PassBox_SU.text().lower()
         for user in cls.users:
             if len(name) < 6:
-                self.Error('Yêu cầu độ dài tên tài khoản hơn 5 kí tự.')
+                cls.Error(self, 'Yêu cầu độ dài tên tài khoản hơn 5 kí tự.')
                 check = False
 
             elif name in user.name:
-                self.Error('Tên tài khoản đã tồn tại. Hãy lựa chọn tên khác.')
+                cls.Error(self, 'Tên tài khoản đã tồn tại. Hãy lựa chọn tên khác.')
                 check = False
 
             elif len(password) < 8:
-                self.Error('Yêu cầu độ dài mật khẩu hơn 7 kí tự')
+                cls.Error(self, 'Yêu cầu độ dài mật khẩu hơn 7 kí tự')
                 check = False
 
             else:
                 for word in name:
                     if word not in "qwertyuiopasdfghjklzxcvbnm1234567890 ":
-                        self.Error('Tên tài khoản không được chứa kí tự đặc biệt')
+                        cls.Error(self, 'Tên tài khoản không được chứa kí tự đặc biệt')
                         check = False
                     else:
                         for word in password:
                             if word not in "qwertyuiopasdfghjklzxcvbnm1234567890 ":
-                                self.Error('Mật khẩu không được chứa kí tự đặc biệt')
+                                cls.Error(self, 'Mật khẩu không được chứa kí tự đặc biệt')
                                 check = False
 
         if check:
@@ -238,9 +219,7 @@ class LoginFunctions(LoginWindow):
                 cls.users.append(User(name, password, role, False))
                 pickle.dump(cls.users, f)
 
-            self.SignUp_Frame.hide()
-            self.Complete_Frame.show()
-            f.close()
+            self.stacked_widget.setCurrentIndex(2)
         QtCore.QTimer.singleShot(2000, lambda: self.frameError.hide())
 
 class Loading_Screen(QMainWindow):

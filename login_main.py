@@ -1,3 +1,4 @@
+import os
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import QApplication, QGraphicsDropShadowEffect, QMainWindow, QSizeGrip, QWidget
@@ -6,7 +7,6 @@ from PyQt5.QtCore import Qt
 from PyQt5 import uic
 from win32api import GetSystemMetrics
 import main_ui
-import time
 import pickle
 
 
@@ -96,9 +96,10 @@ class LoginWindow(QMainWindow):
 
     def load_users(self):
         self.users.clear()
-        with open(self.USER_PATH, 'rb') as f:
-            unpickler = pickle.Unpickler(f)
-            self.users = unpickler.load()
+        if os.path.getsize(self.USER_PATH) > 0:
+            with open(self.USER_PATH, 'rb') as f:
+                unpickler = pickle.Unpickler(f)
+                self.users = unpickler.load()
 
     # Check sign in
     def check_SI(self):
@@ -190,7 +191,7 @@ class Loading_Screen(QMainWindow):
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.progress)
-        self.timer.start(100)
+        self.timer.start(50)
         self.show()
 
     def progress(self):

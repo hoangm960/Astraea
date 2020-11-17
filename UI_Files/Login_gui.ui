@@ -80,8 +80,8 @@ background-color:none;</string>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
         <widget class="QFrame" name="title_bar">
          <property name="minimumSize">
           <size>
@@ -229,7 +229,7 @@ text-align: left;
          </layout>
         </widget>
        </item>
-       <item>
+       <item row="1" column="0" colspan="2">
         <widget class="QFrame" name="frame">
          <property name="enabled">
           <bool>true</bool>
@@ -615,6 +615,46 @@ background-color: none;
             <set>Qt::AlignCenter</set>
            </property>
           </widget>
+          <widget class="QPushButton" name="ConvertButton_4">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="geometry">
+            <rect>
+             <x>80</x>
+             <y>190</y>
+             <width>251</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>12</pointsize>
+             <weight>75</weight>
+             <italic>false</italic>
+             <bold>true</bold>
+             <underline>false</underline>
+             <strikeout>false</strikeout>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton{
+background-color: rgba(255, 85, 255,0);
+border-radius: 8px;
+color: rgb(170, 170, 255);
+}
+QPushButton:hover {
+background-color: none;
+color: rgb(255,255,255);
+}</string>
+           </property>
+           <property name="text">
+            <string>Trở về</string>
+           </property>
+           <property name="autoRepeat">
+            <bool>true</bool>
+           </property>
+          </widget>
          </widget>
          <widget class="QFrame" name="SignUp_Frame">
           <property name="enabled">
@@ -660,7 +700,7 @@ border-radius: 8px;
            </property>
            <property name="geometry">
             <rect>
-             <x>20</x>
+             <x>10</x>
              <y>20</y>
              <width>381</width>
              <height>41</height>
@@ -1123,7 +1163,7 @@ font-size: 12px;</string>
           <property name="geometry">
            <rect>
             <x>300</x>
-            <y>170</y>
+            <y>200</y>
             <width>400</width>
             <height>180</height>
            </rect>
@@ -1235,7 +1275,7 @@ color: rgb(255, 255, 255);</string>
          <zorder>OkCancelFrame</zorder>
         </widget>
        </item>
-       <item>
+       <item row="2" column="1">
         <widget class="QFrame" name="frame_grip">
          <property name="maximumSize">
           <size>
@@ -1311,7 +1351,7 @@ border-radius: 12px;
    <hints>
     <hint type="sourcelabel">
      <x>379</x>
-     <y>535</y>
+     <y>336</y>
     </hint>
     <hint type="destinationlabel">
      <x>438</x>
@@ -1327,11 +1367,43 @@ border-radius: 12px;
    <hints>
     <hint type="sourcelabel">
      <x>379</x>
-     <y>535</y>
+     <y>336</y>
     </hint>
     <hint type="destinationlabel">
      <x>469</x>
-     <y>337</y>
+     <y>262</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ConvertButton_4</sender>
+   <signal>clicked()</signal>
+   <receiver>SignIn_Frame</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>495</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>438</x>
+     <y>300</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ConvertButton_4</sender>
+   <signal>clicked()</signal>
+   <receiver>Complete_Frame</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>280</x>
+     <y>495</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>500</y>
     </hint>
    </hints>
   </connection>
@@ -1359,7 +1431,7 @@ border-radius: 12px;
    <hints>
     <hint type="sourcelabel">
      <x>289</x>
-     <y>505</y>
+     <y>325</y>
     </hint>
     <hint type="destinationlabel">
      <x>318</x>
@@ -1375,7 +1447,7 @@ border-radius: 12px;
    <hints>
     <hint type="sourcelabel">
      <x>289</x>
-     <y>505</y>
+     <y>325</y>
     </hint>
     <hint type="destinationlabel">
      <x>300</x>
@@ -1391,7 +1463,7 @@ border-radius: 12px;
    <hints>
     <hint type="sourcelabel">
      <x>289</x>
-     <y>505</y>
+     <y>325</y>
     </hint>
     <hint type="destinationlabel">
      <x>548</x>
@@ -1411,7 +1483,7 @@ border-radius: 12px;
     </hint>
     <hint type="destinationlabel">
      <x>379</x>
-     <y>375</y>
+     <y>196</y>
     </hint>
    </hints>
   </connection>
@@ -1426,8 +1498,8 @@ border-radius: 12px;
      <y>545</y>
     </hint>
     <hint type="destinationlabel">
-     <x>334</x>
-     <y>444</y>
+     <x>379</x>
+     <y>246</y>
     </hint>
    </hints>
   </connection>
@@ -1443,7 +1515,7 @@ border-radius: 12px;
     </hint>
     <hint type="destinationlabel">
      <x>240</x>
-     <y>475</y>
+     <y>291</y>
     </hint>
    </hints>
   </connection>
@@ -1454,8 +1526,8 @@ border-radius: 12px;
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>548</x>
-     <y>394</y>
+     <x>539</x>
+     <y>424</y>
     </hint>
     <hint type="destinationlabel">
      <x>625</x>
@@ -1470,8 +1542,8 @@ border-radius: 12px;
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>378</x>
-     <y>394</y>
+     <x>369</x>
+     <y>424</y>
     </hint>
     <hint type="destinationlabel">
      <x>521</x>
@@ -1503,7 +1575,7 @@ border-radius: 12px;
    <hints>
     <hint type="sourcelabel">
      <x>379</x>
-     <y>535</y>
+     <y>355</y>
     </hint>
     <hint type="destinationlabel">
      <x>245</x>
@@ -1522,8 +1594,8 @@ border-radius: 12px;
      <y>483</y>
     </hint>
     <hint type="destinationlabel">
-     <x>334</x>
-     <y>444</y>
+     <x>333</x>
+     <y>266</y>
     </hint>
    </hints>
   </connection>
@@ -1538,8 +1610,8 @@ border-radius: 12px;
      <y>481</y>
     </hint>
     <hint type="destinationlabel">
-     <x>379</x>
-     <y>375</y>
+     <x>374</x>
+     <y>188</y>
     </hint>
    </hints>
   </connection>
@@ -1554,8 +1626,8 @@ border-radius: 12px;
      <y>487</y>
     </hint>
     <hint type="destinationlabel">
-     <x>188</x>
-     <y>475</y>
+     <x>179</x>
+     <y>287</y>
     </hint>
    </hints>
   </connection>
@@ -1566,12 +1638,12 @@ border-radius: 12px;
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>371</x>
-     <y>444</y>
+     <x>449</x>
+     <y>243</y>
     </hint>
     <hint type="destinationlabel">
-     <x>371</x>
-     <y>444</y>
+     <x>440</x>
+     <y>248</y>
     </hint>
    </hints>
   </connection>
@@ -1582,12 +1654,12 @@ border-radius: 12px;
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>371</x>
-     <y>444</y>
+     <x>433</x>
+     <y>244</y>
     </hint>
     <hint type="destinationlabel">
-     <x>369</x>
-     <y>444</y>
+     <x>408</x>
+     <y>248</y>
     </hint>
    </hints>
   </connection>
@@ -1598,12 +1670,12 @@ border-radius: 12px;
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>364</x>
-     <y>444</y>
+     <x>403</x>
+     <y>248</y>
     </hint>
     <hint type="destinationlabel">
-     <x>371</x>
-     <y>444</y>
+     <x>435</x>
+     <y>248</y>
     </hint>
    </hints>
   </connection>
@@ -1614,12 +1686,12 @@ border-radius: 12px;
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>363</x>
-     <y>444</y>
+     <x>402</x>
+     <y>239</y>
     </hint>
     <hint type="destinationlabel">
-     <x>367</x>
-     <y>444</y>
+     <x>406</x>
+     <y>243</y>
     </hint>
    </hints>
   </connection>
@@ -1634,8 +1706,8 @@ border-radius: 12px;
      <y>454</y>
     </hint>
     <hint type="destinationlabel">
-     <x>418</x>
-     <y>464</y>
+     <x>437</x>
+     <y>454</y>
     </hint>
    </hints>
   </connection>
@@ -1662,12 +1734,12 @@ border-radius: 12px;
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>418</x>
-     <y>464</y>
+     <x>453</x>
+     <y>462</y>
     </hint>
     <hint type="destinationlabel">
-     <x>418</x>
-     <y>464</y>
+     <x>441</x>
+     <y>463</y>
     </hint>
    </hints>
   </connection>
@@ -1678,8 +1750,8 @@ border-radius: 12px;
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>418</x>
-     <y>464</y>
+     <x>443</x>
+     <y>460</y>
     </hint>
     <hint type="destinationlabel">
      <x>398</x>

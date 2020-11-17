@@ -104,7 +104,7 @@ class LoginWindow(QMainWindow):
             if name == "" or password == "":
                 self.Error('Chưa điền đầy đủ thông tin đăng nhập')
             elif name not in user.name:
-                self.Error('Tên không tồn tại. Hãy nhập lại.')
+                self.Error('Tên tài khoản không tồn tại. Hãy nhập lại.')
             elif password != user.password:
                 self.Error('Mật khẩu không chính xác. Hãy nhập lại.')
             else:
@@ -118,7 +118,6 @@ class LoginWindow(QMainWindow):
                 self.close()
                 main_ui.main(user.role)
                 break
-            # QtCore.QTimer.singleShot(2000, lambda: self.frameError.hide())
             QtCore.QTimer.singleShot(2000, lambda: self.frameError.hide())
            
 
@@ -175,7 +174,7 @@ class Loading_Screen(QMainWindow):
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.progress)
-        self.timer.start(10)
+        self.timer.start(100)
         self.show()
     def delay(self, point, wait):
         if self.counter == point :
@@ -193,14 +192,14 @@ class Loading_Screen(QMainWindow):
             self.timer.singleShot(1500, lambda: self.Loading_label.setText('Thiết lập giao diện ...'))
         if self.counter == 73:
             self.timer.singleShot(1500, lambda: self.Loading_label.setText('Kết nối dữ liệu  ...'))     
-        # self.delay(7,0.1)
-        # self.delay(20,0.23)
-        # self.delay(44, 0.43)
-        # self.delay(73, 0.93)
-        # self.delay(80, 0.17)
-        # self.delay(97, 0.6)
-        # self.delay(98, 1)
-        # self.delay(99, 3.53)
+        self.delay(7,0.1)
+        self.delay(20,0.23)
+        self.delay(44, 0.43)
+        self.delay(73, 0.93)
+        self.delay(80, 0.17)
+        self.delay(97, 0.6)
+        self.delay(98, 1)
+        self.delay(99, 3.53)
         self.counter += 1
 
 def main():

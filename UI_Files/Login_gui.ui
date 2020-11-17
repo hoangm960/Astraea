@@ -70,7 +70,7 @@ background-color:none;</string>
       </property>
       <property name="styleSheet">
        <string notr="true">QFrame{
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0.591, stop:0.227273 rgba(94, 0, 95, 255), stop:1 rgba(0, 0, 45, 255));
+	background-color: rgb(40, 44, 52);
  border: none;
 }</string>
       </property>
@@ -80,34 +80,34 @@ background-color:none;</string>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
         <widget class="QFrame" name="title_bar">
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>20</height>
+           <height>0</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>60</height>
+           <height>50</height>
           </size>
          </property>
-         <property name="layoutDirection">
-          <enum>Qt::RightToLeft</enum>
-         </property>
          <property name="styleSheet">
-          <string notr="true">background-color:none;</string>
+          <string notr="true">background-color: none</string>
          </property>
          <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
+          <enum>QFrame::StyledPanel</enum>
          </property>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <property name="spacing">
+           <number>0</number>
+          </property>
           <property name="leftMargin">
            <number>0</number>
           </property>
@@ -117,8 +117,17 @@ background-color:none;</string>
           <property name="rightMargin">
            <number>0</number>
           </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QFrame" name="btn_frame">
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>30</height>
+             </size>
+            </property>
             <property name="maximumSize">
              <size>
               <width>100</width>
@@ -134,19 +143,19 @@ background-color:none;</string>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
              <item>
               <widget class="QPushButton" name="btn_quit">
                <property name="minimumSize">
                 <size>
-                 <width>15</width>
-                 <height>15</height>
+                 <width>20</width>
+                 <height>20</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>17</width>
-                 <height>17</height>
+                 <width>20</width>
+                 <height>20</height>
                 </size>
                </property>
                <property name="toolTip">
@@ -155,7 +164,7 @@ background-color:none;</string>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
 	border: none;
-	border-radius: 8px;
+	border-radius: 10px;
 	background-color: rgb(255, 0, 0);
 }
 QPushButton:hover {
@@ -168,17 +177,49 @@ QPushButton:hover {
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="btn_minimize">
+              <widget class="QPushButton" name="btn_maximize">
                <property name="minimumSize">
                 <size>
-                 <width>15</width>
-                 <height>15</height>
+                 <width>20</width>
+                 <height>20</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>17</width>
-                 <height>17</height>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="toolTip">
+                <string>Maximize</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+	border: none;
+	border-radius: 10px;
+	background-color: rgb(85, 255, 127);
+}
+QPushButton:hover {
+	background-color: rgba(85, 255, 127, 150);
+}</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btn_minimize">
+               <property name="minimumSize">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
                 </size>
                </property>
                <property name="toolTip">
@@ -187,7 +228,7 @@ QPushButton:hover {
                <property name="styleSheet">
                 <string notr="true">QPushButton {
 	border: none;
-	border-radius: 8px;
+	border-radius: 10px;
 	background-color: rgb(255, 170, 0);
 }
 QPushButton:hover {
@@ -203,33 +244,20 @@ QPushButton:hover {
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label_11">
-            <property name="enabled">
-             <bool>true</bool>
+           <widget class="QFrame" name="title">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
             </property>
-            <property name="font">
-             <font>
-              <pointsize>14</pointsize>
-             </font>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
             </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(255, 255, 255);
-background-color: none;
-text-align: left;
-</string>
-            </property>
-            <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;PyLearn - Đăng nhập hệ thống&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_3"/>
            </widget>
           </item>
          </layout>
         </widget>
        </item>
-       <item row="1" column="0" colspan="2">
+       <item>
         <widget class="QFrame" name="frame">
          <property name="enabled">
           <bool>true</bool>
@@ -266,7 +294,7 @@ border: none;</string>
           </property>
           <property name="styleSheet">
            <string notr="true">QFrame { 
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0.0227273 rgba(150, 0, 183, 150), stop:1 rgba(255, 255, 255, 150));
+	background-color: rgb(255, 255, 255);
 border-radius: 8px;
 }</string>
           </property>
@@ -291,9 +319,8 @@ border-radius: 8px;
             </font>
            </property>
            <property name="styleSheet">
-            <string notr="true">color: rgb(225, 255, 255);
-background-color: none;
-text-align: center;
+            <string notr="true">background-color: none;
+color: rgb(0, 0, 0);
 </string>
            </property>
            <property name="text">
@@ -323,7 +350,7 @@ text-align: center;
 background-color: rgba(188, 183, 255, 160);
 border-radius: 16px;
 border-color: rgb(0, 255, 255);
-color: rgb(255,255,255);
+	color: rgb(0, 0, 0);
 }
 QLineEdit:hover{
 border: 2px solid rgb(255, 255, 255);
@@ -366,7 +393,7 @@ border: 2px solid rgb(255, 255, 255);
 background-color: rgba(188, 183, 255, 160);
 border-radius: 16px;
 border-color: rgb(0, 255, 255);
-color: rgb(255,255,255);
+	color: rgb(0, 0, 0);
 }
 QLineEdit:hover{
 border: 2px solid rgb(255, 255, 255);
@@ -403,16 +430,15 @@ border: 2px solid rgb(255, 255, 255);
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton{
-background-color: rgba(255, 85, 255,160);
+	background-color: rgb(255, 255, 255);
 border-radius: 8px;
-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 0);
+border: 1px solid;
 font: bold;
 }
 QPushButton:hover{
-background-color:rgb(255, 170, 255);
-}
-QPushButton:focus {
-background-color:rgb(255, 170, 255);
+	background-color: rgb(0, 0, 0);
+	color: rgb(255, 255, 255);
 }</string>
            </property>
            <property name="text">
@@ -439,7 +465,7 @@ background-color:rgb(255, 170, 255);
            </property>
            <property name="styleSheet">
             <string notr="true">background-color: none;
-color: rgb(255,255,255);
+color: rgb(0, 0, 0);
 </string>
            </property>
            <property name="text">
@@ -464,7 +490,7 @@ color: rgb(255,255,255);
            </property>
            <property name="styleSheet">
             <string notr="true">background-color: none;
-color: rgb(255,255,255);
+color: rgb(0, 0, 0);
 </string>
            </property>
            <property name="text">
@@ -482,7 +508,7 @@ color: rgb(255,255,255);
            </property>
            <property name="styleSheet">
             <string notr="true">font: bold;
-color: rgb(255, 255, 255)</string>
+color: rgb(0, 0, 0);</string>
            </property>
            <property name="text">
             <string>Lưu mật khẩu?</string>
@@ -510,10 +536,10 @@ color: rgb(255, 255, 255)</string>
             <string notr="true">QPushButton{
 background-color: rgba(255, 85, 255,0);
 border-radius: 8px;
-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 0);
 }
 QPushButton:hover {
-color: rgb(170, 255, 255);
+color: rgb(74, 163, 223);
 }</string>
            </property>
            <property name="text">
@@ -579,7 +605,7 @@ image: url(:/images/invisible.png);
           </property>
           <property name="styleSheet">
            <string notr="true">QFrame { 
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0.0227273 rgba(150, 0, 183, 150), stop:1 rgba(255, 255, 255, 150));
+	background-color: rgb(255, 255, 255);
 border-radius: 8px;
 }</string>
           </property>
@@ -604,8 +630,8 @@ border-radius: 8px;
             </font>
            </property>
            <property name="styleSheet">
-            <string notr="true">color: rgb(225, 255, 255);
-background-color: none;
+            <string notr="true">background-color: none;
+color: rgb(0, 0, 0);
 </string>
            </property>
            <property name="text">
@@ -641,11 +667,10 @@ background-color: none;
             <string notr="true">QPushButton{
 background-color: rgba(255, 85, 255,0);
 border-radius: 8px;
-color: rgb(170, 170, 255);
+	color: rgb(0, 0, 0);
 }
 QPushButton:hover {
-background-color: none;
-color: rgb(255,255,255);
+color: rgb(74, 163, 223);
 }</string>
            </property>
            <property name="text">
@@ -684,7 +709,7 @@ color: rgb(255,255,255);
           </property>
           <property name="styleSheet">
            <string notr="true">QFrame { 
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0.0227273 rgba(150, 0, 183, 150), stop:1 rgba(255, 255, 255, 150));
+	background-color: rgb(255, 255, 255);
 border-radius: 8px;
 }</string>
           </property>
@@ -712,9 +737,8 @@ border-radius: 8px;
             </font>
            </property>
            <property name="styleSheet">
-            <string notr="true">color: rgb(225, 255, 255);
-background-color: none;
-text-align: center;
+            <string notr="true">background-color: none;
+color: rgb(0, 0, 0);
 </string>
            </property>
            <property name="text">
@@ -749,7 +773,7 @@ text-align: center;
 background-color: rgba(188, 183, 255, 160);
 border-radius: 16px;
 border-color: rgb(0, 255, 255);
-color: rgb(255,255,255);
+	color: rgb(0, 0, 0);
 }
 QLineEdit:hover{
 border: 2px solid rgb(255, 255, 255);
@@ -764,6 +788,9 @@ border: 2px solid rgb(255, 255, 255);
            </property>
            <property name="placeholderText">
             <string>Nhập tên tài khoản đăng ký của bạn</string>
+           </property>
+           <property name="cursorMoveStyle">
+            <enum>Qt::LogicalMoveStyle</enum>
            </property>
           </widget>
           <widget class="QLineEdit" name="PassBox_SU">
@@ -788,7 +815,7 @@ border: 2px solid rgb(255, 255, 255);
 background-color: rgba(188, 183, 255, 160);
 border-radius: 16px;
 border-color: rgb(0, 255, 255);
-color: rgb(255,255,255);
+	color: rgb(0, 0, 0);
 }
 QLineEdit:hover{
 border: 2px solid rgb(255, 255, 255);
@@ -822,16 +849,15 @@ border: 2px solid rgb(255, 255, 255);
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton{
-background-color: rgba(255, 85, 255,160);
+	background-color: rgb(255, 255, 255);
 border-radius: 8px;
-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 0);
+border: 1px solid;
 font: bold;
 }
 QPushButton:hover{
-background-color:rgb(255, 170, 255);
-}
-QPushButton:focus {
-background-color:rgb(255, 170, 255);
+	background-color: rgb(0, 0, 0);
+	color: rgb(255, 255, 255);
 }</string>
            </property>
            <property name="text">
@@ -858,7 +884,7 @@ background-color:rgb(255, 170, 255);
            </property>
            <property name="styleSheet">
             <string notr="true">background-color: none;
-color: rgb(255,255,255);
+color: rgb(0, 0, 0);
 </string>
            </property>
            <property name="text">
@@ -883,7 +909,7 @@ color: rgb(255,255,255);
            </property>
            <property name="styleSheet">
             <string notr="true">background-color: none;
-color: rgb(255,255,255);
+color: rgb(0, 0, 0);
 </string>
            </property>
            <property name="text">
@@ -912,10 +938,10 @@ color: rgb(255,255,255);
             <string notr="true">QPushButton{
 background-color: rgba(255, 85, 255,0);
 border-radius: 8px;
-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 0);
 }
 QPushButton:hover {
-color: rgb(170, 255, 255);
+color: rgb(74, 163, 223);
 }</string>
            </property>
            <property name="text">
@@ -935,8 +961,8 @@ color: rgb(170, 255, 255);
             </rect>
            </property>
            <property name="styleSheet">
-            <string notr="true">color: rgb(255, 255, 255);
-font: bold;</string>
+            <string notr="true">font: bold;
+color: rgb(0, 0, 0);</string>
            </property>
            <property name="text">
             <string>Học sinh</string>
@@ -956,7 +982,7 @@ font: bold;</string>
            </property>
            <property name="styleSheet">
             <string notr="true">font: bold;
-color: rgb(255, 255, 255)</string>
+color: rgb(0, 0, 0);</string>
            </property>
            <property name="text">
             <string>Giáo viên</string>
@@ -1065,7 +1091,7 @@ font: bold;
 font-size: 12px;</string>
            </property>
            <property name="text">
-            <string>Yêu cầu độ dài mật khẩu ít nhất 3 kí tự</string>
+            <string>Yêu cầu độ dài mật khẩu ít nhất 8 kí tự</string>
            </property>
           </widget>
           <widget class="QLabel" name="Error_NameRan">
@@ -1170,9 +1196,8 @@ font-size: 12px;</string>
           </property>
           <property name="styleSheet">
            <string notr="true">QFrame {
-background-color: qlineargradient(spread:pad, x1:0, y1:0.551, x2:1, y2:0.579, stop:0 rgba(210, 93, 255, 160), stop:0.642045 rgba(142, 32, 201, 160));
-color: rgb(170, 255, 255);
-border-radius: 50px;
+	background-color: rgb(255, 255, 255);
+border-radius: 15px;
 }</string>
           </property>
           <property name="frameShape">
@@ -1193,14 +1218,14 @@ border-radius: 50px;
            <property name="styleSheet">
             <string notr="true">QPushButton {
 border-radius:10;
-background-color: rgb(255, 255, 255);
-color: rgb(181, 67, 232);
+	border-color: rgb(0, 0, 0);
+	border : 1px solid ;
 font: bold;
 font-size: 15px;
 }
 QPushButton:hover {
-background-color: rgb(255, 170, 255);
-color: rgb(255, 255, 255);
+	background-color: rgb(0, 0, 0);
+	color: rgb(255, 255, 255);
 }</string>
            </property>
            <property name="text">
@@ -1222,14 +1247,14 @@ color: rgb(255, 255, 255);
            <property name="styleSheet">
             <string notr="true">QPushButton {
 border-radius:10;
-background-color: rgb(255, 255, 255);
-color: rgb(142, 32, 201);
+	border-color: rgb(0, 0, 0);
+	border : 1px solid ;
 font: bold;
 font-size: 15px;
 }
 QPushButton:hover {
-background-color: rgb(255, 170, 255);
-color: rgb(255, 255, 255);
+	background-color: rgb(0, 0, 0);
+	color: rgb(255, 255, 255);
 }</string>
            </property>
            <property name="text">
@@ -1261,7 +1286,7 @@ color: rgb(255, 255, 255);
             <string notr="true">background-color: none;
 font:bold;
 font-size: 16px;
-color: rgb(255, 255, 255);</string>
+color: rgb(0, 0, 0);</string>
            </property>
            <property name="text">
             <string>Xác nhận thoát giao diện đăng nhập?</string>
@@ -1275,7 +1300,7 @@ color: rgb(255, 255, 255);</string>
          <zorder>OkCancelFrame</zorder>
         </widget>
        </item>
-       <item row="2" column="1">
+       <item>
         <widget class="QFrame" name="frame_grip">
          <property name="maximumSize">
           <size>

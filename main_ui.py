@@ -27,8 +27,8 @@ import login_main
 
 UI_MAIN_PATH = "UI_Files/ui_main.ui"
 
-class MainWindow(QMainWindow):
 
+class MainWindow(QMainWindow):
     def __init__(self, role):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(UI_MAIN_PATH, self)

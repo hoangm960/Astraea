@@ -12,8 +12,8 @@ def get_key(path):
     file.close()
 
 
-def encrypt(input_file, output_file, key_path):
-    with open(key_path, 'rb') as f:
+def encrypt(input_file, output_file, key_file):
+    with open(key_file, 'rb') as f:
         key = f.read() 
 
     with open(input_file, 'rb') as f:
@@ -28,12 +28,13 @@ def encrypt(input_file, output_file, key_path):
     os.remove(input_file)
 
 
-def decrypt(input_file, output_file, key_path):
+def decrypt(input_file, output_file, key_file):
     input_file_path = Path(input_file)
     if not input_file_path.is_file():
+        get_key(key_file)
         open(output_file, 'w').close()
     else:
-        with open(key_path, 'rb') as f:
+        with open(key_file, 'rb') as f:
             key = f.read() 
             
         with open(input_file, 'rb') as f:

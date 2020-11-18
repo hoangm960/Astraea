@@ -20,6 +20,14 @@ from UI_Files import Resources
 EDIT_FORM_PATH = "UI_Files/edit_form.ui"
 EDIT_FRAME_PATH = "UI_Files/edit_frame.ui"
 
+class Assignment():
+    def __init__(self, name, test_file, input_file, ans_file, tests, vars):
+        self.name = name
+        self.test_file = test_file
+        self.input_file = input_file
+        self.ans_file = ans_file
+        self.tests = tests
+        self.vars = vars
 
 class EditWindow(QMainWindow):
     def __init__(self):
@@ -44,6 +52,7 @@ class EditWindow(QMainWindow):
 
 class UIFunctions(EditWindow):
     GLOBAL_STATE = False
+    ASSIGNMENTS = []
 
     @classmethod
     def uiDefinitions(cls, self):

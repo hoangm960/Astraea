@@ -25,13 +25,13 @@ from PyQt5 import uic
 from UI_Files import Resources
 import login_main
 
+UI_MAIN_PATH = "UI_Files/ui_main.ui"
 
 class MainWindow(QMainWindow):
-    UI_MAIN_PATH = "UI_Files/ui_main.ui"
 
-    def __init__(cls, self, role):
+    def __init__(self, role):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
-        uic.loadUi(cls.UI_MAIN_PATH, self)
+        uic.loadUi(UI_MAIN_PATH, self)
         self.role = role
         UIFunctions.uiDefinitions(self)
 

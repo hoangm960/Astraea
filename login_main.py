@@ -25,6 +25,8 @@ class User:
         self.auto_saved = auto_saved
 
 class LoginWindow(QMainWindow):
+    file = open('data/Users/User.txt', 'a+')
+    file.close()
     USER_PATH = "data/Users/User.txt"
     UI_PATH = "UI_Files/Login_gui.ui"
     users = []
@@ -100,9 +102,12 @@ class LoginFunctions(LoginWindow):
         self.ConvertButton.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(1))
         self.ConvertButton_SU.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(0))
         self.ConvertButton_4.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(0))
-
+        self.ConvertButton.clicked.connect(lambda: default())
         def default():
             self.STATE_ECHOPASS = True
+            self.PassBox_SU.clear()
+            self.NameBox_SU.clear()
+            self.Student_SU.setChecked(True)
 
     @classmethod
     def setup_sizegrip(cls, self):
@@ -201,18 +206,19 @@ class LoginFunctions(LoginWindow):
                 check = False
 
             else:
-                for word in name:
-                    if word.isalnum() is False:
-                        if word.replace(' ','').isalnum() is True:
-                            pass
-                        else:
-                            cls.Error(self, 'Tên tài khoản không được chứa kí tự đặc biệt')
-                            check = False
+                if name.isalnum() is False:
+                    if name.replace(' ','').isalnum() is True:
+                        pass
                     else:
-                        for word in password:
-                            if word.isalnum() is False:
-                                cls.Error(self, 'Mật khẩu không được chứa kí tự đặc biệt')
-                                check = False
+                        cls.Error(self, 'Tên tài khoản không được chứa kí tự đặc biệt')
+                        check = False
+                else:        
+                    if password.isalnum() is False:
+                        if password.replace(' ','').isalnum() is True:
+                            pass
+                        else: 
+                            cls.Error(self, 'Mật khẩu không được chứa kí tự đặc biệt')
+                            check = False
 
         if check:
             with open(self.USER_PATH, "wb") as f:

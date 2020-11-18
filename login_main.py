@@ -202,12 +202,15 @@ class LoginFunctions(LoginWindow):
 
             else:
                 for word in name:
-                    if word not in "qwertyuiopasdfghjklzxcvbnm1234567890 ":
-                        cls.Error(self, 'Tên tài khoản không được chứa kí tự đặc biệt')
-                        check = False
+                    if word.isalnum() is False:
+                        if word.replace(' ','').isalnum() is True:
+                            pass
+                        else:
+                            cls.Error(self, 'Tên tài khoản không được chứa kí tự đặc biệt')
+                            check = False
                     else:
                         for word in password:
-                            if word not in "qwertyuiopasdfghjklzxcvbnm1234567890 ":
+                            if word.isalnum() is False:
                                 cls.Error(self, 'Mật khẩu không được chứa kí tự đặc biệt')
                                 check = False
 

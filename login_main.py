@@ -26,6 +26,7 @@ class User:
         self.role = role
         self.auto_saved = auto_saved
 
+
 class LoginWindow(QMainWindow):
     UI_PATH = "UI_Files/Login_gui.ui"
 
@@ -53,7 +54,7 @@ class LoginFunctions(LoginWindow):
     GLOBAL_STATE = False
     STATE_ECHOPASS = True
     USER_PATH = "data/Users/User.txt"
-    USER_PATH_ENCRYPTED = 'data/Users/User.encrypted'
+    USER_PATH_ENCRYPTED = "data/Users/User.encrypted"
     KEY_PATH = "data/encryption/key.key"
 
     @classmethod
@@ -101,10 +102,17 @@ class LoginFunctions(LoginWindow):
         )
         self.SignIn_Bt.clicked.connect(lambda: cls.check_SI(self))
         self.SignUp_Bt.clicked.connect(lambda: cls.check_SU(self))
-        self.ConvertButton.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(1))
-        self.ConvertButton_SU.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(0))
-        self.ConvertButton_4.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(0))
+        self.ConvertButton.clicked.connect(
+            lambda: self.stacked_widget.setCurrentIndex(1)
+        )
+        self.ConvertButton_SU.clicked.connect(
+            lambda: self.stacked_widget.setCurrentIndex(0)
+        )
+        self.ConvertButton_4.clicked.connect(
+            lambda: self.stacked_widget.setCurrentIndex(0)
+        )
         self.ConvertButton.clicked.connect(lambda: default())
+
         def default():
             self.STATE_ECHOPASS = True
             self.PassBox_SU.clear()
@@ -131,7 +139,7 @@ class LoginFunctions(LoginWindow):
     @classmethod
     def returnStatus(cls):
         return cls.GLOBAL_STATE
-    
+
     @classmethod
     def maximize_restore(cls, self):
         status = cls.GLOBAL_STATE
@@ -171,11 +179,11 @@ class LoginFunctions(LoginWindow):
         password = self.PassBox_SI.text()
         for user in cls.users:
             if name == "" or password == "":
-                cls.Error(self, 'Chưa điền đầy đủ thông tin đăng nhập')
+                cls.Error(self, "Chưa điền đầy đủ thông tin đăng nhập")
             elif name not in user.name:
-                cls.Error(self, 'Tên tài khoản không tồn tại. Hãy nhập lại.')
+                cls.Error(self, "Tên tài khoản không tồn tại. Hãy nhập lại.")
             elif password != user.password:
-                cls.Error(self, 'Mật khẩu không chính xác. Hãy nhập lại.')
+                cls.Error(self, "Mật khẩu không chính xác. Hãy nhập lại.")
             else:
                 for i in range(len(cls.users)):
                     cls.users[i].auto_saved = False
@@ -192,7 +200,6 @@ class LoginFunctions(LoginWindow):
                 main_ui.main(user.role)
                 break
             QtCore.QTimer.singleShot(3000, lambda: self.frameError.hide())
-           
 
     @classmethod
     def check_SU(cls, self):
@@ -201,30 +208,30 @@ class LoginFunctions(LoginWindow):
         password = self.PassBox_SU.text().lower()
         for user in cls.users:
             if len(name) < 6:
-                cls.Error(self, 'Yêu cầu độ dài tên tài khoản hơn 5 kí tự.')
+                cls.Error(self, "Yêu cầu độ dài tên tài khoản hơn 5 kí tự.")
                 check = False
 
             elif name in user.name:
-                cls.Error(self, 'Tên tài khoản đã tồn tại. Hãy lựa chọn tên khác.')
+                cls.Error(self, "Tên tài khoản đã tồn tại. Hãy lựa chọn tên khác.")
                 check = False
 
             elif len(password) < 8:
-                cls.Error(self, 'Yêu cầu độ dài mật khẩu hơn 7 kí tự')
+                cls.Error(self, "Yêu cầu độ dài mật khẩu hơn 7 kí tự")
                 check = False
 
             else:
                 if name.isalnum() is False:
-                    if name.replace(' ','').isalnum() is True:
+                    if name.replace(" ", "").isalnum() is True:
                         pass
                     else:
-                        cls.Error(self, 'Tên tài khoản không được chứa kí tự đặc biệt')
+                        cls.Error(self, "Tên tài khoản không được chứa kí tự đặc biệt")
                         check = False
-                else:        
+                else:
                     if password.isalnum() is False:
-                        if password.replace(' ','').isalnum() is True:
+                        if password.replace(" ", "").isalnum() is True:
                             pass
-                        else: 
-                            cls.Error(self, 'Mật khẩu không được chứa kí tự đặc biệt')
+                        else:
+                            cls.Error(self, "Mật khẩu không được chứa kí tự đặc biệt")
                             check = False
 
         if check:
@@ -241,8 +248,10 @@ class LoginFunctions(LoginWindow):
             self.stacked_widget.setCurrentIndex(2)
         QtCore.QTimer.singleShot(3000, lambda: self.frameError.hide())
 
+
 class Loading_Screen(QMainWindow):
     counter = 0
+
     def __init__(self):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi("UI_files/Loading_Screen.ui", self)
@@ -252,9 +261,11 @@ class Loading_Screen(QMainWindow):
         self.timer.timeout.connect(self.progress)
         self.timer.start(20)
         self.show()
+
     def delay(self, point, wait):
-        if self.counter == point :
-            time.sleep(wait) 
+        if self.counter == point:
+            time.sleep(wait)
+
     def progress(self):
         self.progressBar.setValue(self.counter)
         if self.counter > 100:
@@ -262,24 +273,35 @@ class Loading_Screen(QMainWindow):
             self.main = LoginWindow()
             LOGIN_WIDTH = 999
             LOGIN_HEIGHT = 700
-            self.main.setGeometry(round((GetSystemMetrics(0) - LOGIN_WIDTH)/2), round((GetSystemMetrics(1) - LOGIN_HEIGHT)/5), LOGIN_WIDTH, LOGIN_HEIGHT)
+            self.main.setGeometry(
+                round((GetSystemMetrics(0) - LOGIN_WIDTH) / 2),
+                round((GetSystemMetrics(1) - LOGIN_HEIGHT) / 5),
+                LOGIN_WIDTH,
+                LOGIN_HEIGHT,
+            )
             self.main.show()
             self.close()
         if self.counter == 20:
-            self.timer.singleShot(1500, lambda: self.Loading_label.setText('Kiểm tra cài đặt ...'))
+            self.timer.singleShot(
+                1500, lambda: self.Loading_label.setText("Kiểm tra cài đặt ...")
+            )
         if self.counter == 45:
-            self.timer.singleShot(2905, lambda: self.Loading_label.setText('Thiết lập giao diện ...'))
+            self.timer.singleShot(
+                2905, lambda: self.Loading_label.setText("Thiết lập giao diện ...")
+            )
         if self.counter == 73:
-            self.timer.singleShot(1500, lambda: self.Loading_label.setText('Kết nối dữ liệu  ...'))     
-        self.delay(randrange(5, 10),0.1)
-        self.delay(randrange(20, 30),0.23)
+            self.timer.singleShot(
+                1500, lambda: self.Loading_label.setText("Kết nối dữ liệu  ...")
+            )
+        self.delay(randrange(5, 10), 0.1)
+        self.delay(randrange(20, 30), 0.23)
         self.delay(randrange(40, 50), 0.43)
         self.delay(randrange(60, 70), 0.93)
         self.delay(randrange(80, 90), 0.17)
         self.delay(randrange(90, 99), 0.6)
         self.delay(99, 1)
-        # self.delay(randrange(30, 50), 3.53)
         self.counter += 1
+
 
 def main():
     app = QApplication(sys.argv)

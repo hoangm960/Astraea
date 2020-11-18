@@ -1,7 +1,13 @@
 import os
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import QApplication, QGraphicsDropShadowEffect, QMainWindow, QSizeGrip, QWidget
+from PyQt5.QtWidgets import (
+    QApplication,
+    QGraphicsDropShadowEffect,
+    QMainWindow,
+    QSizeGrip,
+    QWidget,
+)
 import sys
 from PyQt5.QtCore import Qt
 from PyQt5 import uic
@@ -19,9 +25,6 @@ class User:
         self.auto_saved = auto_saved
 
 class LoginWindow(QMainWindow):
-    STATE_ECHOPASS = True
-    with open('data/Users/User.txt','a+') as f:
-        f.close()
     USER_PATH = "data/Users/User.txt"
     UI_PATH = "UI_Files/Login_gui.ui"
     users = []
@@ -29,12 +32,45 @@ class LoginWindow(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(self.UI_PATH, self)
+        LoginFunctions.uiDefinitions(self)
+
+        def moveWindow(event):
+            if LoginFunctions.returnStatus() == True:
+                LoginFunctions.maximize_restore(self)
+            if event.buttons() == Qt.LeftButton:
+                self.move(self.pos() + event.globalPos() - self.dragPos)
+                self.dragPos = event.globalPos()
+                event.accept()
+
+        self.title_bar.mouseMoveEvent = moveWindow
+
+    def mousePressEvent(self, event):
+        self.dragPos = event.globalPos()
+
+
+class LoginFunctions(LoginWindow):
+    users = []
+    GLOBAL_STATE = False
+    STATE_ECHOPASS = True
+
+    @classmethod
+    def uiDefinitions(cls, self):
         self.OkCancelFrame.hide()
-        self.Accept.clicked.connect(lambda: self.close())
+        self.frameError.hide()
+        self.eyeButton_SU.hide()
+        self.eyeButton_SI.hide()
+        self.stacked_widget.setCurrentIndex(0)
+
         self.move(round(GetSystemMetrics(0) / 10), round(GetSystemMetrics(1) / 50))
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        cls.create_dropshadow(self)
+        cls.connect_btn(self)
+        cls.setup_sizegrip(self)
+        cls.check_autosave(self)
 
+    @classmethod
+    def create_dropshadow(cls, self):
         self.shadow = QGraphicsDropShadowEffect(self)
         self.shadow.setBlurRadius(50)
         self.shadow.setXOffset(0)
@@ -42,15 +78,12 @@ class LoginWindow(QMainWindow):
         self.shadow.setColor(QColor(0, 0, 0, 200))
         self.bg_frame.setGraphicsEffect(self.shadow)
 
+    @classmethod
+    def connect_btn(cls, self):
         self.btn_minimize.clicked.connect(lambda: self.showMinimized())
+        self.btn_maximize.clicked.connect(lambda: cls.maximize_restore(self))
         self.btn_quit.clicked.connect(lambda: self.OkCancelFrame.show())
-        self.eyeButton_SU.hide()
-        self.eyeButton_SI.hide()
-        self.sizegrip = QSizeGrip(self.frame_grip)
-        self.sizegrip.setStyleSheet(
-            "QSizeGrip { background-color: none; width: 20px; height: 20px; margin: 5px; border-radius: 10px; } QSizeGrip:hover { background-color: rgb(66, 0, 99);}"
-        )
-        self.sizegrip.setToolTip("This was locked")
+        self.Accept.clicked.connect(lambda: self.close())
         self.eyeButton_SI.clicked.connect(
             lambda: self.PassBox_SI.setEchoMode(QtWidgets.QLineEdit.Password)
         )
@@ -63,92 +96,120 @@ class LoginWindow(QMainWindow):
         self.eyeButton_SU_2.clicked.connect(
             lambda: self.PassBox_SU.setEchoMode(QtWidgets.QLineEdit.Normal)
         )
-        self.SignIn_Bt.clicked.connect(lambda: self.check_SI())
-        self.SignUp_Bt.clicked.connect(lambda: self.check_SU())
+        self.SignIn_Bt.clicked.connect(lambda: cls.check_SI(self))
+        self.SignUp_Bt.clicked.connect(lambda: cls.check_SU(self))
+        self.ConvertButton.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(1))
+        self.ConvertButton_SU.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(0))
+        self.ConvertButton_4.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(0))
 
         def default():
             self.STATE_ECHOPASS = True
 
-        self.ConvertButton.clicked.connect(lambda: default())
-        self.ConvertButton_SU.clicked.connect(lambda: default())
+    @classmethod
+    def setup_sizegrip(cls, self):
+        self.sizegrip = QSizeGrip(self.frame_grip)
+        self.sizegrip.setStyleSheet(
+            "QSizeGrip { background-color: none; width: 20px; height: 20px; margin: 5px; border-radius: 10px; } QSizeGrip:hover { background-color: rgb(66, 0, 99);}"
+        )
+        self.sizegrip.setToolTip("This was locked")
 
-        self.load_users()
-        for user in self.users:
+    @classmethod
+    def check_autosave(cls, self):
+        cls.load_users(self)
+        for user in cls.users:
             if user.auto_saved:
                 self.NameBox_SI.setText(user.name)
                 self.PassBox_SI.setText(user.password)
                 self.SavePass.setChecked(True)
                 break
 
-        self.frameError.hide()
-        self.Complete_Frame.hide()
-        self.SignUp_Frame.hide()
-       
-    def Error(self, text):
+    @classmethod
+    def returnStatus(cls):
+        return cls.GLOBAL_STATE
+    
+    @classmethod
+    def maximize_restore(cls, self):
+        status = cls.GLOBAL_STATE
+
+        if status == False:
+            cls.GLOBAL_STATE = True
+            self.showMaximized()
+            self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+            self.btn_maximize.setToolTip("Restore")
+        else:
+            cls.GLOBAL_STATE = False
+            self.showNormal()
+            self.resize(self.width() + 1, self.height() + 1)
+            self.verticalLayout.setContentsMargins(10, 10, 10, 10)
+            self.btn_maximize.setToolTip("Maximize")
+
+    @classmethod
+    def Error(cls, self, text):
         self.frameError.show()
         self.Error_Content.setText(text)
 
-    def load_users(self):
-        self.users.clear()
+    @classmethod
+    def load_users(cls, self):
+        cls.users.clear()
         if os.path.getsize(self.USER_PATH) > 0:
-            with open(self.USER_PATH, 'rb') as f:
+            with open(self.USER_PATH, "rb") as f:
                 unpickler = pickle.Unpickler(f)
-                self.users = unpickler.load()
+                cls.users = unpickler.load()
 
-    # Check sign in
-    def check_SI(self):
-        self.load_users()
+    @classmethod
+    def check_SI(cls, self):
+        cls.load_users(self)
         name = self.NameBox_SI.text()
         password = self.PassBox_SI.text()
-        for user in self.users:
+        for user in cls.users:
             if name == "" or password == "":
-                self.Error('Chưa điền đầy đủ thông tin đăng nhập')
+                cls.Error(self, 'Chưa điền đầy đủ thông tin đăng nhập')
             elif name not in user.name:
-                self.Error('Tên tài khoản không tồn tại. Hãy nhập lại.')
+                cls.Error(self, 'Tên tài khoản không tồn tại. Hãy nhập lại.')
             elif password != user.password:
-                self.Error('Mật khẩu không chính xác. Hãy nhập lại.')
+                cls.Error(self, 'Mật khẩu không chính xác. Hãy nhập lại.')
             else:
-                if self.SavePass.isChecked() and not user.auto_saved:
-                    user.auto_saved = True
-                elif not self.SavePass.isChecked() and user.auto_saved:
-                    user.auto_saved = False
+                for i in range(len(cls.users)):
+                    cls.users[i].auto_saved = False
+                if self.SavePass.isChecked():
+                    cls.users[cls.users.index(user)].auto_saved = True
                 with open(self.USER_PATH, "wb") as f:
-                    pickle.dump(self.users, f)
-                f.close()
+                    pickle.dump(cls.users, f)
+
                 self.close()
                 main_ui.main(user.role)
                 break
             QtCore.QTimer.singleShot(2000, lambda: self.frameError.hide())
            
 
-    # Check your signing up
-    def check_SU(self):
+    @classmethod
+    def check_SU(cls, self):
         check = True
-        self.load_users()
+        cls.load_users(self)
         name = self.NameBox_SU.text().lower()
         password = self.PassBox_SU.text().lower()
-        for user in self.users:
+        for user in cls.users:
             if len(name) < 6:
-                self.Error('Yêu cầu độ dài tên tài khoản hơn 5 kí tự.')
+                cls.Error(self, 'Yêu cầu độ dài tên tài khoản hơn 5 kí tự.')
                 check = False
 
             elif name in user.name:
-                self.Error('Tên tài khoản đã tồn tại. Hãy lựa chọn tên khác.')
+                cls.Error(self, 'Tên tài khoản đã tồn tại. Hãy lựa chọn tên khác.')
                 check = False
 
             elif len(password) < 8:
-                self.Error('Yêu cầu độ dài mật khẩu hơn 7 kí tự')
+                cls.Error(self, 'Yêu cầu độ dài mật khẩu hơn 7 kí tự')
                 check = False
 
             else:
                 for word in name:
                     if word not in "qwertyuiopasdfghjklzxcvbnm1234567890 ":
-                        self.Error('Tên tài khoản không được chứa kí tự đặc biệt')
+                        cls.Error(self, 'Tên tài khoản không được chứa kí tự đặc biệt')
                         check = False
                     else:
                         for word in password:
                             if word not in "qwertyuiopasdfghjklzxcvbnm1234567890 ":
-                                self.Error('Mật khẩu không được chứa kí tự đặc biệt')
+                                cls.Error(self, 'Mật khẩu không được chứa kí tự đặc biệt')
                                 check = False
 
         if check:
@@ -156,15 +217,12 @@ class LoginWindow(QMainWindow):
                 name = self.NameBox_SU.text()
                 password = self.PassBox_SU.text()
                 role = "teacher" if self.Teacher_SU.isChecked() else "student"
-                self.users.append(User(name, password, role, False))
-                pickle.dump(self.users, f)
+                cls.users.append(User(name, password, role, False))
+                pickle.dump(cls.users, f)
 
-            self.SignUp_Frame.hide()
-            self.Complete_Frame.show()
-            f.close()
+            self.stacked_widget.setCurrentIndex(2)
         QtCore.QTimer.singleShot(2000, lambda: self.frameError.hide())
 
-# </>-------------------
 class Loading_Screen(QMainWindow):
     counter = 0
     def __init__(self):
@@ -174,7 +232,7 @@ class Loading_Screen(QMainWindow):
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.progress)
-        self.timer.start(120)
+        self.timer.start(20)
         self.show()
     def delay(self, point, wait):
         if self.counter == point :
@@ -184,6 +242,9 @@ class Loading_Screen(QMainWindow):
         if self.counter > 100:
             self.timer.stop()
             self.main = LoginWindow()
+            LOGIN_WIDTH = 999
+            LOGIN_HEIGHT = 700
+            self.main.setGeometry(round((GetSystemMetrics(0) - LOGIN_WIDTH)/2), round((GetSystemMetrics(1) - LOGIN_HEIGHT)/5), LOGIN_WIDTH, LOGIN_HEIGHT)
             self.main.show()
             self.close()
         if self.counter == 20:

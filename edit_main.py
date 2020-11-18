@@ -115,7 +115,7 @@ class UIFunctions(EditWindow):
         self.bg_frame.setGraphicsEffect(self.shadow)
 
         # Button function
-        self.btn_maximize.clicked.connect(lambda: UIFunctions.maximize_restore(self))
+        self.btn_maximize.clicked.connect(lambda: cls.maximize_restore(self))
         self.btn_minimize.clicked.connect(lambda: self.showMinimized())
         self.btn_quit.clicked.connect(lambda: self.close())
 

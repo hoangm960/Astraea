@@ -194,11 +194,11 @@ class LoginFunctions(LoginWindow):
         password = self.PassBox_SU.text().lower()
         for user in cls.users:
             if len(name) < 6:
-                cls.Error(self, 'Yêu cầu độ dài tên tài khoản hơn 5 kí tự.')
+                cls.Error(self, 'Yêu cầu độ dài tên đăng ký hơn 5 kí tự.')
                 check = False
 
             elif name in user.name:
-                cls.Error(self, 'Tên tài khoản đã tồn tại. Hãy lựa chọn tên khác.')
+                cls.Error(self, 'Tên đăng ký đã tồn tại. Hãy lựa chọn tên khác.')
                 check = False
 
             elif len(password) < 8:
@@ -227,7 +227,7 @@ class LoginFunctions(LoginWindow):
                 role = "teacher" if self.Teacher_SU.isChecked() else "student"
                 cls.users.append(User(name, password, role, False))
                 pickle.dump(cls.users, f)
-
+            self.title_bar.hide()
             self.stacked_widget.setCurrentIndex(2)
         QtCore.QTimer.singleShot(3000, lambda: self.frameError.hide())
 

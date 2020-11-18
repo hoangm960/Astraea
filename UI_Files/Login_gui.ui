@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>999</width>
+    <width>1000</width>
     <height>700</height>
    </rect>
   </property>
@@ -273,6 +273,21 @@ QPushButton:hover {
             </layout>
            </widget>
           </item>
+          <item>
+           <widget class="QLabel" name="label_15">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);
+font-size: 25px;
+font:bold;</string>
+            </property>
+            <property name="text">
+             <string>PyLearn - Giao diện tài khoản          </string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -430,7 +445,7 @@ color: rgb(0, 0, 0);</string>
            <string notr="true">background: transparent;</string>
           </property>
           <property name="currentIndex">
-           <number>2</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="page">
            <widget class="QFrame" name="SignIn_Frame">
@@ -649,7 +664,7 @@ color: rgb(0, 0, 0);
 </string>
              </property>
              <property name="text">
-              <string>Tên tài khoản:</string>
+              <string>Tên đăng nhập:</string>
              </property>
             </widget>
             <widget class="QCheckBox" name="SavePass">
@@ -828,7 +843,7 @@ color: rgb(0, 0, 0);
               </font>
              </property>
              <property name="toolTip">
-              <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0800;&quot;&gt;Tên đăng nhập tối thiểu 6 kí tự, chứa kí tự bao gồm [0-9,a-z,A-Z,_,  ]&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string notr="true"/>
              </property>
              <property name="styleSheet">
               <string notr="true">QLineEdit {

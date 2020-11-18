@@ -64,7 +64,6 @@ class LoginFunctions(LoginWindow):
         self.move(round(GetSystemMetrics(0) / 10), round(GetSystemMetrics(1) / 50))
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-        cls.create_dropshadow(self)
         cls.connect_btn(self)
         cls.setup_sizegrip(self)
         cls.check_autosave(self)
@@ -179,7 +178,7 @@ class LoginFunctions(LoginWindow):
                 self.close()
                 main_ui.main(user.role)
                 break
-            QtCore.QTimer.singleShot(2000, lambda: self.frameError.hide())
+            QtCore.QTimer.singleShot(3000, lambda: self.frameError.hide())
            
 
     @classmethod
@@ -221,7 +220,7 @@ class LoginFunctions(LoginWindow):
                 pickle.dump(cls.users, f)
 
             self.stacked_widget.setCurrentIndex(2)
-        QtCore.QTimer.singleShot(2000, lambda: self.frameError.hide())
+        QtCore.QTimer.singleShot(3000, lambda: self.frameError.hide())
 
 class Loading_Screen(QMainWindow):
     counter = 0
@@ -250,7 +249,7 @@ class Loading_Screen(QMainWindow):
         if self.counter == 20:
             self.timer.singleShot(1500, lambda: self.Loading_label.setText('Kiểm tra cài đặt ...'))
         if self.counter == 45:
-            self.timer.singleShot(1500, lambda: self.Loading_label.setText('Thiết lập giao diện ...'))
+            self.timer.singleShot(2905, lambda: self.Loading_label.setText('Thiết lập giao diện ...'))
         if self.counter == 73:
             self.timer.singleShot(1500, lambda: self.Loading_label.setText('Kết nối dữ liệu  ...'))     
         self.delay(7,0.1)

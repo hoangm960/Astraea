@@ -49,6 +49,8 @@ class LoginWindow(QMainWindow):
 
 
 class LoginFunctions(LoginWindow):
+    file = open('data/Users/User.txt','a+')
+    file.close()
     users = []
     GLOBAL_STATE = False
     STATE_ECHOPASS = True
@@ -277,7 +279,7 @@ class Loading_Screen(QMainWindow):
         self.delay(randrange(60, 70), 0.93)
         self.delay(randrange(80, 90), 0.17)
         self.delay(randrange(90, 99), 0.6)
-        self.delay(99, 1)
+        self.delay(99, 3)
         # self.delay(randrange(30, 50), 3.53)
         self.counter += 1
 

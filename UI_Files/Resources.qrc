@@ -1,7 +1,8 @@
 <RCC>
   <qresource prefix="images">
-    <file>menubutton.png</file>
     <file>invisible_black.png</file>
+    <file>menubutton_off.png</file>
+    <file>menubutton_on.png</file>
     <file>visibility_black.png</file>
     <file>folder_open.png</file>
     <file>minus.png</file>

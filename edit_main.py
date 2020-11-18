@@ -19,6 +19,8 @@ from UI_Files import Resources
 
 EDIT_FORM_PATH = "UI_Files/edit_form.ui"
 EDIT_FRAME_PATH = "UI_Files/edit_frame.ui"
+
+
 class EditWindow(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
@@ -71,6 +73,7 @@ class UIFunctions(EditWindow):
 
         # Change scene
         self.confirm_button.clicked.connect(lambda: cls.go_to_second(self))
+        self.return_btn.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(0))
         self.stacked_widget.setCurrentIndex(0)
 
     @classmethod
@@ -135,6 +138,9 @@ class UIFunctions(EditWindow):
 
     @classmethod
     def put_frame_in_list(cls, self, num):
+        self.list_widget.clear()
+        self.list_widget.verticalScrollBar().setValue(1)
+        self.list_widget.verticalScrollBar().setSingleStep(10)
         for _ in range(num):
             self.widget_item = QListWidgetItem()
             self.frame = cls.EditFrame()
@@ -142,12 +148,6 @@ class UIFunctions(EditWindow):
 
             self.list_widget.addItem(self.widget_item)
             self.list_widget.setItemWidget(self.widget_item, self.frame)
-
-        def sizeHint(self):
-            s = QSize()
-            s.setHeight(super(self.list_widget, self).sizeHint().height())
-            s.setWidth(self.sizeHintForColumn(0))
-            return s
 
 
 if __name__ == "__main__":

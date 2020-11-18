@@ -27,7 +27,7 @@ class LoginWindow(QMainWindow):
     users = []
 
     def __init__(self):
-        QMainWindow.__init__(self)
+        QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(self.UI_PATH, self)
         self.OkCancelFrame.hide()
         self.Accept.clicked.connect(lambda: self.close())
@@ -174,7 +174,7 @@ class Loading_Screen(QMainWindow):
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.progress)
-        self.timer.start(100)
+        self.timer.start(120)
         self.show()
     def delay(self, point, wait):
         if self.counter == point :

@@ -15,6 +15,8 @@ from win32api import GetSystemMetrics
 import main_ui
 import pickle
 import time
+from encryption import *
+from random import randrange
 
 
 class User:
@@ -25,11 +27,7 @@ class User:
         self.auto_saved = auto_saved
 
 class LoginWindow(QMainWindow):
-    file = open('data/Users/User.txt', 'a+')
-    file.close()
-    USER_PATH = "data/Users/User.txt"
     UI_PATH = "UI_Files/Login_gui.ui"
-    users = []
 
     def __init__(self):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
@@ -54,6 +52,9 @@ class LoginFunctions(LoginWindow):
     users = []
     GLOBAL_STATE = False
     STATE_ECHOPASS = True
+    USER_PATH = "data/Users/User.txt"
+    USER_PATH_ENCRYPTED = 'data/Users/User.encrypted'
+    KEY_PATH = "data/encryption/key.key"
 
     @classmethod
     def uiDefinitions(cls, self):
@@ -68,6 +69,7 @@ class LoginFunctions(LoginWindow):
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         cls.connect_btn(self)
         cls.setup_sizegrip(self)
+        cls.load_users()
         cls.check_autosave(self)
 
     @classmethod
@@ -119,7 +121,6 @@ class LoginFunctions(LoginWindow):
 
     @classmethod
     def check_autosave(cls, self):
-        cls.load_users(self)
         for user in cls.users:
             if user.auto_saved:
                 self.NameBox_SI.setText(user.name)
@@ -153,16 +154,19 @@ class LoginFunctions(LoginWindow):
         self.Error_Content.setText(text)
 
     @classmethod
-    def load_users(cls, self):
+    def load_users(cls):
         cls.users.clear()
-        if os.path.getsize(self.USER_PATH) > 0:
-            with open(self.USER_PATH, "rb") as f:
+        decrypt(cls.USER_PATH_ENCRYPTED, cls.USER_PATH, cls.KEY_PATH)
+        time.sleep(3)
+        if os.path.getsize(cls.USER_PATH) > 0:
+            with open(cls.USER_PATH, "rb") as f:
                 unpickler = pickle.Unpickler(f)
                 cls.users = unpickler.load()
+        get_key(cls.KEY_PATH)
+        encrypt(cls.USER_PATH, cls.USER_PATH_ENCRYPTED, cls.KEY_PATH)
 
     @classmethod
     def check_SI(cls, self):
-        cls.load_users(self)
         name = self.NameBox_SI.text()
         password = self.PassBox_SI.text()
         for user in cls.users:
@@ -177,8 +181,12 @@ class LoginFunctions(LoginWindow):
                     cls.users[i].auto_saved = False
                 if self.SavePass.isChecked():
                     cls.users[cls.users.index(user)].auto_saved = True
-                with open(self.USER_PATH, "wb") as f:
+
+                decrypt(cls.USER_PATH_ENCRYPTED, cls.USER_PATH, cls.KEY_PATH)
+                time.sleep(3)
+                with open(cls.USER_PATH, "wb") as f:
                     pickle.dump(cls.users, f)
+                encrypt(cls.USER_PATH, cls.USER_PATH_ENCRYPTED, cls.KEY_PATH)
 
                 self.close()
                 main_ui.main(user.role)
@@ -189,7 +197,6 @@ class LoginFunctions(LoginWindow):
     @classmethod
     def check_SU(cls, self):
         check = True
-        cls.load_users(self)
         name = self.NameBox_SU.text().lower()
         password = self.PassBox_SU.text().lower()
         for user in cls.users:
@@ -221,13 +228,16 @@ class LoginFunctions(LoginWindow):
                             check = False
 
         if check:
-            with open(self.USER_PATH, "wb") as f:
+            decrypt(cls.USER_PATH_ENCRYPTED, cls.USER_PATH, cls.KEY_PATH)
+            time.sleep(3)
+            with open(cls.USER_PATH, "wb") as f:
                 name = self.NameBox_SU.text()
                 password = self.PassBox_SU.text()
                 role = "teacher" if self.Teacher_SU.isChecked() else "student"
                 cls.users.append(User(name, password, role, False))
                 pickle.dump(cls.users, f)
-            self.title_bar.hide()
+            encrypt(cls.USER_PATH, cls.USER_PATH_ENCRYPTED, cls.KEY_PATH)
+
             self.stacked_widget.setCurrentIndex(2)
         QtCore.QTimer.singleShot(3000, lambda: self.frameError.hide())
 
@@ -261,14 +271,14 @@ class Loading_Screen(QMainWindow):
             self.timer.singleShot(2905, lambda: self.Loading_label.setText('Thiết lập giao diện ...'))
         if self.counter == 73:
             self.timer.singleShot(1500, lambda: self.Loading_label.setText('Kết nối dữ liệu  ...'))     
-        self.delay(7,0.1)
-        self.delay(20,0.23)
-        self.delay(44, 0.43)
-        self.delay(73, 0.93)
-        self.delay(80, 0.17)
-        self.delay(97, 0.6)
-        self.delay(98, 1)
-        self.delay(99, 3.53)
+        self.delay(randrange(5, 10),0.1)
+        self.delay(randrange(20, 30),0.23)
+        self.delay(randrange(40, 50), 0.43)
+        self.delay(randrange(60, 70), 0.93)
+        self.delay(randrange(80, 90), 0.17)
+        self.delay(randrange(90, 99), 0.6)
+        self.delay(99, 1)
+        # self.delay(randrange(30, 50), 3.53)
         self.counter += 1
 
 def main():

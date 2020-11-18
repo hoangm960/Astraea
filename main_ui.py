@@ -25,11 +25,10 @@ from PyQt5 import uic
 from UI_Files import Resources
 import login_main
 
-
 UI_MAIN_PATH = "UI_Files/ui_main.ui"
 
-
 class MainWindow(QMainWindow):
+
     def __init__(self, role):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(UI_MAIN_PATH, self)
@@ -86,7 +85,7 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def load_assignments(cls, self, filename):
-        with open(filename, encoding='utf-8') as f:
+        with open(filename, encoding="utf-8") as f:
             lines = f.readlines()
             for line in lines:
                 self.list_assignments.addItem(line.rstrip("\n"))

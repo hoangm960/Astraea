@@ -17,63 +17,8 @@ from PyQt5.QtWidgets import (
 from PyQt5 import uic
 from UI_Files import Resources
 
-# Init path
 EDIT_FORM_PATH = "UI_Files/edit_form.ui"
-EDIT_WIDGET1_PATH = "UI_Files/edit_widget1.ui"
-EDIT_WIDGET2_PATH = "UI_Files/edit_widget2.ui"
 EDIT_FRAME_PATH = "UI_Files/edit_frame.ui"
-
-
-class EditWidget1(QWidget):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        uic.loadUi(EDIT_WIDGET1_PATH, self)
-
-
-class EditWidget2(QWidget):
-    class EditFrame(QWidget):
-        def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)
-            uic.loadUi(EDIT_FRAME_PATH, self)
-
-            self.test_file_btn.clicked.connect(
-                lambda: self.showDialog(self.test_file_entry)
-            )
-            self.input_file_btn.clicked.connect(
-                lambda: self.showDialog(self.input_file_entry)
-            )
-            self.ans_file_btn.clicked.connect(
-                lambda: self.showDialog(self.ans_file_entry)
-            )
-
-        def showDialog(self, entry):
-            HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
-            file_name = QFileDialog.getOpenFileName(self, "Open file", HOME_PATH)
-
-            if file_name[0]:
-                entry.setText(file_name[0])
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        uic.loadUi(EDIT_WIDGET2_PATH, self)
-
-    def change_lesson_title(self, title):
-        self.lesson_title.setText(title if title else "Bài học không tên")
-
-    def put_frame_in_list(self, num):
-        for _ in range(num):
-            self.widget_item = QListWidgetItem()
-            self.frame = self.EditFrame()
-            self.widget_item.setSizeHint(self.sizeHint())
-
-            self.list_widget.addItem(self.widget_item)
-            self.list_widget.setItemWidget(self.widget_item, self.frame)
-
-        def sizeHint(self):
-            s = QSize()
-            s.setHeight(super(self.list_widget, self).sizeHint().height())
-            s.setWidth(self.sizeHintForColumn(0))
-            return s
 
 
 class EditWindow(QMainWindow):
@@ -127,17 +72,14 @@ class UIFunctions(EditWindow):
         self.sizegrip.setToolTip("Resize Window")
 
         # Change scene
-        self.first = EditWidget1()
-        self.stacked_widget.insertWidget(0, self.first)
-        self.first.confirm_button.clicked.connect(lambda: cls.go_to_second(self))
-        self.second = EditWidget2()
-        self.stacked_widget.insertWidget(1, self.second)
+        self.confirm_button.clicked.connect(lambda: cls.go_to_second(self))
+        self.return_btn.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(0))
         self.stacked_widget.setCurrentIndex(0)
 
     @classmethod
     def go_to_second(cls, self):
-        self.second.change_lesson_title(self.first.name_entry.text())
-        self.second.put_frame_in_list(self.first.num_entry.value())
+        cls.change_lesson_title(self, self.name_entry.text())
+        cls.put_frame_in_list(self, self.num_entry.value())
         self.stacked_widget.setCurrentIndex(1)
 
     @classmethod
@@ -167,6 +109,45 @@ class UIFunctions(EditWindow):
                 "background-color: qlineargradient(spread:pad, x1:0, y1:0.341, x2:1, y2:0.897, stop:0 rgba(97, 152, 255, 255), stop:0.514124 rgba(186, 38, 175, 255), stop:1 rgba(255, 0, 0, 255)); border-radius: 20px;"
             )
             self.btn_maximize.setToolTip("Maximize")
+
+    class EditFrame(QWidget):
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            uic.loadUi(EDIT_FRAME_PATH, self)
+
+            self.test_file_btn.clicked.connect(
+                lambda: self.showDialog(self.test_file_entry)
+            )
+            self.input_file_btn.clicked.connect(
+                lambda: self.showDialog(self.input_file_entry)
+            )
+            self.ans_file_btn.clicked.connect(
+                lambda: self.showDialog(self.ans_file_entry)
+            )
+
+        def showDialog(self, entry):
+            HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
+            file_name = QFileDialog.getOpenFileName(self, "Open file", HOME_PATH)
+
+            if file_name[0]:
+                entry.setText(file_name[0])
+
+    @classmethod
+    def change_lesson_title(cls, self, title):
+        self.lesson_title.setText(title if title else "Bài học không tên")
+
+    @classmethod
+    def put_frame_in_list(cls, self, num):
+        self.list_widget.clear()
+        self.list_widget.verticalScrollBar().setValue(1)
+        self.list_widget.verticalScrollBar().setSingleStep(10)
+        for _ in range(num):
+            self.widget_item = QListWidgetItem()
+            self.frame = cls.EditFrame()
+            self.widget_item.setSizeHint(self.sizeHint())
+
+            self.list_widget.addItem(self.widget_item)
+            self.list_widget.setItemWidget(self.widget_item, self.frame)
 
 
 if __name__ == "__main__":

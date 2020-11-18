@@ -388,9 +388,9 @@ QPushButton:hover {
           <widget class="QLabel" name="label_2">
            <property name="geometry">
             <rect>
-             <x>50</x>
+             <x>100</x>
              <y>60</y>
-             <width>321</width>
+             <width>371</width>
              <height>41</height>
             </rect>
            </property>
@@ -401,7 +401,7 @@ font-size: 16px;
 color: rgb(0, 0, 0);</string>
            </property>
            <property name="text">
-            <string>Xác nhận thoát giao diện đăng nhập?</string>
+            <string>Xác nhận đóng ứng dụng?</string>
            </property>
           </widget>
          </widget>
@@ -430,7 +430,7 @@ color: rgb(0, 0, 0);</string>
            <string notr="true">background: transparent;</string>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="page">
            <widget class="QFrame" name="SignIn_Frame">
@@ -934,7 +934,7 @@ QPushButton:hover{
               <rect>
                <x>90</x>
                <y>130</y>
-               <width>61</width>
+               <width>121</width>
                <height>16</height>
               </rect>
              </property>
@@ -950,7 +950,7 @@ color: rgb(0, 0, 0);
 </string>
              </property>
              <property name="text">
-              <string>Mật khẩu:</string>
+              <string>Mật khẩu đăng ký:</string>
              </property>
             </widget>
             <widget class="QLabel" name="label_9">
@@ -958,7 +958,7 @@ color: rgb(0, 0, 0);
               <rect>
                <x>90</x>
                <y>60</y>
-               <width>101</width>
+               <width>141</width>
                <height>31</height>
               </rect>
              </property>
@@ -975,7 +975,7 @@ color: rgb(0, 0, 0);
 </string>
              </property>
              <property name="text">
-              <string>Tên tài khoản:</string>
+              <string>Tên tài khoản đăng ký:</string>
              </property>
             </widget>
             <widget class="QPushButton" name="ConvertButton_SU">
@@ -1189,8 +1189,8 @@ color: rgb(0, 0, 0);
                      <property name="styleSheet">
                       <string notr="true">QPushButton{
 background-color: rgba(255, 85, 255,0);
-border-radius: 8px;
-	color: rgb(0, 0, 0);
+border:none;
+color: rgb(0, 0, 0);
 }
 QPushButton:hover {
 color: rgb(74, 163, 223);

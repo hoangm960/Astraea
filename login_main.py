@@ -104,9 +104,12 @@ class LoginFunctions(LoginWindow):
         self.ConvertButton.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(1))
         self.ConvertButton_SU.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(0))
         self.ConvertButton_4.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(0))
-
+        self.ConvertButton.clicked.connect(lambda: default())
         def default():
             self.STATE_ECHOPASS = True
+            self.PassBox_SU.clear()
+            self.NameBox_SU.clear()
+            self.Student_SU.setChecked(True)
 
     @classmethod
     def setup_sizegrip(cls, self):
@@ -210,15 +213,19 @@ class LoginFunctions(LoginWindow):
                 check = False
 
             else:
-                for word in name:
-                    if word not in "qwertyuiopasdfghjklzxcvbnm1234567890 ":
+                if name.isalnum() is False:
+                    if name.replace(' ','').isalnum() is True:
+                        pass
+                    else:
                         cls.Error(self, 'Tên tài khoản không được chứa kí tự đặc biệt')
                         check = False
-                    else:
-                        for word in password:
-                            if word not in "qwertyuiopasdfghjklzxcvbnm1234567890 ":
-                                cls.Error(self, 'Mật khẩu không được chứa kí tự đặc biệt')
-                                check = False
+                else:        
+                    if password.isalnum() is False:
+                        if password.replace(' ','').isalnum() is True:
+                            pass
+                        else: 
+                            cls.Error(self, 'Mật khẩu không được chứa kí tự đặc biệt')
+                            check = False
 
         if check:
             decrypt(cls.USER_PATH_ENCRYPTED, cls.USER_PATH, cls.KEY_PATH)

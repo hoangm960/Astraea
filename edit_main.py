@@ -183,6 +183,9 @@ class UIFunctions(EditWindow):
         main_ui.UIFunctions.load_assignments(self.parent(), filename)
         self.close()
 
+    # @classmethod
+    
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

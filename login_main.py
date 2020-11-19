@@ -65,6 +65,8 @@ class LoginFunctions(LoginWindow):
         self.frameError.hide()
         self.eyeButton_SU.hide()
         self.eyeButton_SI.hide()
+        self.Name_Frame.hide()
+        self.label_namef.hide()
         self.stacked_widget.setCurrentIndex(0)
 
         self.move(round(GetSystemMetrics(0) / 10), round(GetSystemMetrics(1) / 50))
@@ -206,8 +208,8 @@ class LoginFunctions(LoginWindow):
     @classmethod
     def check_SU(cls, self):
         check = True
-        name = self.NameBox_SU.text().lower()
-        password = self.PassBox_SU.text().lower()
+        name = self.NameBox_SU.text()
+        password = self.PassBox_SU.text()
         for user in cls.users:
             if len(name) < 6:
                 cls.Error(self, "Yêu cầu độ dài tên tài khoản hơn 5 kí tự.")
@@ -237,17 +239,27 @@ class LoginFunctions(LoginWindow):
                             check = False
 
         if check:
-            decrypt(cls.USER_PATH_ENCRYPTED, cls.USER_PATH, cls.KEY_PATH)
-            time.sleep(3)
-            with open(cls.USER_PATH, "wb") as f:
-                name = self.NameBox_SU.text()
-                password = self.PassBox_SU.text()
-                role = "teacher" if self.Teacher_SU.isChecked() else "student"
-                cls.users.append(User(name, password, role, False))
-                pickle.dump(cls.users, f)
-            encrypt(cls.USER_PATH, cls.USER_PATH_ENCRYPTED, cls.KEY_PATH)
-
-            self.stacked_widget.setCurrentIndex(2)
+            self.Name_Frame.show()
+            self.title_bar.hide() 
+            def check_name():
+                name_account = self.lineEdit_N.text()
+                if len(name_account) < 8 or name_account.replace(' ','').isalnum() is False:
+                    self.label_namefs.show()
+                else:
+                    decrypt(cls.USER_PATH_ENCRYPTED, cls.USER_PATH, cls.KEY_PATH)
+                    time.sleep(3)
+                    with open(cls.USER_PATH, "wb") as f:
+                        name = self.NameBox_SU.text()
+                        password = self.PassBox_SU.text()
+                        role = "teacher" if self.Teacher_SU.isChecked() else "student"
+                        cls.users.append(User(name, password, role, False))
+                        pickle.dump(cls.users, f)
+                    encrypt(cls.USER_PATH, cls.USER_PATH_ENCRYPTED, cls.KEY_PATH) 
+                    self.Name_Frame.hide()
+                    self.title_bar.show()
+                    self.stacked_widget.setCurrentIndex(2)
+            self.pushButton_N.clicked.connect(lambda: check_name())  
+                
         QtCore.QTimer.singleShot(3000, lambda: self.frameError.hide())
 
 

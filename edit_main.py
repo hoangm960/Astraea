@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+import pickle
 import sys
 from PyQt5 import QtCore
 from PyQt5.QtCore import QSize, Qt
@@ -20,6 +21,7 @@ from win32api import GetSystemMetrics
 
 EDIT_FORM_PATH = "UI_Files/edit_form.ui"
 EDIT_FRAME_PATH = "UI_Files/edit_frame.ui"
+ASSIGNMENTS_PATH = "data/Lesson/assignments.list"
 
 
 class Assignment:
@@ -62,6 +64,7 @@ class EditWindow(QMainWindow):
 class UIFunctions(EditWindow):
     GLOBAL_STATE = False
     ASSIGNMENTS = []
+    list = []
 
     @classmethod
     def uiDefinitions(cls, self):
@@ -81,6 +84,7 @@ class UIFunctions(EditWindow):
         self.btn_maximize.clicked.connect(lambda: cls.maximize_restore(self))
         self.btn_minimize.clicked.connect(lambda: self.showMinimized())
         self.btn_quit.clicked.connect(lambda: self.close())
+        self.confirm_btn.clicked.connect(lambda: cls.load_assignments(self))
 
         # Window size grip
         self.sizegrip = QSizeGrip(self.frame_grip)
@@ -156,16 +160,23 @@ class UIFunctions(EditWindow):
 
     @classmethod
     def put_frame_in_list(cls, self, num):
-        self.list_widget.clear()
-        self.list_widget.verticalScrollBar().setValue(1)
-        self.list_widget.verticalScrollBar().setSingleStep(10)
+        for i in reversed(range(self.content_layout.count())): 
+            self.content_layout.itemAt(i).widget().setParent(None)
+        self.scrollArea.verticalScrollBar().setValue(1)
         for _ in range(num):
-            self.widget_item = QListWidgetItem()
             self.frame = cls.EditFrame()
-            self.widget_item.setSizeHint(self.sizeHint())
+            self.content_layout.addWidget(self.frame)
 
-            self.list_widget.addItem(self.widget_item)
-            self.list_widget.setItemWidget(self.widget_item, self.frame)
+    @classmethod
+    def load_assignments(cls, self):
+        assignments = [
+            self.content_widget.children()[i].title_entry.text()
+            for i in range(1, self.content_layout.count() + 1)
+        ]
+        with open(ASSIGNMENTS_PATH, "wb") as f:
+            pickle.dump(assignments, f)
+
+        self.close()
 
 
 if __name__ == "__main__":

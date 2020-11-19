@@ -26,7 +26,7 @@ from UI_Files import Resources
 import login_main
 
 UI_MAIN_PATH = "UI_Files/ui_main.ui"
-ASSIGNMENTS_PATH = "data/Lesson/assignments.txt"
+ASSIGNMENTS_PATH = "data/Lesson/assignments.list"
 DETAILS_PATH = "data/Lesson/assignment_details.list"
 
 
@@ -84,18 +84,24 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def load_assignments(cls, self, filename):
-        with open(filename, encoding="utf-8") as f:
-            lines = f.readlines()
-            for line in lines:
-                self.list_assignments.addItem(line.rstrip("\n"))
+        if os.path.exists(filename):
+            if os.path.getsize(filename) > 0:
+                with open(filename, "rb") as f:
+                    unpickler = pickle.Unpickler(f)
+                    assignments = unpickler.load()
+                    for assignment in assignments:
+                        self.list_assignments.addItem(assignment)
 
     @classmethod
     def load_details(cls, self, filename):
-        with open(filename, "rb") as f:
-            details = pickle.load(f)
-            self.assignment_details.setText(
-                details[self.list_assignments.currentRow()].rstrip("\n")
-            )
+        if os.path.exists(filename):
+            if os.path.getsize(filename) > 0:
+                with open(filename, "rb") as f:
+                    unpickler = pickle.Unpickler(f)
+                    details = unpickler.load()
+                    self.assignment_details.setText(
+                        details[self.list_assignments.currentRow()]
+                    )
 
     class TeacherUiFunctions:
         @classmethod
@@ -120,7 +126,8 @@ class UIFunctions(MainWindow):
         def save_text(cls, self, filename):
             cls.changed = True
             with open(filename, "rb") as f:
-                cls.details = pickle.load(f)
+                unpickler = pickle.Unpickler(f)
+                cls.details = unpickler.load()
             if (
                 cls.details[self.list_assignments.currentRow()]
                 != self.assignment_details.toPlainText()

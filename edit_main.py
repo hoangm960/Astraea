@@ -96,7 +96,7 @@ class UIFunctions(EditWindow):
 
         # Change scene
         self.confirm_button.clicked.connect(lambda: cls.go_to_second(self))
-        self.return_btn.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(0))
+        self.return_btn.clicked.connect(lambda: cls.return_to_first(self))
         self.stacked_widget.setCurrentIndex(0)
 
     @classmethod
@@ -161,10 +161,11 @@ class UIFunctions(EditWindow):
 
     @classmethod
     def put_frame_in_list(cls, self, num):
-        self.content_layout = QVBoxLayout()
-        self.content_widget.setLayout(self.content_layout)
+        current_layout = self.content_widget.layout()
+        self.content_layout = QVBoxLayout(self.content_widget) if not current_layout else current_layout
         for i in reversed(range(self.content_layout.count())): 
             self.content_layout.itemAt(i).widget().setParent(None)
+        
         self.scrollArea.verticalScrollBar().setValue(1)
         
         for _ in range(num):
@@ -172,19 +173,26 @@ class UIFunctions(EditWindow):
             self.content_layout.addWidget(self.frame)
 
     @classmethod
+    def return_to_first(cls, self):
+        # self.content_widget.layout().delete()
+        self.stacked_widget.setCurrentIndex(0)
+
+    @classmethod
     def load_assignments(cls, self, filename):
-        assignments = [
+        assignment_names = [
             self.content_widget.children()[i].title_entry.text()
             for i in range(1, self.content_layout.count() + 1)
         ]
         with open(filename, "wb") as f:
-            pickle.dump(assignments, f)
+            pickle.dump(assignment_names, f)
 
         main_ui.UIFunctions.load_assignments(self.parent(), filename)
         self.close()
 
     # @classmethod
-    
+    # def load_check_info(cls, self, filename):
+    #     children = self.content_widget.children()
+    #     assignments = [Assignment(children[i].test_file_entry.text(), children[i].input_file_entry.text() for i in range(1, self.content_layout.count() + 1)]
 
 
 if __name__ == "__main__":

@@ -730,7 +730,7 @@ color: rgb(74, 163, 223);
              </property>
              <property name="styleSheet">
               <string notr="true">QPushButton:enabled{
-	image: url(:/images/visibility_black.png);
+	image: url(:/images/icons/visibility_black.png);
 }</string>
              </property>
              <property name="text">
@@ -748,7 +748,7 @@ color: rgb(74, 163, 223);
              </property>
              <property name="styleSheet">
               <string notr="true">QPushButton:enabled {
-	image: url(:/images/invisible_black.png);
+	image: url(:/images/icons/invisible_black.png);
 }</string>
              </property>
              <property name="text">
@@ -1076,7 +1076,7 @@ color: rgb(0, 0, 0);</string>
              </property>
              <property name="styleSheet">
               <string notr="true">QPushButton:enabled{
-	image: url(:/images/invisible_black.png);
+	image: url(:/images/icons/invisible_black.png);
 }</string>
              </property>
              <property name="text">
@@ -1094,7 +1094,7 @@ color: rgb(0, 0, 0);</string>
              </property>
              <property name="styleSheet">
               <string notr="true">QPushButton:enabled {
-	image: url(:/images/visibility_black.png);
+	image: url(:/images/icons/visibility_black.png);
 }</string>
              </property>
              <property name="text">

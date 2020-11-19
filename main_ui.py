@@ -5,23 +5,15 @@ import sys
 
 import win32con
 import win32gui
-from PyQt5 import QtCore
+from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import (
-    QApplication,
-    QDialogButtonBox,
-    QGraphicsDropShadowEffect,
-    QMainWindow,
-    QMessageBox,
-    QPushButton,
-    QSizeGrip,
-    QWidget,
-)
+from PyQt5.QtWidgets import (QApplication, QDialogButtonBox,
+                             QGraphicsDropShadowEffect, QMainWindow,
+                             QMessageBox, QPushButton, QSizeGrip, QWidget)
 from win32api import GetSystemMetrics
 
-import edit_main 
-from PyQt5 import uic
+import edit_main
 from UI_Files import Resources
 
 UI_MAIN_PATH = "UI_Files/ui_main.ui"
@@ -83,7 +75,7 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def load_assignments(cls, self, filename):
-        # self.list_assignments.
+        self.list_assignments.clear()
         if os.path.exists(filename):
             if os.path.getsize(filename) > 0:
                 with open(filename, "rb") as f:
@@ -103,9 +95,13 @@ class UIFunctions(MainWindow):
                         details[self.list_assignments.currentRow()]
                     )
 
-    class TeacherUiFunctions:
+    class TeacherUiFunctions(MainWindow):
+        parrent = None
+
         @classmethod
-        def config(cls, self):
+        def __init__(cls, parrent, self):
+            cls.parrent = parrent
+
             self.main_btn.setText("Sửa đổi")
             self.main_btn.setStyleSheet(
                 """QPushButton {background-color: rgb(59, 143, 14);}
@@ -125,9 +121,14 @@ class UIFunctions(MainWindow):
         @classmethod
         def save_text(cls, self, filename):
             cls.changed = True
-            with open(filename, "rb") as f:
-                unpickler = pickle.Unpickler(f)
-                cls.details = unpickler.load()
+            if os.path.exists(filename):
+                if os.path.getsize(filename) > 0:
+                    with open(filename, "rb") as f:
+                        unpickler = pickle.Unpickler(f)
+                        cls.details = unpickler.load()
+                else: 
+                    cls.details = ['' for _ in range(self.list_assignments.currentRow() + 1)]
+                    print(cls.details)
             if (
                 cls.details[self.list_assignments.currentRow()]
                 != self.assignment_details.toPlainText()
@@ -140,7 +141,7 @@ class UIFunctions(MainWindow):
                 with open(filename, "wb") as f:
                     pickle.dump(cls.details, f)
             else:
-                cls.load_details(self, filename)
+                cls.parrent.load_details(self, filename)
 
         @classmethod
         def show_confirm_mess(cls, self, filename):
@@ -177,7 +178,7 @@ class UIFunctions(MainWindow):
     @classmethod
     def define_role(cls, self):
         if self.role.lower() == "teacher":
-            cls.TeacherUiFunctions.config(self)
+            cls.TeacherUiFunctions(cls, self)
         if self.role.lower() == "student":
             cls.StudentUiFunctions.student_gui_config(self)
 

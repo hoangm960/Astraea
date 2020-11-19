@@ -281,7 +281,7 @@ font-size: 25px;
 font:bold;</string>
             </property>
             <property name="text">
-             <string>PyLearn - Giao diện tài khoản          </string>
+             <string>   PyLearn - Giao diện tài khoản                                  </string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
@@ -445,7 +445,7 @@ color: rgb(0, 0, 0);</string>
            <string notr="true">background: transparent;</string>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="page">
            <widget class="QFrame" name="SignIn_Frame">
@@ -517,16 +517,16 @@ color: rgb(0, 0, 0);
              </property>
              <property name="styleSheet">
               <string notr="true">QLineEdit {
-	background-color: rgb(40, 44, 52);
-	border-radius: 16px;
-	border-color: rgb(0, 255, 255);
-	color: rgb(255, 255, 255);
+background-color: rgb(255, 255, 255);
+border-radius: 16px;
+border: 2px solid rgb(35, 44, 51);
+color: rgb(35, 44, 51);
 }
 QLineEdit:hover{
-border: 2px solid rgb(170, 255, 255);
+border: 2px solid rgb(0, 0, 0);
 }
 QLineEdit:focus {
-border: 2px solid rgb(170, 255, 255);
+border: 2px solid rgb(0, 0, 0);
 }
 </string>
              </property>
@@ -560,10 +560,10 @@ border: 2px solid rgb(170, 255, 255);
              </property>
              <property name="styleSheet">
               <string notr="true">QLineEdit {
-	background-color: rgb(40, 44, 52);
-	border-radius: 16px;
-	border-color: rgb(0, 255, 255);
-	color: rgb(255, 255, 255);
+background-color: rgb(255, 255, 255);
+border-radius: 16px;
+border: 2px solid rgb(0, 0, 0);
+color: rgb(35, 44, 51);
 }
 QLineEdit:hover{
 border: 2px solid rgb(170, 255, 255);
@@ -847,10 +847,10 @@ color: rgb(0, 0, 0);
              </property>
              <property name="styleSheet">
               <string notr="true">QLineEdit {
-background-color: rgba(188, 183, 255, 160);
+background-color: rgb(255, 255, 255);
 border-radius: 16px;
-border-color: rgb(0, 255, 255);
-color: rgb(0, 0, 0);
+border: 2px solid rgb(0, 0, 0);
+color: rgb(35, 44, 51);
 }
 QLineEdit:hover{
 border: 2px solid rgb(170, 255, 255);
@@ -889,10 +889,11 @@ border: 2px solid rgb(170, 255, 255);
              </property>
              <property name="styleSheet">
               <string notr="true">QLineEdit {
-background-color: rgba(188, 183, 255, 160);
-border-radius: 16px;
-border-color: rgb(0, 255, 255);
-	color: rgb(0, 0, 0);
+	background-color: rgba(188, 183, 255, 160);
+	background-color: rgb(255, 255, 255);
+	border-radius: 16px;
+	border: 2px solid rgb(0, 0, 0);
+	color: rgb(35, 44, 51);
 }
 QLineEdit:hover{
 border: 2px solid rgb(170, 255, 255);
@@ -1297,9 +1298,159 @@ font-size: 12px;</string>
            </item>
           </layout>
          </widget>
+         <widget class="QFrame" name="frame_4">
+          <property name="geometry">
+           <rect>
+            <x>570</x>
+            <y>380</y>
+            <width>120</width>
+            <height>80</height>
+           </rect>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+         </widget>
+         <widget class="QFrame" name="Name_Frame">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>-10</y>
+            <width>1011</width>
+            <height>531</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(35, 44, 51);</string>
+          </property>
+          <property name="inputMethodHints">
+           <set>Qt::ImhLatinOnly</set>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <widget class="QLineEdit" name="lineEdit_N">
+           <property name="geometry">
+            <rect>
+             <x>265</x>
+             <y>260</y>
+             <width>461</width>
+             <height>52</height>
+            </rect>
+           </property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="toolTip">
+            <string/>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::LeftToRight</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QLineEdit {
+background-color: rgb(35, 44, 51);
+border: 2px solid rgb(255, 255, 255);
+border-radius: 26px; 
+color: rgba(255, 255, 255,200);
+font-size: 16px;
+font: bold;
+}
+
+QLineEdit:hover {
+border: 3px solid rgb(170, 255, 255);
+}
+QLineEdit:focus {
+border: 3px solid rgb(170, 255, 255);
+}</string>
+           </property>
+           <property name="locale">
+            <locale language="Vietnamese" country="Vietnam"/>
+           </property>
+           <property name="inputMethodHints">
+            <set>Qt::ImhNone</set>
+           </property>
+           <property name="inputMask">
+            <string/>
+           </property>
+           <property name="maxLength">
+            <number>100</number>
+           </property>
+           <property name="frame">
+            <bool>true</bool>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="placeholderText">
+            <string>Mời bạn nhập tên người dùng </string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="pushButton_N">
+           <property name="geometry">
+            <rect>
+             <x>420</x>
+             <y>360</y>
+             <width>150</width>
+             <height>42</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+background-color: rgb(255, 255, 255);
+color: rbg(0,0,0);
+border: 1px solid rgb(255, 255, 255);
+border-radius: 21px;
+font-size: 13px;
+font: bold;
+}
+QPushButton:hover {
+border: 4px solid rgb(170, 255, 255);
+}
+QPushButton:focus {
+border: 4px solid rgb(170, 255, 255);
+}
+</string>
+           </property>
+           <property name="text">
+            <string>Tiếp tục</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_namef">
+           <property name="geometry">
+            <rect>
+             <x>300</x>
+             <y>330</y>
+             <width>421</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">font: bold;
+font-size: 15;
+color: rgb(255, 255, 255);
+background: transparent;
+</string>
+           </property>
+           <property name="text">
+            <string>Tên người dùng của bạn phải hơn 7 kí tự và không bao gồm kí tự đặc biệt</string>
+           </property>
+          </widget>
+         </widget>
          <zorder>stacked_widget</zorder>
-         <zorder>OkCancelFrame</zorder>
          <zorder>frameError</zorder>
+         <zorder>frame_4</zorder>
+         <zorder>OkCancelFrame</zorder>
+         <zorder>Name_Frame</zorder>
         </widget>
        </item>
        <item>

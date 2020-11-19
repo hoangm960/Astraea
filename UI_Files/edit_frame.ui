@@ -122,7 +122,7 @@ border-radius: 12px;</string>
          <string notr="true">QPushButton {
 	background-color: rgb(255, 255, 255);
 	border-radius: 5px;
-	image: url(:/images/folder_open.png);
+	image: url(:/images/icons/folder_open.png);
 }
 
 QPushButton:hover {
@@ -183,7 +183,7 @@ border-radius: 12px;</string>
          <string notr="true">QPushButton {
 	background-color: rgb(255, 255, 255);
 	border-radius: 5px;
-	image: url(:/images/folder_open.png);
+	image: url(:/images/icons/folder_open.png);
 }
 
 QPushButton:hover {
@@ -244,7 +244,7 @@ border-radius: 12px;</string>
          <string notr="true">QPushButton {
 	background-color: rgb(255, 255, 255);
 	border-radius: 5px;
-	image: url(:/images/folder_open.png);
+	image: url(:/images/icons/folder_open.png);
 }
 
 QPushButton:hover {
@@ -332,13 +332,13 @@ QSpinBox::down-button:pressed {
 }
 
 QSpinBox::up-arrow {
-	image: url(:/images/plus.png);
+	image: url(:/images/icons/plus.png);
     width: 5px;
     height: 5px;
 }
 
 QSpinBox::down-arrow {
-	image: url(:/images/minus.png);
+	image: url(:/images/icons/minus.png);
     width: 5px;
     height: 5px;
 }</string>
@@ -408,13 +408,13 @@ QSpinBox::down-button:pressed {
 }
 
 QSpinBox::up-arrow {
-	image: url(:/images/plus.png);
+	image: url(:/images/icons/plus.png);
     width: 5px;
     height: 5px;
 }
 
 QSpinBox::down-arrow {
-	image: url(:/images/minus.png);
+	image: url(:/images/icons/minus.png);
     width: 5px;
     height: 5px;
 }</string>

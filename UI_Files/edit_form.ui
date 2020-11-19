@@ -452,13 +452,13 @@ QSpinBox::down-button:pressed {
 }
 
 QSpinBox::up-arrow {
-	image: url(:/images/plus.png);
+	image: url(:/images/icons/plus.png);
     width: 20px;
     height: 20px;
 }
 
 QSpinBox::down-arrow {
-	image: url(:/images/minus.png);
+	image: url(:/images/icons/minus.png);
     width: 20px;
     height: 20px;
 }</string>

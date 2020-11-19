@@ -26,6 +26,8 @@ from UI_Files import Resources
 import login_main
 
 UI_MAIN_PATH = "UI_Files/ui_main.ui"
+ASSIGNMENTS_PATH = "data/Lesson/assignments.txt"
+DETAILS_PATH = "data/Lesson/assignment_details.list"
 
 
 class MainWindow(QMainWindow):
@@ -37,9 +39,6 @@ class MainWindow(QMainWindow):
 
 
 class UIFunctions(MainWindow):
-    ASSIGNMENTS_PATH = "data/Lesson/assignments.txt"
-    DETAILS_PATH = "data/Lesson/assignment_details.list"
-
     @classmethod
     def uiDefinitions(cls, self):
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
@@ -55,14 +54,14 @@ class UIFunctions(MainWindow):
         self.btn_minimize.clicked.connect(lambda: self.showMinimized())
         self.btn_quit.clicked.connect(lambda: cls.close_pg(self))
 
-        # UIFunctions.open_vscode()
+        # cls.open_vscode()
 
-        UIFunctions.load_assignments(self, cls.ASSIGNMENTS_PATH)
+        cls.load_assignments(self, ASSIGNMENTS_PATH)
         self.list_assignments.itemPressed.connect(
-            lambda: UIFunctions.load_details(self, cls.DETAILS_PATH)
+            lambda: cls.load_details(self, DETAILS_PATH)
         )
 
-        UIFunctions.define_role(self)
+        cls.define_role(self)
 
     @classmethod
     def open_vscode(cls):
@@ -98,79 +97,87 @@ class UIFunctions(MainWindow):
                 details[self.list_assignments.currentRow()].rstrip("\n")
             )
 
-    @classmethod
-    def define_role(cls, self):
-        if self.role.lower() == "teacher":
-            cls.teacher_gui_config(self)
-        if self.role.lower() == "student":
-            cls.student_gui_config(self)
+    class TeacherUiFunctions:
+        @classmethod
+        def config(cls, self):
+            self.main_btn.setText("Sửa đổi")
+            self.main_btn.setStyleSheet(
+                """QPushButton {background-color: rgb(59, 143, 14);}
+            QPushButton:hover {background-color: rgba(59, 143, 14, 150);}"""
+            )
+            self.main_btn.clicked.connect(lambda: cls.open_edit_form(self))
 
-    @classmethod
-    def teacher_gui_config(cls, self):
-        self.main_btn.setText("Sửa đổi")
-        self.main_btn.setStyleSheet(
-            """QPushButton {background-color: rgb(59, 143, 14);}
-        QPushButton:hover {background-color: rgba(59, 143, 14, 150);}"""
-        )
-        self.main_btn.clicked.connect(lambda: open_edit_form())
+            self.assignment_details.setReadOnly(False)
+            self.confirmButton = QDialogButtonBox(self.frame_content_hint)
+            self.confirmButton.setStandardButtons(QDialogButtonBox.Ok)
+            self.confirmButton.setObjectName("confirmButton")
+            self.verticalLayout_4.addWidget(self.confirmButton)
+            self.confirmButton.accepted.connect(
+                lambda: cls.save_text(self, DETAILS_PATH)
+            )
 
-        self.assignment_details.setReadOnly(False)
-        self.confirmButton = QDialogButtonBox(self.frame_content_hint)
-        self.confirmButton.setStandardButtons(QDialogButtonBox.Ok)
-        self.confirmButton.setObjectName("confirmButton")
-        self.verticalLayout_4.addWidget(self.confirmButton)
-        self.confirmButton.accepted.connect(lambda: save_text(cls.DETAILS_PATH))
-
-        def save_text(filename):
-            save_text.changed = True
+        @classmethod
+        def save_text(cls, self, filename):
+            cls.changed = True
             with open(filename, "rb") as f:
-                save_text.details = pickle.load(f)
+                cls.details = pickle.load(f)
             if (
-                save_text.details[self.list_assignments.currentRow()]
+                cls.details[self.list_assignments.currentRow()]
                 != self.assignment_details.toPlainText()
             ):
-                show_confirm_mess(filename)
-            save_text.details[
+                cls.show_confirm_mess(self, filename)
+            cls.details[
                 self.list_assignments.currentRow()
             ] = self.assignment_details.toPlainText()
-            if save_text.changed:
+            if cls.changed:
                 with open(filename, "wb") as f:
-                    pickle.dump(save_text.details, f)
+                    pickle.dump(cls.details, f)
             else:
                 cls.load_details(self, filename)
 
-        def show_confirm_mess(filename):
+        @classmethod
+        def show_confirm_mess(cls, self, filename):
             msg = QMessageBox()
             msg.setWindowTitle("Thành công sửa đổi bài tập")
             msg.setText("Chi tiết câu đã được chỉnh sửa")
             with open(filename) as f:
                 msg.setDetailedText(
-                    f"Chi tiết gốc:\n{save_text.details[self.list_assignments.currentRow()]}\n\nChi tiết sau khi sửa đổi:\n{self.assignment_details.toPlainText()}"
+                    f"Chi tiết gốc:\n{cls.details[self.list_assignments.currentRow()]}\n\nChi tiết sau khi sửa đổi:\n{self.assignment_details.toPlainText()}"
                 )
             msg.setIcon(QMessageBox.Information)
             msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-            msg.buttonClicked.connect(popup_button)
+            msg.buttonClicked.connect(cls.popup_button)
             msg.exec_()
 
-        def popup_button(i):
-            save_text.changed = False if i.text().lower() == "cancel" else True
+        @classmethod
+        def popup_button(cls, i):
+            cls.changed = False if i.text().lower() == "cancel" else True
 
-        def open_edit_form():
-            window = EditWindow()
+        @classmethod
+        def open_edit_form(cls, self):
+            window = EditWindow(self)
             window.show()
 
+    class StudentUiFunctions:
+        @classmethod
+        def student_gui_config(cls, self):
+            self.main_btn.setText("Kiểm tra")
+            self.main_btn.setStyleSheet(
+                """QPushButton {background-color: rgb(224, 150, 0);}
+            QPushButton:hover {background-color: rgba(224, 150, 0, 150);}"""
+            )
+
     @classmethod
-    def student_gui_config(cls, self):
-        self.main_btn.setText("Kiểm tra")
-        self.main_btn.setStyleSheet(
-            """QPushButton {background-color: rgb(224, 150, 0);}
-        QPushButton:hover {background-color: rgba(224, 150, 0, 150);}"""
-        )
+    def define_role(cls, self):
+        if self.role.lower() == "teacher":
+            cls.TeacherUiFunctions.config(self)
+        if self.role.lower() == "student":
+            cls.StudentUiFunctions.student_gui_config(self)
 
 
 def main(role):
     window = MainWindow(role)
-    window.move(GetSystemMetrics(0) - 300, 0)
+    window.move(GetSystemMetrics(0) - window.width(), 0)
     window.show()
 
 

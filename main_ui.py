@@ -83,7 +83,7 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def load_assignments(cls, self, filename):
-        # self.list_assignments.
+        self.list_assignments.clear()
         if os.path.exists(filename):
             if os.path.getsize(filename) > 0:
                 with open(filename, "rb") as f:

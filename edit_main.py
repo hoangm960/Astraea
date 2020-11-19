@@ -12,12 +12,13 @@ from PyQt5.QtWidgets import (
     QLayout,
     QListWidgetItem,
     QMainWindow,
-    QSizeGrip,
+    QSizeGrip, QVBoxLayout,
     QWidget,
 )
 from PyQt5 import uic
 from UI_Files import Resources
 from win32api import GetSystemMetrics
+import main_ui
 
 EDIT_FORM_PATH = "UI_Files/edit_form.ui"
 EDIT_FRAME_PATH = "UI_Files/edit_frame.ui"
@@ -84,7 +85,7 @@ class UIFunctions(EditWindow):
         self.btn_maximize.clicked.connect(lambda: cls.maximize_restore(self))
         self.btn_minimize.clicked.connect(lambda: self.showMinimized())
         self.btn_quit.clicked.connect(lambda: self.close())
-        self.confirm_btn.clicked.connect(lambda: cls.load_assignments(self))
+        self.confirm_btn.clicked.connect(lambda: cls.load_assignments(self, ASSIGNMENTS_PATH))
 
         # Window size grip
         self.sizegrip = QSizeGrip(self.frame_grip)
@@ -160,22 +161,26 @@ class UIFunctions(EditWindow):
 
     @classmethod
     def put_frame_in_list(cls, self, num):
+        self.content_layout = QVBoxLayout()
+        self.content_widget.setLayout(self.content_layout)
         for i in reversed(range(self.content_layout.count())): 
             self.content_layout.itemAt(i).widget().setParent(None)
         self.scrollArea.verticalScrollBar().setValue(1)
+        
         for _ in range(num):
             self.frame = cls.EditFrame()
             self.content_layout.addWidget(self.frame)
 
     @classmethod
-    def load_assignments(cls, self):
+    def load_assignments(cls, self, filename):
         assignments = [
             self.content_widget.children()[i].title_entry.text()
             for i in range(1, self.content_layout.count() + 1)
         ]
-        with open(ASSIGNMENTS_PATH, "wb") as f:
+        with open(filename, "wb") as f:
             pickle.dump(assignments, f)
 
+        main_ui.UIFunctions.load_assignments(self.parent(), filename)
         self.close()
 
 

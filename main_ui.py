@@ -20,10 +20,9 @@ from PyQt5.QtWidgets import (
 )
 from win32api import GetSystemMetrics
 
-from edit_main import EditWindow
+import edit_main 
 from PyQt5 import uic
 from UI_Files import Resources
-import login_main
 
 UI_MAIN_PATH = "UI_Files/ui_main.ui"
 ASSIGNMENTS_PATH = "data/Lesson/assignments.list"
@@ -162,7 +161,7 @@ class UIFunctions(MainWindow):
 
         @classmethod
         def open_edit_form(cls, self):
-            window = EditWindow(self)
+            window = edit_main.EditWindow(self)
             window.show()
 
     class StudentUiFunctions:

@@ -16,11 +16,13 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5 import uic
 from UI_Files import Resources
+from win32api import GetSystemMetrics
 
 EDIT_FORM_PATH = "UI_Files/edit_form.ui"
 EDIT_FRAME_PATH = "UI_Files/edit_frame.ui"
 
-class Assignment():
+
+class Assignment:
     def __init__(self, name, test_file, input_file, ans_file, tests, vars):
         self.name = name
         self.test_file = test_file
@@ -29,10 +31,17 @@ class Assignment():
         self.tests = tests
         self.vars = vars
 
+
 class EditWindow(QMainWindow):
-    def __init__(self):
-        QMainWindow.__init__(self)
+    def __init__(self, *args, **kwargs):
+        QMainWindow.__init__(self, *args, **kwargs)
         uic.loadUi(EDIT_FORM_PATH, self)
+        self.setGeometry(
+            round((GetSystemMetrics(0) - self.width()) / 3),
+            round((GetSystemMetrics(1) - self.height()) / 2),
+            self.width(),
+            self.height(),
+        )
 
         def moveWindow(event):
             if UIFunctions.returnStatus() == True:

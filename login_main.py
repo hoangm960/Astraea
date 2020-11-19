@@ -257,6 +257,8 @@ class Loading_Screen(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi("UI_files/Loading_Screen.ui", self)
+        self.move(round((GetSystemMetrics(0) - self.width())/ 2), round((GetSystemMetrics(1) - self.height())/ 2))
+
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.timer = QtCore.QTimer()
@@ -273,13 +275,11 @@ class Loading_Screen(QMainWindow):
         if self.counter > 100:
             self.timer.stop()
             self.main = LoginWindow()
-            LOGIN_WIDTH = 999
-            LOGIN_HEIGHT = 700
             self.main.setGeometry(
-                round((GetSystemMetrics(0) - LOGIN_WIDTH) / 2),
-                round((GetSystemMetrics(1) - LOGIN_HEIGHT) / 5),
-                LOGIN_WIDTH,
-                LOGIN_HEIGHT,
+                round((GetSystemMetrics(0) - self.main.width()) / 2),
+                round((GetSystemMetrics(1) - self.main.height()) / 5),
+                self.main.width(),
+                self.main.height(),
             )
             self.main.show()
             self.close()
@@ -308,7 +308,6 @@ class Loading_Screen(QMainWindow):
 def main():
     app = QApplication(sys.argv)
     splash_window = Loading_Screen()
-    splash_window.move(round(GetSystemMetrics(0) / 4), round(GetSystemMetrics(1) / 4))
     splash_window.show()
     sys.exit(app.exec_())
 

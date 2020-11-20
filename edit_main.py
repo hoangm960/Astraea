@@ -12,7 +12,8 @@ from PyQt5.QtWidgets import (
     QLayout,
     QListWidgetItem,
     QMainWindow,
-    QSizeGrip, QVBoxLayout,
+    QSizeGrip,
+    QVBoxLayout,
     QWidget,
 )
 from PyQt5 import uic
@@ -26,13 +27,14 @@ ASSIGNMENTS_PATH = "data/Lesson/assignments.list"
 
 
 class Assignment:
-    def __init__(self, name, test_file, input_file, ans_file, tests, vars):
+    def __init__(self, name, test_file, input_file, ans_file, tests, vars, details):
         self.name = name
         self.test_file = test_file
         self.input_file = input_file
         self.ans_file = ans_file
         self.tests = tests
         self.vars = vars
+        self.details = details
 
 
 class EditWindow(QMainWindow):
@@ -85,7 +87,9 @@ class UIFunctions(EditWindow):
         self.btn_maximize.clicked.connect(lambda: cls.maximize_restore(self))
         self.btn_minimize.clicked.connect(lambda: self.showMinimized())
         self.btn_quit.clicked.connect(lambda: self.close())
-        self.confirm_btn.clicked.connect(lambda: cls.load_assignments(self, ASSIGNMENTS_PATH))
+        self.confirm_btn.clicked.connect(
+            lambda: cls.load_assignments(self, ASSIGNMENTS_PATH)
+        )
 
         # Window size grip
         self.sizegrip = QSizeGrip(self.frame_grip)
@@ -96,7 +100,7 @@ class UIFunctions(EditWindow):
 
         # Change scene
         self.confirm_button.clicked.connect(lambda: cls.go_to_second(self))
-        self.return_btn.clicked.connect(lambda: cls.return_to_first(self))
+        self.return_btn.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(0))
         self.stacked_widget.setCurrentIndex(0)
 
     @classmethod
@@ -162,37 +166,39 @@ class UIFunctions(EditWindow):
     @classmethod
     def put_frame_in_list(cls, self, num):
         current_layout = self.content_widget.layout()
-        self.content_layout = QVBoxLayout(self.content_widget) if not current_layout else current_layout
-        for i in reversed(range(self.content_layout.count())): 
+        self.content_layout = (
+            QVBoxLayout(self.content_widget) if not current_layout else current_layout
+        )
+        for i in reversed(range(self.content_layout.count())):
             self.content_layout.itemAt(i).widget().setParent(None)
-        
+
         self.scrollArea.verticalScrollBar().setValue(1)
-        
+
         for _ in range(num):
             self.frame = cls.EditFrame()
             self.content_layout.addWidget(self.frame)
 
     @classmethod
-    def return_to_first(cls, self):
-        # self.content_widget.layout().delete()
-        self.stacked_widget.setCurrentIndex(0)
-
-    @classmethod
     def load_assignments(cls, self, filename):
-        assignment_names = [
-            self.content_widget.children()[i].title_entry.text()
+        children = self.content_widget.children()
+        assignments = [
+            Assignment(
+                children[i].title_entry.text(),
+                children[i].test_file_entry.text(),
+                children[i].input_file_entry.text(),
+                children[i].ans_file_entry.text(),
+                children[i].test_num_entry.value(),
+                children[i].test_var_entry.value(),
+                children[i].details_entry.toPlainText()
+            )
             for i in range(1, self.content_layout.count() + 1)
         ]
+
         with open(filename, "wb") as f:
-            pickle.dump(assignment_names, f)
+            pickle.dump(assignments, f)
 
         main_ui.UIFunctions.load_assignments(self.parent(), filename)
         self.close()
-
-    # @classmethod
-    # def load_check_info(cls, self, filename):
-    #     children = self.content_widget.children()
-    #     assignments = [Assignment(children[i].test_file_entry.text(), children[i].input_file_entry.text() for i in range(1, self.content_layout.count() + 1)]
 
 
 if __name__ == "__main__":

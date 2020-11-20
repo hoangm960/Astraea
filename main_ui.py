@@ -21,6 +21,7 @@ from PyQt5.QtWidgets import (
 from win32api import GetSystemMetrics
 
 import edit_main
+import result_main
 from UI_Files import Resources
 
 UI_MAIN_PATH = "UI_Files/ui_main.ui"
@@ -78,7 +79,6 @@ class UIFunctions(MainWindow):
             pass
 
         self.close()
-
     @classmethod
     def load_assignments(cls, self, filename):
         self.list_assignments.clear()
@@ -91,21 +91,22 @@ class UIFunctions(MainWindow):
                     for assignment in assignments:
                         cls.assignments[assignment.name] = assignment.details
                         self.list_assignments.addItem(assignment.name)
-        print(cls.assignments)
+        # print(list(cls.assignments.values())[self.list_assignments.currentRow()])
+        # print(list(cls.assignments.values()))
 
     @classmethod
     def load_details(cls, self):
-        print(cls.assignments)
         self.assignment_details.setText(
             list(cls.assignments.values())[self.list_assignments.currentRow()]
         )
 
     class TeacherUiFunctions():
-        parrent = None
+        parent = None
+        changed = True
 
         @classmethod
-        def __init__(cls, parrent, self):
-            cls.parrent = parrent
+        def __init__(cls, parent, self):
+            cls.parent = parent
 
             self.main_btn.setText("Sửa đổi")
             self.main_btn.setStyleSheet(
@@ -113,30 +114,20 @@ class UIFunctions(MainWindow):
             QPushButton:hover {background-color: rgba(59, 143, 14, 150);}"""
             )
             self.main_btn.clicked.connect(lambda: cls.open_edit_form(self))
-            self.confirmButton.accepted.connect(
-                lambda: cls.save_text(self, ASSIGNMENTS_PATH)
-            )
 
             self.assignment_details.setReadOnly(False)
             self.confirmButton = QDialogButtonBox(self.frame_content_hint)
             self.confirmButton.setStandardButtons(QDialogButtonBox.Ok)
             self.confirmButton.setObjectName("confirmButton")
             self.verticalLayout_4.addWidget(self.confirmButton)
+            self.confirmButton.accepted.connect(
+                lambda: cls.save_text(self, ASSIGNMENTS_PATH)
+            )
 
         @classmethod
         def save_text(cls, self, filename):
-            cls.changed = True
-            if os.path.exists(filename):
-                if os.path.getsize(filename) > 0:
-                    with open(filename, "rb") as f:
-                        unpickler = pickle.Unpickler(f)
-                        cls.parrent.details = unpickler.load()
-                else:
-                    cls.parrent.details = [
-                        "" for _ in range(self.list_assignments.currentRow() + 1)
-                    ]
             if (
-                list(cls.parrent.assignments.values())[
+                list(cls.parent.assignments.values())[
                     self.list_assignments.currentRow()
                 ]
                 != self.assignment_details.toPlainText()
@@ -147,13 +138,12 @@ class UIFunctions(MainWindow):
                 with open(filename, "rb") as f:
                     unpickler = pickle.Unpickler(f)
                     assignments = unpickler.load()
-                for i in len(assignments):
-                    assignments[i].value = list(cls.parrent.assignments.values())[i]
+                assignments[self.list_assignments.currentRow()].value = list(cls.parent.assignments.values())[self.list_assignments.currentRow()]
 
                 with open(filename, "wb") as f:
                     pickle.dump(assignments, f)
-            else:
-                cls.parrent.load_details(self, filename)
+
+            cls.parent.load_details(self)
 
         @classmethod
         def show_confirm_mess(cls, self):
@@ -161,7 +151,7 @@ class UIFunctions(MainWindow):
             msg.setWindowTitle("Thành công sửa đổi bài tập")
             msg.setText("Chi tiết câu đã được chỉnh sửa")
             msg.setDetailedText(
-                f"Chi tiết gốc:\n{list(cls.parrent.assignments.values())[self.list_assignments.currentRow()]}\n\nChi tiết sau khi sửa đổi:\n{self.assignment_details.toPlainText()}"
+                f"Chi tiết gốc:\n{list(cls.parent.assignments.values())[self.list_assignments.currentRow()]}\n\nChi tiết sau khi sửa đổi:\n{self.assignment_details.toPlainText()}"
             )
             msg.setIcon(QMessageBox.Information)
             msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)

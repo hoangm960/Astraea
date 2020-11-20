@@ -144,7 +144,6 @@ class UIFunctions(MainWindow):
                 with open(filename, "wb") as f:
                     pickle.dump(assignments, f)
 
-            cls.parent.load_assignments(ui, filename)
             cls.parent.load_details(ui)
 
         @classmethod

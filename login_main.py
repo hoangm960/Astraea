@@ -50,8 +50,6 @@ class LoginWindow(QMainWindow):
 
 
 class LoginFunctions(LoginWindow):
-    file = open('data/Users/User.txt','a+')
-    file.close()
     users = []
     GLOBAL_STATE = False
     STATE_ECHOPASS = True

@@ -47,8 +47,9 @@
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0.341, x2:1, y2:0.897, stop:0 rgba(97, 152, 255, 255), stop:0.514124 rgba(186, 38, 175, 255), stop:1 rgba(255, 0, 0, 255));
-border-radius: 10px;</string>
+       <string notr="true">background-color: rgb(30, 30, 30);
+border-radius: 10px;
+color: rgb(255, 255, 255);</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -316,7 +317,7 @@ QPushButton:hover {
                 <string notr="true">border-radius: 1px;</string>
                </property>
                <property name="currentIndex">
-                <number>1</number>
+                <number>2</number>
                </property>
                <widget class="QWidget" name="edit_frame1">
                 <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -482,6 +483,9 @@ QSpinBox::down-arrow {
                  </item>
                  <item>
                   <widget class="QFrame" name="confirm_frame">
+                   <property name="styleSheet">
+                    <string notr="true">color: rgb(0, 0, 0);</string>
+                   </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
                    </property>
@@ -538,7 +542,7 @@ QPushButton:pressed {
                 </layout>
                </widget>
                <widget class="QWidget" name="edit_frame2">
-                <layout class="QVBoxLayout" name="verticalLayout_10">
+                <layout class="QVBoxLayout" name="verticalLayout_5">
                  <property name="spacing">
                   <number>5</number>
                  </property>
@@ -613,6 +617,9 @@ QPushButton:pressed {
                      <height>450</height>
                     </size>
                    </property>
+                   <property name="styleSheet">
+                    <string notr="true">color: rgb(0, 0, 0)</string>
+                   </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
                    </property>
@@ -640,7 +647,7 @@ QPushButton:pressed {
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
-                        <height>490</height>
+                        <height>0</height>
                        </size>
                       </property>
                       <property name="styleSheet">
@@ -690,7 +697,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                          <x>0</x>
                          <y>0</y>
                          <width>820</width>
-                         <height>490</height>
+                         <height>480</height>
                         </rect>
                        </property>
                       </widget>
@@ -699,7 +706,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                    </layout>
                   </widget>
                  </item>
-                 <item alignment="Qt::AlignHCenter">
+                 <item>
                   <widget class="QFrame" name="btn_frame_2">
                    <property name="minimumSize">
                     <size>
@@ -708,7 +715,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true"/>
+                    <string notr="true">color: rgb(0, 0, 0);</string>
                    </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
@@ -718,7 +725,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                    </property>
                    <layout class="QHBoxLayout" name="horizontalLayout_5">
                     <property name="spacing">
-                     <number>100</number>
+                     <number>0</number>
                     </property>
                     <property name="leftMargin">
                      <number>0</number>
@@ -738,6 +745,12 @@ QScrollBar::add-page, QScrollBar::sub-page {
                        <size>
                         <width>50</width>
                         <height>30</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>50</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -777,6 +790,12 @@ QPushButton:pressed {
                         <height>30</height>
                        </size>
                       </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>100</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
                       <property name="font">
                        <font>
                         <family>Montserrat</family>
@@ -800,6 +819,265 @@ QPushButton:pressed {
 	color: rgb(255, 255, 255);
 	background-color: rgb(0, 0, 0);
 }r</string>
+                      </property>
+                      <property name="text">
+                       <string>Quay lại</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="add_btn">
+                      <property name="minimumSize">
+                       <size>
+                        <width>150</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>100</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Montserrat</family>
+                        <pointsize>12</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">QPushButton {
+	background-color: rgb(255, 255, 255);
+	border-radius: 10px;
+}
+
+QPushButton:hover {
+	color: rgb(255, 255, 255);
+	background-color: rgba(0, 0, 0, 150);
+}
+
+QPushButton:pressed {
+	color: rgb(255, 255, 255);
+	background-color: rgb(0, 0, 0);
+}r</string>
+                      </property>
+                      <property name="text">
+                       <string>Thêm bài tập</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="edit_frame3">
+                <layout class="QVBoxLayout" name="verticalLayout_10">
+                 <item>
+                  <widget class="QFrame" name="num_editframe_3">
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_8">
+                    <property name="spacing">
+                     <number>20</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="num_label_3">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>iCiel Effra</family>
+                        <pointsize>22</pointsize>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Số bài tập cần thêm:</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSpinBox" name="num_entry_3">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>80</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Corbel</family>
+                        <pointsize>22</pointsize>
+                       </font>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">QSpinBox {
+	border-radius: 10px;
+	color: rgb(0, 0, 0);
+}
+QSpinBox::up-button {
+	background-color: rgb(255, 255, 255);
+	border-radius: 10px;
+}
+
+QSpinBox::up-button:hover {
+	background-color: rgb(223, 223, 223);
+}
+
+QSpinBox::up-button:pressed {
+	background-color: rgb(207, 207, 207);
+}
+
+QSpinBox::down-button {
+	background-color: rgb(255, 255, 255);
+	border-radius: 10px;
+}
+
+QSpinBox::down-button:hover {
+	background-color: rgb(223, 223, 223);
+}
+
+QSpinBox::down-button:pressed {
+	background-color: rgb(207, 207, 207);
+}
+
+QSpinBox::up-arrow {
+	image: url(:/images/icons/plus.png);
+    width: 20px;
+    height: 20px;
+}
+
+QSpinBox::down-arrow {
+	image: url(:/images/icons/minus.png);
+    width: 20px;
+    height: 20px;
+}</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                      <property name="suffix">
+                       <string/>
+                      </property>
+                      <property name="minimum">
+                       <number>1</number>
+                      </property>
+                      <property name="maximum">
+                       <number>50</number>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="btn_editframe_3">
+                   <property name="styleSheet">
+                    <string notr="true">color: rgb(0, 0, 0);</string>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_9">
+                    <item>
+                     <widget class="QPushButton" name="confirm_add_btn">
+                      <property name="minimumSize">
+                       <size>
+                        <width>200</width>
+                        <height>100</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>100</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Montserrat</family>
+                        <pointsize>12</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">QPushButton {
+	background-color: rgb(255, 255, 255);
+	border-radius: 10px;
+}
+
+QPushButton:hover {
+	background-color: rgba(0, 0, 0, 150);
+	color: rgb(255, 255, 255);
+}
+
+QPushButton:pressed {
+	background-color: rgb(0, 0, 0);
+	color: rgb(255, 255, 255);
+}</string>
+                      </property>
+                      <property name="text">
+                       <string>OK</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="return_add_btn">
+                      <property name="minimumSize">
+                       <size>
+                        <width>200</width>
+                        <height>100</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>100</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>Montserrat</family>
+                        <pointsize>12</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">QPushButton {
+	background-color: rgb(255, 255, 255);
+	border-radius: 10px;
+}
+
+QPushButton:hover {
+	background-color: rgba(0, 0, 0, 150);
+	color: rgb(255, 255, 255);
+}
+
+QPushButton:pressed {
+	background-color: rgb(0, 0, 0);
+	color: rgb(255, 255, 255);
+}</string>
                       </property>
                       <property name="text">
                        <string>Quay lại</string>

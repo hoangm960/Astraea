@@ -42,7 +42,7 @@ class EditWindow(QMainWindow):
         QMainWindow.__init__(self, *args, **kwargs)
         uic.loadUi(EDIT_FORM_PATH, self)
         self.setGeometry(
-            round((GetSystemMetrics(0) - self.width()) / 3),
+            round((GetSystemMetrics(0) - self.width()) / 2),
             round((GetSystemMetrics(1) - self.height()) / 2),
             self.width(),
             self.height(),
@@ -197,7 +197,7 @@ class UIFunctions(EditWindow):
         with open(filename, "wb") as f:
             pickle.dump(assignments, f)
 
-        main_ui.UIFunctions.load_assignments(self.parent(), filename)
+        main_ui.main("teacher")
         self.close()
 
 

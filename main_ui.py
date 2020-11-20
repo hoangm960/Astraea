@@ -91,13 +91,12 @@ class UIFunctions(MainWindow):
                     for assignment in assignments:
                         cls.assignments[assignment.name] = assignment.details
                         self.list_assignments.addItem(assignment.name)
-        # print(list(cls.assignments.values())[self.list_assignments.currentRow()])
-        # print(list(cls.assignments.values()))
+        print([detail for detail in cls.assignments.values()][self.list_assignments.currentRow()])
 
     @classmethod
     def load_details(cls, self):
         self.assignment_details.setText(
-            list(cls.assignments.values())[self.list_assignments.currentRow()]
+            [detail for detail in cls.assignments.values()][self.list_assignments.currentRow()]
         )
 
     class TeacherUiFunctions():
@@ -138,11 +137,12 @@ class UIFunctions(MainWindow):
                 with open(filename, "rb") as f:
                     unpickler = pickle.Unpickler(f)
                     assignments = unpickler.load()
-                assignments[self.list_assignments.currentRow()].value = list(cls.parent.assignments.values())[self.list_assignments.currentRow()]
+                assignments[self.list_assignments.currentRow()].details = self.assignment_details.toPlainText()
 
                 with open(filename, "wb") as f:
                     pickle.dump(assignments, f)
 
+            cls.parent.load_assignments(self, filename)
             cls.parent.load_details(self)
 
         @classmethod

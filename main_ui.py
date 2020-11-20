@@ -8,9 +8,16 @@ import win32gui
 from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import (QApplication, QDialogButtonBox,
-                             QGraphicsDropShadowEffect, QMainWindow,
-                             QMessageBox, QPushButton, QSizeGrip, QWidget)
+from PyQt5.QtWidgets import (
+    QApplication,
+    QDialogButtonBox,
+    QGraphicsDropShadowEffect,
+    QMainWindow,
+    QMessageBox,
+    QPushButton,
+    QSizeGrip,
+    QWidget,
+)
 from win32api import GetSystemMetrics
 
 import edit_main
@@ -18,7 +25,6 @@ from UI_Files import Resources
 
 UI_MAIN_PATH = "UI_Files/ui_main.ui"
 ASSIGNMENTS_PATH = "data/Lesson/assignments.list"
-DETAILS_PATH = "data/Lesson/assignment_details.list"
 
 
 class MainWindow(QMainWindow):
@@ -30,6 +36,8 @@ class MainWindow(QMainWindow):
 
 
 class UIFunctions(MainWindow):
+    assignments = {}
+
     @classmethod
     def uiDefinitions(cls, self):
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
@@ -48,9 +56,7 @@ class UIFunctions(MainWindow):
         # cls.open_vscode()
 
         cls.load_assignments(self, ASSIGNMENTS_PATH)
-        self.list_assignments.itemPressed.connect(
-            lambda: cls.load_details(self, DETAILS_PATH)
-        )
+        self.list_assignments.itemPressed.connect(lambda: cls.load_details(self))
 
         cls.define_role(self)
 
@@ -76,26 +82,25 @@ class UIFunctions(MainWindow):
     @classmethod
     def load_assignments(cls, self, filename):
         self.list_assignments.clear()
+        cls.assignments.clear()
         if os.path.exists(filename):
             if os.path.getsize(filename) > 0:
                 with open(filename, "rb") as f:
                     unpickler = pickle.Unpickler(f)
                     assignments = unpickler.load()
                     for assignment in assignments:
-                        self.list_assignments.addItem(assignment)
+                        cls.assignments[assignment.name] = assignment.details
+                        self.list_assignments.addItem(assignment.name)
+        print(cls.assignments)
 
     @classmethod
-    def load_details(cls, self, filename):
-        if os.path.exists(filename):
-            if os.path.getsize(filename) > 0:
-                with open(filename, "rb") as f:
-                    unpickler = pickle.Unpickler(f)
-                    details = unpickler.load()
-                    self.assignment_details.setText(
-                        details[self.list_assignments.currentRow()]
-                    )
+    def load_details(cls, self):
+        print(cls.assignments)
+        self.assignment_details.setText(
+            list(cls.assignments.values())[self.list_assignments.currentRow()]
+        )
 
-    class TeacherUiFunctions(MainWindow):
+    class TeacherUiFunctions():
         parrent = None
 
         @classmethod
@@ -108,15 +113,15 @@ class UIFunctions(MainWindow):
             QPushButton:hover {background-color: rgba(59, 143, 14, 150);}"""
             )
             self.main_btn.clicked.connect(lambda: cls.open_edit_form(self))
+            self.confirmButton.accepted.connect(
+                lambda: cls.save_text(self, ASSIGNMENTS_PATH)
+            )
 
             self.assignment_details.setReadOnly(False)
             self.confirmButton = QDialogButtonBox(self.frame_content_hint)
             self.confirmButton.setStandardButtons(QDialogButtonBox.Ok)
             self.confirmButton.setObjectName("confirmButton")
             self.verticalLayout_4.addWidget(self.confirmButton)
-            self.confirmButton.accepted.connect(
-                lambda: cls.save_text(self, DETAILS_PATH)
-            )
 
         @classmethod
         def save_text(cls, self, filename):
@@ -125,33 +130,39 @@ class UIFunctions(MainWindow):
                 if os.path.getsize(filename) > 0:
                     with open(filename, "rb") as f:
                         unpickler = pickle.Unpickler(f)
-                        cls.details = unpickler.load()
-                else: 
-                    cls.details = ['' for _ in range(self.list_assignments.currentRow() + 1)]
-                    print(cls.details)
+                        cls.parrent.details = unpickler.load()
+                else:
+                    cls.parrent.details = [
+                        "" for _ in range(self.list_assignments.currentRow() + 1)
+                    ]
             if (
-                cls.details[self.list_assignments.currentRow()]
+                list(cls.parrent.assignments.values())[
+                    self.list_assignments.currentRow()
+                ]
                 != self.assignment_details.toPlainText()
             ):
-                cls.show_confirm_mess(self, filename)
-            cls.details[
-                self.list_assignments.currentRow()
-            ] = self.assignment_details.toPlainText()
+                cls.show_confirm_mess(self)
+
             if cls.changed:
+                with open(filename, "rb") as f:
+                    unpickler = pickle.Unpickler(f)
+                    assignments = unpickler.load()
+                for i in len(assignments):
+                    assignments[i].value = list(cls.parrent.assignments.values())[i]
+
                 with open(filename, "wb") as f:
-                    pickle.dump(cls.details, f)
+                    pickle.dump(assignments, f)
             else:
                 cls.parrent.load_details(self, filename)
 
         @classmethod
-        def show_confirm_mess(cls, self, filename):
+        def show_confirm_mess(cls, self):
             msg = QMessageBox()
             msg.setWindowTitle("Thành công sửa đổi bài tập")
             msg.setText("Chi tiết câu đã được chỉnh sửa")
-            with open(filename) as f:
-                msg.setDetailedText(
-                    f"Chi tiết gốc:\n{cls.details[self.list_assignments.currentRow()]}\n\nChi tiết sau khi sửa đổi:\n{self.assignment_details.toPlainText()}"
-                )
+            msg.setDetailedText(
+                f"Chi tiết gốc:\n{list(cls.parrent.assignments.values())[self.list_assignments.currentRow()]}\n\nChi tiết sau khi sửa đổi:\n{self.assignment_details.toPlainText()}"
+            )
             msg.setIcon(QMessageBox.Information)
             msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
             msg.buttonClicked.connect(cls.popup_button)

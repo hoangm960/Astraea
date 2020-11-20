@@ -70,72 +70,80 @@ class UIFunctions(EditWindow):
     list = []
 
     @classmethod
-    def uiDefinitions(cls, self):
+    def uiDefinitions(cls, ui):
         # Delete title bar
-        self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
+        ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 
         # Make drop shadow
-        self.shadow = QGraphicsDropShadowEffect(self)
-        self.shadow.setBlurRadius(20)
-        self.shadow.setXOffset(0)
-        self.shadow.setYOffset(0)
-        self.shadow.setColor(QColor(0, 0, 0, 100))
-        self.bg_frame.setGraphicsEffect(self.shadow)
+        ui.shadow = QGraphicsDropShadowEffect(ui)
+        ui.shadow.setBlurRadius(20)
+        ui.shadow.setXOffset(0)
+        ui.shadow.setYOffset(0)
+        ui.shadow.setColor(QColor(0, 0, 0, 100))
+        ui.bg_frame.setGraphicsEffect(ui.shadow)
 
         # Button function
-        self.btn_maximize.clicked.connect(lambda: cls.maximize_restore(self))
-        self.btn_minimize.clicked.connect(lambda: self.showMinimized())
-        self.btn_quit.clicked.connect(lambda: self.close())
-        self.confirm_btn.clicked.connect(
-            lambda: cls.load_assignments(self, ASSIGNMENTS_PATH)
+        ui.btn_maximize.clicked.connect(lambda: cls.maximize_restore(ui))
+        ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
+        ui.btn_quit.clicked.connect(lambda: ui.close())
+        ui.confirm_btn.clicked.connect(
+            lambda: cls.load_assignments(ui, ASSIGNMENTS_PATH)
         )
 
         # Window size grip
-        self.sizegrip = QSizeGrip(self.frame_grip)
-        self.sizegrip.setStyleSheet(
+        ui.sizegrip = QSizeGrip(ui.frame_grip)
+        ui.sizegrip.setStyleSheet(
             "QSizeGrip { width: 20px; height: 20px; margin: 5px; border-radius: 10px; } QSizeGrip:hover { background-color: rgb(201, 21, 8) }"
         )
-        self.sizegrip.setToolTip("Resize Window")
+        ui.sizegrip.setToolTip("Resize Window")
 
         # Change scene
-        self.confirm_button.clicked.connect(lambda: cls.go_to_second(self))
-        self.return_btn.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(0))
-        self.stacked_widget.setCurrentIndex(0)
+        ui.confirm_button.clicked.connect(lambda: cls.go_to_second(ui))
+        ui.return_btn.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(0))
+        if os.path.getsize(ASSIGNMENTS_PATH) > 0:
+            ui.stacked_widget.setCurrentIndex(1)
+            with open(ASSIGNMENTS_PATH, 'rb') as f:
+                unpickler = pickle.Unpickler(f)
+                assignments = unpickler.load()
+                cls.put_frame_in_list(ui, len(assignments))
+                cls.setup_frame(ui, assignments)
+        else:
+            ui.stacked_widget.setCurrentIndex(0)
 
     @classmethod
-    def go_to_second(cls, self):
-        cls.change_lesson_title(self, self.name_entry.text())
-        cls.put_frame_in_list(self, self.num_entry.value())
-        self.stacked_widget.setCurrentIndex(1)
+    def go_to_second(cls, ui):
+        cls.change_lesson_title(ui, ui.name_entry.text())
+        cls.put_frame_in_list(ui, ui.num_entry.value())
+        ui.stacked_widget.setCurrentIndex(1)
 
     @classmethod
     def returnStatus(cls):
         return cls.GLOBAL_STATE
 
     @classmethod
-    def maximize_restore(cls, self):
+    def maximize_restore(cls, ui):
         status = cls.GLOBAL_STATE
 
         if status == False:
-            self.showMaximized()
+            ui.showMaximized()
 
             cls.GLOBAL_STATE = True
 
-            self.bg_layout.setContentsMargins(0, 0, 0, 0)
-            self.bg_frame.setStyleSheet(
+            ui.bg_layout.setContentsMargins(0, 0, 0, 0)
+            ui.bg_frame.setStyleSheet(
                 "background-color: qlineargradient(spread:pad, x1:0, y1:0.341, x2:1, y2:0.897, stop:0 rgba(97, 152, 255, 255), stop:0.514124 rgba(186, 38, 175, 255), stop:1 rgba(255, 0, 0, 255)); border-radius: 0px;"
             )
-            self.btn_maximize.setToolTip("Restore")
+            ui.btn_maximize.setToolTip("Restore")
         else:
             cls.GLOBAL_STATE = False
-            self.showNormal()
-            self.resize(self.width() + 1, self.height() + 1)
-            self.bg_layout.setContentsMargins(10, 10, 10, 10)
-            self.bg_frame.setStyleSheet(
+            ui.showNormal()
+            ui.resize(ui.width() + 1, ui.height() + 1)
+            ui.bg_layout.setContentsMargins(10, 10, 10, 10)
+            ui.bg_frame.setStyleSheet(
                 "background-color: qlineargradient(spread:pad, x1:0, y1:0.341, x2:1, y2:0.897, stop:0 rgba(97, 152, 255, 255), stop:0.514124 rgba(186, 38, 175, 255), stop:1 rgba(255, 0, 0, 255)); border-radius: 20px;"
             )
-            self.btn_maximize.setToolTip("Maximize")
+            ui.btn_maximize.setToolTip("Maximize")
 
     class EditFrame(QWidget):
         def __init__(self, *args, **kwargs):
@@ -160,27 +168,41 @@ class UIFunctions(EditWindow):
                 entry.setText(file_name[0])
 
     @classmethod
-    def change_lesson_title(cls, self, title):
-        self.lesson_title.setText(title if title else "Bài học không tên")
+    def change_lesson_title(cls, ui, title):
+        ui.lesson_title.setText(title if title else "Bài học không tên")
 
     @classmethod
-    def put_frame_in_list(cls, self, num):
-        current_layout = self.content_widget.layout()
-        self.content_layout = (
-            QVBoxLayout(self.content_widget) if not current_layout else current_layout
-        )
-        for i in reversed(range(self.content_layout.count())):
-            self.content_layout.itemAt(i).widget().setParent(None)
+    def setup_frame(cls, ui, assignments):
+        children = ui.content_widget.children()
+        i = 1
+        for assignment in assignments:
+            children[i].title_entry.setText(assignment.name)
+            children[i].test_file_entry.setText(assignment.test_file)
+            children[i].input_file_entry.setText(assignment.input_file)
+            children[i].ans_file_entry.setText(assignment.ans_file)
+            children[i].test_num_entry.setValue(assignment.tests)
+            children[i].test_var_entry.setValue(assignment.vars)
+            children[i].details_entry.setText(assignment.details)
+            i += 1
 
-        self.scrollArea.verticalScrollBar().setValue(1)
+    @classmethod
+    def put_frame_in_list(cls, ui, num):
+        current_layout = ui.content_widget.layout()
+        ui.content_layout = (
+            QVBoxLayout(ui.content_widget) if not current_layout else current_layout
+        )
+        for i in reversed(range(ui.content_layout.count())):
+            ui.content_layout.itemAt(i).widget().setParent(None)
+
+        ui.scrollArea.verticalScrollBar().setValue(1)
 
         for _ in range(num):
-            self.frame = cls.EditFrame()
-            self.content_layout.addWidget(self.frame)
+            ui.frame = cls.EditFrame()
+            ui.content_layout.addWidget(ui.frame)
 
     @classmethod
-    def load_assignments(cls, self, filename):
-        children = self.content_widget.children()
+    def load_assignments(cls, ui, filename):
+        children = ui.content_widget.children()
         assignments = [
             Assignment(
                 children[i].title_entry.text(),
@@ -191,14 +213,14 @@ class UIFunctions(EditWindow):
                 children[i].test_var_entry.value(),
                 children[i].details_entry.toPlainText()
             )
-            for i in range(1, self.content_layout.count() + 1)
+            for i in range(1, ui.content_layout.count() + 1)
         ]
 
         with open(filename, "wb") as f:
             pickle.dump(assignments, f)
 
         main_ui.main("teacher")
-        self.close()
+        ui.close()
 
 
 if __name__ == "__main__":

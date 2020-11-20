@@ -95,8 +95,6 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def load_details(cls, ui):
-        print([detail for detail in cls.assignments.values()])
-        print([detail for detail in cls.assignments.values()])
         ui.assignment_details.setText(
             [detail for detail in cls.assignments.values()][
                 ui.list_assignments.currentRow()
@@ -130,9 +128,7 @@ class UIFunctions(MainWindow):
         @classmethod
         def save_text(cls, ui, filename):
             if (
-                list(cls.parent.assignments.values())[
-                    ui.list_assignments.currentRow()
-                ]
+                list(cls.parent.assignments.values())[ui.list_assignments.currentRow()]
                 != ui.assignment_details.toPlainText()
             ):
                 cls.show_confirm_mess(ui)

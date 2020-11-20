@@ -101,16 +101,20 @@ class UIFunctions(EditWindow):
         # Change scene
         ui.confirm_button.clicked.connect(lambda: cls.go_to_second(ui))
         ui.return_btn.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(0))
-        if os.path.getsize(ASSIGNMENTS_PATH) > 0:
-            ui.stacked_widget.setCurrentIndex(1)
-            with open(ASSIGNMENTS_PATH, 'rb') as f:
-                unpickler = pickle.Unpickler(f)
-                assignments = unpickler.load()
-                cls.put_frame_in_list(ui, len(assignments))
-                cls.setup_frame(ui, assignments)
-        else:
-            ui.stacked_widget.setCurrentIndex(0)
+        ui.stacked_widget.setCurrentIndex(0)
+        cls.check_empty(ui, ASSIGNMENTS_PATH)
 
+    @classmethod
+    def check_empty(cls, ui, filename):
+        if os.path.exists(filename):
+            if os.path.getsize(filename) > 0:
+                ui.stacked_widget.setCurrentIndex(1)
+                with open(filename, 'rb') as f:
+                    unpickler = pickle.Unpickler(f)
+                    assignments = unpickler.load()
+                    cls.put_frame_in_list(ui, len(assignments))
+                    cls.setup_frame(ui, assignments)
+                
     @classmethod
     def go_to_second(cls, ui):
         cls.change_lesson_title(ui, ui.name_entry.text())

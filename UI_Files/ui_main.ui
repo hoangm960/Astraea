@@ -177,13 +177,16 @@
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_5">
              <property name="spacing">
-              <number>10</number>
+              <number>15</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
              </property>
              <property name="topMargin">
               <number>0</number>
              </property>
              <property name="rightMargin">
-              <number>5</number>
+              <number>0</number>
              </property>
              <property name="bottomMargin">
               <number>0</number>
@@ -209,7 +212,7 @@
                 <string notr="true">QPushButton {
 	border: none;
 	border-radius: 8px;
-	background-color: rgb(255, 255, 255);
+	background-color: transparent;
 }
 QPushButton:hover {
 	background-color: rgba(255, 255, 255, 150);
@@ -217,6 +220,10 @@ QPushButton:hover {
                </property>
                <property name="text">
                 <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/images/icons/minimize.png</normaloff>:/images/icons/minimize.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -247,7 +254,7 @@ QPushButton:hover {
                 <string notr="true">QPushButton {
 	border: none;
 	border-radius: 8px;
-	background-color: rgb(195, 0, 0);
+	background-color: transparent;
 }
 QPushButton:hover {
 	background-color: rgba(195, 0, 0, 150);
@@ -256,10 +263,14 @@ QPushButton:hover {
                <property name="text">
                 <string/>
                </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/images/icons/close.png</normaloff>:/images/icons/close.png</iconset>
+               </property>
                <property name="iconSize">
                 <size>
-                 <width>10</width>
-                 <height>10</height>
+                 <width>15</width>
+                 <height>15</height>
                 </size>
                </property>
               </widget>

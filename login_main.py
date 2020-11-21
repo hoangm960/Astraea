@@ -55,7 +55,7 @@ class LoginFunctions(LoginWindow):
     STATE_ECHOPASS = True
     USER_PATH = "data/Users/User.txt"
     USER_PATH_ENCRYPTED = "data/Users/User.encrypted"
-    KEY_PATH = "data/encryption/key.key"
+    KEY_PATH = "data/encryption/users.key"
 
     @classmethod
     def uiDefinitions(cls, self):

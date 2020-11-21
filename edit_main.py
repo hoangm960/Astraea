@@ -25,6 +25,7 @@ from encryption import *
 EDIT_FORM_PATH = "UI_Files/edit_form.ui"
 EDIT_FRAME_PATH = "UI_Files/edit_frame.ui"
 ASSIGNMENTS_PATH = "data/Lesson/assignments.list"
+# KEY_PATH
 
 
 class Assignment:
@@ -68,7 +69,7 @@ class EditWindow(QMainWindow):
 class UIFunctions(EditWindow):
     GLOBAL_STATE = False
     ASSIGNMENTS = []
-    deleted = True
+    deleted = False
 
     @classmethod
     def uiDefinitions(cls, ui):
@@ -87,7 +88,7 @@ class UIFunctions(EditWindow):
         # Button function
         ui.btn_maximize.clicked.connect(lambda: cls.maximize_restore(ui))
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
-        ui.btn_quit.clicked.connect(lambda: ui.close())
+        ui.btn_quit.clicked.connect(lambda: cls.reopen_main(ui))
         ui.confirm_btn.clicked.connect(
             lambda: cls.load_assignments(ui, ASSIGNMENTS_PATH)
         )
@@ -117,9 +118,11 @@ class UIFunctions(EditWindow):
                 ui.stacked_widget.setCurrentIndex(1)
                 with open(filename, 'rb') as f:
                     unpickler = pickle.Unpickler(f)
-                    assignments = unpickler.load()
+                    data = unpickler.load()
+                    title = data[0]
+                    assignments = data[1]
                     cls.put_frame_in_list(ui, len(assignments))
-                    cls.setup_frame(ui, assignments)
+                    cls.setup_frame(ui, title, assignments)
                 
     @classmethod
     def go_to_second(cls, ui):
@@ -142,7 +145,9 @@ class UIFunctions(EditWindow):
 
             ui.bg_layout.setContentsMargins(0, 0, 0, 0)
             ui.bg_frame.setStyleSheet(
-                "background-color: qlineargradient(spread:pad, x1:0, y1:0.341, x2:1, y2:0.897, stop:0 rgba(97, 152, 255, 255), stop:0.514124 rgba(186, 38, 175, 255), stop:1 rgba(255, 0, 0, 255)); border-radius: 0px;"
+                """background-color: rgb(30, 30, 30);
+                border-radius: 0px;
+                color: rgb(255, 255, 255);"""
             )
             ui.btn_maximize.setToolTip("Restore")
         else:
@@ -151,7 +156,9 @@ class UIFunctions(EditWindow):
             ui.resize(ui.width() + 1, ui.height() + 1)
             ui.bg_layout.setContentsMargins(10, 10, 10, 10)
             ui.bg_frame.setStyleSheet(
-                "background-color: qlineargradient(spread:pad, x1:0, y1:0.341, x2:1, y2:0.897, stop:0 rgba(97, 152, 255, 255), stop:0.514124 rgba(186, 38, 175, 255), stop:1 rgba(255, 0, 0, 255)); border-radius: 20px;"
+                """background-color: rgb(30, 30, 30);
+                border-radius: 10px;
+                color: rgb(255, 255, 255);"""
             )
             ui.btn_maximize.setToolTip("Maximize")
 
@@ -182,9 +189,10 @@ class UIFunctions(EditWindow):
         ui.lesson_title.setText(title if title else "Bài học không tên")
 
     @classmethod
-    def setup_frame(cls, ui, assignments):
+    def setup_frame(cls, ui, title, assignments):
         children = ui.content_widget.children()
         i = 1
+        cls.change_lesson_title(ui, title)
         for assignment in assignments:
             children[i].title_entry.setText(assignment.name)
             children[i].test_file_entry.setText(assignment.test_file)
@@ -214,7 +222,6 @@ class UIFunctions(EditWindow):
         for _ in range(num):
             ui.frame = cls.EditFrame()
             ui.frame.close_btn.clicked.connect(lambda: cls.close_frame(ui, ui.frame))
-            ui.frame.setGeometry(QRect(0, 0, ui.width(), ui.height()))
             ui.content_layout.addWidget(ui.frame)
 
     @classmethod
@@ -257,8 +264,12 @@ class UIFunctions(EditWindow):
         ]
 
         with open(filename, "wb") as f:
-            pickle.dump(assignments, f)
+            pickle.dump([ui.lesson_title.text(), assignments], f)
+        
+        cls.reopen_main(ui)
 
+    @classmethod
+    def reopen_main(cls, ui):
         main_ui.main("teacher")
         ui.close()
 

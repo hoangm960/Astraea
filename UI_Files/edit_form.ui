@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>820</width>
-    <height>630</height>
+    <height>650</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -314,7 +314,8 @@ QPushButton:hover {
              <item>
               <widget class="QStackedWidget" name="stacked_widget">
                <property name="styleSheet">
-                <string notr="true">border-radius: 1px;</string>
+                <string notr="true">border-radius: 1px;
+background-color: transparent;</string>
                </property>
                <property name="currentIndex">
                 <number>1</number>
@@ -699,7 +700,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                          <x>0</x>
                          <y>0</y>
                          <width>820</width>
-                         <height>480</height>
+                         <height>500</height>
                         </rect>
                        </property>
                       </widget>

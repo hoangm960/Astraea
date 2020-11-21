@@ -34,7 +34,8 @@ class LoginWindow(QMainWindow):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(self.UI_PATH, self)
         LoginFunctions.uiDefinitions(self)
-
+        
+        self.OkCancelFrame.move(290,220)
         def moveWindow(event):
             if LoginFunctions.returnStatus() == True:
                 LoginFunctions.maximize_restore(self)
@@ -42,7 +43,6 @@ class LoginWindow(QMainWindow):
                 self.move(self.pos() + event.globalPos() - self.dragPos)
                 self.dragPos = event.globalPos()
                 event.accept()
-
         self.title_bar.mouseMoveEvent = moveWindow
 
     def mousePressEvent(self, event):
@@ -61,6 +61,7 @@ class LoginFunctions(LoginWindow):
 
     @classmethod
     def uiDefinitions(cls, self):
+        
         self.OkCancelFrame.hide()
         self.frameError.hide()
         self.eyeHide.hide()
@@ -68,7 +69,7 @@ class LoginFunctions(LoginWindow):
         self.stacked_widget.setCurrentIndex(0)
         self.NoteName.hide()
         self.NotePass.hide()
-        self.NoteUser.hide()
+        self.NoteUser.hide() 
         self.move(round(GetSystemMetrics(0) / 10), round(GetSystemMetrics(1) / 50))
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
@@ -76,7 +77,11 @@ class LoginFunctions(LoginWindow):
         cls.setup_sizegrip(self)
         cls.load_users()
         cls.check_autosave(self)
-
+        cls.move_TaskClose(self)
+        
+    @classmethod 
+    def move_TaskClose(cls, self):
+        self.OkCancelFrame.move(round((self.frame.width()-400)/2), round((self.frame.height()-180)/2)) 
     @classmethod
     def create_dropshadow(cls, self):
         self.shadow = QGraphicsDropShadowEffect(self)
@@ -90,6 +95,7 @@ class LoginFunctions(LoginWindow):
     def connect_btn(cls, self):
         self.btn_minimize.clicked.connect(lambda: self.showMinimized())
         self.btn_maximize.clicked.connect(lambda: cls.maximize_restore(self))
+        self.btn_maximize.clicked.connect(lambda: cls.move_TaskClose(self))
         self.btn_quit.clicked.connect(lambda: self.OkCancelFrame.show())
         self.Accept.clicked.connect(lambda: self.close())
         self.eyeHide.clicked.connect(
@@ -121,6 +127,10 @@ class LoginFunctions(LoginWindow):
             self.STATE_ECHOPASS = True
             self.PassBox_SU.clear()
             self.NameBox_SU.clear()
+            self.UserBox.clear()
+            self.NoteName.hide()
+            self.NotePass.hide()
+            self.NoteUser.hide()
             self.Student_SU.setChecked(True)
 
     @classmethod
@@ -209,26 +219,22 @@ class LoginFunctions(LoginWindow):
     def check_SU(cls, self):
         check = True
         name = self.NameBox_SU.text()[:31]
-        password = self.PassBox_SU.text()[:22]
-        name_account = self.UserBox.text()[:31]
+        password = self.PassBox_SU.text()[:26]
+        name_account = self.UserBox.text()[:30]
 
         for user in cls.users:
-            if len(name) < 6  or name in user.name or [False for i in name.lower() if i not in "1234567890qwertyuiopasdfghjklzxcvbnm "] == [False]:
+            if len(name) < 6  or name in user.name or list(set(False for i in name if i not in 'qwertyuiopasdfghjklzxcvbnm1234567890 ')) == [False]:
                 self.NoteName.show()
                 check = False
-            else:
-                self.NoteName.hide()
-            if len(password) < 8 or len(name_account) < 6 or [False for i in name.lower() if i not in "1234567890qwertyuiopasdfghjklzxcvbnm "] == [False]:
-                self.NotePass.show()
-                check = False
-            else:
-                self.NotePass.hide()
-            if len(name_account) < 6  or name.replace(" ", "").isalnum() is False:
-                self.NoteUser.show()
-                check = False 
-            else:
-                self.noteUser.hide()
-            
+            else: self.NoteName.hide()
+        if len(password) < 8 or list(set(False for i in password if i not in 'qwertyuiopasdfghjklzxcvbnm1234567890 ')) == [False]:
+            self.NotePass.show()
+            check = False
+        else: self.NotePass.hide()
+        if len(name_account) < 6 or name_account.replace(" ", "").isalnum() is False:
+            self.NoteUser.show()
+            check = False    
+        else: self.NoteUser.hide()
         if check:
             decrypt(cls.USER_PATH_ENCRYPTED, cls.USER_PATH, cls.KEY_PATH)
             # time.sleep(3)

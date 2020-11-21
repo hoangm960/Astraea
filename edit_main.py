@@ -3,7 +3,7 @@ from pathlib import Path
 import pickle
 import sys
 from PyQt5 import QtCore
-from PyQt5.QtCore import QSize, Qt
+from PyQt5.QtCore import QRect, QSize, Qt
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (
     QApplication,
@@ -11,7 +11,7 @@ from PyQt5.QtWidgets import (
     QGraphicsDropShadowEffect,
     QLayout,
     QListWidgetItem,
-    QMainWindow,
+    QMainWindow, QMessageBox,
     QSizeGrip,
     QVBoxLayout,
     QWidget,
@@ -68,7 +68,7 @@ class EditWindow(QMainWindow):
 class UIFunctions(EditWindow):
     GLOBAL_STATE = False
     ASSIGNMENTS = []
-    list = []
+    deleted = True
 
     @classmethod
     def uiDefinitions(cls, ui):
@@ -95,7 +95,7 @@ class UIFunctions(EditWindow):
         # Window size grip
         ui.sizegrip = QSizeGrip(ui.frame_grip)
         ui.sizegrip.setStyleSheet(
-            "QSizeGrip { width: 20px; height: 20px; margin: 5px; border-radius: 10px; } QSizeGrip:hover { background-color: rgb(201, 21, 8) }"
+            "QSizeGrip { width: 20px; height: 20px; margin: 5px; border-radius: 10px; } QSizeGrip:hover { background-color: rgb(90, 90, 90)}"
         )
         ui.sizegrip.setToolTip("Resize Window")
 
@@ -213,8 +213,32 @@ class UIFunctions(EditWindow):
     def add_frame(cls, ui, num):
         for _ in range(num):
             ui.frame = cls.EditFrame()
-            ui.frame.setGeometry(ui.content_layout.geometry())
+            ui.frame.close_btn.clicked.connect(lambda: cls.close_frame(ui, ui.frame))
+            ui.frame.setGeometry(QRect(0, 0, ui.width(), ui.height()))
             ui.content_layout.addWidget(ui.frame)
+
+    @classmethod
+    def close_frame(cls, ui, frame):
+        children = ui.content_widget.children()
+        pos = len(children) - children.index(frame)
+        cls.warn_close_frame(ui, children[pos])
+        if cls.deleted == True:
+            children[pos].setParent(None)
+            ui.scrollArea.verticalScrollBar().setValue(1)
+
+    @classmethod
+    def warn_close_frame(cls, ui, frame):
+        msg = QMessageBox(ui)
+        msg.setWindowTitle("Xóa bài tập")
+        msg.setText(f"'{frame.title_entry.text()}' sẽ được xóa")
+        msg.setIcon(QMessageBox.Information)
+        msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+        msg.buttonClicked.connect(cls.popup_button)
+        msg.exec_()
+    
+    @classmethod
+    def popup_button(cls, i):
+        cls.deleted = False if i.text().lower() == "cancel" else True
 
     @classmethod
     def load_assignments(cls, ui, filename):

@@ -148,7 +148,7 @@ class UIFunctions(MainWindow):
 
         @classmethod
         def show_confirm_mess(cls, ui):
-            msg = QMessageBox()
+            msg = QMessageBox(ui)
             msg.setWindowTitle("Thành công sửa đổi bài tập")
             msg.setText("Chi tiết câu đã được chỉnh sửa")
             msg.setDetailedText(

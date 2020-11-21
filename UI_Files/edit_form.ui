@@ -317,7 +317,7 @@ QPushButton:hover {
                 <string notr="true">border-radius: 1px;</string>
                </property>
                <property name="currentIndex">
-                <number>2</number>
+                <number>1</number>
                </property>
                <widget class="QWidget" name="edit_frame1">
                 <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -358,7 +358,8 @@ QPushButton:hover {
                        </font>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">border-radius: 10px;</string>
+                       <string notr="true">border-radius: 10px;
+color: rgb(0, 0, 0);</string>
                       </property>
                       <property name="alignment">
                        <set>Qt::AlignCenter</set>
@@ -425,6 +426,7 @@ QPushButton:hover {
                       <property name="styleSheet">
                        <string notr="true">QSpinBox {
 	border-radius: 10px;
+	color: rgb(0, 0, 0)
 }
 QSpinBox::up-button {
 	background-color: rgb(255, 255, 255);
@@ -778,7 +780,7 @@ QPushButton:pressed {
 }r</string>
                       </property>
                       <property name="text">
-                       <string>OK</string>
+                       <string>Lưu</string>
                       </property>
                      </widget>
                     </item>
@@ -821,7 +823,7 @@ QPushButton:pressed {
 }r</string>
                       </property>
                       <property name="text">
-                       <string>Quay lại</string>
+                       <string>Tạo mới</string>
                       </property>
                      </widget>
                     </item>

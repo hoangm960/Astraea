@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>717</width>
-    <height>315</height>
+    <width>736</width>
+    <height>321</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">border-radius: 40px;</string>
+   <string notr="true">border-radius: 16px;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -38,6 +38,7 @@
       <property name="styleSheet">
        <string notr="true">QFrame {
 background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0.9945, y2:1, stop:0.125 rgba(129, 48, 142, 255), stop:1 rgba(63, 31, 95, 255));
+background-color: rgb(35, 44, 51);
 }</string>
       </property>
       <property name="frameShape">
@@ -46,47 +47,6 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0.9945, y2:1, stop:
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <widget class="QLabel" name="Slogan_Pylearn">
-       <property name="geometry">
-        <rect>
-         <x>80</x>
-         <y>20</y>
-         <width>221</width>
-         <height>81</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLabel {
-background: none;
-color:  rgb(255, 170, 255);
-font: bold;
-font-size: 40px;
-}</string>
-       </property>
-       <property name="text">
-        <string>PyLearn</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="Slogan">
-       <property name="geometry">
-        <rect>
-         <x>250</x>
-         <y>60</y>
-         <width>261</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLabel {
-background: none;
-color: rgb(213, 41, 255);
-font-size: 20px;
-}</string>
-       </property>
-       <property name="text">
-        <string>ỨNG DỤNG HỌC TẬP</string>
-       </property>
-      </widget>
       <widget class="QProgressBar" name="progressBar">
        <property name="geometry">
         <rect>
@@ -99,16 +59,16 @@ font-size: 20px;
        <property name="styleSheet">
         <string notr="true">QProgressBar { 	
 	border-radius: 20px;
- 	color: rgb(255, 170, 255);
+ 	color: rgb(255, 255, 255);
  	font: bold;
 	font-size: 20px;
 	text-align: center;
-	background-color: rgba(154, 57, 171, 100);
+	background-color: rgba(0, 0, 0, 100);
 }
 
 QProgressBar::chunk {
 	border-radius: 20px;
-	background-color: qlineargradient(spread:pad, x1:0, y1:0.551, x2:1, y2:0.579, stop:0 rgba(210, 93, 255, 255), stop:0.642045 rgba(142, 32, 201, 255));
+	background-color: qlineargradient(spread:pad, x1:0, y1:0.551, x2:1, y2:0.568, stop:0 rgba(255, 255, 255, 255), stop:1 rgba(149, 149, 149, 255));
 }</string>
        </property>
        <property name="value">
@@ -127,7 +87,7 @@ QProgressBar::chunk {
        <property name="styleSheet">
         <string notr="true">QLabel {
 background: none;
-color: rgb(170, 85, 255);
+color: rgb(255, 255, 255);
 font-size: 18px;
 }</string>
        </property>
@@ -141,7 +101,7 @@ font-size: 18px;
       <widget class="QLabel" name="label_credits">
        <property name="geometry">
         <rect>
-         <x>-10</x>
+         <x>60</x>
          <y>290</y>
          <width>651</width>
          <height>21</height>
@@ -155,13 +115,33 @@ font-size: 18px;
        </property>
        <property name="styleSheet">
         <string notr="true">background: none;
-color: rgb(98, 114, 164);</string>
+color: rgb(228, 225, 228);</string>
        </property>
        <property name="text">
-        <string>&lt;strong&gt;Created&lt;/strong&gt;: Tien Huynh @Tok</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ffffff;&quot;&gt;Version &lt;/span&gt;&lt;span style=&quot; font-size:14pt; color:#ffffff;&quot;&gt;1.0.0&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="Slogan_Pylearn">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>40</y>
+         <width>461</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel {
+background: none;
+color:  rgb(255, 255, 255);
+font: bold;
+}</string>
+       </property>
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:36pt; color:#ffffff;&quot;&gt;PyLearn &lt;/span&gt;&lt;span style=&quot; font-size:22pt; font-weight:400; color:#dfdfdf;&quot;&gt;ứng dụng học tập&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </widget>

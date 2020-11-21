@@ -1,6 +1,6 @@
 import os
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtGui import QColor
+from PyQt5.QtGui import QColor, QPalette
 from PyQt5.QtWidgets import (
     QApplication,
     QGraphicsDropShadowEffect,
@@ -20,12 +20,12 @@ from random import randrange
 
 
 class User:
-    def __init__(self, name, password, role, auto_saved):
+    def __init__(self, name, password, role, name_user, auto_saved):
         self.name = name
         self.password = password
         self.role = role
         self.auto_saved = auto_saved
-
+        self.name_user = name_user
 
 class LoginWindow(QMainWindow):
     UI_PATH = "UI_Files/Login_gui.ui"
@@ -63,12 +63,12 @@ class LoginFunctions(LoginWindow):
     def uiDefinitions(cls, self):
         self.OkCancelFrame.hide()
         self.frameError.hide()
-        self.eyeButton_SU.hide()
-        self.eyeButton_SI.hide()
-        self.Name_Frame.hide()
-        self.label_namef.hide()
+        self.eyeHide.hide()
+        self.eyeHide_SU.hide()
         self.stacked_widget.setCurrentIndex(0)
-
+        self.NoteName.hide()
+        self.NotePass.hide()
+        self.NoteUser.hide()
         self.move(round(GetSystemMetrics(0) / 10), round(GetSystemMetrics(1) / 50))
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
@@ -92,16 +92,16 @@ class LoginFunctions(LoginWindow):
         self.btn_maximize.clicked.connect(lambda: cls.maximize_restore(self))
         self.btn_quit.clicked.connect(lambda: self.OkCancelFrame.show())
         self.Accept.clicked.connect(lambda: self.close())
-        self.eyeButton_SI.clicked.connect(
+        self.eyeHide.clicked.connect(
             lambda: self.PassBox_SI.setEchoMode(QtWidgets.QLineEdit.Password)
         )
-        self.eyeButton_SU.clicked.connect(
+        self.eyeHide_SU.clicked.connect(
             lambda: self.PassBox_SU.setEchoMode(QtWidgets.QLineEdit.Password)
         )
-        self.eyeButton_SI_2.clicked.connect(
+        self.eyeShow.clicked.connect(
             lambda: self.PassBox_SI.setEchoMode(QtWidgets.QLineEdit.Normal)
         )
-        self.eyeButton_SU_2.clicked.connect(
+        self.eyeShow_SU.clicked.connect(
             lambda: self.PassBox_SU.setEchoMode(QtWidgets.QLineEdit.Normal)
         )
         self.SignIn_Bt.clicked.connect(lambda: cls.check_SI(self))
@@ -179,8 +179,8 @@ class LoginFunctions(LoginWindow):
 
     @classmethod
     def check_SI(cls, self):
-        name = self.NameBox_SI.text()
-        password = self.PassBox_SI.text()
+        name = self.NameBox_SI.text()[:31]
+        password = self.PassBox_SI.text()[:22]
         for user in cls.users:
             if name == "" or password == "":
                 cls.Error(self, "Chưa điền đầy đủ thông tin đăng nhập")
@@ -208,60 +208,39 @@ class LoginFunctions(LoginWindow):
     @classmethod
     def check_SU(cls, self):
         check = True
-        name = self.NameBox_SU.text()
-        password = self.PassBox_SU.text()
+        name = self.NameBox_SU.text()[:31]
+        password = self.PassBox_SU.text()[:22]
+        name_account = self.UserBox.text()[:31]
+
         for user in cls.users:
-            if len(name) < 6:
-                cls.Error(self, "Yêu cầu độ dài tên tài khoản hơn 5 kí tự.")
+            if len(name) < 6  or name in user.name or [False for i in name.lower() if i not in "1234567890qwertyuiopasdfghjklzxcvbnm "] == [False]:
+                self.NoteName.show()
                 check = False
-
-            elif name in user.name:
-                cls.Error(self, "Tên tài khoản đã tồn tại. Hãy lựa chọn tên khác.")
-                check = False
-
-            elif len(password) < 8:
-                cls.Error(self, "Yêu cầu độ dài mật khẩu hơn 7 kí tự")
-                check = False
-
             else:
-                if name.isalnum() is False:
-                    if name.replace(" ", "").isalnum() is True:
-                        pass
-                    else:
-                        cls.Error(self, "Tên tài khoản không được chứa kí tự đặc biệt")
-                        check = False
-                else:
-                    if password.isalnum() is False:
-                        if password.replace(" ", "").isalnum() is True:
-                            pass
-                        else:
-                            cls.Error(self, "Mật khẩu không được chứa kí tự đặc biệt")
-                            check = False
-
+                self.NoteName.hide()
+            if len(password) < 8 or len(name_account) < 6 or [False for i in name.lower() if i not in "1234567890qwertyuiopasdfghjklzxcvbnm "] == [False]:
+                self.NotePass.show()
+                check = False
+            else:
+                self.NotePass.hide()
+            if len(name_account) < 6  or name.replace(" ", "").isalnum() is False:
+                self.NoteUser.show()
+                check = False 
+            else:
+                self.noteUser.hide()
+            
         if check:
-            self.Name_Frame.show()
-            self.title_bar.hide() 
-            def check_name():
-                name_account = self.lineEdit_N.text()
-                if len(name_account) < 8 or name_account.replace(' ','').isalnum() is False:
-                    self.label_namefs.show()
-                else:
-                    decrypt(cls.USER_PATH_ENCRYPTED, cls.USER_PATH, cls.KEY_PATH)
-                    time.sleep(3)
-                    with open(cls.USER_PATH, "wb") as f:
-                        name = self.NameBox_SU.text()
-                        password = self.PassBox_SU.text()
-                        role = "teacher" if self.Teacher_SU.isChecked() else "student"
-                        cls.users.append(User(name, password, role, False))
-                        pickle.dump(cls.users, f)
-                    encrypt(cls.USER_PATH, cls.USER_PATH_ENCRYPTED, cls.KEY_PATH) 
-                    self.Name_Frame.hide()
-                    self.title_bar.show()
-                    self.stacked_widget.setCurrentIndex(2)
-            self.pushButton_N.clicked.connect(lambda: check_name())  
+            decrypt(cls.USER_PATH_ENCRYPTED, cls.USER_PATH, cls.KEY_PATH)
+            # time.sleep(3)
+            with open(cls.USER_PATH, "wb") as f:
+                name = self.NameBox_SU.text()
+                password = self.PassBox_SU.text()
+                role = "teacher" if self.Teacher_SU.isChecked() else "student"
+                cls.users.append(User(name, password, role, name_account, False))
+                pickle.dump(cls.users, f)
                 
-        QtCore.QTimer.singleShot(3000, lambda: self.frameError.hide())
-
+            encrypt(cls.USER_PATH, cls.USER_PATH_ENCRYPTED, cls.KEY_PATH) 
+            self.stacked_widget.setCurrentIndex(2)
 
 class Loading_Screen(QMainWindow):
     counter = 0

@@ -1,13 +1,11 @@
 <RCC>
   <qresource prefix="images">
     <file>icons/folder_open.png</file>
-    <file>icons/invisible.png</file>
-    <file>icons/invisible_black.png</file>
+    <file>icons/eye_hide.png</file>
+    <file>icons/eye_show.png</file>
     <file>icons/menubutton_off.png</file>
     <file>icons/menubutton_on.png</file>
     <file>icons/minus.png</file>
     <file>icons/plus.png</file>
-    <file>icons/visibility.png</file>
-    <file>icons/visibility_black.png</file>
   </qresource>
 </RCC>

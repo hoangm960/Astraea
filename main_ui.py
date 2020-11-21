@@ -12,7 +12,7 @@ from PyQt5.QtWidgets import (QApplication, QDialogButtonBox,
                              QGraphicsDropShadowEffect, QMainWindow,
                              QMessageBox, QPushButton, QSizeGrip, QWidget)
 from win32api import GetSystemMetrics
-
+import result_main
 import edit_main
 from UI_Files import Resources
 
@@ -128,7 +128,6 @@ class UIFunctions(MainWindow):
                         cls.details = unpickler.load()
                 else: 
                     cls.details = ['' for _ in range(self.list_assignments.currentRow() + 1)]
-                    print(cls.details)
             if (
                 cls.details[self.list_assignments.currentRow()]
                 != self.assignment_details.toPlainText()
@@ -168,13 +167,17 @@ class UIFunctions(MainWindow):
 
     class StudentUiFunctions:
         @classmethod
+        def open_result_form(cls, self):
+            window = result_main.ResultWindow(self)
+            window.show()
+        @classmethod
         def student_gui_config(cls, self):
             self.main_btn.setText("Kiểm tra")
             self.main_btn.setStyleSheet(
                 """QPushButton {background-color: rgb(224, 150, 0);}
             QPushButton:hover {background-color: rgba(224, 150, 0, 150);}"""
             )
-            self.main_btn.clicked.connect(lambda: result_main.open_result_form())
+            self.main_btn.clicked.connect(lambda: cls.open_result_form(self))
     @classmethod
     def define_role(cls, self):
         if self.role.lower() == "teacher":

@@ -7,6 +7,8 @@
     <file>icons/eye_show.png</file>
     <file>icons/menubutton_off.png</file>
     <file>icons/menubutton_on.png</file>
+    <file>icons/minimize_white.png</file>
+    <file>icons/close_white.png</file>
     <file>icons/minus.png</file>
     <file>icons/plus.png</file>
   </qresource>

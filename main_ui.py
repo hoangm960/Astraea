@@ -178,20 +178,21 @@ class UIFunctions(MainWindow):
 
     class StudentUiFunctions:
         @classmethod
-        def student_gui_config(ui):
-            ui.main_btn.setText("Kiểm tra")
-            ui.main_btn.setStyleSheet(
-                """QPushButton {background-color: rgb(224, 150, 0);}
-            QPushButton:hover {background-color: rgba(224, 150, 0, 150);}"""
-            )
-            ui.main_btn.clicked.connect(lambda: result_main.open_result_form())
+        def __init__(cls, parent, ui):
+            cls.parent = parent
 
+            ui.main_btn.setText("kiểm tra")
+            ui.main_btn.setStyleSheet(
+                """QPushButton {background-color: rgb(59, 143, 14);}
+            QPushButton:hover {background-color: rgba(59, 143, 14, 150);}"""
+            )
+            ui.main_btn.clicked.connect(lambda: cls.open_result_form(ui))
     @classmethod
     def define_role(cls, ui):
         if ui.role.lower() == "teacher":
             cls.TeacherUiFunctions(cls, ui)
         if ui.role.lower() == "student":
-            cls.StudentUiFunctions.student_gui_config(ui)
+            cls.StudentUiFunctions(cls, ui)
 
 
 def main(role):
@@ -202,5 +203,5 @@ def main(role):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    main("teacher")
+    main("student")
     sys.exit(app.exec_())

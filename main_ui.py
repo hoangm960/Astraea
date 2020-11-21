@@ -187,8 +187,6 @@ class UIFunctions(MainWindow):
             QPushButton:hover {background-color: rgba(59, 143, 14, 150);}"""
             )
             ui.main_btn.clicked.connect(lambda: cls.open_result_form(ui))
-        @classmethod
-        def open_result_form(cls, ui):
     @classmethod
     def define_role(cls, ui):
         if ui.role.lower() == "teacher":

@@ -8,17 +8,24 @@ import win32gui
 from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import (QApplication, QDialogButtonBox,
-                             QGraphicsDropShadowEffect, QMainWindow,
-                             QMessageBox, QPushButton, QSizeGrip, QWidget)
+from PyQt5.QtWidgets import (
+    QApplication,
+    QDialogButtonBox,
+    QGraphicsDropShadowEffect,
+    QMainWindow,
+    QMessageBox,
+    QPushButton,
+    QSizeGrip,
+    QWidget,
+)
 from win32api import GetSystemMetrics
 import result_main
 import edit_main
+import result_main
 from UI_Files import Resources
 
 UI_MAIN_PATH = "UI_Files/ui_main.ui"
 ASSIGNMENTS_PATH = "data/Lesson/assignments.list"
-DETAILS_PATH = "data/Lesson/assignment_details.list"
 
 
 class MainWindow(QMainWindow):
@@ -30,29 +37,29 @@ class MainWindow(QMainWindow):
 
 
 class UIFunctions(MainWindow):
+    assignments = {}
+
     @classmethod
-    def uiDefinitions(cls, self):
-        self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+    def uiDefinitions(cls, ui):
+        ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
+        ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 
-        self.shadow = QGraphicsDropShadowEffect(self)
-        self.shadow.setBlurRadius(50)
-        self.shadow.setXOffset(0)
-        self.shadow.setYOffset(0)
-        self.shadow.setColor(QColor(0, 0, 0, 200))
-        self.bg_frame.setGraphicsEffect(self.shadow)
+        ui.shadow = QGraphicsDropShadowEffect(ui)
+        ui.shadow.setBlurRadius(50)
+        ui.shadow.setXOffset(0)
+        ui.shadow.setYOffset(0)
+        ui.shadow.setColor(QColor(0, 0, 0, 200))
+        ui.bg_frame.setGraphicsEffect(ui.shadow)
 
-        self.btn_minimize.clicked.connect(lambda: self.showMinimized())
-        self.btn_quit.clicked.connect(lambda: cls.close_pg(self))
+        ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
+        ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
 
         # cls.open_vscode()
 
-        cls.load_assignments(self, ASSIGNMENTS_PATH)
-        self.list_assignments.itemPressed.connect(
-            lambda: cls.load_details(self, DETAILS_PATH)
-        )
+        cls.load_assignments(ui, ASSIGNMENTS_PATH)
+        ui.list_assignments.itemPressed.connect(lambda: cls.load_details(ui))
 
-        cls.define_role(self)
+        cls.define_role(ui)
 
     @classmethod
     def open_vscode(cls):
@@ -65,92 +72,89 @@ class UIFunctions(MainWindow):
         win32gui.MoveWindow(cls.pg, 0, 0, w + 45, h, True)
 
     @classmethod
-    def close_pg(cls, self):
+    def close_pg(cls, ui):
         try:
             win32gui.PostMessage(cls.pg, win32con.WM_CLOSE, 0, 0)
         except:
             pass
 
-        self.close()
+        ui.close()
 
     @classmethod
-    def load_assignments(cls, self, filename):
-        self.list_assignments.clear()
+    def load_assignments(cls, ui, filename):
+        ui.list_assignments.clear()
+        cls.assignments.clear()
         if os.path.exists(filename):
             if os.path.getsize(filename) > 0:
                 with open(filename, "rb") as f:
                     unpickler = pickle.Unpickler(f)
                     assignments = unpickler.load()
                     for assignment in assignments:
-                        self.list_assignments.addItem(assignment)
+                        cls.assignments[assignment.name] = assignment.details
+                        ui.list_assignments.addItem(assignment.name)
 
     @classmethod
-    def load_details(cls, self, filename):
-        if os.path.exists(filename):
-            if os.path.getsize(filename) > 0:
-                with open(filename, "rb") as f:
-                    unpickler = pickle.Unpickler(f)
-                    details = unpickler.load()
-                    self.assignment_details.setText(
-                        details[self.list_assignments.currentRow()]
-                    )
+    def load_details(cls, ui):
+        ui.assignment_details.setText(
+            [detail for detail in cls.assignments.values()][
+                ui.list_assignments.currentRow()
+            ]
+        )
 
-    class TeacherUiFunctions(MainWindow):
-        parrent = None
+    class TeacherUiFunctions:
+        parent = None
+        changed = True
 
         @classmethod
-        def __init__(cls, parrent, self):
-            cls.parrent = parrent
+        def __init__(cls, parent, ui):
+            cls.parent = parent
 
-            self.main_btn.setText("Sửa đổi")
-            self.main_btn.setStyleSheet(
+            ui.main_btn.setText("Sửa đổi")
+            ui.main_btn.setStyleSheet(
                 """QPushButton {background-color: rgb(59, 143, 14);}
             QPushButton:hover {background-color: rgba(59, 143, 14, 150);}"""
             )
-            self.main_btn.clicked.connect(lambda: cls.open_edit_form(self))
+            ui.main_btn.clicked.connect(lambda: cls.open_edit_form(ui))
 
-            self.assignment_details.setReadOnly(False)
-            self.confirmButton = QDialogButtonBox(self.frame_content_hint)
-            self.confirmButton.setStandardButtons(QDialogButtonBox.Ok)
-            self.confirmButton.setObjectName("confirmButton")
-            self.verticalLayout_4.addWidget(self.confirmButton)
-            self.confirmButton.accepted.connect(
-                lambda: cls.save_text(self, DETAILS_PATH)
+            ui.assignment_details.setReadOnly(False)
+            ui.confirmButton = QDialogButtonBox(ui.frame_content_hint)
+            ui.confirmButton.setStandardButtons(QDialogButtonBox.Ok)
+            ui.confirmButton.setObjectName("confirmButton")
+            ui.verticalLayout_4.addWidget(ui.confirmButton)
+            ui.confirmButton.accepted.connect(
+                lambda: cls.save_text(ui, ASSIGNMENTS_PATH)
             )
 
         @classmethod
-        def save_text(cls, self, filename):
-            cls.changed = True
-            if os.path.exists(filename):
-                if os.path.getsize(filename) > 0:
-                    with open(filename, "rb") as f:
-                        unpickler = pickle.Unpickler(f)
-                        cls.details = unpickler.load()
-                else: 
-                    cls.details = ['' for _ in range(self.list_assignments.currentRow() + 1)]
+        def save_text(cls, ui, filename):
             if (
-                cls.details[self.list_assignments.currentRow()]
-                != self.assignment_details.toPlainText()
+                list(cls.parent.assignments.values())[ui.list_assignments.currentRow()]
+                != ui.assignment_details.toPlainText()
             ):
-                cls.show_confirm_mess(self, filename)
-            cls.details[
-                self.list_assignments.currentRow()
-            ] = self.assignment_details.toPlainText()
+                cls.show_confirm_mess(ui)
+
             if cls.changed:
+                with open(filename, "rb") as f:
+                    unpickler = pickle.Unpickler(f)
+                    assignments = unpickler.load()
+                assignments[
+                    ui.list_assignments.currentRow()
+                ].details = ui.assignment_details.toPlainText()
+
                 with open(filename, "wb") as f:
-                    pickle.dump(cls.details, f)
-            else:
-                cls.parrent.load_details(self, filename)
+                    pickle.dump(assignments, f)
+
+            cls.parent.load_assignments(ui, filename)
+            cls.parent.load_details(ui)
 
         @classmethod
-        def show_confirm_mess(cls, self, filename):
+        def show_confirm_mess(cls, ui):
             msg = QMessageBox()
             msg.setWindowTitle("Thành công sửa đổi bài tập")
             msg.setText("Chi tiết câu đã được chỉnh sửa")
-            with open(filename) as f:
-                msg.setDetailedText(
-                    f"Chi tiết gốc:\n{cls.details[self.list_assignments.currentRow()]}\n\nChi tiết sau khi sửa đổi:\n{self.assignment_details.toPlainText()}"
-                )
+            msg.setDetailedText(
+                f"Chi tiết gốc:\n{list(cls.parent.assignments.values())[ui.list_assignments.currentRow()]}\n\nChi tiết sau khi sửa đổi:\n{ui.assignment_details.toPlainText()}"
+            )
             msg.setIcon(QMessageBox.Information)
             msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
             msg.buttonClicked.connect(cls.popup_button)
@@ -161,29 +165,27 @@ class UIFunctions(MainWindow):
             cls.changed = False if i.text().lower() == "cancel" else True
 
         @classmethod
-        def open_edit_form(cls, self):
-            window = edit_main.EditWindow(self)
+        def open_edit_form(cls, ui):
+            window = edit_main.EditWindow()
             window.show()
+            ui.close()
 
     class StudentUiFunctions:
         @classmethod
-        def open_result_form(cls, self):
-            window = result_main.ResultWindow(self)
-            window.show()
-        @classmethod
-        def student_gui_config(cls, self):
-            self.main_btn.setText("Kiểm tra")
-            self.main_btn.setStyleSheet(
+        def student_gui_config(ui):
+            ui.main_btn.setText("Kiểm tra")
+            ui.main_btn.setStyleSheet(
                 """QPushButton {background-color: rgb(224, 150, 0);}
             QPushButton:hover {background-color: rgba(224, 150, 0, 150);}"""
             )
-            self.main_btn.clicked.connect(lambda: cls.open_result_form(self))
+            ui.main_btn.clicked.connect(lambda: result_main.open_result_form())
+
     @classmethod
-    def define_role(cls, self):
-        if self.role.lower() == "teacher":
-            cls.TeacherUiFunctions(cls, self)
-        if self.role.lower() == "student":
-            cls.StudentUiFunctions.student_gui_config(self)
+    def define_role(cls, ui):
+        if ui.role.lower() == "teacher":
+            cls.TeacherUiFunctions(cls, ui)
+        if ui.role.lower() == "student":
+            cls.StudentUiFunctions.student_gui_config(ui)
 
 
 def main(role):

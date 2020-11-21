@@ -318,7 +318,7 @@ QPushButton:hover {
 background-color: transparent;</string>
                </property>
                <property name="currentIndex">
-                <number>1</number>
+                <number>2</number>
                </property>
                <widget class="QWidget" name="edit_frame1">
                 <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -360,7 +360,8 @@ background-color: transparent;</string>
                       </property>
                       <property name="styleSheet">
                        <string notr="true">border-radius: 10px;
-color: rgb(0, 0, 0);</string>
+color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
                       </property>
                       <property name="alignment">
                        <set>Qt::AlignCenter</set>
@@ -427,7 +428,8 @@ color: rgb(0, 0, 0);</string>
                       <property name="styleSheet">
                        <string notr="true">QSpinBox {
 	border-radius: 10px;
-	color: rgb(0, 0, 0)
+	color: rgb(0, 0, 0);
+	background-color: rgb(255, 255, 255);
 }
 QSpinBox::up-button {
 	background-color: rgb(255, 255, 255);
@@ -933,6 +935,7 @@ QPushButton:pressed {
                        <string notr="true">QSpinBox {
 	border-radius: 10px;
 	color: rgb(0, 0, 0);
+	background-color: rgb(255, 255, 255);
 }
 QSpinBox::up-button {
 	background-color: rgb(255, 255, 255);

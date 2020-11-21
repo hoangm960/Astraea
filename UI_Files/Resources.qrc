@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="images">
+    <file>icons/minimize.png</file>
+    <file>icons/close.png</file>
     <file>icons/folder_open.png</file>
     <file>icons/eye_hide.png</file>
     <file>icons/eye_show.png</file>

@@ -88,10 +88,13 @@ class UIFunctions(MainWindow):
             if os.path.getsize(filename) > 0:
                 with open(filename, "rb") as f:
                     unpickler = pickle.Unpickler(f)
-                    assignments = unpickler.load()
+                    data = unpickler.load()
+                    title = data[0]
+                    assignments = data[1]
                     for assignment in assignments:
                         cls.assignments[assignment.name] = assignment.details
                         ui.list_assignments.addItem(assignment.name)
+                    cls.change_assignment_title(ui, title)
 
     @classmethod
     def load_details(cls, ui):
@@ -100,6 +103,10 @@ class UIFunctions(MainWindow):
                 ui.list_assignments.currentRow()
             ]
         )
+
+    @classmethod
+    def change_assignment_title(cls, ui, title):
+        ui.assignment_title.setText(title) if title else ui.assignment_title.setParent(None)
 
     class TeacherUiFunctions:
         parent = None
@@ -144,12 +151,11 @@ class UIFunctions(MainWindow):
                 with open(filename, "wb") as f:
                     pickle.dump(assignments, f)
 
-            cls.parent.load_assignments(ui, filename)
             cls.parent.load_details(ui)
 
         @classmethod
         def show_confirm_mess(cls, ui):
-            msg = QMessageBox()
+            msg = QMessageBox(ui)
             msg.setWindowTitle("Thành công sửa đổi bài tập")
             msg.setText("Chi tiết câu đã được chỉnh sửa")
             msg.setDetailedText(

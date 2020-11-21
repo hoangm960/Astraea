@@ -50,14 +50,12 @@ class LoginWindow(QMainWindow):
 
 
 class LoginFunctions(LoginWindow):
-    file = open('data/Users/User.txt','a+')
-    file.close()
     users = []
     GLOBAL_STATE = False
     STATE_ECHOPASS = True
     USER_PATH = "data/Users/User.txt"
     USER_PATH_ENCRYPTED = "data/Users/User.encrypted"
-    KEY_PATH = "data/encryption/key.key"
+    KEY_PATH = "data/encryption/users.key"
 
     @classmethod
     def uiDefinitions(cls, self):

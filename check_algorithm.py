@@ -2,7 +2,7 @@ import os
 from subprocess import PIPE, Popen
 
 
-def main(filename, input_file, ans_file, tests, vars):
+def main(filename, ex_file, size_range, input_file, ans_file, tests, vars):
     def get_file_content(file):
         f = open(file, "r")
         content = f.readlines()
@@ -44,20 +44,41 @@ def main(filename, input_file, ans_file, tests, vars):
 
     def check(input, ans):
         with open(input_file) as f:
-            output = Popen("python " + filename, stdout=PIPE, stdin=PIPE).communicate(
-                bytes(input, "utf8")
-            )[0].decode().rstrip()
+            output = (
+                Popen("python " + filename, stdout=PIPE, stdin=PIPE)
+                .communicate(bytes(input, "utf8"))[0]
+                .decode()
+                .rstrip()
+            )
         try:
             assert output == ans
-            print("Đúng")
+            print("Đúng.")
         except AssertionError:
-            print("Sai")
+            print("Sai.")
 
-    for test in range(tests):
+    def check_file_size():
+        file_size = os.stat(filename).st_size
+        ex_file_size = os.stat(ex_file).st_size
+        if file_size in range(ex_file_size - size_range, ex_file_size + size_range):
+            print("Thuật toán đã tối ưu hóa.")
+        else:
+            print("Thuật toán chưa tối ưu hóa.")
+
+    for _ in range(tests):
         check(get_input(), get_ans())
     del_copied_file(input_file)
     del_copied_file(ans_file)
+    check_file_size()
+
 
 if __name__ == "__main__":
-    main("test.py", "data/check algorithm/Inputs.txt", "data/check algorithm/Ans.txt", 1, 2)
+    main(
+        filename="test.py",
+        ex_file="data/Lesson/example.py",
+        size_range=10,
+        input_file="data/check algorithm/Inputs.txt",
+        ans_file="data/check algorithm/Ans.txt",
+        tests=1,
+        vars=2,
+    )
 

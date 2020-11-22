@@ -221,11 +221,11 @@ class LoginFunctions(LoginWindow):
         name_account = self.UserBox.text()[:30]
 
         for user in cls.users:
-            if len(name) < 6  or name in user.name or list(set(False for i in name if i not in 'qwertyuiopasdfghjklzxcvbnm1234567890 ')) == [False]:
+            if len(name) < 6  or name in user.name or list(set(False for i in name.lower() if i not in 'qwertyuiopasdfghjklzxcvbnm1234567890 ')) == [False]:
                 self.NoteName.show()
                 check = False
             else: self.NoteName.hide()
-        if len(password) < 8 or list(set(False for i in password if i not in 'qwertyuiopasdfghjklzxcvbnm1234567890 ')) == [False]:
+        if len(password) < 8 or list(set(False for i in password.lower() if i not in 'qwertyuiopasdfghjklzxcvbnm1234567890 ')) == [False]:
             self.NotePass.show()
             check = False
         else: self.NotePass.hide()

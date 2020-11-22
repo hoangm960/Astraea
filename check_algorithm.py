@@ -2,7 +2,7 @@ import os
 from subprocess import PIPE, Popen
 
 
-def main(filename, ex_file, size_range, input_file, ans_file, tests, vars):
+def main(filename, input_file, ans_file, tests, ex_file, vars=0, size_range=50):
     def get_file_content(file):
         f = open(file, "r")
         content = f.readlines()
@@ -75,7 +75,6 @@ if __name__ == "__main__":
     main(
         filename="test.py",
         ex_file="data/Lesson/example.py",
-        size_range=10,
         input_file="data/check algorithm/Inputs.txt",
         ans_file="data/check algorithm/Ans.txt",
         tests=1,

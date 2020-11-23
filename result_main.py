@@ -119,16 +119,16 @@ class UIFunctions(ResultWindow):
         for i in reversed(range(self.content_layout.count())): 
             self.content_layout.itemAt(i).widget().setParent(None)
         self.scrollArea.verticalScrollBar().setValue(1)
-        test = [10,10,8,9,9,7,8,10,7,5]
-        correct = [3,9,6,9,7,5,8,9,7,3]     
+        test = [5]        
+        correct = [4]    
         for i in range(0,num):
             self.frame = cls.ResultFrame()
-            percent = (correct[i]/test[i])*100
+            # percent = (correct[i]/test[i])*100
             self.content_layout.addWidget(self.frame)
-            self.frame.test_file_label.setText('Câu '+str(i+1))
-            self.frame.progressBar.setValue(round(percent))
-            self.frame.Score_box.setText(str(round(percent/10,2)))
-            self.frame.Test_box.setText(str(correct[i])+'/'+str(test[i]))
+            # self.frame.test_file_label.setText('Câu '+str(i+1))
+            # self.frame.progressBar.setValue(round(percent))
+            # self.frame.Score_box.setText(str(round(percent/10,2)))
+            # self.frame.Test_box.setText(str(correct[i])+'/'+str(test[i]))
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

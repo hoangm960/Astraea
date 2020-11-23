@@ -279,7 +279,7 @@ font-size: 25px;
 font:bold;</string>
             </property>
             <property name="text">
-             <string>    PyLearn - Giao diện tài khoản                                  </string>
+             <string>    Astraea - Giao diện tài khoản                                  </string>
             </property>
             <property name="alignment">
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>

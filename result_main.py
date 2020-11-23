@@ -77,7 +77,7 @@ class UIFunctions(ResultWindow):
             "QSizeGrip { width: 20px; height: 20px; margin: 5px; border-radius: 10px; } QSizeGrip:hover { background-color: rgb(201, 21, 8) }"
         )
         self.sizegrip.setToolTip("Resize Window")
-        cls.put_frame_in_list(self, 6)
+        cls.put_frame_in_list(self, 20)
         
     @classmethod
     def returnStatus(cls):
@@ -115,15 +115,15 @@ class UIFunctions(ResultWindow):
     @classmethod
     def put_frame_in_list(cls, self, num):
         self.content_layout = QVBoxLayout()
-        self.content_widget.setLayout(self.content_layout)
+        self.content_widget_2.setLayout(self.content_layout)
         for i in reversed(range(self.content_layout.count())): 
             self.content_layout.itemAt(i).widget().setParent(None)
         self.scrollArea.verticalScrollBar().setValue(1)
         self.percent = 0
         self.SumTest = 0
         Average = 0
-        test = [1,2,3,4,5,6,7,8,9,10]        
-        correct = [1,2,3,4,5,6,7,8,9,9]
+        test = [1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10]
+        correct = [1,2,3,2,2,4,2,0,9,10,1,2,3,4,5,3,7,8,3,5]
         for i in correct:
             self.percent += i
         for i in test:
@@ -134,15 +134,15 @@ class UIFunctions(ResultWindow):
             self.frame.test_file_label.setText('Câu '+str(i+1))
             self.frame.Score_box.setText(str(round((correct[i]/test[i])*10,2)))
             self.frame.Test_box.setText(str(correct[i])+'/'+str(test[i]))
-            Average += round((correct[i]/test[i])*10,2)
+            Average += float(self.frame.Score_box.text())
         self.progressBar.setValue(round((self.percent/self.SumTest)*100))
-        self.Score.setText(str(round(Average / len(test),2)))
+        self.Score.setText(str(round((Average/len(test)))))
         if float(self.Score.text()) <8.5:
-            self.Judge.setText('Mua điểm không em')
+            self.Judge.setText('Khá')
         if float(self.Score.text()) == 10:
             self.Judge.setText('Amazing Gút chóp iem')
         if float(self.Score.text()) < 10 and float(self.Score.text()) >= 8.5:
-            self.Judge.setText('Muốn 10 phẩy không khó, đêm đến nhà thầy')
+            self.Judge.setText('Giỏi')
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = ResultWindow()

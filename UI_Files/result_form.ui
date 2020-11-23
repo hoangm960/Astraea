@@ -390,7 +390,7 @@ QPushButton:hover {
                        </font>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true"/>
+                       <string notr="true">color: rgb(255,255,255);</string>
                       </property>
                       <property name="text">
                        <string>    Kết quả bài làm:</string>
@@ -401,35 +401,106 @@ QPushButton:hover {
                   </widget>
                  </item>
                  <item>
-                  <widget class="QScrollArea" name="scrollArea">
+                  <widget class="QFrame" name="list_widget_frame">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>450</height>
+                    </size>
+                   </property>
                    <property name="styleSheet">
-                    <string notr="true"/>
+                    <string notr="true">color: rgb(0, 0, 0)</string>
                    </property>
-                   <property name="verticalScrollBarPolicy">
-                    <enum>Qt::ScrollBarAlwaysOn</enum>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
                    </property>
-                   <property name="horizontalScrollBarPolicy">
-                    <enum>Qt::ScrollBarAlwaysOff</enum>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
                    </property>
-                   <property name="sizeAdjustPolicy">
-                    <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
-                   </property>
-                   <property name="widgetResizable">
-                    <bool>false</bool>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                   <widget class="QWidget" name="content_widget">
-                    <property name="geometry">
-                     <rect>
-                      <x>0</x>
-                      <y>0</y>
-                      <width>900</width>
-                      <height>414</height>
-                     </rect>
+                   <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="0">
+                    <property name="spacing">
+                     <number>0</number>
                     </property>
-                   </widget>
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="QScrollArea" name="scrollArea">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">QScrollArea {
+	border-radius: 10px;
+	background-color: rgba(255, 255, 255, 50);
+	outline: 0;
+} 
+QScrollArea::item { 
+	margin: 20px;
+	background-color: transparent;
+	border: 0px solid black;
+}
+
+QScrollBar{
+	background : rgb(255, 255, 255);	
+}
+
+QScrollBar::handle{
+	background : rgb(158, 158, 158);
+	border-radius: 5px;
+	margin: 3px 3px 3px 3px;
+}
+
+QScrollBar::handle::pressed{
+	background : rgb(85, 85, 85);
+}
+
+QScrollBar::add-line {
+	height: 0px;
+}
+
+QScrollBar::sub-line {
+	height: 0px;
+}
+
+QScrollBar::add-page, QScrollBar::sub-page {
+	height: 0px;
+}</string>
+                      </property>
+                      <property name="widgetResizable">
+                       <bool>true</bool>
+                      </property>
+                      <widget class="QWidget" name="content_widget_2">
+                       <property name="geometry">
+                        <rect>
+                         <x>0</x>
+                         <y>0</y>
+                         <width>900</width>
+                         <height>450</height>
+                        </rect>
+                       </property>
+                      </widget>
+                     </widget>
+                    </item>
+                   </layout>
                   </widget>
                  </item>
                  <item>
@@ -437,8 +508,11 @@ QPushButton:hover {
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
-                     <height>50</height>
+                     <height>0</height>
                     </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">background: rgb(54, 54, 54);</string>
                    </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
@@ -481,13 +555,14 @@ QPushButton:hover {
                         <family>Segoe UI Black</family>
                         <pointsize>11</pointsize>
                         <weight>75</weight>
+                        <italic>true</italic>
                         <bold>true</bold>
                        </font>
                       </property>
                       <property name="styleSheet">
                        <string notr="true">QProgressBar { 	
 	border-radius: 16px;
- 	color: rgb(182, 43, 179);
+ 	color: rgb(255,255,255);
 	text-align: center;
 	background-color: rgba(255,255,255,100);
 }
@@ -534,7 +609,7 @@ QProgressBar::chunk {
                           </font>
                          </property>
                          <property name="styleSheet">
-                          <string notr="true"/>
+                          <string notr="true">color: rgb(255, 255, 255);</string>
                          </property>
                          <property name="text">
                           <string>Điểm:</string>
@@ -596,7 +671,7 @@ QProgressBar::chunk {
                         <widget class="QLabel" name="judge_frame">
                          <property name="maximumSize">
                           <size>
-                           <width>150</width>
+                           <width>120</width>
                            <height>16777215</height>
                           </size>
                          </property>
@@ -609,7 +684,7 @@ QProgressBar::chunk {
                           </font>
                          </property>
                          <property name="styleSheet">
-                          <string notr="true"/>
+                          <string notr="true">color: rgb(255,255,255);</string>
                          </property>
                          <property name="text">
                           <string>Nhận xét:</string>
@@ -627,7 +702,7 @@ QProgressBar::chunk {
                          <property name="font">
                           <font>
                            <family>Segoe UI Black</family>
-                           <pointsize>10</pointsize>
+                           <pointsize>11</pointsize>
                            <weight>75</weight>
                            <bold>true</bold>
                           </font>

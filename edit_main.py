@@ -264,7 +264,7 @@ class UIFunctions(EditWindow):
         ]
 
         with open(filename, "wb") as f:
-            pickle.dump([ui.lesson_title.text(), assignments], f)
+            pickle.dump((ui.lesson_title.text(), assignments), f)
         
         cls.reopen_main(ui)
 

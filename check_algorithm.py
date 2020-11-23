@@ -45,7 +45,7 @@ def main(filename, input_file, ans_file, tests, ex_file, vars=0, size_range=50):
     def check(input, ans):
         with open(input_file) as f:
             output = (
-                Popen("python " + filename, stdout=PIPE, stdin=PIPE)
+                Popen("fpc " + filename, stdout=PIPE, stdin=PIPE)
                 .communicate(bytes(input, "utf8"))[0]
                 .decode()
                 .rstrip()
@@ -60,15 +60,15 @@ def main(filename, input_file, ans_file, tests, ex_file, vars=0, size_range=50):
         file_size = os.stat(filename).st_size
         ex_file_size = os.stat(ex_file).st_size
         if file_size in range(ex_file_size - size_range, ex_file_size + size_range):
-            print("Thuật toán đã tối ưu hóa.")
+            print("Bài làm đã tối ưu hóa.")
+            check_file_size()
         else:
-            print("Thuật toán chưa tối ưu hóa.")
+            print("Bài làm chưa tối ưu hóa.")
 
     for _ in range(tests):
         check(get_input(), get_ans())
     del_copied_file(input_file)
     del_copied_file(ans_file)
-    check_file_size()
 
 
 if __name__ == "__main__":

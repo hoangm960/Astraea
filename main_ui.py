@@ -98,19 +98,18 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def load_details(cls, ui):
-        ui.assignment_details.setText(
-            [detail for detail in cls.assignments.values()][
-                ui.list_assignments.currentRow()
+        ui.assignment_details.setText(cls.assignments[
+                ui.list_assignments.currentItem().text()
             ]
         )
 
     @classmethod
     def change_assignment_title(cls, ui, title):
-        ui.assignment_title.setText(title) if title else ui.assignment_title.setParent(None)
+        ui.lesson_title.setText(title) if title else ui.lesson_title.setParent(None)
 
     class TeacherUiFunctions:
         parent = None
-        changed = True
+        changed = False
 
         @classmethod
         def __init__(cls, parent, ui):
@@ -151,8 +150,9 @@ class UIFunctions(MainWindow):
                         ].details = ui.assignment_details.toPlainText()
 
                         with open(filename, "wb") as f:
-                            pickle.dump(assignments, f, pickle.HIGHEST_PROTOCOL)
+                            pickle.dump([ui.lesson_title.text(), assignments], f, -1)
 
+                    cls.parent.assignments[ui.list_assignments.currentItem().text()] = ui.assignment_details.toPlainText()
                     cls.parent.load_details(ui)
 
         @classmethod
@@ -170,7 +170,7 @@ class UIFunctions(MainWindow):
 
         @classmethod
         def popup_button(cls, i):
-            cls.changed = False if i.text().lower() == "cancel" else True
+            cls.changed = True if i.text().lower() == "ok" else False
 
         @classmethod
         def open_edit_form(cls, ui):

@@ -262,7 +262,7 @@ QPushButton:hover {
         </widget>
        </item>
        <item>
-        <widget class="QFrame" name="assignment_title_frame">
+        <widget class="QFrame" name="lesson_title_frame">
          <property name="styleSheet">
           <string notr="true">background-color: transparent;</string>
          </property>
@@ -289,7 +289,7 @@ QPushButton:hover {
            <number>0</number>
           </property>
           <item>
-           <widget class="QLabel" name="assignment_title">
+           <widget class="QLabel" name="lesson_title">
             <property name="font">
              <font>
               <family>Montserrat</family>

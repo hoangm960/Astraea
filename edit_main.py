@@ -206,9 +206,9 @@ class UIFunctions(EditWindow):
     @classmethod
     def put_frame_in_list(cls, ui, num):
         current_layout = ui.content_widget.layout()
-        ui.content_layout = (
-            QVBoxLayout(ui.content_widget) if not current_layout else current_layout
-        )
+        if not current_layout:
+            ui.content_widget.setLayout(QVBoxLayout())
+        ui.content_layout = ui.content_widget.layout()
         ui.content_layout.setContentsMargins(9, 9, 9, 9)
         for i in reversed(range(ui.content_layout.count())):
             ui.content_layout.itemAt(i).widget().setParent(None)

@@ -158,14 +158,14 @@ color: rgb(255, 255, 255);</string>
               <widget class="QPushButton" name="btn_minimize">
                <property name="minimumSize">
                 <size>
-                 <width>15</width>
-                 <height>15</height>
+                 <width>20</width>
+                 <height>20</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>17</width>
-                 <height>17</height>
+                 <width>20</width>
+                 <height>20</height>
                 </size>
                </property>
                <property name="toolTip">
@@ -174,11 +174,13 @@ color: rgb(255, 255, 255);</string>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
 	border: none;
-	border-radius: 8px;
+	border-radius: 10px;
 	background-color: rgb(255, 170, 0);
+	background-color: rgb(199, 199, 199);
 }
 QPushButton:hover {
 	background-color: rgba(255, 170, 0, 150);
+	background-color: rgba(199, 199, 199, 150);
 }</string>
                </property>
                <property name="text">
@@ -190,14 +192,14 @@ QPushButton:hover {
               <widget class="QPushButton" name="btn_maximize">
                <property name="minimumSize">
                 <size>
-                 <width>15</width>
-                 <height>15</height>
+                 <width>20</width>
+                 <height>20</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>17</width>
-                 <height>17</height>
+                 <width>20</width>
+                 <height>20</height>
                 </size>
                </property>
                <property name="toolTip">
@@ -206,11 +208,13 @@ QPushButton:hover {
                <property name="styleSheet">
                 <string notr="true">QPushButton {
 	border: none;
-	border-radius: 8px;
+	border-radius: 10px;
 	background-color: rgb(85, 255, 127);
+	background-color: rgb(255, 255, 255);
 }
 QPushButton:hover {
 	background-color: rgba(85, 255, 127, 150);
+	background-color: rgba(255, 255, 255, 150);
 }</string>
                </property>
                <property name="text">
@@ -705,7 +709,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                          <x>0</x>
                          <y>0</y>
                          <width>100</width>
-                         <height>30</height>
+                         <height>450</height>
                         </rect>
                        </property>
                       </widget>

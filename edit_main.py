@@ -207,11 +207,11 @@ class UIFunctions(EditWindow):
     def put_frame_in_list(cls, ui, num):
         current_layout = ui.content_widget.layout()
         if not current_layout:
-            ui.content_widget.setLayout(QVBoxLayout())
-        ui.content_layout = ui.content_widget.layout()
-        ui.content_layout.setContentsMargins(9, 9, 9, 9)
-        for i in reversed(range(ui.content_layout.count())):
-            ui.content_layout.itemAt(i).widget().setParent(None)
+            current_layout = QVBoxLayout()
+            current_layout.setContentsMargins(9, 9, 9, 9)
+            ui.content_widget.setLayout(current_layout)
+        for i in reversed(range(current_layout.count())):
+            current_layout.itemAt(i).widget().setParent(None)
 
         ui.scrollArea.verticalScrollBar().setValue(1)
 
@@ -222,7 +222,7 @@ class UIFunctions(EditWindow):
         for _ in range(num):
             ui.frame = cls.EditFrame()
             ui.frame.close_btn.clicked.connect(lambda: cls.close_frame(ui, ui.frame))
-            ui.content_layout.addWidget(ui.frame)
+            ui.content_widget.layout().addWidget(ui.frame)
 
     @classmethod
     def close_frame(cls, ui, frame):
@@ -250,21 +250,23 @@ class UIFunctions(EditWindow):
     @classmethod
     def load_assignments(cls, ui, filename):
         children = ui.content_widget.children()
-        assignments = [
-            Assignment(
-                children[i].title_entry.text(),
-                children[i].test_file_entry.text(),
-                children[i].input_file_entry.text(),
-                children[i].ans_file_entry.text(),
-                children[i].test_num_entry.value(),
-                children[i].test_var_entry.value(),
-                children[i].details_entry.toPlainText()
-            )
-            for i in range(1, ui.content_layout.count() + 1)
-        ]
+        assignments = []
+        for i in range(1, ui.content_widget.layout().count() + 1):
+            if not children[i].title_entry.text() in [assignment.name for assignment in assignments]:
+                assignments.append(
+                    Assignment(
+                        children[i].title_entry.text(),
+                        children[i].test_file_entry.text(),
+                        children[i].input_file_entry.text(),
+                        children[i].ans_file_entry.text(),
+                        children[i].test_num_entry.value(),
+                        children[i].test_var_entry.value(),
+                        children[i].details_entry.toPlainText()
+                    )
+                )
 
         with open(filename, "wb") as f:
-            pickle.dump((ui.lesson_title.text(), assignments), f)
+            pickle.dump([ui.lesson_title.text(), assignments], f, -1)
         
         cls.reopen_main(ui)
 

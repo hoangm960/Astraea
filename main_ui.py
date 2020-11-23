@@ -151,13 +151,13 @@ class UIFunctions(MainWindow):
                         ].details = ui.assignment_details.toPlainText()
 
                         with open(filename, "wb") as f:
-                            pickle.dump(assignments, f)
+                            pickle.dump(assignments, f, pickle.HIGHEST_PROTOCOL)
 
                     cls.parent.load_details(ui)
 
         @classmethod
         def show_confirm_mess(cls, ui):
-            msg = QMessageBox(ui)
+            msg = QMessageBox()
             msg.setWindowTitle("Thành công sửa đổi bài tập")
             msg.setText("Chi tiết câu đã được chỉnh sửa")
             msg.setDetailedText(

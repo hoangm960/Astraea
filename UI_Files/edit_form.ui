@@ -318,7 +318,7 @@ QPushButton:hover {
 background-color: transparent;</string>
                </property>
                <property name="currentIndex">
-                <number>2</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="edit_frame1">
                 <layout class="QVBoxLayout" name="verticalLayout_7">

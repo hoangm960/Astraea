@@ -101,9 +101,9 @@ font-size: 18px;
       <widget class="QLabel" name="label_credits">
        <property name="geometry">
         <rect>
-         <x>60</x>
+         <x>10</x>
          <y>290</y>
-         <width>651</width>
+         <width>701</width>
          <height>21</height>
         </rect>
        </property>
@@ -118,7 +118,7 @@ font-size: 18px;
 color: rgb(228, 225, 228);</string>
        </property>
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ffffff;&quot;&gt;Version &lt;/span&gt;&lt;span style=&quot; font-size:14pt; color:#ffffff;&quot;&gt;1.0.0&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;&lt;span style=&quot; font-size:14pt; color:#ffffff;&quot;&gt;v 1.0.0&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -127,9 +127,9 @@ color: rgb(228, 225, 228);</string>
       <widget class="QLabel" name="Slogan_Pylearn">
        <property name="geometry">
         <rect>
-         <x>80</x>
+         <x>132</x>
          <y>40</y>
-         <width>461</width>
+         <width>471</width>
          <height>81</height>
         </rect>
        </property>
@@ -141,7 +141,7 @@ font: bold;
 }</string>
        </property>
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:36pt; color:#ffffff;&quot;&gt;PyLearn &lt;/span&gt;&lt;span style=&quot; font-size:22pt; font-weight:400; color:#dfdfdf;&quot;&gt;ứng dụng học tập&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:36pt; color:#ffffff;&quot;&gt;ASTRAEA &lt;/span&gt;&lt;span style=&quot; font-size:22pt; font-weight:400; color:#dfdfdf;&quot;&gt;ứng dụng học tập&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </widget>

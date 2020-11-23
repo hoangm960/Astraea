@@ -134,24 +134,26 @@ class UIFunctions(MainWindow):
 
         @classmethod
         def save_text(cls, ui, filename):
-            if (
-                list(cls.parent.assignments.values())[ui.list_assignments.currentRow()]
-                != ui.assignment_details.toPlainText()
-            ):
-                cls.show_confirm_mess(ui)
+            if os.path.exists(filename):
+                if os.path.getsize(filename) > 0:
+                    if (
+                        list(cls.parent.assignments.values())[ui.list_assignments.currentRow()]
+                        != ui.assignment_details.toPlainText()
+                    ):
+                        cls.show_confirm_mess(ui)
 
-            if cls.changed:
-                with open(filename, "rb") as f:
-                    unpickler = pickle.Unpickler(f)
-                    assignments = unpickler.load()
-                assignments[
-                    ui.list_assignments.currentRow()
-                ].details = ui.assignment_details.toPlainText()
+                    if cls.changed:
+                        with open(filename, "rb") as f:
+                            unpickler = pickle.Unpickler(f)
+                            assignments = unpickler.load()[1]
+                        assignments[
+                            ui.list_assignments.currentRow()
+                        ].details = ui.assignment_details.toPlainText()
 
-                with open(filename, "wb") as f:
-                    pickle.dump(assignments, f)
+                        with open(filename, "wb") as f:
+                            pickle.dump(assignments, f)
 
-            cls.parent.load_details(ui)
+                    cls.parent.load_details(ui)
 
         @classmethod
         def show_confirm_mess(cls, ui):

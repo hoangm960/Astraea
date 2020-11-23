@@ -3,18 +3,17 @@ from pathlib import Path
 
 from cryptography.fernet import Fernet, InvalidToken
 
-KEY_PATH  = 'data/key.key'
 
-def get_key():
+def get_key(path):
     key = Fernet.generate_key()
 
-    file = open(KEY_PATH, 'wb')  # Open the file as wb to write bytes
+    file = open(path, 'wb')  # Open the file as wb to write bytes
     file.write(key)  # The key is type bytes still
     file.close()
 
 
-def encript(input_file, output_file):
-    with open(KEY_PATH, 'rb') as f:
+def encrypt(input_file, output_file, key_file):
+    with open(key_file, 'rb') as f:
         key = f.read() 
 
     with open(input_file, 'rb') as f:
@@ -29,12 +28,13 @@ def encript(input_file, output_file):
     os.remove(input_file)
 
 
-def decript(input_file, output_file):
+def decrypt(input_file, output_file, key_file):
     input_file_path = Path(input_file)
     if not input_file_path.is_file():
+        get_key(key_file)
         open(output_file, 'w').close()
     else:
-        with open(KEY_PATH, 'rb') as f:
+        with open(key_file, 'rb') as f:
             key = f.read() 
             
         with open(input_file, 'rb') as f:
@@ -46,10 +46,18 @@ def decript(input_file, output_file):
 
             with open(output_file, 'wb') as f:
                 f.write(decrypted)  # Write the decrypted bytes to the output file
+            
+            os.remove(input_file)
 
             # Note: You can delete input_file here if you want
         except InvalidToken as e:
             print("Invalid Key - Unsuccessfully decrypted")
 
-        os.remove(input_file)
 
+if __name__ == "__main__":
+    KEY_PATH = "data/encryption/users.key"
+    USER_PATH = "data/Users/User.txt"
+    USER_PATH_ENCRYPTED = "data/Users/User.encrypted"
+    get_key(KEY_PATH)
+    encrypt(USER_PATH, USER_PATH_ENCRYPTED, KEY_PATH)
+    # decrypt(USER_PATH_ENCRYPTED, USER_PATH, KEY_PATH)

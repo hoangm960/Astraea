@@ -23,6 +23,7 @@ import check_algorithm
 
 RESULT_FORM_PATH = "UI_Files/result_form.ui"
 RESULT_FRAME_PATH = "UI_Files/result_frame.ui"
+TEST_FRAME_PATH = "UI_Files/Test_frame.ui"
 
 
 class ResultWindow(QMainWindow):
@@ -31,7 +32,7 @@ class ResultWindow(QMainWindow):
         uic.loadUi(RESULT_FORM_PATH, self)
         self.setGeometry(
             round((GetSystemMetrics(0) - self.width()) / 3),
-            round((GetSystemMetri   cs(1) - self.height()) / 2),
+            round((GetSystemMetrics(1) - self.height()) / 2),
             self.width(),
             self.height(),
         )
@@ -68,7 +69,9 @@ class UIFunctions(ResultWindow):
         self.shadow.setYOffset(0)
         self.shadow.setColor(QColor(0, 0, 0, 100))
         self.bg_frame.setGraphicsEffect(self.shadow)
-
+        self.stacked_widget.setCurrentIndex(1)
+        self.Out_btn.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(0))
+        self.return_btn.clicked.connect(lambda: self.close())
         # Button function
         self.btn_maximize.clicked.connect(lambda: cls.maximize_restore(self))
         self.btn_minimize.clicked.connect(lambda: self.showMinimized())
@@ -80,7 +83,7 @@ class UIFunctions(ResultWindow):
             "QSizeGrip { width: 20px; height: 20px; margin: 5px; border-radius: 10px; } QSizeGrip:hover { background-color: rgb(201, 21, 8) }"
         )
         self.sizegrip.setToolTip("Resize Window")
-        cls.put_frame_in_list(self, 20)
+        cls.put_frame_in_test(self, 20)
 
     @classmethod
     def returnStatus(cls):
@@ -96,9 +99,8 @@ class UIFunctions(ResultWindow):
             cls.GLOBAL_STATE = True
 
             self.bg_layout.setContentsMargins(0, 0, 0, 0)
-            self.bg_frame.setStyleSheet(
-                "background-color: qlineargradient(spread:pad, x1:0, y1:0.341, x2:1, y2:0.897, stop:0 rgba(97, 152, 255, 255), stop:0.514124 rgba(186, 38, 175, 255), stop:1 rgba(255, 0, 0, 255)); border-radius: 0px;"
-            )
+            self.bg_frame.setStyleSheet("""
+                background-color: rgb(30, 30, 30);\n border-radius: 0px;""")
             self.btn_maximize.setToolTip("Restore")
         else:
             cls.GLOBAL_STATE = False
@@ -106,50 +108,70 @@ class UIFunctions(ResultWindow):
             self.resize(self.width() + 1, self.height() + 1)
             self.bg_layout.setContentsMargins(10, 10, 10, 10)
             self.bg_frame.setStyleSheet(
-                "background-color: qlineargradient(spread:pad, x1:0, y1:0.341, x2:1, y2:0.897, stop:0 rgba(97, 152, 255, 255), stop:0.514124 rgba(186, 38, 175, 255), stop:1 rgba(255, 0, 0, 255)); border-radius: 20px;"
-            )
+                """background-color: rgb(30, 30, 30); \nborder-radius: 10px;""")
             self.btn_maximize.setToolTip("Maximize")
 
     class ResultFrame(QWidget):
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
             uic.loadUi(RESULT_FRAME_PATH, self)
+    class TestFrame(QWidget):
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            uic.loadUi(TEST_FRAME_PATH, self)
 
+            self.ans_file_btn.clicked.connect(
+                lambda: self.showDialog(self.ans_file_entry)
+            )
+            
+
+        def showDialog(self, entry):
+            HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
+            file_name = QFileDialog.getOpenFileName(self, "Open file", HOME_PATH)
+
+            if file_name[0]:
+                entry.setText(file_name[0])
+    # @classmethod
+    # def put_frame_in_list(cls, self, num, filename, input_file, ans_file, tests, ex_file, timeout, vars, size_range):
+    #     current_layout = self.content_widget.layout()
+    #     if not current_layout:
+    #         current_layout = QVBoxLayout()
+    #         current_layout.setContentsMargins(9, 9, 9, 9)
+    #         self.content_widget.setLayout(current_layout)
+    #     self.scrollArea_2.verticalScrollBar().setValue(1)
+    #     result = check_algorithm.main(filename, input_file, ans_file, tests, ex_file, timeout, vars, size_range).split("\n")
+
+    #     correct = [i for i in result if i == "correct"]
+    @classmethod 
+    def put_frame_in_test(cls, self, num):
+        current_layoutT = self.content_widgetT.layout()
+        if not current_layoutT:
+            current_layoutT = QVBoxLayout()
+            current_layoutT.setContentsMargins(9, 9, 9, 9)
+            self.content_widgetT.setLayout(current_layoutT)
+        self.ScrollAreaT.verticalScrollBar().setValue(1)
+        
+        for i in range(0, num):
+            self.frameT = cls.TestFrame()
+            self.content_widgetT.layout().addWidget(self.frameT)
+            self.frameT.details_label.setText("Câu " + str(i + 1))
+     
+
+    
     @classmethod
-    def put_frame_in_list(cls, self, num, filename, input_file, ans_file, tests, ex_file, timeout, vars, size_range):
+    def put_frame_in_list(cls, self, num):
         current_layout = self.content_widget.layout()
         if not current_layout:
             current_layout = QVBoxLayout()
             current_layout.setContentsMargins(9, 9, 9, 9)
             self.content_widget.setLayout(current_layout)
-        self.scrollArea_2.verticalScrollBar().setValue(1)
-        self.percent = 0
-        self.SumTest = 0
-        Average = 0
-        result = check_algorithm.main(filename, input_file, ans_file, tests, ex_file, timeout, vars, size_range).split("\n")
-
-        correct = [i for i in result if i == "correct"]
-
-        for i in correct:
-            self.percent += i
-        for i in test:
-            self.SumTest += i
+        self.scrollArea.verticalScrollBar().setValue(1)
+        
         for i in range(0, num):
             self.frame = cls.ResultFrame()
             self.content_widget.layout().addWidget(self.frame)
             self.frame.test_file_label.setText("Câu " + str(i + 1))
-            self.frame.Score_box.setText(str(round((correct[i] / test[i]) * 10, 2)))
-            self.frame.Test_box.setText(str(correct[i]) + "/" + str(test[i]))
-            Average += float(self.frame.Score_box.text())
-        self.progressBar.setValue(round((self.percent / self.SumTest) * 100))
-        self.Score.setText(str(round((Average / len(test)))))
-        if float(self.Score.text()) < 8.5:
-            self.Judge.setText("Khá")
-        if float(self.Score.text()) == 10:
-            self.Judge.setText("Amazing Gút chóp iem")
-        if float(self.Score.text()) < 10 and float(self.Score.text()) >= 8.5:
-            self.Judge.setText("Giỏi")
-
+     
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

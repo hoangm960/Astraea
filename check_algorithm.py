@@ -79,6 +79,6 @@ if __name__ == "__main__":
         input_file="data/check algorithm/Inputs.txt",
         ans_file="data/check algorithm/Ans.txt",
         tests=1,
-        vars=0,
+        vars=2,
     )
 

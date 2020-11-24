@@ -497,7 +497,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>960</width>
+                         <width>100</width>
                          <height>450</height>
                         </rect>
                        </property>
@@ -861,22 +861,7 @@ QPushButton:pressed {
                    <property name="frameShadow">
                     <enum>QFrame::Raised</enum>
                    </property>
-                   <layout class="QVBoxLayout" name="verticalLayout_10">
-                    <property name="spacing">
-                     <number>0</number>
-                    </property>
-                    <property name="leftMargin">
-                     <number>6</number>
-                    </property>
-                    <property name="topMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="rightMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="bottomMargin">
-                     <number>0</number>
-                    </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_3">
                     <item>
                      <widget class="QLabel" name="label">
                       <property name="font">
@@ -986,7 +971,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                          <x>0</x>
                          <y>0</y>
                          <width>960</width>
-                         <height>493</height>
+                         <height>475</height>
                         </rect>
                        </property>
                       </widget>

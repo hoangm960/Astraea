@@ -109,6 +109,10 @@ class UIFunctions(EditWindow):
         ui.confirm_add_btn.clicked.connect(lambda: cls.add_frame(ui, int(ui.num_entry_3.text())))
         ui.confirm_add_btn.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(1))
         ui.stacked_widget.setCurrentIndex(0)
+        ui.Hours_entry.setDisabled(True)
+        ui.Minutes_entry.setDisabled(True)
+        ui.checkBox.clicked.connect(lambda: ui.Hours_entry.setValue(0))
+        ui.checkBox.clicked.connect(lambda: ui.Minutes_entry.setValue(0))
         cls.check_empty(ui, ASSIGNMENTS_PATH)
 
     @classmethod

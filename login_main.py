@@ -84,7 +84,7 @@ class LoginFunctions(LoginWindow):
     def create_dropshadow(cls, self):
         self.shadow = QGraphicsDropShadowEffect(self)
         self.shadow.setBlurRadius(50)
-        self.shadow.setXOffset(0)
+        self.shadow.setXOffset(0)   
         self.shadow.setYOffset(0)
         self.shadow.setColor(QColor(0, 0, 0, 200))
         self.bg_frame.setGraphicsEffect(self.shadow)

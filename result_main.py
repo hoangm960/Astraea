@@ -71,13 +71,12 @@ class UIFunctions(ResultWindow):
         self.bg_frame.setGraphicsEffect(self.shadow)
         self.stacked_widget.setCurrentIndex(1)
         self.Out_btn.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(0))
-        self.Out_btn.clicked.connect(lambda: cls.put_frame_in_list(self,20))
+        self.Out_btn.clicked.connect(lambda: cls.put_frame_in_list(self, 20))
         self.return_btn.clicked.connect(lambda: self.close())
         # Button function
         self.btn_maximize.clicked.connect(lambda: cls.maximize_restore(self))
         self.btn_minimize.clicked.connect(lambda: self.showMinimized())
         self.btn_quit.clicked.connect(lambda: self.close())
-
 
         # Window size grip
         self.sizegrip = QSizeGrip(self.frame_grip)
@@ -101,8 +100,10 @@ class UIFunctions(ResultWindow):
             cls.GLOBAL_STATE = True
 
             self.bg_layout.setContentsMargins(0, 0, 0, 0)
-            self.bg_frame.setStyleSheet("""
-                background-color: rgb(30, 30, 30);\n border-radius: 0px;""")
+            self.bg_frame.setStyleSheet(
+                """
+                background-color: rgb(30, 30, 30);\n border-radius: 0px;"""
+            )
             self.btn_maximize.setToolTip("Restore")
         else:
             cls.GLOBAL_STATE = False
@@ -110,14 +111,14 @@ class UIFunctions(ResultWindow):
             self.resize(self.width() + 1, self.height() + 1)
             self.bg_layout.setContentsMargins(10, 10, 10, 10)
             self.bg_frame.setStyleSheet(
-                """background-color: rgb(30, 30, 30); \nborder-radius: 10px;""")
+                """background-color: rgb(30, 30, 30); \nborder-radius: 10px;"""
+            )
             self.btn_maximize.setToolTip("Maximize")
 
     class ResultFrame(QWidget):
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
             uic.loadUi(RESULT_FRAME_PATH, self)
-
 
     class TestFrame(QWidget):
         def __init__(self, *args, **kwargs):
@@ -127,7 +128,6 @@ class UIFunctions(ResultWindow):
             self.ans_file_btn.clicked.connect(
                 lambda: self.showDialog(self.ans_file_entry)
             )
-            
 
         def showDialog(self, entry):
             HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
@@ -135,18 +135,8 @@ class UIFunctions(ResultWindow):
 
             if file_name[0]:
                 entry.setText(file_name[0])
-    # @classmethod
-    # def put_frame_in_list(cls, self, num, filename, input_file, ans_file, tests, ex_file, timeout, vars, size_range):
-    #     current_layout = self.content_widget.layout()
-    #     if not current_layout:
-    #         current_layout = QVBoxLayout()
-    #         current_layout.setContentsMargins(9, 9, 9, 9)
-    #         self.content_widget.setLayout(current_layout)
-    #     self.scrollArea_2.verticalScrollBar().setValue(1)
-    #     result = check_algorithm.main(filename, input_file, ans_file, tests, ex_file, timeout, vars, size_range).split("\n")
 
-    #     correct = [i for i in result if i == "correct"]
-    @classmethod 
+    @classmethod
     def put_frame_in_test(cls, self, num):
         current_layoutT = self.content_widgetT.layout()
         if not current_layoutT:
@@ -154,13 +144,12 @@ class UIFunctions(ResultWindow):
             current_layoutT.setContentsMargins(9, 9, 9, 9)
             self.content_widgetT.setLayout(current_layoutT)
         self.ScrollAreaT.verticalScrollBar().setValue(1)
-        
+
         for i in range(0, num):
             self.frameT = cls.TestFrame()
             self.content_widgetT.layout().addWidget(self.frameT)
             self.frameT.details_label.setText("Câu " + str(i + 1))
-     
-    
+
     @classmethod
     def put_frame_in_list(cls, self, num):
         current_layout = self.content_widget.layout()
@@ -169,12 +158,12 @@ class UIFunctions(ResultWindow):
             current_layout.setContentsMargins(9, 9, 9, 9)
             self.content_widget.setLayout(current_layout)
         self.scrollArea.verticalScrollBar().setValue(1)
-        
+
         for i in range(0, num):
             self.frame = cls.ResultFrame()
             self.content_widget.layout().addWidget(self.frame)
             self.frame.test_file_label.setText("Câu " + str(i + 1))
-     
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

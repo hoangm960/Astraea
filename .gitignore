@@ -1,7 +1,7 @@
 __pycache__/
-Test/
+test/
+data/
 old gui/
 .vscode/
-temp.py
+.gitignore
 data/
-.gitignore/

@@ -31,7 +31,7 @@ class ResultWindow(QMainWindow):
         uic.loadUi(RESULT_FORM_PATH, self)
         self.setGeometry(
             round((GetSystemMetrics(0) - self.width()) / 3),
-            round((GetSystemMetrics(1) - self.height()) / 2),
+            round((GetSystemMetri   cs(1) - self.height()) / 2),
             self.width(),
             self.height(),
         )

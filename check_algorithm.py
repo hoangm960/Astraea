@@ -2,7 +2,7 @@ import os
 from subprocess import PIPE, Popen, TimeoutExpired, check_output, run
 
 
-def main(filename, input_file, ans_file, tests, ex_file, vars=0, size_range=50):
+def main(filename, input_file, ans_file, tests, ex_file, timeout=2, vars=0, size_range=50):
     def get_file_content(file):
         f = open(file, "r")
         content = f.readlines()
@@ -46,10 +46,11 @@ def main(filename, input_file, ans_file, tests, ex_file, vars=0, size_range=50):
         with open(input_file) as f:
             output = ''
             try:
-                process = check_output(["python", filename], input=input, timeout=2)
+                process = check_output(["python", filename], input=input, timeout=timeout)
                 output = process.rstrip()
             except TimeoutExpired:
-                print("Chạy quá thời gian")
+                print("Chạy quá thời gian.\nSai.")
+                return
         try:
             assert output == ans
             print("Đúng.")

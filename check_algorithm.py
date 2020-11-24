@@ -1,5 +1,5 @@
 import os
-from subprocess import PIPE, Popen
+from subprocess import PIPE, Popen, TimeoutExpired, check_output, run
 
 
 def main(filename, input_file, ans_file, tests, ex_file, vars=0, size_range=50):
@@ -44,15 +44,16 @@ def main(filename, input_file, ans_file, tests, ex_file, vars=0, size_range=50):
 
     def check(input, ans):
         with open(input_file) as f:
-            output = (
-                Popen("fpc " + filename, stdout=PIPE, stdin=PIPE)
-                .communicate(bytes(input, "utf8"))[0]
-                .decode()
-                .rstrip()
-            )
+            output = ''
+            try:
+                process = check_output(["python", filename], input=input, timeout=2)
+                output = process.rstrip()
+            except TimeoutExpired:
+                print("Chạy quá thời gian")
         try:
             assert output == ans
             print("Đúng.")
+            check_file_size()
         except AssertionError:
             print("Sai.")
 
@@ -61,7 +62,6 @@ def main(filename, input_file, ans_file, tests, ex_file, vars=0, size_range=50):
         ex_file_size = os.stat(ex_file).st_size
         if file_size in range(ex_file_size - size_range, ex_file_size + size_range):
             print("Bài làm đã tối ưu hóa.")
-            check_file_size()
         else:
             print("Bài làm chưa tối ưu hóa.")
 
@@ -78,6 +78,6 @@ if __name__ == "__main__":
         input_file="data/check algorithm/Inputs.txt",
         ans_file="data/check algorithm/Ans.txt",
         tests=1,
-        vars=2,
+        vars=0,
     )
 

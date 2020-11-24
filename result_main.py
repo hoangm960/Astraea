@@ -71,11 +71,13 @@ class UIFunctions(ResultWindow):
         self.bg_frame.setGraphicsEffect(self.shadow)
         self.stacked_widget.setCurrentIndex(1)
         self.Out_btn.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(0))
+        self.Out_btn.clicked.connect(lambda: cls.put_frame_in_list(self,20))
         self.return_btn.clicked.connect(lambda: self.close())
         # Button function
         self.btn_maximize.clicked.connect(lambda: cls.maximize_restore(self))
         self.btn_minimize.clicked.connect(lambda: self.showMinimized())
         self.btn_quit.clicked.connect(lambda: self.close())
+
 
         # Window size grip
         self.sizegrip = QSizeGrip(self.frame_grip)
@@ -115,6 +117,8 @@ class UIFunctions(ResultWindow):
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
             uic.loadUi(RESULT_FRAME_PATH, self)
+
+
     class TestFrame(QWidget):
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
@@ -156,7 +160,6 @@ class UIFunctions(ResultWindow):
             self.content_widgetT.layout().addWidget(self.frameT)
             self.frameT.details_label.setText("Câu " + str(i + 1))
      
-
     
     @classmethod
     def put_frame_in_list(cls, self, num):

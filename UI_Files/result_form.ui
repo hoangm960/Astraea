@@ -232,14 +232,14 @@ QPushButton:hover {
               <widget class="QPushButton" name="btn_quit">
                <property name="minimumSize">
                 <size>
-                 <width>15</width>
-                 <height>15</height>
+                 <width>20</width>
+                 <height>20</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>17</width>
-                 <height>17</height>
+                 <width>20</width>
+                 <height>20</height>
                 </size>
                </property>
                <property name="toolTip">
@@ -301,33 +301,6 @@ QPushButton:hover {
            <number>0</number>
           </property>
           <item>
-           <widget class="QFrame" name="stacked_frame">
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_4">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-            </layout>
-           </widget>
-          </item>
-          <item>
            <widget class="QFrame" name="title_frame">
             <property name="minimumSize">
              <size>
@@ -341,24 +314,9 @@ QPushButton:hover {
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_9">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <property name="leftMargin">
-              <number>6</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
+            <layout class="QVBoxLayout" name="verticalLayout_5">
              <item>
-              <widget class="QLabel" name="lesson_title">
+              <widget class="QLabel" name="lesson_title_2">
                <property name="font">
                 <font>
                  <family>Montserrat</family>
@@ -371,7 +329,7 @@ QPushButton:hover {
                 <string notr="true">color: rgb(255,255,255);</string>
                </property>
                <property name="text">
-                <string>    Kết quả bài làm:</string>
+                <string>Kết quả bài làm:</string>
                </property>
               </widget>
              </item>
@@ -383,7 +341,7 @@ QPushButton:hover {
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>450</height>
+              <height>390</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -395,7 +353,7 @@ QPushButton:hover {
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_10" stretch="0">
              <property name="spacing">
               <number>0</number>
              </property>
@@ -412,7 +370,13 @@ QPushButton:hover {
               <number>0</number>
              </property>
              <item>
-              <widget class="QScrollArea" name="scrollArea">
+              <widget class="QScrollArea" name="scrollArea_2">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -461,18 +425,19 @@ QScrollBar::sub-line {
 
 QScrollBar::add-page, QScrollBar::sub-page {
 	height: 0px;
-}</string>
+}
+</string>
                </property>
                <property name="widgetResizable">
                 <bool>true</bool>
                </property>
-               <widget class="QWidget" name="content_widget_2">
+               <widget class="QWidget" name="content_widget">
                 <property name="geometry">
                  <rect>
                   <x>0</x>
                   <y>0</y>
                   <width>900</width>
-                  <height>450</height>
+                  <height>390</height>
                  </rect>
                 </property>
                </widget>
@@ -498,7 +463,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <layout class="QHBoxLayout" name="horizontalLayout_11">
              <property name="spacing">
               <number>100</number>
              </property>
@@ -518,6 +483,9 @@ QScrollBar::add-page, QScrollBar::sub-page {
            </widget>
           </item>
          </layout>
+         <zorder>list_widget_frame</zorder>
+         <zorder>btn_frame_2</zorder>
+         <zorder>title_frame</zorder>
         </widget>
        </item>
        <item>

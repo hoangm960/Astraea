@@ -12,15 +12,18 @@ from PyQt5.QtWidgets import (
     QLayout,
     QListWidgetItem,
     QMainWindow,
-    QSizeGrip, QVBoxLayout,
+    QSizeGrip,
+    QVBoxLayout,
     QWidget,
 )
 from PyQt5 import uic
 from UI_Files import Resources
 from win32api import GetSystemMetrics
+import check_algorithm
 
 RESULT_FORM_PATH = "UI_Files/result_form.ui"
 RESULT_FRAME_PATH = "UI_Files/result_frame.ui"
+
 
 class ResultWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
@@ -51,7 +54,7 @@ class ResultWindow(QMainWindow):
 
 class UIFunctions(ResultWindow):
     GLOBAL_STATE = False
-    
+
     @classmethod
     def uiDefinitions(cls, self):
         # Delete title bar
@@ -70,7 +73,7 @@ class UIFunctions(ResultWindow):
         self.btn_maximize.clicked.connect(lambda: cls.maximize_restore(self))
         self.btn_minimize.clicked.connect(lambda: self.showMinimized())
         self.btn_quit.clicked.connect(lambda: self.close())
-       
+
         # Window size grip
         self.sizegrip = QSizeGrip(self.frame_grip)
         self.sizegrip.setStyleSheet(
@@ -78,7 +81,7 @@ class UIFunctions(ResultWindow):
         )
         self.sizegrip.setToolTip("Resize Window")
         cls.put_frame_in_list(self, 20)
-        
+
     @classmethod
     def returnStatus(cls):
         return cls.GLOBAL_STATE
@@ -113,36 +116,41 @@ class UIFunctions(ResultWindow):
             uic.loadUi(RESULT_FRAME_PATH, self)
 
     @classmethod
-    def put_frame_in_list(cls, self, num):
-        self.content_layout = QVBoxLayout()
-        self.content_widget_2.setLayout(self.content_layout)
-        for i in reversed(range(self.content_layout.count())): 
-            self.content_layout.itemAt(i).widget().setParent(None)
-        self.scrollArea.verticalScrollBar().setValue(1)
+    def put_frame_in_list(cls, self, num, filename, input_file, ans_file, tests, ex_file, timeout, vars, size_range):
+        current_layout = self.content_widget.layout()
+        if not current_layout:
+            current_layout = QVBoxLayout()
+            current_layout.setContentsMargins(9, 9, 9, 9)
+            self.content_widget.setLayout(current_layout)
+        self.scrollArea_2.verticalScrollBar().setValue(1)
         self.percent = 0
         self.SumTest = 0
         Average = 0
-        test = [1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10]
-        correct = [1,2,3,2,2,4,2,0,9,10,1,2,3,4,5,3,7,8,3,5]
+        result = check_algorithm.main(filename, input_file, ans_file, tests, ex_file, timeout, vars, size_range).split("\n")
+
+        correct = [i for i in result if i == "correct"]
+
         for i in correct:
             self.percent += i
         for i in test:
-            self.SumTest+=i
-        for i in range(0,num):
+            self.SumTest += i
+        for i in range(0, num):
             self.frame = cls.ResultFrame()
-            self.content_layout.addWidget(self.frame)
-            self.frame.test_file_label.setText('Câu '+str(i+1))
-            self.frame.Score_box.setText(str(round((correct[i]/test[i])*10,2)))
-            self.frame.Test_box.setText(str(correct[i])+'/'+str(test[i]))
+            self.content_widget.layout().addWidget(self.frame)
+            self.frame.test_file_label.setText("Câu " + str(i + 1))
+            self.frame.Score_box.setText(str(round((correct[i] / test[i]) * 10, 2)))
+            self.frame.Test_box.setText(str(correct[i]) + "/" + str(test[i]))
             Average += float(self.frame.Score_box.text())
-        self.progressBar.setValue(round((self.percent/self.SumTest)*100))
-        self.Score.setText(str(round((Average/len(test)))))
-        if float(self.Score.text()) <8.5:
-            self.Judge.setText('Khá')
+        self.progressBar.setValue(round((self.percent / self.SumTest) * 100))
+        self.Score.setText(str(round((Average / len(test)))))
+        if float(self.Score.text()) < 8.5:
+            self.Judge.setText("Khá")
         if float(self.Score.text()) == 10:
-            self.Judge.setText('Amazing Gút chóp iem')
+            self.Judge.setText("Amazing Gút chóp iem")
         if float(self.Score.text()) < 10 and float(self.Score.text()) >= 8.5:
-            self.Judge.setText('Giỏi')
+            self.Judge.setText("Giỏi")
+
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = ResultWindow()

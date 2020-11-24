@@ -1,2 +1,0 @@
-Bài 1: Viết một đoạn lệnh in ra màn hình: Hello world!
-Bài 2: Viết chương trình tính 1+2+...+100

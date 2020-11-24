@@ -43,16 +43,15 @@ def main(filename, input_file, ans_file, tests, ex_file, timeout=2, vars=0, size
         return ans
 
     def check(input, ans):
-        with open(input_file) as f:
-            output = ''
-            try:
-                process = check_output(["python", filename], input=input, timeout=timeout)
-                output = process.rstrip()
-            except TimeoutExpired:
-                print("Chạy quá thời gian.\nSai.")
-                return
+        output = ''
         try:
-            assert output == ans
+            process = Popen(["python", filename], stdin=PIPE, stdout=PIPE, encoding='utf8')
+            output = process.communicate(input=input, timeout=timeout)[0]
+        except TimeoutExpired:
+            print("Chạy quá thời gian.")
+            
+        try:
+            assert output.rstrip() == ans.rstrip()
             print("Đúng.")
             check_file_size()
         except AssertionError:
@@ -78,7 +77,7 @@ if __name__ == "__main__":
         ex_file="data/Lesson/example.py",
         input_file="data/check algorithm/Inputs.txt",
         ans_file="data/check algorithm/Ans.txt",
-        tests=1,
-        vars=0,
+        tests=3,
+        vars=2,
     )
 

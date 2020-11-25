@@ -11,6 +11,7 @@ from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (
     QApplication,
     QDialogButtonBox,
+    QFileDialog,
     QGraphicsDropShadowEffect,
     QMainWindow,
     QMessageBox,
@@ -25,7 +26,7 @@ import result_main
 from UI_Files import Resources
 
 UI_MAIN_PATH = "UI_Files/ui_main.ui"
-ASSIGNMENTS_PATH = "data/Lesson/assignments.list"
+OPENED_LESSON_PATH = 'data/Users/opened_assignment.oa'
 
 
 class MainWindow(QMainWindow):
@@ -53,13 +54,15 @@ class UIFunctions(MainWindow):
 
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
         ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
+        ui.load_btn.clicked.connect(lambda: cls.show_file_dialog(ui, OPENED_LESSON_PATH))
 
         # cls.open_vscode()
 
-        cls.load_assignments(ui, ASSIGNMENTS_PATH)
         ui.list_assignments.itemPressed.connect(lambda: cls.load_details(ui))
 
         cls.define_role(ui)
+
+        cls.check_opened_lesson(ui, OPENED_LESSON_PATH)
 
     @classmethod
     def open_vscode(cls):
@@ -81,6 +84,24 @@ class UIFunctions(MainWindow):
         ui.close()
 
     @classmethod
+    def check_opened_lesson(cls, ui, filename):
+        if os.path.exists(filename):
+            if os.path.getsize(filename) > 0:
+                with open(filename) as f:
+                    file_path = f.read().rstrip()
+                    cls.load_assignments(ui, file_path)
+
+    @classmethod
+    def show_file_dialog(cls, ui, filename):
+        HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
+        file_path = QFileDialog.getOpenFileName(
+            ui, "Open file", HOME_PATH, "*.list"
+        )[0]
+        with open(filename, 'w') as f:
+            f.write(file_path)
+        cls.load_assignments(ui, file_path)
+
+    @classmethod
     def load_assignments(cls, ui, filename):
         ui.list_assignments.clear()
         cls.assignments.clear()
@@ -98,9 +119,8 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def load_details(cls, ui):
-        ui.assignment_details.setText(cls.assignments[
-                ui.list_assignments.currentItem().text()
-            ]
+        ui.assignment_details.setText(
+            cls.assignments[ui.list_assignments.currentItem().text()]
         )
 
     @classmethod
@@ -117,7 +137,7 @@ class UIFunctions(MainWindow):
 
             ui.main_btn.setText("Sửa đổi")
             ui.main_btn.setStyleSheet(
-                """QPushButton {background-color: rgb(59, 143, 14);}
+                """QPushButton {background-color: rgb(59, 143, 14); border-radius: 5px;}
             QPushButton:hover {background-color: rgba(59, 143, 14, 150);}"""
             )
             ui.main_btn.clicked.connect(lambda: cls.open_edit_form(ui))
@@ -128,7 +148,7 @@ class UIFunctions(MainWindow):
             ui.confirmButton.setObjectName("confirmButton")
             ui.verticalLayout_4.addWidget(ui.confirmButton)
             ui.confirmButton.accepted.connect(
-                lambda: cls.save_text(ui, ASSIGNMENTS_PATH)
+                lambda: cls.save_text(ui, cls.parrent.showDialog.filepath)
             )
 
         @classmethod
@@ -136,7 +156,9 @@ class UIFunctions(MainWindow):
             if os.path.exists(filename):
                 if os.path.getsize(filename) > 0:
                     if (
-                        list(cls.parent.assignments.values())[ui.list_assignments.currentRow()]
+                        list(cls.parent.assignments.values())[
+                            ui.list_assignments.currentRow()
+                        ]
                         != ui.assignment_details.toPlainText()
                     ):
                         cls.show_confirm_mess(ui)
@@ -152,7 +174,9 @@ class UIFunctions(MainWindow):
                         with open(filename, "wb") as f:
                             pickle.dump([ui.lesson_title.text(), assignments], f, -1)
 
-                    cls.parent.assignments[ui.list_assignments.currentItem().text()] = ui.assignment_details.toPlainText()
+                    cls.parent.assignments[
+                        ui.list_assignments.currentItem().text()
+                    ] = ui.assignment_details.toPlainText()
                     cls.parent.load_details(ui)
 
         @classmethod
@@ -185,15 +209,17 @@ class UIFunctions(MainWindow):
 
             ui.main_btn.setText("kiểm tra")
             ui.main_btn.setStyleSheet(
-                """QPushButton {background-color: rgb(59, 143, 14);}
+                """QPushButton {background-color: rgb(59, 143, 14); border-radius: 5px;}
             QPushButton:hover {background-color: rgba(59, 143, 14, 150);}"""
             )
             ui.main_btn.clicked.connect(lambda: cls.open_result_form(ui))
+
         @classmethod
         def open_result_form(cls, ui):
             window = result_main.ResultWindow()
             window.show()
             ui.close()
+
     @classmethod
     def define_role(cls, ui):
         if ui.role.lower() == "teacher":

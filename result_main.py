@@ -131,7 +131,7 @@ class UIFunctions(ResultWindow):
 
         def showDialog(self, entry):
             HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
-            file_name = QFileDialog.getOpenFileName(self, "Open file", HOME_PATH)
+            file_name = QFileDialog.getOpenFileName(self, "Open file", HOME_PATH, '*.py')
 
             if file_name[0]:
                 entry.setText(file_name[0])

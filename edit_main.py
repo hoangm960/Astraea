@@ -11,7 +11,8 @@ from PyQt5.QtWidgets import (
     QGraphicsDropShadowEffect,
     QLayout,
     QListWidgetItem,
-    QMainWindow, QMessageBox,
+    QMainWindow,
+    QMessageBox,
     QSizeGrip,
     QVBoxLayout,
     QWidget,
@@ -24,7 +25,7 @@ from encryption import *
 
 EDIT_FORM_PATH = "UI_Files/edit_form.ui"
 EDIT_FRAME_PATH = "UI_Files/edit_frame.ui"
-ASSIGNMENTS_PATH = "data/Lesson/assignments.list"
+OPENED_LESSON_PATH = 'data/Users/opened_assignment.oa'
 # KEY_PATH
 
 
@@ -90,7 +91,7 @@ class UIFunctions(EditWindow):
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
         ui.btn_quit.clicked.connect(lambda: cls.reopen_main(ui))
         ui.confirm_btn.clicked.connect(
-            lambda: cls.load_assignments(ui, ASSIGNMENTS_PATH)
+            lambda: cls.load_assignments(ui, open(OPENED_LESSON_PATH).read().rstrip())
         )
 
         # Window size grip
@@ -106,28 +107,31 @@ class UIFunctions(EditWindow):
         ui.add_btn.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(2))
         ui.add_btn.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(2))
         ui.return_add_btn.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(1))
-        ui.confirm_add_btn.clicked.connect(lambda: cls.add_frame(ui, int(ui.num_entry_3.text())))
+        ui.confirm_add_btn.clicked.connect(
+            lambda: cls.add_frame(ui, int(ui.num_entry_3.text()))
+        )
         ui.confirm_add_btn.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(1))
         ui.stacked_widget.setCurrentIndex(0)
         ui.Hours_entry.setDisabled(True)
         ui.Minutes_entry.setDisabled(True)
         ui.checkBox.clicked.connect(lambda: ui.Hours_entry.setValue(0))
         ui.checkBox.clicked.connect(lambda: ui.Minutes_entry.setValue(0))
-        cls.check_empty(ui, ASSIGNMENTS_PATH)
+        with open(OPENED_LESSON_PATH) as f:
+            cls.check_empty(ui, f.read().rstrip())
 
     @classmethod
     def check_empty(cls, ui, filename):
         if os.path.exists(filename):
             if os.path.getsize(filename) > 0:
                 ui.stacked_widget.setCurrentIndex(1)
-                with open(filename, 'rb') as f:
+                with open(filename, "rb") as f:
                     unpickler = pickle.Unpickler(f)
                     data = unpickler.load()
                     title = data[0]
                     assignments = data[1]
                     cls.put_frame_in_list(ui, len(assignments))
                     cls.setup_frame(ui, title, assignments)
-                
+
     @classmethod
     def go_to_second(cls, ui):
         cls.change_lesson_title(ui, ui.name_entry.text())
@@ -172,16 +176,16 @@ class UIFunctions(EditWindow):
             uic.loadUi(EDIT_FRAME_PATH, self)
 
             self.test_file_btn.clicked.connect(
-                lambda: self.showDialog(self.test_file_entry)
+                lambda: self.show_file_dialog(self.test_file_entry)
             )
             self.input_file_btn.clicked.connect(
-                lambda: self.showDialog(self.input_file_entry)
+                lambda: self.show_file_dialog(self.input_file_entry)
             )
             self.ans_file_btn.clicked.connect(
-                lambda: self.showDialog(self.ans_file_entry)
+                lambda: self.show_file_dialog(self.ans_file_entry)
             )
 
-        def showDialog(self, entry):
+        def show_file_dialog(self, entry):
             HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
             file_name = QFileDialog.getOpenFileName(self, "Open file", HOME_PATH)
 
@@ -246,7 +250,7 @@ class UIFunctions(EditWindow):
         msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
         msg.buttonClicked.connect(cls.popup_button)
         msg.exec_()
-    
+
     @classmethod
     def popup_button(cls, i):
         cls.deleted = False if i.text().lower() == "cancel" else True
@@ -256,7 +260,9 @@ class UIFunctions(EditWindow):
         children = ui.content_widget.children()
         assignments = []
         for i in range(1, ui.content_widget.layout().count() + 1):
-            if not children[i].title_entry.text() in [assignment.name for assignment in assignments]:
+            if not children[i].title_entry.text() in [
+                assignment.name for assignment in assignments
+            ]:
                 assignments.append(
                     Assignment(
                         children[i].title_entry.text(),
@@ -265,13 +271,13 @@ class UIFunctions(EditWindow):
                         children[i].ans_file_entry.text(),
                         children[i].test_num_entry.value(),
                         children[i].test_var_entry.value(),
-                        children[i].details_entry.toPlainText()
+                        children[i].details_entry.toPlainText(),
                     )
                 )
 
         with open(filename, "wb") as f:
             pickle.dump([ui.lesson_title.text(), assignments], f, -1)
-        
+
         cls.reopen_main(ui)
 
     @classmethod

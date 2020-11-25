@@ -226,14 +226,14 @@ QPushButton:hover {
               <widget class="QPushButton" name="btn_quit">
                <property name="minimumSize">
                 <size>
-                 <width>15</width>
-                 <height>15</height>
+                 <width>20</width>
+                 <height>20</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>17</width>
-                 <height>17</height>
+                 <width>20</width>
+                 <height>20</height>
                 </size>
                </property>
                <property name="toolTip">
@@ -1026,7 +1026,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                          <x>0</x>
                          <y>0</y>
                          <width>100</width>
-                         <height>450</height>
+                         <height>30</height>
                         </rect>
                        </property>
                       </widget>

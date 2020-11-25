@@ -26,6 +26,7 @@ RESULT_FORM_PATH = "UI_Files/result_form.ui"
 RESULT_FRAME_PATH = "UI_Files/result_frame.ui"
 TEST_FRAME_PATH = "UI_Files/Test_frame.ui"
 OPENED_LESSON_PATH = "data/Users/opened_assignment.oa"
+SCORING_SYSTEM = 10
 
 
 class ResultWindow(QMainWindow):
@@ -201,6 +202,12 @@ class UIFunctions(ResultWindow):
                 if result[1]:
                     correct += 1    
             self.frame.correct_num.setText(str(correct))
+            self.frame.Score_box.setText(str(correct * SCORING_SYSTEM / len(results[:-1])))
+            if results[-1]:
+                self.frame.details_entry.setText('Bài làm đã tối ưu hóa.')
+            else: 
+                self.frame.details_entry.setText('Bài làm chưa tối ưu hóa.')
+
 
 
 if __name__ == "__main__":

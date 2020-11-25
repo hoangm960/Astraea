@@ -137,8 +137,8 @@ class UIFunctions(MainWindow):
 
             ui.main_btn.setText("Sửa đổi")
             ui.main_btn.setStyleSheet(
-                """QPushButton {background-color: rgb(59, 143, 14); border-radius: 5px;}
-            QPushButton:hover {background-color: rgba(59, 143, 14, 150);}"""
+                """QPushButton {background-color: rgb(156, 220, 254); border-radius: 5px;}
+            QPushButton:hover {background-color: rgba(156, 220, 254, 150);}"""
             )
             ui.main_btn.clicked.connect(lambda: cls.open_edit_form(ui))
 
@@ -210,8 +210,8 @@ class UIFunctions(MainWindow):
 
             ui.main_btn.setText("Kiểm tra")
             ui.main_btn.setStyleSheet(
-                """QPushButton {background-color: rgb(59, 143, 14); border-radius: 5px;}
-            QPushButton:hover {background-color: rgba(59, 143, 14, 150);}"""
+                """QPushButton {background-color: rgb(156, 220, 254); border-radius: 5px;}
+            QPushButton:hover {background-color: rgba(156, 220, 254, 150);}"""
             )
             ui.main_btn.clicked.connect(lambda: cls.open_result_form(ui))
 

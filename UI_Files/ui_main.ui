@@ -550,7 +550,7 @@ QPushButton:hover {
           <property name="bottomMargin">
            <number>0</number>
           </property>
-          <item>
+          <item alignment="Qt::AlignHCenter">
            <widget class="QPushButton" name="main_btn">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -579,7 +579,7 @@ QPushButton:hover {
             <property name="styleSheet">
              <string notr="true">QPushButton {
 	background-color: rgb(255, 255, 255);
-	border-radius: 5px;
+	border-radius: 20px;
 }
 
 QPushButton:hover {

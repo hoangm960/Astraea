@@ -204,9 +204,9 @@ class UIFunctions(ResultWindow):
             self.frame.correct_num.setText(str(correct))
             self.frame.Score_box.setText(str(correct * SCORING_SYSTEM / len(results[:-1])))
             if results[-1]:
-                self.frame.details_entry.setText('Bài làm đã tối ưu hóa.')
+                self.frame.detail_entry.setText('Bài làm đã tối ưu hóa.')
             else: 
-                self.frame.details_entry.setText('Bài làm chưa tối ưu hóa.')
+                self.frame.detail_entry.setText('Bài làm chưa tối ưu hóa.')
 
 
 

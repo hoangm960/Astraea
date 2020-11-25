@@ -23,10 +23,10 @@ from win32api import GetSystemMetrics
 import main_ui
 from encryption import *
 
+KEY_PATH = "data/Lesson/assignments.key"
 EDIT_FORM_PATH = "UI_Files/edit_form.ui"
 EDIT_FRAME_PATH = "UI_Files/edit_frame.ui"
 OPENED_LESSON_PATH = "data/Users/opened_assignment.oa"
-# KEY_PATH
 
 
 class Assignment:
@@ -116,21 +116,23 @@ class UIFunctions(EditWindow):
         ui.Minutes_entry.setDisabled(True)
         ui.checkBox.clicked.connect(lambda: ui.Hours_entry.setValue(0))
         ui.checkBox.clicked.connect(lambda: ui.Minutes_entry.setValue(0))
-        with open(OPENED_LESSON_PATH) as f:
-            cls.check_empty(ui, f.read().rstrip())
+        cls.check_empty(ui, open(OPENED_LESSON_PATH).read().rstrip())
 
     @classmethod
     def check_empty(cls, ui, filename):
         if os.path.exists(filename):
             if os.path.getsize(filename) > 0:
+                decrypted_filename = f"{os.path.splitext(filename)[0]}.list"
+                decrypt(filename, decrypted_filename, KEY_PATH)
                 ui.stacked_widget.setCurrentIndex(1)
-                with open(filename, "rb") as f:
+                with open(decrypted_filename, "rb") as f:
                     unpickler = pickle.Unpickler(f)
                     data = unpickler.load()
                     title = data[0]
                     assignments = data[1]
                     cls.put_frame_in_list(ui, len(assignments))
                     cls.setup_frame(ui, title, assignments)
+                encrypt(decrypted_filename, filename, KEY_PATH)
 
     @classmethod
     def go_to_second(cls, ui):
@@ -277,8 +279,11 @@ class UIFunctions(EditWindow):
                     )
                 )
 
+        decrypted_filename = f"{os.path.splitext(filename)[0]}.list"
+        decrypt(filename, decrypted_filename, KEY_PATH)
         with open(filename, "wb") as f:
             pickle.dump([ui.lesson_title.text(), assignments], f, -1)
+        encrypt(decrypted_filename, filename, KEY_PATH)
 
         cls.reopen_main(ui)
 

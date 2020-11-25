@@ -13,6 +13,8 @@ def get_key(path):
 
 
 def encrypt(input_file, output_file, key_file):
+    get_key(key_file)
+
     with open(key_file, 'rb') as f:
         key = f.read() 
 
@@ -49,15 +51,16 @@ def decrypt(input_file, output_file, key_file):
             
             os.remove(input_file)
 
+            os.remove(key_file)
+
             # Note: You can delete input_file here if you want
         except InvalidToken as e:
             print("Invalid Key - Unsuccessfully decrypted")
 
 
 if __name__ == "__main__":
-    KEY_PATH = "data/encryption/users.key"
-    USER_PATH = "data/Users/User.txt"
-    USER_PATH_ENCRYPTED = "data/Users/User.encrypted"
-    get_key(KEY_PATH)
+    KEY_PATH = "data/Lesson/assignments.key"
+    USER_PATH = "data/Lesson/assignments.list"
+    USER_PATH_ENCRYPTED = "data/Lesson/assignments.encrypted"
     encrypt(USER_PATH, USER_PATH_ENCRYPTED, KEY_PATH)
     # decrypt(USER_PATH_ENCRYPTED, USER_PATH, KEY_PATH)

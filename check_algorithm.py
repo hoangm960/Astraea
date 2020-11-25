@@ -3,7 +3,7 @@ from subprocess import PIPE, Popen, TimeoutExpired, check_output, run
 
 
 def main(
-    filename, input_file, ans_file, tests, ex_file, time_limit=2, vars=0, size_range=50
+    filename, input_file, ans_file, tests, ex_file, time_limit=1, vars=0, size_range=50
 ):
     main.results = []
 

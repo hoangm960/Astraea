@@ -25,7 +25,7 @@ from encryption import *
 
 EDIT_FORM_PATH = "UI_Files/edit_form.ui"
 EDIT_FRAME_PATH = "UI_Files/edit_frame.ui"
-OPENED_LESSON_PATH = 'data/Users/opened_assignment.oa'
+OPENED_LESSON_PATH = "data/Users/opened_assignment.oa"
 # KEY_PATH
 
 

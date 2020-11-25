@@ -75,7 +75,9 @@ class UIFunctions(ResultWindow):
         self.bg_frame.setGraphicsEffect(self.shadow)
         self.stacked_widget.setCurrentIndex(1)
         self.Out_btn.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(0))
-        self.Out_btn.clicked.connect(lambda: cls.put_frame_in_list(self, len(cls.assignments)))
+        self.Out_btn.clicked.connect(
+            lambda: cls.put_frame_in_list(self, len(cls.assignments))
+        )
         self.return_btn.clicked.connect(lambda: self.close())
         # Button function
         self.btn_maximize.clicked.connect(lambda: cls.maximize_restore(self))
@@ -179,7 +181,7 @@ class UIFunctions(ResultWindow):
             input_file=assignments.input_file,
             ans_file=assignments.ans_file,
             tests=assignments.tests,
-            vars=assignments.vars
+            vars=assignments.vars,
         )
 
     @classmethod
@@ -195,19 +197,20 @@ class UIFunctions(ResultWindow):
             self.frame = cls.ResultFrame()
             self.content_widget.layout().addWidget(self.frame)
             self.frame.test_file_label.setText(cls.assignments[i].name)
-            
+
             results = cls.check_result(self, i)
             correct = 0
             for result in results[:-1]:
                 if result[1]:
-                    correct += 1    
+                    correct += 1
             self.frame.correct_num.setText(str(correct))
-            self.frame.Score_box.setText(str(correct * SCORING_SYSTEM / len(results[:-1])))
+            self.frame.Score_box.setText(
+                str(correct * SCORING_SYSTEM / len(results[:-1]))
+            )
             if results[-1]:
-                self.frame.detail_entry.setText('Bài làm đã tối ưu hóa.')
-            else: 
-                self.frame.detail_entry.setText('Bài làm chưa tối ưu hóa.')
-
+                self.frame.detail_entry.setText("Bài làm đã tối ưu hóa.")
+            else:
+                self.frame.detail_entry.setText("Bài làm chưa tối ưu hóa.")
 
 
 if __name__ == "__main__":

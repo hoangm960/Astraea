@@ -27,6 +27,7 @@ class User:
         self.auto_saved = auto_saved
         self.name_user = name_user
 
+
 class LoginWindow(QMainWindow):
     UI_PATH = "UI_Files/Login_gui.ui"
 
@@ -34,8 +35,9 @@ class LoginWindow(QMainWindow):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(self.UI_PATH, self)
         LoginFunctions.uiDefinitions(self)
-        
-        self.OkCancelFrame.move(290,220)
+
+        self.OkCancelFrame.move(290, 220)
+
         def moveWindow(event):
             if LoginFunctions.returnStatus() == True:
                 LoginFunctions.maximize_restore(self)
@@ -43,6 +45,7 @@ class LoginWindow(QMainWindow):
                 self.move(self.pos() + event.globalPos() - self.dragPos)
                 self.dragPos = event.globalPos()
                 event.accept()
+
         self.title_bar.mouseMoveEvent = moveWindow
 
     def mousePressEvent(self, event):
@@ -59,7 +62,7 @@ class LoginFunctions(LoginWindow):
 
     @classmethod
     def uiDefinitions(cls, self):
-        
+
         self.OkCancelFrame.hide()
         self.frameError.hide()
         self.eyeHide.hide()
@@ -67,7 +70,7 @@ class LoginFunctions(LoginWindow):
         self.stacked_widget.setCurrentIndex(0)
         self.NoteName.hide()
         self.NotePass.hide()
-        self.NoteUser.hide() 
+        self.NoteUser.hide()
         self.move(round(GetSystemMetrics(0) / 10), round(GetSystemMetrics(1) / 50))
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
@@ -76,15 +79,19 @@ class LoginFunctions(LoginWindow):
         cls.load_users()
         cls.check_autosave(self)
         cls.move_TaskClose(self)
-        
-    @classmethod 
+
+    @classmethod
     def move_TaskClose(cls, self):
-        self.OkCancelFrame.move(round((self.frame.width()-400)/2), round((self.frame.height()-180)/2)) 
+        self.OkCancelFrame.move(
+            round((self.frame.width() - 400) / 2),
+            round((self.frame.height() - 180) / 2),
+        )
+
     @classmethod
     def create_dropshadow(cls, self):
         self.shadow = QGraphicsDropShadowEffect(self)
         self.shadow.setBlurRadius(50)
-        self.shadow.setXOffset(0)   
+        self.shadow.setXOffset(0)
         self.shadow.setYOffset(0)
         self.shadow.setColor(QColor(0, 0, 0, 200))
         self.bg_frame.setGraphicsEffect(self.shadow)
@@ -221,18 +228,38 @@ class LoginFunctions(LoginWindow):
         name_account = self.UserBox.text()[:30]
 
         for user in cls.users:
-            if len(name) < 6  or name in user.name or list(set(False for i in name.lower() if i not in 'qwertyuiopasdfghjklzxcvbnm1234567890 ')) == [False]:
+            if (
+                len(name) < 6
+                or name in user.name
+                or list(
+                    set(
+                        False
+                        for i in name.lower()
+                        if i not in "qwertyuiopasdfghjklzxcvbnm1234567890 "
+                    )
+                )
+                == [False]
+            ):
                 self.NoteName.show()
                 check = False
-            else: self.NoteName.hide()
-        if len(password) < 8 or list(set(False for i in password.lower() if i not in 'qwertyuiopasdfghjklzxcvbnm1234567890 ')) == [False]:
+            else:
+                self.NoteName.hide()
+        if len(password) < 8 or list(
+            set(
+                False
+                for i in password.lower()
+                if i not in "qwertyuiopasdfghjklzxcvbnm1234567890 "
+            )
+        ) == [False]:
             self.NotePass.show()
             check = False
-        else: self.NotePass.hide()
+        else:
+            self.NotePass.hide()
         if len(name_account) < 6 or name_account.replace(" ", "").isalnum() is False:
             self.NoteUser.show()
-            check = False    
-        else: self.NoteUser.hide()
+            check = False
+        else:
+            self.NoteUser.hide()
         if check:
             decrypt(cls.USER_PATH_ENCRYPTED, cls.USER_PATH, cls.KEY_PATH)
             with open(cls.USER_PATH, "wb") as f:
@@ -241,9 +268,10 @@ class LoginFunctions(LoginWindow):
                 role = "teacher" if self.Teacher_SU.isChecked() else "student"
                 cls.users.append(User(name, password, role, name_account, False))
                 pickle.dump(cls.users, f)
-                
-            encrypt(cls.USER_PATH, cls.USER_PATH_ENCRYPTED, cls.KEY_PATH) 
+
+            encrypt(cls.USER_PATH, cls.USER_PATH_ENCRYPTED, cls.KEY_PATH)
             self.stacked_widget.setCurrentIndex(2)
+
 
 class Loading_Screen(QMainWindow):
     counter = 0
@@ -251,7 +279,10 @@ class Loading_Screen(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi("UI_files/Loading_Screen.ui", self)
-        self.move(round((GetSystemMetrics(0) - self.width())/ 2), round((GetSystemMetrics(1) - self.height())/ 2))
+        self.move(
+            round((GetSystemMetrics(0) - self.width()) / 2),
+            round((GetSystemMetrics(1) - self.height()) / 2),
+        )
 
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)

@@ -26,7 +26,7 @@ import result_main
 from UI_Files import Resources
 
 UI_MAIN_PATH = "UI_Files/ui_main.ui"
-OPENED_LESSON_PATH = 'data/Users/opened_assignment.oa'
+OPENED_LESSON_PATH = "data/Users/opened_assignment.oa"
 
 
 class MainWindow(QMainWindow):
@@ -54,7 +54,9 @@ class UIFunctions(MainWindow):
 
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
         ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
-        ui.load_btn.clicked.connect(lambda: cls.show_file_dialog(ui, OPENED_LESSON_PATH))
+        ui.load_btn.clicked.connect(
+            lambda: cls.show_file_dialog(ui, OPENED_LESSON_PATH)
+        )
 
         # cls.open_vscode()
 
@@ -94,10 +96,8 @@ class UIFunctions(MainWindow):
     @classmethod
     def show_file_dialog(cls, ui, filename):
         HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
-        file_path = QFileDialog.getOpenFileName(
-            ui, "Open file", HOME_PATH, "*.list"
-        )[0]
-        with open(filename, 'w') as f:
+        file_path = QFileDialog.getOpenFileName(ui, "Open file", HOME_PATH, "*.list")[0]
+        with open(filename, "w") as f:
             f.write(file_path)
         cls.load_assignments(ui, file_path)
 

@@ -85,8 +85,8 @@ if __name__ == "__main__":
             ex_file="data/Lesson/example.py",
             input_file="data/check algorithm/Inputs.txt",
             ans_file="data/check algorithm/Ans.txt",
-            tests=3,
-            vars=2,
+            tests=1,
+            vars=0,
         )
     )
 

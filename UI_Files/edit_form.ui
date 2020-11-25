@@ -242,7 +242,7 @@ QPushButton:hover {
                <property name="styleSheet">
                 <string notr="true">QPushButton {
 	border: none;
-	border-radius: 8px;
+	border-radius: 10px;
 	background-color: rgb(255, 0, 0);
 }
 QPushButton:hover {
@@ -325,7 +325,7 @@ QPushButton:hover {
 background-color: transparent;</string>
                </property>
                <property name="currentIndex">
-                <number>0</number>
+                <number>1</number>
                </property>
                <widget class="QWidget" name="edit_frame1">
                 <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -1025,8 +1025,8 @@ QScrollBar::add-page, QScrollBar::sub-page {
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>100</width>
-                         <height>30</height>
+                         <width>820</width>
+                         <height>500</height>
                         </rect>
                        </property>
                       </widget>

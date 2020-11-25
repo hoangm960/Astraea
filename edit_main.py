@@ -30,9 +30,9 @@ OPENED_LESSON_PATH = 'data/Users/opened_assignment.oa'
 
 
 class Assignment:
-    def __init__(self, name, test_file, input_file, ans_file, tests, vars, details):
+    def __init__(self, name, ex_file, input_file, ans_file, tests, vars, details):
         self.name = name
-        self.test_file = test_file
+        self.ex_file = ex_file
         self.input_file = input_file
         self.ans_file = ans_file
         self.tests = tests
@@ -203,7 +203,7 @@ class UIFunctions(EditWindow):
         cls.change_lesson_title(ui, title)
         for assignment in assignments:
             children[i].title_entry.setText(assignment.name)
-            children[i].test_file_entry.setText(assignment.test_file)
+            children[i].test_file_entry.setText(assignment.ex_file)
             children[i].input_file_entry.setText(assignment.input_file)
             children[i].ans_file_entry.setText(assignment.ans_file)
             children[i].test_num_entry.setValue(assignment.tests)

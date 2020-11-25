@@ -189,7 +189,7 @@ border-radius: 12px;</string>
       <item>
        <widget class="QLabel" name="test_file_label">
         <property name="text">
-         <string>File cần kiểm tra:</string>
+         <string>File chuẩn:</string>
         </property>
        </widget>
       </item>

@@ -235,7 +235,8 @@ class UIFunctions(EditWindow):
     @classmethod
     def close_frame(cls, ui, frame):
         children = ui.content_widget.children()
-        pos = len(children) - children.index(frame)
+        del children[0]
+        pos = len(children) - children.index(frame) - 1
         cls.warn_close_frame(ui, children[pos])
         if cls.deleted == True:
             children[pos].setParent(None)
@@ -258,8 +259,9 @@ class UIFunctions(EditWindow):
     @classmethod
     def load_assignments(cls, ui, filename):
         children = ui.content_widget.children()
+        del children[0]
         assignments = []
-        for i in range(1, ui.content_widget.layout().count() + 1):
+        for i in range(ui.content_widget.layout().count()):
             if not children[i].title_entry.text() in [
                 assignment.name for assignment in assignments
             ]:

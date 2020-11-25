@@ -177,7 +177,7 @@ class LoginFunctions(LoginWindow):
     def load_users(cls):
         cls.users.clear()
         decrypt(cls.USER_PATH_ENCRYPTED, cls.USER_PATH, cls.KEY_PATH)
-        time.sleep(3)
+        time.sleep(1)
         if os.path.getsize(cls.USER_PATH) > 0:
             with open(cls.USER_PATH, "rb") as f:
                 unpickler = pickle.Unpickler(f)
@@ -203,7 +203,7 @@ class LoginFunctions(LoginWindow):
                     cls.users[cls.users.index(user)].auto_saved = True
 
                 decrypt(cls.USER_PATH_ENCRYPTED, cls.USER_PATH, cls.KEY_PATH)
-                time.sleep(3)
+                time.sleep(1)
                 with open(cls.USER_PATH, "wb") as f:
                     pickle.dump(cls.users, f)
                 encrypt(cls.USER_PATH, cls.USER_PATH_ENCRYPTED, cls.KEY_PATH)
@@ -235,7 +235,6 @@ class LoginFunctions(LoginWindow):
         else: self.NoteUser.hide()
         if check:
             decrypt(cls.USER_PATH_ENCRYPTED, cls.USER_PATH, cls.KEY_PATH)
-            # time.sleep(3)
             with open(cls.USER_PATH, "wb") as f:
                 name = self.NameBox_SU.text()
                 password = self.PassBox_SU.text()

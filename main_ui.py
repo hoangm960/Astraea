@@ -148,7 +148,7 @@ class UIFunctions(MainWindow):
             ui.confirmButton.setObjectName("confirmButton")
             ui.verticalLayout_4.addWidget(ui.confirmButton)
             ui.confirmButton.accepted.connect(
-                lambda: cls.save_text(ui, cls.parrent.showDialog.filepath)
+                lambda: cls.save_text(ui, open(OPENED_LESSON_PATH).read().rstrip())
             )
 
         @classmethod
@@ -173,10 +173,11 @@ class UIFunctions(MainWindow):
 
                         with open(filename, "wb") as f:
                             pickle.dump([ui.lesson_title.text(), assignments], f, -1)
+                        cls.changed = False
 
-                    cls.parent.assignments[
-                        ui.list_assignments.currentItem().text()
-                    ] = ui.assignment_details.toPlainText()
+                        cls.parent.assignments[
+                            ui.list_assignments.currentItem().text()
+                        ] = ui.assignment_details.toPlainText()
                     cls.parent.load_details(ui)
 
         @classmethod
@@ -207,7 +208,7 @@ class UIFunctions(MainWindow):
         def __init__(cls, parent, ui):
             cls.parent = parent
 
-            ui.main_btn.setText("kiểm tra")
+            ui.main_btn.setText("Kiểm tra")
             ui.main_btn.setStyleSheet(
                 """QPushButton {background-color: rgb(59, 143, 14); border-radius: 5px;}
             QPushButton:hover {background-color: rgba(59, 143, 14, 150);}"""
@@ -237,4 +238,5 @@ def main(role):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     main("teacher")
+    # main("student")
     sys.exit(app.exec_())

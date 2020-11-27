@@ -169,6 +169,7 @@ class UIFunctions(ResultWindow):
     def put_frame_in_test(cls, self, num):
         if num == 0:
             self.Out_btn.clicked.connect(lambda: self.close())
+            self.Out_btn.setText("Thoát")
             self.inform.show()
             self.inform.move(340, 220)
         else:
@@ -228,7 +229,17 @@ class UIFunctions(ResultWindow):
                 self.frame.detail_entry.setText("Bài làm chưa tối ưu hóa.")
             cls.Total = correct * SCORING_SYSTEM / len(results[:-1])
         try:
-            self.progressBar.setValue(int(cls.Total/ num))
+            self.counter = 0
+            def progress():
+                self.progressBar.setValue(self.counter)
+                if self.counter > int(cls.Total/ num):
+                    self.timer.stop()
+                self.counter+=1
+        
+            self.timer = QtCore.QTimer()
+            self.timer.timeout.connect(progress())
+            self.timer.start(100)
+            self.counter = 0
         except:
             self.progressBar.setValue(0)
 

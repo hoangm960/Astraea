@@ -161,13 +161,10 @@ class UIFunctions(ResultWindow):
         cls.assignments.clear()
         if os.path.exists(filename):
             if os.path.getsize(filename) > 0:
-                decrypted_filename = f"{os.path.splitext(filename)[0]}.list"
-                decrypt(filename, decrypted_filename, KEY_PATH)
                 with open(filename, "rb") as f:
                     unpickler = pickle.Unpickler(f)
                     data = unpickler.load()
                     cls.assignments = data[1]
-                encrypt(decrypted_filename, filename, KEY_PATH)
 
     @classmethod
     def put_frame_in_test(cls, self, num):

@@ -123,7 +123,7 @@ class UIFunctions(EditWindow):
         if os.path.exists(filename):
             if os.path.getsize(filename) > 0:
                 ui.stacked_widget.setCurrentIndex(1)
-                with open(decrypted_filename, "rb") as f:
+                with open(filename, "rb") as f:
                     unpickler = pickle.Unpickler(f)
                     data = unpickler.load()
                     title = data[0]

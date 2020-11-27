@@ -59,6 +59,7 @@ class ResultWindow(QMainWindow):
 class UIFunctions(ResultWindow):
     GLOBAL_STATE = False
     assignments = {}
+    Total = 0
 
     @classmethod
     def uiDefinitions(cls, self):
@@ -211,7 +212,8 @@ class UIFunctions(ResultWindow):
                 self.frame.detail_entry.setText("Bài làm đã tối ưu hóa.")
             else:
                 self.frame.detail_entry.setText("Bài làm chưa tối ưu hóa.")
-
+            cls.Total = correct * SCORING_SYSTEM / len(results[:-1])
+        self.progressBar.setValue(cls.Total)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

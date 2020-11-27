@@ -498,7 +498,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                          <x>0</x>
                          <y>0</y>
                          <width>100</width>
-                         <height>30</height>
+                         <height>450</height>
                         </rect>
                        </property>
                       </widget>
@@ -974,6 +974,30 @@ QScrollBar::add-page, QScrollBar::sub-page {
                          <height>475</height>
                         </rect>
                        </property>
+                       <widget class="QLabel" name="inform">
+                        <property name="geometry">
+                         <rect>
+                          <x>330</x>
+                          <y>190</y>
+                          <width>341</width>
+                          <height>71</height>
+                         </rect>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <family>Segoe UI Black</family>
+                          <pointsize>18</pointsize>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: rgb(117, 117, 117);</string>
+                        </property>
+                        <property name="text">
+                         <string>Hiện tại chưa có bài tập</string>
+                        </property>
+                       </widget>
                       </widget>
                      </widget>
                     </item>

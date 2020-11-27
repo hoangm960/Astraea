@@ -81,6 +81,7 @@ class UIFunctions(ResultWindow):
             lambda: cls.put_frame_in_list(self, len(cls.assignments))
         )
         self.return_btn.clicked.connect(lambda: self.close())
+        self.inform.hide()
         # Button function
         self.btn_maximize.clicked.connect(lambda: cls.maximize_restore(self))
         self.btn_minimize.clicked.connect(lambda: self.showMinimized())
@@ -113,6 +114,10 @@ class UIFunctions(ResultWindow):
                 """
                 background-color: rgb(30, 30, 30);\n border-radius: 0px;"""
             )
+            self.inform.move(
+            round((self.ScrollAreaT.width() - 280) / 2),
+            round((self.ScrollAreaT.height() - 70) / 2)
+            )
             self.btn_maximize.setToolTip("Restore")
         else:
             cls.GLOBAL_STATE = False
@@ -121,6 +126,10 @@ class UIFunctions(ResultWindow):
             self.bg_layout.setContentsMargins(10, 10, 10, 10)
             self.bg_frame.setStyleSheet(
                 """background-color: rgb(30, 30, 30); \nborder-radius: 10px;"""
+            )
+            self.inform.move(
+            round((self.ScrollAreaT.width() - 280)/2),
+            round((self.ScrollAreaT.height() - 70)/2)
             )
             self.btn_maximize.setToolTip("Maximize")
 
@@ -162,18 +171,23 @@ class UIFunctions(ResultWindow):
 
     @classmethod
     def put_frame_in_test(cls, self, num):
-        current_layoutT = self.content_widgetT.layout()
-        if not current_layoutT:
-            current_layoutT = QVBoxLayout()
-            current_layoutT.setContentsMargins(9, 9, 9, 9)
-            self.content_widgetT.setLayout(current_layoutT)
-        self.ScrollAreaT.verticalScrollBar().setValue(1)
+        if num == 0:
+            self.Out_btn.clicked.connect(lambda: self.close())
+            self.inform.show()
+            self.inform.move(340, 220)
+        else:
+            current_layoutT = self.content_widgetT.layout()
+            if not current_layoutT:
+                current_layoutT = QVBoxLayout()
+                current_layoutT.setContentsMargins(9, 9, 9, 9)
+                self.content_widgetT.setLayout(current_layoutT)
+            self.ScrollAreaT.verticalScrollBar().setValue(1)
 
-        for i in range(num):
-            self.frameT = cls.TestFrame()
-            self.content_widgetT.layout().addWidget(self.frameT)
-            self.frameT.details_label.setText(cls.assignments[i].name)
-            self.frameT.details_entry.setText(cls.assignments[i].details)
+            for i in range(num):
+                self.frameT = cls.TestFrame()
+                self.content_widgetT.layout().addWidget(self.frameT)
+                self.frameT.details_label.setText(cls.assignments[i].name)
+                self.frameT.details_entry.setText(cls.assignments[i].details)
 
     @classmethod
     def check_result(cls, self, num):
@@ -217,7 +231,10 @@ class UIFunctions(ResultWindow):
             else:
                 self.frame.detail_entry.setText("Bài làm chưa tối ưu hóa.")
             cls.Total = correct * SCORING_SYSTEM / len(results[:-1])
-        self.progressBar.setValue(cls.Total)
+        try:
+            self.progressBar.setValue(int(cls.Total/ num))
+        except:
+            self.progressBar.setValue(0)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

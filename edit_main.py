@@ -122,8 +122,6 @@ class UIFunctions(EditWindow):
     def check_empty(cls, ui, filename):
         if os.path.exists(filename):
             if os.path.getsize(filename) > 0:
-                decrypted_filename = f"{os.path.splitext(filename)[0]}.list"
-                decrypt(filename, decrypted_filename, KEY_PATH)
                 ui.stacked_widget.setCurrentIndex(1)
                 with open(decrypted_filename, "rb") as f:
                     unpickler = pickle.Unpickler(f)
@@ -132,7 +130,6 @@ class UIFunctions(EditWindow):
                     assignments = data[1]
                     cls.put_frame_in_list(ui, len(assignments))
                     cls.setup_frame(ui, title, assignments)
-                encrypt(decrypted_filename, filename, KEY_PATH)
 
     @classmethod
     def go_to_second(cls, ui):
@@ -279,11 +276,8 @@ class UIFunctions(EditWindow):
                     )
                 )
 
-        decrypted_filename = f"{os.path.splitext(filename)[0]}.list"
-        decrypt(filename, decrypted_filename, KEY_PATH)
         with open(filename, "wb") as f:
             pickle.dump([ui.lesson_title.text(), assignments], f, -1)
-        encrypt(decrypted_filename, filename, KEY_PATH)
 
         cls.reopen_main(ui)
 

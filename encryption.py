@@ -50,7 +50,6 @@ def decrypt(input_file, output_file, key_file):
             
             os.remove(input_file)
 
-            os.remove(key_file)
 
             # Note: You can delete input_file here if you want
         except InvalidToken as e:
@@ -61,5 +60,5 @@ if __name__ == "__main__":
     KEY_PATH = "data/Lesson/assignments.key"
     USER_PATH = "data/Lesson/assignments.list"
     USER_PATH_ENCRYPTED = "data/Lesson/assignments.encrypted"
-    encrypt(USER_PATH, USER_PATH_ENCRYPTED, KEY_PATH)
-    # decrypt(USER_PATH_ENCRYPTED, USER_PATH, KEY_PATH)
+    # encrypt(USER_PATH, USER_PATH_ENCRYPTED, KEY_PATH)
+    decrypt(USER_PATH_ENCRYPTED, USER_PATH, KEY_PATH)

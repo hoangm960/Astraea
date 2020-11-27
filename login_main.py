@@ -189,7 +189,6 @@ class LoginFunctions(LoginWindow):
             with open(cls.USER_PATH, "rb") as f:
                 unpickler = pickle.Unpickler(f)
                 cls.users = unpickler.load()
-        get_key(cls.KEY_PATH)
         encrypt(cls.USER_PATH, cls.USER_PATH_ENCRYPTED, cls.KEY_PATH)
 
     @classmethod

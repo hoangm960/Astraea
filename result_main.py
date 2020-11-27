@@ -21,6 +21,7 @@ from win32api import GetSystemMetrics
 
 import check_algorithm
 from UI_Files import Resources
+from encryption import *
 
 RESULT_FORM_PATH = "UI_Files/result_form.ui"
 RESULT_FRAME_PATH = "UI_Files/result_frame.ui"
@@ -89,7 +90,7 @@ class UIFunctions(ResultWindow):
         # Window size grip
         self.sizegrip = QSizeGrip(self.frame_grip)
         self.sizegrip.setStyleSheet(
-            "QSizeGrip { width: 20px; height: 20px; margin: 5px; border-radius: 10px; } QSizeGrip:hover { background-color: rgb(201, 21, 8) }"
+            "QSizeGrip { width: 20px; height: 20px; margin: 5px; border-radius: 10px; } QSizeGrip:hover { background-color: rgb(90, 90, 90) }"
         )
         self.sizegrip.setToolTip("Resize Window")
         cls.load_assignments(open(OPENED_LESSON_PATH).read().rstrip())

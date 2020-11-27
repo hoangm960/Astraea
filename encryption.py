@@ -33,7 +33,6 @@ def encrypt(input_file, output_file, key_file):
 def decrypt(input_file, output_file, key_file):
     input_file_path = Path(input_file)
     if not input_file_path.is_file():
-        get_key(key_file)
         open(output_file, 'w').close()
     else:
         with open(key_file, 'rb') as f:

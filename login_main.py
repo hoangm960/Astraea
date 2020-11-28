@@ -18,7 +18,6 @@ from encryption import *
 from random import randrange
 
 
-
 class User:
     def __init__(self, name, password, role, name_user, auto_saved):
         self.name = name
@@ -30,7 +29,7 @@ class User:
 
 class LoginWindow(QMainWindow):
     UI_PATH = "UI_Files/Login_gui.ui"
-    
+
     def __init__(self):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(self.UI_PATH, self)
@@ -59,7 +58,7 @@ class LoginFunctions(LoginWindow):
     USER_PATH = "data/Users/User.txt"
     USER_PATH_ENCRYPTED = "data/Users/User.encrypted"
     KEY_PATH = "data/encryption/users.key"
-    
+
     @classmethod
     def uiDefinitions(cls, self):
 
@@ -71,7 +70,7 @@ class LoginFunctions(LoginWindow):
         self.NoteName.hide()
         self.NotePass.hide()
         self.NoteUser.hide()
-        self.move(round(size.width() / 10), round(size.height() / 50))
+        self.move(round(QApplication.primaryScreen().size().width() / 10), round(QApplication.primaryScreen().size().height() / 50))
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         cls.connect_btn(self)
@@ -279,9 +278,10 @@ class Loading_Screen(QMainWindow):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi("UI_files/Loading_Screen.ui", self)
         self.move(
-            round((size.width() - self.width()) / 2),
-            round((size.height() - self.height()) / 2),
+            round((QApplication.primaryScreen().size().width() - self.width()) / 2),
+            round((QApplication.primaryScreen().size().height() - self.height()) / 2),
         )
+
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.timer = QtCore.QTimer()
@@ -299,8 +299,8 @@ class Loading_Screen(QMainWindow):
             self.timer.stop()
             self.main = LoginWindow()
             self.main.setGeometry(
-                round((size.width() - self.main.width()) / 2),
-                round((size.height() - self.main.height()) / 5),
+                round((QApplication.primaryScreen().size().width() - self.main.width()) / 2),
+                round((QApplication.primaryScreen().size().height() - self.main.height()) / 5),
                 self.main.width(),
                 self.main.height(),
             )
@@ -329,10 +329,7 @@ class Loading_Screen(QMainWindow):
 
 
 def main():
-    global size
     app = QApplication(sys.argv)
-    screen = app.primaryScreen()
-    size = screen.size()
     splash_window = Loading_Screen()
     splash_window.show()
     sys.exit(app.exec_())

@@ -19,7 +19,6 @@ from PyQt5.QtWidgets import (
     QSizeGrip,
     QWidget,
 )
-from win32api import GetSystemMetrics
 import result_main
 import edit_main
 import result_main
@@ -231,7 +230,7 @@ class UIFunctions(MainWindow):
 
 def main(role):
     window = MainWindow(role)
-    window.move(GetSystemMetrics(0) - window.width(), 0)
+    window.move(QApplication.primaryScreen().size().width() - window.width(), 0)
     window.show()
 
 

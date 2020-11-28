@@ -19,7 +19,6 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5 import uic
 from UI_Files import Resources
-from win32api import GetSystemMetrics
 import main_ui
 from encryption import *
 
@@ -45,8 +44,8 @@ class EditWindow(QMainWindow):
         QMainWindow.__init__(self, *args, **kwargs)
         uic.loadUi(EDIT_FORM_PATH, self)
         self.setGeometry(
-            round((GetSystemMetrics(0) - self.width()) / 2),
-            round((GetSystemMetrics(1) - self.height()) / 2),
+            round((QApplication.primaryScreen().size().width() - self.width()) / 2),
+            round((QApplication.primaryScreen().size().height() - self.height()) / 2),
             self.width(),
             self.height(),
         )

@@ -235,8 +235,8 @@ def main(role):
     window.show()
 
 
-# if __name__ == "__main__":
-#     app = QApplication(sys.argv)
-#     main("teacher")
-#     # main("student")
-#     sys.exit(app.exec_())
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    main("teacher")
+    # main("student")
+    sys.exit(app.exec_())

@@ -21,7 +21,6 @@ from win32api import GetSystemMetrics
 
 import check_algorithm
 from UI_Files import Resources
-from encryption import *
 
 RESULT_FORM_PATH = "UI_Files/result_form.ui"
 RESULT_FRAME_PATH = "UI_Files/result_frame.ui"
@@ -90,7 +89,7 @@ class UIFunctions(ResultWindow):
         # Window size grip
         self.sizegrip = QSizeGrip(self.frame_grip)
         self.sizegrip.setStyleSheet(
-            "QSizeGrip { width: 20px; height: 20px; margin: 5px; border-radius: 10px; } QSizeGrip:hover { background-color: rgb(90, 90, 90) }"
+            "QSizeGrip { width: 20px; height: 20px; margin: 5px; border-radius: 10px; } QSizeGrip:hover { background-color: rgb(201, 21, 8) }"
         )
         self.sizegrip.setToolTip("Resize Window")
         cls.load_assignments(open(OPENED_LESSON_PATH).read().rstrip())
@@ -230,17 +229,7 @@ class UIFunctions(ResultWindow):
                 self.frame.detail_entry.setText("Bài làm chưa tối ưu hóa.")
             cls.Total = correct * SCORING_SYSTEM / len(results[:-1])
         try:
-            self.counter = 0
-            def progress():
-                self.progressBar.setValue(self.counter)
-                if self.counter > int(cls.Total/ num):
-                    self.timer.stop()
-                self.counter+=1
-        
-            self.timer = QtCore.QTimer()
-            self.timer.timeout.connect(progress())
-            self.timer.start(100)
-            self.counter = 0
+            self.progressBar.setValue(int(cls.Total/ num))
         except:
             self.progressBar.setValue(0)
 

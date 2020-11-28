@@ -11,12 +11,12 @@ from PyQt5.QtWidgets import (
 import sys
 from PyQt5.QtCore import Qt
 from PyQt5 import uic
-from win32api import GetSystemMetrics
 import main_ui
 import pickle
 import time
 from encryption import *
 from random import randrange
+
 
 
 class User:
@@ -30,7 +30,7 @@ class User:
 
 class LoginWindow(QMainWindow):
     UI_PATH = "UI_Files/Login_gui.ui"
-
+    
     def __init__(self):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(self.UI_PATH, self)
@@ -59,7 +59,7 @@ class LoginFunctions(LoginWindow):
     USER_PATH = "data/Users/User.txt"
     USER_PATH_ENCRYPTED = "data/Users/User.encrypted"
     KEY_PATH = "data/encryption/users.key"
-
+    
     @classmethod
     def uiDefinitions(cls, self):
 
@@ -71,7 +71,7 @@ class LoginFunctions(LoginWindow):
         self.NoteName.hide()
         self.NotePass.hide()
         self.NoteUser.hide()
-        self.move(round(GetSystemMetrics(0) / 10), round(GetSystemMetrics(1) / 50))
+        self.move(round(size.width() / 10), round(size.height() / 50))
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         cls.connect_btn(self)
@@ -279,10 +279,9 @@ class Loading_Screen(QMainWindow):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi("UI_files/Loading_Screen.ui", self)
         self.move(
-            round((GetSystemMetrics(0) - self.width()) / 2),
-            round((GetSystemMetrics(1) - self.height()) / 2),
+            round((size.width() - self.width()) / 2),
+            round((size.height() - self.height()) / 2),
         )
-
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.timer = QtCore.QTimer()
@@ -300,8 +299,8 @@ class Loading_Screen(QMainWindow):
             self.timer.stop()
             self.main = LoginWindow()
             self.main.setGeometry(
-                round((GetSystemMetrics(0) - self.main.width()) / 2),
-                round((GetSystemMetrics(1) - self.main.height()) / 5),
+                round((size.width() - self.main.width()) / 2),
+                round((size.height() - self.main.height()) / 5),
                 self.main.width(),
                 self.main.height(),
             )
@@ -330,11 +329,14 @@ class Loading_Screen(QMainWindow):
 
 
 def main():
+    global size
     app = QApplication(sys.argv)
+    screen = app.primaryScreen()
+    size = screen.size()
     splash_window = Loading_Screen()
     splash_window.show()
     sys.exit(app.exec_())
 
 
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    main()

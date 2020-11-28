@@ -57,7 +57,7 @@ class UIFunctions(MainWindow):
             lambda: cls.show_file_dialog(ui, OPENED_LESSON_PATH)
         )
 
-        # cls.open_vscode()
+        cls.open_vscode()
 
         ui.list_assignments.itemPressed.connect(lambda: cls.load_details(ui))
 

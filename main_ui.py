@@ -216,7 +216,7 @@ class UIFunctions(MainWindow):
         def open_result_form(cls, ui):
             window = result_main.ResultWindow()
             window.show()
-            ui.close()
+            cls.parent.close_pg(ui)
 
     @classmethod
     def define_role(cls, ui):

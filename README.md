@@ -1,2 +1,2 @@
-## Pylearn
-A software that help you learn python easily.
+## Astraea
+Phần mềm hỗ trợ dạy và học lập trình

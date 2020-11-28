@@ -7,3 +7,4 @@ old gui/
 .gitignore
 data/
 temp.py
+output/

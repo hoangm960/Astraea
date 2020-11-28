@@ -23,8 +23,8 @@ import edit_main
 import result_main
 from UI_Files import Resources
 
-UI_MAIN_PATH = "UI_Files/ui_main.ui"
-OPENED_LESSON_PATH = "data/Users/opened_assignment.oa"
+UI_MAIN_PATH = "./UI_Files/ui_main.ui"
+OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
 
 
 class MainWindow(QMainWindow):

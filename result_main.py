@@ -21,10 +21,10 @@ from PyQt5.QtWidgets import (
 import check_algorithm
 from UI_Files import Resources
 
-RESULT_FORM_PATH = "UI_Files/result_form.ui"
-RESULT_FRAME_PATH = "UI_Files/result_frame.ui"
-TEST_FRAME_PATH = "UI_Files/Test_frame.ui"
-OPENED_LESSON_PATH = "data/Users/opened_assignment.oa"
+RESULT_FORM_PATH = "./UI_Files/result_form.ui"
+RESULT_FRAME_PATH = "./UI_Files/result_frame.ui"
+TEST_FRAME_PATH = "./UI_Files/Test_frame.ui"
+OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
 SCORING_SYSTEM = 10
 
 

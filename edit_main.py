@@ -22,10 +22,10 @@ from UI_Files import Resources
 import main_ui
 from encryption import *
 
-KEY_PATH = "data/Lesson/assignments.key"
-EDIT_FORM_PATH = "UI_Files/edit_form.ui"
-EDIT_FRAME_PATH = "UI_Files/edit_frame.ui"
-OPENED_LESSON_PATH = "data/Users/opened_assignment.oa"
+KEY_PATH = "./data/Lesson/assignments.key"
+EDIT_FORM_PATH = "./UI_Files/edit_form.ui"
+EDIT_FRAME_PATH = "./UI_Files/edit_frame.ui"
+OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
 if not os.path.exists(OPENED_LESSON_PATH):
     open(OPENED_LESSON_PATH, 'w').close()
 

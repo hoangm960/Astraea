@@ -17,7 +17,6 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QWidget,
 )
-from win32api import GetSystemMetrics
 
 import check_algorithm
 from UI_Files import Resources
@@ -34,8 +33,8 @@ class ResultWindow(QMainWindow):
         QMainWindow.__init__(self, *args, **kwargs)
         uic.loadUi(RESULT_FORM_PATH, self)
         self.setGeometry(
-            round((GetSystemMetrics(0) - self.width()) / 3),
-            round((GetSystemMetrics(1) - self.height()) / 2),
+            round((QApplication.primaryScreen().size().width() - self.width()) / 3),
+            round((QApplication.primaryScreen().size().height() - self.height()) / 2),
             self.width(),
             self.height(),
         )

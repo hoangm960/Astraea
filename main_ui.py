@@ -3,8 +3,7 @@ import pickle
 import subprocess
 import sys
 
-import win32con
-import win32gui
+import pygetwindow as gw
 from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor
@@ -38,6 +37,7 @@ class MainWindow(QMainWindow):
 
 class UIFunctions(MainWindow):
     assignments = {}
+    pg = None
 
     @classmethod
     def uiDefinitions(cls, ui):
@@ -69,16 +69,14 @@ class UIFunctions(MainWindow):
     def open_vscode(cls):
         file = os.path.expandvars("%LOCALAPPDATA%/Programs/Microsoft VS Code/Code.exe")
         subprocess.call(file)
-        cls.pg = win32gui.FindWindow(None, "Visual Studio Code")
-        x0, y0, x1, y1 = win32gui.GetWindowRect(cls.pg)
-        w = x1 - x0
-        h = y1 - y0
-        win32gui.MoveWindow(cls.pg, 0, 0, w + 45, h, True)
+        cls.pg = gw.getWindowsWithTitle("Visual Studio Code")[0]
+        cls.pg.moveTo(0, 0)
+        cls.pg.resize(45, 0)
 
     @classmethod
     def close_pg(cls, ui):
         try:
-            win32gui.PostMessage(cls.pg, win32con.WM_CLOSE, 0, 0)
+            cls.pg.close()
         except:
             pass
 

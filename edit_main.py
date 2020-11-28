@@ -172,10 +172,12 @@ class UIFunctions(EditWindow):
 
     @classmethod
     def show_file_dialog(cls, ui, filename):
-        HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
-        file_path = QFileDialog.getSaveFileName(ui, "Open file", HOME_PATH, "*.list")[0]
-        with open(filename, "w") as f:
-            f.write(file_path)
+        file_path = open(filename).read().rstrip()
+        if not file_path:
+            HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
+            file_path = QFileDialog.getSaveFileName(ui, "Open file", HOME_PATH, "*.list")[0]
+            with open(filename, "w") as f:
+                f.write(file_path)
         cls.load_assignments(ui, file_path)
 
     class EditFrame(QWidget):

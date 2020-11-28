@@ -67,8 +67,9 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def open_vscode(cls):
-        file = os.path.expandvars("%LOCALAPPDATA%/Programs/Microsoft VS Code/Code.exe")
-        subprocess.call(file)
+        file_path = os.path.expandvars("%LOCALAPPDATA%\Programs\Microsoft VS Code")
+        os.system(f"cmd /c cd {file_path}")
+        os.system("Code.cmd")
         cls.pg = gw.getWindowsWithTitle("Visual Studio Code")[0]
         cls.pg.moveTo(0, 0)
         cls.pg.resize(45, 0)
@@ -79,7 +80,6 @@ class UIFunctions(MainWindow):
             cls.pg.close()
         except:
             pass
-
         ui.close()
 
     @classmethod
@@ -198,7 +198,7 @@ class UIFunctions(MainWindow):
         def open_edit_form(cls, ui):
             window = edit_main.EditWindow()
             window.show()
-            ui.close()
+            cls.parent.close_pg(ui)
 
     class StudentUiFunctions:
         @classmethod

@@ -2,6 +2,7 @@ import os
 import pickle
 import subprocess
 import sys
+import pyautogui
 
 import pygetwindow as gw
 from PyQt5 import QtCore, uic
@@ -18,6 +19,7 @@ from PyQt5.QtWidgets import (
     QSizeGrip,
     QWidget,
 )
+from time import sleep
 import result_main
 import edit_main
 import result_main
@@ -25,6 +27,7 @@ from UI_Files import Resources
 
 UI_MAIN_PATH = "./UI_Files/ui_main.ui"
 OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
+SCREEN_WIDTH, SCREEN_HEIGHT = pyautogui.size()
 
 
 class MainWindow(QMainWindow):
@@ -57,7 +60,7 @@ class UIFunctions(MainWindow):
             lambda: cls.show_file_dialog(ui, OPENED_LESSON_PATH)
         )
 
-        cls.open_vscode()
+        cls.open_vscode(ui)
 
         ui.list_assignments.itemPressed.connect(lambda: cls.load_details(ui))
 
@@ -66,13 +69,18 @@ class UIFunctions(MainWindow):
         cls.check_opened_lesson(ui, OPENED_LESSON_PATH)
 
     @classmethod
-    def open_vscode(cls):
+    def open_vscode(cls, ui):
         os.system("code -n")
-        cls.pg = gw.getWindowsWithTitle("Visual Studio Code")[0]
-        print(cls.pg)
+        windows = gw.getAllWindows()
+        for window in windows:
+            if "Visual Studio Code" in window.title:
+                cls.pg = window
+                break
+        sleep(2)
+        cls.pg.restore()
         cls.pg.moveTo(0, 0)
-        cls.pg.resize(45, 0)
-
+        cls.pg.resizeTo(round((SCREEN_WIDTH - ui.width())), ui.height())
+        
     @classmethod
     def close_pg(cls, ui):
         try:

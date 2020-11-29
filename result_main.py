@@ -180,13 +180,13 @@ class UIFunctions(ResultWindow):
             current_layout.setContentsMargins(9, 9, 9, 9)
             self.content_widgetT.setLayout(current_layout)
         self.scrollArea.verticalScrollBar().setValue(1)
-        self.results = cls.ResultFrame()
+        self.results = cls.ResultFrame() 
 
         for i in range(num):
             self.frame = cls.TestFrame()
             self.content_widgetT.layout().addWidget(self.frame)
-            self.results.test_file_label.setText(cls.assignments[i].name)
-
+            # self.results.test_file_label.setText(cls.assignments[i].name)
+            self.frame.details_label.setText(f'Câu {i+1} : {cls.assignments[i].name}')
     @classmethod
     def check_result(cls, frame, num):
         assignments = cls.assignments[num]
@@ -204,12 +204,15 @@ class UIFunctions(ResultWindow):
         children = self.content_widgetT.children()
         del children[0:2]
         for i in range(num):
-            self.frame = children[i]
-            results = cls.check_result(self.frame, i)
             correct = 0
-            for result in results[:-1]:
-                if result[1]:
-                    correct += 1
+            results = []
+            self.frame = children[i]
+
+            if self.frame.ans_file_entry.text() != '':
+                results = cls.check_result(self.frame, i)
+                for result in results[:-1]:
+                    if result[1]:
+                        correct += 1
 
             current_layout = self.content_widget.layout()
             if not current_layout:
@@ -220,16 +223,20 @@ class UIFunctions(ResultWindow):
             self.frame = cls.ResultFrame()
             self.content_widget.layout().addWidget(self.frame)
             self.frame.correct_num.setText(str(correct))
-            self.frame.Score_box.setText(
+            try:
+                self.frame.Score_box.setText(
                 str(correct * SCORING_SYSTEM / len(results[:-1]))
             )
-            if results[-1]:
-                self.frame.detail_entry.setText("Bài làm đã tối ưu hóa.")
-            else:
-                self.frame.detail_entry.setText("Bài làm chưa tối ưu hóa.")
-            cls.Total = correct * SCORING_SYSTEM / len(results[:-1])
+                if results[-1]:
+                    self.frame.detail_entry.setText("Bài làm đã tối ưu hóa.")
+                else:
+                    self.frame.detail_entry.setText("Bài làm chưa tối ưu hóa.")
+                cls.Total = correct * SCORING_SYSTEM / len(results[:-1])
+            except:
+                pass
+                self.frame.detail_entry.setText("Chưa làm câu này")
             try:
-                self.progressBar.setValue(int(cls.Total/ num))
+                self.progressBar.setValue(int(cls.Total/ num*100))
             except:
                 self.progressBar.setValue(0)
 

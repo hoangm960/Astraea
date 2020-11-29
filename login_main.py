@@ -172,7 +172,7 @@ class LoginFunctions(LoginWindow):
             self.verticalLayout.setContentsMargins(0, 0, 0, 0)
             self.btn_maximize.setToolTip("Khôi phục")
             self.bg_frame.setStyleSheet("""QFrame{
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0.00568182 rgba(35, 44, 51, 255), stop:1 rgba(35, 44, 51, 255));
+	background-image: url(:/images/icons/Bg.jpg);
     border-radius: 0px;
 }""")
         else:
@@ -182,7 +182,7 @@ class LoginFunctions(LoginWindow):
             self.verticalLayout.setContentsMargins(10, 10, 10, 10)
             self.btn_maximize.setToolTip("Phóng to")
             self.bg_frame.setStyleSheet("""QFrame{
-	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0.00568182 rgba(35, 44, 51, 255), stop:1 rgba(35, 44, 51, 255));
+	background-image: url(:/images/icons/Bg.jpg);
     border-radius: 9px;
 }""")
 
@@ -236,33 +236,38 @@ class LoginFunctions(LoginWindow):
         name = self.NameBox.text()[:31]
         password = self.PassBox.text()[:22]
         name_account = self.UserBox.text()[:30]
-        for user in cls.users:
-            if len(name) < 8 or list(
+        if len(name) < 8 or list(
             set(
                 False
                 for i in name.lower()
                 if i not in cls.enabled 
             )
         ) == [False]:
-                self.Note_Pass.show()
-                check = False
+            self.Note_Name.show()
+            check = False
         else:
-            self.Note_Pass.hide()
+            for user in cls.users:
+                print(user.name)
+                if name == user.name:
+                    self.Note_Name.show()
+                    check = False
+                    break
+            else:
+                self.Note_Name.hide()
+
         if len(password) < 8 or list(
             set(
                 False
                 for i in password.lower()
-                if i not in cls.enabled 
+                if i not in cls.enabled
             )
         ) == [False]:
             self.Note_Pass.show()
             check = False
         else:
             self.Note_Pass.hide()
-        if len(name_account) < 6 or ''.join([i for i in name_account.lower() if i not in cls.enabled]).isalnum() == True:
-            if ''.join([i for i in name_account.lower() if i not in cls.enabled]) == '':
-                pass 
-            else:
+        if len(name_account) < 6 or not ''.join([i for i in name_account.lower() if i not in cls.enabled]).isalnum():
+            if not ''.join([i for i in name_account.lower() if i not in cls.enabled]) == '':
                 self.Note_User.show()
                 check = False
         else:

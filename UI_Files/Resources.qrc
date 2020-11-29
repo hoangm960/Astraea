@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="images">
+    <file>icons/Bg.jpg</file>
     <file>icons/minimize.png</file>
     <file>icons/close.png</file>
     <file>icons/folder_open.png</file>

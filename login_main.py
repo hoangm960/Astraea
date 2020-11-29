@@ -247,7 +247,6 @@ class LoginFunctions(LoginWindow):
             check = False
         else:
             for user in cls.users:
-                print(user.name)
                 if name == user.name:
                     self.Note_Name.show()
                     check = False

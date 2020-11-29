@@ -103,6 +103,19 @@ class UIFunctions(EditWindow):
         ui.sizegrip.setToolTip("Resize Window")
 
         # Change scene
+        def showDialog(self, entry):
+            HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
+            file_name = QFileDialog.getOpenFileName(
+                self, "Open file", HOME_PATH, "*.docx"
+            )
+
+            if file_name[0]:
+                entry.setText(file_name[0])
+        ui.setting_stackedWidget.setCurrentIndex(0)
+        ui.Study.setChecked(True)
+        ui.Study.clicked.connect(lambda: ui.setting_stackedWidget.setCurrentIndex(0))
+        ui.Exercise.clicked.connect(lambda: ui.setting_stackedWidget.setCurrentIndex(1))
+        ui.load_file.clicked.connect(lambda: showDialog(ui,ui.file_entry))
         ui.confirm_button.clicked.connect(lambda: cls.go_to_second(ui))
         ui.return_btn.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(0))
         ui.add_btn.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(2))
@@ -134,9 +147,13 @@ class UIFunctions(EditWindow):
 
     @classmethod
     def go_to_second(cls, ui):
-        cls.change_lesson_title(ui, ui.name_entry.text())
-        cls.put_frame_in_list(ui, ui.num_entry.value())
-        ui.stacked_widget.setCurrentIndex(1)
+        if ui.Study.isChecked():
+            ui.NameLesson.setText(ui.name_entry.text())
+            ui.stacked_widget.setCurrentIndex(3)    
+        else:
+            cls.change_lesson_title(ui, ui.name_entry.text())
+            cls.put_frame_in_list(ui, ui.num_entry.value())
+            ui.stacked_widget.setCurrentIndex(1)
 
     @classmethod
     def returnStatus(cls):

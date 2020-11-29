@@ -20,11 +20,13 @@ from PyQt5.QtWidgets import (
 
 import check_algorithm
 from UI_Files import Resources
+import pyautogui
 
 RESULT_FORM_PATH = "./UI_Files/result_form.ui"
 RESULT_FRAME_PATH = "./UI_Files/result_frame.ui"
 TEST_FRAME_PATH = "./UI_Files/Test_frame.ui"
 OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
+SCREEN_WIDTH, SCREEN_HEIGHT = pyautogui.size()
 SCORING_SYSTEM = 10
 
 
@@ -33,8 +35,8 @@ class ResultWindow(QMainWindow):
         QMainWindow.__init__(self, *args, **kwargs)
         uic.loadUi(RESULT_FORM_PATH, self)
         self.setGeometry(
-            round((QApplication.primaryScreen().size().width() - self.width()) / 3),
-            round((QApplication.primaryScreen().size().height() - self.height()) / 2),
+            round((SCREEN_WIDTH - self.width()) / 3),
+            round((SCREEN_HEIGHT - self.height()) / 2),
             self.width(),
             self.height(),
         )
@@ -111,8 +113,8 @@ class UIFunctions(ResultWindow):
                 background-color: rgb(30, 30, 30);\n border-radius: 0px;"""
             )
             self.inform.move(
-            round((self.ScrollAreaT.width() - 280) / 2),
-            round((self.ScrollAreaT.height() - 70) / 2)
+                round((self.ScrollAreaT.width() - 280) / 2),
+                round((self.ScrollAreaT.height() - 70) / 2),
             )
             self.btn_maximize.setToolTip("Restore")
         else:
@@ -124,8 +126,8 @@ class UIFunctions(ResultWindow):
                 """background-color: rgb(30, 30, 30); \nborder-radius: 10px;"""
             )
             self.inform.move(
-            round((self.ScrollAreaT.width() - 280)/2),
-            round((self.ScrollAreaT.height() - 70)/2)
+                round((self.ScrollAreaT.width() - 280) / 2),
+                round((self.ScrollAreaT.height() - 70) / 2),
             )
             self.btn_maximize.setToolTip("Maximize")
 
@@ -180,23 +182,21 @@ class UIFunctions(ResultWindow):
             current_layout.setContentsMargins(9, 9, 9, 9)
             self.content_widgetT.setLayout(current_layout)
         self.scrollArea.verticalScrollBar().setValue(1)
-        self.results = cls.ResultFrame() 
+        self.results = cls.ResultFrame()
 
         for i in range(num):
             self.frame = cls.TestFrame()
             self.content_widgetT.layout().addWidget(self.frame)
-            # self.results.test_file_label.setText(cls.assignments[i].name)
-            self.frame.details_label.setText(f'Câu {i+1} : {cls.assignments[i].name}')
+            self.frame.details_label.setText(cls.assignments[i].name)
+            self.frame.details_entry.setText(cls.assignments[i].details)
+
     @classmethod
     def check_result(cls, frame, num):
         assignments = cls.assignments[num]
         return check_algorithm.main(
             filename=frame.ans_file_entry.text(),
             ex_file=assignments.ex_file,
-            input_file=assignments.input_file,
-            ans_file=assignments.ans_file,
             tests=assignments.tests,
-            vars=assignments.vars,
         )
 
     @classmethod
@@ -208,8 +208,9 @@ class UIFunctions(ResultWindow):
             results = []
             self.frame = children[i]
 
-            if self.frame.ans_file_entry.text() != '':
+            if self.frame.ans_file_entry.text() != "":
                 results = cls.check_result(self.frame, i)
+                print(results)
                 for result in results[:-1]:
                     if result[1]:
                         correct += 1
@@ -225,8 +226,8 @@ class UIFunctions(ResultWindow):
             self.frame.correct_num.setText(str(correct))
             try:
                 self.frame.Score_box.setText(
-                str(correct * SCORING_SYSTEM / len(results[:-1]))
-            )
+                    str(correct * SCORING_SYSTEM / len(results[:-1]))
+                )
                 if results[-1]:
                     self.frame.detail_entry.setText("Bài làm đã tối ưu hóa.")
                 else:
@@ -236,12 +237,13 @@ class UIFunctions(ResultWindow):
                 pass
                 self.frame.detail_entry.setText("Chưa làm câu này")
             try:
-                self.progressBar.setValue(int(cls.Total/ num*100))
-                self.Score.setText(str(round(cls.Total/num * 10, 2)))
+                self.progressBar.setValue(int(cls.Total / num * 100))
+                self.Score.setText(str(round(cls.Total / num * 10, 2)))
             except:
                 self.progressBar.setValue(0)
-            if float(self.Score.text())<5:
+            if float(self.Score.text()) < 5:
                 self.Judge.setText("Bài làm vẫn chưa đạt chuẩn.")
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

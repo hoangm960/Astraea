@@ -53,6 +53,7 @@ class LoginWindow(QMainWindow):
 
 class LoginFunctions(LoginWindow):
     users = []
+    enabled = "qwertyuiopasdfghjklzxcvbnm1234567890 @/._"
     GLOBAL_STATE = False
     STATE_ECHOPASS = True
     USER_PATH = "data/Users/User.txt"
@@ -64,12 +65,12 @@ class LoginFunctions(LoginWindow):
 
         self.OkCancelFrame.hide()
         self.frameError.hide()
+        self.eyeHide_SI.hide()
         self.eyeHide.hide()
-        self.eyeHide_SU.hide()
         self.stacked_widget.setCurrentIndex(0)
-        self.NoteName.hide()
-        self.NotePass.hide()
-        self.NoteUser.hide()
+        self.Note_Name.hide()
+        self.Note_Pass.hide()
+        self.Note_User.hide()
         self.move(round(QApplication.primaryScreen().size().width() / 10), round(QApplication.primaryScreen().size().height() / 50))
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
@@ -105,17 +106,17 @@ class LoginFunctions(LoginWindow):
         self.btn_maximize.clicked.connect(lambda: cls.move_TaskClose(self))
         self.btn_quit.clicked.connect(lambda: self.OkCancelFrame.show())
         self.Accept.clicked.connect(lambda: self.close())
-        self.eyeHide.clicked.connect(
+        self.eyeHide_SI.clicked.connect(
             lambda: self.PassBox_SI.setEchoMode(QtWidgets.QLineEdit.Password)
         )
-        self.eyeHide_SU.clicked.connect(
-            lambda: self.PassBox_SU.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.eyeHide.clicked.connect(
+            lambda: self.PassBox.setEchoMode(QtWidgets.QLineEdit.Password)
         )
-        self.eyeShow.clicked.connect(
+        self.eyeShow_SI.clicked.connect(
             lambda: self.PassBox_SI.setEchoMode(QtWidgets.QLineEdit.Normal)
         )
-        self.eyeShow_SU.clicked.connect(
-            lambda: self.PassBox_SU.setEchoMode(QtWidgets.QLineEdit.Normal)
+        self.eyeShow.clicked.connect(
+            lambda: self.PassBox.setEchoMode(QtWidgets.QLineEdit.Normal)
         )
         self.SignIn_Bt.clicked.connect(lambda: cls.check_SI(self))
         self.SignUp_Bt.clicked.connect(lambda: cls.check_SU(self))
@@ -132,13 +133,13 @@ class LoginFunctions(LoginWindow):
 
         def default():
             self.STATE_ECHOPASS = True
-            self.PassBox_SU.clear()
-            self.NameBox_SU.clear()
+            self.PassBox.clear()
+            self.NameBox.clear()
             self.UserBox.clear()
-            self.NoteName.hide()
-            self.NotePass.hide()
-            self.NoteUser.hide()
-            self.Student_SU.setChecked(True)
+            self.Note_Name.hide()
+            self.Note_Pass.hide()
+            self.Note_User.hide()
+            self.student.setChecked(True)
 
     @classmethod
     def setup_sizegrip(cls, self):
@@ -232,49 +233,46 @@ class LoginFunctions(LoginWindow):
     @classmethod
     def check_SU(cls, self):
         check = True
-        name = self.NameBox_SU.text()[:31]
-        password = self.PassBox_SU.text()[:26]
+        name = self.NameBox.text()[:31]
+        password = self.PassBox.text()[:22]
         name_account = self.UserBox.text()[:30]
-
         for user in cls.users:
-            if (
-                len(name) < 6
-                or name in user.name
-                or list(
-                    set(
-                        False
-                        for i in name.lower()
-                        if i not in "qwertyuiopasdfghjklzxcvbnm1234567890 "
-                    )
-                )
-                == [False]
-            ):
-                self.NoteName.show()
+            if len(name) < 8 or list(
+            set(
+                False
+                for i in name.lower()
+                if i not in cls.enabled 
+            )
+        ) == [False]:
+                self.Note_Pass.show()
                 check = False
-            else:
-                self.NoteName.hide()
+        else:
+            self.Note_Pass.hide()
         if len(password) < 8 or list(
             set(
                 False
                 for i in password.lower()
-                if i not in "qwertyuiopasdfghjklzxcvbnm1234567890 "
+                if i not in cls.enabled 
             )
         ) == [False]:
-            self.NotePass.show()
+            self.Note_Pass.show()
             check = False
         else:
-            self.NotePass.hide()
-        if len(name_account) < 6 or name_account.replace(" ", "").isalnum() is False:
-            self.NoteUser.show()
-            check = False
+            self.Note_Pass.hide()
+        if len(name_account) < 6 or ''.join([i for i in name_account.lower() if i not in cls.enabled]).isalnum() == True:
+            if ''.join([i for i in name_account.lower() if i not in cls.enabled]) == '':
+                pass 
+            else:
+                self.Note_User.show()
+                check = False
         else:
-            self.NoteUser.hide()
+            self.Note_User.hide()
         if check:
             decrypt(cls.USER_PATH_ENCRYPTED, cls.USER_PATH, cls.KEY_PATH)
             with open(cls.USER_PATH, "wb") as f:
-                name = self.NameBox_SU.text()
-                password = self.PassBox_SU.text()
-                role = "teacher" if self.Teacher_SU.isChecked() else "student"
+                name = self.NameBox.text()
+                password = self.PassBox.text()
+                role = "teacher" if self.teacher.isChecked() else "student"
                 cls.users.append(User(name, password, role, name_account, False))
                 pickle.dump(cls.users, f)
 
@@ -344,7 +342,6 @@ def main():
     splash_window = Loading_Screen()
     splash_window.show()
     sys.exit(app.exec_())
-
 
 if __name__ == "__main__":
     main()

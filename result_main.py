@@ -21,10 +21,10 @@ from PyQt5.QtWidgets import (
 import check_algorithm
 from UI_Files import Resources
 
-RESULT_FORM_PATH = "UI_Files/result_form.ui"
-RESULT_FRAME_PATH = "UI_Files/result_frame.ui"
-TEST_FRAME_PATH = "UI_Files/Test_frame.ui"
-OPENED_LESSON_PATH = "data/Users/opened_assignment.oa"
+RESULT_FORM_PATH = "./UI_Files/result_form.ui"
+RESULT_FRAME_PATH = "./UI_Files/result_frame.ui"
+TEST_FRAME_PATH = "./UI_Files/Test_frame.ui"
+OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
 SCORING_SYSTEM = 10
 
 
@@ -75,9 +75,7 @@ class UIFunctions(ResultWindow):
         self.bg_frame.setGraphicsEffect(self.shadow)
         self.stacked_widget.setCurrentIndex(1)
         self.Out_btn.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(0))
-        self.Out_btn.clicked.connect(
-            lambda: cls.put_frame_in_list(self, len(cls.assignments))
-        )
+        self.Out_btn.clicked.connect(lambda: cls.check_true(self, len(cls.assignments)))
         self.return_btn.clicked.connect(lambda: self.close())
         self.inform.hide()
         # Button function
@@ -92,7 +90,7 @@ class UIFunctions(ResultWindow):
         )
         self.sizegrip.setToolTip("Resize Window")
         cls.load_assignments(open(OPENED_LESSON_PATH).read().rstrip())
-        cls.put_frame_in_test(self, len(cls.assignments))
+        cls.check_empty(self, len(cls.assignments))
 
     @classmethod
     def returnStatus(cls):
@@ -165,33 +163,35 @@ class UIFunctions(ResultWindow):
                     cls.assignments = data[1]
 
     @classmethod
-    def put_frame_in_test(cls, self, num):
+    def check_empty(cls, self, num):
         if num == 0:
             self.Out_btn.clicked.connect(lambda: self.close())
             self.Out_btn.setText("Thoát")
             self.inform.show()
             self.inform.move(340, 220)
         else:
-            current_layoutT = self.content_widgetT.layout()
-            if not current_layoutT:
-                current_layoutT = QVBoxLayout()
-                current_layoutT.setContentsMargins(9, 9, 9, 9)
-                self.content_widgetT.setLayout(current_layoutT)
-            self.ScrollAreaT.verticalScrollBar().setValue(1)
-
-            for i in range(num):
-                self.frameT = cls.TestFrame()
-                self.content_widgetT.layout().addWidget(self.frameT)
-                self.frameT.details_label.setText(cls.assignments[i].name)
-                self.frameT.details_entry.setText(cls.assignments[i].details)
+            cls.put_frame_in_list(self, len(cls.assignments))
 
     @classmethod
-    def check_result(cls, self, num):
+    def put_frame_in_list(cls, self, num):
+        current_layout = self.content_widgetT.layout()
+        if not current_layout:
+            current_layout = QVBoxLayout()
+            current_layout.setContentsMargins(9, 9, 9, 9)
+            self.content_widgetT.setLayout(current_layout)
+        self.scrollArea.verticalScrollBar().setValue(1)
+        self.results = cls.ResultFrame()
+
+        for i in range(num):
+            self.frame = cls.TestFrame()
+            self.content_widgetT.layout().addWidget(self.frame)
+            self.results.test_file_label.setText(cls.assignments[i].name)
+
+    @classmethod
+    def check_result(cls, frame, num):
         assignments = cls.assignments[num]
-        children = self.content_widgetT.children()
-        del children[0]
         return check_algorithm.main(
-            filename=children[num].ans_file_entry.text(),
+            filename=frame.ans_file_entry.text(),
             ex_file=assignments.ex_file,
             input_file=assignments.input_file,
             ans_file=assignments.ans_file,
@@ -200,24 +200,25 @@ class UIFunctions(ResultWindow):
         )
 
     @classmethod
-    def put_frame_in_list(cls, self, num):
-        current_layout = self.content_widget.layout()
-        if not current_layout:
-            current_layout = QVBoxLayout()
-            current_layout.setContentsMargins(9, 9, 9, 9)
-            self.content_widget.setLayout(current_layout)
-        self.scrollArea.verticalScrollBar().setValue(1)
-
+    def check_true(cls, self, num):
+        children = self.content_widgetT.children()
+        del children[0:2]
         for i in range(num):
-            self.frame = cls.ResultFrame()
-            self.content_widget.layout().addWidget(self.frame)
-            self.frame.test_file_label.setText(cls.assignments[i].name)
-
-            results = cls.check_result(self, i)
+            self.frame = children[i]
+            results = cls.check_result(self.frame, i)
             correct = 0
             for result in results[:-1]:
                 if result[1]:
                     correct += 1
+
+            current_layout = self.content_widget.layout()
+            if not current_layout:
+                current_layout = QVBoxLayout()
+                current_layout.setContentsMargins(9, 9, 9, 9)
+                self.content_widget.setLayout(current_layout)
+
+            self.frame = cls.ResultFrame()
+            self.content_widget.layout().addWidget(self.frame)
             self.frame.correct_num.setText(str(correct))
             self.frame.Score_box.setText(
                 str(correct * SCORING_SYSTEM / len(results[:-1]))
@@ -227,10 +228,10 @@ class UIFunctions(ResultWindow):
             else:
                 self.frame.detail_entry.setText("Bài làm chưa tối ưu hóa.")
             cls.Total = correct * SCORING_SYSTEM / len(results[:-1])
-        try:
-            self.progressBar.setValue(int(cls.Total/ num))
-        except:
-            self.progressBar.setValue(0)
+            try:
+                self.progressBar.setValue(int(cls.Total/ num))
+            except:
+                self.progressBar.setValue(0)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

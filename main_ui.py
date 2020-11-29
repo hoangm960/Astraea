@@ -2,6 +2,7 @@ import os
 import pickle
 import subprocess
 import sys
+import pyautogui
 
 import pygetwindow as gw
 from PyQt5 import QtCore, uic
@@ -18,13 +19,15 @@ from PyQt5.QtWidgets import (
     QSizeGrip,
     QWidget,
 )
+from time import sleep
 import result_main
 import edit_main
 import result_main
 from UI_Files import Resources
 
-UI_MAIN_PATH = "UI_Files/ui_main.ui"
-OPENED_LESSON_PATH = "data/Users/opened_assignment.oa"
+UI_MAIN_PATH = "./UI_Files/ui_main.ui"
+OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
+SCREEN_WIDTH, SCREEN_HEIGHT = pyautogui.size()
 
 
 class MainWindow(QMainWindow):
@@ -57,7 +60,7 @@ class UIFunctions(MainWindow):
             lambda: cls.show_file_dialog(ui, OPENED_LESSON_PATH)
         )
 
-        cls.open_vscode()
+        cls.open_vscode(ui)
 
         ui.list_assignments.itemPressed.connect(lambda: cls.load_details(ui))
 
@@ -66,20 +69,24 @@ class UIFunctions(MainWindow):
         cls.check_opened_lesson(ui, OPENED_LESSON_PATH)
 
     @classmethod
-    def open_vscode(cls):
-        file = os.path.expandvars("%LOCALAPPDATA%/Programs/Microsoft VS Code/Code.exe")
-        subprocess.call(file)
-        cls.pg = gw.getWindowsWithTitle("Visual Studio Code")[0]
+    def open_vscode(cls, ui):
+        os.system("code -n")
+        windows = gw.getAllWindows()
+        for window in windows:
+            if "Visual Studio Code" in window.title:
+                cls.pg = window
+                break
+        sleep(2)
+        cls.pg.restore()
         cls.pg.moveTo(0, 0)
-        cls.pg.resize(45, 0)
-
+        cls.pg.resizeTo(round((SCREEN_WIDTH - ui.width())), ui.height())
+        
     @classmethod
     def close_pg(cls, ui):
         try:
             cls.pg.close()
         except:
             pass
-
         ui.close()
 
     @classmethod
@@ -94,9 +101,10 @@ class UIFunctions(MainWindow):
     def show_file_dialog(cls, ui, filename):
         HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
         file_path = QFileDialog.getOpenFileName(ui, "Open file", HOME_PATH, "*.list")[0]
-        with open(filename, "w") as f:
-            f.write(file_path)
-        cls.load_assignments(ui, file_path)
+        if file_path:
+            with open(filename, "w") as f:
+                f.write(file_path)
+            cls.load_assignments(ui, file_path)
 
     @classmethod
     def load_assignments(cls, ui, filename):
@@ -198,7 +206,7 @@ class UIFunctions(MainWindow):
         def open_edit_form(cls, ui):
             window = edit_main.EditWindow()
             window.show()
-            ui.close()
+            cls.parent.close_pg(ui)
 
     class StudentUiFunctions:
         @classmethod
@@ -234,6 +242,6 @@ def main(role):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    main("teacher")
-    # main("student")
+    # main("teacher")
+    main("student")
     sys.exit(app.exec_())

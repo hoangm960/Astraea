@@ -71,14 +71,16 @@ class LoginFunctions(LoginWindow):
         self.Note_Name.hide()
         self.Note_Pass.hide()
         self.Note_User.hide()
-        self.move(round(QApplication.primaryScreen().size().width() / 10), round(QApplication.primaryScreen().size().height() / 50))
+        self.move(
+            round(QApplication.primaryScreen().size().width() / 10),
+            round(QApplication.primaryScreen().size().height() / 50),
+        )
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.btn_maximize.setToolTip("Phóng to")
         self.btn_minimize.setToolTip("Thu nhỏ")
         self.btn_quit.setToolTip("Đóng")
         cls.connect_btn(self)
-        cls.setup_sizegrip(self)
         cls.load_users()
         cls.check_autosave(self)
         cls.move_TaskClose(self)
@@ -142,14 +144,6 @@ class LoginFunctions(LoginWindow):
             self.student.setChecked(True)
 
     @classmethod
-    def setup_sizegrip(cls, self):
-        self.sizegrip = QSizeGrip(self.frame_grip)
-        self.sizegrip.setStyleSheet(
-            "QSizeGrip { background-color: none; width: 20px; height: 20px; margin: 5px; border-radius: 10px; } QSizeGrip:hover { background-color: rgb(66, 0, 99);}"
-        )
-        self.sizegrip.setToolTip("This was locked")
-
-    @classmethod
     def check_autosave(cls, self):
         for user in cls.users:
             if user.auto_saved:
@@ -171,20 +165,24 @@ class LoginFunctions(LoginWindow):
             self.showMaximized()
             self.verticalLayout.setContentsMargins(0, 0, 0, 0)
             self.btn_maximize.setToolTip("Khôi phục")
-            self.bg_frame.setStyleSheet("""QFrame{
-	background-image: url(:/images/icons/Bg.jpg);
-    border-radius: 0px;
-}""")
+            self.bg_frame.setStyleSheet(
+                """#bg_frame {
+                    border-image: url(:/images/icons/Bg.jpg);
+                    border-radius: 0px;
+                    }"""
+            )
         else:
             cls.GLOBAL_STATE = False
             self.showNormal()
             self.resize(self.width() + 1, self.height() + 1)
             self.verticalLayout.setContentsMargins(10, 10, 10, 10)
             self.btn_maximize.setToolTip("Phóng to")
-            self.bg_frame.setStyleSheet("""QFrame{
-	background-image: url(:/images/icons/Bg.jpg);
-    border-radius: 9px;
-}""")
+            self.bg_frame.setStyleSheet(
+                """#bg_frame {
+                    border-image: url(:/images/icons/Bg.jpg);
+                    border-radius: 9px;
+                    }"""
+            )
 
     @classmethod
     def Error(cls, self, text):
@@ -237,11 +235,7 @@ class LoginFunctions(LoginWindow):
         password = self.PassBox.text()[:22]
         name_account = self.UserBox.text()[:30]
         if len(name) < 8 or list(
-            set(
-                False
-                for i in name.lower()
-                if i not in cls.enabled 
-            )
+            set(False for i in name.lower() if i not in cls.enabled)
         ) == [False]:
             self.Note_Name.show()
             check = False
@@ -256,18 +250,22 @@ class LoginFunctions(LoginWindow):
                 self.Note_Name.hide()
 
         if len(password) < 8 or list(
-            set(
-                False
-                for i in password.lower()
-                if i not in cls.enabled
-            )
+            set(False for i in password.lower() if i not in cls.enabled)
         ) == [False]:
             self.Note_Pass.show()
             check = False
         else:
             self.Note_Pass.hide()
-        if len(name_account) < 6 or not ''.join([i for i in name_account.lower() if i not in cls.enabled]).isalnum():
-            if not ''.join([i for i in name_account.lower() if i not in cls.enabled]) == '':
+        if (
+            len(name_account) < 6
+            or not "".join(
+                [i for i in name_account.lower() if i not in cls.enabled]
+            ).isalnum()
+        ):
+            if (
+                not "".join([i for i in name_account.lower() if i not in cls.enabled])
+                == ""
+            ):
                 self.Note_User.show()
                 check = False
         else:
@@ -313,8 +311,14 @@ class Loading_Screen(QMainWindow):
             self.timer.stop()
             self.main = LoginWindow()
             self.main.setGeometry(
-                round((QApplication.primaryScreen().size().width() - self.main.width()) / 2),
-                round((QApplication.primaryScreen().size().height() - self.main.height()) / 5),
+                round(
+                    (QApplication.primaryScreen().size().width() - self.main.width())
+                    / 2
+                ),
+                round(
+                    (QApplication.primaryScreen().size().height() - self.main.height())
+                    / 5
+                ),
                 self.main.width(),
                 self.main.height(),
             )
@@ -347,6 +351,7 @@ def main():
     splash_window = Loading_Screen()
     splash_window.show()
     sys.exit(app.exec_())
+
 
 if __name__ == "__main__":
     main()

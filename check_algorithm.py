@@ -3,7 +3,7 @@ from subprocess import PIPE, Popen, TimeoutExpired, check_output, run
 
 
 def main(
-    filename, input_file, ans_file, tests, ex_file, time_limit=1, vars=0, size_range=50
+    filename, input_file, ans_file, tests, ex_file, time_limit=2, vars=0, size_range=50
 ):
     main.results = []
 
@@ -81,10 +81,10 @@ def main(
 if __name__ == "__main__":
     print(
         main(
-            filename="test.py",
-            ex_file="data/Lesson/example.py",
-            input_file="data/check algorithm/Inputs.txt",
-            ans_file="data/check algorithm/Ans.txt",
+            filename="C:/Users/Admin/Desktop/test.py",
+            ex_file="C:/Users/Admin/Desktop/New folder/example.py",
+            input_file="C:/Users/Admin/Desktop/New folder/Input.txt",
+            ans_file="C:/Users/Admin/Desktop/New folder/Ans.txt",
             tests=1,
             vars=0,
         )

@@ -60,13 +60,12 @@ class UIFunctions(MainWindow):
             lambda: cls.show_file_dialog(ui, OPENED_LESSON_PATH)
         )
 
-        cls.open_vscode(ui)
-
         ui.list_assignments.itemPressed.connect(lambda: cls.load_details(ui))
 
         cls.define_role(ui)
-
         cls.check_opened_lesson(ui, OPENED_LESSON_PATH)
+
+        cls.open_vscode(ui)
 
     @classmethod
     def open_vscode(cls, ui):
@@ -79,7 +78,7 @@ class UIFunctions(MainWindow):
         cls.pg.restore()
         cls.pg.moveTo(0, 0)
         cls.pg.resizeTo(round((SCREEN_WIDTH - ui.width())), ui.height())
-        
+
     @classmethod
     def close_pg(cls, ui):
         try:

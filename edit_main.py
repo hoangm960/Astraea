@@ -31,14 +31,27 @@ if not os.path.exists(OPENED_LESSON_PATH):
 
 
 class Assignment:
-    def __init__(self, name, ex_file, input_file, ans_file, tests, vars, details):
+    class Test:
+        def __init__(self, inputs, outputs):
+            self.inputs = inputs
+            self.outputs = outputs
+
+    def __init__(self, name, ex_file, test_file, details):
         self.name = name
         self.ex_file = ex_file
-        self.input_file = input_file
-        self.ans_file = ans_file
-        self.tests = tests
-        self.vars = vars
+        self.test_file = test_file
         self.details = details
+        self.load_io()
+        
+    def load_io(self):
+        self.tests = []
+        with open(self.test_file) as f:
+            lines = f.readlines()
+            sep = lines[0].rstrip()
+            del lines[0]
+            for line in lines:
+                inputs, outputs = line.rstrip().rsplit(sep)
+                self.tests.append(self.Test(inputs.rsplit('&'), outputs.rsplit('&')))
 
 
 class EditWindow(QMainWindow):
@@ -187,14 +200,11 @@ class UIFunctions(EditWindow):
             super().__init__(*args, **kwargs)
             uic.loadUi(EDIT_FRAME_PATH, self)
 
+            self.ex_file_btn.clicked.connect(
+                lambda: self.show_file_dialog(self.ex_file_entry)
+            )
             self.test_file_btn.clicked.connect(
                 lambda: self.show_file_dialog(self.test_file_entry)
-            )
-            self.input_file_btn.clicked.connect(
-                lambda: self.show_file_dialog(self.input_file_entry)
-            )
-            self.ans_file_btn.clicked.connect(
-                lambda: self.show_file_dialog(self.ans_file_entry)
             )
 
         def show_file_dialog(self, entry):
@@ -215,11 +225,8 @@ class UIFunctions(EditWindow):
         cls.change_lesson_title(ui, title)
         for assignment in assignments:
             children[i].title_entry.setText(assignment.name)
-            children[i].test_file_entry.setText(assignment.ex_file)
-            children[i].input_file_entry.setText(assignment.input_file)
-            children[i].ans_file_entry.setText(assignment.ans_file)
-            children[i].test_num_entry.setValue(assignment.tests)
-            children[i].test_var_entry.setValue(assignment.vars)
+            children[i].ex_file_entry.setText(assignment.ex_file)
+            children[i].test_file_entry.setText(assignment.test_file)
             children[i].details_entry.setText(assignment.details)
             i += 1
 
@@ -280,11 +287,8 @@ class UIFunctions(EditWindow):
                 assignments.append(
                     Assignment(
                         children[i].title_entry.text(),
+                        children[i].ex_file_entry.text(),
                         children[i].test_file_entry.text(),
-                        children[i].input_file_entry.text(),
-                        children[i].ans_file_entry.text(),
-                        children[i].test_num_entry.value(),
-                        children[i].test_var_entry.value(),
                         children[i].details_entry.toPlainText(),
                     )
                 )

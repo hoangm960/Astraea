@@ -126,6 +126,7 @@ class UIFunctions(EditWindow):
                 entry.setText(file_name[0])
         ui.setting_stackedWidget.setCurrentIndex(0)
         ui.Study.setChecked(True)
+        ui.SaveDocx.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(0))
         ui.Study.clicked.connect(lambda: ui.setting_stackedWidget.setCurrentIndex(0))
         ui.Exercise.clicked.connect(lambda: ui.setting_stackedWidget.setCurrentIndex(1))
         ui.load_file.clicked.connect(lambda: showDialog(ui,ui.file_entry))

@@ -337,7 +337,7 @@ QPushButton:hover {
 background-color: transparent;</string>
                </property>
                <property name="currentIndex">
-                <number>0</number>
+                <number>3</number>
                </property>
                <widget class="QWidget" name="Edit_Main_Frame">
                 <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -1875,7 +1875,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                      </widget>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="pushButton">
+                     <widget class="QPushButton" name="SaveDocx">
                       <property name="minimumSize">
                        <size>
                         <width>100</width>

@@ -67,10 +67,9 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def open_vscode(cls):
-        file_path = os.path.expandvars("%LOCALAPPDATA%\Programs\Microsoft VS Code")
-        os.system(f"cmd /c cd {file_path}")
-        os.system("Code.cmd")
+        os.system("code -n")
         cls.pg = gw.getWindowsWithTitle("Visual Studio Code")[0]
+        print(cls.pg)
         cls.pg.moveTo(0, 0)
         cls.pg.resize(45, 0)
 
@@ -94,9 +93,10 @@ class UIFunctions(MainWindow):
     def show_file_dialog(cls, ui, filename):
         HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
         file_path = QFileDialog.getOpenFileName(ui, "Open file", HOME_PATH, "*.list")[0]
-        with open(filename, "w") as f:
-            f.write(file_path)
-        cls.load_assignments(ui, file_path)
+        if file_path:
+            with open(filename, "w") as f:
+                f.write(file_path)
+            cls.load_assignments(ui, file_path)
 
     @classmethod
     def load_assignments(cls, ui, filename):

@@ -27,7 +27,7 @@ EDIT_FORM_PATH = "./UI_Files/edit_form.ui"
 EDIT_FRAME_PATH = "./UI_Files/edit_frame.ui"
 OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
 if not os.path.exists(OPENED_LESSON_PATH):
-    open(OPENED_LESSON_PATH, 'w').close()
+    open(OPENED_LESSON_PATH, "w").close()
 
 
 class Assignment:
@@ -175,7 +175,9 @@ class UIFunctions(EditWindow):
         file_path = open(filename).read().rstrip()
         if not file_path:
             HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
-            file_path = QFileDialog.getSaveFileName(ui, "Open file", HOME_PATH, "*.list")[0]
+            file_path = QFileDialog.getSaveFileName(
+                ui, "Open file", HOME_PATH, "*.list"
+            )[0]
             with open(filename, "w") as f:
                 f.write(file_path)
         cls.load_assignments(ui, file_path)

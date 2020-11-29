@@ -16,6 +16,9 @@ import pickle
 import time
 from encryption import *
 from random import randrange
+import pyautogui
+
+SCREEN_WIDTH, SCREEN_HEIGHT = pyautogui.size()
 
 
 class User:
@@ -71,9 +74,11 @@ class LoginFunctions(LoginWindow):
         self.Note_Name.hide()
         self.Note_Pass.hide()
         self.Note_User.hide()
-        self.move(
-            round(QApplication.primaryScreen().size().width() / 10),
-            round(QApplication.primaryScreen().size().height() / 50),
+        self.setGeometry(
+            round((SCREEN_WIDTH - self.width()) / 2),
+            round((SCREEN_HEIGHT - self.height()) / 2),
+            self.width(),
+            self.height()
         )
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
@@ -290,8 +295,8 @@ class Loading_Screen(QMainWindow):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi("UI_files/Loading_Screen.ui", self)
         self.move(
-            round((QApplication.primaryScreen().size().width() - self.width()) / 2),
-            round((QApplication.primaryScreen().size().height() - self.height()) / 2),
+            round((SCREEN_WIDTH - self.width()) / 2),
+            round((SCREEN_HEIGHT - self.height()) / 2),
         )
 
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
@@ -311,14 +316,8 @@ class Loading_Screen(QMainWindow):
             self.timer.stop()
             self.main = LoginWindow()
             self.main.setGeometry(
-                round(
-                    (QApplication.primaryScreen().size().width() - self.main.width())
-                    / 2
-                ),
-                round(
-                    (QApplication.primaryScreen().size().height() - self.main.height())
-                    / 5
-                ),
+                round((SCREEN_WIDTH - self.main.width()) / 2),
+                round((SCREEN_HEIGHT - self.main.height()) / 5),
                 self.main.width(),
                 self.main.height(),
             )

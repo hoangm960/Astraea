@@ -76,7 +76,6 @@ class UIFunctions(MainWindow):
             if "Visual Studio Code" in window.title:
                 cls.pg = window
                 break
-        sleep(2)
         cls.pg.restore()
         cls.pg.moveTo(0, 0)
         cls.pg.resizeTo(round((SCREEN_WIDTH - ui.width())), ui.height())

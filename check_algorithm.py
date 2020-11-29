@@ -72,7 +72,11 @@ def main(
     for _ in range(tests):
         check(get_input(copied_input_file), get_ans(copied_ans_file))
         main.results.append(check.result)
-    check_file_size()
+
+    if not (result[1] for result in main.results):
+        check_file_size()
+    else:
+        main.results.append(False)
     del_copied_file(input_file)
     del_copied_file(ans_file)
     return main.results

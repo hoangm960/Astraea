@@ -337,9 +337,9 @@ QPushButton:hover {
 background-color: transparent;</string>
                </property>
                <property name="currentIndex">
-                <number>0</number>
+                <number>3</number>
                </property>
-               <widget class="QWidget" name="edit_frame1">
+               <widget class="QWidget" name="Edit_Main_Frame">
                 <layout class="QVBoxLayout" name="verticalLayout_7">
                  <item>
                   <widget class="QFrame" name="name_frame">
@@ -356,6 +356,9 @@ background-color: transparent;</string>
                     <enum>QFrame::Raised</enum>
                    </property>
                    <layout class="QHBoxLayout" name="horizontalLayout_3">
+                    <property name="rightMargin">
+                     <number>30</number>
+                    </property>
                     <item>
                      <widget class="QLabel" name="name_label">
                       <property name="font">
@@ -391,6 +394,9 @@ background-color: rgb(255, 255, 255);</string>
                       <property name="alignment">
                        <set>Qt::AlignCenter</set>
                       </property>
+                      <property name="placeholderText">
+                       <string>Xin mời giáo viên nhập tên bài học</string>
+                      </property>
                       <property name="cursorMoveStyle">
                        <enum>Qt::VisualMoveStyle</enum>
                       </property>
@@ -400,12 +406,133 @@ background-color: rgb(255, 255, 255);</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QFrame" name="num_frame">
+                  <widget class="QFrame" name="Option_Frame">
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_7">
+                    <property name="spacing">
+                     <number>3</number>
+                    </property>
+                    <property name="leftMargin">
+                     <number>20</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="content">
+                      <property name="minimumSize">
+                       <size>
+                        <width>180</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>180</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>iCiel Effra Regular</family>
+                        <pointsize>22</pointsize>
+                        <weight>50</weight>
+                        <bold>false</bold>
+                       </font>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">color: rgb(255,255,255);</string>
+                      </property>
+                      <property name="text">
+                       <string>Nội dung:</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QRadioButton" name="Exercise">
+                      <property name="minimumSize">
+                       <size>
+                        <width>250</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>250</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>iCiel Effra Regular</family>
+                        <pointsize>22</pointsize>
+                       </font>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">color: rgb(255, 255, 255);</string>
+                      </property>
+                      <property name="text">
+                       <string>Kiểm tra/ Bài tập</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QRadioButton" name="Study">
+                      <property name="minimumSize">
+                       <size>
+                        <width>300</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>300</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>iCiel Effra Regular</family>
+                        <pointsize>22</pointsize>
+                       </font>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">color: rgb(255, 255, 255);</string>
+                      </property>
+                      <property name="text">
+                       <string>Học tập/ Lý thuyết</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QStackedWidget" name="setting_stackedWidget">
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
                      <height>200</height>
                     </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <family>iCiel Brandon Text Bold</family>
+                    </font>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">background: transparent;</string>
                    </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
@@ -413,69 +540,167 @@ background-color: rgb(255, 255, 255);</string>
                    <property name="frameShadow">
                     <enum>QFrame::Raised</enum>
                    </property>
-                   <layout class="QHBoxLayout" name="horizontalLayout_4">
-                    <property name="spacing">
-                     <number>20</number>
-                    </property>
-                    <item>
-                     <widget class="QFrame" name="frame_4">
-                      <property name="minimumSize">
-                       <size>
-                        <width>40</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="frameShape">
-                       <enum>QFrame::StyledPanel</enum>
-                      </property>
-                      <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="num_label">
-                      <property name="minimumSize">
-                       <size>
-                        <width>0</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="font">
-                       <font>
-                        <family>iCiel Effra</family>
-                        <pointsize>22</pointsize>
-                       </font>
-                      </property>
-                      <property name="text">
-                       <string>Số bài tập:</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QSpinBox" name="num_entry">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="minimumSize">
-                       <size>
-                        <width>80</width>
-                        <height>50</height>
-                       </size>
-                      </property>
-                      <property name="font">
-                       <font>
-                        <family>iCiel Effra Regular</family>
-                        <pointsize>30</pointsize>
-                        <weight>50</weight>
-                        <bold>false</bold>
-                       </font>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">QSpinBox {
+                   <property name="currentIndex">
+                    <number>1</number>
+                   </property>
+                   <widget class="QWidget" name="page">
+                    <layout class="QHBoxLayout" name="horizontalLayout_12">
+                     <property name="spacing">
+                      <number>20</number>
+                     </property>
+                     <property name="rightMargin">
+                      <number>10</number>
+                     </property>
+                     <item>
+                      <widget class="QLabel" name="content_file">
+                       <property name="font">
+                        <font>
+                         <family>iCiel Effra</family>
+                         <pointsize>22</pointsize>
+                        </font>
+                       </property>
+                       <property name="text">
+                        <string>Nội dung bài học:</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLineEdit" name="file_entry">
+                       <property name="minimumSize">
+                        <size>
+                         <width>0</width>
+                         <height>80</height>
+                        </size>
+                       </property>
+                       <property name="font">
+                        <font>
+                         <family>Corbel</family>
+                         <pointsize>22</pointsize>
+                        </font>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">border-radius: 10px;
+color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);
+</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                       <property name="placeholderText">
+                        <string>Hãy liên kết với địa chỉ file bài học</string>
+                       </property>
+                       <property name="cursorMoveStyle">
+                        <enum>Qt::VisualMoveStyle</enum>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="load_file">
+                       <property name="minimumSize">
+                        <size>
+                         <width>80</width>
+                         <height>50</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>100</width>
+                         <height>50</height>
+                        </size>
+                       </property>
+                       <property name="font">
+                        <font>
+                         <family>Montserrat</family>
+                         <pointsize>12</pointsize>
+                         <weight>75</weight>
+                         <bold>true</bold>
+                        </font>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">QPushButton {
+	background-color: rgb(255, 255, 255);
+	border-radius: 10px;
+}
+
+QPushButton:hover {
+	background-color: rgba(0, 0, 0, 150);
+	color: rgb(255, 255, 255);
+}
+
+QPushButton:pressed {
+	background-color: rgb(0, 0, 0);
+	color: rgb(255, 255, 255);
+}</string>
+                       </property>
+                       <property name="text">
+                        <string/>
+                       </property>
+                       <property name="icon">
+                        <iconset resource="Resources.qrc">
+                         <normaloff>:/images/icons/folder_open.png</normaloff>:/images/icons/folder_open.png</iconset>
+                       </property>
+                       <property name="iconSize">
+                        <size>
+                         <width>50</width>
+                         <height>80</height>
+                        </size>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                   <widget class="QWidget" name="setting_stackedWidgetPage1">
+                    <layout class="QHBoxLayout" name="horizontalLayout_4">
+                     <property name="spacing">
+                      <number>40</number>
+                     </property>
+                     <property name="leftMargin">
+                      <number>40</number>
+                     </property>
+                     <item>
+                      <widget class="QLabel" name="num_label">
+                       <property name="minimumSize">
+                        <size>
+                         <width>0</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="font">
+                        <font>
+                         <family>iCiel Effra</family>
+                         <pointsize>22</pointsize>
+                        </font>
+                       </property>
+                       <property name="text">
+                        <string>Số bài làm:</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QSpinBox" name="num_entry">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>80</width>
+                         <height>50</height>
+                        </size>
+                       </property>
+                       <property name="font">
+                        <font>
+                         <family>iCiel Effra Regular</family>
+                         <pointsize>30</pointsize>
+                         <weight>50</weight>
+                         <bold>false</bold>
+                        </font>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">QSpinBox {
 	border-radius: 10px;
 	color: rgb(0, 0, 0);
 	background-color: rgb(255, 255, 255);
@@ -517,138 +742,125 @@ QSpinBox::down-arrow {
     width: 10px;
     height: 20px;
 }</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignCenter</set>
-                      </property>
-                      <property name="suffix">
-                       <string/>
-                      </property>
-                      <property name="minimum">
-                       <number>1</number>
-                      </property>
-                      <property name="maximum">
-                       <number>50</number>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QFrame" name="frame_2">
-                      <property name="minimumSize">
-                       <size>
-                        <width>50</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="frameShape">
-                       <enum>QFrame::StyledPanel</enum>
-                      </property>
-                      <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="time_label">
-                      <property name="minimumSize">
-                       <size>
-                        <width>130</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="font">
-                       <font>
-                        <family>iCiel Effra</family>
-                        <pointsize>22</pointsize>
-                       </font>
-                      </property>
-                      <property name="text">
-                       <string>Thời gian:</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QFrame" name="frame_6">
-                      <property name="minimumSize">
-                       <size>
-                        <width>100</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="frameShape">
-                       <enum>QFrame::StyledPanel</enum>
-                      </property>
-                      <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
-                      </property>
-                      <layout class="QGridLayout" name="gridLayout_3">
-                       <item row="1" column="0">
-                        <widget class="QCheckBox" name="checkBox">
-                         <property name="font">
-                          <font>
-                           <family>Segoe UI Black</family>
-                           <pointsize>11</pointsize>
-                           <weight>75</weight>
-                           <bold>true</bold>
-                          </font>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">color: rgb(255, 255, 255);
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                       <property name="suffix">
+                        <string/>
+                       </property>
+                       <property name="minimum">
+                        <number>1</number>
+                       </property>
+                       <property name="maximum">
+                        <number>50</number>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="time_label">
+                       <property name="minimumSize">
+                        <size>
+                         <width>150</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="font">
+                        <font>
+                         <family>iCiel Effra</family>
+                         <pointsize>22</pointsize>
+                        </font>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">border-left: 1px solid rgb(255,255,255);</string>
+                       </property>
+                       <property name="text">
+                        <string>Thời gian:</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QFrame" name="frame_6">
+                       <property name="minimumSize">
+                        <size>
+                         <width>100</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="frameShape">
+                        <enum>QFrame::StyledPanel</enum>
+                       </property>
+                       <property name="frameShadow">
+                        <enum>QFrame::Raised</enum>
+                       </property>
+                       <layout class="QGridLayout" name="gridLayout_3">
+                        <item row="1" column="0">
+                         <widget class="QCheckBox" name="checkBox">
+                          <property name="font">
+                           <font>
+                            <family>Segoe UI Black</family>
+                            <pointsize>11</pointsize>
+                            <weight>75</weight>
+                            <bold>true</bold>
+                           </font>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true">color: rgb(255, 255, 255);
 background: transparent;</string>
-                         </property>
-                         <property name="text">
-                          <string>Áp dụng</string>
-                         </property>
-                        </widget>
-                       </item>
-                      </layout>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QFrame" name="frame_5">
-                      <property name="minimumSize">
-                       <size>
-                        <width>80</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="font">
-                       <font>
-                        <family>Segoe UI Black</family>
-                        <pointsize>14</pointsize>
-                        <weight>75</weight>
-                        <bold>true</bold>
-                       </font>
-                      </property>
-                      <property name="frameShape">
-                       <enum>QFrame::StyledPanel</enum>
-                      </property>
-                      <property name="frameShadow">
-                       <enum>QFrame::Raised</enum>
-                      </property>
-                      <layout class="QHBoxLayout" name="horizontalLayout_11">
-                       <item>
-                        <widget class="QSpinBox" name="Hours_entry">
-                         <property name="sizePolicy">
-                          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                           <horstretch>0</horstretch>
-                           <verstretch>0</verstretch>
-                          </sizepolicy>
-                         </property>
-                         <property name="minimumSize">
-                          <size>
-                           <width>80</width>
-                           <height>50</height>
-                          </size>
-                         </property>
-                         <property name="font">
-                          <font>
-                           <family>iCiel Effra Regular</family>
-                           <pointsize>22</pointsize>
-                          </font>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">QSpinBox {
+                          </property>
+                          <property name="text">
+                           <string>Áp dụng</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QFrame" name="frame_5">
+                       <property name="minimumSize">
+                        <size>
+                         <width>80</width>
+                         <height>0</height>
+                        </size>
+                       </property>
+                       <property name="font">
+                        <font>
+                         <family>Segoe UI Black</family>
+                         <pointsize>14</pointsize>
+                         <weight>75</weight>
+                         <bold>true</bold>
+                        </font>
+                       </property>
+                       <property name="frameShape">
+                        <enum>QFrame::StyledPanel</enum>
+                       </property>
+                       <property name="frameShadow">
+                        <enum>QFrame::Raised</enum>
+                       </property>
+                       <layout class="QHBoxLayout" name="horizontalLayout_11">
+                        <item>
+                         <widget class="QSpinBox" name="Hours_entry">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="minimumSize">
+                           <size>
+                            <width>80</width>
+                            <height>50</height>
+                           </size>
+                          </property>
+                          <property name="font">
+                           <font>
+                            <family>iCiel Effra Regular</family>
+                            <pointsize>22</pointsize>
+                           </font>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true">QSpinBox {
 	border-radius: 10px;
 	color: rgb(0, 0, 0);
 	background-color: rgb(255, 255, 255);
@@ -690,126 +902,126 @@ QSpinBox::down-arrow {
     width: 10px;
     height: 20px;
 }</string>
-                         </property>
-                         <property name="alignment">
-                          <set>Qt::AlignCenter</set>
-                         </property>
-                         <property name="suffix">
-                          <string/>
-                         </property>
-                         <property name="minimum">
-                          <number>0</number>
-                         </property>
-                         <property name="maximum">
-                          <number>24</number>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QLabel" name="label">
-                         <property name="minimumSize">
-                          <size>
-                           <width>50</width>
-                           <height>0</height>
-                          </size>
-                         </property>
-                         <property name="font">
-                          <font>
-                           <family>Segoe UI Black</family>
-                           <pointsize>16</pointsize>
-                           <weight>75</weight>
-                           <bold>true</bold>
-                          </font>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">color: rgb(255, 255, 255);
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignCenter</set>
+                          </property>
+                          <property name="suffix">
+                           <string/>
+                          </property>
+                          <property name="minimum">
+                           <number>0</number>
+                          </property>
+                          <property name="maximum">
+                           <number>24</number>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="label">
+                          <property name="minimumSize">
+                           <size>
+                            <width>50</width>
+                            <height>0</height>
+                           </size>
+                          </property>
+                          <property name="font">
+                           <font>
+                            <family>Segoe UI Black</family>
+                            <pointsize>16</pointsize>
+                            <weight>75</weight>
+                            <bold>true</bold>
+                           </font>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true">color: rgb(255, 255, 255);
 background: transparent;</string>
-                         </property>
-                         <property name="text">
-                          <string>Giờ</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QFrame" name="frame">
-                         <property name="minimumSize">
-                          <size>
-                           <width>100</width>
-                           <height>0</height>
-                          </size>
-                         </property>
-                         <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
-                         </property>
-                         <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
-                         </property>
-                         <layout class="QGridLayout" name="gridLayout_2">
-                          <item row="0" column="2">
-                           <widget class="QFrame" name="frame_3">
-                            <property name="minimumSize">
-                             <size>
-                              <width>70</width>
-                              <height>0</height>
-                             </size>
-                            </property>
-                            <property name="frameShape">
-                             <enum>QFrame::StyledPanel</enum>
-                            </property>
-                            <property name="frameShadow">
-                             <enum>QFrame::Raised</enum>
-                            </property>
-                            <layout class="QGridLayout" name="gridLayout">
-                             <item row="0" column="0">
-                              <widget class="QLabel" name="label_2">
-                               <property name="minimumSize">
-                                <size>
-                                 <width>80</width>
-                                 <height>0</height>
-                                </size>
-                               </property>
-                               <property name="font">
-                                <font>
-                                 <family>Segoe UI Black</family>
-                                 <pointsize>16</pointsize>
-                                 <weight>75</weight>
-                                 <bold>true</bold>
-                                </font>
-                               </property>
-                               <property name="styleSheet">
-                                <string notr="true">color: rgb(255, 255, 255);
+                          </property>
+                          <property name="text">
+                           <string>Giờ</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QFrame" name="frame">
+                          <property name="minimumSize">
+                           <size>
+                            <width>100</width>
+                            <height>0</height>
+                           </size>
+                          </property>
+                          <property name="frameShape">
+                           <enum>QFrame::StyledPanel</enum>
+                          </property>
+                          <property name="frameShadow">
+                           <enum>QFrame::Raised</enum>
+                          </property>
+                          <layout class="QGridLayout" name="gridLayout_2">
+                           <item row="0" column="2">
+                            <widget class="QFrame" name="frame_3">
+                             <property name="minimumSize">
+                              <size>
+                               <width>70</width>
+                               <height>0</height>
+                              </size>
+                             </property>
+                             <property name="frameShape">
+                              <enum>QFrame::StyledPanel</enum>
+                             </property>
+                             <property name="frameShadow">
+                              <enum>QFrame::Raised</enum>
+                             </property>
+                             <layout class="QGridLayout" name="gridLayout">
+                              <item row="0" column="0">
+                               <widget class="QLabel" name="label_2">
+                                <property name="minimumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>0</height>
+                                 </size>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>Segoe UI Black</family>
+                                  <pointsize>16</pointsize>
+                                  <weight>75</weight>
+                                  <bold>true</bold>
+                                 </font>
+                                </property>
+                                <property name="styleSheet">
+                                 <string notr="true">color: rgb(255, 255, 255);
 background: transparent;</string>
-                               </property>
-                               <property name="text">
-                                <string>Phút</string>
-                               </property>
-                              </widget>
-                             </item>
-                            </layout>
-                           </widget>
-                          </item>
-                          <item row="0" column="1">
-                           <widget class="QSpinBox" name="Minutes_entry">
-                            <property name="sizePolicy">
-                             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                              <horstretch>0</horstretch>
-                              <verstretch>0</verstretch>
-                             </sizepolicy>
-                            </property>
-                            <property name="minimumSize">
-                             <size>
-                              <width>80</width>
-                              <height>50</height>
-                             </size>
-                            </property>
-                            <property name="font">
-                             <font>
-                              <family>iCiel Effra Regular</family>
-                              <pointsize>22</pointsize>
-                             </font>
-                            </property>
-                            <property name="styleSheet">
-                             <string notr="true">QSpinBox {
+                                </property>
+                                <property name="text">
+                                 <string>Phút</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                           <item row="0" column="1">
+                            <widget class="QSpinBox" name="Minutes_entry">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="minimumSize">
+                              <size>
+                               <width>80</width>
+                               <height>50</height>
+                              </size>
+                             </property>
+                             <property name="font">
+                              <font>
+                               <family>iCiel Effra Regular</family>
+                               <pointsize>22</pointsize>
+                              </font>
+                             </property>
+                             <property name="styleSheet">
+                              <string notr="true">QSpinBox {
 	border-radius: 10px;
 	color: rgb(0, 0, 0);
 	background-color: rgb(255, 255, 255);
@@ -851,28 +1063,29 @@ QSpinBox::down-arrow {
     width: 10px;
     height: 20px;
 }</string>
-                            </property>
-                            <property name="alignment">
-                             <set>Qt::AlignCenter</set>
-                            </property>
-                            <property name="suffix">
-                             <string/>
-                            </property>
-                            <property name="minimum">
-                             <number>0</number>
-                            </property>
-                            <property name="maximum">
-                             <number>60</number>
-                            </property>
-                           </widget>
-                          </item>
-                         </layout>
-                        </widget>
-                       </item>
-                      </layout>
-                     </widget>
-                    </item>
-                   </layout>
+                             </property>
+                             <property name="alignment">
+                              <set>Qt::AlignCenter</set>
+                             </property>
+                             <property name="suffix">
+                              <string/>
+                             </property>
+                             <property name="minimum">
+                              <number>0</number>
+                             </property>
+                             <property name="maximum">
+                              <number>60</number>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </widget>
+                        </item>
+                       </layout>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
                   </widget>
                  </item>
                  <item>
@@ -1149,7 +1362,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>820</width>
+                         <width>1046</width>
                          <height>500</height>
                         </rect>
                        </property>
@@ -1543,6 +1756,171 @@ QPushButton:pressed {
                  </item>
                 </layout>
                </widget>
+               <widget class="QWidget" name="page_2">
+                <layout class="QGridLayout" name="gridLayout_4">
+                 <item row="1" column="0">
+                  <widget class="QFrame" name="frame_2">
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_13">
+                    <property name="leftMargin">
+                     <number>10</number>
+                    </property>
+                    <item>
+                     <widget class="QScrollArea" name="scrollArea_2">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">QScrollArea {
+	border-radius: 10px;
+	background-color: rgb(255, 255, 255);
+	outline: 0;
+} 
+QScrollArea::item { 
+	margin: 20px;
+	background-color: transparent;
+	border: 0px solid black;
+}
+
+QScrollBar{
+	background : rgb(255, 255, 255);	
+}
+
+QScrollBar::handle{
+	background : rgb(158, 158, 158);
+	border-radius: 5px;
+	margin: 3px 3px 3px 3px;
+}
+
+QScrollBar::handle::pressed{
+	background : rgb(85, 85, 85);
+}
+
+QScrollBar::add-line {
+	height: 0px;
+}
+
+QScrollBar::sub-line {
+	height: 0px;
+}
+
+QScrollBar::add-page, QScrollBar::sub-page {
+	height: 0px;
+}</string>
+                      </property>
+                      <property name="widgetResizable">
+                       <bool>true</bool>
+                      </property>
+                      <widget class="QWidget" name="content_widget_2">
+                       <property name="geometry">
+                        <rect>
+                         <x>0</x>
+                         <y>0</y>
+                         <width>1009</width>
+                         <height>470</height>
+                        </rect>
+                       </property>
+                      </widget>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QFrame" name="frame_4">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_14">
+                    <item>
+                     <widget class="QLabel" name="NameLesson">
+                      <property name="minimumSize">
+                       <size>
+                        <width>1000</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>iCiel Brandon Text Bold</family>
+                        <pointsize>20</pointsize>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>Bài học không tên</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="SaveDocx">
+                      <property name="minimumSize">
+                       <size>
+                        <width>100</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>100</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>iCiel Brandon Text Bold</family>
+                        <pointsize>16</pointsize>
+                       </font>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">QPushButton {
+	background-color: rgb(255, 255, 255);
+	border-radius: 10px;
+	color: rgb(0,0,0);
+}
+
+QPushButton:hover {
+	color: rgb(255, 255, 255);
+	background-color: rgba(0, 0, 0, 150);
+}
+
+QPushButton:pressed {
+	color: rgb(255, 255, 255);
+	background-color: rgb(0, 0, 0);
+}r</string>
+                      </property>
+                      <property name="text">
+                       <string>Lưu</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
               </widget>
              </item>
             </layout>
@@ -1585,38 +1963,5 @@ QPushButton:pressed {
  <resources>
   <include location="Resources.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>checkBox</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>Hours_entry</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>253</x>
-     <y>402</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>343</x>
-     <y>413</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>Minutes_entry</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>219</x>
-     <y>401</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>606</x>
-     <y>405</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

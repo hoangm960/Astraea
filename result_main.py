@@ -212,7 +212,7 @@ class UIFunctions(ResultWindow):
             self.content_widgetT.layout().addWidget(self.frame)
             self.frame.details_label.setText(cls.assignments[i].name)
             self.frame.details_entry.setText(cls.assignments[i].details)
-            self.frame.test_file_label.setText('Câu '+str(i))
+            
 
     @classmethod
     def check_result(cls, frame, num):
@@ -247,6 +247,7 @@ class UIFunctions(ResultWindow):
             self.frame = cls.ResultFrame()
             self.content_widget.layout().addWidget(self.frame)
             self.frame.correct_num.setText(str(correct))
+            self.frame.test_file_label.setText("hahaq")
             try:
                 self.frame.Score_box.setText(
                     str(correct * SCORING_SYSTEM / len(results[:-1]))

@@ -247,7 +247,7 @@ class UIFunctions(ResultWindow):
             self.frame = cls.ResultFrame()
             self.content_widget.layout().addWidget(self.frame)
             self.frame.correct_num.setText(str(correct)+'/'+str(len(cls.assignments[i].tests)))
-            self.frame.test_file_label.setText("hahaq")
+            self.frame.test_file_label.setText(cls.assignments[i].name)
             try:
                 self.frame.Score_box.setText(
                     str(correct * SCORING_SYSTEM / len(results[:-1]))

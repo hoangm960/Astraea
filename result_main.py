@@ -17,7 +17,7 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QWidget,
 )
-
+import main_ui
 import check_algorithm
 from UI_Files import Resources
 import pyautogui
@@ -60,8 +60,23 @@ class ResultWindow(QMainWindow):
 class UIFunctions(ResultWindow):
     GLOBAL_STATE = False
     assignments = {}
+    lesson = {}
     Total = 0
 
+    @classmethod
+    def load_assignments(cls, ui, filename):
+        ui.textBrowser.clear()
+        cls.lesson.clear()
+        if os.path.exists(filename):
+            if os.path.getsize(filename) > 0:
+                with open(filename, "rb") as f:
+                    unpickler = pickle.Unpickler(f)
+                    data = unpickler.load()
+                    title = data[0]
+                    assignments = data[1]
+                    for assignment in assignments:
+                        cls.lesson[assignment.name] = assignment.details
+                        ui.textBrowser.addItem(assignment.name)
     @classmethod
     def uiDefinitions(cls, self):
         # Delete title bar
@@ -84,6 +99,7 @@ class UIFunctions(ResultWindow):
         self.btn_maximize.clicked.connect(lambda: cls.maximize_restore(self))
         self.btn_minimize.clicked.connect(lambda: self.showMinimized())
         self.btn_quit.clicked.connect(lambda: self.close())
+        self.btn_quit.clicked.connect(lambda: main_ui.main("student"))
 
         # Window size grip
         self.sizegrip = QSizeGrip(self.frame_grip)

@@ -503,8 +503,8 @@ QScrollBar::add-page, QScrollBar::sub-page {
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>960</width>
-                         <height>450</height>
+                         <width>100</width>
+                         <height>30</height>
                         </rect>
                        </property>
                       </widget>
@@ -994,8 +994,8 @@ QScrollBar::add-page, QScrollBar::sub-page {
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>960</width>
-                         <height>475</height>
+                         <width>100</width>
+                         <height>30</height>
                         </rect>
                        </property>
                        <widget class="QLabel" name="inform">
@@ -1115,7 +1115,7 @@ QPushButton:pressed {
                   <widget class="QFrame" name="lesson_widget_frame">
                    <property name="minimumSize">
                     <size>
-                     <width>180</width>
+                     <width>200</width>
                      <height>550</height>
                     </size>
                    </property>
@@ -1125,10 +1125,7 @@ QPushButton:pressed {
                    <property name="frameShadow">
                     <enum>QFrame::Raised</enum>
                    </property>
-                   <layout class="QVBoxLayout" name="verticalLayout_7">
-                    <property name="spacing">
-                     <number>0</number>
-                    </property>
+                   <layout class="QGridLayout" name="gridLayout_2">
                     <property name="leftMargin">
                      <number>0</number>
                     </property>
@@ -1141,159 +1138,33 @@ QPushButton:pressed {
                     <property name="bottomMargin">
                      <number>0</number>
                     </property>
-                    <item>
-                     <widget class="QScrollArea" name="scrollArea_3">
-                      <property name="styleSheet">
-                       <string notr="true">QScrollArea {
-	background-color: rgba(255, 255, 255, 50);
-	outline: 0;
-} 
-QScrollArea::item { 
-	margin: 20px;
-	background-color: transparent;
-	border: 0px solid black;
-}
-
-QScrollBar{
-	background : rgb(255, 255, 255);	
-}
-
-QScrollBar::handle{
-	background : rgb(158, 158, 158);
-	border-radius: 5px;
-	margin: 3px 3px 3px 3px;
-}
-
-QScrollBar::handle::pressed{
-	background : rgb(85, 85, 85);
-}
-
-QScrollBar::add-line {
-	height: 0px;
-}
-
-QScrollBar::sub-line {
-	height: 0px;
-}
-
-QScrollBar::add-page, QScrollBar::sub-page {
-	height: 0px;
-}</string>
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <item row="0" column="0">
+                     <widget class="QListWidget" name="listWidget">
+                      <property name="minimumSize">
+                       <size>
+                        <width>200</width>
+                        <height>550</height>
+                       </size>
                       </property>
-                      <property name="widgetResizable">
-                       <bool>true</bool>
+                      <property name="maximumSize">
+                       <size>
+                        <width>150</width>
+                        <height>16777215</height>
+                       </size>
                       </property>
-                      <widget class="QWidget" name="scrollAreaWidgetContents">
-                       <property name="geometry">
-                        <rect>
-                         <x>0</x>
-                         <y>0</y>
-                         <width>180</width>
-                         <height>550</height>
-                        </rect>
-                       </property>
-                      </widget>
                      </widget>
                     </item>
                    </layout>
                   </widget>
                  </item>
                  <item row="0" column="1">
-                  <widget class="QStackedWidget" name="list_widget_stackedWidget_2">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>450</height>
-                    </size>
-                   </property>
+                  <widget class="QTextBrowser" name="textBrowser">
                    <property name="styleSheet">
-                    <string notr="true">color: rgb(0, 0, 0)</string>
+                    <string notr="true">background-color: rgb(255,255,255);</string>
                    </property>
-                   <property name="frameShape">
-                    <enum>QFrame::StyledPanel</enum>
-                   </property>
-                   <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
-                   </property>
-                   <widget class="QWidget" name="list_widget_stackedWidget_2Page1" native="true">
-                    <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="0">
-                     <property name="spacing">
-                      <number>0</number>
-                     </property>
-                     <property name="leftMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="topMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="rightMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="bottomMargin">
-                      <number>0</number>
-                     </property>
-                     <item>
-                      <widget class="QScrollArea" name="scrollArea_2">
-                       <property name="minimumSize">
-                        <size>
-                         <width>0</width>
-                         <height>550</height>
-                        </size>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true">QScrollArea {
-	background-color: rgb(255, 255, 255);
-	outline: 0;
-} 
-QScrollArea::item { 
-	margin: 20px;
-	background-color: transparent;
-	border: 0px solid black;
-}
-
-QScrollBar{
-	background : rgb(255, 255, 255);	
-}
-
-QScrollBar::handle{
-	background : rgb(158, 158, 158);
-	border-radius: 5px;
-	margin: 3px 3px 3px 3px;
-}
-
-QScrollBar::handle::pressed{
-	background : rgb(85, 85, 85);
-}
-
-QScrollBar::add-line {
-	height: 0px;
-}
-
-QScrollBar::sub-line {
-	height: 0px;
-}
-
-QScrollBar::add-page, QScrollBar::sub-page {
-	height: 0px;
-}</string>
-                       </property>
-                       <property name="widgetResizable">
-                        <bool>true</bool>
-                       </property>
-                       <widget class="QWidget" name="content_widget_2">
-                        <property name="geometry">
-                         <rect>
-                          <x>0</x>
-                          <y>0</y>
-                          <width>756</width>
-                          <height>550</height>
-                         </rect>
-                        </property>
-                       </widget>
-                      </widget>
-                     </item>
-                    </layout>
-                   </widget>
                   </widget>
                  </item>
                 </layout>

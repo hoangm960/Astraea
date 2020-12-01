@@ -260,27 +260,23 @@ class LoginFunctions(LoginWindow):
             check = False
         else:
             self.Note_Pass.hide()
-        if (
-            len(name_account) < 6
-            or not "".join(
-                [i for i in name_account.lower() if i not in cls.enabled]
-            ).isalnum()
-        ):
-            if (
-                not "".join([i for i in name_account.lower() if i not in cls.enabled])
-                == ""
-            ):
+        if not "".join([i for i in name_account.lower() if i not in cls.enabled]).isalnum():
+            if (not "".join([i for i in name_account.lower() if i not in cls.enabled])== ""):
                 self.Note_User.show()
-                check = False
-        else:
-            self.Note_User.hide()
+                check = False      
+            else:
+                self.Note_User.hide()
+        if len(name_account)<6:
+            self.Note_User.show()
+            check = False  
         if check:
             decrypt(cls.USER_PATH_ENCRYPTED, cls.USER_PATH, cls.KEY_PATH)
             with open(cls.USER_PATH, "wb") as f:
                 name = self.NameBox.text()
                 password = self.PassBox.text()
                 role = "teacher" if self.teacher.isChecked() else "student"
-                cls.users.append(User(name, password, role, name_account, False))
+                cls.users.append(
+                    User(name, password, role, name_account, False))
                 pickle.dump(cls.users, f)
 
             encrypt(cls.USER_PATH, cls.USER_PATH_ENCRYPTED, cls.KEY_PATH)
@@ -324,15 +320,18 @@ class Loading_Screen(QMainWindow):
             self.close()
         if self.counter == 20:
             self.timer.singleShot(
-                1500, lambda: self.Loading_label.setText("Kiểm tra cài đặt ...")
+                1500, lambda: self.Loading_label.setText(
+                    "Kiểm tra cài đặt ...")
             )
         if self.counter == 45:
             self.timer.singleShot(
-                2905, lambda: self.Loading_label.setText("Thiết lập giao diện ...")
+                2905, lambda: self.Loading_label.setText(
+                    "Thiết lập giao diện ...")
             )
         if self.counter == 73:
             self.timer.singleShot(
-                1500, lambda: self.Loading_label.setText("Kết nối dữ liệu  ...")
+                1500, lambda: self.Loading_label.setText(
+                    "Kết nối dữ liệu  ...")
             )
         self.delay(randrange(5, 10), 0.1)
         self.delay(randrange(20, 30), 0.23)

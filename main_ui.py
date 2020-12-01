@@ -2,25 +2,18 @@ import os
 import pickle
 import subprocess
 import sys
-import pyautogui
+from time import sleep
 
+import pyautogui
 import pygetwindow as gw
 from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import (
-    QApplication,
-    QDialogButtonBox,
-    QFileDialog,
-    QGraphicsDropShadowEffect,
-    QMainWindow,
-    QMessageBox,
-    QPushButton,
-    QSizeGrip,
-    QWidget,
-)
-from time import sleep
-import result_main
+from PyQt5.QtWidgets import (QApplication, QDialogButtonBox, QFileDialog,
+                             QGraphicsDropShadowEffect, QMainWindow,
+                             QMessageBox, QPushButton, QSizeGrip, QWidget)
+
+import doc
 import edit_main
 import result_main
 from UI_Files import Resources
@@ -29,14 +22,12 @@ UI_MAIN_PATH = "./UI_Files/ui_main.ui"
 OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
 SCREEN_WIDTH, SCREEN_HEIGHT = pyautogui.size()
 
-
 class MainWindow(QMainWindow):
     def __init__(self, role):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(UI_MAIN_PATH, self)
         self.role = role
         UIFunctions.uiDefinitions(self)
-
 
 class UIFunctions(MainWindow):
     assignments = {}
@@ -59,6 +50,7 @@ class UIFunctions(MainWindow):
         ui.load_btn.clicked.connect(
             lambda: cls.show_file_dialog(ui, OPENED_LESSON_PATH)
         )
+        ui.LessonButton.clicked.connect(lambda: cls.open_doc(ui))
 
         ui.list_assignments.itemPressed.connect(lambda: cls.load_details(ui))
 
@@ -130,6 +122,12 @@ class UIFunctions(MainWindow):
     def change_assignment_title(cls, ui, title):
         ui.lesson_title.setText(title) if title else ui.lesson_title.setParent(None)
 
+    @classmethod
+    def open_doc(cls, ui):
+        window = doc.DocWindow()
+        window.show()
+        cls.close_pg(ui)
+
     class TeacherUiFunctions:
         parent = None
         changed = False
@@ -144,7 +142,6 @@ class UIFunctions(MainWindow):
             QPushButton:hover {background-color: rgba(156, 220, 254, 150);}"""
             )
             ui.main_btn.clicked.connect(lambda: cls.open_edit_form(ui))
-            ui.Frame.close()
             ui.assignment_details.setReadOnly(False)
             ui.confirmButton = QDialogButtonBox(ui.frame_content_hint)
             ui.confirmButton.setStandardButtons(QDialogButtonBox.Ok)
@@ -217,16 +214,10 @@ class UIFunctions(MainWindow):
             QPushButton:hover {background-color: rgba(156, 220, 254, 150);}"""
             )
             ui.main_btn.clicked.connect(lambda: cls.open_result_form(ui))
-            ui.LessonButton.clicked.connect(lambda: cls.open_lesson_form(ui))
+
         @classmethod
         def open_result_form(cls, ui):
             window = result_main.ResultWindow()
-            window.show()
-            cls.parent.close_pg(ui)
-        @classmethod
-        def open_lesson_form(cls, ui):
-            window = result_main.ResultWindow()
-            window.stacked_widget.setCurrentIndex(2)
             window.show()
             cls.parent.close_pg(ui)
 

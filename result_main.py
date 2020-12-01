@@ -250,7 +250,7 @@ class UIFunctions(ResultWindow):
             self.frame.test_file_label.setText("hahaq")
             try:
                 self.frame.Score_box.setText(
-                    str(correct * SCORING_SYSTEM / len(results[:-1]))
+                    str(correct * SCORING_SYSTEM / len(results[:-1])+'/'+len(cls.assignments.tests))
                 )
                 if results[-1]:
                     self.frame.detail_entry.setText("Bài làm đã tối ưu hóa.")

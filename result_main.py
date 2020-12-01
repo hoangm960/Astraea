@@ -17,7 +17,7 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QWidget,
 )
-
+import main_ui
 import check_algorithm
 from UI_Files import Resources
 import pyautogui
@@ -60,8 +60,23 @@ class ResultWindow(QMainWindow):
 class UIFunctions(ResultWindow):
     GLOBAL_STATE = False
     assignments = {}
+    lesson = {}
     Total = 0
 
+    @classmethod
+    def load_assignments(cls, ui, filename):
+        ui.textBrowser.clear()
+        cls.lesson.clear()
+        if os.path.exists(filename):
+            if os.path.getsize(filename) > 0:
+                with open(filename, "rb") as f:
+                    unpickler = pickle.Unpickler(f)
+                    data = unpickler.load()
+                    title = data[0]
+                    assignments = data[1]
+                    for assignment in assignments:
+                        cls.lesson[assignment.name] = assignment.details
+                        ui.textBrowser.addItem(assignment.name)
     @classmethod
     def uiDefinitions(cls, self):
         # Delete title bar
@@ -84,6 +99,7 @@ class UIFunctions(ResultWindow):
         self.btn_maximize.clicked.connect(lambda: cls.maximize_restore(self))
         self.btn_minimize.clicked.connect(lambda: self.showMinimized())
         self.btn_quit.clicked.connect(lambda: self.close())
+        self.btn_quit.clicked.connect(lambda: main_ui.main("student"))
 
         # Window size grip
         self.sizegrip = QSizeGrip(self.frame_grip)
@@ -196,6 +212,7 @@ class UIFunctions(ResultWindow):
             self.content_widgetT.layout().addWidget(self.frame)
             self.frame.details_label.setText(cls.assignments[i].name)
             self.frame.details_entry.setText(cls.assignments[i].details)
+            self.frame.test_file_label.setText('Câu '+str(i))
 
     @classmethod
     def check_result(cls, frame, num):
@@ -243,7 +260,7 @@ class UIFunctions(ResultWindow):
                 pass
                 self.frame.detail_entry.setText("Chưa làm câu này")
             try:
-                self.progressBar.setValue(int(cls.Total * SCORING_SYSTEM / num))
+                self.progressBar.setValue(int(cls.Total/ num)*10)
                 self.Score.setText(str(round(cls.Total / num, 2)))
             except:
                 self.progressBar.setValue(0)

@@ -120,7 +120,7 @@ background: transparent;</string>
              </size>
             </property>
             <property name="toolTip">
-             <string>Minimize</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;thu nhỏ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton {
@@ -154,7 +154,7 @@ QPushButton:hover {
              </size>
             </property>
             <property name="toolTip">
-             <string>Maximize</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;phóng to&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton {
@@ -188,7 +188,7 @@ QPushButton:hover {
              </size>
             </property>
             <property name="toolTip">
-             <string>Close</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Đóng&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton {

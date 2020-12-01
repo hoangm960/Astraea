@@ -27,7 +27,7 @@ RESULT_FRAME_PATH = "./UI_Files/result_frame.ui"
 TEST_FRAME_PATH = "./UI_Files/Test_frame.ui"
 OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
 SCREEN_WIDTH, SCREEN_HEIGHT = pyautogui.size()
-SCORING_SYSTEM = 10
+
 
 
 class ResultWindow(QMainWindow):
@@ -250,18 +250,18 @@ class UIFunctions(ResultWindow):
             self.frame.test_file_label.setText(cls.assignments[i].name)
             try:
                 self.frame.Score_box.setText(
-                    str(correct * SCORING_SYSTEM / len(results[:-1]))
+                    str(correct * cls.assignments[i].mark / len(results[:-1]))
                 )
                 if results[-1]:
                     self.frame.detail_entry.setText("Bài làm đã tối ưu hóa.")
                 else:
                     self.frame.detail_entry.setText("Bài làm chưa tối ưu hóa.")
-                cls.Total = correct * SCORING_SYSTEM / len(results[:-1])
+                cls.Total += correct * cls.assignments.mark / len(results[:-1])
             except:
                 pass
                 self.frame.detail_entry.setText("Chưa làm câu này")
             try:
-                self.progressBar.setValue(int(cls.Total/ num)*10)
+                self.progressBar.setValue(int(cls.Total/ num)*(cls.assignments.mark/10))
                 self.Score.setText(str(round(cls.Total / num, 2)))
             except:
                 self.progressBar.setValue(0)

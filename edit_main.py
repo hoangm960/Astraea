@@ -45,11 +45,12 @@ class Assignment:
 
         
 
-    def __init__(self, name, ex_file, test_file, details):
+    def __init__(self, name, ex_file, test_file, details, mark):
         self.name = name
         self.ex_file = ex_file
         self.test_file = test_file
         self.details = details
+        self.mark = mark
         self.load_io()
         
     def load_io(self):
@@ -174,6 +175,7 @@ class UIFunctions(EditWindow):
             ui.NameLesson.setText(ui.name_entry.text())
             ui.stacked_widget.setCurrentIndex(3)    
         else:
+            
             cls.change_lesson_title(ui, ui.name_entry.text())
             cls.put_frame_in_list(ui, ui.num_entry.value())
             ui.stacked_widget.setCurrentIndex(1)
@@ -255,6 +257,7 @@ class UIFunctions(EditWindow):
             children[i].ex_file_entry.setText(assignment.ex_file)
             children[i].test_file_entry.setText(assignment.test_file)
             children[i].details_entry.setText(assignment.details)
+            children[i].level_Entry.setText(assignment.mark)
             i += 1
 
     @classmethod
@@ -317,6 +320,7 @@ class UIFunctions(EditWindow):
                         children[i].ex_file_entry.text(),
                         children[i].test_file_entry.text(),
                         children[i].details_entry.toPlainText(),
+                        children[i].level_Entry.value(),
                     )
                 )
 

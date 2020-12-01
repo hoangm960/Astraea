@@ -246,11 +246,11 @@ class UIFunctions(ResultWindow):
 
             self.frame = cls.ResultFrame()
             self.content_widget.layout().addWidget(self.frame)
-            self.frame.correct_num.setText(str(correct))
+            self.frame.correct_num.setText(str(correct)+'/'+str(len(cls.assignments[i].tests)))
             self.frame.test_file_label.setText("hahaq")
             try:
                 self.frame.Score_box.setText(
-                    str(correct * SCORING_SYSTEM / len(results[:-1])+'/'+len(cls.assignments.tests))
+                    str(correct * SCORING_SYSTEM / len(results[:-1]))
                 )
                 if results[-1]:
                     self.frame.detail_entry.setText("Bài làm đã tối ưu hóa.")

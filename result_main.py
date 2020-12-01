@@ -260,7 +260,7 @@ class UIFunctions(ResultWindow):
                 pass
                 self.frame.detail_entry.setText("Chưa làm câu này")
             try:
-                self.progressBar.setValue(int(cls.Total/ num)*100)
+                self.progressBar.setValue(int(cls.Total/ num)*10)
                 self.Score.setText(str(round(cls.Total / num, 2)))
             except:
                 self.progressBar.setValue(0)

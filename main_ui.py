@@ -133,7 +133,7 @@ class UIFunctions(MainWindow):
     class TeacherUiFunctions:
         parent = None
         changed = False
-        
+
         @classmethod
         def __init__(cls, parent, ui):
             cls.parent = parent

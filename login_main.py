@@ -19,6 +19,7 @@ from random import randrange
 import pyautogui
 
 SCREEN_WIDTH, SCREEN_HEIGHT = pyautogui.size()
+FILE = ""
 
 
 class User:
@@ -344,7 +345,8 @@ class Loading_Screen(QMainWindow):
         self.counter += 1
 
 
-def main():
+def main(file=''):
+    FILE = file
     app = QApplication(sys.argv)
     splash_window = Loading_Screen()
     splash_window.show()

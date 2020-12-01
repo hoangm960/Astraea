@@ -25,9 +25,12 @@ from encryption import *
 KEY_PATH = "./data/Lesson/assignments.key"
 EDIT_FORM_PATH = "./UI_Files/edit_form.ui"
 EDIT_FRAME_PATH = "./UI_Files/edit_frame.ui"
-OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
+OPENED_ASSIGNMENT_PATH = "./data/Users/opened_assignment.oa"
+OPENED_LESSON_PATH = "./data/Users/opened_Lesson.oa"
+if not os.path.exists(OPENED_ASSIGNMENT_PATH):
+    open(OPENED_ASSIGNMENT_PATH, "w").close()
 if not os.path.exists(OPENED_LESSON_PATH):
-    open(OPENED_LESSON_PATH, "w").close()
+    open(OPENED_LESSON_PATH, 'W').close()
 
 
 class Assignment:
@@ -105,7 +108,7 @@ class UIFunctions(EditWindow):
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
         ui.btn_quit.clicked.connect(lambda: cls.reopen_main(ui))
         ui.confirm_btn.clicked.connect(
-            lambda: cls.show_file_dialog(ui, OPENED_LESSON_PATH)
+            lambda: cls.show_file_dialog(ui, OPENED_ASSIGNMENT_PATH)
         )
 
         # Window size grip
@@ -144,7 +147,7 @@ class UIFunctions(EditWindow):
         ui.Minutes_entry.setDisabled(True)
         ui.checkBox.clicked.connect(lambda: ui.Hours_entry.setValue(0))
         ui.checkBox.clicked.connect(lambda: ui.Minutes_entry.setValue(0))
-        cls.check_empty(ui, open(OPENED_LESSON_PATH).read().rstrip())
+        cls.check_empty(ui, open(OPENED_ASSIGNMENT_PATH).read().rstrip())
 
     @classmethod
     def check_empty(cls, ui, filename):

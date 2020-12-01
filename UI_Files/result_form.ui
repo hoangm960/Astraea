@@ -335,7 +335,7 @@ QPushButton:hover {
 background-color: transparent;</string>
                </property>
                <property name="currentIndex">
-                <number>1</number>
+                <number>2</number>
                </property>
                <widget class="QWidget" name="result_frame">
                 <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -994,8 +994,8 @@ QScrollBar::add-page, QScrollBar::sub-page {
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>100</width>
-                         <height>30</height>
+                         <width>978</width>
+                         <height>493</height>
                         </rect>
                        </property>
                        <widget class="QLabel" name="inform">
@@ -1108,6 +1108,18 @@ QPushButton:pressed {
                   </widget>
                  </item>
                 </layout>
+               </widget>
+               <widget class="QWidget" name="page_2">
+                <widget class="QFrame" name="frame">
+                 <property name="geometry">
+                  <rect>
+                   <x>0</x>
+                   <y>0</y>
+                   <width>951</width>
+                   <height>551</height>
+                  </rect>
+                 </property>
+                </widget>
                </widget>
               </widget>
              </item>

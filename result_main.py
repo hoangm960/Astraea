@@ -163,11 +163,18 @@ class UIFunctions(ResultWindow):
                     unpickler = pickle.Unpickler(f)
                     data = unpickler.load()
                     cls.assignments = data[1]
+    
+    @classmethod
+    def reopen_main(cls, ui):
+        import main_ui
+        main_ui.main("student")
+        ui.close()
 
     @classmethod
     def check_empty(cls, self, num):
         if num == 0:
             self.Out_btn.clicked.connect(lambda: self.close())
+            self.Out_btn.clicked.connect(lambda: cls.reopen_main(self))
             self.Out_btn.setText("Thoát")
             self.inform.show()
             self.inform.move(340, 220)

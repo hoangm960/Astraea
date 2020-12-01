@@ -144,7 +144,7 @@ class UIFunctions(MainWindow):
             QPushButton:hover {background-color: rgba(156, 220, 254, 150);}"""
             )
             ui.main_btn.clicked.connect(lambda: cls.open_edit_form(ui))
-
+            ui.Frame.close()
             ui.assignment_details.setReadOnly(False)
             ui.confirmButton = QDialogButtonBox(ui.frame_content_hint)
             ui.confirmButton.setStandardButtons(QDialogButtonBox.Ok)
@@ -217,12 +217,19 @@ class UIFunctions(MainWindow):
             QPushButton:hover {background-color: rgba(156, 220, 254, 150);}"""
             )
             ui.main_btn.clicked.connect(lambda: cls.open_result_form(ui))
-
+            ui.LessonButton.clicked.connect(lambda: cls.open_lesson_form(ui))
         @classmethod
         def open_result_form(cls, ui):
             window = result_main.ResultWindow()
             window.show()
             cls.parent.close_pg(ui)
+        @classmethod
+        def open_lesson_form(cls, ui):
+            window = result_main.ResultWindow()
+            window.stacked_widget.setCurrentIndex(2)
+            window.show()
+            cls.parent.close_pg(ui)
+
 
     @classmethod
     def define_role(cls, ui):

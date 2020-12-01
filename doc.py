@@ -3,24 +3,22 @@ import sys
 from PyQt5 import QtCore, uic
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import QApplication, QGraphicsDropShadowEffect, QMainWindow
-
+import main_ui
 import pyautogui
 
 DOC_PATH = "./UI_Files/Doc.ui"
 
 
 class DocWindow(QMainWindow):
-    def __init__(self, role):
+    def __init__(self):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(DOC_PATH, self)
-        self.role = role
         UIFunctions.uiDefinitions(self)
 
 class UIFunctions(DocWindow):
     STATUS = True
     @classmethod
     def uiDefinitions(cls, ui):
-        cls.define_role(ui)
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         ui.move(
@@ -39,7 +37,6 @@ class UIFunctions(DocWindow):
                 cls.STATUS = True
         ui.btn_maximize.clicked.connect(lambda: status_change())
         ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
-        
     @classmethod
     def close_pg(cls, ui):
         try:
@@ -47,17 +44,7 @@ class UIFunctions(DocWindow):
         except:
             pass
         ui.close()    
-    class TeacherUiFunctions:
-        parent = None
-        @classmethod
-        def __init__(cls, parent, ui):
-            cls.parent = parent
-    class StudentUiFunctions:
-        @classmethod
-        def __init__(cls, parent, ui):
-            cls.parent = parent
-
-    
+   
 
 
 

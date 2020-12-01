@@ -1,22 +1,18 @@
 import os
-from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtGui import QColor, QPalette
-from PyQt5.QtWidgets import (
-    QApplication,
-    QGraphicsDropShadowEffect,
-    QMainWindow,
-    QSizeGrip,
-    QWidget,
-)
-import sys
-from PyQt5.QtCore import Qt
-from PyQt5 import uic
-import main_ui
 import pickle
+import sys
 import time
-from encryption import *
 from random import randrange
+
 import pyautogui
+from PyQt5 import QtCore, QtWidgets, uic
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QColor, QPalette
+from PyQt5.QtWidgets import (QApplication, QGraphicsDropShadowEffect,
+                             QMainWindow, QSizeGrip, QWidget)
+
+import main_ui
+from encryption import *
 
 SCREEN_WIDTH, SCREEN_HEIGHT = pyautogui.size()
 FILE = ""

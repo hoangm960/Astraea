@@ -3,24 +3,18 @@ import pickle
 import sys
 from pathlib import Path
 
+import pyautogui
 from PyQt5 import QtCore, uic
 from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import (
-    QApplication,
-    QFileDialog,
-    QGraphicsDropShadowEffect,
-    QLayout,
-    QListWidgetItem,
-    QMainWindow,
-    QSizeGrip,
-    QVBoxLayout,
-    QWidget,
-)
-import main_ui
+from PyQt5.QtWidgets import (QApplication, QFileDialog,
+                             QGraphicsDropShadowEffect, QLayout,
+                             QListWidgetItem, QMainWindow, QSizeGrip,
+                             QVBoxLayout, QWidget)
+
 import check_algorithm
+import main_ui
 from UI_Files import Resources
-import pyautogui
 
 RESULT_FORM_PATH = "./UI_Files/result_form.ui"
 RESULT_FRAME_PATH = "./UI_Files/result_frame.ui"

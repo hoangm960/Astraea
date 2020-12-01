@@ -1,26 +1,19 @@
 import os
-from pathlib import Path
 import pickle
 import sys
-from PyQt5 import QtCore
+from pathlib import Path
+
+from PyQt5 import QtCore, uic
 from PyQt5.QtCore import QRect, QSize, Qt
 from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import (
-    QApplication,
-    QFileDialog,
-    QGraphicsDropShadowEffect,
-    QLayout,
-    QListWidgetItem,
-    QMainWindow,
-    QMessageBox,
-    QSizeGrip,
-    QVBoxLayout,
-    QWidget,
-)
-from PyQt5 import uic
-from UI_Files import Resources
+from PyQt5.QtWidgets import (QApplication, QFileDialog,
+                             QGraphicsDropShadowEffect, QLayout,
+                             QListWidgetItem, QMainWindow, QMessageBox,
+                             QSizeGrip, QVBoxLayout, QWidget)
+
 import main_ui
 from encryption import *
+from UI_Files import Resources
 
 KEY_PATH = "data/Lesson/assignments.key"
 EDIT_FORM_PATH = "UI_Files/edit_form.ui"

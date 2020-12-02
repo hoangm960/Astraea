@@ -125,9 +125,9 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def open_doc(cls, ui):
-        cls.close_pg(ui)
         ui.main = doc.DocWindow()
         ui.main.show()
+        cls.close_pg(ui)
 
     class TeacherUiFunctions:
         parent = None

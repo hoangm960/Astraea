@@ -120,7 +120,7 @@ background: transparent;</string>
              </size>
             </property>
             <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;thu nhỏ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>Minimize</string>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton {
@@ -154,7 +154,7 @@ QPushButton:hover {
              </size>
             </property>
             <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;phóng to&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>Maximize</string>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton {
@@ -188,7 +188,7 @@ QPushButton:hover {
              </size>
             </property>
             <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Đóng&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>Close</string>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton {
@@ -240,15 +240,31 @@ QPushButton:hover {
            <height>16777215</height>
           </size>
          </property>
+         <property name="font">
+          <font>
+           <family>iCiel Effra</family>
+           <pointsize>14</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);</string>
+          <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QTextBrowser" name="text_entry">
+         <property name="font">
+          <font>
+           <family>iCiel Effra</family>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(255,255,255);</string>
+          <string notr="true">background-color: rgb(255,255,255);
+color: rgb(0, 0, 0);</string>
          </property>
         </widget>
        </item>

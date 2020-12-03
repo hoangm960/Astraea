@@ -210,7 +210,7 @@ class UIFunctions(ResultWindow):
         for i in range(num):
             self.frame = cls.TestFrame()
             self.content_widgetT.layout().addWidget(self.frame)
-            self.frame.details_label.setText('(',cls.assignments[i].score+')' + cls.assignments[i].name)
+            self.frame.details_label.setText(f'({cls.assignments[i].score}){cls.assignments[i].name}')
             self.frame.details_entry.setText(cls.assignments[i].details)
             
 

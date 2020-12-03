@@ -144,42 +144,6 @@ class UIFunctions(MainWindow):
             )
             ui.main_btn.clicked.connect(lambda: cls.open_edit_form(ui))
             ui.assignment_details.setReadOnly(False)
-            ui.confirmButton = QDialogButtonBox(ui.frame_content_hint)
-            ui.confirmButton.setStandardButtons(QDialogButtonBox.Ok)
-            ui.confirmButton.setObjectName("confirmButton")
-            ui.verticalLayout_4.addWidget(ui.confirmButton)
-            ui.confirmButton.accepted.connect(
-                lambda: cls.save_text(ui, open(OPENED_LESSON_PATH).read().rstrip())
-            )
-
-        @classmethod
-        def save_text(cls, ui, filename):
-            if os.path.exists(filename):
-                if os.path.getsize(filename) > 0:
-                    if (
-                        list(cls.parent.assignments.values())[
-                            ui.list_assignments.currentRow()
-                        ]
-                        != ui.assignment_details.toPlainText()
-                    ):
-                        cls.show_confirm_mess(ui)
-
-                    if cls.changed:
-                        with open(filename, "rb") as f:
-                            unpickler = pickle.Unpickler(f)
-                            assignments = unpickler.load()[1]
-                        assignments[
-                            ui.list_assignments.currentRow()
-                        ].details = ui.assignment_details.toPlainText()
-
-                        with open(filename, "wb") as f:
-                            pickle.dump([ui.lesson_title.text(), assignments], f, -1)
-                        cls.changed = False
-
-                        cls.parent.assignments[
-                            ui.list_assignments.currentItem().text()
-                        ] = ui.assignment_details.toPlainText()
-                    cls.parent.load_details(ui)
 
         @classmethod
         def show_confirm_mess(cls, ui):
@@ -239,6 +203,6 @@ def main(role):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    main("teacher")
-    # main("student")
+    # main("teacher")
+    main("student")
     sys.exit(app.exec_())

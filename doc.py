@@ -2,7 +2,6 @@ import os
 import pickle
 import sys
 
-import docx
 import mammoth
 import pyautogui
 from docx import Document

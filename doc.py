@@ -2,10 +2,8 @@ import os
 import pickle
 import sys
 
-import docx
 import mammoth
 import pyautogui
-from docx import Document
 from PyQt5 import QtCore, uic
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (QApplication, QGraphicsDropShadowEffect,

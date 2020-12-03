@@ -38,12 +38,11 @@ class Assignment:
 
         
 
-    def __init__(self, name, ex_file, test_file, details, mark):
+    def __init__(self, name, ex_file, test_file, details):
         self.name = name
         self.ex_file = ex_file
         self.test_file = test_file
         self.details = details
-        self.mark = mark
         self.load_io()
         
     def load_io(self):
@@ -110,7 +109,7 @@ class UIFunctions(EditWindow):
         ui.confirm_btn.clicked.connect(
             lambda: cls.show_file_dialog(ui, OPENED_ASSIGNMENT_PATH)
         )
-
+        
         # Window size grip
         ui.sizegrip = QSizeGrip(ui.frame_grip)
         ui.sizegrip.setStyleSheet(
@@ -159,8 +158,9 @@ class UIFunctions(EditWindow):
                     data = unpickler.load()
                     title = data[0]
                     assignments = data[1]
+                    mark = data[2]
                     cls.put_frame_in_list(ui, len(assignments))
-                    cls.setup_frame(ui, title, assignments)
+                    cls.setup_frame(ui, title, assignments, mark)
 
     @classmethod
     def go_to_second(cls, ui):
@@ -241,7 +241,7 @@ class UIFunctions(EditWindow):
         ui.lesson_title.setText(title if title else "Bài học không tên")
 
     @classmethod
-    def setup_frame(cls, ui, title, assignments):
+    def setup_frame(cls, ui, title, assignments, mark):
         children = ui.content_widget.children()
         i = 1
         cls.change_lesson_title(ui, title)
@@ -250,8 +250,10 @@ class UIFunctions(EditWindow):
             children[i].ex_file_entry.setText(assignment.ex_file)
             children[i].test_file_entry.setText(assignment.test_file)
             children[i].details_entry.setText(assignment.details)
-            children[i].level_Entry.setText(assignment.mark)
+            
             i += 1
+
+        ui.level_Entry.setValue(mark)
 
     @classmethod
     def put_frame_in_list(cls, ui, num):
@@ -312,13 +314,12 @@ class UIFunctions(EditWindow):
                         children[i].title_entry.text(),
                         children[i].ex_file_entry.text(),
                         children[i].test_file_entry.text(),
-                        children[i].details_entry.toPlainText(),
-                        children[i].level_Entry.value(),
+                        children[i].details_entry.toPlainText()
                     )
                 )
-
+        mark = ui.level_Entry.value()
         with open(filename, "wb") as f:
-            pickle.dump([ui.lesson_title.text(), assignments], f, -1)
+            pickle.dump([ui.lesson_title.text(), assignments, mark], f, -1)
 
         cls.reopen_main(ui)
 

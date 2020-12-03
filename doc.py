@@ -1,13 +1,17 @@
 import os
+import pickle
 import sys
 
+import docx
+import mammoth
+import pyautogui
+from docx import Document
 from PyQt5 import QtCore, uic
 from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import QApplication, QGraphicsDropShadowEffect, QMainWindow
+from PyQt5.QtWidgets import (QApplication, QGraphicsDropShadowEffect,
+                             QMainWindow)
+
 import main_ui
-import pyautogui
-import pickle
-import docx
 
 DOC_PATH = "./UI_Files/Doc.ui"
 
@@ -44,7 +48,7 @@ class UIFunctions(DocWindow):
                 cls.STATUS = True
         ui.btn_maximize.clicked.connect(lambda: status_change())
         ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
-        ui.assignments.itemPressed.connect(lambda: cls.load_doc(ui))
+        ui.assignments.itemPressed.connect(lambda: cls.load_doc(ui, "test.docx"))
         cls.load_assignments(ui, open(main_ui.OPENED_LESSON_PATH).read().rstrip())
 
 
@@ -68,3 +72,14 @@ class UIFunctions(DocWindow):
                         cls.assignments[assignment.name] = assignment.details
                         ui.assignments.addItem(assignment.name)
 
+    @classmethod
+    def load_doc(cls, ui, filename):
+        f = open(filename, 'rb')
+        html_filename = os.path.splitext(filename)[0] + '.html'
+        b = open(html_filename, 'wb')
+        document = mammoth.convert_to_html(f)
+        b.write(document.value.encode('utf8'))
+        f.close()
+        b.close()
+        
+        ui.text_entry.setSource(QtCore.QUrl.fromLocalFile(html_filename))

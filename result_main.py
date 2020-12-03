@@ -55,7 +55,10 @@ class UIFunctions(ResultWindow):
     GLOBAL_STATE = False
     assignments = {}
     lesson = {}
+    mark = 0
     Total = 0
+    TotalTest = 0
+    TotalScore = 0
 
     @classmethod
     def load_assignments(cls, ui, filename):
@@ -68,6 +71,8 @@ class UIFunctions(ResultWindow):
                     data = unpickler.load()
                     title = data[0]
                     assignments = data[1]
+                    mark = data[2]
+                    
                     for assignment in assignments:
                         cls.lesson[assignment.name] = assignment.details
                         ui.textBrowser.addItem(assignment.name)
@@ -173,6 +178,7 @@ class UIFunctions(ResultWindow):
                     unpickler = pickle.Unpickler(f)
                     data = unpickler.load()
                     cls.assignments = data[1]
+                    cls.mark = data[2]
     
     @classmethod
     def reopen_main(cls, ui):
@@ -204,7 +210,7 @@ class UIFunctions(ResultWindow):
         for i in range(num):
             self.frame = cls.TestFrame()
             self.content_widgetT.layout().addWidget(self.frame)
-            self.frame.details_label.setText(cls.assignments[i].name)
+            self.frame.details_label.setText('(',cls.assignments[i].score+')' + cls.assignments[i].name)
             self.frame.details_entry.setText(cls.assignments[i].details)
             
 
@@ -242,26 +248,32 @@ class UIFunctions(ResultWindow):
             self.content_widget.layout().addWidget(self.frame)
             self.frame.correct_num.setText(str(correct)+'/'+str(len(cls.assignments[i].tests)))
             self.frame.test_file_label.setText(cls.assignments[i].name)
+
             try:
                 self.frame.Score_box.setText(
-                    str(correct * cls.assignments[i].mark / len(results[:-1]))
+                    str(correct * cls.mark/ len(results[:-1]))
                 )
                 if results[-1]:
                     self.frame.detail_entry.setText("Bài làm đã tối ưu hóa.")
                 else:
                     self.frame.detail_entry.setText("Bài làm chưa tối ưu hóa.")
-                cls.Total += correct * cls.assignments.mark / len(results[:-1])
-            except:
-                pass
+                cls.Total += correct
+                cls.TotalScore += (correct / len(cls.assignments[i].tests)) * cls.assignments[i].score
+                cls.TotalTest += len(cls.assignments[i].tests)
+            except: 
+                cls.TotalTest += len(cls.assignments[i].tests)
                 self.frame.detail_entry.setText("Chưa làm câu này")
             try:
-                self.progressBar.setValue(int(cls.Total/ num)*(cls.assignments.mark/10))
-                self.Score.setText(str(round(cls.Total / num, 2)))
+                self.progressBar.setValue(int((cls.Total/cls.TotalTest)*100))
+                self.Score.setText(str(round(cls.TotalScore, 2)))
             except:
                 self.progressBar.setValue(0)
-            if float(self.Score.text()) < 5:
+            float(self.Score.text())< 0.7*cls.mark
+            if float(self.Score.text()) < 0.7*cls.mark:
                 self.Judge.setText("Bài làm vẫn chưa đạt chuẩn.")
-
+            else:
+                self.Judge.setText("Bài làm đạt chuẩn")
+            
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

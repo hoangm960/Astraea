@@ -36,12 +36,11 @@ class Assignment:
 
         
 
-    def __init__(self, name, ex_file, test_file, details, score):
+    def __init__(self, name, ex_file, test_file, details):
         self.name = name
         self.ex_file = ex_file
         self.test_file = test_file
         self.details = details
-        self.score = score
         self.load_io()
         
     def load_io(self):
@@ -157,9 +156,8 @@ class UIFunctions(EditWindow):
                     data = unpickler.load()
                     title = data[0]
                     assignments = data[1]
-                    mark = data[2]
                     cls.put_frame_in_list(ui, len(assignments))
-                    cls.setup_frame(ui, title, assignments, mark)
+                    cls.setup_frame(ui, title, assignments)
 
     @classmethod
     def go_to_second(cls, ui):
@@ -240,7 +238,7 @@ class UIFunctions(EditWindow):
         ui.lesson_title.setText(title if title else "Bài học không tên")
 
     @classmethod
-    def setup_frame(cls, ui, title, assignments, mark):
+    def setup_frame(cls, ui, title, assignments):
         children = ui.content_widget.children()
         i = 1
         cls.change_lesson_title(ui, title)
@@ -249,10 +247,9 @@ class UIFunctions(EditWindow):
             children[i].ex_file_entry.setText(assignment.ex_file)
             children[i].test_file_entry.setText(assignment.test_file)
             children[i].details_entry.setText(assignment.details)
-            children[i].Score_edit.setText(assignment.score)
             i += 1
 
-        ui.level_Entry.setValue(mark)
+    
 
     @classmethod
     def put_frame_in_list(cls, ui, num):
@@ -313,8 +310,7 @@ class UIFunctions(EditWindow):
                         children[i].title_entry.text(),
                         children[i].ex_file_entry.text(),
                         children[i].test_file_entry.text(),
-                        children[i].details_entry.toPlainText(),
-                        children[i].Score_edit.text()
+                        children[i].details_entry.toPlainText()
                     )
                 )
             
@@ -333,5 +329,4 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = EditWindow()
     window.show()
-
     sys.exit(app.exec_())

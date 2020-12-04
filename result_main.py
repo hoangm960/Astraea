@@ -70,7 +70,6 @@ class UIFunctions(ResultWindow):
                     data = unpickler.load()
                     title = data[0]
                     assignments = data[1]
-
                     for assignment in assignments:
                         cls.lesson[assignment.name] = assignment.details
                         ui.textBrowser.addItem(assignment.name)
@@ -180,7 +179,6 @@ class UIFunctions(ResultWindow):
                     unpickler = pickle.Unpickler(f)
                     data = unpickler.load()
                     cls.assignments = data[1]
-
     @classmethod
     def reopen_main(cls, ui):
         import main_ui
@@ -211,8 +209,7 @@ class UIFunctions(ResultWindow):
         for i in range(num):
             self.frame = cls.TestFrame()
             self.content_widgetT.layout().addWidget(self.frame)
-            self.frame.details_label.setText(
-                f'({cls.assignments[i].score}){cls.assignments[i].name}')
+            self.frame.details_label.setText(cls.assignments[i].name)
             self.frame.details_entry.setText(cls.assignments[i].details)
 
     @classmethod
@@ -253,27 +250,25 @@ class UIFunctions(ResultWindow):
 
             try:
                 self.frame.Score_box.setText(
-                    str(correct * cls.mark / len(results[:-1]))
+                    str(correct / len(results[:-1]))
                 )
                 if results[-1]:
                     self.frame.detail_entry.setText("Bài làm đã tối ưu hóa.")
                 else:
                     self.frame.detail_entry.setText("Bài làm chưa tối ưu hóa.")
-
-                Total += num
-                TotalScore += (correct /
-                               len(cls.assignments[i].tests)) * cls.assignments[i].score
-                TotalTest += len(cls.assignments[i].tests)
-            except:
-                TotalTest += len(cls.assignments[i].tests)
+                cls.Total += correct
+                cls.TotalScore += (correct / len(cls.assignments[i].tests))
+                cls.TotalTest += len(cls.assignments[i].tests)
+            except: 
+                cls.TotalTest += len(cls.assignments[i].tests)
                 self.frame.detail_entry.setText("Chưa làm câu này")
             try:
                 self.progressBar.setValue(int((Total/TotalTest)*100))
                 self.Score.setText(str(round(TotalScore, 2)))
             except:
                 self.progressBar.setValue(0)
-            float(self.Score.text()) < 0.7*cls.mark
-            if float(self.Score.text()) < 0.7*cls.mark:
+            float(self.Score.text())< 0.7
+            if float(self.Score.text()) < 0.7:
                 self.Judge.setText("Bài làm vẫn chưa đạt chuẩn.")
             else:
                 self.Judge.setText("Bài làm đạt chuẩn")

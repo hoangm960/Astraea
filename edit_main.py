@@ -19,9 +19,11 @@ KEY_PATH = "data/Lesson/assignments.key"
 EDIT_FORM_PATH = "UI_Files/edit_form.ui"
 EDIT_FRAME_PATH = "UI_Files/edit_frame.ui"
 OPENED_ASSIGNMENT_PATH = "data/Users/opened_assignment.oa"
+OPENED_LESSON_PATH = "data/Users/opened_Lesson.oa"
 if not os.path.exists(OPENED_ASSIGNMENT_PATH):
     open(OPENED_ASSIGNMENT_PATH, "w").close()
-
+if not os.path.exists(OPENED_LESSON_PATH):
+    open(OPENED_LESSON_PATH, 'w').close()
 
 
 class Assignment:
@@ -36,11 +38,12 @@ class Assignment:
 
         
 
-    def __init__(self, name, ex_file, test_file, details):
+    def __init__(self, name, ex_file, test_file, details, mark):
         self.name = name
         self.ex_file = ex_file
         self.test_file = test_file
         self.details = details
+        self.mark = mark
         self.load_io()
         
     def load_io(self):
@@ -107,7 +110,7 @@ class UIFunctions(EditWindow):
         ui.confirm_btn.clicked.connect(
             lambda: cls.show_file_dialog(ui, OPENED_ASSIGNMENT_PATH)
         )
-        
+
         # Window size grip
         ui.sizegrip = QSizeGrip(ui.frame_grip)
         ui.sizegrip.setStyleSheet(
@@ -247,9 +250,8 @@ class UIFunctions(EditWindow):
             children[i].ex_file_entry.setText(assignment.ex_file)
             children[i].test_file_entry.setText(assignment.test_file)
             children[i].details_entry.setText(assignment.details)
+            children[i].level_Entry.setText(assignment.mark)
             i += 1
-
-    
 
     @classmethod
     def put_frame_in_list(cls, ui, num):
@@ -310,13 +312,14 @@ class UIFunctions(EditWindow):
                         children[i].title_entry.text(),
                         children[i].ex_file_entry.text(),
                         children[i].test_file_entry.text(),
-                        children[i].details_entry.toPlainText()
+                        children[i].details_entry.toPlainText(),
+                        children[i].level_Entry.value(),
                     )
                 )
-            
-                
+
         with open(filename, "wb") as f:
             pickle.dump([ui.lesson_title.text(), assignments], f, -1)
+
         cls.reopen_main(ui)
 
     @classmethod

@@ -317,10 +317,10 @@ class UIFunctions(EditWindow):
                         children[i].Score_edit.text()
                     )
                 )
+            
                 
-        mark = ui.level_Entry.value()
         with open(filename, "wb") as f:
-            pickle.dump([ui.lesson_title.text(), assignments, mark], f, -1)
+            pickle.dump([ui.lesson_title.text(), assignments], f, -1)
         cls.reopen_main(ui)
 
     @classmethod

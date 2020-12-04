@@ -250,7 +250,7 @@ class UIFunctions(EditWindow):
             children[i].ex_file_entry.setText(assignment.ex_file)
             children[i].test_file_entry.setText(assignment.test_file)
             children[i].details_entry.setText(assignment.details)
-            children[i].level_Entry.setText(assignment.mark)
+            children[i].Score_edit.setText(assignment.mark)
             i += 1
 
     @classmethod
@@ -313,7 +313,7 @@ class UIFunctions(EditWindow):
                         children[i].ex_file_entry.text(),
                         children[i].test_file_entry.text(),
                         children[i].details_entry.toPlainText(),
-                        children[i].level_Entry.value(),
+                        children[i].Score_edit.value(),
                     )
                 )
 

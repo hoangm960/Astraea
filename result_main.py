@@ -248,7 +248,8 @@ class UIFunctions(ResultWindow):
                 str(correct)+'/'+str(len(cls.assignments[i].tests)))
             self.frame.test_file_label.setText(cls.assignments[i].name)
 
-            try:
+            cls.TotalTest += len(cls.assignments[i].tests)
+            if results:
                 self.frame.Score_box.setText(
                     str(correct / len(results[:-1]))
                 )
@@ -256,22 +257,21 @@ class UIFunctions(ResultWindow):
                     self.frame.detail_entry.setText("Bài làm đã tối ưu hóa.")
                 else:
                     self.frame.detail_entry.setText("Bài làm chưa tối ưu hóa.")
-                cls.Total += correct
-                cls.TotalScore += (correct / len(cls.assignments[i].tests))
-                cls.TotalTest += len(cls.assignments[i].tests)
-            except: 
-                cls.TotalTest += len(cls.assignments[i].tests)
-                self.frame.detail_entry.setText("Chưa làm câu này")
-            try:
-                self.progressBar.setValue(int((Total/TotalTest)*100))
-                self.Score.setText(str(round(TotalScore, 2)))
-            except:
-                self.progressBar.setValue(0)
-            float(self.Score.text())< 0.7
-            if float(self.Score.text()) < 0.7:
-                self.Judge.setText("Bài làm vẫn chưa đạt chuẩn.")
+                cls.Total = correct
+                cls.TotalScore += (correct / len(cls.assignments[i].tests) * cls.assignments[i].mark)
             else:
-                self.Judge.setText("Bài làm đạt chuẩn")
+                self.frame.detail_entry.setText("Chưa làm câu này")
+
+        try:
+            self.progressBar.setValue(int((cls.Total / cls.TotalTest)*100))
+            self.Score.setText(str(round(cls.TotalScore, 2)))
+        except:
+            self.progressBar.setValue(0)
+        float(self.Score.text())< 0.7
+        if float(self.Score.text()) < 0.7:
+            self.Judge.setText("Bài làm vẫn chưa đạt chuẩn.")
+        else:
+            self.Judge.setText("Bài làm đạt chuẩn")
 
 
 if __name__ == "__main__":

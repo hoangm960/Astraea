@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>786</width>
-    <height>530</height>
+    <height>523</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -345,19 +345,56 @@ QPushButton:pressed {
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="Score_edit">
-        <property name="maximumSize">
-         <size>
-          <width>100</width>
-          <height>16777215</height>
-         </size>
+       <widget class="QSpinBox" name="Score_edit">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);
-border-radius: 12px;</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
+         <string notr="true">QSpinBox {
+	border-radius: 10px;
+	color: rgb(0, 0, 0);
+	background-color: rgb(255, 255, 255);
+}
+QSpinBox::up-button {
+	background-color: rgb(255, 255, 255);
+	border-radius: 5px;
+}
+
+QSpinBox::up-button:hover {
+	background-color: rgb(223, 223, 223);
+}
+
+QSpinBox::up-button:pressed {
+	background-color: rgb(207, 207, 207);
+}
+
+QSpinBox::down-button {
+	background-color: rgb(255, 255, 255);
+	border-radius: 5px;
+}
+
+QSpinBox::down-button:hover {
+	background-color: rgb(223, 223, 223);
+}
+
+QSpinBox::down-button:pressed {
+	background-color: rgb(207, 207, 207);
+}
+
+QSpinBox::up-arrow {
+	image: url(:/images/icons/plus.png);
+    width: 10px;
+    height: 20px;
+}
+
+QSpinBox::down-arrow {
+	image: url(:/images/icons/minus.png);
+    width: 10px;
+    height: 20px;
+}</string>
         </property>
        </widget>
       </item>

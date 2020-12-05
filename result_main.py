@@ -212,6 +212,11 @@ class UIFunctions(ResultWindow):
             self.frame.details_label.setText(cls.assignments[i].name)
             self.frame.details_entry.setText(cls.assignments[i].details)
 
+    # @classmethod
+    # def count_total_mark(cls):
+    #     for assignment in assignments: 
+    #         cls.assignment.mark
+
     @classmethod
     def check_result(cls, frame, num):
         assignments = cls.assignments[num]
@@ -251,19 +256,22 @@ class UIFunctions(ResultWindow):
             cls.TotalTest += len(cls.assignments[i].tests)
             if results:
                 self.frame.Score_box.setText(
-                    str(correct / len(results[:-1]))
+                    str(correct / len(results[:-1]) * cls.assignments[i].mark)
                 )
                 if results[-1]:
                     self.frame.detail_entry.setText("Bài làm đã tối ưu hóa.")
                 else:
                     self.frame.detail_entry.setText("Bài làm chưa tối ưu hóa.")
-                cls.Total = correct
+                cls.Total += correct
                 cls.TotalScore += (correct / len(cls.assignments[i].tests) * cls.assignments[i].mark)
             else:
                 self.frame.detail_entry.setText("Chưa làm câu này")
 
+        totalScore = int()
+        for assignment in cls.assignments:
+            totalScore += assignment.mark
         try:
-            self.progressBar.setValue(int((cls.Total / cls.TotalTest)*100))
+            self.progressBar.setValue(int((cls.TotalScore / totalScore)*100))
             self.Score.setText(str(round(cls.TotalScore, 2)))
         except:
             self.progressBar.setValue(0)

@@ -56,7 +56,6 @@ class Assignment:
                 inputs, outputs = line.rstrip().rsplit(sep)
                 self.tests.append(self.Test(inputs.rsplit('&'), outputs.rsplit('&')))
 
-
 class EditWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
         QMainWindow.__init__(self, *args, **kwargs)
@@ -250,7 +249,7 @@ class UIFunctions(EditWindow):
             children[i].ex_file_entry.setText(assignment.ex_file)
             children[i].test_file_entry.setText(assignment.test_file)
             children[i].details_entry.setText(assignment.details)
-            children[i].Score_edit.setText(assignment.mark)
+            children[i].Score_edit.setValue(assignment.mark)
             i += 1
 
     @classmethod

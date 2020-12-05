@@ -49,7 +49,7 @@ class UIFunctions(DocWindow):
         ui.btn_maximize.clicked.connect(lambda: status_change())
         ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
         ui.assignments.itemPressed.connect(lambda: cls.load_doc(
-            ui, "D:/Programming/Python/Astraea/test.docx"))
+            ui, "D:/Programming/Python/Astraea/bruh.docx"))
         cls.load_assignments(
             ui, open(main_ui.OPENED_LESSON_PATH).read().rstrip())
 
@@ -75,9 +75,10 @@ class UIFunctions(DocWindow):
 
     @classmethod
     def load_doc(cls, ui, filename):
+        html_file = f"{os.path.join(os.path.abspath(HTML_CONVERT_PATH), os.path.splitext(os.path.basename(filename))[0])}.html".replace("\\", "/")
+        
         wordOle = WordOle(filename)
         wordOle.hide()
-        html_file = f"{os.path.join(os.path.abspath(HTML_CONVERT_PATH), os.path.splitext(os.path.basename(filename))[0])}.html"
         wordOle.save(html_file, WordSaveFormat.wdFormatHTML)
         wordOle.close()
 

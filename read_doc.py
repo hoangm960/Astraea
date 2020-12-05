@@ -23,8 +23,7 @@ class WordOle:
 
     def close(self):
         self.wordDoc.Close( SaveChanges = 0 )
-        # shutil.rmtree("test_files")
-        del self.wordApp
+        self.wordApp.Quit()
 
     def show(self):
         self.wordApp.Visible = 1

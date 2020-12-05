@@ -1295,12 +1295,12 @@ QPushButton:pressed {
                    <property name="frameShadow">
                     <enum>QFrame::Raised</enum>
                    </property>
-                   <layout class="QVBoxLayout" name="verticalLayout_9">
+                   <layout class="QVBoxLayout" name="verticalLayout_8">
                     <property name="spacing">
                      <number>0</number>
                     </property>
                     <property name="leftMargin">
-                     <number>6</number>
+                     <number>10</number>
                     </property>
                     <property name="topMargin">
                      <number>0</number>
@@ -1312,20 +1312,17 @@ QPushButton:pressed {
                      <number>0</number>
                     </property>
                     <item>
-                     <widget class="QLabel" name="lesson_title">
+                     <widget class="QLineEdit" name="lesson_title">
                       <property name="font">
                        <font>
                         <family>Montserrat</family>
-                        <pointsize>16</pointsize>
+                        <pointsize>18</pointsize>
                         <weight>75</weight>
                         <bold>true</bold>
                        </font>
                       </property>
-                      <property name="styleSheet">
-                       <string notr="true"/>
-                      </property>
                       <property name="text">
-                       <string>TextLabel</string>
+                       <string>Bài học không tên</string>
                       </property>
                      </widget>
                     </item>
@@ -1420,7 +1417,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                          <x>0</x>
                          <y>0</y>
                          <width>1046</width>
-                         <height>490</height>
+                         <height>484</height>
                         </rect>
                        </property>
                       </widget>

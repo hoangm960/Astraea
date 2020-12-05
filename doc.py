@@ -10,8 +10,10 @@ from PyQt5.QtWidgets import (QApplication, QGraphicsDropShadowEffect,
                              QMainWindow)
 
 import main_ui
+from read_doc import *
 
 DOC_PATH = "./UI_Files/Doc.ui"
+HTML_CONVERT_PATH = "./data/html_convert"
 
 
 class DocWindow(QMainWindow):
@@ -46,9 +48,10 @@ class UIFunctions(DocWindow):
                 cls.STATUS = True
         ui.btn_maximize.clicked.connect(lambda: status_change())
         ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
-        ui.assignments.itemPressed.connect(lambda: cls.load_doc(ui, "test.docx"))
-        cls.load_assignments(ui, open(main_ui.OPENED_LESSON_PATH).read().rstrip())
-
+        ui.assignments.itemPressed.connect(lambda: cls.load_doc(
+            ui, "D:/Programming/Python/Astraea/test.docx"))
+        cls.load_assignments(
+            ui, open(main_ui.OPENED_LESSON_PATH).read().rstrip())
 
     @classmethod
     def close_pg(cls, ui):
@@ -72,12 +75,17 @@ class UIFunctions(DocWindow):
 
     @classmethod
     def load_doc(cls, ui, filename):
-        f = open(filename, 'rb')
-        html_filename = os.path.splitext(filename)[0] + '.html'
-        b = open(html_filename, 'wb')
-        document = mammoth.convert_to_html(f)
-        b.write(document.value.encode('utf8'))
-        f.close()
-        b.close()
-        
-        ui.text_entry.setSource(QtCore.QUrl.fromLocalFile(html_filename))
+        wordOle = WordOle(filename)
+        wordOle.hide()
+        html_file = f"{os.path.join(os.path.abspath(HTML_CONVERT_PATH), os.path.splitext(os.path.basename(filename))[0])}.html"
+        wordOle.save(html_file, WordSaveFormat.wdFormatHTML)
+        wordOle.close()
+
+        ui.text_entry.setSource(QtCore.QUrl.fromLocalFile(html_file))
+
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = DocWindow()
+    window.show()
+    sys.exit(app.exec_())

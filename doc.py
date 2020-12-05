@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import (QApplication, QGraphicsDropShadowEffect,
                              QMainWindow)
 
 import main_ui
-from read_doc import *
+from win32com import client as wc
 
 DOC_PATH = "./UI_Files/Doc.ui"
 HTML_CONVERT_PATH = "./data/html_convert"
@@ -18,13 +18,12 @@ HTML_CONVERT_PATH = "./data/html_convert"
 
 class DocWindow(QMainWindow):
     def __init__(self):
-        QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
+        QMainWindow.__init__(self)
         uic.loadUi(DOC_PATH, self)
         UIFunctions.uiDefinitions(self)
 
 
 class UIFunctions(DocWindow):
-    STATUS = True
     assignments = {}
 
     @classmethod
@@ -35,18 +34,7 @@ class UIFunctions(DocWindow):
             round((QApplication.primaryScreen().size().width() - ui.width()) / 2),
             round((QApplication.primaryScreen().size().height() - ui.height()) / 2),
         )
-        ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
-
-        def status_change():
-            if cls.STATUS == True:
-                ui.showMaximized()
-                ui.btn_maximize.setToolTip('Phóng to')
-                cls.STATUS = False
-            else:
-                ui.showNormal()
-                ui.btn_minimize.setToolTip('Thu nhỏ')
-                cls.STATUS = True
-        ui.btn_maximize.clicked.connect(lambda: status_change())
+        ui.showMaximized()
         ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
         ui.assignments.itemPressed.connect(lambda: cls.load_doc(
             ui, "D:/Programming/Python/Astraea/bruh.docx"))
@@ -75,12 +63,13 @@ class UIFunctions(DocWindow):
 
     @classmethod
     def load_doc(cls, ui, filename):
-        html_file = f"{os.path.join(os.path.abspath(HTML_CONVERT_PATH), os.path.splitext(os.path.basename(filename))[0])}.html".replace("\\", "/")
+        html_file = f"{os.path.join(os.path.abspath(HTML_CONVERT_PATH), os.path.splitext(os.path.basename(filename))[0])}.html"
         
-        wordOle = WordOle(filename)
-        wordOle.hide()
-        wordOle.save(html_file, WordSaveFormat.wdFormatHTML)
-        wordOle.close()
+        word = wc.Dispatch('Word.Application') 
+        doc = word.Documents.Open(filename)
+        doc.SaveAs(html_file, 8) 
+        doc.Close() 
+        word.Quit()
 
         ui.text_entry.setSource(QtCore.QUrl.fromLocalFile(html_file))
 

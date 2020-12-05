@@ -7,54 +7,34 @@
     <x>0</x>
     <y>0</y>
     <width>1016</width>
-    <height>708</height>
+    <height>678</height>
    </rect>
-  </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>0</width>
-    <height>0</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>16777215</width>
-    <height>16777215</height>
-   </size>
-  </property>
-  <property name="font">
-   <font>
-    <kerning>true</kerning>
-   </font>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
-  </property>
-  <property name="windowOpacity">
-   <double>1.000000000000000</double>
   </property>
   <property name="styleSheet">
    <string notr="true">border-radius: 8px;
 background : transparent;</string>
   </property>
-  <widget class="QWidget" name="Form">
-   <property name="minimumSize">
-    <size>
-     <width>0</width>
-     <height>0</height>
-    </size>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background: transparent;</string>
-   </property>
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout_8">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
      <widget class="QFrame" name="bg_frame">
       <property name="layoutDirection">
        <enum>Qt::RightToLeft</enum>
@@ -2383,195 +2363,8 @@ color: rgb(207,207,207);
    </layout>
   </widget>
  </widget>
- <tabstops>
-  <tabstop>Accept</tabstop>
-  <tabstop>Deny</tabstop>
-  <tabstop>NameBox_SI</tabstop>
-  <tabstop>PassBox_SI</tabstop>
-  <tabstop>NameBox</tabstop>
-  <tabstop>PassBox</tabstop>
-  <tabstop>UserBox</tabstop>
-  <tabstop>teacher</tabstop>
-  <tabstop>student</tabstop>
-  <tabstop>SignUp_Bt</tabstop>
-  <tabstop>ConvertButton_SU</tabstop>
-  <tabstop>Note_User</tabstop>
-  <tabstop>ConvertButton_4</tabstop>
-  <tabstop>SavePass</tabstop>
-  <tabstop>btn_maximize</tabstop>
-  <tabstop>Note_Name</tabstop>
-  <tabstop>eyeHide</tabstop>
-  <tabstop>eyeShow_SI</tabstop>
-  <tabstop>SignIn_Bt</tabstop>
-  <tabstop>eyeHide_SI</tabstop>
-  <tabstop>eyeShow</tabstop>
-  <tabstop>btn_quit</tabstop>
-  <tabstop>btn_minimize</tabstop>
-  <tabstop>ConvertButton</tabstop>
- </tabstops>
  <resources>
   <include location="Resources.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>Accept</sender>
-   <signal>clicked()</signal>
-   <receiver>OkCancelFrame</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>549</x>
-     <y>398</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>521</x>
-     <y>387</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>Deny</sender>
-   <signal>clicked()</signal>
-   <receiver>OkCancelFrame</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>729</x>
-     <y>398</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>625</x>
-     <y>309</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>eyeShow</sender>
-   <signal>clicked()</signal>
-   <receiver>eyeShow</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>411</x>
-     <y>320</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>411</x>
-     <y>320</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>eyeHide</sender>
-   <signal>clicked()</signal>
-   <receiver>eyeHide</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>411</x>
-     <y>320</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>411</x>
-     <y>320</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>eyeHide</sender>
-   <signal>clicked()</signal>
-   <receiver>eyeShow</receiver>
-   <slot>show()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>411</x>
-     <y>320</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>411</x>
-     <y>320</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>eyeShow</sender>
-   <signal>clicked()</signal>
-   <receiver>eyeHide</receiver>
-   <slot>show()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>411</x>
-     <y>320</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>411</x>
-     <y>320</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>eyeShow_SI</sender>
-   <signal>clicked()</signal>
-   <receiver>eyeHide_SI</receiver>
-   <slot>show()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>390</x>
-     <y>334</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>408</x>
-     <y>339</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>eyeHide_SI</sender>
-   <signal>clicked()</signal>
-   <receiver>eyeHide_SI</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>412</x>
-     <y>341</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>415</x>
-     <y>348</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>eyeShow_SI</sender>
-   <signal>clicked()</signal>
-   <receiver>eyeShow_SI</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>389</x>
-     <y>328</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>388</x>
-     <y>343</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>eyeHide_SI</sender>
-   <signal>clicked()</signal>
-   <receiver>eyeShow_SI</receiver>
-   <slot>show()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>402</x>
-     <y>341</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>390</x>
-     <y>340</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

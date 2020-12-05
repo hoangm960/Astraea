@@ -237,6 +237,7 @@ class UIFunctions(ResultWindow):
 
             if self.frame.ans_file_entry.text() != "":
                 results = cls.check_result(self.frame, i)
+                print(results)
                 for result in results[:-1]:
                     if result[1]:
                         correct += 1
@@ -254,7 +255,8 @@ class UIFunctions(ResultWindow):
             self.frame.test_file_label.setText(cls.assignments[i].name)
 
             cls.TotalTest += len(cls.assignments[i].tests)
-            if results:
+            
+            if result[]:
                 self.frame.Score_box.setText(
                     str(correct / len(results[:-1]) * cls.assignments[i].mark)
                 )
@@ -264,7 +266,7 @@ class UIFunctions(ResultWindow):
                     self.frame.detail_entry.setText("Bài làm chưa tối ưu hóa.")
                 cls.Total += correct
                 cls.TotalScore += (correct / len(cls.assignments[i].tests) * cls.assignments[i].mark)
-            else:
+            except:
                 self.frame.detail_entry.setText("Chưa làm câu này")
 
         totalScore = int()

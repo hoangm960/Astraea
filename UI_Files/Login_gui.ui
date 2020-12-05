@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1016</width>
-    <height>715</height>
+    <height>708</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -466,7 +466,7 @@ border-radius: 9px;</string>
             <enum>QFrame::Raised</enum>
            </property>
            <property name="currentIndex">
-            <number>1</number>
+            <number>0</number>
            </property>
            <widget class="QWidget" name="SignIn_Page">
             <property name="sizePolicy">
@@ -1149,8 +1149,20 @@ color: rgb(207,207,207);
                <property name="text">
                 <string>Không có tài khoản? Đăng ký ngay</string>
                </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
                <property name="autoRepeat">
                 <bool>true</bool>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+               <property name="default">
+                <bool>false</bool>
+               </property>
+               <property name="flat">
+                <bool>false</bool>
                </property>
               </widget>
              </item>

@@ -86,11 +86,6 @@ class LoginFunctions(LoginWindow):
         cls.load_users()
         cls.check_autosave(self)
         cls.move_TaskClose(self)
-        self.sizegrip = QSizeGrip(self.frame_grip)
-        self.sizegrip.setStyleSheet(
-            "QSizeGrip { width: 20px; height: 20px; margin: 5px; border-radius: 10px; } QSizeGrip:hover { background-color: rgb(90, 90, 90)}"
-        )
-        self.sizegrip.setToolTip("Resize Window")
 
     @classmethod
     def move_TaskClose(cls, self):

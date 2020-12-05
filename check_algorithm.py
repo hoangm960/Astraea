@@ -30,6 +30,8 @@ def main(filename, ex_file, tests, time_limit=2, size_range=50):
                 if file_size in range(ex_file_size - size_range, ex_file_size + size_range)
                 else False
             )
+        else:
+            main.results.append("")
 
     for test in tests:
         input = output = ''

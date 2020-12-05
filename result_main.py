@@ -256,7 +256,7 @@ class UIFunctions(ResultWindow):
 
             cls.TotalTest += len(cls.assignments[i].tests)
             
-            if result[]:
+            if results[-1]:
                 self.frame.Score_box.setText(
                     str(correct / len(results[:-1]) * cls.assignments[i].mark)
                 )
@@ -266,7 +266,7 @@ class UIFunctions(ResultWindow):
                     self.frame.detail_entry.setText("Bài làm chưa tối ưu hóa.")
                 cls.Total += correct
                 cls.TotalScore += (correct / len(cls.assignments[i].tests) * cls.assignments[i].mark)
-            except:
+            else:
                 self.frame.detail_entry.setText("Chưa làm câu này")
 
         totalScore = int()

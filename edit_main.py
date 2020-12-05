@@ -189,7 +189,7 @@ class UIFunctions(EditWindow):
                 border-radius: 0px;
                 color: rgb(255, 255, 255);"""
             )
-            ui.btn_maximize.setToolTip("Restore")
+            ui.btn_maximize.setToolTip("Thu nhỏ")
         else:
             cls.GLOBAL_STATE = False
             ui.showNormal()
@@ -200,7 +200,7 @@ class UIFunctions(EditWindow):
                 border-radius: 10px;
                 color: rgb(255, 255, 255);"""
             )
-            ui.btn_maximize.setToolTip("Maximize")
+            ui.btn_maximize.setToolTip("Phóng to")
 
     @classmethod
     def show_file_dialog(cls, ui, filename):

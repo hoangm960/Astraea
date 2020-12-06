@@ -46,8 +46,8 @@ class Assignment:
             sep = lines[0].rstrip()
             del lines[0]
             for line in lines:
-                inputs, outputs = line.rstrip().rsplit(sep)
-                self.tests.append(self.Test(inputs.rsplit('&'), outputs.rsplit('&')))
+                inputs, outputs = line.strip("\n\r").split(sep)
+                self.tests.append(self.Test(inputs.split('&'), outputs.split('&')))
 
 class EditWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
@@ -300,21 +300,6 @@ class UIFunctions(EditWindow):
         cls.deleted = False if i.text().lower() == "cancel" else True
 
     @classmethod
-    def convert_doc_to_html(cls, filename):
-        html_file = f"{os.path.join(os.path.abspath(HTML_CONVERT_PATH), os.path.splitext(os.path.basename(filename))[0])}.html"
-
-        word = wc.Dispatch('Word.Application') 
-        doc = word.Documents.Open(filename)
-        doc.SaveAs(html_file, 8) 
-        doc.Close() 
-        word.Quit()
-
-        with open(html_file, 'r') as f:
-            html_data = f.read()
-        os.remove(html_file)
-        return html_data
-
-    @classmethod
     def load_assignments(cls, ui, filename):
         children = ui.content_widget.children()
         del children[0]
@@ -333,11 +318,8 @@ class UIFunctions(EditWindow):
                     )
                 )
 
-        html_data = []
-        for doc in cls.doc_files:
-            html_data.append(cls.convert_doc_to_html(doc))
         with open(filename, "wb") as f:
-            pickle.dump([ui.lesson_title.text(), assignments, html_data], f, -1)
+            pickle.dump([ui.lesson_title.text(), assignments], f, -1)
 
         cls.reopen_main(ui)
 

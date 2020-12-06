@@ -63,7 +63,7 @@ class UIFunctions(MainWindow):
 
         cls.define_role(ui)
         cls.check_opened_lesson(ui, OPENED_LESSON_PATH)
-
+    
         cls.open_vscode(ui)
 
     @classmethod

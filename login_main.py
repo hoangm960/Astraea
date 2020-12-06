@@ -275,6 +275,7 @@ class LoginFunctions(LoginWindow):
                 name = self.NameBox.text()
                 password = self.PassBox.text()
                 role = "teacher" if self.teacher.isChecked() else "student"
+                print(role)
                 cls.users.append(
                     User(name, password, role, name_account, False))
                 pickle.dump(cls.users, f)

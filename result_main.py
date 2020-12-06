@@ -1,3 +1,4 @@
+import Main
 import os
 import pickle
 import sys
@@ -19,7 +20,6 @@ RESULT_FORM_PATH = "./UI_Files/result_form.ui"
 RESULT_FRAME_PATH = "./UI_Files/result_frame.ui"
 TEST_FRAME_PATH = "./UI_Files/Test_frame.ui"
 OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
-SCREEN_WIDTH, SCREEN_HEIGHT = pyautogui.size()
 
 
 class ResultWindow(QMainWindow):
@@ -27,8 +27,8 @@ class ResultWindow(QMainWindow):
         QMainWindow.__init__(self, *args, **kwargs)
         uic.loadUi(RESULT_FORM_PATH, self)
         self.setGeometry(
-            round((SCREEN_WIDTH - self.width()) / 3),
-            round((SCREEN_HEIGHT - self.height()) / 2),
+            round((Main.SCREEN_WIDTH - self.width()) / 3),
+            round((Main.SCREEN_HEIGHT - self.height()) / 2),
             self.width(),
             self.height(),
         )

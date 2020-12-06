@@ -1,6 +1,11 @@
+import login_main
 import argparse
-
+from win32api import GetMonitorInfo, MonitorFromPoint
 from pathlib import Path
+
+monitor_info = GetMonitorInfo(MonitorFromPoint((0, 0)))
+work_area = monitor_info.get("Work")
+SCREEN_WIDTH, SCREEN_HEIGHT = work_area[2], work_area[3]
 
 USER_PATH = "data/Users/"
 ENCRYPTION_PATH = "data/encryption/"
@@ -16,5 +21,5 @@ Path(USER_PATH).mkdir(parents=True, exist_ok=True)
 Path(ENCRYPTION_PATH).mkdir(parents=True, exist_ok=True)
 # login_main.main(args.file)
 
-import login_main
-login_main.main()
+if __name__ == "__main__":
+    login_main.main()

@@ -6,7 +6,7 @@ import mammoth
 import pyautogui
 from PyQt5 import QtCore, uic
 from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import (QApplication, QGraphicsDropShadowEffect,
+from PyQt5.QtWidgets import (QApplication, QGraphicsDropShadowEffect, QFileDialog,
                              QMainWindow)
 
 import main_ui
@@ -24,7 +24,7 @@ class DocWindow(QMainWindow):
 
 
 class UIFunctions(DocWindow):
-    assignments = {}
+    docs = {}
 
     @classmethod
     def uiDefinitions(cls, ui):
@@ -37,7 +37,7 @@ class UIFunctions(DocWindow):
         ui.showMaximized()
         ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
         ui.assignments.itemPressed.connect(lambda: cls.load_doc(
-            ui, "D:/Programming/Python/Astraea/bruh.docx"))
+            ui))
         cls.load_assignments(
             ui, open(main_ui.OPENED_LESSON_PATH).read().rstrip())
 
@@ -49,29 +49,43 @@ class UIFunctions(DocWindow):
     @classmethod
     def load_assignments(cls, ui, filename):
         ui.assignments.clear()
-        cls.assignments.clear()
+        cls.docs.clear()
         if os.path.exists(filename):
             if os.path.getsize(filename) > 0:
                 with open(filename, "rb") as f:
                     unpickler = pickle.Unpickler(f)
                     data = unpickler.load()
-                    title = data[0]
-                    assignments = data[1]
-                    for assignment in assignments:
-                        cls.assignments[assignment.name] = assignment.details
-                        ui.assignments.addItem(assignment.name)
+                    for i in range(1, len(cls.docs) + 1):
+                        ui.assignments.addItem(str(i))
 
     @classmethod
-    def load_doc(cls, ui, filename):
-        html_file = f"{os.path.join(os.path.abspath(HTML_CONVERT_PATH), os.path.splitext(os.path.basename(filename))[0])}.html"
-        
+    def load_doc(cls, ui):
+        with open(HTML_CONVERT_PATH, 'w') as f:
+            f.write(cls.docs[1])            
+        ui.text_entry.setSource(QtCore.QUrl.fromLocalFile(HTML_CONVERT_PATH))
+
+    @classmethod
+    def convert_doc_to_html(cls, filename):
+        html_file = f"{os.path.splitext(filename)[0]}.html"
+
         word = wc.Dispatch('Word.Application') 
         doc = word.Documents.Open(filename)
         doc.SaveAs(html_file, 8) 
         doc.Close() 
         word.Quit()
 
-        ui.text_entry.setSource(QtCore.QUrl.fromLocalFile(html_file))
+        return html_file
+
+    @classmethod
+    def show_file_dialog(cls, ui, filename):
+        HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
+        file_path = QFileDialog.getOpenFileName(ui, "Open file", HOME_PATH, "*.docx")[0]
+        if file_path:
+            with open(filename, "w") as f:
+                f.write(file_path)
+            cls.load_assignments(ui, file_path)
+    # class TeacherUiFunctions:
+        
 
 
 if __name__ == "__main__":

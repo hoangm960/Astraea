@@ -22,7 +22,7 @@ from UI_Files import Resources
 
 UI_MAIN_PATH = "./UI_Files/ui_main.ui"
 OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
-SCREEN_WIDTH, SCREEN_HEIGHT = pyautogui.size()
+SCREEN_WIDTH, SCREEN_HEIGHT = pyautogui.size() + 7
 
 class MainWindow(QMainWindow):
     def __init__(self, role):
@@ -65,13 +65,6 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def open_vscode(cls, ui):
-        # os.system("C:/Users/Admin/AppData/Local/Programs/Python/Python39/Lib/idlelib/idle.pyw")
-        # windows = gw.getAllWindows()
-        # sleep(2)
-        # for window in windows:
-        #     if "Notepad++" in window.title:
-        #         cls.pg = window
-        #         break
         def get_hwnds_for_pid (pid):
             def callback (hwnd, hwnds):
                 if win32gui.IsWindowVisible (hwnd) and win32gui.IsWindowEnabled (hwnd):

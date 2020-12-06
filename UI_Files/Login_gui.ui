@@ -2418,19 +2418,19 @@ color: rgb(207,207,207);
   <tabstop>SavePass</tabstop>
   <tabstop>SignIn_Bt</tabstop>
   <tabstop>ConvertButton</tabstop>
-  <tabstop>Note_Name</tabstop>
   <tabstop>NameBox</tabstop>
-  <tabstop>Note_Pass</tabstop>
+  <tabstop>PassBox</tabstop>
   <tabstop>eyeHide</tabstop>
   <tabstop>eyeShow</tabstop>
-  <tabstop>PassBox</tabstop>
-  <tabstop>Note_User</tabstop>
   <tabstop>UserBox</tabstop>
   <tabstop>teacher</tabstop>
   <tabstop>student</tabstop>
   <tabstop>SignUp_Bt</tabstop>
   <tabstop>ConvertButton_SU</tabstop>
   <tabstop>ConvertButton_4</tabstop>
+  <tabstop>Note_Pass</tabstop>
+  <tabstop>Note_User</tabstop>
+  <tabstop>Note_Name</tabstop>
  </tabstops>
  <resources>
   <include location="Resources.qrc"/>

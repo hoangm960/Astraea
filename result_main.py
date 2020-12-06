@@ -245,7 +245,7 @@ class UIFunctions(ResultWindow):
                 current_layout = QVBoxLayout()
                 current_layout.setContentsMargins(9, 9, 9, 9)
                 self.content_widget.setLayout(current_layout)
-
+    
             self.frame = cls.ResultFrame()
             self.content_widget.layout().addWidget(self.frame)
             self.frame.correct_num.setText(

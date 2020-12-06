@@ -212,7 +212,7 @@ class UIFunctions(EditWindow):
             file_path = QFileDialog.getSaveFileName(
                 ui, "Open file", HOME_PATH, "*.list"
             )[0]
-            with open(filename, "w") as f:
+            with open(filename, "w", encoding = 'utf8') as f:
                 f.write(file_path)
         cls.load_assignments(ui, file_path)
 
@@ -222,19 +222,25 @@ class UIFunctions(EditWindow):
             uic.loadUi(EDIT_FRAME_PATH, self)
 
             self.ex_file_btn.clicked.connect(
-                lambda: self.show_file_dialog(self.ex_file_entry)
+                lambda: self.show_file_dialog_Py(self.ex_file_entry)
             )
             self.test_file_btn.clicked.connect(
-                lambda: self.show_file_dialog(self.test_file_entry)
+                lambda: self.show_file_dialog_Txt(self.test_file_entry)
             )
 
-        def show_file_dialog(self, entry):
+        def show_file_dialog_Txt(self, entry):
             HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
-            file_name = QFileDialog.getOpenFileName(self, "Open file", HOME_PATH)
+            file_name = QFileDialog.getOpenFileName(self, "Open file", HOME_PATH, "*.txt")
 
             if file_name[0]:
                 entry.setText(file_name[0])
+        
+        def show_file_dialog_Py(self, entry):
+            HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
+            file_name = QFileDialog.getOpenFileName(self, "Open file", HOME_PATH, "*.py")
 
+            if file_name[0]:
+                entry.setText(file_name[0])
     @classmethod
     def change_lesson_title(cls, ui, title):
         ui.lesson_title.setText(title if title else "Bài học không tên")

@@ -2,6 +2,9 @@ import os
 import pickle
 import subprocess
 import sys
+import win32gui
+import win32process
+import win32con
 from time import sleep
 
 import pyautogui
@@ -62,20 +65,37 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def open_vscode(cls, ui):
-        os.system("code -n")
-        windows = gw.getAllWindows()
-        for window in windows:
-            if "Visual Studio Code" in window.title:
-                cls.pg = window
-                break
-        cls.pg.restore()
-        cls.pg.moveTo(0, 0)
-        cls.pg.resizeTo(round((SCREEN_WIDTH - ui.width())), ui.height())
+        # os.system("C:/Users/Admin/AppData/Local/Programs/Python/Python39/Lib/idlelib/idle.pyw")
+        # windows = gw.getAllWindows()
+        # sleep(2)
+        # for window in windows:
+        #     if "Notepad++" in window.title:
+        #         cls.pg = window
+        #         break
+        def get_hwnds_for_pid (pid):
+            def callback (hwnd, hwnds):
+                if win32gui.IsWindowVisible (hwnd) and win32gui.IsWindowEnabled (hwnd):
+                    _, found_pid = win32process.GetWindowThreadProcessId (hwnd)
+                    if found_pid == pid:
+                        hwnds.append (hwnd)
+                return True
+                
+            hwnds = []
+            win32gui.EnumWindows (callback, hwnds)
+            return hwnds
+
+        idle = subprocess.Popen ("pythonw C:/Users/Admin/AppData/Local/Programs/Python/Python39/Lib/idlelib/idle.pyw")
+        sleep (2.0)
+        
+        for hwnd in get_hwnds_for_pid (idle.pid):
+            cls.pg = hwnd
+
+        win32gui.MoveWindow(cls.pg, -8, 0, SCREEN_WIDTH - ui.width() + 16, ui.height() + 8, True)
 
     @classmethod
     def close_pg(cls, ui):
         try:
-            cls.pg.close()
+            win32gui.SendMessage(cls.pg, win32con.WM_CLOSE, 0, 0)
         except:
             pass
         ui.close()

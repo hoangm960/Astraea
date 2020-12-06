@@ -1,3 +1,4 @@
+from Main import SCREEN_HEIGHT, SCREEN_WIDTH
 import os
 import pickle
 import sys
@@ -14,7 +15,6 @@ from PyQt5.QtWidgets import (QApplication, QGraphicsDropShadowEffect,
 import main_ui
 from encryption import *
 
-SCREEN_WIDTH, SCREEN_HEIGHT = pyautogui.size()
 FILE = ""
 
 

@@ -1,3 +1,4 @@
+from Main import SCREEN_HEIGHT, SCREEN_WIDTH
 import os
 import pickle
 import sys
@@ -19,7 +20,6 @@ RESULT_FORM_PATH = "./UI_Files/result_form.ui"
 RESULT_FRAME_PATH = "./UI_Files/result_frame.ui"
 TEST_FRAME_PATH = "./UI_Files/Test_frame.ui"
 OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
-SCREEN_WIDTH, SCREEN_HEIGHT = pyautogui.size()
 
 
 class ResultWindow(QMainWindow):

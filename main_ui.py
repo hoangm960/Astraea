@@ -1,3 +1,4 @@
+from Main import SCREEN_HEIGHT, SCREEN_WIDTH
 import os
 import pickle
 import subprocess
@@ -22,7 +23,7 @@ from UI_Files import Resources
 
 UI_MAIN_PATH = "./UI_Files/ui_main.ui"
 OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
-SCREEN_WIDTH, SCREEN_HEIGHT = pyautogui.size() + 7
+
 
 class MainWindow(QMainWindow):
     def __init__(self, role):
@@ -31,12 +32,15 @@ class MainWindow(QMainWindow):
         self.role = role
         UIFunctions.uiDefinitions(self)
 
+
 class UIFunctions(MainWindow):
     assignments = {}
     pg = None
-   
+
     @classmethod
     def uiDefinitions(cls, ui):
+        ui.setGeometry(SCREEN_WIDTH, SCREEN_HEIGHT, ui.width(), SCREEN_HEIGHT)
+
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 
@@ -52,8 +56,7 @@ class UIFunctions(MainWindow):
         ui.load_btn.clicked.connect(
             lambda: cls.show_file_dialog(ui, OPENED_LESSON_PATH)
         )
-        
-        
+
         ui.LessonButton.clicked.connect(lambda: cls.open_doc(ui))
 
         ui.list_assignments.itemPressed.connect(lambda: cls.load_details(ui))
@@ -65,25 +68,27 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def open_vscode(cls, ui):
-        def get_hwnds_for_pid (pid):
-            def callback (hwnd, hwnds):
-                if win32gui.IsWindowVisible (hwnd) and win32gui.IsWindowEnabled (hwnd):
-                    _, found_pid = win32process.GetWindowThreadProcessId (hwnd)
+        def get_hwnds_for_pid(pid):
+            def callback(hwnd, hwnds):
+                if win32gui.IsWindowVisible(hwnd) and win32gui.IsWindowEnabled(hwnd):
+                    _, found_pid = win32process.GetWindowThreadProcessId(hwnd)
                     if found_pid == pid:
-                        hwnds.append (hwnd)
+                        hwnds.append(hwnd)
                 return True
-                
+
             hwnds = []
-            win32gui.EnumWindows (callback, hwnds)
+            win32gui.EnumWindows(callback, hwnds)
             return hwnds
 
-        idle = subprocess.Popen ("pythonw C:/Users/Admin/AppData/Local/Programs/Python/Python39/Lib/idlelib/idle.pyw")
-        sleep (2.0)
-        
-        for hwnd in get_hwnds_for_pid (idle.pid):
+        idle = subprocess.Popen(
+            "pythonw C:/Users/Admin/AppData/Local/Programs/Python/Python39/Lib/idlelib/idle.pyw")
+        sleep(2.0)
+
+        for hwnd in get_hwnds_for_pid(idle.pid):
             cls.pg = hwnd
 
-        win32gui.MoveWindow(cls.pg, -8, 0, SCREEN_WIDTH - ui.width() + 16, ui.height() + 8, True)
+        win32gui.MoveWindow(cls.pg, -8, 0, SCREEN_WIDTH -
+                            ui.width() + 16, ui.height() + 8, True)
 
     @classmethod
     def close_pg(cls, ui):
@@ -103,8 +108,10 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def show_file_dialog(cls, ui, filename):
-        HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
-        file_path = QFileDialog.getOpenFileName(ui, "Open file", HOME_PATH, "*.list")[0]
+        HOME_PATH = os.path.join(os.path.join(
+            os.environ["USERPROFILE"]), "Desktop")
+        file_path = QFileDialog.getOpenFileName(
+            ui, "Open file", HOME_PATH, "*.list")[0]
         if file_path:
             with open(filename, "w") as f:
                 f.write(file_path)
@@ -134,7 +141,8 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def change_assignment_title(cls, ui, title):
-        ui.lesson_title.setText(title) if title else ui.lesson_title.setParent(None)
+        ui.lesson_title.setText(
+            title) if title else ui.lesson_title.setParent(None)
 
     @classmethod
     def open_doc(cls, ui):
@@ -146,7 +154,6 @@ class UIFunctions(MainWindow):
         parent = None
         changed = False
 
-        @classmethod
         def __init__(cls, parent, ui):
             cls.parent = parent
 
@@ -199,7 +206,6 @@ class UIFunctions(MainWindow):
             window.show()
             cls.parent.close_pg(ui)
 
-
     @classmethod
     def define_role(cls, ui):
         if ui.role.lower() == "teacher":
@@ -210,7 +216,8 @@ class UIFunctions(MainWindow):
 
 def main(role):
     window = MainWindow(role)
-    window.move(QApplication.primaryScreen().size().width() - window.width(), 0)
+    window.move(QApplication.primaryScreen(
+    ).size().width() - window.width(), 0)
     window.show()
 
 

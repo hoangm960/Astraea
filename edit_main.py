@@ -19,11 +19,9 @@ KEY_PATH = "data/Lesson/assignments.key"
 EDIT_FORM_PATH = "UI_Files/edit_form.ui"
 EDIT_FRAME_PATH = "UI_Files/edit_frame.ui"
 OPENED_ASSIGNMENT_PATH = "data/Users/opened_assignment.oa"
-OPENED_LESSON_PATH = "data/Users/opened_Lesson.oa"
 if not os.path.exists(OPENED_ASSIGNMENT_PATH):
     open(OPENED_ASSIGNMENT_PATH, "w").close()
-if not os.path.exists(OPENED_LESSON_PATH):
-    open(OPENED_LESSON_PATH, 'w').close()
+
 
 
 class Assignment:

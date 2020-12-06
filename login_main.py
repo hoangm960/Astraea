@@ -12,7 +12,7 @@ from PyQt5.QtGui import QColor, QPalette
 from PyQt5.QtWidgets import (QApplication, QGraphicsDropShadowEffect,
                              QMainWindow, QSizeGrip, QWidget)
 
-import main_ui
+import main_ui  
 from encryption import *
 
 FILE = ""

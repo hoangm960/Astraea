@@ -21,4 +21,5 @@ Path(USER_PATH).mkdir(parents=True, exist_ok=True)
 Path(ENCRYPTION_PATH).mkdir(parents=True, exist_ok=True)
 # login_main.main(args.file)
 
-login_main.main()
+if __name__ == "__main__":
+    login_main.main()

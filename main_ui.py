@@ -1,4 +1,4 @@
-from Main import SCREEN_HEIGHT, SCREEN_WIDTH
+import Main
 import os
 import pickle
 import subprocess
@@ -39,7 +39,7 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def uiDefinitions(cls, ui):
-        ui.setGeometry(SCREEN_WIDTH, SCREEN_HEIGHT, ui.width(), SCREEN_HEIGHT)
+        ui.setGeometry(Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT, ui.width(), Main.SCREEN_HEIGHT)
 
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
@@ -87,7 +87,7 @@ class UIFunctions(MainWindow):
         for hwnd in get_hwnds_for_pid(idle.pid):
             cls.pg = hwnd
 
-        win32gui.MoveWindow(cls.pg, -8, 0, SCREEN_WIDTH -
+        win32gui.MoveWindow(cls.pg, -8, 0, Main.SCREEN_WIDTH -
                             ui.width() + 16, ui.height() + 8, True)
 
     @classmethod

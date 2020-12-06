@@ -1,4 +1,4 @@
-from Main import SCREEN_HEIGHT, SCREEN_WIDTH
+import Main
 import os
 import pickle
 import sys
@@ -73,8 +73,8 @@ class LoginFunctions(LoginWindow):
         self.Note_Pass.hide()
         self.Note_User.hide()
         self.setGeometry(
-            round((SCREEN_WIDTH - self.width()) / 2),
-            round((SCREEN_HEIGHT - self.height()) / 2),
+            round((Main.SCREEN_WIDTH - self.width()) / 2),
+            round((Main.SCREEN_HEIGHT - self.height()) / 2),
             self.width(),
             self.height()
         )
@@ -290,8 +290,8 @@ class Loading_Screen(QMainWindow):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi("UI_files/Loading_Screen.ui", self)
         self.move(
-            round((SCREEN_WIDTH - self.width()) / 2),
-            round((SCREEN_HEIGHT - self.height()) / 2),
+            round((Main.SCREEN_WIDTH - self.width()) / 2),
+            round((Main.SCREEN_HEIGHT - self.height()) / 2),
         )
 
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
@@ -311,8 +311,8 @@ class Loading_Screen(QMainWindow):
             self.timer.stop()
             self.main = LoginWindow()
             self.main.setGeometry(
-                round((SCREEN_WIDTH - self.main.width()) / 2),
-                round((SCREEN_HEIGHT - self.main.height()) / 5),
+                round((Main.SCREEN_WIDTH - self.main.width()) / 2),
+                round((Main.SCREEN_HEIGHT - self.main.height()) / 5),
                 self.main.width(),
                 self.main.height(),
             )

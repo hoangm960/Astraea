@@ -1,4 +1,4 @@
-from Main import SCREEN_HEIGHT, SCREEN_WIDTH
+import Main
 import os
 import pickle
 import sys
@@ -27,8 +27,8 @@ class ResultWindow(QMainWindow):
         QMainWindow.__init__(self, *args, **kwargs)
         uic.loadUi(RESULT_FORM_PATH, self)
         self.setGeometry(
-            round((SCREEN_WIDTH - self.width()) / 3),
-            round((SCREEN_HEIGHT - self.height()) / 2),
+            round((Main.SCREEN_WIDTH - self.width()) / 3),
+            round((Main.SCREEN_HEIGHT - self.height()) / 2),
             self.width(),
             self.height(),
         )

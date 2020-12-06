@@ -93,7 +93,7 @@ class UIFunctions(MainWindow):
         HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
         file_path = QFileDialog.getOpenFileName(ui, "Open file", HOME_PATH, "*.list")[0]
         if file_path:
-            with open(filename, "w") as f:
+            with open(filename, "w",encoding = 'utf8') as f:
                 f.write(file_path)
             cls.load_assignments(ui, file_path)
 

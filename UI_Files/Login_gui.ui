@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1016</width>
-    <height>678</height>
+    <width>1280</width>
+    <height>675</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1280</width>
+    <height>675</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -18,6 +24,12 @@
 background : transparent;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="minimumSize">
+    <size>
+     <width>1280</width>
+     <height>675</height>
+    </size>
+   </property>
    <layout class="QVBoxLayout" name="verticalLayout_8">
     <property name="spacing">
      <number>0</number>
@@ -36,6 +48,12 @@ background : transparent;</string>
     </property>
     <item>
      <widget class="QFrame" name="bg_frame">
+      <property name="minimumSize">
+       <size>
+        <width>1280</width>
+        <height>675</height>
+       </size>
+      </property>
       <property name="layoutDirection">
        <enum>Qt::RightToLeft</enum>
       </property>
@@ -161,6 +179,12 @@ background : transparent;</string>
 }
 QPushButton:hover {
 	background-color: rgba(255, 0, 0, 150);
+}
+QToolTip {
+color: rgb(0,0,0);
+background-color: rgb(255,255,255);
+min-width: 45px;
+min-height: 20px;
 }</string>
                </property>
                <property name="text">
@@ -195,6 +219,12 @@ QPushButton:hover {
 QPushButton:hover {
 	background-color: rgba(85, 255, 127, 150);
 	background-color: rgba(255, 255, 255, 150);
+}
+QToolTip {
+color: rgb(0,0,0);
+background-color: rgb(255,255,255);
+min-width: 60px;
+min-height: 20px;
 }</string>
                </property>
                <property name="text">
@@ -229,6 +259,12 @@ QPushButton:hover {
 QPushButton:hover {
 	background-color: rgba(255, 170, 0, 150);
 	background-color: rgba(199, 199, 199, 150);
+}
+QToolTip {
+color: rgb(0,0,0);
+background-color: rgb(255,255,255);
+min-width: 60px;
+min-height: 20px;
 }</string>
                </property>
                <property name="text">
@@ -264,8 +300,8 @@ font:bold;</string>
          </property>
          <property name="minimumSize">
           <size>
-           <width>998</width>
-           <height>620</height>
+           <width>1280</width>
+           <height>645</height>
           </size>
          </property>
          <property name="contextMenuPolicy">
@@ -424,7 +460,7 @@ border-radius: 9px;</string>
              <x>0</x>
              <y>0</y>
              <width>380</width>
-             <height>500</height>
+             <height>507</height>
             </rect>
            </property>
            <property name="minimumSize">
@@ -679,35 +715,6 @@ border-bottom: 1px solid rgb(207, 207, 207);
                    <property name="spacing">
                     <number>0</number>
                    </property>
-                   <item row="0" column="0">
-                    <widget class="QLabel" name="PassLabel">
-                     <property name="minimumSize">
-                      <size>
-                       <width>305</width>
-                       <height>30</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>305</width>
-                       <height>30</height>
-                      </size>
-                     </property>
-                     <property name="font">
-                      <font>
-                       <family>Segoe UI</family>
-                       <pointsize>14</pointsize>
-                      </font>
-                     </property>
-                     <property name="styleSheet">
-                      <string notr="true">color: rgb(255, 255, 255);
-background: transparent;</string>
-                     </property>
-                     <property name="text">
-                      <string>Mật khẩu:</string>
-                     </property>
-                    </widget>
-                   </item>
                    <item row="1" column="0">
                     <widget class="QFrame" name="PassFrame">
                      <property name="minimumSize">
@@ -887,6 +894,35 @@ border-bottom: 1px solid rgb(236, 236, 236);
                      </layout>
                     </widget>
                    </item>
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="PassLabel">
+                     <property name="minimumSize">
+                      <size>
+                       <width>305</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>305</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Segoe UI</family>
+                       <pointsize>14</pointsize>
+                      </font>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">color: rgb(255, 255, 255);
+background: transparent;</string>
+                     </property>
+                     <property name="text">
+                      <string>Mật khẩu:</string>
+                     </property>
+                    </widget>
+                   </item>
                   </layout>
                  </widget>
                 </item>
@@ -977,6 +1013,9 @@ background: transparent;
                  <height>40</height>
                 </size>
                </property>
+               <property name="styleSheet">
+                <string notr="true">background: transparent;</string>
+               </property>
                <property name="frameShape">
                 <enum>QFrame::StyledPanel</enum>
                </property>
@@ -1011,7 +1050,7 @@ background: transparent;
                   </property>
                   <property name="styleSheet">
                    <string notr="true">QLabel {
-background: none;
+background: transparent;
 color: rgb(255, 255, 255);
 }</string>
                   </property>
@@ -1278,14 +1317,17 @@ color: rgb(255, 255, 255);</string>
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QFrame" name="frame_10">
-                        <property name="frameShape">
-                         <enum>QFrame::StyledPanel</enum>
+                       <spacer name="horizontalSpacer">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
                         </property>
-                        <property name="frameShadow">
-                         <enum>QFrame::Raised</enum>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>40</width>
+                          <height>20</height>
+                         </size>
                         </property>
-                       </widget>
+                       </spacer>
                       </item>
                       <item>
                        <widget class="QPushButton" name="Note_Name">
@@ -1345,7 +1387,7 @@ min-height: 20px;
                         </property>
                         <property name="minimumSize">
                          <size>
-                          <width>120</width>
+                          <width>110</width>
                           <height>30</height>
                          </size>
                         </property>
@@ -1531,20 +1573,17 @@ border-bottom: 1px solid rgb(207, 207, 207);
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QFrame" name="frame_11">
-                        <property name="minimumSize">
+                       <spacer name="horizontalSpacer_2">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
                          <size>
-                          <width>100</width>
-                          <height>0</height>
+                          <width>40</width>
+                          <height>20</height>
                          </size>
                         </property>
-                        <property name="frameShape">
-                         <enum>QFrame::StyledPanel</enum>
-                        </property>
-                        <property name="frameShadow">
-                         <enum>QFrame::Raised</enum>
-                        </property>
-                       </widget>
+                       </spacer>
                       </item>
                       <item>
                        <widget class="QPushButton" name="Note_Pass">
@@ -1860,14 +1899,17 @@ border-bottom: 1px solid rgb(236, 236, 236);
                     <number>0</number>
                    </property>
                    <item>
-                    <widget class="QFrame" name="frame_12">
-                     <property name="frameShape">
-                      <enum>QFrame::StyledPanel</enum>
+                    <spacer name="horizontalSpacer_3">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
                      </property>
-                     <property name="frameShadow">
-                      <enum>QFrame::Raised</enum>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
                      </property>
-                    </widget>
+                    </spacer>
                    </item>
                    <item>
                     <widget class="QPushButton" name="Note_User">
@@ -2363,8 +2405,164 @@ color: rgb(207,207,207);
    </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>btn_quit</tabstop>
+  <tabstop>btn_maximize</tabstop>
+  <tabstop>btn_minimize</tabstop>
+  <tabstop>Accept</tabstop>
+  <tabstop>Deny</tabstop>
+  <tabstop>NameBox_SI</tabstop>
+  <tabstop>PassBox_SI</tabstop>
+  <tabstop>eyeHide_SI</tabstop>
+  <tabstop>eyeShow_SI</tabstop>
+  <tabstop>SavePass</tabstop>
+  <tabstop>SignIn_Bt</tabstop>
+  <tabstop>ConvertButton</tabstop>
+  <tabstop>Note_Name</tabstop>
+  <tabstop>NameBox</tabstop>
+  <tabstop>Note_Pass</tabstop>
+  <tabstop>eyeHide</tabstop>
+  <tabstop>eyeShow</tabstop>
+  <tabstop>PassBox</tabstop>
+  <tabstop>Note_User</tabstop>
+  <tabstop>UserBox</tabstop>
+  <tabstop>teacher</tabstop>
+  <tabstop>student</tabstop>
+  <tabstop>SignUp_Bt</tabstop>
+  <tabstop>ConvertButton_SU</tabstop>
+  <tabstop>ConvertButton_4</tabstop>
+ </tabstops>
  <resources>
   <include location="Resources.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>eyeShow_SI</sender>
+   <signal>clicked()</signal>
+   <receiver>eyeHide_SI</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>385</x>
+     <y>343</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>395</x>
+     <y>335</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eyeHide_SI</sender>
+   <signal>clicked()</signal>
+   <receiver>eyeShow_SI</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>401</x>
+     <y>336</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>387</x>
+     <y>342</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eyeHide_SI</sender>
+   <signal>clicked()</signal>
+   <receiver>eyeHide_SI</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>401</x>
+     <y>321</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>403</x>
+     <y>323</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eyeShow_SI</sender>
+   <signal>clicked()</signal>
+   <receiver>eyeShow_SI</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>384</x>
+     <y>343</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>383</x>
+     <y>338</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eyeHide</sender>
+   <signal>clicked()</signal>
+   <receiver>eyeShow</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>389</x>
+     <y>304</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>376</x>
+     <y>308</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eyeShow</sender>
+   <signal>clicked()</signal>
+   <receiver>eyeHide</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>373</x>
+     <y>313</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>394</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eyeHide</sender>
+   <signal>clicked()</signal>
+   <receiver>eyeHide</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>386</x>
+     <y>294</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>388</x>
+     <y>300</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eyeShow</sender>
+   <signal>clicked()</signal>
+   <receiver>eyeShow</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>381</x>
+     <y>316</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>376</x>
+     <y>308</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

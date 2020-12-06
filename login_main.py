@@ -35,7 +35,7 @@ class LoginWindow(QMainWindow):
         uic.loadUi(self.UI_PATH, self)
         LoginFunctions.uiDefinitions(self)
 
-        self.OkCancelFrame.move(290, 220)
+        self.OkCancelFrame.move(440, 247)
 
         def moveWindow(event):
             if LoginFunctions.returnStatus() == True:
@@ -44,6 +44,7 @@ class LoginWindow(QMainWindow):
                 self.move(self.pos() + event.globalPos() - self.dragPos)
                 self.dragPos = event.globalPos()
                 event.accept()
+                
 
         self.title_bar.mouseMoveEvent = moveWindow
 
@@ -110,6 +111,7 @@ class LoginFunctions(LoginWindow):
         self.btn_maximize.clicked.connect(lambda: cls.move_TaskClose(self))
         self.btn_quit.clicked.connect(lambda: self.OkCancelFrame.show())
         self.Accept.clicked.connect(lambda: self.close())
+        self.Deny.clicked.connect(lambda: self.OkCancelFrame.hide())
         self.eyeHide_SI.clicked.connect(
             lambda: self.PassBox_SI.setEchoMode(QtWidgets.QLineEdit.Password)
         )
@@ -186,10 +188,6 @@ class LoginFunctions(LoginWindow):
                     }"""
             )
 
-    @classmethod
-    def Error(cls, self, text):
-        self.frameError.show()
-        self.Error_Content.setText(text)
 
     @classmethod
     def load_users(cls):
@@ -206,14 +204,17 @@ class LoginFunctions(LoginWindow):
     def check_SI(cls, self):
         name = self.NameBox_SI.text()[:31]
         password = self.PassBox_SI.text()[:22]
-        for user in cls.users:
-            if name == "" or password == "":
-                cls.Error(self, "Chưa điền đầy đủ thông tin đăng nhập")
-            elif name not in user.name:
-                cls.Error(self, "Tên tài khoản không tồn tại. Hãy nhập lại.")
-            elif password != user.password:
-                cls.Error(self, "Mật khẩu không chính xác. Hãy nhập lại.")
-            else:
+        if len(password)*len(name) == 0:
+            self.frameError.show()
+            self.Error_Content.setText("Chưa điền đầy đủ thông tin đăng nhập")
+        elif not [True for user in cls.users if user.name == name]:
+            self.frameError.show()
+            self.Error_Content.setText("Tên tài khoản không tồn tại. Hãy nhập lại.")            
+        elif not [True for user in cls.users if user.name == name and user.password == password]:
+            self.frameError.show()
+            self.Error_Content.setText("Mật khẩu không chính xác. Hãy nhập lại.")
+        else:
+            for user in cls.users:
                 for i in range(len(cls.users)):
                     cls.users[i].auto_saved = False
                 if self.SavePass.isChecked():
@@ -228,7 +229,7 @@ class LoginFunctions(LoginWindow):
                 self.close()
                 main_ui.main(user.role)
                 break
-            QtCore.QTimer.singleShot(3000, lambda: self.frameError.hide())
+        QtCore.QTimer.singleShot(3000, lambda: self.frameError.hide())
 
     @classmethod
     def check_SU(cls, self):

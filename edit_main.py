@@ -2,6 +2,7 @@ import os
 import pickle
 import sys
 from pathlib import Path
+from shutil import rmtree
 
 from PyQt5 import QtCore, uic
 from PyQt5.QtCore import QRect, QSize, Qt
@@ -10,20 +11,18 @@ from PyQt5.QtWidgets import (QApplication, QFileDialog,
                              QGraphicsDropShadowEffect, QLayout,
                              QListWidgetItem, QMainWindow, QMessageBox,
                              QSizeGrip, QVBoxLayout, QWidget)
+from win32com import client as wc
 
 import main_ui
 from encryption import *
-from UI_Files import Resources
 
 KEY_PATH = "data/Lesson/assignments.key"
 EDIT_FORM_PATH = "UI_Files/edit_form.ui"
 EDIT_FRAME_PATH = "UI_Files/edit_frame.ui"
 OPENED_ASSIGNMENT_PATH = "data/Users/opened_assignment.oa"
-OPENED_LESSON_PATH = "data/Users/opened_Lesson.oa"
+HTML_CONVERT_PATH = "./data/html_convert"
 if not os.path.exists(OPENED_ASSIGNMENT_PATH):
     open(OPENED_ASSIGNMENT_PATH, "w").close()
-if not os.path.exists(OPENED_LESSON_PATH):
-    open(OPENED_LESSON_PATH, 'w').close()
 
 
 class Assignment:
@@ -31,12 +30,6 @@ class Assignment:
         def __init__(self, inputs, outputs):
             self.inputs = inputs
             self.outputs = outputs
-
-    class Document:
-        def __init__(self, filename):
-            self.filename = filename
-
-        
 
     def __init__(self, name, ex_file, test_file, details, mark):
         self.name = name
@@ -87,6 +80,7 @@ class UIFunctions(EditWindow):
     GLOBAL_STATE = False
     ASSIGNMENTS = []
     deleted = False
+    doc_files = []
 
     @classmethod
     def uiDefinitions(cls, ui):
@@ -117,21 +111,29 @@ class UIFunctions(EditWindow):
         )
         ui.sizegrip.setToolTip("Resize Window")
 
-        # Change scene
         def showDialog(self, entry):
             HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
-            file_name = QFileDialog.getOpenFileName(
+            file_name = QFileDialog.getOpenFileNames(
                 self, "Open file", HOME_PATH, "*.docx"
             )
 
             if file_name[0]:
-                entry.setText(file_name[0])
+                files_entry = ''
+                for file in file_name[0][:-1]:
+                    files_entry += f'"{file}"; ' 
+                files_entry += f'"{file_name[0][-1]}"'
+                cls.doc_files = files_entry.split(';')
+                for i in range(len(cls.doc_files)):
+                    cls.doc_files[i] = cls.doc_files[i].strip('" ')
+                print(cls.doc_files)
+                entry.setText(files_entry)
+                
         ui.setting_stackedWidget.setCurrentIndex(0)
         ui.Study.setChecked(True)
         ui.SaveDocx.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(0))
         ui.Study.clicked.connect(lambda: ui.setting_stackedWidget.setCurrentIndex(0))
         ui.Exercise.clicked.connect(lambda: ui.setting_stackedWidget.setCurrentIndex(1))
-        ui.load_file.clicked.connect(lambda: showDialog(ui,ui.file_entry))
+        ui.load_file.clicked.connect(lambda: showDialog(ui, ui.file_entry))
         ui.confirm_button.clicked.connect(lambda: cls.go_to_second(ui))
         ui.return_btn.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(0))
         ui.add_btn.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(2))
@@ -298,6 +300,21 @@ class UIFunctions(EditWindow):
         cls.deleted = False if i.text().lower() == "cancel" else True
 
     @classmethod
+    def convert_doc_to_html(cls, filename):
+        html_file = f"{os.path.join(os.path.abspath(HTML_CONVERT_PATH), os.path.splitext(os.path.basename(filename))[0])}.html"
+
+        word = wc.Dispatch('Word.Application') 
+        doc = word.Documents.Open(filename)
+        doc.SaveAs(html_file, 8) 
+        doc.Close() 
+        word.Quit()
+
+        with open(html_file, 'r') as f:
+            html_data = f.read()
+        os.remove(html_file)
+        return html_data
+
+    @classmethod
     def load_assignments(cls, ui, filename):
         children = ui.content_widget.children()
         del children[0]
@@ -316,8 +333,11 @@ class UIFunctions(EditWindow):
                     )
                 )
 
+        html_data = []
+        for doc in cls.doc_files:
+            html_data.append(cls.convert_doc_to_html(doc))
         with open(filename, "wb") as f:
-            pickle.dump([ui.lesson_title.text(), assignments], f, -1)
+            pickle.dump([ui.lesson_title.text(), assignments, html_data], f, -1)
 
         cls.reopen_main(ui)
 

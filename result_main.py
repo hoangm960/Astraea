@@ -14,7 +14,6 @@ from PyQt5.QtWidgets import (QApplication, QFileDialog,
 
 import check_algorithm
 import main_ui
-from UI_Files import Resources
 
 RESULT_FORM_PATH = "./UI_Files/result_form.ui"
 RESULT_FRAME_PATH = "./UI_Files/result_frame.ui"

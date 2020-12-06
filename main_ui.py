@@ -64,10 +64,23 @@ class UIFunctions(MainWindow):
         cls.define_role(ui)
         cls.check_opened_lesson(ui, OPENED_LESSON_PATH)
 
-        cls.open_vscode(ui)
+        cls.open_idle(ui)
+
+    @staticmethod
+    def find_idle():
+        class Error(Exception): pass
+
+        def _find(pathname, matchFunc=os.path.isfile):
+            for dirname in sys.path:
+                candidate = os.path.join(dirname, pathname)
+                if matchFunc(candidate):
+                    return candidate
+            raise Error("Can't find file %s" % pathname)
+
+        return _find("Lib\idlelib\idle.pyw")
 
     @classmethod
-    def open_vscode(cls, ui):
+    def open_idle(cls, ui):
         def get_hwnds_for_pid(pid):
             def callback(hwnd, hwnds):
                 if win32gui.IsWindowVisible(hwnd) and win32gui.IsWindowEnabled(hwnd):
@@ -80,15 +93,14 @@ class UIFunctions(MainWindow):
             win32gui.EnumWindows(callback, hwnds)
             return hwnds
 
-        idle = subprocess.Popen(
-            "pythonw C:/Users/Admin/AppData/Local/Programs/Python/Python39/Lib/idlelib/idle.pyw")
+        idle = subprocess.Popen(["pythonw", cls.find_idle()])
         sleep(2.0)
 
         for hwnd in get_hwnds_for_pid(idle.pid):
             cls.pg = hwnd
 
-        win32gui.MoveWindow(cls.pg, -8, 0, Main.SCREEN_WIDTH -
-                            ui.width() + 16, ui.height() + 8, True)
+        if cls.pg:
+            win32gui.MoveWindow(cls.pg, -8, 0, Main.SCREEN_WIDTH - ui.width() + 16, ui.height() + 8, True)
 
     @classmethod
     def close_pg(cls, ui):
@@ -189,7 +201,6 @@ class UIFunctions(MainWindow):
             cls.parent.close_pg(ui)
 
     class StudentUiFunctions:
-        @classmethod
         def __init__(cls, parent, ui):
             cls.parent = parent
 

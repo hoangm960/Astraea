@@ -15,9 +15,14 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(30, 30, 30);
-border-radius: 10px;
-color: rgb(255, 255, 255);</string>
+    <string notr="true">QWidget{ 
+	background-color: rgb(30, 30, 30);
+	color: rgb(255, 255, 255);
+}
+
+QFrame{
+	border-radius: 10px;
+}</string>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
@@ -87,7 +92,7 @@ background: transparent;</string>
          </layout>
         </widget>
        </item>
-       <item>
+       <item alignment="Qt::AlignRight">
         <widget class="QFrame" name="btn_frame">
          <property name="maximumSize">
           <size>
@@ -105,74 +110,6 @@ background: transparent;</string>
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
-           <widget class="QPushButton" name="btn_minimize">
-            <property name="minimumSize">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>Minimize</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
-	border: none;
-	border-radius: 10px;
-	background-color: rgb(255, 170, 0);
-	background-color: rgb(199, 199, 199);
-}
-QPushButton:hover {
-	background-color: rgba(255, 170, 0, 150);
-	background-color: rgba(199, 199, 199, 150);
-}</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="btn_maximize">
-            <property name="minimumSize">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>Maximize</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
-	border: none;
-	border-radius: 10px;
-	background-color: rgb(85, 255, 127);
-	background-color: rgb(255, 255, 255);
-}
-QPushButton:hover {
-	background-color: rgba(85, 255, 127, 150);
-	background-color: rgba(255, 255, 255, 150);
-}</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
           <item>
            <widget class="QPushButton" name="btn_quit">
             <property name="minimumSize">

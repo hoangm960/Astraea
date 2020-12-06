@@ -14,7 +14,6 @@ from PyQt5.QtWidgets import (QApplication, QFileDialog,
 
 import check_algorithm
 import main_ui
-from UI_Files import Resources
 
 RESULT_FORM_PATH = "./UI_Files/result_form.ui"
 RESULT_FRAME_PATH = "./UI_Files/result_frame.ui"
@@ -237,7 +236,6 @@ class UIFunctions(ResultWindow):
 
             if self.frame.ans_file_entry.text() != "":
                 results = cls.check_result(self.frame, i)
-                print(results)
                 for result in results[:-1]:
                     if result[1]:
                         correct += 1

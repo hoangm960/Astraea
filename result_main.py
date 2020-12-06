@@ -87,13 +87,11 @@ class UIFunctions(ResultWindow):
         self.shadow.setColor(QColor(0, 0, 0, 100))
         self.bg_frame.setGraphicsEffect(self.shadow)
         self.stacked_widget.setCurrentIndex(1)
-        self.Out_btn.clicked.connect(
-            lambda: self.stacked_widget.setCurrentIndex(0))
-        self.Out_btn.clicked.connect(
-            lambda: cls.check_true(self, len(cls.assignments)))
         self.return_btn.clicked.connect(lambda: self.close())
         self.inform.hide()
         # Button function
+        self.OkCancelFrame.hide()
+        self.OkCancelFrame.move(280,234)
         self.btn_maximize.clicked.connect(lambda: cls.maximize_restore(self))
         self.btn_minimize.clicked.connect(lambda: self.showMinimized())
         self.btn_quit.clicked.connect(lambda: self.close())
@@ -193,6 +191,11 @@ class UIFunctions(ResultWindow):
             self.inform.show()
             self.inform.move(340, 220)
         else:
+            self.Out_btn.clicked.connect(lambda: self.OkCancelFrame.show())
+            self.Accept.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(0))
+            self.Accept.clicked.connect(
+            lambda: cls.check_true(self, len(cls.assignments)))
+            self.Deny.clicked.connect(lambda: self.OkCancelFrame.hide())
             cls.put_frame_in_list(self, len(cls.assignments))
 
     @classmethod

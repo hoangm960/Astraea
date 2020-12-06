@@ -87,8 +87,7 @@ class UIFunctions(MainWindow):
         for hwnd in get_hwnds_for_pid(idle.pid):
             cls.pg = hwnd
 
-        win32gui.MoveWindow(cls.pg, -8, 0, Main.SCREEN_WIDTH -
-                            ui.width() + 16, ui.height() + 8, True)
+        win32gui.MoveWindow(cls.pg, -8, 0, Main.SCREEN_WIDTH - ui.width() + 16, ui.height() + 8, True)
 
     @classmethod
     def close_pg(cls, ui):

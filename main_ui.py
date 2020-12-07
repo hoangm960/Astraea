@@ -56,10 +56,12 @@ class UIFunctions(MainWindow):
         ui.load_btn.clicked.connect(
             lambda: cls.show_file_dialog(ui, OPENED_LESSON_PATH)
         )
-
+        ui.main_btn.clicked.connect(lambda: cls.close_pg(ui))
+        ui.LessonButton.clicked.connect(lambda: cls.close_pg(ui))
         ui.LessonButton.clicked.connect(lambda: cls.open_doc(ui))
 
         ui.list_assignments.itemPressed.connect(lambda: cls.load_details(ui))
+        
 
         cls.define_role(ui)
         cls.check_opened_lesson(ui, OPENED_LESSON_PATH)
@@ -160,7 +162,7 @@ class UIFunctions(MainWindow):
     def open_doc(cls, ui):
         ui.main = doc.DocWindow()
         ui.main.show()
-        cls.close_pg(ui)
+        # cls.close_pg(ui)
 
     class TeacherUiFunctions:
         parent = None
@@ -198,7 +200,7 @@ class UIFunctions(MainWindow):
         def open_edit_form(cls, ui):
             window = edit_main.EditWindow()
             window.show()
-            cls.parent.close_pg(ui)
+            # cls.parent.close_pg(ui)
 
     class StudentUiFunctions:
         def __init__(cls, parent, ui):
@@ -215,7 +217,7 @@ class UIFunctions(MainWindow):
         def open_result_form(cls, ui):
             window = result_main.ResultWindow()
             window.show()
-            cls.parent.close_pg(ui)
+            # cls.parent.close_pg(ui)
 
     @classmethod
     def define_role(cls, ui):
@@ -234,6 +236,6 @@ def main(role):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    main("teacher")
-    # main("student")
+    # main("teacher")
+    main("student")
     sys.exit(app.exec_())

@@ -215,20 +215,22 @@ class LoginFunctions(LoginWindow):
             self.Error_Content.setText("Mật khẩu không chính xác. Hãy nhập lại.")
         else:
             for user in cls.users:
-                for i in range(len(cls.users)):
-                    cls.users[i].auto_saved = False
-                if self.SavePass.isChecked():
-                    cls.users[cls.users.index(user)].auto_saved = True
+                if user.name == name:
+                    for i in range(len(cls.users)):
+                        cls.users[i].auto_saved = False
+                    if self.SavePass.isChecked():
+                        cls.users[cls.users.index(user)].auto_saved = True
 
-                decrypt(cls.USER_PATH_ENCRYPTED, cls.USER_PATH, cls.KEY_PATH)
-                time.sleep(1)
-                with open(cls.USER_PATH, "wb") as f:
-                    pickle.dump(cls.users, f)
-                encrypt(cls.USER_PATH, cls.USER_PATH_ENCRYPTED, cls.KEY_PATH)
+                    decrypt(cls.USER_PATH_ENCRYPTED, cls.USER_PATH, cls.KEY_PATH)
+                    time.sleep(1)
+                    with open(cls.USER_PATH, "wb") as f:
+                        pickle.dump(cls.users, f)
+                    encrypt(cls.USER_PATH, cls.USER_PATH_ENCRYPTED, cls.KEY_PATH)
 
-                self.close()
-                main_ui.main(user.role)
-                break
+                    self.close()
+                    print(user.role)
+                    main_ui.main(user.role)
+                    break
         QtCore.QTimer.singleShot(3000, lambda: self.frameError.hide())
 
     @classmethod
@@ -275,7 +277,6 @@ class LoginFunctions(LoginWindow):
                 name = self.NameBox.text()
                 password = self.PassBox.text()
                 role = "teacher" if self.teacher.isChecked() else "student"
-                print(role)
                 cls.users.append(
                     User(name, password, role, name_account, False))
                 pickle.dump(cls.users, f)

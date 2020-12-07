@@ -117,6 +117,7 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def check_opened_lesson(cls, ui, filename):
+        print('Đã check')
         if os.path.exists(filename):
             if os.path.getsize(filename) > 0:
                 with open(filename) as f:
@@ -136,11 +137,14 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def load_assignments(cls, ui, filename):
+        print('Đã load')
         ui.list_assignments.clear()
         cls.assignments.clear()
+        print(cls.assignments)
         if os.path.exists(filename):
             if os.path.getsize(filename) > 0:
                 with open(filename, "rb") as f:
+                    print('Đang pickle')
                     unpickler = pickle.Unpickler(f)
                     data = unpickler.load()
                     title = data[0]

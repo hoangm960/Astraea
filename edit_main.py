@@ -296,7 +296,7 @@ class UIFunctions(EditWindow):
                         children[i].Score_edit.value(),
                     )
                 )
-
+        print(assignments)
         with open(filename, "wb") as f:
             pickle.dump([ui.lesson_title.text(), assignments], f, -1)
 

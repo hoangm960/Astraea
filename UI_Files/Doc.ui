@@ -179,7 +179,7 @@ QPushButton:hover {
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QListWidget" name="assignments">
+        <widget class="QListWidget" name="titles">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -207,8 +207,12 @@ QPushButton:hover {
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 0);</string>
+          <string notr="true">QListWidget {
+	padding: 10px;
+	background-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 0);
+}
+</string>
          </property>
         </widget>
        </item>
@@ -310,6 +314,59 @@ QPushButton:pressed {
          </property>
          <property name="text">
           <string>Lưu</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="add_btn">
+         <property name="minimumSize">
+          <size>
+           <width>80</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Montserrat</family>
+           <pointsize>12</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-color: rgb(255, 255, 255);
+	border-radius: 10px;
+}
+
+QPushButton:hover {
+	background-color: rgba(0, 0, 0, 150);
+	color: rgb(255, 255, 255);
+}
+
+QPushButton:pressed {
+	background-color: rgb(0, 0, 0);
+	color: rgb(255, 255, 255);
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="Resources.qrc">
+           <normaloff>:/images/icons/plus.png</normaloff>:/images/icons/plus.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>50</width>
+           <height>50</height>
+          </size>
          </property>
         </widget>
        </item>

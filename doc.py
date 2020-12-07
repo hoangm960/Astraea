@@ -7,7 +7,7 @@ import pyautogui
 from PyQt5 import QtCore, uic
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (QApplication, QGraphicsDropShadowEffect, QFileDialog,
-                             QMainWindow)
+                             QMainWindow, QLineEdit, QListWidgetItem, QVBoxLayout)
 
 import main_ui
 from win32com import client as wc
@@ -17,9 +17,10 @@ HTML_CONVERT_PATH = "./data/html_convert"
 
 
 class DocWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self, role):
         QMainWindow.__init__(self)
         uic.loadUi(DOC_PATH, self)
+        self.role = role
         UIFunctions.uiDefinitions(self)
 
 
@@ -36,19 +37,18 @@ class UIFunctions(DocWindow):
         )
         ui.showMaximized()
         ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
-        ui.assignments.itemPressed.connect(lambda: cls.load_doc(
-            ui))
         cls.load_assignments(
             ui, open(main_ui.OPENED_LESSON_PATH).read().rstrip())
+        cls.define_role(ui)
 
     @classmethod
     def close_pg(cls, ui):
         ui.close()
-        main_ui.main("student")
+        main_ui.main(ui.role)
 
     @classmethod
     def load_assignments(cls, ui, filename):
-        ui.assignments.clear()
+        ui.titles.clear()
         cls.docs.clear()
         if os.path.exists(filename):
             if os.path.getsize(filename) > 0:
@@ -56,40 +56,63 @@ class UIFunctions(DocWindow):
                     unpickler = pickle.Unpickler(f)
                     data = unpickler.load()
                     for i in range(1, len(cls.docs) + 1):
-                        ui.assignments.addItem(str(i))
+                        ui.titles.addItem(str(i))
 
     @classmethod
     def load_doc(cls, ui):
         with open(HTML_CONVERT_PATH, 'w') as f:
             f.write(cls.docs[1])            
         ui.text_entry.setSource(QtCore.QUrl.fromLocalFile(HTML_CONVERT_PATH))
+    
 
-    @classmethod
-    def convert_doc_to_html(cls, filename):
-        html_file = f"{os.path.splitext(filename)[0]}.html"
-
-        word = wc.Dispatch('Word.Application') 
-        doc = word.Documents.Open(filename)
-        doc.SaveAs(html_file, 8) 
-        doc.Close() 
-        word.Quit()
-
-        return html_file
-
-    @classmethod
-    def show_file_dialog(cls, ui, filename):
-        HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
-        file_path = QFileDialog.getOpenFileName(ui, "Open file", HOME_PATH, "*.docx")[0]
-        if file_path:
-            with open(filename, "w") as f:
-                f.write(file_path)
-            cls.load_assignments(ui, file_path)
-    # class TeacherUiFunctions:
+    class TeacherUiFunctions:
+        def __init__(self, ui):
+            self.connect_btn(ui)
         
+        
+        def show_file_dialog(self, ui):
+            HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
+            file_path = QFileDialog.getOpenFileName(ui, "Open file", HOME_PATH, "*.docx")[0]
+            if file_path:
+                ui.text_entry.setSource(QtCore.QUrl.fromLocalFile(self.convert_doc_to_html(file_path)))
 
+        @staticmethod
+        def convert_doc_to_html(filename):
+            html_file = f"{os.path.splitext(filename)[0]}.html"
+
+            word = wc.Dispatch('Word.Application') 
+            doc = word.Documents.Open(filename)
+            doc.SaveAs(html_file, 8) 
+            doc.Close() 
+            word.Quit()
+
+            return html_file
+
+        def add_titles(self, ui):
+            title = QLineEdit()
+            title_item = QListWidgetItem()
+            ui.titles.insertItem(ui.titles.count(), title_item)
+            ui.titles.setItemWidget(title_item, title)
+
+        def connect_btn(self, ui):
+            ui.add_btn.clicked.connect(lambda: self.add_titles(ui))
+            ui.load_btn.clicked.connect(lambda: self.show_file_dialog(ui))
+            ui.titles.itemPressed.connect(lambda: self.load_doc(ui))
+
+    class StudentUiFunctions:
+        def __init__(self, ui):
+            ui.confirm_frame.close()
+
+    @classmethod
+    def define_role(cls, ui):
+        if ui.role.lower() == "teacher":
+            cls.TeacherUiFunctions(ui)
+        if ui.role.lower() == "student":
+            cls.StudentUiFunctions(ui)
+        
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = DocWindow()
+    window = DocWindow("teacher")
     window.show()
     sys.exit(app.exec_())

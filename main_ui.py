@@ -1,23 +1,24 @@
-import Main
 import os
 import pickle
 import subprocess
 import sys
-import win32gui
-import win32process
-import win32con
 from time import sleep
 
 import pyautogui
 import pygetwindow as gw
+import win32con
+import win32gui
+import win32process
 from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (QApplication, QDialogButtonBox, QFileDialog,
                              QGraphicsDropShadowEffect, QMainWindow,
                              QMessageBox, QPushButton, QSizeGrip, QWidget)
+
 import doc
 import edit_main
+import Main
 import result_main
 from UI_Files import Resources
 
@@ -96,13 +97,15 @@ class UIFunctions(MainWindow):
             return hwnds
 
         idle = subprocess.Popen(["pythonw", cls.find_idle()])
-        sleep(2.0)
+
+        sleep(2)
 
         for hwnd in get_hwnds_for_pid(idle.pid):
             cls.pg = hwnd
 
         if cls.pg:
             win32gui.MoveWindow(cls.pg, -8, 0, Main.SCREEN_WIDTH - ui.width() + 16, ui.height() + 8, True)
+            win32gui.SetActiveWindow(cls.pg)
 
     @classmethod
     def close_pg(cls, ui):
@@ -118,7 +121,7 @@ class UIFunctions(MainWindow):
         if os.path.exists(filename):
             if os.path.getsize(filename) > 0:
                 with open(filename) as f:
-                    file_path = f.read().rstrip()
+                    file_path = f.read().rstrip("\n")
                     cls.load_assignments(ui, file_path)
 
     @classmethod
@@ -240,6 +243,6 @@ def main(role):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    # main("teacher")
-    main("student")
+    main("teacher")
+    # main("student")
     sys.exit(app.exec_())

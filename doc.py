@@ -57,12 +57,6 @@ class UIFunctions(DocWindow):
                     data = unpickler.load()
                     for i in range(1, len(cls.docs) + 1):
                         ui.titles.addItem(str(i))
-
-    @classmethod
-    def load_doc(cls, ui):
-        with open(HTML_CONVERT_PATH, 'w') as f:
-            f.write(cls.docs[1])            
-        ui.text_entry.setSource(QtCore.QUrl.fromLocalFile(HTML_CONVERT_PATH))
     
 
     class TeacherUiFunctions:
@@ -74,7 +68,10 @@ class UIFunctions(DocWindow):
             HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
             file_path = QFileDialog.getOpenFileName(ui, "Open file", HOME_PATH, "*.docx")[0]
             if file_path:
-                ui.text_entry.setSource(QtCore.QUrl.fromLocalFile(self.convert_doc_to_html(file_path)))
+                self.load_doc(ui, file_path)    
+
+        def load_doc(self, ui, filename):
+            ui.text_entry.setText(self.get_html(filename))
 
         @staticmethod
         def convert_doc_to_html(filename):
@@ -87,6 +84,10 @@ class UIFunctions(DocWindow):
             word.Quit()
 
             return html_file
+
+        def get_html(self, filename):
+            with open(self.convert_doc_to_html(filename), 'r') as f:
+                return f.read()
 
         def add_titles(self, ui):
             title = QLineEdit()

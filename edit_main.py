@@ -188,7 +188,8 @@ class UIFunctions(EditWindow):
             )[0]
             with open(filename, "w", encoding = 'utf8') as f:
                 f.write(file_path)
-        cls.load_assignments(ui, file_path)
+        if file_path:
+            cls.load_assignments(ui, file_path)
 
     class EditFrame(QWidget):
         def __init__(self, *args, **kwargs):

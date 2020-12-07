@@ -94,7 +94,8 @@ class UIFunctions(MainWindow):
             return hwnds
 
         idle = subprocess.Popen(["pythonw", cls.find_idle()])
-        sleep(2.0)
+
+        sleep(2)
 
         for hwnd in get_hwnds_for_pid(idle.pid):
             cls.pg = hwnd

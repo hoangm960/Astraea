@@ -142,14 +142,9 @@ class UIFunctions(EditWindow):
 
     @classmethod
     def go_to_second(cls, ui):
-        if ui.Study.isChecked():
-            ui.NameLesson.setText(ui.name_entry.text())
-            ui.stacked_widget.setCurrentIndex(3)    
-        else:
-            
-            cls.change_lesson_title(ui, ui.name_entry.text())
-            cls.put_frame_in_list(ui, ui.num_entry.value())
-            ui.stacked_widget.setCurrentIndex(1)
+        cls.change_lesson_title(ui, ui.name_entry.text())
+        cls.put_frame_in_list(ui, ui.num_entry.value())
+        ui.stacked_widget.setCurrentIndex(1)
 
     @classmethod
     def returnStatus(cls):

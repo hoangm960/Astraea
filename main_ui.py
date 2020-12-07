@@ -102,6 +102,7 @@ class UIFunctions(MainWindow):
 
         if cls.pg:
             win32gui.MoveWindow(cls.pg, -8, 0, Main.SCREEN_WIDTH - ui.width() + 16, ui.height() + 8, True)
+            win32gui.SetActiveWindow(cls.pg)
 
     @classmethod
     def close_pg(cls, ui):

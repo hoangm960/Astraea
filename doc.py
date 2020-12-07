@@ -7,7 +7,7 @@ import pyautogui
 from PyQt5 import QtCore, uic
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (QApplication, QGraphicsDropShadowEffect, QFileDialog,
-                             QMainWindow, QLineEdit, QListWidgetItem)
+                             QMainWindow, QLineEdit, QListWidgetItem, QVBoxLayout)
 
 import main_ui
 from win32com import client as wc
@@ -44,7 +44,7 @@ class UIFunctions(DocWindow):
     @classmethod
     def close_pg(cls, ui):
         ui.close()
-        main_ui.main("student")
+        main_ui.main(ui.role)
 
     @classmethod
     def load_assignments(cls, ui, filename):

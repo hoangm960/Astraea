@@ -38,7 +38,7 @@ class Assignment:
         self.details = details
         self.mark = mark
         self.load_io()
-        
+
     def load_io(self):
         self.tests = []
         with open(self.test_file) as f:
@@ -47,7 +47,9 @@ class Assignment:
             del lines[0]
             for line in lines:
                 inputs, outputs = line.strip("\n\r").split(sep)
-                self.tests.append(self.Test(inputs.split('&'), outputs.split('&')))
+                self.tests.append(
+                    self.Test(inputs.split('&'), outputs.split('&')))
+
 
 class EditWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
@@ -81,7 +83,7 @@ class UIFunctions(EditWindow):
     ASSIGNMENTS = []
     deleted = False
     doc_files = []
-
+    CheckValue = True
     @classmethod
     def uiDefinitions(cls, ui):
         # Delete title bar
@@ -99,10 +101,9 @@ class UIFunctions(EditWindow):
         # Button function
         ui.btn_maximize.clicked.connect(lambda: cls.maximize_restore(ui))
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
-        ui.btn_quit.clicked.connect(lambda: cls.reopen_main(ui))
+        ui.btn_quit.clicked.connect(lambda: cls.reopen_main(ui))   
         ui.confirm_btn.clicked.connect(
-            lambda: cls.show_file_dialog(ui, OPENED_ASSIGNMENT_PATH)
-        )
+            lambda: cls.check_empty_entry(ui))
 
         # Window size grip
         ui.sizegrip = QSizeGrip(ui.frame_grip)
@@ -110,23 +111,93 @@ class UIFunctions(EditWindow):
             "QSizeGrip { width: 20px; height: 20px; margin: 5px; border-radius: 10px; } QSizeGrip:hover { background-color: rgb(90, 90, 90)}"
         )
         ui.sizegrip.setToolTip("Resize Window")
-                
+
         ui.confirm_button.clicked.connect(lambda: cls.go_to_second(ui))
-        ui.return_btn.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(0))
-        ui.add_btn.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(2))
-        ui.add_btn.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(2))
-        ui.return_add_btn.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(1))
+        ui.return_btn.clicked.connect(
+            lambda: ui.stacked_widget.setCurrentIndex(0))
+        ui.add_btn.clicked.connect(
+            lambda: ui.stacked_widget.setCurrentIndex(2))
+        ui.add_btn.clicked.connect(
+            lambda: ui.stacked_widget.setCurrentIndex(2))
+        ui.return_add_btn.clicked.connect(
+            lambda: ui.stacked_widget.setCurrentIndex(1))
         ui.confirm_add_btn.clicked.connect(
             lambda: cls.add_frame(ui, int(ui.num_entry_3.text()))
         )
-        ui.confirm_add_btn.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(1))
+        ui.confirm_add_btn.clicked.connect(
+            lambda: ui.stacked_widget.setCurrentIndex(1))
         ui.stacked_widget.setCurrentIndex(0)
         ui.Hours_entry.setDisabled(True)
         ui.Minutes_entry.setDisabled(True)
         ui.checkBox.clicked.connect(lambda: ui.Hours_entry.setValue(0))
         ui.checkBox.clicked.connect(lambda: ui.Minutes_entry.setValue(0))
         cls.check_empty(ui, open(OPENED_ASSIGNMENT_PATH).read().rstrip())
-
+    @classmethod
+    def check_empty_entry(cls, ui):
+        cls.CheckValue = True
+        children = ui.content_widget.children()
+        del children[0]
+        for child in children:
+            if child.title_entry.text() == '':
+                child.title_entry.setStyleSheet(
+                    """background-color: rgb(255, 255, 255); 
+                    border: 2px solid rgb(225, 0 , 0); 
+                    border-radius: 12px;""")
+                cls.CheckValue = False
+            else:
+                child.title_entry.setStyleSheet(
+                    """background-color: rgb(255, 255, 255); 
+                    border: 0px solid black; 
+                    border-radius: 12px;""")
+            if child.ex_file_entry.text() == '':
+                child.ex_file_entry.setStyleSheet(
+                    """background-color: rgb(255, 255, 255); 
+                    border: 2px solid rgb(225, 0 , 0); border-radius: 12px;""")
+                cls.CheckValue = False
+            else:
+                child.ex_file_entry.setStyleSheet(
+                    """background-color: rgb(255, 255, 255); 
+                    border: 0px solid black; 
+                    border-radius: 12px;""")
+            if child.test_file_entry.text() == '':
+                child.test_file_entry.setStyleSheet(
+                    """background-color: rgb(255, 255, 255); 
+                    border: 2px solid rgb(225, 0 , 0); 
+                    border-radius: 12px;""")
+                cls.CheckValue = False
+            else:
+                child.test_file_entry.setStyleSheet(
+                    """background-color: rgb(255, 255, 255); 
+                    border: 0px solid black; 
+                    border-radius: 12px;""")
+                cls.CheckValue = False
+            if child.details_entry.toPlainText():
+                child.details_entry.setStyleSheet(
+                    """background-color: rgb(255, 255, 255); 
+                    border: 5px solid rgb(225, 0 , 0); 
+                    border-radius: 12px;""")
+                cls.CheckValue = False
+            else:
+                child.details_entry.setStyleSheet(
+                    """background-color: rgb(255, 255, 255); 
+                    border: 0px solid black; 
+                    border-radius: 12px;""")
+                cls.CheckValue = False
+            if child.Score_edit.value() < 0:
+                child.Score_edit.setStyleSheet(
+                    """background-color: rgb(255, 255, 255); 
+                    border: 2px solid rgb(225, 0 , 0); 
+                    border-radius: 12px;""")
+                cls.CheckValue = False
+            else:
+                child.Score_edit.setStyleSheet(
+                    """background-color: rgb(255, 255, 255); 
+                    border: 0px solid black; 
+                    border-radius: 12px;""")
+        if cls.CheckValue == True:
+            cls.show_file_dialog(ui, OPENED_ASSIGNMENT_PATH)
+        else:
+            pass
     @classmethod
     def check_empty(cls, ui, filename):
         if os.path.exists(filename):
@@ -182,11 +253,12 @@ class UIFunctions(EditWindow):
     def show_file_dialog(cls, ui, filename):
         file_path = open(filename).read().rstrip()
         if not file_path:
-            HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
+            HOME_PATH = os.path.join(os.path.join(
+                os.environ["USERPROFILE"]), "Desktop")
             file_path = QFileDialog.getSaveFileName(
                 ui, "Open file", HOME_PATH, "*.list"
             )[0]
-            with open(filename, "w", encoding = 'utf8') as f:
+            with open(filename, "w", encoding='utf8') as f:
                 f.write(file_path)
         if file_path:
             cls.load_assignments(ui, file_path)
@@ -204,18 +276,25 @@ class UIFunctions(EditWindow):
             )
 
         def show_file_dialog_Txt(self, entry):
-            HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
-            file_name = QFileDialog.getOpenFileName(self, "Open file", HOME_PATH, "*.txt")
+            HOME_PATH = os.path.join(os.path.join(
+                os.environ["USERPROFILE"]), "Desktop")
+            file_name = QFileDialog.getOpenFileName(
+                self, "Open file", HOME_PATH, "*.txt")
 
             if file_name[0]:
                 entry.setText(file_name[0])
-        
+
         def show_file_dialog_Py(self, entry):
-            HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
-            file_name = QFileDialog.getOpenFileName(self, "Open file", HOME_PATH, "*.py")
+            HOME_PATH = os.path.join(os.path.join(
+                os.environ["USERPROFILE"]), "Desktop")
+            file_name = QFileDialog.getOpenFileName(
+                self, "Open file", HOME_PATH, "*.py")
 
             if file_name[0]:
                 entry.setText(file_name[0])
+
+        
+
     @classmethod
     def change_lesson_title(cls, ui, title):
         ui.lesson_title.setText(title if title else "Bài học không tên")
@@ -251,7 +330,8 @@ class UIFunctions(EditWindow):
     def add_frame(cls, ui, num):
         for _ in range(num):
             ui.frame = cls.EditFrame()
-            ui.frame.close_btn.clicked.connect(lambda: cls.close_frame(ui, ui.frame))
+            ui.frame.close_btn.clicked.connect(
+                lambda: cls.close_frame(ui, ui.frame))
             ui.content_widget.layout().addWidget(ui.frame)
 
     @classmethod

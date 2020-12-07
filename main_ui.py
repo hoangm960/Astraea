@@ -165,7 +165,6 @@ class UIFunctions(MainWindow):
     def open_doc(cls, ui):
         ui.main = doc.DocWindow()
         ui.main.show()
-        # cls.close_pg(ui)
 
     class TeacherUiFunctions:
         parent = None
@@ -203,7 +202,6 @@ class UIFunctions(MainWindow):
         def open_edit_form(cls, ui):
             window = edit_main.EditWindow()
             window.show()
-            # cls.parent.close_pg(ui)
 
     class StudentUiFunctions:
         def __init__(cls, parent, ui):
@@ -220,7 +218,6 @@ class UIFunctions(MainWindow):
         def open_result_form(cls, ui):
             window = result_main.ResultWindow()
             window.show()
-            # cls.parent.close_pg(ui)
 
     @classmethod
     def define_role(cls, ui):

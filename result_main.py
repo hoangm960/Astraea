@@ -1,3 +1,10 @@
+from PyQt5 import QtCore, uic
+from PyQt5.QtCore import QSize, Qt
+from PyQt5.QtGui import QColor
+from PyQt5.QtWidgets import (QApplication, QFileDialog, QMessageBox,
+                        QGraphicsDropShadowEffect, QLayout,
+                        QListWidgetItem, QMainWindow, QSizeGrip,
+                        QVBoxLayout, QWidget)
 import time
 from encryption import decrypt, encrypt
 import Main
@@ -7,14 +14,6 @@ import sys
 from pathlib import Path
 
 import pyautogui
-from PyQt5 import QtCore, uic
-from PyQt5.QtCore import QSize, Qt
-from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import (QApplication, QFileDialog,
-                             QGraphicsDropShadowEffect, QLayout,
-                             QListWidgetItem, QMainWindow, QSizeGrip,
-                             QVBoxLayout, QWidget)
-
 import check_algorithm
 import main_ui
 
@@ -25,7 +24,6 @@ OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
 OPENED_RESULT_PATH = "./data/Users/Kết quả.txt"
 if not os.path.exists(OPENED_RESULT_PATH):
     open(OPENED_RESULT_PATH, "w").close()
-
 class ResultWindow(QMainWindow):
     def __init__(self, name, *args, **kwargs):
         QMainWindow.__init__(self, *args, **kwargs)
@@ -218,7 +216,7 @@ class UIFunctions(ResultWindow):
 
     @classmethod
     def check_empty(cls, self, num):
-        if num != 0:
+        if num == 0:
             self.Out_btn.clicked.connect(lambda: self.close())
             self.Out_btn.clicked.connect(lambda: cls.reopen_main(self))
             self.Out_btn.setText("Thoát")
@@ -325,8 +323,6 @@ class UIFunctions(ResultWindow):
             text = '    FILE KẾT QUẢ:\n'+name_account + ' :  ' + self.Score.text()
             f.write(text)
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = ResultWindow('mineshark15@gmail.com')
-    window.show()
-    sys.exit(app.exec_())
+
+
+#KHÔNG CHẠY FILE RESULT_MAIN.PY#--------------------------------------------------------------------

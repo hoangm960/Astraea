@@ -17,10 +17,11 @@ HTML_CONVERT_PATH = "./data/html_convert"
 
 
 class DocWindow(QMainWindow):
-    def __init__(self, role):
+    def __init__(self, role, name):
         QMainWindow.__init__(self)
         uic.loadUi(DOC_PATH, self)
         self.role = role
+        self.name = name
         UIFunctions.uiDefinitions(self)
 
 
@@ -44,7 +45,7 @@ class UIFunctions(DocWindow):
     @classmethod
     def close_pg(cls, ui):
         ui.close()
-        main_ui.main(ui.role)
+        main_ui.main(ui.role, ui.name)
 
     @classmethod
     def load_assignments(cls, ui, filename):
@@ -114,6 +115,6 @@ class UIFunctions(DocWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = DocWindow("teacher")
+    window = DocWindow("teacher",'mineshark15@gmail.com')
     window.show()
     sys.exit(app.exec_())

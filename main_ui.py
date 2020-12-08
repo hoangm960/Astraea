@@ -168,7 +168,7 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def open_doc(cls, ui):
-        ui.main = doc.DocWindow()
+        ui.main = doc.DocWindow(ui.name)
         ui.main.show()
 
     class TeacherUiFunctions:
@@ -205,7 +205,7 @@ class UIFunctions(MainWindow):
 
         @classmethod
         def open_edit_form(cls, ui):
-            window = edit_main.EditWindow()
+            window = edit_main.EditWindow(ui.name)
             window.show()
 
     class StudentUiFunctions:

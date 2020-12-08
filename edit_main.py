@@ -52,10 +52,9 @@ class Assignment:
 
 
 class EditWindow(QMainWindow):
-    def __init__(self, name, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         QMainWindow.__init__(self, *args, **kwargs)
         uic.loadUi(EDIT_FORM_PATH, self)
-        self.name = name
         self.setGeometry(
             round((QApplication.primaryScreen().size().width() - self.width()) / 2),
             round((QApplication.primaryScreen().size().height() - self.height()) / 2),
@@ -115,6 +114,8 @@ class UIFunctions(EditWindow):
         ui.confirm_button.clicked.connect(lambda: cls.go_to_second(ui))
         ui.return_btn.clicked.connect(
             lambda: ui.stacked_widget.setCurrentIndex(0))
+        ui.return_btn.clicked.connect(
+            lambda: open(OPENED_ASSIGNMENT_PATH, 'w').write(''))
         ui.add_btn.clicked.connect(
             lambda: ui.stacked_widget.setCurrentIndex(2))
         ui.add_btn.clicked.connect(
@@ -369,12 +370,12 @@ class UIFunctions(EditWindow):
 
     @classmethod
     def reopen_main(cls, ui):
-        main_ui.main("teacher", ui.name)
+        main_ui.main("teacher")
         ui.close()
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = EditWindow('mineshark15@gmail.com')
+    window = EditWindow()
     window.show()
     sys.exit(app.exec_())

@@ -228,7 +228,7 @@ class LoginFunctions(LoginWindow):
                     encrypt(cls.USER_PATH, cls.USER_PATH_ENCRYPTED, cls.KEY_PATH)
 
                     self.close()
-                    main_ui.main(user.role, user.name)
+                    main_ui.main(user.role)
                     break
         QtCore.QTimer.singleShot(3000, lambda: self.frameError.hide())
 

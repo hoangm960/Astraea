@@ -15,11 +15,10 @@ HTML_CONVERT_PATH = "./data/html_convert"
 
 
 class DocWindow(QMainWindow):
-    def __init__(self, role, name):
+    def __init__(self, role):
         QMainWindow.__init__(self)
         uic.loadUi(DOC_UI, self)
         self.role = role
-        self.name = name
         UIFunctions.uiDefinitions(self)
 
 
@@ -43,7 +42,7 @@ class UIFunctions(DocWindow):
     @classmethod
     def close_pg(cls, ui):
         ui.close()
-        main_ui.main(ui.role, ui.name)
+        main_ui.main(ui.role)
 
     @classmethod
     def load_assignments(cls, ui, filename):
@@ -62,11 +61,10 @@ class UIFunctions(DocWindow):
             self.connect_btn(ui)
 
         def open_doc(self, ui):
-            if ui.titles.selectedItems():
-                file_path = self.show_file_dialog(ui)
-                if file_path:
-                    self.load_doc(ui, file_path)
-                    self.delete_html_file(file_path)
+            file_path = self.show_file_dialog(ui)
+            if file_path:
+                self.load_doc(ui, file_path)
+                self.delete_html_file(file_path)
 
         @staticmethod
         def show_file_dialog(ui):
@@ -96,9 +94,9 @@ class UIFunctions(DocWindow):
         def check_empty(ui):
             return True if ui.titles.currentItem().text() in UIFunctions.docs else False
 
-        def load_doc(self, ui, filename):
+        def load_doc(self, ui):
             if not self.check_empty(ui):
-                html_data = self.get_html(filename)
+                html_data = self.get_html(self.show_file_dialog(ui))
                 UIFunctions.docs[ui.titles.currentItem().text()] = html_data
                 ui.text_entry.setText(html_data)
             else:
@@ -120,12 +118,12 @@ class UIFunctions(DocWindow):
             else:
                 title = QLabel()
                 title.setText(text)
+            UIFunctions.docs[text] = UIFunctions.docs.pop(text)
             title_item = QListWidgetItem()
             ui.titles.insertItem(ui.titles.count(), title_item)
             ui.titles.setItemWidget(title_item, title)
 
-        @staticmethod
-        def add_titles(ui):
+        def add_titles(self, ui):
             title = QLabel()
             title_item = QListWidgetItem()
             ui.titles.insertItem(ui.titles.count(), title_item)
@@ -138,8 +136,7 @@ class UIFunctions(DocWindow):
 
         def connect_btn(self, ui):
             ui.add_btn.clicked.connect(lambda: self.add_titles(ui))
-            ui.load_btn.clicked.connect(lambda: self.open_doc(ui))
-            # ui.titles.itemPressed.connect(lambda: self.load_doc(ui))
+            ui.titles.itemClicked.connect(lambda: self.load_doc(ui))
             ui.titles.itemDoubleClicked.connect(lambda: self.change_title(ui, True, ui.titles.selectedItems()[0].text()))
 
     class StudentUiFunctions:
@@ -156,6 +153,6 @@ class UIFunctions(DocWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = DocWindow("teacher",'mineshark15@gmail.com')
+    window = DocWindow("teacher")
     window.show()
     sys.exit(app.exec_())

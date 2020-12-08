@@ -99,13 +99,12 @@ class UIFunctions(MainWindow):
             hwnds = []
             win32gui.EnumWindows(callback, hwnds)
             return hwnds
+
         idle = subprocess.Popen(cls.find_idle())
 
         sleep(1)
-
         for hwnd in get_hwnds_for_pid(idle.pid):
             cls.pg = hwnd
-
         if cls.pg:
             win32gui.MoveWindow(cls.pg, -8, 0, Main.SCREEN_WIDTH - ui.width() + 16, ui.height() + 8, True)
             win32gui.SetActiveWindow(cls.pg)
@@ -165,7 +164,7 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def open_doc(cls, ui):
-        ui.main = doc.DocWindow(ui.name)
+        ui.main = doc.DocWindow()
         ui.main.show()
 
     class TeacherUiFunctions:
@@ -181,7 +180,6 @@ class UIFunctions(MainWindow):
             QPushButton:hover {background-color: rgba(156, 220, 254, 150);}"""
             )
             ui.main_btn.clicked.connect(lambda: cls.open_edit_form(ui))
-            ui.assignment_details.setReadOnly(False)
 
         @classmethod
         def show_confirm_mess(cls, ui):
@@ -202,7 +200,7 @@ class UIFunctions(MainWindow):
 
         @classmethod
         def open_edit_form(cls, ui):
-            window = edit_main.EditWindow(ui.name)
+            window = edit_main.EditWindow()
             window.show()
 
     class StudentUiFunctions:
@@ -218,7 +216,7 @@ class UIFunctions(MainWindow):
 
         @classmethod
         def open_result_form(cls, ui):
-            window = result_main.ResultWindow(ui.name)
+            window = result_main.ResultWindow()
             window.show()
 
     @classmethod
@@ -238,6 +236,6 @@ def main(role):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    # main("teacher")
-    main("student")
+    main("teacher")
+    # main("student")
     sys.exit(app.exec_())

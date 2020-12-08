@@ -60,6 +60,7 @@ class LoginFunctions(LoginWindow):
     USER_PATH = "data/Users/User.txt"
     USER_PATH_ENCRYPTED = "data/Users/User.encrypted"
     KEY_PATH = "data/encryption/users.key"
+    OPENED_USER = "data/Users/opened_user.ou"
 
     @classmethod
     def uiDefinitions(cls, self):
@@ -216,6 +217,8 @@ class LoginFunctions(LoginWindow):
         else:
             for user in cls.users:
                 if user.name == name:
+                    open(cls.OPENED_USER, 'w').write(user.name_user)
+
                     for i in range(len(cls.users)):
                         cls.users[i].auto_saved = False
                     if self.SavePass.isChecked():

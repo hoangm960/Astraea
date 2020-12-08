@@ -83,6 +83,7 @@ class UIFunctions(EditWindow):
     ASSIGNMENTS = []
     deleted = False
     doc_files = []
+
     @classmethod
     def uiDefinitions(cls, ui):
         # Delete title bar
@@ -100,7 +101,7 @@ class UIFunctions(EditWindow):
         # Button function
         ui.btn_maximize.clicked.connect(lambda: cls.maximize_restore(ui))
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
-        ui.btn_quit.clicked.connect(lambda: cls.reopen_main(ui))   
+        ui.btn_quit.clicked.connect(lambda: cls.reopen_main(ui))
         ui.confirm_btn.clicked.connect(
             lambda: cls.check_empty_entry(ui))
 
@@ -133,6 +134,7 @@ class UIFunctions(EditWindow):
         ui.checkBox.clicked.connect(lambda: ui.Hours_entry.setValue(0))
         ui.checkBox.clicked.connect(lambda: ui.Minutes_entry.setValue(0))
         cls.check_empty(ui, open(OPENED_ASSIGNMENT_PATH).read().rstrip())
+
     @classmethod
     def check_empty_entry(cls, ui):
         cls.CheckValue = True
@@ -150,7 +152,7 @@ class UIFunctions(EditWindow):
                     """background-color: rgb(255, 255, 255); 
                     border: 0px solid black; 
                     border-radius: 12px;""")
-                    
+
             if not os.path.exists(child.ex_file_entry.text()):
                 child.ex_file_entry.setStyleSheet(
                     """background-color: rgb(255, 255, 255); 
@@ -185,6 +187,7 @@ class UIFunctions(EditWindow):
                     border-radius: 12px;""")
         if cls.CheckValue:
             cls.show_file_dialog(ui, OPENED_ASSIGNMENT_PATH)
+
     @classmethod
     def check_empty(cls, ui, filename):
         if os.path.exists(filename):
@@ -279,8 +282,6 @@ class UIFunctions(EditWindow):
 
             if file_name[0]:
                 entry.setText(file_name[0])
-
-        
 
     @classmethod
     def change_lesson_title(cls, ui, title):

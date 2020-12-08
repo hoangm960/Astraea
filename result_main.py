@@ -2,9 +2,9 @@ from PyQt5 import QtCore, uic
 from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (QApplication, QFileDialog, QMessageBox,
-                        QGraphicsDropShadowEffect, QLayout,
-                        QListWidgetItem, QMainWindow, QSizeGrip,
-                        QVBoxLayout, QWidget)
+                             QGraphicsDropShadowEffect, QLayout,
+                             QListWidgetItem, QMainWindow, QSizeGrip,
+                             QVBoxLayout, QWidget)
 import time
 from encryption import decrypt, encrypt
 import Main
@@ -21,14 +21,15 @@ RESULT_FORM_PATH = "./UI_Files/result_form.ui"
 RESULT_FRAME_PATH = "./UI_Files/result_frame.ui"
 TEST_FRAME_PATH = "./UI_Files/Test_frame.ui"
 OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
-OPENED_RESULT_PATH = "./data/Users/Kết quả.txt"
+OPENED_RESULT_PATH = "./data/results/"
 if not os.path.exists(OPENED_RESULT_PATH):
     open(OPENED_RESULT_PATH, "w").close()
+
+
 class ResultWindow(QMainWindow):
-    def __init__(self, name, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         QMainWindow.__init__(self, *args, **kwargs)
         uic.loadUi(RESULT_FORM_PATH, self)
-        self.name = name
         self.setGeometry(
             round((Main.SCREEN_WIDTH - self.width()) / 3),
             round((Main.SCREEN_HEIGHT - self.height()) / 2),
@@ -64,6 +65,9 @@ class UIFunctions(ResultWindow):
     USER_PATH = "data/Users/User.txt"
     USER_PATH_ENCRYPTED = "data/Users/User.encrypted"
     KEY_PATH = "data/encryption/users.key"
+    OPENED_USER = "data/Users/opened_user.ou"
+
+
     @classmethod
     def load_assignments(cls, ui, filename):
         ui.textBrowser.clear()
@@ -96,17 +100,19 @@ class UIFunctions(ResultWindow):
         self.inform.hide()
         self.Frame_close.hide()
         # Button function
-        self.OkCancelFrame.move(0,0)
-        self.OkCancelFrame.move(280,148)
+        self.OkCancelFrame.move(0, 0)
+        self.OkCancelFrame.move(280, 148)
         self.btn_maximize.clicked.connect(lambda: cls.maximize_restore(self))
         self.btn_minimize.clicked.connect(lambda: self.showMinimized())
+
         def quit():
             self.Accept1.clicked.connect(lambda: self.close())
-            self.Accept1.clicked.connect(lambda: main_ui.main("student", self.name))
-            self.Deny1.clicked.connect(lambda: self.bg_frame.setStyleSheet("""background-color: rgb(30, 30, 30); border-radius: 10px; color: rgb(255, 255, 255);"""))
-            self.bg_frame.setStyleSheet("""background-color: rgba(255, 255, 255, 200); border-radius: 10px; color: rgb(255, 255, 255);""")
+            self.Accept1.clicked.connect(lambda: main_ui.main("student"))
+            self.Deny1.clicked.connect(lambda: self.bg_frame.setStyleSheet(
+                """background-color: rgb(30, 30, 30); border-radius: 10px; color: rgb(255, 255, 255);"""))
+            self.bg_frame.setStyleSheet(
+                """background-color: rgba(255, 255, 255, 200); border-radius: 10px; color: rgb(255, 255, 255);""")
         self.btn_quit.clicked.connect(lambda: quit())
-        cls.load_users()
 
         # Window size grip
         self.sizegrip = QSizeGrip(self.frame_grip)
@@ -116,6 +122,7 @@ class UIFunctions(ResultWindow):
         self.sizegrip.setToolTip("Resize Window")
         cls.load_assignments(open(OPENED_LESSON_PATH).read().rstrip())
         cls.check_empty(self, len(cls.assignments))
+
     @classmethod
     def returnStatus(cls):
         return cls.GLOBAL_STATE
@@ -175,16 +182,6 @@ class UIFunctions(ResultWindow):
 
             if file_name[0]:
                 entry.setText(file_name[0])
-    @classmethod
-    def load_users(cls):
-        cls.users.clear()
-        decrypt(cls.USER_PATH_ENCRYPTED, cls.USER_PATH, cls.KEY_PATH)
-        time.sleep(1)
-        if os.path.getsize(cls.USER_PATH) > 0:
-            with open(cls.USER_PATH, "rb") as f:
-                unpickler = pickle.Unpickler(f)
-                cls.users = unpickler.load()
-        encrypt(cls.USER_PATH, cls.USER_PATH_ENCRYPTED, cls.KEY_PATH)
 
     @classmethod
     def load_assignments(cls, filename):
@@ -195,10 +192,11 @@ class UIFunctions(ResultWindow):
                     unpickler = pickle.Unpickler(f)
                     data = unpickler.load()
                     cls.assignments = data[1]
+
     @classmethod
     def reopen_main(cls, self, ui):
         import main_ui
-        main_ui.main("student", self.name)
+        main_ui.main("student")
         ui.close()
 
     @classmethod
@@ -211,9 +209,10 @@ class UIFunctions(ResultWindow):
             self.inform.move(340, 220)
         else:
             self.Out_btn.clicked.connect(lambda: self.OkCancelFrame.show())
-            self.Accept.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(0))
             self.Accept.clicked.connect(
-            lambda: cls.check_true(self, len(cls.assignments)))
+                lambda: self.stacked_widget.setCurrentIndex(0))
+            self.Accept.clicked.connect(
+                lambda: cls.check_true(self, len(cls.assignments)))
             cls.put_frame_in_list(self, len(cls.assignments))
 
     @classmethod
@@ -231,11 +230,6 @@ class UIFunctions(ResultWindow):
             self.content_widgetT.layout().addWidget(self.frame)
             self.frame.details_label.setText(cls.assignments[i].name)
             self.frame.details_entry.setText(cls.assignments[i].details)
-
-    # @classmethod
-    # def count_total_mark(cls):
-    #     for assignment in assignments: 
-    #         cls.assignment.mark
 
     @classmethod
     def check_result(cls, frame, num):
@@ -266,15 +260,15 @@ class UIFunctions(ResultWindow):
                 current_layout = QVBoxLayout()
                 current_layout.setContentsMargins(9, 9, 9, 9)
                 self.content_widget.setLayout(current_layout)
-    
+
             self.frame = cls.ResultFrame()
             self.content_widget.layout().addWidget(self.frame)
             self.frame.correct_num.setText(
                 str(correct)+'/'+str(len(cls.assignments[i].tests)))
             self.frame.test_file_label.setText(cls.assignments[i].name)
-        
+
             cls.TotalTest += len(cls.assignments[i].tests)
-            
+
             if results[-1]:
                 self.frame.Score_box.setText(
                     str(correct / len(results[:-1]) * cls.assignments[i].mark)
@@ -284,7 +278,8 @@ class UIFunctions(ResultWindow):
                 else:
                     self.frame.detail_entry.setText("Bài làm chưa tối ưu hóa.")
                 cls.Total += correct
-                cls.TotalScore += (correct / len(cls.assignments[i].tests) * cls.assignments[i].mark)
+                cls.TotalScore += (correct /
+                                   len(cls.assignments[i].tests) * cls.assignments[i].mark)
             else:
                 self.frame.detail_entry.setText("Chưa làm câu này")
 
@@ -300,14 +295,16 @@ class UIFunctions(ResultWindow):
             self.Judge.setText("Bài làm vẫn chưa đạt chuẩn.")
         else:
             self.Judge.setText("Bài làm đạt chuẩn")
-        with open(OPENED_RESULT_PATH, 'w+', encoding = 'utf-8') as f:
-            name_account = ''
-            for user in cls.users:
-                if user.name == self.name:
-                    name_account = user.name_user
-            text = '    FILE KẾT QUẢ:\n'+name_account + ' :  ' + self.Score.text()
+        with open(f"{OPENED_RESULT_PATH}{open(cls.OPENED_USER).read().rstrip()}.rf", 'w+', encoding='utf-8') as f:
+            name_account = open(cls.OPENED_USER).read().rstrip()
+            text = f'    FILE KẾT QUẢ:\n{name_account} :  {self.Score.text()}'
             f.write(text)
 
+def main():
+    app = QApplication(sys.argv)
+    window = ResultWindow()
+    window.show()
+    sys.exit(app.exec_())
 
-
-#KHÔNG CHẠY FILE RESULT_MAIN.PY#--------------------------------------------------------------------
+if __name__ == "__main__":
+    main()

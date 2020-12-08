@@ -1,3 +1,12 @@
+from PyQt5 import QtCore, uic
+from PyQt5.QtCore import QSize, Qt
+from PyQt5.QtGui import QColor
+from PyQt5.QtWidgets import (QApplication, QFileDialog, QMessageBox,
+                        QGraphicsDropShadowEffect, QLayout,
+                        QListWidgetItem, QMainWindow, QSizeGrip,
+                        QVBoxLayout, QWidget)
+import time
+from encryption import decrypt, encrypt
 import Main
 import os
 import pickle
@@ -5,14 +14,6 @@ import sys
 from pathlib import Path
 
 import pyautogui
-from PyQt5 import QtCore, uic
-from PyQt5.QtCore import QSize, Qt
-from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import (QApplication, QFileDialog,
-                             QGraphicsDropShadowEffect, QLayout,
-                             QListWidgetItem, QMainWindow, QSizeGrip,
-                             QVBoxLayout, QWidget)
-
 import check_algorithm
 import main_ui
 
@@ -23,11 +24,11 @@ OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
 OPENED_RESULT_PATH = "./data/Users/Kết quả.txt"
 if not os.path.exists(OPENED_RESULT_PATH):
     open(OPENED_RESULT_PATH, "w").close()
-
 class ResultWindow(QMainWindow):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, name, *args, **kwargs):
         QMainWindow.__init__(self, *args, **kwargs)
         uic.loadUi(RESULT_FORM_PATH, self)
+        self.name = name
         self.setGeometry(
             round((Main.SCREEN_WIDTH - self.width()) / 3),
             round((Main.SCREEN_HEIGHT - self.height()) / 2),
@@ -55,11 +56,14 @@ class UIFunctions(ResultWindow):
     GLOBAL_STATE = False
     assignments = {}
     lesson = {}
+    users = []
     mark = int()
     Total = int()
     TotalTest = int()
     TotalScore = int()
-
+    USER_PATH = "data/Users/User.txt"
+    USER_PATH_ENCRYPTED = "data/Users/User.encrypted"
+    KEY_PATH = "data/encryption/users.key"
     @classmethod
     def load_assignments(cls, ui, filename):
         ui.textBrowser.clear()
@@ -80,7 +84,6 @@ class UIFunctions(ResultWindow):
         # Delete title bar
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-
         # Make drop shadow
         self.shadow = QGraphicsDropShadowEffect(self)
         self.shadow.setBlurRadius(20)
@@ -101,13 +104,14 @@ class UIFunctions(ResultWindow):
         def quit():
             self.OkCancelFrameQuit.show()
             self.Accept1.clicked.connect(lambda: self.close())
-            self.Accept1.clicked.connect(lambda: main_ui.main("student"))
+            self.Accept1.clicked.connect(lambda: main_ui.main("student", self.name))
             self.Deny1.clicked.connect(lambda: self.OkCancelFrameQuit.hide())
             self.Deny1.clicked.connect(lambda: self.Out_btn.setDisabled(False))
             self.Deny1.clicked.connect(lambda: self.bg_frame.setStyleSheet("""background-color: rgb(30, 30, 30); border-radius: 10px; color: rgb(255, 255, 255);"""))
             self.Out_btn.setDisabled(True)
             self.bg_frame.setStyleSheet("""background-color: rgba(255, 255, 255, 200); border-radius: 10px; color: rgb(255, 255, 255);""")
         self.btn_quit.clicked.connect(lambda: quit())
+        cls.load_users()
 
         # Window size grip
         self.sizegrip = QSizeGrip(self.frame_grip)
@@ -184,6 +188,16 @@ class UIFunctions(ResultWindow):
 
             if file_name[0]:
                 entry.setText(file_name[0])
+    @classmethod
+    def load_users(cls):
+        cls.users.clear()
+        decrypt(cls.USER_PATH_ENCRYPTED, cls.USER_PATH, cls.KEY_PATH)
+        time.sleep(1)
+        if os.path.getsize(cls.USER_PATH) > 0:
+            with open(cls.USER_PATH, "rb") as f:
+                unpickler = pickle.Unpickler(f)
+                cls.users = unpickler.load()
+        encrypt(cls.USER_PATH, cls.USER_PATH_ENCRYPTED, cls.KEY_PATH)
 
     @classmethod
     def load_assignments(cls, filename):
@@ -195,14 +209,14 @@ class UIFunctions(ResultWindow):
                     data = unpickler.load()
                     cls.assignments = data[1]
     @classmethod
-    def reopen_main(cls, ui):
+    def reopen_main(cls, self, ui):
         import main_ui
-        main_ui.main("student")
+        main_ui.main("student", self.name)
         ui.close()
 
     @classmethod
     def check_empty(cls, self, num):
-        if num != 0:
+        if num == 0:
             self.Out_btn.clicked.connect(lambda: self.close())
             self.Out_btn.clicked.connect(lambda: cls.reopen_main(self))
             self.Out_btn.setText("Thoát")
@@ -301,13 +315,14 @@ class UIFunctions(ResultWindow):
             self.Judge.setText("Bài làm vẫn chưa đạt chuẩn.")
         else:
             self.Judge.setText("Bài làm đạt chuẩn")
-        with open(OPENED_RESULT_PATH, 'r+', encoding = 'utf-8') as f:
-            if f.read() == '':
-                text = 'Em nào đó: '+ self.Score.text()
-                f.write(text)
+        with open(OPENED_RESULT_PATH, 'w+', encoding = 'utf-8') as f:
+            name_account = ''
+            for user in cls.users:
+                if user.name == self.name:
+                    name_account = user.name_user
+            text = '    FILE KẾT QUẢ:\n'+name_account + ' :  ' + self.Score.text()
+            f.write(text)
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = ResultWindow()
-    window.show()
-    sys.exit(app.exec_())
+
+
+#KHÔNG CHẠY FILE RESULT_MAIN.PY#--------------------------------------------------------------------

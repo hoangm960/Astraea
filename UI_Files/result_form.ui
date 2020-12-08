@@ -356,7 +356,7 @@ min-height: 20px;
 background-color: transparent;</string>
                </property>
                <property name="currentIndex">
-                <number>1</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="result_frame">
                 <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -524,8 +524,8 @@ QScrollBar::add-page, QScrollBar::sub-page {
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>100</width>
-                         <height>30</height>
+                         <width>960</width>
+                         <height>450</height>
                         </rect>
                        </property>
                       </widget>

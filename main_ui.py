@@ -27,10 +27,11 @@ OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
 
 
 class MainWindow(QMainWindow):
-    def __init__(self, role):
+    def __init__(self, role, name):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(UI_MAIN_PATH, self)
         self.role = role
+        self.name = name
         UIFunctions.uiDefinitions(self)
 
 
@@ -220,7 +221,7 @@ class UIFunctions(MainWindow):
 
         @classmethod
         def open_result_form(cls, ui):
-            window = result_main.ResultWindow()
+            window = result_main.ResultWindow(ui.name)
             window.show()
 
     @classmethod
@@ -231,8 +232,8 @@ class UIFunctions(MainWindow):
             cls.StudentUiFunctions(cls, ui)
 
 
-def main(role):
-    window = MainWindow(role)
+def main(role, name):
+    window = MainWindow(role,name)
     window.move(QApplication.primaryScreen(
     ).size().width() - window.width(), 0)
     window.show()
@@ -240,6 +241,6 @@ def main(role):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    main("teacher")
-    # main("student")
+    # main("teacher",'mineshark15@gmail.com')
+    main("student",'mineshark15@gmail.com')
     sys.exit(app.exec_())

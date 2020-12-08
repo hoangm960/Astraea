@@ -94,21 +94,16 @@ class UIFunctions(ResultWindow):
         self.stacked_widget.setCurrentIndex(1)
         self.return_btn.clicked.connect(lambda: self.close())
         self.inform.hide()
-        self.OkCancelFrameQuit.hide()
+        self.Frame_close.hide()
         # Button function
-        self.OkCancelFrame.hide()
         self.OkCancelFrame.move(0,0)
         self.OkCancelFrame.move(280,148)
         self.btn_maximize.clicked.connect(lambda: cls.maximize_restore(self))
         self.btn_minimize.clicked.connect(lambda: self.showMinimized())
         def quit():
-            self.OkCancelFrameQuit.show()
             self.Accept1.clicked.connect(lambda: self.close())
             self.Accept1.clicked.connect(lambda: main_ui.main("student", self.name))
-            self.Deny1.clicked.connect(lambda: self.OkCancelFrameQuit.hide())
-            self.Deny1.clicked.connect(lambda: self.Out_btn.setDisabled(False))
             self.Deny1.clicked.connect(lambda: self.bg_frame.setStyleSheet("""background-color: rgb(30, 30, 30); border-radius: 10px; color: rgb(255, 255, 255);"""))
-            self.Out_btn.setDisabled(True)
             self.bg_frame.setStyleSheet("""background-color: rgba(255, 255, 255, 200); border-radius: 10px; color: rgb(255, 255, 255);""")
         self.btn_quit.clicked.connect(lambda: quit())
         cls.load_users()
@@ -122,12 +117,6 @@ class UIFunctions(ResultWindow):
         cls.load_assignments(open(OPENED_LESSON_PATH).read().rstrip())
         cls.check_empty(self, len(cls.assignments))
     @classmethod
-    def move_TaskClose(cls, self):
-        self.OkCancelFrame.move(
-            round((self.ScrollAreaT.width() - 400) / 2),
-            round((self.ScrollAreaT.height() - 180) / 2),
-        )
-    @classmethod
     def returnStatus(cls):
         return cls.GLOBAL_STATE
 
@@ -139,7 +128,6 @@ class UIFunctions(ResultWindow):
             self.showMaximized()
 
             cls.GLOBAL_STATE = True
-            cls.move_TaskClose(self)
             self.bg_layout.setContentsMargins(0, 0, 0, 0)
             self.bg_frame.setStyleSheet(
                 """
@@ -153,7 +141,6 @@ class UIFunctions(ResultWindow):
         else:
             cls.GLOBAL_STATE = False
             self.showNormal()
-            cls.move_TaskClose(self)
             self.resize(self.width() + 1, self.height() + 1)
             self.bg_layout.setContentsMargins(0, 0, 0, 0)
             self.bg_frame.setStyleSheet(
@@ -224,11 +211,9 @@ class UIFunctions(ResultWindow):
             self.inform.move(340, 220)
         else:
             self.Out_btn.clicked.connect(lambda: self.OkCancelFrame.show())
-            self.Accept.clicked.connect(lambda: self.btn_quit.hide())
             self.Accept.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(0))
             self.Accept.clicked.connect(
             lambda: cls.check_true(self, len(cls.assignments)))
-            self.Deny.clicked.connect(lambda: self.OkCancelFrame.hide())
             cls.put_frame_in_list(self, len(cls.assignments))
 
     @classmethod

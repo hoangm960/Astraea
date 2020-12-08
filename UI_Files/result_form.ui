@@ -356,7 +356,7 @@ min-height: 20px;
 background-color: transparent;</string>
                </property>
                <property name="currentIndex">
-                <number>0</number>
+                <number>1</number>
                </property>
                <widget class="QWidget" name="result_frame">
                 <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -950,22 +950,7 @@ background: transparent;</string>
                    <property name="frameShadow">
                     <enum>QFrame::Raised</enum>
                    </property>
-                   <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="0">
-                    <property name="spacing">
-                     <number>0</number>
-                    </property>
-                    <property name="leftMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="topMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="rightMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="bottomMargin">
-                     <number>0</number>
-                    </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_7">
                     <item>
                      <widget class="QScrollArea" name="ScrollAreaT">
                       <property name="minimumSize">
@@ -1019,8 +1004,8 @@ QScrollBar::add-page, QScrollBar::sub-page {
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>960</width>
-                         <height>475</height>
+                         <width>942</width>
+                         <height>253</height>
                         </rect>
                        </property>
                        <widget class="QLabel" name="inform">
@@ -1047,224 +1032,254 @@ QScrollBar::add-page, QScrollBar::sub-page {
                          <string>Hiện tại chưa có bài tập</string>
                         </property>
                        </widget>
-                       <widget class="QFrame" name="OkCancelFrame">
-                        <property name="geometry">
-                         <rect>
-                          <x>290</x>
-                          <y>130</y>
-                          <width>400</width>
-                          <height>180</height>
-                         </rect>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">QFrame {
-	background-color: rgb(228, 228, 228);
-	border-radius: 8px;
-}</string>
-                        </property>
-                        <property name="frameShape">
-                         <enum>QFrame::StyledPanel</enum>
-                        </property>
-                        <property name="frameShadow">
-                         <enum>QFrame::Raised</enum>
-                        </property>
-                        <widget class="QPushButton" name="Accept">
-                         <property name="geometry">
-                          <rect>
-                           <x>60</x>
-                           <y>130</y>
-                           <width>100</width>
-                           <height>20</height>
-                          </rect>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">QPushButton {
-border-radius:10;
-	border-color: rgb(0, 0, 0);
-	border : 1px solid ;
-font: bold;
-font-size: 15px;
-}
-QPushButton:hover {
-	background-color: rgb(0, 0, 0);
-	color: rgb(255, 255, 255);
-}</string>
-                         </property>
-                         <property name="text">
-                          <string>Chấp nhận</string>
-                         </property>
-                        </widget>
-                        <widget class="QPushButton" name="Deny">
-                         <property name="geometry">
-                          <rect>
-                           <x>240</x>
-                           <y>130</y>
-                           <width>100</width>
-                           <height>20</height>
-                          </rect>
-                         </property>
-                         <property name="toolTip">
-                          <string/>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">QPushButton {
-border-radius:10;
-	border-color: rgb(0, 0, 0);
-	border : 1px solid ;
-font: bold;
-font-size: 15px;
-}
-QPushButton:hover {
-	background-color: rgb(0, 0, 0);
-	color: rgb(255, 255, 255);
-}</string>
-                         </property>
-                         <property name="text">
-                          <string>Từ chối</string>
-                         </property>
-                         <property name="checkable">
-                          <bool>true</bool>
-                         </property>
-                         <property name="checked">
-                          <bool>true</bool>
-                         </property>
-                         <property name="autoRepeat">
-                          <bool>false</bool>
-                         </property>
-                         <property name="autoExclusive">
-                          <bool>true</bool>
-                         </property>
-                        </widget>
-                        <widget class="QLabel" name="label_2">
-                         <property name="geometry">
-                          <rect>
-                           <x>125</x>
-                           <y>70</y>
-                           <width>150</width>
-                           <height>40</height>
-                          </rect>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">background-color: none;
-font:bold;
-font-size: 16px;
-color: rgb(0, 0, 0);</string>
-                         </property>
-                         <property name="text">
-                          <string>Xác nhận nộp bài?</string>
-                         </property>
-                        </widget>
-                       </widget>
-                       <widget class="QFrame" name="OkCancelFrameQuit">
-                        <property name="geometry">
-                         <rect>
-                          <x>290</x>
-                          <y>130</y>
-                          <width>400</width>
-                          <height>180</height>
-                         </rect>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">QFrame {
-	background-color: rgb(228, 228, 228);
-	border-radius: 8px;
-}</string>
-                        </property>
-                        <property name="frameShape">
-                         <enum>QFrame::StyledPanel</enum>
-                        </property>
-                        <property name="frameShadow">
-                         <enum>QFrame::Raised</enum>
-                        </property>
-                        <widget class="QPushButton" name="Accept1">
-                         <property name="geometry">
-                          <rect>
-                           <x>60</x>
-                           <y>130</y>
-                           <width>100</width>
-                           <height>20</height>
-                          </rect>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">QPushButton {
-border-radius:10;
-	border-color: rgb(0, 0, 0);
-	border : 1px solid ;
-font: bold;
-font-size: 15px;
-}
-QPushButton:hover {
-	background-color: rgb(0, 0, 0);
-	color: rgb(255, 255, 255);
-}</string>
-                         </property>
-                         <property name="text">
-                          <string>Chấp nhận</string>
-                         </property>
-                        </widget>
-                        <widget class="QPushButton" name="Deny1">
-                         <property name="geometry">
-                          <rect>
-                           <x>240</x>
-                           <y>130</y>
-                           <width>100</width>
-                           <height>20</height>
-                          </rect>
-                         </property>
-                         <property name="toolTip">
-                          <string/>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">QPushButton {
-border-radius:10;
-	border-color: rgb(0, 0, 0);
-	border : 1px solid ;
-font: bold;
-font-size: 15px;
-}
-QPushButton:hover {
-	background-color: rgb(0, 0, 0);
-	color: rgb(255, 255, 255);
-}</string>
-                         </property>
-                         <property name="text">
-                          <string>Từ chối</string>
-                         </property>
-                         <property name="checkable">
-                          <bool>true</bool>
-                         </property>
-                         <property name="checked">
-                          <bool>true</bool>
-                         </property>
-                         <property name="autoRepeat">
-                          <bool>false</bool>
-                         </property>
-                         <property name="autoExclusive">
-                          <bool>true</bool>
-                         </property>
-                        </widget>
-                        <widget class="QLabel" name="label_5">
-                         <property name="geometry">
-                          <rect>
-                           <x>100</x>
-                           <y>80</y>
-                           <width>231</width>
-                           <height>40</height>
-                          </rect>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">background-color: none;
-font:bold;
-font-size: 16px;
-color: rgb(0, 0, 0);</string>
-                         </property>
-                         <property name="text">
-                          <string>   Xác nhận thoát cửa sổ?
-</string>
-                         </property>
-                        </widget>
-                       </widget>
                       </widget>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QFrame" name="Frame_close">
+                      <property name="minimumSize">
+                       <size>
+                        <width>400</width>
+                        <height>180</height>
+                       </size>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <layout class="QGridLayout" name="gridLayout_3">
+                       <item row="0" column="0">
+                        <widget class="QFrame" name="OkCancelFrame">
+                         <property name="minimumSize">
+                          <size>
+                           <width>400</width>
+                           <height>180</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>400</width>
+                           <height>180</height>
+                          </size>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QFrame {
+	background-color: rgb(228, 228, 228);
+	border-radius: 8px;
+}</string>
+                         </property>
+                         <property name="frameShape">
+                          <enum>QFrame::StyledPanel</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <widget class="QPushButton" name="Accept">
+                          <property name="geometry">
+                           <rect>
+                            <x>60</x>
+                            <y>130</y>
+                            <width>100</width>
+                            <height>20</height>
+                           </rect>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true">QPushButton {
+border-radius:10;
+	border-color: rgb(0, 0, 0);
+	border : 1px solid ;
+font: bold;
+font-size: 15px;
+}
+QPushButton:hover {
+	background-color: rgb(0, 0, 0);
+	color: rgb(255, 255, 255);
+}</string>
+                          </property>
+                          <property name="text">
+                           <string>Chấp nhận</string>
+                          </property>
+                         </widget>
+                         <widget class="QPushButton" name="Deny">
+                          <property name="geometry">
+                           <rect>
+                            <x>240</x>
+                            <y>130</y>
+                            <width>100</width>
+                            <height>20</height>
+                           </rect>
+                          </property>
+                          <property name="toolTip">
+                           <string/>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true">QPushButton {
+border-radius:10;
+	border-color: rgb(0, 0, 0);
+	border : 1px solid ;
+font: bold;
+font-size: 15px;
+}
+QPushButton:hover {
+	background-color: rgb(0, 0, 0);
+	color: rgb(255, 255, 255);
+}</string>
+                          </property>
+                          <property name="text">
+                           <string>Từ chối</string>
+                          </property>
+                          <property name="checkable">
+                           <bool>true</bool>
+                          </property>
+                          <property name="checked">
+                           <bool>true</bool>
+                          </property>
+                          <property name="autoRepeat">
+                           <bool>false</bool>
+                          </property>
+                          <property name="autoExclusive">
+                           <bool>true</bool>
+                          </property>
+                         </widget>
+                         <widget class="QLabel" name="label_2">
+                          <property name="geometry">
+                           <rect>
+                            <x>125</x>
+                            <y>70</y>
+                            <width>150</width>
+                            <height>40</height>
+                           </rect>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true">background-color: none;
+font:bold;
+font-size: 16px;
+color: rgb(0, 0, 0);</string>
+                          </property>
+                          <property name="text">
+                           <string>Xác nhận nộp bài?</string>
+                          </property>
+                         </widget>
+                        </widget>
+                       </item>
+                       <item row="0" column="1">
+                        <widget class="QFrame" name="OkCancelFrameQuit">
+                         <property name="minimumSize">
+                          <size>
+                           <width>400</width>
+                           <height>180</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>400</width>
+                           <height>180</height>
+                          </size>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QFrame {
+	background-color: rgb(228, 228, 228);
+	border-radius: 8px;
+}</string>
+                         </property>
+                         <property name="frameShape">
+                          <enum>QFrame::StyledPanel</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <widget class="QPushButton" name="Accept1">
+                          <property name="geometry">
+                           <rect>
+                            <x>60</x>
+                            <y>130</y>
+                            <width>100</width>
+                            <height>20</height>
+                           </rect>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true">QPushButton {
+border-radius:10;
+	border-color: rgb(0, 0, 0);
+	border : 1px solid ;
+font: bold;
+font-size: 15px;
+}
+QPushButton:hover {
+	background-color: rgb(0, 0, 0);
+	color: rgb(255, 255, 255);
+}</string>
+                          </property>
+                          <property name="text">
+                           <string>Chấp nhận</string>
+                          </property>
+                         </widget>
+                         <widget class="QPushButton" name="Deny1">
+                          <property name="geometry">
+                           <rect>
+                            <x>240</x>
+                            <y>130</y>
+                            <width>100</width>
+                            <height>20</height>
+                           </rect>
+                          </property>
+                          <property name="toolTip">
+                           <string/>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true">QPushButton {
+border-radius:10;
+	border-color: rgb(0, 0, 0);
+	border : 1px solid ;
+font: bold;
+font-size: 15px;
+}
+QPushButton:hover {
+	background-color: rgb(0, 0, 0);
+	color: rgb(255, 255, 255);
+}</string>
+                          </property>
+                          <property name="text">
+                           <string>Từ chối</string>
+                          </property>
+                          <property name="checkable">
+                           <bool>true</bool>
+                          </property>
+                          <property name="checked">
+                           <bool>true</bool>
+                          </property>
+                          <property name="autoRepeat">
+                           <bool>false</bool>
+                          </property>
+                          <property name="autoExclusive">
+                           <bool>true</bool>
+                          </property>
+                         </widget>
+                         <widget class="QLabel" name="label_5">
+                          <property name="geometry">
+                           <rect>
+                            <x>100</x>
+                            <y>80</y>
+                            <width>231</width>
+                            <height>40</height>
+                           </rect>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true">background-color: none;
+font:bold;
+font-size: 16px;
+color: rgb(0, 0, 0);</string>
+                          </property>
+                          <property name="text">
+                           <string>   Xác nhận thoát cửa sổ?
+</string>
+                          </property>
+                         </widget>
+                        </widget>
+                       </item>
+                      </layout>
                      </widget>
                     </item>
                    </layout>
@@ -1393,5 +1408,278 @@ QPushButton:pressed {
  <resources>
   <include location="Resources.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>Deny</sender>
+   <signal>clicked()</signal>
+   <receiver>Frame_close</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>330</x>
+     <y>521</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>484</x>
+     <y>508</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Deny1</sender>
+   <signal>clicked()</signal>
+   <receiver>Frame_close</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>764</x>
+     <y>522</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>471</x>
+     <y>494</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Accept</sender>
+   <signal>clicked()</signal>
+   <receiver>btn_quit</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>193</x>
+     <y>519</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>937</x>
+     <y>24</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_quit</sender>
+   <signal>clicked()</signal>
+   <receiver>OkCancelFrame</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>937</x>
+     <y>23</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>193</x>
+     <y>387</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Out_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>OkCancelFrameQuit</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>515</x>
+     <y>596</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>764</x>
+     <y>459</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_quit</sender>
+   <signal>clicked()</signal>
+   <receiver>OkCancelFrameQuit</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>933</x>
+     <y>19</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>890</x>
+     <y>481</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Out_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>OkCancelFrame</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>474</x>
+     <y>604</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>266</x>
+     <y>549</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Out_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>Frame_close</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>484</x>
+     <y>604</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>475</x>
+     <y>491</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_quit</sender>
+   <signal>clicked()</signal>
+   <receiver>Frame_close</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>933</x>
+     <y>25</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>939</x>
+     <y>414</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Out_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>ScrollAreaT</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>488</x>
+     <y>601</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>483</x>
+     <y>264</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_quit</sender>
+   <signal>clicked()</signal>
+   <receiver>ScrollAreaT</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>938</x>
+     <y>24</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>934</x>
+     <y>260</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Deny1</sender>
+   <signal>clicked()</signal>
+   <receiver>ScrollAreaT</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>796</x>
+     <y>518</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>775</x>
+     <y>309</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Deny</sender>
+   <signal>clicked()</signal>
+   <receiver>ScrollAreaT</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>349</x>
+     <y>515</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>339</x>
+     <y>331</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_quit</sender>
+   <signal>clicked()</signal>
+   <receiver>Out_btn</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>937</x>
+     <y>25</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>490</x>
+     <y>598</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Out_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>Out_btn</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>494</x>
+     <y>597</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>495</x>
+     <y>596</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Deny</sender>
+   <signal>clicked()</signal>
+   <receiver>Out_btn</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>382</x>
+     <y>524</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>457</x>
+     <y>593</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Deny1</sender>
+   <signal>clicked()</signal>
+   <receiver>Out_btn</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>816</x>
+     <y>521</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>509</x>
+     <y>608</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

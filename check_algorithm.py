@@ -21,7 +21,6 @@ def main(filename, ex_file, tests, time_limit=2, size_range=50):
         check.result[1] = True if output.rstrip() == ans.rstrip() else False
 
     def check_file_size():
-        print([result[1] for result in main.results])
         if True in [result[1] for result in main.results]:
             file_size = os.stat(filename).st_size
             ex_file_size = os.stat(ex_file).st_size

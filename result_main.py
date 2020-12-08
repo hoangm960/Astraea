@@ -249,7 +249,7 @@ class UIFunctions(ResultWindow):
             results = []
             self.frame = children[i]
 
-            if self.frame.ans_file_entry.text() != "":
+            if self.frame.ans_file_entry.text():
                 results = cls.check_result(self.frame, i)
                 for result in results[:-1]:
                     if result[1]:
@@ -264,7 +264,7 @@ class UIFunctions(ResultWindow):
             self.frame = cls.ResultFrame()
             self.content_widget.layout().addWidget(self.frame)
             self.frame.correct_num.setText(
-                str(correct)+'/'+str(len(cls.assignments[i].tests)))
+                f'{str(correct)}/{str(len(cls.assignments[i].tests))}')
             self.frame.test_file_label.setText(cls.assignments[i].name)
 
             cls.TotalTest += len(cls.assignments[i].tests)

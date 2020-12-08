@@ -20,7 +20,9 @@ RESULT_FORM_PATH = "./UI_Files/result_form.ui"
 RESULT_FRAME_PATH = "./UI_Files/result_frame.ui"
 TEST_FRAME_PATH = "./UI_Files/Test_frame.ui"
 OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
-
+OPENED_RESULT_PATH = "./data/Users/Kết quả.txt"
+if not os.path.exists(OPENED_RESULT_PATH):
+    open(OPENED_RESULT_PATH, "w").close()
 
 class ResultWindow(QMainWindow):
     def __init__(self, *args, **kwargs):
@@ -89,13 +91,23 @@ class UIFunctions(ResultWindow):
         self.stacked_widget.setCurrentIndex(1)
         self.return_btn.clicked.connect(lambda: self.close())
         self.inform.hide()
+        self.OkCancelFrameQuit.hide()
         # Button function
         self.OkCancelFrame.hide()
-        self.OkCancelFrame.move(280,234)
+        self.OkCancelFrame.move(0,0)
+        self.OkCancelFrame.move(280,148)
         self.btn_maximize.clicked.connect(lambda: cls.maximize_restore(self))
         self.btn_minimize.clicked.connect(lambda: self.showMinimized())
-        self.btn_quit.clicked.connect(lambda: self.close())
-        self.btn_quit.clicked.connect(lambda: main_ui.main("student"))
+        def quit():
+            self.OkCancelFrameQuit.show()
+            self.Accept1.clicked.connect(lambda: self.close())
+            self.Accept1.clicked.connect(lambda: main_ui.main("student"))
+            self.Deny1.clicked.connect(lambda: self.OkCancelFrameQuit.hide())
+            self.Deny1.clicked.connect(lambda: self.Out_btn.setDisabled(False))
+            self.Deny1.clicked.connect(lambda: self.bg_frame.setStyleSheet("""background-color: rgb(30, 30, 30); border-radius: 10px; color: rgb(255, 255, 255);"""))
+            self.Out_btn.setDisabled(True)
+            self.bg_frame.setStyleSheet("""background-color: rgba(255, 255, 255, 200); border-radius: 10px; color: rgb(255, 255, 255);""")
+        self.btn_quit.clicked.connect(lambda: quit())
 
         # Window size grip
         self.sizegrip = QSizeGrip(self.frame_grip)
@@ -105,7 +117,12 @@ class UIFunctions(ResultWindow):
         self.sizegrip.setToolTip("Resize Window")
         cls.load_assignments(open(OPENED_LESSON_PATH).read().rstrip())
         cls.check_empty(self, len(cls.assignments))
-
+    @classmethod
+    def move_TaskClose(cls, self):
+        self.OkCancelFrame.move(
+            round((self.ScrollAreaT.width() - 400) / 2),
+            round((self.ScrollAreaT.height() - 180) / 2),
+        )
     @classmethod
     def returnStatus(cls):
         return cls.GLOBAL_STATE
@@ -118,7 +135,7 @@ class UIFunctions(ResultWindow):
             self.showMaximized()
 
             cls.GLOBAL_STATE = True
-
+            cls.move_TaskClose(self)
             self.bg_layout.setContentsMargins(0, 0, 0, 0)
             self.bg_frame.setStyleSheet(
                 """
@@ -128,12 +145,13 @@ class UIFunctions(ResultWindow):
                 round((self.ScrollAreaT.width() - 280) / 2),
                 round((self.ScrollAreaT.height() - 70) / 2),
             )
-            self.btn_maximize.setToolTip("Restore")
+            self.btn_maximize.setToolTip("khôi phục")
         else:
             cls.GLOBAL_STATE = False
             self.showNormal()
+            cls.move_TaskClose(self)
             self.resize(self.width() + 1, self.height() + 1)
-            self.bg_layout.setContentsMargins(10, 10, 10, 10)
+            self.bg_layout.setContentsMargins(0, 0, 0, 0)
             self.bg_frame.setStyleSheet(
                 """background-color: rgb(30, 30, 30); \nborder-radius: 10px;"""
             )
@@ -141,7 +159,7 @@ class UIFunctions(ResultWindow):
                 round((self.ScrollAreaT.width() - 280) / 2),
                 round((self.ScrollAreaT.height() - 70) / 2),
             )
-            self.btn_maximize.setToolTip("Maximize")
+            self.btn_maximize.setToolTip("Phóng to")
 
     class ResultFrame(QWidget):
         def __init__(self, *args, **kwargs):
@@ -184,7 +202,7 @@ class UIFunctions(ResultWindow):
 
     @classmethod
     def check_empty(cls, self, num):
-        if num == 0:
+        if num != 0:
             self.Out_btn.clicked.connect(lambda: self.close())
             self.Out_btn.clicked.connect(lambda: cls.reopen_main(self))
             self.Out_btn.setText("Thoát")
@@ -192,6 +210,7 @@ class UIFunctions(ResultWindow):
             self.inform.move(340, 220)
         else:
             self.Out_btn.clicked.connect(lambda: self.OkCancelFrame.show())
+            self.Accept.clicked.connect(lambda: self.btn_quit.hide())
             self.Accept.clicked.connect(lambda: self.stacked_widget.setCurrentIndex(0))
             self.Accept.clicked.connect(
             lambda: cls.check_true(self, len(cls.assignments)))
@@ -254,7 +273,7 @@ class UIFunctions(ResultWindow):
             self.frame.correct_num.setText(
                 str(correct)+'/'+str(len(cls.assignments[i].tests)))
             self.frame.test_file_label.setText(cls.assignments[i].name)
-
+        
             cls.TotalTest += len(cls.assignments[i].tests)
             
             if results[-1]:
@@ -273,17 +292,19 @@ class UIFunctions(ResultWindow):
         totalScore = int()
         for assignment in cls.assignments:
             totalScore += assignment.mark
-        try:
+        if cls.TotalScore != 0:
             self.progressBar.setValue(int((cls.TotalScore / totalScore)*100))
             self.Score.setText(str(round(cls.TotalScore, 2)))
-        except:
+        else:
             self.progressBar.setValue(0)
-        float(self.Score.text())< 0.7
         if float(self.Score.text()) < 0.7:
             self.Judge.setText("Bài làm vẫn chưa đạt chuẩn.")
         else:
             self.Judge.setText("Bài làm đạt chuẩn")
-
+        with open(OPENED_RESULT_PATH, 'r+', encoding = 'utf-8') as f:
+            if f.read() == '':
+                text = 'Em nào đó: '+ self.Score.text()
+                f.write(text)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

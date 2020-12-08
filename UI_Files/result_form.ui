@@ -26,6 +26,9 @@
      <height>418</height>
     </size>
    </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <property name="spacing">
      <number>0</number>
@@ -179,7 +182,7 @@ background: transparent;</string>
                 </size>
                </property>
                <property name="toolTip">
-                <string>Minimize</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Thu nhỏ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
@@ -191,6 +194,12 @@ background: transparent;</string>
 QPushButton:hover {
 	background-color: rgba(255, 170, 0, 150);
 	background-color: rgba(199, 199, 199, 150);
+}
+QToolTip {
+color: rgb(0,0,0);
+background-color: rgb(255,255,255);
+min-width: 45px;
+min-height: 20px;
 }</string>
                </property>
                <property name="text">
@@ -213,7 +222,7 @@ QPushButton:hover {
                 </size>
                </property>
                <property name="toolTip">
-                <string>Maximize</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Phóng to&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
@@ -225,6 +234,12 @@ QPushButton:hover {
 QPushButton:hover {
 	background-color: rgba(85, 255, 127, 150);
 	background-color: rgba(255, 255, 255, 150);
+}
+QToolTip {
+color: rgb(0,0,0);
+background-color: rgb(255,255,255);
+min-width: 45px;
+min-height: 20px;
 }</string>
                </property>
                <property name="text">
@@ -247,7 +262,7 @@ QPushButton:hover {
                 </size>
                </property>
                <property name="toolTip">
-                <string>Close</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Đóng&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
@@ -257,6 +272,12 @@ QPushButton:hover {
 }
 QPushButton:hover {
 	background-color: rgba(255, 0, 0, 150);
+}
+QToolTip {
+color: rgb(0,0,0);
+background-color: rgb(255,255,255);
+min-width: 45px;
+min-height: 20px;
 }</string>
                </property>
                <property name="text">
@@ -504,7 +525,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                          <x>0</x>
                          <y>0</y>
                          <width>100</width>
-                         <height>450</height>
+                         <height>30</height>
                         </rect>
                        </property>
                       </widget>
@@ -662,7 +683,7 @@ QProgressBar::chunk {
                           <string notr="true">color: rgb(255, 255, 255);</string>
                          </property>
                          <property name="text">
-                          <string>[Điểm]</string>
+                          <string>0</string>
                          </property>
                         </widget>
                        </item>
@@ -1134,6 +1155,115 @@ color: rgb(0, 0, 0);</string>
                          </property>
                         </widget>
                        </widget>
+                       <widget class="QFrame" name="OkCancelFrameQuit">
+                        <property name="geometry">
+                         <rect>
+                          <x>290</x>
+                          <y>130</y>
+                          <width>400</width>
+                          <height>180</height>
+                         </rect>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">QFrame {
+	background-color: rgb(228, 228, 228);
+	border-radius: 8px;
+}</string>
+                        </property>
+                        <property name="frameShape">
+                         <enum>QFrame::StyledPanel</enum>
+                        </property>
+                        <property name="frameShadow">
+                         <enum>QFrame::Raised</enum>
+                        </property>
+                        <widget class="QPushButton" name="Accept1">
+                         <property name="geometry">
+                          <rect>
+                           <x>60</x>
+                           <y>130</y>
+                           <width>100</width>
+                           <height>20</height>
+                          </rect>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QPushButton {
+border-radius:10;
+	border-color: rgb(0, 0, 0);
+	border : 1px solid ;
+font: bold;
+font-size: 15px;
+}
+QPushButton:hover {
+	background-color: rgb(0, 0, 0);
+	color: rgb(255, 255, 255);
+}</string>
+                         </property>
+                         <property name="text">
+                          <string>Chấp nhận</string>
+                         </property>
+                        </widget>
+                        <widget class="QPushButton" name="Deny1">
+                         <property name="geometry">
+                          <rect>
+                           <x>240</x>
+                           <y>130</y>
+                           <width>100</width>
+                           <height>20</height>
+                          </rect>
+                         </property>
+                         <property name="toolTip">
+                          <string/>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QPushButton {
+border-radius:10;
+	border-color: rgb(0, 0, 0);
+	border : 1px solid ;
+font: bold;
+font-size: 15px;
+}
+QPushButton:hover {
+	background-color: rgb(0, 0, 0);
+	color: rgb(255, 255, 255);
+}</string>
+                         </property>
+                         <property name="text">
+                          <string>Từ chối</string>
+                         </property>
+                         <property name="checkable">
+                          <bool>true</bool>
+                         </property>
+                         <property name="checked">
+                          <bool>true</bool>
+                         </property>
+                         <property name="autoRepeat">
+                          <bool>false</bool>
+                         </property>
+                         <property name="autoExclusive">
+                          <bool>true</bool>
+                         </property>
+                        </widget>
+                        <widget class="QLabel" name="label_5">
+                         <property name="geometry">
+                          <rect>
+                           <x>100</x>
+                           <y>80</y>
+                           <width>231</width>
+                           <height>40</height>
+                          </rect>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: none;
+font:bold;
+font-size: 16px;
+color: rgb(0, 0, 0);</string>
+                         </property>
+                         <property name="text">
+                          <string>   Xác nhận thoát cửa sổ?
+</string>
+                         </property>
+                        </widget>
+                       </widget>
                       </widget>
                      </widget>
                     </item>
@@ -1141,7 +1271,7 @@ color: rgb(0, 0, 0);</string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QFrame" name="Btn_frameT">
+                  <widget class="QFrame" name="frame">
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
@@ -1149,7 +1279,7 @@ color: rgb(0, 0, 0);</string>
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">color: rgb(0, 0, 0);</string>
+                    <string notr="true">color: rgb(0,0,0);</string>
                    </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
@@ -1157,10 +1287,7 @@ color: rgb(0, 0, 0);</string>
                    <property name="frameShadow">
                     <enum>QFrame::Raised</enum>
                    </property>
-                   <layout class="QHBoxLayout" name="horizontalLayout_4">
-                    <property name="spacing">
-                     <number>0</number>
-                    </property>
+                   <layout class="QGridLayout" name="gridLayout_2">
                     <property name="leftMargin">
                      <number>0</number>
                     </property>
@@ -1173,7 +1300,10 @@ color: rgb(0, 0, 0);</string>
                     <property name="bottomMargin">
                      <number>0</number>
                     </property>
-                    <item>
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <item row="0" column="0">
                      <widget class="QPushButton" name="Out_btn">
                       <property name="minimumSize">
                        <size>

@@ -181,7 +181,7 @@ color: rgb(255, 255, 255);</string>
                 </size>
                </property>
                <property name="toolTip">
-                <string>Minimize</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Thu nhỏ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
@@ -193,6 +193,12 @@ color: rgb(255, 255, 255);</string>
 QPushButton:hover {
 	background-color: rgba(255, 170, 0, 150);
 	background-color: rgba(199, 199, 199, 150);
+}
+QToolTip {
+color: rgb(0,0,0);
+background-color: rgb(255,255,255);
+min-width: 45px;
+min-height: 20px;
 }</string>
                </property>
                <property name="text">
@@ -215,7 +221,7 @@ QPushButton:hover {
                 </size>
                </property>
                <property name="toolTip">
-                <string>Maximize</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Phóng to&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
@@ -227,6 +233,12 @@ QPushButton:hover {
 QPushButton:hover {
 	background-color: rgba(85, 255, 127, 150);
 	background-color: rgba(255, 255, 255, 150);
+}
+QToolTip {
+color: rgb(0,0,0);
+background-color: rgb(255,255,255);
+min-width: 45px;
+min-height: 20px;
 }</string>
                </property>
                <property name="text">
@@ -249,7 +261,7 @@ QPushButton:hover {
                 </size>
                </property>
                <property name="toolTip">
-                <string>Close</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Đóng&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
@@ -259,6 +271,12 @@ QPushButton:hover {
 }
 QPushButton:hover {
 	background-color: rgba(255, 0, 0, 150);
+}
+QToolTip {
+color: rgb(0,0,0);
+background-color: rgb(255,255,255);
+min-width: 45px;
+min-height: 20px;
 }</string>
                </property>
                <property name="text">
@@ -1212,8 +1230,8 @@ QScrollBar::add-page, QScrollBar::sub-page {
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>1046</width>
-                         <height>484</height>
+                         <width>100</width>
+                         <height>30</height>
                         </rect>
                        </property>
                       </widget>

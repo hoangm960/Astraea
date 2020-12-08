@@ -44,7 +44,7 @@ class UIFunctions(MainWindow):
 
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-
+        
         ui.shadow = QGraphicsDropShadowEffect(ui)
         ui.shadow.setBlurRadius(50)
         ui.shadow.setXOffset(0)
@@ -53,6 +53,10 @@ class UIFunctions(MainWindow):
         ui.bg_frame.setGraphicsEffect(ui.shadow)
 
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
+        def minimize(window):
+            win32gui.ShowWindow(window, win32con.SW_MINIMIZE)
+        ui.btn_minimize.clicked.connect(lambda: minimize(cls.pg))
+        
         ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
         ui.load_btn.clicked.connect(
             lambda: cls.show_file_dialog(ui, OPENED_LESSON_PATH)
@@ -91,11 +95,10 @@ class UIFunctions(MainWindow):
                     if found_pid == pid:
                         hwnds.append(hwnd)
                 return True
-
+            
             hwnds = []
             win32gui.EnumWindows(callback, hwnds)
             return hwnds
-
         idle = subprocess.Popen(cls.find_idle())
 
         sleep(2)
@@ -106,6 +109,7 @@ class UIFunctions(MainWindow):
         if cls.pg:
             win32gui.MoveWindow(cls.pg, -8, 0, Main.SCREEN_WIDTH - ui.width() + 16, ui.height() + 8, True)
             win32gui.SetActiveWindow(cls.pg)
+            win32gui.SetWindowPos(cls.pg, win32con.HWND_TOPMOST, 100, 100, 300, 200, 0)
 
     @classmethod
     def close_pg(cls, ui):

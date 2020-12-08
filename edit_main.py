@@ -83,7 +83,6 @@ class UIFunctions(EditWindow):
     ASSIGNMENTS = []
     deleted = False
     doc_files = []
-    CheckValue = True
     @classmethod
     def uiDefinitions(cls, ui):
         # Delete title bar
@@ -138,7 +137,7 @@ class UIFunctions(EditWindow):
         children = ui.content_widget.children()
         del children[0]
         for child in children:
-            if child.title_entry.text() == '':
+            if not child.title_entry.text():
                 child.title_entry.setStyleSheet(
                     """background-color: rgb(255, 255, 255); 
                     border: 2px solid rgb(225, 0 , 0); 
@@ -149,7 +148,8 @@ class UIFunctions(EditWindow):
                     """background-color: rgb(255, 255, 255); 
                     border: 0px solid black; 
                     border-radius: 12px;""")
-            if child.ex_file_entry.text() == '':
+                    
+            if not os.path.exists(child.ex_file_entry.text()):
                 child.ex_file_entry.setStyleSheet(
                     """background-color: rgb(255, 255, 255); 
                     border: 2px solid rgb(225, 0 , 0); border-radius: 12px;""")
@@ -157,9 +157,9 @@ class UIFunctions(EditWindow):
             else:
                 child.ex_file_entry.setStyleSheet(
                     """background-color: rgb(255, 255, 255); 
-                    border: 0px solid black; 
+                    border: 0px solid black;
                     border-radius: 12px;""")
-            if child.test_file_entry.text() == '':
+            if not os.path.exists(child.test_file_entry.text()):
                 child.test_file_entry.setStyleSheet(
                     """background-color: rgb(255, 255, 255); 
                     border: 2px solid rgb(225, 0 , 0); 
@@ -170,19 +170,6 @@ class UIFunctions(EditWindow):
                     """background-color: rgb(255, 255, 255); 
                     border: 0px solid black; 
                     border-radius: 12px;""")
-                cls.CheckValue = False
-            if child.details_entry.toPlainText():
-                child.details_entry.setStyleSheet(
-                    """background-color: rgb(255, 255, 255); 
-                    border: 5px solid rgb(225, 0 , 0); 
-                    border-radius: 12px;""")
-                cls.CheckValue = False
-            else:
-                child.details_entry.setStyleSheet(
-                    """background-color: rgb(255, 255, 255); 
-                    border: 0px solid black; 
-                    border-radius: 12px;""")
-                cls.CheckValue = False
             if child.Score_edit.value() < 0:
                 child.Score_edit.setStyleSheet(
                     """background-color: rgb(255, 255, 255); 
@@ -194,10 +181,8 @@ class UIFunctions(EditWindow):
                     """background-color: rgb(255, 255, 255); 
                     border: 0px solid black; 
                     border-radius: 12px;""")
-        if cls.CheckValue == True:
+        if cls.CheckValue:
             cls.show_file_dialog(ui, OPENED_ASSIGNMENT_PATH)
-        else:
-            pass
     @classmethod
     def check_empty(cls, ui, filename):
         if os.path.exists(filename):
@@ -236,12 +221,12 @@ class UIFunctions(EditWindow):
                 border-radius: 0px;
                 color: rgb(255, 255, 255);"""
             )
-            ui.btn_maximize.setToolTip("Thu nhỏ")
+            ui.btn_maximize.setToolTip("khôi phục")
         else:
             cls.GLOBAL_STATE = False
             ui.showNormal()
             ui.resize(ui.width() + 1, ui.height() + 1)
-            ui.bg_layout.setContentsMargins(10, 10, 10, 10)
+            ui.bg_layout.setContentsMargins(0, 0, 0, 0)
             ui.bg_frame.setStyleSheet(
                 """background-color: rgb(30, 30, 30);
                 border-radius: 10px;
@@ -376,7 +361,6 @@ class UIFunctions(EditWindow):
                         children[i].Score_edit.value(),
                     )
                 )
-        print(assignments)
         with open(filename, "wb") as f:
             pickle.dump([ui.lesson_title.text(), assignments], f, -1)
 

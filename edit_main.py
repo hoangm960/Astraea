@@ -52,9 +52,10 @@ class Assignment:
 
 
 class EditWindow(QMainWindow):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, name, *args, **kwargs):
         QMainWindow.__init__(self, *args, **kwargs)
         uic.loadUi(EDIT_FORM_PATH, self)
+        self.name = name
         self.setGeometry(
             round((QApplication.primaryScreen().size().width() - self.width()) / 2),
             round((QApplication.primaryScreen().size().height() - self.height()) / 2),
@@ -368,12 +369,12 @@ class UIFunctions(EditWindow):
 
     @classmethod
     def reopen_main(cls, ui):
-        main_ui.main("teacher")
+        main_ui.main("teacher", ui.name)
         ui.close()
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = EditWindow()
+    window = EditWindow('mineshark15@gmail.com')
     window.show()
     sys.exit(app.exec_())

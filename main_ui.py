@@ -101,7 +101,7 @@ class UIFunctions(MainWindow):
             return hwnds
         idle = subprocess.Popen(cls.find_idle())
 
-        sleep(2)
+        sleep(1)
 
         for hwnd in get_hwnds_for_pid(idle.pid):
             cls.pg = hwnd
@@ -110,12 +110,11 @@ class UIFunctions(MainWindow):
             win32gui.MoveWindow(cls.pg, -8, 0, Main.SCREEN_WIDTH - ui.width() + 16, ui.height() + 8, True)
             win32gui.SetActiveWindow(cls.pg)
 
+
     @classmethod
     def close_pg(cls, ui):
-        try:
-            win32gui.SendMessage(cls.pg, win32con.WM_CLOSE, 0, 0)
-        except:
-            pass
+        win32gui.SetActiveWindow(cls.pg)
+        win32gui.SendMessage(cls.pg, win32con.WM_CLOSE, 0, 0)
         ui.close()
 
     @classmethod

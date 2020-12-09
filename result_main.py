@@ -1,3 +1,5 @@
+from datetime import datetime
+from win32api import GetMonitorInfo, MonitorFromPoint
 import os
 import pickle
 import sys
@@ -10,16 +12,14 @@ from PyQt5.QtWidgets import (QApplication, QFileDialog,
 
 import check_algorithm
 import main_ui
-from win32api import GetMonitorInfo, MonitorFromPoint
 
 
 RESULT_FORM_PATH = "./UI_Files/result_form.ui"
 RESULT_FRAME_PATH = "./UI_Files/result_frame.ui"
 TEST_FRAME_PATH = "./UI_Files/Test_frame.ui"
 OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
-OPENED_RESULT_PATH = "./data/results"
-if not os.path.exists(OPENED_RESULT_PATH):
-    open(OPENED_RESULT_PATH, "w").close()
+OPENED_RESULT_PATH = "./data/results/"
+
 monitor_info = GetMonitorInfo(MonitorFromPoint((0, 0)))
 work_area = monitor_info.get("Work")
 SCREEN_WIDTH, SCREEN_HEIGHT = work_area[2], work_area[3]
@@ -192,12 +192,6 @@ class UIFunctions(ResultWindow):
                     cls.assignments = data[1]
 
     @classmethod
-    def reopen_main(cls, ui):
-        import main_ui
-        main_ui.main("student")
-        ui.close()
-
-    @classmethod
     def check_empty(cls, self, num):
         if num == 0:
             self.Out_btn.clicked.connect(lambda: self.close())
@@ -293,10 +287,17 @@ class UIFunctions(ResultWindow):
             self.Judge.setText("Bài làm vẫn chưa đạt chuẩn.")
         else:
             self.Judge.setText("Bài làm đạt chuẩn")
-        with open(f"{OPENED_RESULT_PATH}{open(cls.OPENED_USER).read().rstrip()}.rf", 'w+', encoding='utf-8') as f:
+        with open(f"{OPENED_RESULT_PATH}{open(cls.OPENED_USER).read().rstrip()}.rf", 'a', encoding='utf-8') as f:
             name_account = open(cls.OPENED_USER).read().rstrip()
-            text = f'    FILE KẾT QUẢ:\n{name_account} :  {self.Score.text()}'
+            current_time = datetime.now().strftime("%H:%M:%S")
+            text = f'{name_account} :  {self.Score.text()} ({current_time})\n'
             f.write(text)
+
+    @staticmethod
+    def reopen_main(ui):
+        import main_ui
+        main_ui.main("student")
+        ui.close()
 
 
 def main():

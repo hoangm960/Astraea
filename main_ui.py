@@ -77,22 +77,18 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def open_idle(cls, ui):
-        os.system("code -n")
-        windows = gw.getAllWindows()
-        for window in windows:
-            if "Visual Studio Code" in window.title:
-                cls.pg = window
-                break
-        cls.pg.restore()
-        cls.pg.moveTo(0, 0)
-        cls.pg.resizeTo(round((SCREEN_WIDTH - ui.width())), ui.height())
+        os.system("start pythonwin")
+        sleep(1)
+        cls.pg = gw.getWindowsWithTitle("PythonWin")[0] if gw.getWindowsWithTitle("PythonWin") else ''
+        if cls.pg:
+            cls.pg.restore()
+            cls.pg.moveTo(-8, 0)
+            cls.pg.resizeTo(SCREEN_WIDTH - ui.width() + 16, ui.height() + 8)
 
     @classmethod
     def close_pg(cls, ui):
-        try:
+        if cls.pg:
             cls.pg.close()
-        except:
-            pass
         ui.close()
 
     # @staticmethod
@@ -185,48 +181,28 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def open_doc(cls, ui):
-        ui.main = doc.DocWindow()
+        ui.main = doc.DocWindow(ui.role)
         ui.main.show()
 
     class TeacherUiFunctions:
-        parent = None
-        changed = False
 
-        def __init__(cls, parent, ui):
-            cls.parent = parent
+        def __init__(self, parent, ui):
+            self.parent = parent
 
             ui.main_btn.setText("Sửa đổi")
             ui.main_btn.setStyleSheet(
                 """QPushButton {background-color: rgb(156, 220, 254); border-radius: 5px;}
             QPushButton:hover {background-color: rgba(156, 220, 254, 150);}"""
             )
-            ui.main_btn.clicked.connect(lambda: cls.open_edit_form(ui))
+            ui.main_btn.clicked.connect(lambda: self.open_edit_form(ui))
 
-        @classmethod
-        def show_confirm_mess(cls, ui):
-            msg = QMessageBox()
-            msg.setWindowTitle("Thành công sửa đổi bài tập")
-            msg.setText("Chi tiết câu đã được chỉnh sửa")
-            msg.setDetailedText(
-                f"Chi tiết gốc:\n{list(cls.parent.assignments.values())[ui.list_assignments.currentRow()]}\n\nChi tiết sau khi sửa đổi:\n{ui.assignment_details.toPlainText()}"
-            )
-            msg.setIcon(QMessageBox.Information)
-            msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-            msg.buttonClicked.connect(cls.popup_button)
-            msg.exec_()
-
-        @classmethod
-        def popup_button(cls, i):
-            cls.changed = True if i.text().lower() == "ok" else False
-
-        @classmethod
-        def open_edit_form(cls, ui):
+        def open_edit_form(self, ui):
+            self.parent.close_pg(ui)
             window = edit_main.EditWindow()
             window.show()
 
     class StudentUiFunctions:
-        def __init__(cls, parent, ui):
-            cls.parent = parent
+        def __init__(cls, ui):
 
             ui.main_btn.setText("Kiểm tra")
             ui.main_btn.setStyleSheet(
@@ -245,7 +221,7 @@ class UIFunctions(MainWindow):
         if ui.role.lower() == "teacher":
             cls.TeacherUiFunctions(cls, ui)
         if ui.role.lower() == "student":
-            cls.StudentUiFunctions(cls, ui)
+            cls.StudentUiFunctions(ui)
 
 
 def main(role):

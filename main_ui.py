@@ -56,9 +56,9 @@ class UIFunctions(MainWindow):
 
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
 
-        def minimize(window):
-            win32gui.ShowWindow(window, win32con.SW_MINIMIZE)
-        ui.btn_minimize.clicked.connect(lambda: minimize(cls.pg))
+        # def minimize(window):
+        #     win32gui.ShowWindow(window, win32con.SW_MINIMIZE)
+        # ui.btn_minimize.clicked.connect(lambda: minimize(cls.pg))
 
         ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
         ui.load_btn.clicked.connect(

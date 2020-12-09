@@ -260,20 +260,20 @@ class UIFunctions(ResultWindow):
             self.frame.test_file_label.setText(cls.assignments[i].name)
 
             cls.TotalTest += len(cls.assignments[i].tests)
-
-            if results[-1]:
-                self.frame.Score_box.setText(
-                    str(correct / len(results[:-1]) * cls.assignments[i].mark)
-                )
+            if len(results) != 0:
                 if results[-1]:
-                    self.frame.detail_entry.setText("Bài làm đã tối ưu hóa.")
+                    self.frame.Score_box.setText(
+                        str(correct / len(results[:-1]) * cls.assignments[i].mark)
+                    )
+                    if results[-1]:
+                        self.frame.detail_entry.setText("Bài làm đã tối ưu hóa.")
+                    else:
+                        self.frame.detail_entry.setText("Bài làm chưa tối ưu hóa.")
+                    cls.Total += correct
+                    cls.TotalScore += (correct /
+                                    len(cls.assignments[i].tests) * cls.assignments[i].mark)
                 else:
-                    self.frame.detail_entry.setText("Bài làm chưa tối ưu hóa.")
-                cls.Total += correct
-                cls.TotalScore += (correct /
-                                   len(cls.assignments[i].tests) * cls.assignments[i].mark)
-            else:
-                self.frame.detail_entry.setText("Chưa làm câu này")
+                    self.frame.detail_entry.setText("Chưa làm câu này")
 
         totalScore = int()
         for assignment in cls.assignments:
@@ -287,7 +287,8 @@ class UIFunctions(ResultWindow):
             self.Judge.setText("Bài làm vẫn chưa đạt chuẩn.")
         else:
             self.Judge.setText("Bài làm đạt chuẩn")
-        with open(f"{OPENED_RESULT_PATH}{open(cls.OPENED_USER).read().rstrip()}.rf", 'a', encoding='utf-8') as f:
+            
+        with open(f"{OPENED_RESULT_PATH}{open(cls.OPENED_USER).read().rstrip()}.rf", 'a+', encoding='utf-8') as f:
             name_account = open(cls.OPENED_USER).read().rstrip()
             current_time = datetime.now().strftime("%H:%M:%S")
             text = f'{name_account} :  {self.Score.text()} ({current_time})\n'

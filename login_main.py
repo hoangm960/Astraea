@@ -19,6 +19,7 @@ monitor_info = GetMonitorInfo(MonitorFromPoint((0, 0)))
 work_area = monitor_info.get("Work")
 SCREEN_WIDTH, SCREEN_HEIGHT = work_area[2], work_area[3]
 
+
 class User:
     def __init__(self, name, password, role, name_user, auto_saved):
         self.name = name
@@ -45,7 +46,6 @@ class LoginWindow(QMainWindow):
                 self.move(self.pos() + event.globalPos() - self.dragPos)
                 self.dragPos = event.globalPos()
                 event.accept()
-                
 
         self.title_bar.mouseMoveEvent = moveWindow
 
@@ -191,7 +191,6 @@ class LoginFunctions(LoginWindow):
                     }"""
             )
 
-
     @classmethod
     def load_users(cls):
         cls.users.clear()
@@ -212,21 +211,25 @@ class LoginFunctions(LoginWindow):
             self.Error_Content.setText("Chưa điền đầy đủ thông tin đăng nhập")
         elif not [True for user in cls.users if user.name == name]:
             self.frameError.show()
-            self.Error_Content.setText("Tên tài khoản không tồn tại. Hãy nhập lại.")            
+            self.Error_Content.setText(
+                "Tên tài khoản không tồn tại. Hãy nhập lại.")
         elif not [True for user in cls.users if user.name == name and user.password == password]:
             self.frameError.show()
-            self.Error_Content.setText("Mật khẩu không chính xác. Hãy nhập lại.")
+            self.Error_Content.setText(
+                "Mật khẩu không chính xác. Hãy nhập lại.")
         else:
             for user in cls.users:
                 if user.name == name:
-                    open(cls.OPENED_USER, 'w', encoding = 'utf-8').write(user.name_user)
+                    open(cls.OPENED_USER, 'w',
+                         encoding='utf-8').write(user.name_user)
 
                     for i in range(len(cls.users)):
                         cls.users[i].auto_saved = False
                     if self.SavePass.isChecked():
                         cls.users[cls.users.index(user)].auto_saved = True
 
-                    decrypt(cls.USER_PATH_ENCRYPTED, cls.USER_PATH, cls.KEY_PATH)
+                    decrypt(cls.USER_PATH_ENCRYPTED,
+                            cls.USER_PATH, cls.KEY_PATH)
                     time.sleep(1)
                     with open(cls.USER_PATH, "wb") as f:
                         pickle.dump(cls.users, f)
@@ -265,14 +268,14 @@ class LoginFunctions(LoginWindow):
         else:
             self.Note_Pass.hide()
         if not "".join([i for i in name_account.lower() if i not in cls.enabled]).isalnum():
-            if (not "".join([i for i in name_account.lower() if i not in cls.enabled])== ""):
+            if (not "".join([i for i in name_account.lower() if i not in cls.enabled]) == ""):
                 self.Note_User.show()
-                check = False      
+                check = False
             else:
                 self.Note_User.hide()
         else:
             self.Note_User.hide()
-        if len(name_account)<6:
+        if len(name_account) < 6:
             self.Note_User.show()
             check = False
         if check:

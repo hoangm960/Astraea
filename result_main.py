@@ -1,18 +1,18 @@
-from datetime import datetime
-from win32api import GetMonitorInfo, MonitorFromPoint
 import os
 import pickle
 import sys
+from datetime import datetime
 
 from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (QApplication, QFileDialog,
-                             QGraphicsDropShadowEffect, QMainWindow, QSizeGrip, QVBoxLayout, QWidget)
+                             QGraphicsDropShadowEffect, QMainWindow, QSizeGrip,
+                             QVBoxLayout, QWidget)
+from win32api import GetMonitorInfo, MonitorFromPoint
 
 import check_algorithm
 import main_ui
-
 
 RESULT_FORM_PATH = "./UI_Files/result_form.ui"
 RESULT_FRAME_PATH = "./UI_Files/result_frame.ui"

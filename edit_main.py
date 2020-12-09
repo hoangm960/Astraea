@@ -8,7 +8,6 @@ from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (QApplication, QFileDialog,
                              QGraphicsDropShadowEffect, QMainWindow, QMessageBox,
                              QSizeGrip, QVBoxLayout, QWidget)
-from win32com import client as wc
 
 import main_ui
 

@@ -192,7 +192,7 @@ class UIFunctions(ResultWindow):
                     cls.assignments = data[1]
 
     @classmethod
-    def reopen_main(cls, self, ui):
+    def reopen_main(cls, ui):
         import main_ui
         main_ui.main("student")
         ui.close()

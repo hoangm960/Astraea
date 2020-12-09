@@ -367,8 +367,9 @@ class UIFunctions(EditWindow):
 
     @classmethod
     def reopen_main(cls, ui):
-        main_ui.main("teacher")
         ui.close()
+        main_ui.UIFunctions.open_idle(ui)
+        main_ui.main("teacher")
 
 
 if __name__ == "__main__":

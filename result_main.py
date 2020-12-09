@@ -61,10 +61,10 @@ class UIFunctions(ResultWindow):
     Total = int()
     TotalTest = int()
     TotalScore = int()
-    USER_PATH = "data/Users/User.txt"
-    USER_PATH_ENCRYPTED = "data/Users/User.encrypted"
-    KEY_PATH = "data/encryption/users.key"
-    OPENED_USER = "data/Users/opened_user.ou"
+    USER_PATH = "./data/Users/User.txt"
+    USER_PATH_ENCRYPTED = "./data/Users/User.encrypted"
+    KEY_PATH = "./data/encryption/users.key"
+    OPENED_USER = "./data/Users/opened_user.ou"
 
     @classmethod
     def load_assignments(cls, ui, filename):

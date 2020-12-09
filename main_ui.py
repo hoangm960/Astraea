@@ -18,6 +18,7 @@ import edit_main
 import result_main
 from UI_Files import Resources
 from win32api import GetMonitorInfo, MonitorFromPoint
+import pygetwindow as gw
 
 
 UI_MAIN_PATH = "./UI_Files/ui_main.ui"
@@ -45,7 +46,7 @@ class UIFunctions(MainWindow):
 
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-        
+
         ui.shadow = QGraphicsDropShadowEffect(ui)
         ui.shadow.setBlurRadius(50)
         ui.shadow.setXOffset(0)
@@ -54,10 +55,11 @@ class UIFunctions(MainWindow):
         ui.bg_frame.setGraphicsEffect(ui.shadow)
 
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
+
         def minimize(window):
             win32gui.ShowWindow(window, win32con.SW_MINIMIZE)
         ui.btn_minimize.clicked.connect(lambda: minimize(cls.pg))
-        
+
         ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
         ui.load_btn.clicked.connect(
             lambda: cls.show_file_dialog(ui, OPENED_LESSON_PATH)
@@ -67,55 +69,73 @@ class UIFunctions(MainWindow):
         ui.LessonButton.clicked.connect(lambda: cls.open_doc(ui))
 
         ui.list_assignments.itemPressed.connect(lambda: cls.load_details(ui))
-        
 
         cls.define_role(ui)
         cls.check_opened_lesson(ui, OPENED_LESSON_PATH)
 
         cls.open_idle(ui)
 
-    @staticmethod
-    def find_idle():
-        class Error(Exception): pass
-
-        def _find(pathname, matchFunc=os.path.isfile):
-            for dirname in sys.path:
-                candidate = os.path.join(dirname, pathname)
-                if matchFunc(candidate):
-                    return candidate
-            raise Error("Can't find file %s" % pathname)
-
-        return _find("Lib\site-packages\pythonwin\Pythonwin.exe")
-
     @classmethod
     def open_idle(cls, ui):
-        def get_hwnds_for_pid(pid):
-            def callback(hwnd, hwnds):
-                if win32gui.IsWindowVisible(hwnd) and win32gui.IsWindowEnabled(hwnd):
-                    _, found_pid = win32process.GetWindowThreadProcessId(hwnd)
-                    if found_pid == pid:
-                        hwnds.append(hwnd)
-                return True
-            
-            hwnds = []
-            win32gui.EnumWindows(callback, hwnds)
-            return hwnds
-
-        idle = subprocess.Popen(cls.find_idle())
-
-        sleep(1)
-        for hwnd in get_hwnds_for_pid(idle.pid):
-            cls.pg = hwnd
-        if cls.pg:
-            win32gui.MoveWindow(cls.pg, -8, 0, SCREEN_WIDTH - ui.width() + 16, ui.height() + 8, True)
-            win32gui.SetActiveWindow(cls.pg)
-
+        os.system("code -n")
+        windows = gw.getAllWindows()
+        for window in windows:
+            if "Visual Studio Code" in window.title:
+                cls.pg = window
+                break
+        cls.pg.restore()
+        cls.pg.moveTo(0, 0)
+        cls.pg.resizeTo(round((SCREEN_WIDTH - ui.width())), ui.height())
 
     @classmethod
     def close_pg(cls, ui):
-        win32gui.SetActiveWindow(cls.pg)
-        win32gui.SendMessage(cls.pg, win32con.WM_CLOSE, 0, 0)
+        try:
+            cls.pg.close()
+        except:
+            pass
         ui.close()
+
+    # @staticmethod
+    # def find_idle():
+    #     class Error(Exception): pass
+
+    #     def _find(pathname, matchFunc=os.path.isfile):
+    #         for dirname in sys.path:
+    #             candidate = os.path.join(dirname, pathname)
+    #             if matchFunc(candidate):
+    #                 return candidate
+    #         raise Error("Can't find file %s" % pathname)
+
+    #     return _find("Lib\site-packages\pythonwin\Pythonwin.exe")
+
+    # @classmethod
+    # def open_idle(cls, ui):
+    #     def get_hwnds_for_pid(pid):
+    #         def callback(hwnd, hwnds):
+    #             if win32gui.IsWindowVisible(hwnd) and win32gui.IsWindowEnabled(hwnd):
+    #                 _, found_pid = win32process.GetWindowThreadProcessId(hwnd)
+    #                 if found_pid == pid:
+    #                     hwnds.append(hwnd)
+    #             return True
+
+    #         hwnds = []
+    #         win32gui.EnumWindows(callback, hwnds)
+    #         return hwnds
+
+    #     idle = subprocess.Popen(cls.find_idle())
+
+    #     sleep(1)
+    #     for hwnd in get_hwnds_for_pid(idle.pid):
+    #         cls.pg = hwnd
+    #     if cls.pg:
+    #         win32gui.MoveWindow(cls.pg, -8, 0, SCREEN_WIDTH - ui.width() + 16, ui.height() + 8, True)
+    #         win32gui.SetActiveWindow(cls.pg)
+
+    # @classmethod
+    # def close_pg(cls, ui):
+    #     win32gui.SetActiveWindow(cls.pg)
+    #     win32gui.SendMessage(cls.pg, win32con.WM_CLOSE, 0, 0)
+    #     ui.close()
 
     @classmethod
     def check_opened_lesson(cls, ui, filename):
@@ -132,7 +152,7 @@ class UIFunctions(MainWindow):
         file_path = QFileDialog.getOpenFileName(
             ui, "Open file", HOME_PATH, "*.list")[0]
         if file_path:
-            with open(filename, "w",encoding = 'utf8') as f:
+            with open(filename, "w", encoding='utf8') as f:
                 f.write(file_path)
             cls.load_assignments(ui, file_path)
 

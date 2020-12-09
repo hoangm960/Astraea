@@ -1,5 +1,6 @@
 import os
 import pickle
+import subprocess
 import sys
 
 import win32con
@@ -52,9 +53,9 @@ class UIFunctions(MainWindow):
 
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
 
-        # def minimize(window):
-        #     win32gui.ShowWindow(window, win32con.SW_MINIMIZE)
-        # ui.btn_minimize.clicked.connect(lambda: minimize(cls.pg))
+        def minimize(window):
+            win32gui.ShowWindow(window, win32con.SW_MINIMIZE)
+        ui.btn_minimize.clicked.connect(lambda: minimize(cls.pg))
 
         ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
         ui.load_btn.clicked.connect(
@@ -73,12 +74,14 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def open_idle(cls, ui):
-        os.system("start pythonwin")
-
-        while True:
+        checked = False
+        while not checked:
             if gw.getWindowsWithTitle("PythonWin"):
                 cls.pg = gw.getWindowsWithTitle("PythonWin")[0]
-                break
+                checked = True
+            else:
+                subprocess.call("start pythonwin")
+
 
         cls.pg.restore()
         cls.pg.moveTo(-8, 0)

@@ -1,10 +1,17 @@
+import os
 import login_main
 import argparse
 from pathlib import Path
+import pygetwindow as gw
+from win32api import GetMonitorInfo, MonitorFromPoint
+
 
 USER_PATH = "./data/Users/"
 ENCRYPTION_PATH = "./data/encryption/"
 OPENED_RESULT_PATH = "./data/results/"
+monitor_info = GetMonitorInfo(MonitorFromPoint((0, 0)))
+work_area = monitor_info.get("Work")
+SCREEN_WIDTH, SCREEN_HEIGHT = work_area[2], work_area[3]
 
 Path(USER_PATH).mkdir(parents=True, exist_ok=True)
 Path(ENCRYPTION_PATH).mkdir(parents=True, exist_ok=True)
@@ -17,6 +24,19 @@ parser.add_argument(
     "--file", type=str, help="Mở ứng dụng với file cho trước."
 )
 args = parser.parse_args()
-# login_main.main(args.file)
 
+pg = None
+def open_idle():
+    global pg
+    os.system("start pythonwin")
+
+    while True:
+        if gw.getWindowsWithTitle("PythonWin"):
+            pg = gw.getWindowsWithTitle("PythonWin")[0]
+            break
+    pg.minimize()
+
+open_idle()
+
+# login_main.main(args.file)
 login_main.main()

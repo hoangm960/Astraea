@@ -298,7 +298,6 @@ class UIFunctions(ResultWindow):
             text = f'    FILE KẾT QUẢ:\n{name_account} :  {self.Score.text()}'
             f.write(text)
 
-
 def main():
     app = QApplication(sys.argv)
     window = ResultWindow()

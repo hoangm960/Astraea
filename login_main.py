@@ -74,6 +74,7 @@ class LoginFunctions(LoginWindow):
         self.Note_Name.hide()
         self.Note_Pass.hide()
         self.Note_User.hide()
+        self.Note_Name.clicked.connect(lambda: self.Note_Name.QToolTip.show())
         self.setGeometry(
             round((SCREEN_WIDTH - self.width()) / 2),
             round((SCREEN_HEIGHT - self.height()) / 2),
@@ -218,7 +219,7 @@ class LoginFunctions(LoginWindow):
         else:
             for user in cls.users:
                 if user.name == name:
-                    open(cls.OPENED_USER, 'w').write(user.name_user)
+                    open(cls.OPENED_USER, 'w', encoding = 'utf-8').write(user.name_user)
 
                     for i in range(len(cls.users)):
                         cls.users[i].auto_saved = False

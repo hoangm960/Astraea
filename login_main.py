@@ -1,4 +1,3 @@
-import Main
 import os
 import pickle
 import sys
@@ -11,12 +10,15 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor, QPalette
 from PyQt5.QtWidgets import (QApplication, QGraphicsDropShadowEffect,
                              QMainWindow, QSizeGrip, QWidget)
+from win32api import GetMonitorInfo, MonitorFromPoint
 
-import main_ui  
+import main_ui
 from encryption import *
 
 FILE = ""
-
+monitor_info = GetMonitorInfo(MonitorFromPoint((0, 0)))
+work_area = monitor_info.get("Work")
+SCREEN_WIDTH, SCREEN_HEIGHT = work_area[2], work_area[3]
 
 class User:
     def __init__(self, name, password, role, name_user, auto_saved):
@@ -74,8 +76,8 @@ class LoginFunctions(LoginWindow):
         self.Note_Pass.hide()
         self.Note_User.hide()
         self.setGeometry(
-            round((Main.SCREEN_WIDTH - self.width()) / 2),
-            round((Main.SCREEN_HEIGHT - self.height()) / 2),
+            round((SCREEN_WIDTH - self.width()) / 2),
+            round((SCREEN_HEIGHT - self.height()) / 2),
             self.width(),
             self.height()
         )
@@ -294,8 +296,8 @@ class Loading_Screen(QMainWindow):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi("UI_files/Loading_Screen.ui", self)
         self.move(
-            round((Main.SCREEN_WIDTH - self.width()) / 2),
-            round((Main.SCREEN_HEIGHT - self.height()) / 2),
+            round((SCREEN_WIDTH - self.width()) / 2),
+            round((SCREEN_HEIGHT - self.height()) / 2),
         )
 
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
@@ -315,8 +317,8 @@ class Loading_Screen(QMainWindow):
             self.timer.stop()
             self.main = LoginWindow()
             self.main.setGeometry(
-                round((Main.SCREEN_WIDTH - self.main.width()) / 2),
-                round((Main.SCREEN_HEIGHT - self.main.height()) / 5),
+                round((SCREEN_WIDTH - self.main.width()) / 2),
+                round((SCREEN_HEIGHT - self.main.height()) / 5),
                 self.main.width(),
                 self.main.height(),
             )

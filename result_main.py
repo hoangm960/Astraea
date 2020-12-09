@@ -1,21 +1,23 @@
-from PyQt5 import QtCore, uic
-from PyQt5.QtCore import QSize, Qt
-from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import (QApplication, QFileDialog, QMessageBox,
-                             QGraphicsDropShadowEffect, QLayout,
-                             QListWidgetItem, QMainWindow, QSizeGrip,
-                             QVBoxLayout, QWidget)
-import time
-from encryption import decrypt, encrypt
-import Main
 import os
 import pickle
 import sys
+import time
 from pathlib import Path
 
 import pyautogui
+from PyQt5 import QtCore, uic
+from PyQt5.QtCore import QSize, Qt
+from PyQt5.QtGui import QColor
+from PyQt5.QtWidgets import (QApplication, QFileDialog,
+                             QGraphicsDropShadowEffect, QLayout,
+                             QListWidgetItem, QMainWindow, QMessageBox,
+                             QSizeGrip, QVBoxLayout, QWidget)
+
 import check_algorithm
 import main_ui
+from encryption import decrypt, encrypt
+from win32api import GetMonitorInfo, MonitorFromPoint
+
 
 RESULT_FORM_PATH = "./UI_Files/result_form.ui"
 RESULT_FRAME_PATH = "./UI_Files/result_frame.ui"
@@ -24,6 +26,9 @@ OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
 OPENED_RESULT_PATH = "./data/results/"
 if not os.path.exists(OPENED_RESULT_PATH):
     open(OPENED_RESULT_PATH, "w").close()
+monitor_info = GetMonitorInfo(MonitorFromPoint((0, 0)))
+work_area = monitor_info.get("Work")
+SCREEN_WIDTH, SCREEN_HEIGHT = work_area[2], work_area[3]
 
 
 class ResultWindow(QMainWindow):
@@ -31,8 +36,8 @@ class ResultWindow(QMainWindow):
         QMainWindow.__init__(self, *args, **kwargs)
         uic.loadUi(RESULT_FORM_PATH, self)
         self.setGeometry(
-            round((Main.SCREEN_WIDTH - self.width()) / 3),
-            round((Main.SCREEN_HEIGHT - self.height()) / 2),
+            round((SCREEN_WIDTH - self.width()) / 3),
+            round((SCREEN_HEIGHT - self.height()) / 2),
             self.width(),
             self.height(),
         )

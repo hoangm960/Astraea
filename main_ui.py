@@ -18,12 +18,16 @@ from PyQt5.QtWidgets import (QApplication, QDialogButtonBox, QFileDialog,
 
 import doc
 import edit_main
-import Main
 import result_main
 from UI_Files import Resources
+from win32api import GetMonitorInfo, MonitorFromPoint
+
 
 UI_MAIN_PATH = "./UI_Files/ui_main.ui"
 OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
+monitor_info = GetMonitorInfo(MonitorFromPoint((0, 0)))
+work_area = monitor_info.get("Work")
+SCREEN_WIDTH, SCREEN_HEIGHT = work_area[2], work_area[3]
 
 
 class MainWindow(QMainWindow):
@@ -40,7 +44,7 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def uiDefinitions(cls, ui):
-        ui.setGeometry(Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT, ui.width(), Main.SCREEN_HEIGHT)
+        ui.setGeometry(SCREEN_WIDTH, SCREEN_HEIGHT, ui.width(), SCREEN_HEIGHT)
 
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
@@ -106,7 +110,7 @@ class UIFunctions(MainWindow):
         for hwnd in get_hwnds_for_pid(idle.pid):
             cls.pg = hwnd
         if cls.pg:
-            win32gui.MoveWindow(cls.pg, -8, 0, Main.SCREEN_WIDTH - ui.width() + 16, ui.height() + 8, True)
+            win32gui.MoveWindow(cls.pg, -8, 0, SCREEN_WIDTH - ui.width() + 16, ui.height() + 8, True)
             win32gui.SetActiveWindow(cls.pg)
 
 

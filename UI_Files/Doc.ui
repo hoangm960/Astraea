@@ -210,15 +210,33 @@ QPushButton:hover {
           <string notr="true">QListWidget {
 	padding: 10px;
 	background-color: rgb(255, 255, 255);
-	color: rgb(0, 0, 0);
 }
 
 QListWidget::item {
-	
-	color: rgb(255, 255, 255);
-	background-color: rgb(255, 255, 255);
+	border-radius: 5px;
+	margin: 0px 0px 10px 0px;	
+	background-color: rgb(193, 193, 193);
+}
+
+QLineEdit {
+	color: rgb(0,0,0);
+	background-color: transparent;
+}
+
+QLabel {
+	color: rgb(0,0,0);
+	background-color: transparent;
 }
 </string>
+         </property>
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+         <property name="sortingEnabled">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -237,8 +255,38 @@ QListWidget::item {
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(255,255,255);
-color: rgb(0, 0, 0);</string>
+          <string notr="true">QTextBrowser {
+background-color: rgb(255,255,255);
+color: rgb(0, 0, 0);
+outline: 0;
+}
+QTextBrower::item { 
+	margin: 20px;
+	background-color: transparent;
+	border: 0px solid black;
+}
+
+QTextBrowser::handle{
+	background : rgb(158, 158, 158);
+	border-radius: 5px;
+	margin: 3px 3px 3px 3px;
+}
+
+QTextBrowser::handle::pressed{
+	background : rgb(85, 85, 85);
+}
+
+QTextBrowser::add-line {
+	height: 0px;
+}
+
+QTextBrowser::sub-line {
+	height: 0px;
+}
+
+QTextBrowser::add-page, QTextBrowser::sub-page {
+	height: 0px;
+}</string>
          </property>
         </widget>
        </item>

@@ -4,14 +4,17 @@ import subprocess
 import sys
 from time import sleep
 
+try:
+    import win32gui
+except ImportError:
+    subprocess.call(["pip", "install",  "pywin32"])
+
 import win32con
 import win32gui
-import win32process
 from PyQt5 import QtCore, uic
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (QApplication, QFileDialog,
-                             QGraphicsDropShadowEffect, QMainWindow,
-                             QMessageBox)
+                             QGraphicsDropShadowEffect, QMainWindow)
 
 import doc
 import edit_main
@@ -77,32 +80,35 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def open_idle(cls, ui):
-        os.system("start pythonwin")
-        sleep(1)
-        cls.pg = gw.getWindowsWithTitle("PythonWin")[0] if gw.getWindowsWithTitle("PythonWin") else ''
-        if cls.pg:
-            cls.pg.restore()
-            cls.pg.moveTo(-8, 0)
-            cls.pg.resizeTo(SCREEN_WIDTH - ui.width() + 16, ui.height() + 8)
+        subprocess.Popen([cls.find_idle()], shell=True)
+
+        while True:
+            if gw.getWindowsWithTitle("PythonWin"):
+                cls.pg = gw.getWindowsWithTitle("PythonWin")[0]
+                break
+
+        cls.pg.restore()
+        cls.pg.moveTo(-8, 0)
+        cls.pg.resizeTo(SCREEN_WIDTH - ui.width() + 16, ui.height() + 8)
 
     @classmethod
     def close_pg(cls, ui):
         if cls.pg:
-            cls.pg.close()
+            cls.pg.maximize()
         ui.close()
 
-    # @staticmethod
-    # def find_idle():
-    #     class Error(Exception): pass
+    @staticmethod
+    def find_idle():
+        class Error(Exception): pass
 
-    #     def _find(pathname, matchFunc=os.path.isfile):
-    #         for dirname in sys.path:
-    #             candidate = os.path.join(dirname, pathname)
-    #             if matchFunc(candidate):
-    #                 return candidate
-    #         raise Error("Can't find file %s" % pathname)
+        def _find(pathname, matchFunc=os.path.isfile):
+            for dirname in sys.path:
+                candidate = os.path.join(dirname, pathname)
+                if matchFunc(candidate):
+                    return candidate
+            raise Error("Can't find file %s" % pathname)
 
-    #     return _find("Lib\site-packages\pythonwin\Pythonwin.exe")
+        return _find("Lib\site-packages\pythonwin\Pythonwin.exe")
 
     # @classmethod
     # def open_idle(cls, ui):
@@ -226,8 +232,7 @@ class UIFunctions(MainWindow):
 
 def main(role):
     window = MainWindow(role)
-    window.move(QApplication.primaryScreen(
-    ).size().width() - window.width(), 0)
+    window.move(SCREEN_WIDTH - window.width(), 0)
     window.show()
 
 

@@ -17,7 +17,7 @@ RESULT_FORM_PATH = "./UI_Files/result_form.ui"
 RESULT_FRAME_PATH = "./UI_Files/result_frame.ui"
 TEST_FRAME_PATH = "./UI_Files/Test_frame.ui"
 OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
-OPENED_RESULT_PATH = "./data/results/"
+OPENED_RESULT_PATH = "./data/results"
 if not os.path.exists(OPENED_RESULT_PATH):
     open(OPENED_RESULT_PATH, "w").close()
 monitor_info = GetMonitorInfo(MonitorFromPoint((0, 0)))
@@ -192,7 +192,7 @@ class UIFunctions(ResultWindow):
                     cls.assignments = data[1]
 
     @classmethod
-    def reopen_main(cls, self, ui):
+    def reopen_main(cls, ui):
         import main_ui
         main_ui.main("student")
         ui.close()

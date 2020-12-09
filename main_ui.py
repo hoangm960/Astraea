@@ -2,12 +2,6 @@ import os
 import pickle
 import subprocess
 import sys
-from time import sleep
-
-try:
-    import win32gui
-except ImportError:
-    subprocess.call(["pip", "install",  "pywin32"])
 
 import win32con
 import win32gui

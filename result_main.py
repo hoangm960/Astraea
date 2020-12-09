@@ -1,21 +1,15 @@
 import os
 import pickle
 import sys
-import time
-from pathlib import Path
 
-import pyautogui
 from PyQt5 import QtCore, uic
-from PyQt5.QtCore import QSize, Qt
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (QApplication, QFileDialog,
-                             QGraphicsDropShadowEffect, QLayout,
-                             QListWidgetItem, QMainWindow, QMessageBox,
-                             QSizeGrip, QVBoxLayout, QWidget)
+                             QGraphicsDropShadowEffect, QMainWindow, QSizeGrip, QVBoxLayout, QWidget)
 
 import check_algorithm
 import main_ui
-from encryption import decrypt, encrypt
 from win32api import GetMonitorInfo, MonitorFromPoint
 
 
@@ -71,7 +65,6 @@ class UIFunctions(ResultWindow):
     USER_PATH_ENCRYPTED = "data/Users/User.encrypted"
     KEY_PATH = "data/encryption/users.key"
     OPENED_USER = "data/Users/opened_user.ou"
-
 
     @classmethod
     def load_assignments(cls, ui, filename):
@@ -305,11 +298,13 @@ class UIFunctions(ResultWindow):
             text = f'    FILE KẾT QUẢ:\n{name_account} :  {self.Score.text()}'
             f.write(text)
 
+
 def main():
     app = QApplication(sys.argv)
     window = ResultWindow()
     window.show()
     sys.exit(app.exec_())
+
 
 if __name__ == "__main__":
     main()

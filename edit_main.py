@@ -1,20 +1,16 @@
 import os
 import pickle
 import sys
-from pathlib import Path
-from shutil import rmtree
 
 from PyQt5 import QtCore, uic
-from PyQt5.QtCore import QRect, QSize, Qt
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (QApplication, QFileDialog,
-                             QGraphicsDropShadowEffect, QLayout,
-                             QListWidgetItem, QMainWindow, QMessageBox,
+                             QGraphicsDropShadowEffect, QMainWindow, QMessageBox,
                              QSizeGrip, QVBoxLayout, QWidget)
 from win32com import client as wc
 
 import main_ui
-from encryption import *
 
 KEY_PATH = "data/Lesson/assignments.key"
 EDIT_FORM_PATH = "UI_Files/edit_form.ui"

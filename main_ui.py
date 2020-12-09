@@ -4,17 +4,14 @@ import subprocess
 import sys
 from time import sleep
 
-import pyautogui
-import pygetwindow as gw
 import win32con
 import win32gui
 import win32process
 from PyQt5 import QtCore, uic
-from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import (QApplication, QDialogButtonBox, QFileDialog,
+from PyQt5.QtWidgets import (QApplication, QFileDialog,
                              QGraphicsDropShadowEffect, QMainWindow,
-                             QMessageBox, QPushButton, QSizeGrip, QWidget)
+                             QMessageBox)
 
 import doc
 import edit_main

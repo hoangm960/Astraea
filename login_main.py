@@ -4,12 +4,11 @@ import sys
 import time
 from random import randrange
 
-import pyautogui
 from PyQt5 import QtCore, QtWidgets, uic
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QColor, QPalette
+from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (QApplication, QGraphicsDropShadowEffect,
-                             QMainWindow, QSizeGrip, QWidget)
+                             QMainWindow)
 from win32api import GetMonitorInfo, MonitorFromPoint
 
 import main_ui

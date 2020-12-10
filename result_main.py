@@ -98,23 +98,11 @@ class UIFunctions(ResultWindow):
         self.return_btn.clicked.connect(lambda: self.close())
         self.inform.hide()
         self.Frame_close.hide()
-        self.Explain_Frame.hide()
         # Button function
         self.OkCancelFrame.move(0, 0)
         self.OkCancelFrame.move(280, 148)
         self.btn_maximize.clicked.connect(lambda: cls.maximize_restore(self))
         self.btn_minimize.clicked.connect(lambda: self.showMinimized())
-        def checkCode_Function():
-            self.scrollArea.hide()
-            self.Explain_Frame.show()
-            self.TurnBack.clicked.connect(lambda: self.Explain_Frame.hide())
-            self.TurnBack.clicked.connect(lambda: self.scrollArea.show())
-            with tempfile.TemporaryFile() as tempf:
-                proc = subprocess.Popen(['python',r], stdin=PIPE, stdout=PIPE, encoding="utf8")
-                output = proc.communicate()[0].rstrip()
-                print(output)
-            self.terminal.setText()
-        self.CheckCode.clicked.connect(lambda: checkCode_Function())
         def quit():
             self.Accept1.clicked.connect(lambda: self.close())
             self.Accept1.clicked.connect(lambda: main_ui.main("student"))

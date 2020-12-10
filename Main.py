@@ -18,5 +18,7 @@ parser.add_argument(
 )
 args = parser.parse_args()
 # login_main.main(args.file)
-
-login_main.main()
+try:
+    login_main.main()
+except Exception as e:
+    print('a')

@@ -4,11 +4,11 @@ import shutil
 import sys
 
 from PyQt5 import QtCore, uic
-from PyQt5.QtWidgets import (QApplication, QFileDialog,
-                             QMainWindow, QLineEdit, QListWidgetItem, QLabel)
+from PyQt5.QtWidgets import (QApplication, QFileDialog, QLabel, QLineEdit,
+                             QListWidgetItem, QMainWindow)
+from win32com import client as wc
 
 import main_ui
-from win32com import client as wc
 
 DOC_UI = "./UI_Files/Doc.ui"
 HTML_CONVERT_PATH = "./data/html_convert"
@@ -61,17 +61,30 @@ class UIFunctions(DocWindow):
             self.connect_btn(ui)
 
         def open_doc(self, ui):
-            file_path = self.show_file_dialog(ui)
-            if file_path:
-                self.load_doc(ui, file_path)
-                self.delete_html_file(file_path)
+            if not ui.titles.currentItem().text():
+                file_path = self.get_file_dialog(ui, "*.docx")
+                if file_path:
+                    ui.titles.currentItem().setText(
+                        os.path.splitext(os.path.basename(file_path))[0])
+                    self.load_doc(ui, file_path)
+                    self.delete_html_file(file_path)
+            else:
+                self.load_doc(ui)
 
         @staticmethod
-        def show_file_dialog(ui):
+        def get_file_dialog(ui, filter):
             HOME_PATH = os.path.join(os.path.join(
                 os.environ["USERPROFILE"]), "Desktop")
             file_path = QFileDialog.getOpenFileName(
-                ui, "Open file", HOME_PATH, "*.docx")[0]
+                ui, "Open file", HOME_PATH, filter)[0]
+            return file_path
+
+        @staticmethod
+        def save_file_dialog(ui, filter):
+            HOME_PATH = os.path.join(os.path.join(
+                os.environ["USERPROFILE"]), "Desktop")
+            file_path = QFileDialog.getSaveFileName(
+                ui, "Open file", HOME_PATH, filter)[0]
             return file_path
 
         @staticmethod
@@ -90,13 +103,9 @@ class UIFunctions(DocWindow):
             with open(self.convert_doc_to_html(filename), 'r') as f:
                 return f.read()
 
-        @staticmethod
-        def check_empty(ui):
-            return True if ui.titles.currentItem().text() in UIFunctions.docs else False
-
-        def load_doc(self, ui):
-            if not self.check_empty(ui):
-                html_data = self.get_html(self.show_file_dialog(ui))
+        def load_doc(self, ui, filename=''):
+            if filename:
+                html_data = self.get_html(filename)
                 UIFunctions.docs[ui.titles.currentItem().text()] = html_data
                 ui.text_entry.setText(html_data)
             else:
@@ -108,36 +117,46 @@ class UIFunctions(DocWindow):
             os.remove(f"{os.path.splitext(filename)[0]}.html")
             shutil.rmtree(f"{os.path.splitext(filename)[0]}_files")
 
-        def change_title(self, ui, edit, text):
-            pos = ui.titles.currentRow()
-            ui.titles.takeItem(pos)
-            if edit:
-                title = QLineEdit(ui)
-                title.setText(text)
-                title.returnPressed.connect(lambda: self.change_title(ui, False, title.text()))
-            else:
-                title = QLabel()
-                title.setText(text)
-            UIFunctions.docs[text] = UIFunctions.docs.pop(text)
-            title_item = QListWidgetItem()
-            ui.titles.insertItem(ui.titles.count(), title_item)
-            ui.titles.setItemWidget(title_item, title)
+        # def change_title(self, ui, edit, text):
+        #     pos = ui.titles.currentRow()
+        #     ui.titles.takeItem(pos)
+        #     if edit:
+        #         title = QLineEdit(ui)
+        #         title.setText(text)
+        #         title.returnPressed.connect(lambda: self.change_title(ui, False, title.text()))
+        #     else:
+        #         title = QLabel()
+        #         title.setText(text)
+        #         print(UIFunctions.docs)
+        #         UIFunctions.docs[text] = UIFunctions.docs.pop(text)
+        #         title_item = QListWidgetItem()
+        #         ui.titles.insertItem(ui.titles.count(), title_item)
+        #         ui.titles.setItemWidget(title_item, title)
 
         def add_titles(self, ui):
             title = QLabel()
             title_item = QListWidgetItem()
-            ui.titles.insertItem(ui.titles.count(), title_item)
+            ui.titles.addItem(title_item)
             ui.titles.setItemWidget(title_item, title)
-            ui.text_entry.setText('')
 
-        # def saveDocx(self, ui):
-        #     with open(filename, "wb") as f:
-        #         pickle.dump([ui.lesson_title.text(), assignments], f, -1)
+        def saveDocx(self, ui, filename):
+            with open(filename, "wb") as f:
+                pickle.dump(UIFunctions.docs, f, -1)
+            self.reopen_main(ui)
+
+        @staticmethod
+        def reopen_main(ui):
+            import main_ui
+            main_ui.main("student")
+            ui.close()
 
         def connect_btn(self, ui):
             ui.add_btn.clicked.connect(lambda: self.add_titles(ui))
-            ui.titles.itemClicked.connect(lambda: self.load_doc(ui))
-            ui.titles.itemDoubleClicked.connect(lambda: self.change_title(ui, True, ui.titles.selectedItems()[0].text()))
+            ui.load_btn.clicked.connect(lambda: self.get_doc(ui))
+            ui.titles.itemClicked.connect(lambda: self.open_doc(ui))
+            # ui.titles.itemDoubleClicked.connect(lambda: self.change_title(ui, True, ui.titles.selectedItems()[0].text()))
+            ui.SaveDocx.clicked.connect(lambda: self.saveDocx(
+                ui, self.save_file_dialog(ui, "*.sd")))
 
     class StudentUiFunctions:
         def __init__(self, ui):

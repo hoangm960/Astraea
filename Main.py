@@ -5,6 +5,7 @@ import argparse
 from pathlib import Path
 import pygetwindow as gw
 from win32api import GetMonitorInfo, MonitorFromPoint
+import subprocess
 
 
 USER_PATH = "./data/Users/"
@@ -26,22 +27,22 @@ parser.add_argument(
 )
 args = parser.parse_args()
 
-# def find_idle():
-#         class Error(Exception): pass
+def find_idle():
+    class Error(Exception): pass
 
-#         def _find(pathname, matchFunc=os.path.isfile):
-#             for dirname in sys.path:
-#                 candidate = os.path.join(dirname, pathname)
-#                 if matchFunc(candidate):
-#                     return candidate
-#             raise Error("Can't find file %s" % pathname)
+    def _find(pathname, matchFunc=os.path.isfile):
+        for dirname in sys.path:
+            candidate = os.path.join(dirname, pathname)
+            if matchFunc(candidate):
+                return candidate
+        raise Error("Can't find file %s" % pathname)
 
-#         return _find("Lib\site-packages\pythonwin\Pythonwin.exe")
+    return _find("Lib\site-packages\pythonwin\Pythonwin.exe")
 
 pg = None
 def open_idle():
     global pg
-    os.system("start pythonwin")
+    subprocess.Popen([find_idle()])
 
     while True:
         if gw.getWindowsWithTitle("PythonWin"):

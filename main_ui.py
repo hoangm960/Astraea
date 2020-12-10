@@ -57,6 +57,8 @@ class UIFunctions(MainWindow):
             win32gui.ShowWindow(window, win32con.SW_MINIMIZE)
         ui.btn_minimize.clicked.connect(lambda: minimize(cls.pg))
 
+        if cls.pg:
+            ui.btn_quit.clicked.connect(lambda: cls.pg.close())
         ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
         ui.load_btn.clicked.connect(
             lambda: cls.show_file_dialog(ui, OPENED_LESSON_PATH)

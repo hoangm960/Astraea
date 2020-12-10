@@ -147,12 +147,12 @@ class UIFunctions(DocWindow):
         @staticmethod
         def reopen_main(ui):
             import main_ui
-            main_ui.main("student")
+            main_ui.main(ui.role)
             ui.close()
 
         def connect_btn(self, ui):
             ui.add_btn.clicked.connect(lambda: self.add_titles(ui))
-            ui.load_btn.clicked.connect(lambda: self.get_doc(ui))
+            # ui.load_btn.clicked.connect(lambda: self.get_doc(ui))
             ui.titles.itemClicked.connect(lambda: self.open_doc(ui))
             # ui.titles.itemDoubleClicked.connect(lambda: self.change_title(ui, True, ui.titles.selectedItems()[0].text()))
             ui.SaveDocx.clicked.connect(lambda: self.saveDocx(

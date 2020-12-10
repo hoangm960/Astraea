@@ -1,12 +1,13 @@
-import os
-import sys
-import login_main
 import argparse
+import os
+import subprocess
+import sys
 from pathlib import Path
+
 import pygetwindow as gw
 from win32api import GetMonitorInfo, MonitorFromPoint
-import subprocess
 
+import login_main
 
 USER_PATH = "./data/Users/"
 ENCRYPTION_PATH = "./data/encryption/"

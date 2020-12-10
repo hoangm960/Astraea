@@ -1007,8 +1007,8 @@ QScrollBar::add-page, QScrollBar::sub-page {
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>100</width>
-                         <height>30</height>
+                         <width>942</width>
+                         <height>253</height>
                         </rect>
                        </property>
                        <widget class="QLabel" name="inform">

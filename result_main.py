@@ -274,9 +274,8 @@ class UIFunctions(ResultWindow):
                     cls.Total += correct
                     cls.TotalScore += (correct /
                                     len(cls.assignments[i].tests) * cls.assignments[i].mark)
-                if not self.TestFrame.ans_file_entry[i]: 
-                    self.ResultFrame.detail_entry.setText("Chưa làm câu này")
-                    
+            else:
+                self.ResultFrame.detail_entry.setText("Chưa làm câu này")
 
         totalScore = int()
         for assignment in cls.assignments:

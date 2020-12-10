@@ -80,7 +80,7 @@ class UIFunctions(MainWindow):
                 cls.pg = gw.getWindowsWithTitle("PythonWin")[0]
                 checked = True
             else:
-                subprocess.call("start pythonwin")
+                os.system(cls.find_idle())
 
 
         cls.pg.restore()
@@ -93,18 +93,18 @@ class UIFunctions(MainWindow):
             cls.pg.maximize()
         ui.close()
 
-    # @staticmethod
-    # def find_idle():
-    #     class Error(Exception): pass
+    @staticmethod
+    def find_idle():
+        class Error(Exception): pass
 
-    #     def _find(pathname, matchFunc=os.path.isfile):
-    #         for dirname in sys.path:
-    #             candidate = os.path.join(dirname, pathname)
-    #             if matchFunc(candidate):
-    #                 return candidate
-    #         raise Error("Can't find file %s" % pathname)
+        def _find(pathname, matchFunc=os.path.isfile):
+            for dirname in sys.path:
+                candidate = os.path.join(dirname, pathname)
+                if matchFunc(candidate):
+                    return candidate
+            raise Error("Can't find file %s" % pathname)
 
-    #     return _find("Lib\site-packages\pythonwin\Pythonwin.exe")
+        return _find("Lib\site-packages\pythonwin\Pythonwin.exe")
 
     # @classmethod
     # def open_idle(cls, ui):

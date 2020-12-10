@@ -1,4 +1,5 @@
 import os
+import sys
 import login_main
 import argparse
 from pathlib import Path
@@ -25,10 +26,22 @@ parser.add_argument(
 )
 args = parser.parse_args()
 
+def find_idle():
+        class Error(Exception): pass
+
+        def _find(pathname, matchFunc=os.path.isfile):
+            for dirname in sys.path:
+                candidate = os.path.join(dirname, pathname)
+                if matchFunc(candidate):
+                    return candidate
+            raise Error("Can't find file %s" % pathname)
+
+        return _find("Lib\site-packages\pythonwin\Pythonwin.exe")
+
 pg = None
 def open_idle():
     global pg
-    os.system("start pythonwin")
+    os.system(find_idle())
 
     while True:
         if gw.getWindowsWithTitle("PythonWin"):

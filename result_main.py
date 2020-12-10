@@ -218,10 +218,10 @@ class UIFunctions(ResultWindow):
         self.results = cls.ResultFrame()
 
         for i in range(num):
-            self.frame = cls.TestFrame()
-            self.content_widgetT.layout().addWidget(self.frame)
-            self.frame.details_label.setText(cls.assignments[i].name)
-            self.frame.details_entry.setText(cls.assignments[i].details)
+            self.TestFrame = cls.TestFrame()
+            self.content_widgetT.layout().addWidget(self.TestFrame)
+            self.TestFrame.details_label.setText(cls.assignments[i].name)
+            self.TestFrame.details_entry.setText(cls.assignments[i].details)
 
     @classmethod
     def check_result(cls, frame, num):
@@ -239,10 +239,10 @@ class UIFunctions(ResultWindow):
         for i in range(num):
             correct = 0
             results = []
-            self.frame = children[i]
+            self.TestFrame = children[i]
 
-            if self.frame.ans_file_entry.text():
-                results = cls.check_result(self.frame, i)
+            if self.TestFrame.ans_file_entry.text():
+                results = cls.check_result(self.TestFrame, i)
                 for result in results[:-1]:
                     if result[1]:
                         correct += 1
@@ -253,29 +253,30 @@ class UIFunctions(ResultWindow):
                 current_layout.setContentsMargins(9, 9, 9, 9)
                 self.content_widget.setLayout(current_layout)
 
-            self.frame = cls.ResultFrame()
-            self.content_widget.layout().addWidget(self.frame)
-            self.frame.correct_num.setText(
+            self.ResultFrame = cls.ResultFrame()
+            self.content_widget.layout().addWidget(self.ResultFrame)
+            self.ResultFrame.correct_num.setText(
                 f'{str(correct)}/{str(len(cls.assignments[i].tests))}')
-            self.frame.test_file_label.setText(cls.assignments[i].name)
+            self.ResultFrame.test_file_label.setText(cls.assignments[i].name)
             cls.TotalTest += len(cls.assignments[i].tests)
             if len(results) != 0:
                 if results[-1]:
-                    self.frame.Score_box.setText(
+                    self.ResultFrame.Score_box.setText(
                         str(correct / len(results[:-1]) * cls.assignments[i].mark)
                     )
                     if results[-1]:
                         if correct<(len(results[:-1])/2):
-                            self.frame.detail_entry.setText("Bài làm chưa hoàn thiện tốt.")
+                            self.ResultFrame.detail_entry.setText("Bài làm chưa hoàn thiện tốt.")
                         else:    
-                            self.frame.detail_entry.setText("Bài làm đã tối ưu hóa.")
+                            self.ResultFrame.detail_entry.setText("Bài làm đã tối ưu hóa.")
                     else:
-                        self.frame.detail_entry.setText("Bài làm chưa tối ưu hóa.")
+                        self.ResultFrame.detail_entry.setText("Bài làm chưa tối ưu hóa.")
                     cls.Total += correct
                     cls.TotalScore += (correct /
                                     len(cls.assignments[i].tests) * cls.assignments[i].mark)
-                else:
-                    self.frame.detail_entry.setText("Chưa làm câu này")
+                if not self.TestFrame.ans_file_entry[i]: 
+                    self.ResultFrame.detail_entry.setText("Chưa làm câu này")
+                    
 
         totalScore = int()
         for assignment in cls.assignments:

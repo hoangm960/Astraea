@@ -18,7 +18,7 @@ FILE = ""
 monitor_info = GetMonitorInfo(MonitorFromPoint((0, 0)))
 work_area = monitor_info.get("Work")
 SCREEN_WIDTH, SCREEN_HEIGHT = work_area[2], work_area[3]
-
+a=2/0
 
 class User:
     def __init__(self, name, password, role, name_user, auto_saved):

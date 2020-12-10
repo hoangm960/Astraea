@@ -356,7 +356,7 @@ min-height: 20px;
 background-color: transparent;</string>
                </property>
                <property name="currentIndex">
-                <number>1</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="result_frame">
                 <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -455,7 +455,7 @@ background-color: transparent;</string>
                    <property name="frameShadow">
                     <enum>QFrame::Raised</enum>
                    </property>
-                   <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="0">
+                   <layout class="QHBoxLayout" name="horizontalLayout_4">
                     <property name="spacing">
                      <number>0</number>
                     </property>
@@ -515,6 +515,9 @@ QScrollBar::sub-line {
 QScrollBar::add-page, QScrollBar::sub-page {
 	height: 0px;
 }</string>
+                      </property>
+                      <property name="horizontalScrollBarPolicy">
+                       <enum>Qt::ScrollBarAlwaysOff</enum>
                       </property>
                       <property name="widgetResizable">
                        <bool>true</bool>
@@ -1004,8 +1007,8 @@ QScrollBar::add-page, QScrollBar::sub-page {
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>942</width>
-                         <height>253</height>
+                         <width>100</width>
+                         <height>30</height>
                         </rect>
                        </property>
                        <widget class="QLabel" name="inform">

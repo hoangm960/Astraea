@@ -74,18 +74,12 @@ class UIFunctions(MainWindow):
 
     @classmethod
     def open_idle(cls, ui):
-        checked = False
-        while not checked:
-            if gw.getWindowsWithTitle("PythonWin"):
-                cls.pg = gw.getWindowsWithTitle("PythonWin")[0]
-                checked = True
-            else:
-                subprocess.Popen([cls.find_idle()])
+        cls.pg = gw.getWindowsWithTitle("PythonWin")[0] if gw.getWindowsWithTitle("PythonWin") else ''
 
-
-        cls.pg.restore()
-        cls.pg.moveTo(-8, 0)
-        cls.pg.resizeTo(SCREEN_WIDTH - ui.width() + 16, ui.height() + 8)
+        if cls.pg:
+            cls.pg.restore()
+            cls.pg.moveTo(-8, 0)
+            cls.pg.resizeTo(SCREEN_WIDTH - ui.width() + 16, ui.height() + 8)
 
     @classmethod
     def close_pg(cls, ui):

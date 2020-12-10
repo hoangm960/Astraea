@@ -10,7 +10,8 @@ from PyQt5.QtWidgets import (QApplication, QFileDialog,
                              QGraphicsDropShadowEffect, QMainWindow, QSizeGrip,
                              QVBoxLayout, QWidget)
 from win32api import GetMonitorInfo, MonitorFromPoint
-
+import subprocess
+import tempfile
 import check_algorithm
 import main_ui
 
@@ -97,12 +98,23 @@ class UIFunctions(ResultWindow):
         self.return_btn.clicked.connect(lambda: self.close())
         self.inform.hide()
         self.Frame_close.hide()
+        self.Explain_Frame.hide()
         # Button function
         self.OkCancelFrame.move(0, 0)
         self.OkCancelFrame.move(280, 148)
         self.btn_maximize.clicked.connect(lambda: cls.maximize_restore(self))
         self.btn_minimize.clicked.connect(lambda: self.showMinimized())
-
+        def checkCode_Function():
+            self.scrollArea.hide()
+            self.Explain_Frame.show()
+            self.TurnBack.clicked.connect(lambda: self.Explain_Frame.hide())
+            self.TurnBack.clicked.connect(lambda: self.scrollArea.show())
+            with tempfile.TemporaryFile() as tempf:
+                proc = subprocess.Popen(['python',r], stdin=PIPE, stdout=PIPE, encoding="utf8")
+                output = proc.communicate()[0].rstrip()
+                print(output)
+            self.terminal.setText()
+        self.CheckCode.clicked.connect(lambda: checkCode_Function())
         def quit():
             self.Accept1.clicked.connect(lambda: self.close())
             self.Accept1.clicked.connect(lambda: main_ui.main("student"))
@@ -258,7 +270,6 @@ class UIFunctions(ResultWindow):
             self.frame.correct_num.setText(
                 f'{str(correct)}/{str(len(cls.assignments[i].tests))}')
             self.frame.test_file_label.setText(cls.assignments[i].name)
-
             cls.TotalTest += len(cls.assignments[i].tests)
             if len(results) != 0:
                 if results[-1]:
@@ -266,7 +277,10 @@ class UIFunctions(ResultWindow):
                         str(correct / len(results[:-1]) * cls.assignments[i].mark)
                     )
                     if results[-1]:
-                        self.frame.detail_entry.setText("Bài làm đã tối ưu hóa.")
+                        if correct<(len(results[:-1])/2):
+                            self.frame.detail_entry.setText("Bài làm chưa hoàn thiện tốt.")
+                        else:    
+                            self.frame.detail_entry.setText("Bài làm đã tối ưu hóa.")
                     else:
                         self.frame.detail_entry.setText("Bài làm chưa tối ưu hóa.")
                     cls.Total += correct
@@ -289,7 +303,7 @@ class UIFunctions(ResultWindow):
             self.Judge.setText("Bài làm đạt chuẩn")
             
         with open(f"{OPENED_RESULT_PATH}{open(cls.OPENED_USER).read().rstrip()}.rf", 'a+', encoding='utf-8') as f:
-            name_account = open(cls.OPENED_USER).read().rstrip()
+            name_account = open(cls.OPENED_USER, encoding = 'utf-8').read().rstrip()
             current_time = datetime.now().strftime("%H:%M:%S")
             text = f'{name_account} :  {self.Score.text()} ({current_time})\n'
             f.write(text)

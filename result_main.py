@@ -260,20 +260,18 @@ class UIFunctions(ResultWindow):
             self.ResultFrame.test_file_label.setText(cls.assignments[i].name)
             cls.TotalTest += len(cls.assignments[i].tests)
             if len(results) != 0:
+                self.ResultFrame.Score_box.setText(
+                    str(correct / len(results[:-1]) * cls.assignments[i].mark)
+                )
                 if results[-1]:
-                    self.ResultFrame.Score_box.setText(
-                        str(correct / len(results[:-1]) * cls.assignments[i].mark)
-                    )
-                    if results[-1]:
-                        if correct<(len(results[:-1])/2):
-                            self.ResultFrame.detail_entry.setText("Bài làm chưa hoàn thiện tốt.")
-                        else:    
-                            self.ResultFrame.detail_entry.setText("Bài làm đã tối ưu hóa.")
-                    else:
-                        self.ResultFrame.detail_entry.setText("Bài làm chưa tối ưu hóa.")
-                    cls.Total += correct
-                    cls.TotalScore += (correct /
-                                    len(cls.assignments[i].tests) * cls.assignments[i].mark)
+                    self.ResultFrame.detail_entry.setText("Bài làm đã tối ưu hóa.")
+                else:
+                    self.ResultFrame.detail_entry.setText("Bài làm chưa tối ưu hóa.")
+                cls.Total += correct
+                cls.TotalScore += (correct /
+                                len(cls.assignments[i].tests) * cls.assignments[i].mark)
+                if correct<(len(results[:-1])/2):
+                        self.ResultFrame.detail_entry.setText("Bài làm chưa hoàn thiện tốt.")
             else:
                 self.ResultFrame.detail_entry.setText("Chưa làm câu này")
 

@@ -7,7 +7,6 @@ from pathlib import Path
 import pygetwindow as gw
 from win32api import GetMonitorInfo, MonitorFromPoint
 
-import login_main
 
 USER_PATH = "./data/Users/"
 ENCRYPTION_PATH = "./data/encryption/"
@@ -53,5 +52,6 @@ def open_idle():
 
 open_idle()
 
+import login_main
 # login_main.main(args.file)
 login_main.main()

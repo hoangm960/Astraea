@@ -52,14 +52,12 @@ class UIFunctions(MainWindow):
         ui.bg_frame.setGraphicsEffect(ui.shadow)
 
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
-
-        def minimize(window):
-            win32gui.ShowWindow(window, win32con.SW_MINIMIZE)
-        ui.btn_minimize.clicked.connect(lambda: minimize(cls.pg))
+        ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
 
         if cls.pg:
+            ui.btn_minimize.clicked.connect(lambda: cls.pg.minimize())
             ui.btn_quit.clicked.connect(lambda: cls.pg.close())
-        ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
+            ui.btn_quit.clicked.connect(lambda: ui.close())
         ui.load_btn.clicked.connect(
             lambda: cls.show_file_dialog(ui, OPENED_LESSON_PATH)
         )
@@ -195,7 +193,6 @@ class UIFunctions(MainWindow):
             ui.main_btn.clicked.connect(lambda: self.open_edit_form(ui))
 
         def open_edit_form(self, ui):
-            self.parent.close_pg(ui)
             window = edit_main.EditWindow()
             window.show()
 

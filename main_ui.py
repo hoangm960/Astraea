@@ -1,7 +1,10 @@
 import os
 import pickle
+import subprocess
 import sys
 
+import win32con
+import win32gui
 from PyQt5 import QtCore, uic
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (QApplication, QFileDialog,
@@ -10,6 +13,7 @@ from PyQt5.QtWidgets import (QApplication, QFileDialog,
 
 from UI_Files import Resources
 from win32api import GetMonitorInfo, MonitorFromPoint
+import pygetwindow as gw
 
 
 UI_MAIN_PATH = "./UI_Files/ui_main.ui"
@@ -46,23 +50,13 @@ class UIFunctions(MainWindow):
         ui.shadow.setColor(QColor(0, 0, 0, 200))
         ui.bg_frame.setGraphicsEffect(ui.shadow)
 
-        cls.define_role(ui)
-        cls.check_opened_lesson(ui, OPENED_LESSON_PATH)
-
-        cls.open_idle(ui)
-        cls.connect_btn(ui)
-
-    @classmethod
-    def connect_btn(cls, ui):
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
 
-        if cls.pg:
-            ui.btn_minimize.clicked.connect(lambda: cls.pg.minimize())
-            ui.btn_quit.clicked.connect(lambda: cls.pg.close())
-            ui.btn_quit.clicked.connect(lambda: ui.close())
-        else:
-            ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
+        def minimize(window):
+            win32gui.ShowWindow(window, win32con.SW_MINIMIZE)
+        ui.btn_minimize.clicked.connect(lambda: minimize(cls.pg))
 
+        ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
         ui.load_btn.clicked.connect(
             lambda: cls.show_file_dialog(ui, OPENED_LESSON_PATH)
         )
@@ -72,9 +66,14 @@ class UIFunctions(MainWindow):
 
         ui.list_assignments.itemPressed.connect(lambda: cls.load_details(ui))
 
+        cls.define_role(ui)
+        cls.check_opened_lesson(ui, OPENED_LESSON_PATH)
+
+        cls.open_idle(ui)
+
     @classmethod
     def open_idle(cls, ui):
-        cls.pg = ui.pg
+        cls.pg = gw.getWindowsWithTitle("PythonWin")[0] if gw.getWindowsWithTitle("PythonWin") else ''
 
         if cls.pg:
             cls.pg.restore()
@@ -180,8 +179,8 @@ class UIFunctions(MainWindow):
             cls.StudentUiFunctions(cls, ui)
 
 
-def main(role, pg):
-    window = MainWindow(role, pg)
+def main(role):
+    window = MainWindow(role)
     window.move(SCREEN_WIDTH - window.width(), 0)
     window.show()
 

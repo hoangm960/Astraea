@@ -34,12 +34,10 @@ class MainWindow(QMainWindow):
 
 class UIFunctions(MainWindow):
     assignments = {}
-    pg = None
 
     @classmethod
     def uiDefinitions(cls, ui):
         ui.setGeometry(SCREEN_WIDTH, SCREEN_HEIGHT, ui.width(), SCREEN_HEIGHT)
-
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 
@@ -50,7 +48,11 @@ class UIFunctions(MainWindow):
         ui.shadow.setColor(QColor(0, 0, 0, 200))
         ui.bg_frame.setGraphicsEffect(ui.shadow)
 
-        ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
+        def minimize(ui, pg):
+            ui.showMinimized()
+            if pg:
+                pg.minimize()
+        ui.btn_minimize.clicked.connect(lambda: minimize(ui, ui.pg))
         ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
         
         ui.load_btn.clicked.connect(
@@ -68,17 +70,17 @@ class UIFunctions(MainWindow):
         cls.open_idle(ui)
     @classmethod
     def open_idle(cls, ui):
-        cls.pg = gw.getWindowsWithTitle("PythonWin")[0] if gw.getWindowsWithTitle("PythonWin") else ''
+        ui.pg = gw.getWindowsWithTitle("PythonWin")[0] if gw.getWindowsWithTitle("PythonWin") else ''
 
-        if cls.pg:
-            cls.pg.restore()
-            cls.pg.moveTo(-8, 0)
-            cls.pg.resizeTo(SCREEN_WIDTH - ui.width() + 16, ui.height() + 8)
+        if ui.pg:
+            ui.pg.restore()
+            ui.pg.moveTo(-8, 0)
+            ui.pg.resizeTo(SCREEN_WIDTH - ui.width() + 16, ui.height() + 8)
 
     @classmethod
     def close_pg(cls, ui):
-        if cls.pg:
-            cls.pg.maximize()
+        if ui.pg:
+            ui.pg.maximize()
         ui.close()
 
     @classmethod

@@ -44,7 +44,7 @@ class UIFunctions(DocWindow):
     @classmethod
     def close_pg(cls, ui):
         ui.close()
-        main_ui.main(ui.role)
+        main_ui.main(ui.role, None)
     @classmethod
     def Delete(cls, ui,number):
         ui.titles.takeItem(number)

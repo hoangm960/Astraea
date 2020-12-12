@@ -50,7 +50,7 @@ class UIFunctions(DocWindow):
         ui.titles.takeItem(number)
     @classmethod
     def Change(cls, ui, number, text):
-        if number<ui.titles.count():
+        if number<ui.titles.count() and len(UIFunctions.docs)>0:
             temp = UIFunctions.docs[ui.titles.item(number).text()]
             UIFunctions.docs.pop(ui.titles.item(number).text())
             ui.titles.item(number).setText(text)

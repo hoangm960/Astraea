@@ -1,7 +1,10 @@
 import os
 import pickle
+import subprocess
 import sys
 
+import win32con
+import win32gui
 from PyQt5 import QtCore, uic
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (QApplication, QFileDialog,
@@ -12,6 +15,7 @@ import edit_main
 import result_main
 from UI_Files import Resources
 from win32api import GetMonitorInfo, MonitorFromPoint
+import pygetwindow as gw
 
 
 UI_MAIN_PATH = "./UI_Files/ui_main.ui"
@@ -22,11 +26,10 @@ SCREEN_WIDTH, SCREEN_HEIGHT = work_area[2], work_area[3]
 
 
 class MainWindow(QMainWindow):
-    def __init__(self, role, pg):
+    def __init__(self, role):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(UI_MAIN_PATH, self)
         self.role = role
-        self.pg = pg if pg else None
         UIFunctions.uiDefinitions(self)
 
 
@@ -48,23 +51,13 @@ class UIFunctions(MainWindow):
         ui.shadow.setColor(QColor(0, 0, 0, 200))
         ui.bg_frame.setGraphicsEffect(ui.shadow)
 
-        cls.define_role(ui)
-        cls.check_opened_lesson(ui, OPENED_LESSON_PATH)
-
-        cls.open_idle(ui)
-        cls.connect_btn(ui)
-
-    @classmethod
-    def connect_btn(cls, ui):
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
 
-        if cls.pg:
-            ui.btn_minimize.clicked.connect(lambda: cls.pg.minimize())
-            ui.btn_quit.clicked.connect(lambda: cls.pg.close())
-            ui.btn_quit.clicked.connect(lambda: ui.close())
-        else:
-            ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
+        def minimize(window):
+            win32gui.ShowWindow(window, win32con.SW_MINIMIZE)
+        ui.btn_minimize.clicked.connect(lambda: minimize(cls.pg))
 
+        ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
         ui.load_btn.clicked.connect(
             lambda: cls.show_file_dialog(ui, OPENED_LESSON_PATH)
         )
@@ -74,9 +67,14 @@ class UIFunctions(MainWindow):
 
         ui.list_assignments.itemPressed.connect(lambda: cls.load_details(ui))
 
+        cls.define_role(ui)
+        cls.check_opened_lesson(ui, OPENED_LESSON_PATH)
+
+        cls.open_idle(ui)
+
     @classmethod
     def open_idle(cls, ui):
-        cls.pg = ui.pg
+        cls.pg = gw.getWindowsWithTitle("PythonWin")[0] if gw.getWindowsWithTitle("PythonWin") else ''
 
         if cls.pg:
             cls.pg.restore()
@@ -88,6 +86,48 @@ class UIFunctions(MainWindow):
         if cls.pg:
             cls.pg.maximize()
         ui.close()
+
+    @staticmethod
+    def find_idle():
+        class Error(Exception): pass
+
+        def _find(pathname, matchFunc=os.path.isfile):
+            for dirname in sys.path:
+                candidate = os.path.join(dirname, pathname)
+                if matchFunc(candidate):
+                    return candidate
+            raise Error("Can't find file %s" % pathname)
+
+        return _find("Lib\site-packages\pythonwin\Pythonwin.exe")
+
+    # @classmethod
+    # def open_idle(cls, ui):
+    #     def get_hwnds_for_pid(pid):
+    #         def callback(hwnd, hwnds):
+    #             if win32gui.IsWindowVisible(hwnd) and win32gui.IsWindowEnabled(hwnd):
+    #                 _, found_pid = win32process.GetWindowThreadProcessId(hwnd)
+    #                 if found_pid == pid:
+    #                     hwnds.append(hwnd)
+    #             return True
+
+    #         hwnds = []
+    #         win32gui.EnumWindows(callback, hwnds)
+    #         return hwnds
+
+    #     idle = subprocess.Popen(cls.find_idle())
+
+    #     sleep(1)
+    #     for hwnd in get_hwnds_for_pid(idle.pid):
+    #         cls.pg = hwnd
+    #     if cls.pg:
+    #         win32gui.MoveWindow(cls.pg, -8, 0, SCREEN_WIDTH - ui.width() + 16, ui.height() + 8, True)
+    #         win32gui.SetActiveWindow(cls.pg)
+
+    # @classmethod
+    # def close_pg(cls, ui):
+    #     win32gui.SetActiveWindow(cls.pg)
+    #     win32gui.SendMessage(cls.pg, win32con.WM_CLOSE, 0, 0)
+    #     ui.close()
 
     @classmethod
     def check_opened_lesson(cls, ui, filename):
@@ -153,6 +193,7 @@ class UIFunctions(MainWindow):
             ui.main_btn.clicked.connect(lambda: self.open_edit_form(ui))
 
         def open_edit_form(self, ui):
+            self.parent.close_pg(ui)
             window = edit_main.EditWindow()
             window.show()
 
@@ -179,8 +220,8 @@ class UIFunctions(MainWindow):
             cls.StudentUiFunctions(ui)
 
 
-def main(role, pg):
-    window = MainWindow(role, pg)
+def main(role):
+    window = MainWindow(role)
     window.move(SCREEN_WIDTH - window.width(), 0)
     window.show()
 

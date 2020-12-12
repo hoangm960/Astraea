@@ -38,7 +38,8 @@ class UIFunctions(DocWindow):
         cls.load_assignments(
             ui, open(main_ui.OPENED_LESSON_PATH).read().rstrip())
         cls.define_role(ui)
-        ui.Delete.clicked.connect(lambda: cls.Delete(ui, ui.Delete_spin.value()))
+        ui.Delete.clicked.connect(lambda: cls.Delete(ui, ui.Delete_spin.value()-1))
+        ui.Save_btn.clicked.connect(lambda: cls.Change(ui, ui.Name_spin.value()-1, ui.Name_edit.text()))
         ui.deleteBox_frame.hide()
     @classmethod
     def close_pg(cls, ui):
@@ -48,8 +49,12 @@ class UIFunctions(DocWindow):
     def Delete(cls, ui,number):
         ui.titles.takeItem(number)
     @classmethod
+    def Change(cls, ui, number, text):
+        if number<ui.titles.count():
+            ui.titles.item(number).setText(text)
+    @classmethod
     def load_assignments(cls, ui, filename):
-        ui.titles.clear()
+        ui.titles.clear()   
         cls.docs.clear()
         if os.path.exists(filename):
             if os.path.getsize(filename) > 0:
@@ -58,7 +63,8 @@ class UIFunctions(DocWindow):
                     data = unpickler.load()
                     for i in range(1, len(cls.docs) + 1):
                         ui.titles.addItem(str(i))
-
+    
+    
     class TeacherUiFunctions:
         def __init__(self, ui):
             self.connect_btn(ui)
@@ -114,7 +120,7 @@ class UIFunctions(DocWindow):
             else:
                 ui.text_entry.setText(
                     UIFunctions.docs[ui.titles.currentItem().text()])
-
+        
         @staticmethod
         def delete_html_file(filename):
             os.remove(f"{os.path.splitext(filename)[0]}.html")
@@ -123,7 +129,7 @@ class UIFunctions(DocWindow):
         # def change_title(self, ui, edit, text):
         #     pos = ui.titles.currentRow()
         #     ui.titles.takeItem(pos)
-        #     if edit:
+        #     if edit:  
         #         title = QLineEdit(ui)
         #         title.setText(text)
         #         title.returnPressed.connect(lambda: self.change_title(ui, False, title.text()))

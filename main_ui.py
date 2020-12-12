@@ -10,9 +10,7 @@ from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (QApplication, QFileDialog,
                              QGraphicsDropShadowEffect, QMainWindow)
 
-import doc
-import edit_main
-import result_main
+
 from UI_Files import Resources
 from win32api import GetMonitorInfo, MonitorFromPoint
 import pygetwindow as gw
@@ -26,10 +24,11 @@ SCREEN_WIDTH, SCREEN_HEIGHT = work_area[2], work_area[3]
 
 
 class MainWindow(QMainWindow):
-    def __init__(self, role):
+    def __init__(self, role, pg):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(UI_MAIN_PATH, self)
         self.role = role
+        self.pg = pg
         UIFunctions.uiDefinitions(self)
 
 
@@ -87,48 +86,6 @@ class UIFunctions(MainWindow):
             cls.pg.maximize()
         ui.close()
 
-    @staticmethod
-    def find_idle():
-        class Error(Exception): pass
-
-        def _find(pathname, matchFunc=os.path.isfile):
-            for dirname in sys.path:
-                candidate = os.path.join(dirname, pathname)
-                if matchFunc(candidate):
-                    return candidate
-            raise Error("Can't find file %s" % pathname)
-
-        return _find("Lib\site-packages\pythonwin\Pythonwin.exe")
-
-    # @classmethod
-    # def open_idle(cls, ui):
-    #     def get_hwnds_for_pid(pid):
-    #         def callback(hwnd, hwnds):
-    #             if win32gui.IsWindowVisible(hwnd) and win32gui.IsWindowEnabled(hwnd):
-    #                 _, found_pid = win32process.GetWindowThreadProcessId(hwnd)
-    #                 if found_pid == pid:
-    #                     hwnds.append(hwnd)
-    #             return True
-
-    #         hwnds = []
-    #         win32gui.EnumWindows(callback, hwnds)
-    #         return hwnds
-
-    #     idle = subprocess.Popen(cls.find_idle())
-
-    #     sleep(1)
-    #     for hwnd in get_hwnds_for_pid(idle.pid):
-    #         cls.pg = hwnd
-    #     if cls.pg:
-    #         win32gui.MoveWindow(cls.pg, -8, 0, SCREEN_WIDTH - ui.width() + 16, ui.height() + 8, True)
-    #         win32gui.SetActiveWindow(cls.pg)
-
-    # @classmethod
-    # def close_pg(cls, ui):
-    #     win32gui.SetActiveWindow(cls.pg)
-    #     win32gui.SendMessage(cls.pg, win32con.WM_CLOSE, 0, 0)
-    #     ui.close()
-
     @classmethod
     def check_opened_lesson(cls, ui, filename):
         if os.path.exists(filename):
@@ -170,13 +127,14 @@ class UIFunctions(MainWindow):
             cls.assignments[ui.list_assignments.currentItem().text()]
         )
 
-    @classmethod
-    def change_assignment_title(cls, ui, title):
+    @staticmethod
+    def change_assignment_title(ui, title):
         ui.lesson_title.setText(
             title) if title else ui.lesson_title.setParent(None)
 
-    @classmethod
-    def open_doc(cls, ui):
+    @staticmethod
+    def open_doc(ui):
+        import doc
         ui.main = doc.DocWindow(ui.role)
         ui.main.show()
 
@@ -192,24 +150,25 @@ class UIFunctions(MainWindow):
             )
             ui.main_btn.clicked.connect(lambda: self.open_edit_form(ui))
 
-        def open_edit_form(self, ui):
-            self.parent.close_pg(ui)
+        @staticmethod
+        def open_edit_form():
+            import edit_main
             window = edit_main.EditWindow()
             window.show()
 
     class StudentUiFunctions:
-        def __init__(cls, ui):
-
+        def __init__(self, parent, ui):
+            self.parent = parent
             ui.main_btn.setText("Kiểm tra")
             ui.main_btn.setStyleSheet(
                 """QPushButton {background-color: rgb(156, 220, 254); border-radius: 5px;}
             QPushButton:hover {background-color: rgba(156, 220, 254, 150);}"""
             )
-            ui.main_btn.clicked.connect(lambda: cls.open_result_form(ui))
+            ui.main_btn.clicked.connect(lambda: self.open_result_form())
 
-        @classmethod
-        def open_result_form(cls, ui):
-            window = result_main.ResultWindow()
+        def open_result_form(self):
+            import result_main
+            window = result_main.ResultWindow(self.parent.pg)
             window.show()
 
     @classmethod
@@ -217,7 +176,7 @@ class UIFunctions(MainWindow):
         if ui.role.lower() == "teacher":
             cls.TeacherUiFunctions(cls, ui)
         if ui.role.lower() == "student":
-            cls.StudentUiFunctions(ui)
+            cls.StudentUiFunctions(cls, ui)
 
 
 def main(role):

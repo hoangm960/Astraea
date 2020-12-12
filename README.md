@@ -1,54 +1,54 @@
-## Astraea
+# Astraea
 Phần mềm hỗ trợ dạy và học lập trình
 
-#Change log:
-30/9: (v0.0) 
+# Change log:
+## v0.0 (30/9):
 	+ Bắt đầu làm với Tkinter.
-4/10: (v0.1) 
+## v0.1 (4/10): 
 	+ User login.
-14/10: (v0.2) 
+## v0.2 (14/10): 
 	+ Bắt đầu phát triển thuật toán chấm điểm.
-16/10: (v0.3) 
+## v0.3 (16/10): 
 	+ Phân User ra thành 2 loại giáo viên hoặc học sinh.
-25/10: (v0.4) 
+## v0.4 (25/10): 
 	+ Thêm thuật toán mã hóa.
-27/10: (v0.5) 
+## v0.5 (27/10): 
 	+ Thêm window edit của giáo viên.
-7/11: (v0.6) 
+## v0.6 (7/11): 
 	+ Test giao diện với Pyqt5 và Pyside2.
-10/11: (v1.0) 
+## v1.0 (10/11): 
 	+ Chuyển đổi giao diện bằng Qt.
-11/11: (v1.1) 
+## v1.1 (11/11):
 	+ Load bài học từ file. 
 	+ Load chi tiết bài tập từ tên bài tập.
-13/11: (v1.2) 
+## v1.2 (13/11): 
 	+ Sắp xếp, dọn dẹp các file.
-15/11:  (v1.3) 
+## v1.3 (15/11): 
 	+ Thuật toán kiểm tra login.
-17/11: (v1.4) 
+## v1.4 (17/11): 
 	+ Màn hình loading.
-18/11: (v1.5) 
+## v1.5 (18/11): 
 	+ Mã hóa file user.
-19/11: (v1.6) 
+## v1.6 (19/11): 
 	+ Đọc file bai học.
-20/11: (v1.7) 
+## v1.7 (20/11):  
 	+ Load sẵn file bài học.
 	+ Thay đổi giao diện edit window.
-22/11: (v1.8) 
+## v1.8 (22/11): 
 	+ Thêm phần check dung lượng của thuật toán.
-23/11: (v1.9) 
+## v1.9 (23/11): 
 	+ Thêm phần nộp bài và thông báo kết quả cho học sinh.
 	+ Thêm thuật toán tính điểm.
-24/11: (v1.10) 
+## v1.10 (24/11): 
 	+ Thuật toán thêm kiểm tra giới hạn thời gian chạy chương trình của học sinh.
 	+ Hoàn thiện thuật toán v1.
-29/11: (v2.0) 
+## v2.0 (29/11): 
 	+ Thuật toán chấm điểm v2 tối ưu hơn.
-1/12: (v2.1) 
+## v2.1 (1/12):
 	+ Thêm giao diện lý thuyết.
-5/12: (v2.2) 
+## v2.2 (5/12): 
 	+ Chuyển đổi file docx của lý thuyết thành dạng html để đọc.
-6/12: (v2.3) 
+## v2.3 (6/12):  
 	+ Dùng IDLE cho môi trường lập trình.
-7/12: (v2.4) 
+## v2.4 (7/12): 
 	+ Chuyển môi trường lập trình sang PythonWin từ pywin32.

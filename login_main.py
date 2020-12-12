@@ -365,4 +365,4 @@ def main(pg, file=''):
 
 
 if __name__ == "__main__":
-    main()
+    main(None)

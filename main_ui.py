@@ -2,7 +2,7 @@ import os
 import pickle
 import subprocess
 import sys
-
+from time import sleep, time
 import win32con
 import win32gui
 from PyQt5 import QtCore, uic
@@ -51,12 +51,8 @@ class UIFunctions(MainWindow):
         ui.bg_frame.setGraphicsEffect(ui.shadow)
 
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
-
-        def minimize(window):
-            win32gui.ShowWindow(window, win32con.SW_MINIMIZE)
-        ui.btn_minimize.clicked.connect(lambda: minimize(cls.pg))
-
         ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
+        
         ui.load_btn.clicked.connect(
             lambda: cls.show_file_dialog(ui, OPENED_LESSON_PATH)
         )
@@ -70,7 +66,6 @@ class UIFunctions(MainWindow):
         cls.check_opened_lesson(ui, OPENED_LESSON_PATH)
 
         cls.open_idle(ui)
-
     @classmethod
     def open_idle(cls, ui):
         cls.pg = gw.getWindowsWithTitle("PythonWin")[0] if gw.getWindowsWithTitle("PythonWin") else ''
@@ -148,7 +143,7 @@ class UIFunctions(MainWindow):
                 """QPushButton {background-color: rgb(156, 220, 254); border-radius: 5px;}
             QPushButton:hover {background-color: rgba(156, 220, 254, 150);}"""
             )
-            ui.main_btn.clicked.connect(lambda: self.open_edit_form(ui))
+            ui.main_btn.clicked.connect(lambda: self.open_edit_form())
 
         @staticmethod
         def open_edit_form():
@@ -179,14 +174,14 @@ class UIFunctions(MainWindow):
             cls.StudentUiFunctions(cls, ui)
 
 
-def main(role):
-    window = MainWindow(role)
+def main(role, pg):
+    window = MainWindow(role, pg)
     window.move(SCREEN_WIDTH - window.width(), 0)
     window.show()
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    main("teacher")
+    main("teacher", None)
     # main("student")
     sys.exit(app.exec_())

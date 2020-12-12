@@ -289,7 +289,7 @@ class UIFunctions(ResultWindow):
         else:
             self.Judge.setText("Bài làm đạt chuẩn")
             
-        with open(f"{OPENED_RESULT_PATH}{open(cls.OPENED_USER).read().rstrip()}.rf", 'a+', encoding='utf-8') as f:
+        with open(f"{OPENED_RESULT_PATH}{open(cls.OPENED_USER, encoding = 'utf-8').read().rstrip()}.rf", 'a+', encoding='utf-8') as f:
             name_account = open(cls.OPENED_USER, encoding = 'utf-8').read().rstrip()
             current_time = datetime.now().strftime("%H:%M:%S %d/%m/%Y")
             text = f'{name_account} :  {self.Score.text()} ({current_time})\n'
@@ -310,4 +310,4 @@ def main(pg):
 
 
 if __name__ == "__main__":
-    main()
+    main(None)

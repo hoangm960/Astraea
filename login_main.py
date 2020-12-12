@@ -32,7 +32,9 @@ class User:
 class LoginWindow(QMainWindow):
     UI_PATH = "UI_Files/Login_gui.ui"
 
-    def __init__(self):
+    def __init__(self, pg):
+        self.pg = pg if pg else None
+
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(self.UI_PATH, self)
         LoginFunctions.uiDefinitions(self)
@@ -236,7 +238,7 @@ class LoginFunctions(LoginWindow):
                     encrypt(cls.USER_PATH, cls.USER_PATH_ENCRYPTED, cls.KEY_PATH)
 
                     self.close()
-                    main_ui.main(user.role)
+                    main_ui.main(user.role, self.pg)
                     break
         QtCore.QTimer.singleShot(3000, lambda: self.frameError.hide())
 
@@ -295,7 +297,9 @@ class LoginFunctions(LoginWindow):
 class Loading_Screen(QMainWindow):
     counter = 0
 
-    def __init__(self):
+    def __init__(self, pg):
+        self.pg = pg if pg else None
+
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi("UI_files/Loading_Screen.ui", self)
         self.move(
@@ -318,7 +322,7 @@ class Loading_Screen(QMainWindow):
         self.progressBar.setValue(self.counter)
         if self.counter > 100:
             self.timer.stop()
-            self.main = LoginWindow()
+            self.main = LoginWindow(self.pg)
             self.main.setGeometry(
                 round((SCREEN_WIDTH - self.main.width()) / 2),
                 round((SCREEN_HEIGHT - self.main.height()) / 5),
@@ -352,10 +356,10 @@ class Loading_Screen(QMainWindow):
         self.counter += 1
 
 
-def main(file=''):
+def main(pg, file=''):
     FILE = file
     app = QApplication(sys.argv)
-    splash_window = Loading_Screen()
+    splash_window = Loading_Screen(pg)
     splash_window.show()
     sys.exit(app.exec_())
 

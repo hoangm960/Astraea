@@ -1,11 +1,12 @@
-import os
-import sys
-import login_main
 import argparse
+import os
+import subprocess
+import sys
 from pathlib import Path
+from time import sleep
+
 import pygetwindow as gw
 from win32api import GetMonitorInfo, MonitorFromPoint
-import subprocess
 
 
 USER_PATH = "./data/Users/"
@@ -43,7 +44,7 @@ pg = None
 def open_idle():
     global pg
     subprocess.Popen([find_idle()])
-
+    sleep(1)
     while True:
         if gw.getWindowsWithTitle("PythonWin"):
             pg = gw.getWindowsWithTitle("PythonWin")[0]
@@ -51,6 +52,6 @@ def open_idle():
     pg.minimize()
 
 open_idle()
-
+import login_main
 # login_main.main(args.file)
-login_main.main()
+login_main.main(pg)

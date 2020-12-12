@@ -3,6 +3,7 @@ import pickle
 import subprocess
 import sys
 from time import sleep, time
+from PyQt5 import QtGui
 import win32con
 import win32gui
 from PyQt5 import QtCore, uic
@@ -30,8 +31,13 @@ class MainWindow(QMainWindow):
         self.role = role
         self.pg = pg
         UIFunctions.uiDefinitions(self)
-
-
+    def changeEvent(self, event):
+        if event.type() == QtCore.QEvent.WindowStateChange:
+            if self.windowState() & QtCore.Qt.WindowMinimized:
+                self.pg.minimize()
+            elif event.oldState() & QtCore.Qt.WindowMinimized:
+                self.pg.maximize()
+        QMainWindow.changeEvent(self, event)
 class UIFunctions(MainWindow):
     assignments = {}
 
@@ -47,12 +53,8 @@ class UIFunctions(MainWindow):
         ui.shadow.setYOffset(0)
         ui.shadow.setColor(QColor(0, 0, 0, 200))
         ui.bg_frame.setGraphicsEffect(ui.shadow)
-
-        def minimize(ui, pg):
-            ui.showMinimized()
-            if pg:
-                pg.minimize()
-        ui.btn_minimize.clicked.connect(lambda: minimize(ui, ui.pg))
+        
+        ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
         ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
         
         ui.load_btn.clicked.connect(

@@ -7,9 +7,7 @@ from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (QApplication, QFileDialog,
                              QGraphicsDropShadowEffect, QMainWindow)
 
-import doc
-import edit_main
-import result_main
+
 from UI_Files import Resources
 from win32api import GetMonitorInfo, MonitorFromPoint
 
@@ -26,7 +24,7 @@ class MainWindow(QMainWindow):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(UI_MAIN_PATH, self)
         self.role = role
-        self.pg = pg if pg else None
+        self.pg = pg
         UIFunctions.uiDefinitions(self)
 
 
@@ -130,13 +128,14 @@ class UIFunctions(MainWindow):
             cls.assignments[ui.list_assignments.currentItem().text()]
         )
 
-    @classmethod
-    def change_assignment_title(cls, ui, title):
+    @staticmethod
+    def change_assignment_title(ui, title):
         ui.lesson_title.setText(
             title) if title else ui.lesson_title.setParent(None)
 
-    @classmethod
-    def open_doc(cls, ui):
+    @staticmethod
+    def open_doc(ui):
+        import doc
         ui.main = doc.DocWindow(ui.role)
         ui.main.show()
 
@@ -152,23 +151,25 @@ class UIFunctions(MainWindow):
             )
             ui.main_btn.clicked.connect(lambda: self.open_edit_form(ui))
 
-        def open_edit_form(self, ui):
+        @staticmethod
+        def open_edit_form():
+            import edit_main
             window = edit_main.EditWindow()
             window.show()
 
     class StudentUiFunctions:
-        def __init__(cls, ui):
-
+        def __init__(self, parent, ui):
+            self.parent = parent
             ui.main_btn.setText("Kiểm tra")
             ui.main_btn.setStyleSheet(
                 """QPushButton {background-color: rgb(156, 220, 254); border-radius: 5px;}
             QPushButton:hover {background-color: rgba(156, 220, 254, 150);}"""
             )
-            ui.main_btn.clicked.connect(lambda: cls.open_result_form(ui))
+            ui.main_btn.clicked.connect(lambda: self.open_result_form())
 
-        @classmethod
-        def open_result_form(cls, ui):
-            window = result_main.ResultWindow()
+        def open_result_form(self):
+            import result_main
+            window = result_main.ResultWindow(self.parent.pg)
             window.show()
 
     @classmethod
@@ -176,7 +177,7 @@ class UIFunctions(MainWindow):
         if ui.role.lower() == "teacher":
             cls.TeacherUiFunctions(cls, ui)
         if ui.role.lower() == "student":
-            cls.StudentUiFunctions(ui)
+            cls.StudentUiFunctions(cls, ui)
 
 
 def main(role, pg):

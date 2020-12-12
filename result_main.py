@@ -10,8 +10,6 @@ from PyQt5.QtWidgets import (QApplication, QFileDialog,
                              QGraphicsDropShadowEffect, QMainWindow, QSizeGrip,
                              QVBoxLayout, QWidget)
 from win32api import GetMonitorInfo, MonitorFromPoint
-import subprocess
-import tempfile
 import check_algorithm
 import main_ui
 
@@ -27,8 +25,9 @@ SCREEN_WIDTH, SCREEN_HEIGHT = work_area[2], work_area[3]
 
 
 class ResultWindow(QMainWindow):
-    def __init__(self, *args, **kwargs):
-        QMainWindow.__init__(self, *args, **kwargs)
+    def __init__(self, pg):
+        self.pg = pg
+        QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(RESULT_FORM_PATH, self)
         self.setGeometry(
             round((SCREEN_WIDTH - self.width()) / 3),
@@ -96,6 +95,8 @@ class UIFunctions(ResultWindow):
         self.bg_frame.setGraphicsEffect(self.shadow)
         self.stacked_widget.setCurrentIndex(1)
         self.return_btn.clicked.connect(lambda: self.close())
+        if self.pg:
+            self.return_btn.clicked.connect(lambda: self.pg.close())
         self.inform.hide()
         self.Frame_close.hide()
         # Button function
@@ -105,7 +106,7 @@ class UIFunctions(ResultWindow):
         self.btn_minimize.clicked.connect(lambda: self.showMinimized())
         def quit():
             self.Accept1.clicked.connect(lambda: self.close())
-            self.Accept1.clicked.connect(lambda: main_ui.main("student"))
+            self.Accept1.clicked.connect(lambda: main_ui.main("student", self.pg))
             self.Deny1.clicked.connect(lambda: self.bg_frame.setStyleSheet(
                 """background-color: rgb(30, 30, 30); border-radius: 10px; color: rgb(255, 255, 255);"""))
             self.bg_frame.setStyleSheet(
@@ -297,13 +298,13 @@ class UIFunctions(ResultWindow):
     @staticmethod
     def reopen_main(ui):
         import main_ui
-        main_ui.main("student")
+        main_ui.main("student", ui.pg)
         ui.close()
 
 
-def main():
+def main(pg):
     app = QApplication(sys.argv)
-    window = ResultWindow()
+    window = ResultWindow(pg)
     window.show()
     sys.exit(app.exec_())
 

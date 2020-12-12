@@ -8,7 +8,6 @@ from time import sleep
 import pygetwindow as gw
 from win32api import GetMonitorInfo, MonitorFromPoint
 
-
 USER_PATH = "./data/Users/"
 ENCRYPTION_PATH = "./data/encryption/"
 OPENED_RESULT_PATH = "./data/results/"
@@ -45,13 +44,13 @@ def open_idle():
     global pg
     subprocess.Popen([find_idle()])
     sleep(1)
-    while True:
-        if gw.getWindowsWithTitle("PythonWin"):
-            pg = gw.getWindowsWithTitle("PythonWin")[0]
-            break
+    if gw.getWindowsWithTitle("PythonWin"):
+        pg = gw.getWindowsWithTitle("PythonWin")[0]
     pg.minimize()
 
 open_idle()
-import login_main
+
 # login_main.main(args.file)
-login_main.main(pg)
+if __name__ == "__main__":
+    import login_main
+    login_main.main(pg)

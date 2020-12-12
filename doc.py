@@ -51,7 +51,11 @@ class UIFunctions(DocWindow):
     @classmethod
     def Change(cls, ui, number, text):
         if number<ui.titles.count():
+            temp = UIFunctions.docs[ui.titles.item(number).text()]
+            UIFunctions.docs.pop(ui.titles.item(number).text())
             ui.titles.item(number).setText(text)
+            UIFunctions.docs[ui.titles.item(number).text()] = temp
+
     @classmethod
     def load_assignments(cls, ui, filename):
         ui.titles.clear()   

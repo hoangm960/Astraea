@@ -38,12 +38,15 @@ class UIFunctions(DocWindow):
         cls.load_assignments(
             ui, open(main_ui.OPENED_LESSON_PATH).read().rstrip())
         cls.define_role(ui)
-
+        ui.Delete.clicked.connect(lambda: cls.Delete(ui, ui.Delete_spin.value()))
+        ui.deleteBox_frame.hide()
     @classmethod
     def close_pg(cls, ui):
         ui.close()
         main_ui.main(ui.role)
-
+    @classmethod
+    def Delete(cls, ui,number):
+        ui.titles.takeItem(number)
     @classmethod
     def load_assignments(cls, ui, filename):
         ui.titles.clear()

@@ -193,6 +193,7 @@ class UIFunctions(EditWindow):
                     data = unpickler.load()
                     title = data[0]
                     assignments = data[1]
+                    
                     cls.put_frame_in_list(ui, len(assignments))
                     cls.setup_frame(ui, title, assignments)
 

@@ -369,7 +369,7 @@ class UIFunctions(EditWindow):
     def reopen_main(cls, ui):
         ui.close()
         main_ui.UIFunctions.open_idle(ui)
-        main_ui.main("teacher")
+        main_ui.main("teacher", None)
 
 
 if __name__ == "__main__":

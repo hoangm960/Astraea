@@ -31,6 +31,7 @@ class MainWindow(QMainWindow):
         self.role = role
         self.pg = pg
         UIFunctions.uiDefinitions(self)
+
     def changeEvent(self, event):
         if event.type() == QtCore.QEvent.WindowStateChange:
             if self.windowState() & QtCore.Qt.WindowMinimized:
@@ -38,6 +39,8 @@ class MainWindow(QMainWindow):
             elif event.oldState() & QtCore.Qt.WindowMinimized:
                 self.pg.maximize()
         QMainWindow.changeEvent(self, event)
+
+
 class UIFunctions(MainWindow):
     assignments = {}
 
@@ -62,9 +65,10 @@ class UIFunctions(MainWindow):
     @classmethod
     def connect_btn(cls, ui):
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
-        ui.btn_quit.clicked.connect(lambda: ui.pg.close())
+        if ui.pg:
+            ui.btn_quit.clicked.connect(lambda: ui.pg.close())
         ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
-        
+
         ui.load_btn.clicked.connect(
             lambda: cls.show_file_dialog(ui, OPENED_LESSON_PATH)
         )
@@ -74,11 +78,8 @@ class UIFunctions(MainWindow):
 
         ui.list_assignments.itemPressed.connect(lambda: cls.load_details(ui))
 
-
     @staticmethod
     def open_idle(ui):
-        # ui.pg = gw.getWindowsWithTitle("PythonWin")[0] if gw.getWindowsWithTitle("PythonWin") else ''
-
         if ui.pg:
             ui.pg.restore()
             ui.pg.moveTo(-8, 0)
@@ -152,12 +153,12 @@ class UIFunctions(MainWindow):
                 """QPushButton {background-color: rgb(156, 220, 254); border-radius: 5px;}
             QPushButton:hover {background-color: rgba(156, 220, 254, 150);}"""
             )
-            ui.main_btn.clicked.connect(lambda: self.open_edit_form())
+            ui.main_btn.clicked.connect(lambda: self.open_edit_form(ui))
 
         @staticmethod
-        def open_edit_form():
+        def open_edit_form(ui):
             import edit_main
-            window = edit_main.EditWindow()
+            window = edit_main.EditWindow(ui.pg)
             window.show()
 
     class StudentUiFunctions:

@@ -25,12 +25,13 @@ SCREEN_WIDTH, SCREEN_HEIGHT = work_area[2], work_area[3]
 
 
 class MainWindow(QMainWindow):
-    def __init__(self, role, pg):
+    def __init__(self, role, pg=None):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(UI_MAIN_PATH, self)
         self.role = role
         self.pg = pg
         UIFunctions.uiDefinitions(self)
+
     def changeEvent(self, event):
         if event.type() == QtCore.QEvent.WindowStateChange:
             if self.windowState() & QtCore.Qt.WindowMinimized:
@@ -47,7 +48,7 @@ class MainWindow(QMainWindow):
                     pass
         QMainWindow.changeEvent(self, event)
     
-    
+
 class UIFunctions(MainWindow):
     assignments = {}
     @classmethod
@@ -67,9 +68,19 @@ class UIFunctions(MainWindow):
             window = profile.ProfileWindow()
             window.show()
         ui.profile_btn.clicked.connect(lambda: open_profile())
+
+        cls.define_role(ui)
+        cls.connect_btn(ui)
+        cls.check_opened_lesson(ui, OPENED_LESSON_PATH)
+        cls.open_idle(ui)
+
+    @classmethod
+    def connect_btn(cls, ui):
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
+        if ui.pg:
+            ui.btn_quit.clicked.connect(lambda: ui.pg.close())
         ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
-        
+
         ui.load_btn.clicked.connect(
             lambda: cls.show_file_dialog(ui, OPENED_LESSON_PATH)
         )
@@ -79,21 +90,15 @@ class UIFunctions(MainWindow):
 
         ui.list_assignments.itemPressed.connect(lambda: cls.load_details(ui))
 
-        cls.define_role(ui)
-        cls.check_opened_lesson(ui, OPENED_LESSON_PATH)
-
-        cls.open_idle(ui)
-    @classmethod
-    def open_idle(cls, ui):
-        ui.pg = gw.getWindowsWithTitle("PythonWin")[0] if gw.getWindowsWithTitle("PythonWin") else ''
-
+    @staticmethod
+    def open_idle(ui):
         if ui.pg:
             ui.pg.restore()
             ui.pg.moveTo(-8, 0)
             ui.pg.resizeTo(SCREEN_WIDTH - ui.width() + 16, ui.height() + 8)
 
-    @classmethod
-    def close_pg(cls, ui):
+    @staticmethod
+    def close_pg(ui):
         if ui.pg:
             ui.pg.maximize()
         ui.close()
@@ -160,12 +165,12 @@ class UIFunctions(MainWindow):
                 """QPushButton {background-color: rgb(156, 220, 254); border-radius: 5px;}
             QPushButton:hover {background-color: rgba(156, 220, 254, 150);}"""
             )
-            ui.main_btn.clicked.connect(lambda: self.open_edit_form())
+            ui.main_btn.clicked.connect(lambda: self.open_edit_form(ui))
 
         @staticmethod
-        def open_edit_form():
+        def open_edit_form(ui):
             import edit_main
-            window = edit_main.EditWindow()
+            window = edit_main.EditWindow(ui.pg)
             window.show()
 
     class StudentUiFunctions:
@@ -176,11 +181,12 @@ class UIFunctions(MainWindow):
                 """QPushButton {background-color: rgb(156, 220, 254); border-radius: 5px;}
             QPushButton:hover {background-color: rgba(156, 220, 254, 150);}"""
             )
-            ui.main_btn.clicked.connect(lambda: self.open_result_form())
+            ui.main_btn.clicked.connect(lambda: self.open_result_form(ui))
 
-        def open_result_form(self):
+        @staticmethod
+        def open_result_form(ui):
             import result_main
-            window = result_main.ResultWindow(self.parent.pg)
+            window = result_main.ResultWindow(ui.pg)
             window.show()
 
     @classmethod

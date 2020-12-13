@@ -46,8 +46,9 @@ class Assignment:
 
 
 class EditWindow(QMainWindow):
-    def __init__(self, *args, **kwargs):
-        QMainWindow.__init__(self, *args, **kwargs)
+    def __init__(self, pg=None):
+        self.pg = pg
+        QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(EDIT_FORM_PATH, self)
         self.setGeometry(
             round((QApplication.primaryScreen().size().width() - self.width()) / 2),
@@ -364,11 +365,10 @@ class UIFunctions(EditWindow):
 
         cls.reopen_main(ui)
 
-    @classmethod
-    def reopen_main(cls, ui):
+    @staticmethod
+    def reopen_main(ui):
         ui.close()
-        main_ui.UIFunctions.open_idle(ui)
-        main_ui.main("teacher", None)
+        main_ui.main("teacher", ui.pg)
 
 
 if __name__ == "__main__":

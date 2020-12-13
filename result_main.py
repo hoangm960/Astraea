@@ -25,7 +25,7 @@ SCREEN_WIDTH, SCREEN_HEIGHT = work_area[2], work_area[3]
 
 
 class ResultWindow(QMainWindow):
-    def __init__(self, pg):
+    def __init__(self, pg=None):
         self.pg = pg
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(RESULT_FORM_PATH, self)

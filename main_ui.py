@@ -34,13 +34,22 @@ class MainWindow(QMainWindow):
     def changeEvent(self, event):
         if event.type() == QtCore.QEvent.WindowStateChange:
             if self.windowState() & QtCore.Qt.WindowMinimized:
-                self.pg.minimize()
+                try:
+                    self.pg.minimize()
+                except:
+                    pass
             elif event.oldState() & QtCore.Qt.WindowMinimized:
-                self.pg.maximize()
+                try:
+                    self.pg.restore()
+                    self.pg.moveTo(-8, 0)
+                    self.pg.resizeTo(SCREEN_WIDTH - self.width() + 16, self.height() + 8)
+                except:
+                    pass
         QMainWindow.changeEvent(self, event)
+    
+    
 class UIFunctions(MainWindow):
     assignments = {}
-
     @classmethod
     def uiDefinitions(cls, ui):
         ui.setGeometry(SCREEN_WIDTH, SCREEN_HEIGHT, ui.width(), SCREEN_HEIGHT)
@@ -53,7 +62,11 @@ class UIFunctions(MainWindow):
         ui.shadow.setYOffset(0)
         ui.shadow.setColor(QColor(0, 0, 0, 200))
         ui.bg_frame.setGraphicsEffect(ui.shadow)
-        
+        def open_profile():
+            import profile
+            window = profile.ProfileWindow()
+            window.show()
+        ui.profile_btn.clicked.connect(lambda: open_profile())
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
         ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
         

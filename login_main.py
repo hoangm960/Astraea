@@ -21,13 +21,13 @@ SCREEN_WIDTH, SCREEN_HEIGHT = work_area[2], work_area[3]
 
 
 class User:
-    def __init__(self, name, password, role, name_user, auto_saved):
+    def __init__(self, name, password, role, name_user, id, auto_saved):
         self.name = name
         self.password = password
         self.role = role
         self.auto_saved = auto_saved
         self.name_user = name_user
-
+        self.id = id
 
 class LoginWindow(QMainWindow):
     UI_PATH = "UI_Files/Login_gui.ui"
@@ -222,9 +222,14 @@ class LoginFunctions(LoginWindow):
         else:
             for user in cls.users:
                 if user.name == name:
-                    open(cls.OPENED_USER, 'w',
-                         encoding='utf-8').write(user.name_user)
-
+                    with open(cls.OPENED_USER, 'w', encoding = 'utf-8') as pro:
+                        pro.write(user.name_user)
+                        pro.write('\n')
+                        pro.write(user.id)
+                        pro.write('\n')
+                        print(user.auto_saved)
+                        pro.write(user.password)
+                        pro.write('\n')
                     for i in range(len(cls.users)):
                         cls.users[i].auto_saved = False
                     if self.SavePass.isChecked():
@@ -241,7 +246,6 @@ class LoginFunctions(LoginWindow):
                     main_ui.main(user.role, self.pg)
                     break
         QtCore.QTimer.singleShot(3000, lambda: self.frameError.hide())
-
     @classmethod
     def check_SU(cls, self):
         check = True
@@ -286,8 +290,11 @@ class LoginFunctions(LoginWindow):
                 name = self.NameBox.text()
                 password = self.PassBox.text()
                 role = "teacher" if self.teacher.isChecked() else "student"
+                code = ''
+                for i in range(0,8):
+                    code+=str(randrange(0,10))
                 cls.users.append(
-                    User(name, password, role, name_account, False))
+                    User(name, password, role, name_account, code, False))
                 pickle.dump(cls.users, f)
 
             encrypt(cls.USER_PATH, cls.USER_PATH_ENCRYPTED, cls.KEY_PATH)

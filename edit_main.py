@@ -19,7 +19,6 @@ HTML_CONVERT_PATH = "./data/html_convert"
 if not os.path.exists(OPENED_ASSIGNMENT_PATH):
     open(OPENED_ASSIGNMENT_PATH, "w").close()
 
-
 class Assignment:
     class Test:
         def __init__(self, inputs, outputs):
@@ -148,7 +147,7 @@ class UIFunctions(EditWindow):
                     border: 0px solid black; 
                     border-radius: 12px;""")
 
-            if not os.path.exists(child.ex_file_entry.text()):
+            if not os.path.exists(child.ex_file_entry.text()) or child.ex_file_entry.text()[-2:] != 'py':
                 child.ex_file_entry.setStyleSheet(
                     """background-color: rgb(255, 255, 255); 
                     border: 2px solid rgb(225, 0 , 0); border-radius: 12px;""")
@@ -158,7 +157,7 @@ class UIFunctions(EditWindow):
                     """background-color: rgb(255, 255, 255); 
                     border: 0px solid black;
                     border-radius: 12px;""")
-            if not os.path.exists(child.test_file_entry.text()):
+            if not os.path.exists(child.test_file_entry.text()) or child.test_file_entry.text()[-2:] != 'xt':
                 child.test_file_entry.setStyleSheet(
                     """background-color: rgb(255, 255, 255); 
                     border: 2px solid rgb(225, 0 , 0); 

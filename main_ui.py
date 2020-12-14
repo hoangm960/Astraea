@@ -35,60 +35,72 @@ class MainWindow(QMainWindow):
     def changeEvent(self, event):
         if event.type() == QtCore.QEvent.WindowStateChange:
             if self.windowState() & QtCore.Qt.WindowMinimized:
-                self.pg.minimize()
+                try:
+                    self.pg.minimize()
+                except:
+                    pass
             elif event.oldState() & QtCore.Qt.WindowMinimized:
-                self.pg.maximize()
+                try:
+                    self.pg.restore()
+                    self.pg.moveTo(-8, 0)
+                    self.pg.resizeTo(SCREEN_WIDTH - self.width() + 16, self.height() + 8)
+                except:
+                    pass
         QMainWindow.changeEvent(self, event)
-
+    
 
 class UIFunctions(MainWindow):
     assignments = {}
-
     @classmethod
     def uiDefinitions(cls, ui):
         ui.setGeometry(SCREEN_WIDTH, SCREEN_HEIGHT, ui.width(), SCREEN_HEIGHT)
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-
+        cls.resize_idle(ui, ui.pg)
         ui.shadow = QGraphicsDropShadowEffect(ui)
         ui.shadow.setBlurRadius(50)
         ui.shadow.setXOffset(0)
         ui.shadow.setYOffset(0)
         ui.shadow.setColor(QColor(0, 0, 0, 200))
         ui.bg_frame.setGraphicsEffect(ui.shadow)
-
+        def open_profile():
+            import profile
+            ui.mainWin = profile.ProfileWindow()
+            ui.mainWin.show()
+        ui.profile_btn.clicked.connect(lambda: open_profile())
+        
+        
         cls.define_role(ui)
         cls.connect_btn(ui)
         cls.check_opened_lesson(ui, OPENED_LESSON_PATH)
-        cls.open_idle(ui)
-
+        
     @classmethod
     def connect_btn(cls, ui):
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
         if ui.pg:
             ui.btn_quit.clicked.connect(lambda: ui.pg.close())
-        ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
+        ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui, ui.pg))
 
         ui.load_btn.clicked.connect(
             lambda: cls.show_file_dialog(ui, OPENED_LESSON_PATH)
         )
-        ui.main_btn.clicked.connect(lambda: cls.close_pg(ui))
-        ui.LessonButton.clicked.connect(lambda: cls.close_pg(ui))
-        ui.LessonButton.clicked.connect(lambda: cls.open_doc(ui))
+        ui.main_btn.clicked.connect(lambda: cls.close_pg(ui, ui.pg))
+        ui.LessonButton.clicked.connect(lambda: cls.close_pg(ui, ui.pg))
+        ui.LessonButton.clicked.connect(lambda: cls.open_doc(ui, ui.pg))
 
         ui.list_assignments.itemPressed.connect(lambda: cls.load_details(ui))
 
     @staticmethod
-    def open_idle(ui):
-        if ui.pg:
-            ui.pg.restore()
-            ui.pg.moveTo(-8, 0)
-            ui.pg.resizeTo(SCREEN_WIDTH - ui.width() + 16, ui.height() + 8)
+    def resize_idle(ui, pg):
+        if pg:
+            pg.restore()
+            pg.moveTo(-8, 0)
+            pg.resizeTo(SCREEN_WIDTH - ui.width() + 16, ui.height() + 8)
 
     @staticmethod
-    def close_pg(ui):
-        if ui.pg:
-            ui.pg.maximize()
+    def close_pg(ui, pg):
+        if pg:
+            pg.maximize()
         ui.close()
 
     @classmethod
@@ -138,9 +150,9 @@ class UIFunctions(MainWindow):
             title) if title else ui.lesson_title.setParent(None)
 
     @staticmethod
-    def open_doc(ui):
+    def open_doc(ui, pg):
         import doc
-        ui.main = doc.DocWindow(ui.role)
+        ui.main = doc.DocWindow(ui.role, pg)
         ui.main.show()
 
     class TeacherUiFunctions:

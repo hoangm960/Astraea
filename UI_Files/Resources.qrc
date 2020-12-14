@@ -12,5 +12,8 @@
     <file>icons/close_white.png</file>
     <file>icons/minus.png</file>
     <file>icons/plus.png</file>
+    <file>icons/user.png</file>
+    <file>icons/user_white.png</file>
+    <file>icons/Edit.png</file>
   </qresource>
 </RCC>

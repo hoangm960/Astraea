@@ -52,3 +52,6 @@ Phần mềm hỗ trợ dạy và học lập trình
 	+ Dùng IDLE cho môi trường lập trình.
 #### v2.4 (7/12): 
 	+ Chuyển môi trường lập trình sang PythonWin từ pywin32.
+#### v2.5 (13/12): 
+	+ Thêm chức năng lưu thông tin người dùng.
+	+ Thêm chức năng xóa, đổi tên các mục Docx.

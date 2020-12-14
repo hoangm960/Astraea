@@ -7,28 +7,29 @@ from time import sleep
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 import pygetwindow as gw
 from win32api import GetMonitorInfo, MonitorFromPoint
-try:
+
+parser = argparse.ArgumentParser(
+    description="Astraea - Công cụ hỗ trợ dạy học"
+)
+parser.add_argument(
+    "--file", type=str, help="Mở ứng dụng với file cho trước."
+)
+args = parser.parse_args()
+
+
+def create_file():
     USER_PATH = "./data/Users/"
     ENCRYPTION_PATH = "./data/encryption/"
     OPENED_RESULT_PATH = "./data/results/"
-    monitor_info = GetMonitorInfo(MonitorFromPoint((0, 0)))
-    work_area = monitor_info.get("Work")
-    SCREEN_WIDTH, SCREEN_HEIGHT = work_area[2], work_area[3]
 
     Path(USER_PATH).mkdir(parents=True, exist_ok=True)
     Path(ENCRYPTION_PATH).mkdir(parents=True, exist_ok=True)
     Path(OPENED_RESULT_PATH).mkdir(parents=True, exist_ok=True)
 
-    parser = argparse.ArgumentParser(
-        description="Astraea - Công cụ hỗ trợ dạy học"
-    )
-    parser.add_argument(
-        "--file", type=str, help="Mở ứng dụng với file cho trước."
-    )
-    args = parser.parse_args()
-
+try:
     def find_idle():
-        class Error(Exception): pass
+        class Error(Exception):
+            pass
 
         def _find(pathname, matchFunc=os.path.isfile):
             for dirname in sys.path:
@@ -40,6 +41,7 @@ try:
         return _find("Lib\site-packages\pythonwin\Pythonwin.exe")
 
     pg = None
+
     def open_idle():
         global pg
         subprocess.Popen([find_idle()])
@@ -48,7 +50,8 @@ try:
             pg = gw.getWindowsWithTitle("PythonWin")[0]
         pg.minimize()
     open_idle()
-except: 
+
+except:
     msg = QMessageBox()
     msg.setWindowTitle("Đang khởi chạy")
     msg.setText(
@@ -57,7 +60,8 @@ except:
     msg.setIcon(QMessageBox.Information)
     msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
     msg.buttonClicked.connect(sys.exit())
-# login_main.main(args.file)
+
 if __name__ == "__main__":
     import login_main
     login_main.main(pg)
+    # login_main.main(args.file)

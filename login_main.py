@@ -29,6 +29,7 @@ class User:
         self.name_user = name_user
         self.id = id
 
+
 class LoginWindow(QMainWindow):
     UI_PATH = "UI_Files/Login_gui.ui"
 
@@ -37,7 +38,7 @@ class LoginWindow(QMainWindow):
 
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(self.UI_PATH, self)
-        LoginFunctions.uiDefinitions(self)
+        LoginFunctions(self)
 
         self.OkCancelFrame.move(440, 247)
 
@@ -65,301 +66,294 @@ class LoginFunctions(LoginWindow):
     KEY_PATH = "data/encryption/users.key"
     OPENED_USER = "data/Users/opened_user.ou"
 
-    @classmethod
-    def uiDefinitions(cls, self):
-
-        self.OkCancelFrame.hide()
-        self.frameError.hide()
-        self.eyeHide_SI.hide()
-        self.eyeHide.hide()
-        self.stacked_widget.setCurrentIndex(0)
-        self.Note_Name.hide()
-        self.Note_Pass.hide()
-        self.Note_User.hide()
-        self.Note_Name.clicked.connect(lambda: self.Note_Name.QToolTip.show())
-        self.setGeometry(
-            round((SCREEN_WIDTH - self.width()) / 2),
-            round((SCREEN_HEIGHT - self.height()) / 2),
-            self.width(),
-            self.height()
+    def __init__(self, ui):
+        ui.OkCancelFrame.hide()
+        ui.frameError.hide()
+        ui.eyeHide_SI.hide()
+        ui.eyeHide.hide()
+        ui.stacked_widget.setCurrentIndex(0)
+        ui.Note_Name.hide()
+        ui.Note_Pass.hide()
+        ui.Note_User.hide()
+        ui.Note_Name.clicked.connect(lambda: ui.Note_Name.QToolTip.show())
+        ui.setGeometry(
+            round((SCREEN_WIDTH - ui.width()) / 2),
+            round((SCREEN_HEIGHT - ui.height()) / 2),
+            ui.width(),
+            ui.height()
         )
-        self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-        self.btn_maximize.setToolTip("Phóng to")
-        self.btn_minimize.setToolTip("Thu nhỏ")
-        self.btn_quit.setToolTip("Đóng")
-        cls.connect_btn(self)
-        cls.load_users()
-        cls.check_autosave(self)
-        cls.move_TaskClose(self)
+        ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
+        ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        ui.btn_maximize.setToolTip("Phóng to")
+        ui.btn_minimize.setToolTip("Thu nhỏ")
+        ui.btn_quit.setToolTip("Đóng")
+        self.connect_btn(ui)
+        self.load_users()
+        self.check_autosave(ui)
+        self.move_TaskClose(ui)
 
-    @classmethod
-    def move_TaskClose(cls, self):
-        self.OkCancelFrame.move(
-            round((self.frame.width() - 400) / 2),
-            round((self.frame.height() - 180) / 2),
+    @staticmethod
+    def move_TaskClose(ui):
+        ui.OkCancelFrame.move(
+            round((ui.frame.width() - 400) / 2),
+            round((ui.frame.height() - 180) / 2),
         )
 
-    @classmethod
-    def create_dropshadow(cls, self):
-        self.shadow = QGraphicsDropShadowEffect(self)
-        self.shadow.setBlurRadius(50)
-        self.shadow.setXOffset(0)
-        self.shadow.setYOffset(0)
-        self.shadow.setColor(QColor(0, 0, 0, 200))
-        self.bg_frame.setGraphicsEffect(self.shadow)
+    @staticmethod
+    def create_dropshadow(ui):
+        ui.shadow = QGraphicsDropShadowEffect(ui)
+        ui.shadow.setBlurRadius(50)
+        ui.shadow.setXOffset(0)
+        ui.shadow.setYOffset(0)
+        ui.shadow.setColor(QColor(0, 0, 0, 200))
+        ui.bg_frame.setGraphicsEffect(ui.shadow)
 
-    @classmethod
-    def connect_btn(cls, self):
-        self.btn_minimize.clicked.connect(lambda: self.showMinimized())
-        self.btn_maximize.clicked.connect(lambda: cls.maximize_restore(self))
-        self.btn_maximize.clicked.connect(lambda: cls.move_TaskClose(self))
-        self.btn_quit.clicked.connect(lambda: self.OkCancelFrame.show())
-        self.Accept.clicked.connect(lambda: self.close())
-        self.Deny.clicked.connect(lambda: self.OkCancelFrame.hide())
-        self.eyeHide_SI.clicked.connect(
-            lambda: self.PassBox_SI.setEchoMode(QtWidgets.QLineEdit.Password)
+    def connect_btn(self, ui):
+        ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
+        ui.btn_maximize.clicked.connect(lambda: self.maximize_restore(ui))
+        ui.btn_maximize.clicked.connect(lambda: self.move_TaskClose(ui))
+        ui.btn_quit.clicked.connect(lambda: ui.OkCancelFrame.show())
+        ui.Accept.clicked.connect(lambda: ui.close())
+        ui.Deny.clicked.connect(lambda: ui.OkCancelFrame.hide())
+        ui.eyeHide_SI.clicked.connect(
+            lambda: ui.PassBox_SI.setEchoMode(QtWidgets.QLineEdit.Password)
         )
-        self.eyeHide.clicked.connect(
-            lambda: self.PassBox.setEchoMode(QtWidgets.QLineEdit.Password)
+        ui.eyeHide.clicked.connect(
+            lambda: ui.PassBox.setEchoMode(QtWidgets.QLineEdit.Password)
         )
-        self.eyeShow_SI.clicked.connect(
-            lambda: self.PassBox_SI.setEchoMode(QtWidgets.QLineEdit.Normal)
+        ui.eyeShow_SI.clicked.connect(
+            lambda: ui.PassBox_SI.setEchoMode(QtWidgets.QLineEdit.Normal)
         )
-        self.eyeShow.clicked.connect(
-            lambda: self.PassBox.setEchoMode(QtWidgets.QLineEdit.Normal)
+        ui.eyeShow.clicked.connect(
+            lambda: ui.PassBox.setEchoMode(QtWidgets.QLineEdit.Normal)
         )
-        self.SignIn_Bt.clicked.connect(lambda: cls.check_SI(self))
-        self.SignUp_Bt.clicked.connect(lambda: cls.check_SU(self))
-        self.ConvertButton.clicked.connect(
-            lambda: self.stacked_widget.setCurrentIndex(1)
+        ui.SignIn_Bt.clicked.connect(lambda: self.check_SI(ui))
+        ui.SignUp_Bt.clicked.connect(lambda: self.check_SU(ui))
+        ui.ConvertButton.clicked.connect(
+            lambda: ui.stacked_widget.setCurrentIndex(1)
         )
-        self.ConvertButton_SU.clicked.connect(
-            lambda: self.stacked_widget.setCurrentIndex(0)
+        ui.ConvertButton_SU.clicked.connect(
+            lambda: ui.stacked_widget.setCurrentIndex(0)
         )
-        self.ConvertButton_4.clicked.connect(
-            lambda: self.stacked_widget.setCurrentIndex(0)
+        ui.ConvertButton_4.clicked.connect(
+            lambda: ui.stacked_widget.setCurrentIndex(0)
         )
-        self.ConvertButton.clicked.connect(lambda: default())
+        ui.ConvertButton.clicked.connect(lambda: default())
 
         def default():
-            self.STATE_ECHOPASS = True
-            self.PassBox.clear()
-            self.NameBox.clear()
-            self.UserBox.clear()
-            self.Note_Name.hide()
-            self.Note_Pass.hide()
-            self.Note_User.hide()
-            self.student.setChecked(True)
+            ui.STATE_ECHOPASS = True
+            ui.PassBox.clear()
+            ui.NameBox.clear()
+            ui.UserBox.clear()
+            ui.Note_Name.hide()
+            ui.Note_Pass.hide()
+            ui.Note_User.hide()
+            ui.student.setChecked(True)
 
-    @classmethod
-    def check_autosave(cls, self):
-        for user in cls.users:
+    def check_autosave(self, ui):
+        for user in self.users:
             if user.auto_saved:
-                self.NameBox_SI.setText(user.name)
-                self.PassBox_SI.setText(user.password)
-                self.SavePass.setChecked(True)
+                ui.NameBox_SI.setText(user.name)
+                ui.PassBox_SI.setText(user.password)
+                ui.SavePass.setChecked(True)
                 break
 
-    @classmethod
-    def returnStatus(cls):
-        return cls.GLOBAL_STATE
+    def returnStatus(self):
+        return self.GLOBAL_STATE
 
-    @classmethod
-    def maximize_restore(cls, self):
-        status = cls.GLOBAL_STATE
+    def maximize_restore(self, ui):
+        status = self.GLOBAL_STATE
 
         if status == False:
-            self.showMaximized()
-            cls.GLOBAL_STATE = True
-            self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-            self.btn_maximize.setToolTip("Khôi phục")
-            self.bg_frame.setStyleSheet(
+            ui.showMaximized()
+            self.GLOBAL_STATE = True
+            ui.verticalLayout.setContentsMargins(0, 0, 0, 0)
+            ui.btn_maximize.setToolTip("Khôi phục")
+            ui.bg_frame.setStyleSheet(
                 """#bg_frame {
                     border-image: url(:/images/icons/Bg.jpg);
                     border-radius: 0px;
                     }"""
             )
         else:
-            self.showNormal()
-            cls.GLOBAL_STATE = False
-            self.resize(self.width() + 1, self.height() + 1)
-            self.verticalLayout.setContentsMargins(10, 10, 10, 10)
-            self.btn_maximize.setToolTip("Phóng to")
-            self.bg_frame.setStyleSheet(
+            ui.showNormal()
+            self.GLOBAL_STATE = False
+            ui.resize(ui.width() + 1, ui.height() + 1)
+            ui.verticalLayout.setContentsMargins(10, 10, 10, 10)
+            ui.btn_maximize.setToolTip("Phóng to")
+            ui.bg_frame.setStyleSheet(
                 """#bg_frame {
                     border-image: url(:/images/icons/Bg.jpg);
                     border-radius: 9px;
                     }"""
             )
 
-    @classmethod
-    def load_users(cls):
-        cls.users.clear()
-        decrypt(cls.USER_PATH_ENCRYPTED, cls.USER_PATH, cls.KEY_PATH)
+    def load_users(self):
+        self.users.clear()
+        decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
         time.sleep(1)
-        if os.path.getsize(cls.USER_PATH) > 0:
-            with open(cls.USER_PATH, "rb") as f:
+        if os.path.getsize(self.USER_PATH) > 0:
+            with open(self.USER_PATH, "rb") as f:
                 unpickler = pickle.Unpickler(f)
-                cls.users = unpickler.load()
-        encrypt(cls.USER_PATH, cls.USER_PATH_ENCRYPTED, cls.KEY_PATH)
+                self.users = unpickler.load()
+        encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
 
-    @classmethod
-    def check_SI(cls, self):
-        name = self.NameBox_SI.text()[:31]
-        password = self.PassBox_SI.text()[:22]
+    def check_SI(self, ui):
+        name = ui.NameBox_SI.text()[:31]
+        password = ui.PassBox_SI.text()[:22]
         if len(password)*len(name) == 0:
-            self.frameError.show()
-            self.Error_Content.setText("Chưa điền đầy đủ thông tin đăng nhập")
-        elif not [True for user in cls.users if user.name == name]:
-            self.frameError.show()
-            self.Error_Content.setText(
+            ui.frameError.show()
+            ui.Error_Content.setText("Chưa điền đầy đủ thông tin đăng nhập")
+        elif not [True for user in self.users if user.name == name]:
+            ui.frameError.show()
+            ui.Error_Content.setText(
                 "Tên tài khoản không tồn tại. Hãy nhập lại.")
-        elif not [True for user in cls.users if user.name == name and user.password == password]:
-            self.frameError.show()
-            self.Error_Content.setText(
+        elif not [True for user in self.users if user.name == name and user.password == password]:
+            ui.frameError.show()
+            ui.Error_Content.setText(
                 "Mật khẩu không chính xác. Hãy nhập lại.")
         else:
-            for user in cls.users:
+            for user in self.users:
                 if user.name == name:
-                    with open(cls.OPENED_USER, 'w', encoding = 'utf-8') as pro:
-                        pro.write(user.name_user)
-                        pro.write('\n')
-                        pro.write(user.id)
-                        pro.write('\n')
-                        pro.write(user.password)
-                        pro.write('\n')
-                    for i in range(len(cls.users)):
-                        cls.users[i].auto_saved = False
-                    if self.SavePass.isChecked():
-                        cls.users[cls.users.index(user)].auto_saved = True
+                    with open(self.OPENED_USER, 'w', encoding='utf-8') as f:
+                        f.write(user.name_user)
+                        f.write('\n')
+                        f.write(user.id)
+                        f.write('\n')
+                        f.write(user.password)
+                        f.write('\n')
+                    for i in range(len(self.users)):
+                        self.users[i].auto_saved = False
+                    if ui.SavePass.isChecked():
+                        self.users[self.users.index(user)].auto_saved = True
 
-                    decrypt(cls.USER_PATH_ENCRYPTED,
-                            cls.USER_PATH, cls.KEY_PATH)
+                    decrypt(self.USER_PATH_ENCRYPTED,
+                            self.USER_PATH, self.KEY_PATH)
                     time.sleep(1)
-                    with open(cls.USER_PATH, "wb") as f:
-                        pickle.dump(cls.users, f)
-                    encrypt(cls.USER_PATH, cls.USER_PATH_ENCRYPTED, cls.KEY_PATH)
+                    with open(self.USER_PATH, "wb") as f:
+                        pickle.dump(self.users, f)
+                    encrypt(self.USER_PATH,
+                            self.USER_PATH_ENCRYPTED, self.KEY_PATH)
 
-                    self.close()
-                    main_ui.main(user.role, self.pg)
+                    ui.close()
+                    main_ui.main(user.role, ui.pg)
                     break
-        QtCore.QTimer.singleShot(3000, lambda: self.frameError.hide())
-    @classmethod
-    def check_SU(cls, self):
+        QtCore.QTimer.singleShot(3000, lambda: ui.frameError.hide())
+
+    def check_SU(self, ui):
         check = True
-        name = self.NameBox.text()[:31]
-        password = self.PassBox.text()[:22]
-        name_account = self.UserBox.text()[:30]
+        name = ui.NameBox.text()[:31]
+        password = ui.PassBox.text()[:22]
+        name_account = ui.UserBox.text()[:30]
         if len(name) < 8 or list(
-            set(False for i in name.lower() if i not in cls.enabled)
+            set(False for i in name.lower() if i not in self.enabled)
         ) == [False]:
-            self.Note_Name.show()
+            ui.Note_Name.show()
             check = False
         else:
-            for user in cls.users:
+            for user in self.users:
                 if name == user.name:
-                    self.Note_Name.show()
+                    ui.Note_Name.show()
                     check = False
                     break
             else:
-                self.Note_Name.hide()
+                ui.Note_Name.hide()
 
         if len(password) < 8 or list(
-            set(False for i in password.lower() if i not in cls.enabled)
+            set(False for i in password.lower() if i not in self.enabled)
         ) == [False]:
-            self.Note_Pass.show()
+            ui.Note_Pass.show()
             check = False
         else:
-            self.Note_Pass.hide()
-        if not "".join([i for i in name_account.lower() if i not in cls.enabled]).isalnum():
-            if (not "".join([i for i in name_account.lower() if i not in cls.enabled]) == ""):
-                self.Note_User.show()
+            ui.Note_Pass.hide()
+        if not "".join([i for i in name_account.lower() if i not in self.enabled]).isalnum():
+            if (not "".join([i for i in name_account.lower() if i not in self.enabled]) == ""):
+                ui.Note_User.show()
                 check = False
             else:
-                self.Note_User.hide()
+                ui.Note_User.hide()
         else:
-            self.Note_User.hide()
+            ui.Note_User.hide()
         if len(name_account) < 6:
-            self.Note_User.show()
+            ui.Note_User.show()
             check = False
         if check:
-            decrypt(cls.USER_PATH_ENCRYPTED, cls.USER_PATH, cls.KEY_PATH)
-            with open(cls.USER_PATH, "wb") as f:
-                name = self.NameBox.text()
-                password = self.PassBox.text()
-                role = "teacher" if self.teacher.isChecked() else "student"
+            decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
+            with open(self.USER_PATH, "wb") as f:
+                name = ui.NameBox.text()
+                password = ui.PassBox.text()
+                role = "teacher" if ui.teacher.isChecked() else "student"
                 code = ''
-                for i in range(0,8):
-                    code+=str(randrange(0,10))
-                cls.users.append(
+                for i in range(0, 8):
+                    code += str(randrange(0, 10))
+                self.users.append(
                     User(name, password, role, name_account, code, False))
-                pickle.dump(cls.users, f)
+                pickle.dump(self.users, f)
 
-            encrypt(cls.USER_PATH, cls.USER_PATH_ENCRYPTED, cls.KEY_PATH)
-            self.stacked_widget.setCurrentIndex(2)
+            encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
+            ui.stacked_widget.setCurrentIndex(2)
 
 
 class Loading_Screen(QMainWindow):
     counter = 0
 
-    def __init__(self, pg):
-        self.pg = pg if pg else None
+    def __init__(ui, pg):
+        ui.pg = pg if pg else None
 
-        QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
-        uic.loadUi("UI_files/Loading_Screen.ui", self)
-        self.move(
-            round((SCREEN_WIDTH - self.width()) / 2),
-            round((SCREEN_HEIGHT - self.height()) / 2),
+        QMainWindow.__init__(ui, None, QtCore.Qt.WindowStaysOnTopHint)
+        uic.loadUi("UI_files/Loading_Screen.ui", ui)
+        ui.move(
+            round((SCREEN_WIDTH - ui.width()) / 2),
+            round((SCREEN_HEIGHT - ui.height()) / 2),
         )
 
-        self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-        self.timer = QtCore.QTimer()
-        self.timer.timeout.connect(self.progress)
-        self.timer.start(20)
-        self.show()
+        ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
+        ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        ui.timer = QtCore.QTimer()
+        ui.timer.timeout.connect(ui.progress)
+        ui.timer.start(20)
+        ui.show()
 
-    def delay(self, point, wait):
-        if self.counter == point:
+    def delay(ui, point, wait):
+        if ui.counter == point:
             time.sleep(wait)
 
-    def progress(self):
-        self.progressBar.setValue(self.counter)
-        if self.counter > 100:
-            self.timer.stop()
-            self.main = LoginWindow(self.pg)
-            self.main.setGeometry(
-                round((SCREEN_WIDTH - self.main.width()) / 2),
-                round((SCREEN_HEIGHT - self.main.height()) / 5),
-                self.main.width(),
-                self.main.height(),
+    def progress(ui):
+        ui.progressBar.setValue(ui.counter)
+        if ui.counter > 100:
+            ui.timer.stop()
+            ui.main = LoginWindow(ui.pg)
+            ui.main.setGeometry(
+                round((SCREEN_WIDTH - ui.main.width()) / 2),
+                round((SCREEN_HEIGHT - ui.main.height()) / 5),
+                ui.main.width(),
+                ui.main.height(),
             )
-            self.main.show()
-            self.close()
-        if self.counter == 20:
-            self.timer.singleShot(
-                1500, lambda: self.Loading_label.setText(
+            ui.main.show()
+            ui.close()
+        if ui.counter == 20:
+            ui.timer.singleShot(
+                1500, lambda: ui.Loading_label.setText(
                     "Kiểm tra cài đặt ...")
             )
-        if self.counter == 45:
-            self.timer.singleShot(
-                2905, lambda: self.Loading_label.setText(
+        if ui.counter == 45:
+            ui.timer.singleShot(
+                2905, lambda: ui.Loading_label.setText(
                     "Thiết lập giao diện ...")
             )
-        if self.counter == 73:
-            self.timer.singleShot(
-                1500, lambda: self.Loading_label.setText(
+        if ui.counter == 73:
+            ui.timer.singleShot(
+                1500, lambda: ui.Loading_label.setText(
                     "Kết nối dữ liệu  ...")
             )
-        self.delay(randrange(5, 10), 0.1)
-        self.delay(randrange(20, 30), 0.23)
-        self.delay(randrange(40, 50), 0.43)
-        self.delay(randrange(60, 70), 0.93)
-        self.delay(randrange(80, 90), 0.17)
-        self.delay(randrange(90, 99), 0.6)
-        self.delay(99, 1)
-        self.counter += 1
+        ui.delay(randrange(5, 10), 0.1)
+        ui.delay(randrange(20, 30), 0.23)
+        ui.delay(randrange(40, 50), 0.43)
+        ui.delay(randrange(60, 70), 0.93)
+        ui.delay(randrange(80, 90), 0.17)
+        ui.delay(randrange(90, 99), 0.6)
+        ui.delay(99, 1)
+        ui.counter += 1
 
 
 def main(pg, file=''):

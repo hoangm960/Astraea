@@ -15,24 +15,44 @@ class ProfileWindow(QMainWindow):
         uic.loadUi(UI_PATH, self)
         UIFunctions.uiDefinitions(self)
 class UIFunctions(ProfileWindow):
+    GLOBAL_STATE = False
     @classmethod
-    def uiDefinitions(cls, ui):
-        ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-        ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-        ui.btn_quit.clicked.connect(lambda: ui.close())
-        ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
-        cls.Update(ui)
-        ui.Save_btn.setDisabled(True)
+    def uiDefinitions(cls, Ui):
+        Ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
+        Ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        Ui.btn_quit.clicked.connect(lambda: Ui.close())
+        Ui.btn_minimize.clicked.connect(lambda: Ui.showMinimized())
+        Ui.btn_maximize.clicked.connect(lambda: cls.maximize_restore(Ui))
 
+        cls.Update(Ui)
+        Ui.Save_btn.setDisabled(True)
+    @classmethod
+    def maximize_restore(cls, self):
+        status = cls.GLOBAL_STATE
+
+        if status == False:
+            self.showMaximized()
+
+            cls.GLOBAL_STATE = True
+            self.centralwidget.setStyleSheet("""background-color: rgb(74, 74, 74);
+border-radius: 0px;""")
+            self.btn_maximize.setToolTip("khôi phục")
+        else:
+            cls.GLOBAL_STATE = False
+            self.showNormal()
+            self.resize(self.width() + 1, self.height() + 1)
+            self.centralwidget.setStyleSheet("""background-color: rgb(74, 74, 74);
+border-radius: 20px;""")
+            self.btn_maximize.setToolTip("Phóng to")
     @classmethod 
-    def Update(cls, ui):
+    def Update(cls, Ui):
         with open(USER_PATH, 'r', encoding = 'utf-8') as f:
             name = f.readline().rstrip()
-            ui.NameBox.setText(name)
+            Ui.NameBox.setText(name)
             id = f.readline().rstrip()
-            ui.IDBox.setText(id)
+            Ui.IDBox.setText(id)
             password = f.readline().rstrip()
-            ui.PassBox.setText(password)
+            Ui.PassBox.setText(password)
 
 
 if __name__ == '__main__':

@@ -15,10 +15,11 @@ HTML_CONVERT_PATH = "./data/html_convert"
 
 
 class DocWindow(QMainWindow):
-    def __init__(self, role):
+    def __init__(self, role, pg):
         QMainWindow.__init__(self)
         uic.loadUi(DOC_UI, self)
         self.role = role
+        self.pg = pg
         UIFunctions.uiDefinitions(self)
 
 
@@ -34,7 +35,7 @@ class UIFunctions(DocWindow):
             round((QApplication.primaryScreen().size().height() - ui.height()) / 2),
         )
         ui.showMaximized()
-        ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
+        ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui, ui.pg))
         cls.load_assignments(
             ui, open(main_ui.OPENED_LESSON_PATH).read().rstrip())
         cls.define_role(ui)
@@ -42,12 +43,15 @@ class UIFunctions(DocWindow):
         ui.Save_btn.clicked.connect(lambda: cls.Change(ui, ui.Name_spin.value()-1, ui.Name_edit.text()))
         ui.deleteBox_frame.hide()
     @classmethod
-    def close_pg(cls, ui):
+    def close_pg(cls, ui, pg):
+        if pg:
+            pg.maximize()
         ui.close()
-        main_ui.main(ui.role, None)
+        main_ui.main(ui.role, ui.pg)
     @classmethod
     def Delete(cls, ui,number):
         ui.titles.takeItem(number)
+        ui.text_entry.clear()
     @classmethod
     def Change(cls, ui, number, text):
         if number<ui.titles.count() and len(UIFunctions.docs)>0:
@@ -160,7 +164,7 @@ class UIFunctions(DocWindow):
         @staticmethod
         def reopen_main(ui):
             import main_ui
-            main_ui.main(ui.role)
+            main_ui.main(ui.role, None)
             ui.close()
 
         def connect_btn(self, ui):
@@ -185,6 +189,6 @@ class UIFunctions(DocWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = DocWindow("teacher")
+    window = DocWindow("teacher", None)
     window.show()
     sys.exit(app.exec_())

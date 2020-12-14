@@ -227,7 +227,6 @@ class LoginFunctions(LoginWindow):
                         pro.write('\n')
                         pro.write(user.id)
                         pro.write('\n')
-                        print(user.auto_saved)
                         pro.write(user.password)
                         pro.write('\n')
                     for i in range(len(cls.users)):

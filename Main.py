@@ -4,9 +4,10 @@ import subprocess
 import sys
 from pathlib import Path
 from time import sleep
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
+from PyQt5.QtWidgets import QMessageBox
 import pygetwindow as gw
-from win32api import GetMonitorInfo, MonitorFromPoint
+
+VERSION = 2.4
 
 parser = argparse.ArgumentParser(
     description="Astraea - Công cụ hỗ trợ dạy học"
@@ -63,5 +64,5 @@ except:
 
 if __name__ == "__main__":
     import login_main
-    login_main.main(pg)
+    login_main.main(pg, VERSION)
     # login_main.main(args.file)

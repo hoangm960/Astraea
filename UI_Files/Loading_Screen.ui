@@ -98,7 +98,7 @@ font-size: 18px;
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
-      <widget class="QLabel" name="label_credits">
+      <widget class="QLabel" name="version">
        <property name="geometry">
         <rect>
          <x>10</x>

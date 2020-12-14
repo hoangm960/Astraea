@@ -297,30 +297,41 @@ class LoginFunctions(LoginWindow):
 class Loading_Screen(QMainWindow):
     counter = 0
 
-    def __init__(ui, pg):
-        ui.pg = pg if pg else None
+    def __init__(self, pg, version):
+        self.pg = pg
 
-        QMainWindow.__init__(ui, None, QtCore.Qt.WindowStaysOnTopHint)
-        uic.loadUi("UI_files/Loading_Screen.ui", ui)
-        ui.move(
-            round((SCREEN_WIDTH - ui.width()) / 2),
-            round((SCREEN_HEIGHT - ui.height()) / 2),
+        QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
+        uic.loadUi("./UI_files/Loading_Screen.ui", self)
+        self.move(
+            round((SCREEN_WIDTH - self.width()) / 2),
+            round((SCREEN_HEIGHT - self.height()) / 2),
         )
+        UILoadingFunctions(self, version)
+
+class UILoadingFunctions(Loading_Screen):
+    def __init__(self, ui, version):
+        self.update_version(ui, str(version))
 
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         ui.timer = QtCore.QTimer()
-        ui.timer.timeout.connect(ui.progress)
+        ui.timer.timeout.connect(lambda: self.progress(ui))
         ui.timer.start(20)
         ui.show()
 
-    def delay(ui, point, wait):
-        if ui.counter == point:
+    @staticmethod
+    def update_version(ui, version):
+        ui.version.setText(f'<html><head/><body><p align="right"><span style=" font-size:14pt; color:#ffffff;">v{version}</span></p></body></html>')
+
+    @classmethod
+    def delay(self, point, wait):
+        if self.counter == point:
             time.sleep(wait)
 
-    def progress(ui):
-        ui.progressBar.setValue(ui.counter)
-        if ui.counter > 100:
+    @classmethod
+    def progress(self, ui):
+        ui.progressBar.setValue(self.counter)
+        if self.counter > 100:
             ui.timer.stop()
             ui.main = LoginWindow(ui.pg)
             ui.main.setGeometry(
@@ -331,35 +342,35 @@ class Loading_Screen(QMainWindow):
             )
             ui.main.show()
             ui.close()
-        if ui.counter == 20:
+        if self.counter == 20:
             ui.timer.singleShot(
                 1500, lambda: ui.Loading_label.setText(
                     "Kiểm tra cài đặt ...")
             )
-        if ui.counter == 45:
+        if self.counter == 45:
             ui.timer.singleShot(
                 2905, lambda: ui.Loading_label.setText(
                     "Thiết lập giao diện ...")
             )
-        if ui.counter == 73:
+        if self.counter == 73:
             ui.timer.singleShot(
                 1500, lambda: ui.Loading_label.setText(
                     "Kết nối dữ liệu  ...")
             )
-        ui.delay(randrange(5, 10), 0.1)
-        ui.delay(randrange(20, 30), 0.23)
-        ui.delay(randrange(40, 50), 0.43)
-        ui.delay(randrange(60, 70), 0.93)
-        ui.delay(randrange(80, 90), 0.17)
-        ui.delay(randrange(90, 99), 0.6)
-        ui.delay(99, 1)
-        ui.counter += 1
+        self.delay(randrange(5, 10), 0.1)
+        self.delay(randrange(20, 30), 0.23)
+        self.delay(randrange(40, 50), 0.43)
+        self.delay(randrange(60, 70), 0.93)
+        self.delay(randrange(80, 90), 0.17)
+        self.delay(randrange(90, 99), 0.6)
+        self.delay(99, 1)
+        self.counter += 1
 
 
-def main(pg, file=''):
+def main(pg, version, file=''):
     FILE = file
     app = QApplication(sys.argv)
-    splash_window = Loading_Screen(pg)
+    splash_window = Loading_Screen(pg, version)
     splash_window.show()
     sys.exit(app.exec_())
 

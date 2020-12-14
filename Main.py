@@ -48,7 +48,7 @@ def open_idle():
         pg = gw.getWindowsWithTitle("PythonWin")[0]
     pg.minimize()
 
-open_idle()
+# open_idle()
 
 # login_main.main(args.file)
 if __name__ == "__main__":

@@ -19,6 +19,7 @@ HTML_CONVERT_PATH = "./data/html_convert"
 if not os.path.exists(OPENED_ASSIGNMENT_PATH):
     open(OPENED_ASSIGNMENT_PATH, "w").close()
 
+
 class Assignment:
     class Test:
         def __init__(self, inputs, outputs):
@@ -67,7 +68,7 @@ class EditWindow(QMainWindow):
 
         self.title_bar.mouseMoveEvent = moveWindow
 
-        UIFunctions.uiDefinitions(self)
+        UIFunctions(self)
 
     def mousePressEvent(self, event):
         self.dragPos = event.globalPos()
@@ -79,8 +80,7 @@ class UIFunctions(EditWindow):
     deleted = False
     doc_files = []
 
-    @classmethod
-    def uiDefinitions(cls, ui):
+    def __init__(self, ui):
         # Delete title bar
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
@@ -94,11 +94,11 @@ class UIFunctions(EditWindow):
         ui.bg_frame.setGraphicsEffect(ui.shadow)
 
         # Button function
-        ui.btn_maximize.clicked.connect(lambda: cls.maximize_restore(ui))
+        ui.btn_maximize.clicked.connect(lambda: self.maximize_restore(ui))
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
-        ui.btn_quit.clicked.connect(lambda: cls.reopen_main(ui))
+        ui.btn_quit.clicked.connect(lambda: self.reopen_main(ui))
         ui.confirm_btn.clicked.connect(
-            lambda: cls.check_empty_entry(ui))
+            lambda: self.check_empty_entry(ui))
 
         # Window size grip
         ui.sizegrip = QSizeGrip(ui.frame_grip)
@@ -107,7 +107,7 @@ class UIFunctions(EditWindow):
         )
         ui.sizegrip.setToolTip("Resize Window")
 
-        ui.confirm_button.clicked.connect(lambda: cls.go_to_second(ui))
+        ui.confirm_button.clicked.connect(lambda: self.go_to_second(ui))
         ui.return_btn.clicked.connect(
             lambda: ui.stacked_widget.setCurrentIndex(0))
         ui.return_btn.clicked.connect(
@@ -119,7 +119,7 @@ class UIFunctions(EditWindow):
         ui.return_add_btn.clicked.connect(
             lambda: ui.stacked_widget.setCurrentIndex(1))
         ui.confirm_add_btn.clicked.connect(
-            lambda: cls.add_frame(ui, int(ui.num_entry_3.text()))
+            lambda: self.add_frame(ui, int(ui.num_entry_3.text()))
         )
         ui.confirm_add_btn.clicked.connect(
             lambda: ui.stacked_widget.setCurrentIndex(1))
@@ -128,11 +128,10 @@ class UIFunctions(EditWindow):
         ui.Minutes_entry.setDisabled(True)
         ui.checkBox.clicked.connect(lambda: ui.Hours_entry.setValue(0))
         ui.checkBox.clicked.connect(lambda: ui.Minutes_entry.setValue(0))
-        cls.check_empty(ui, open(OPENED_ASSIGNMENT_PATH).read().rstrip())
+        self.check_empty(ui, open(OPENED_ASSIGNMENT_PATH).read().rstrip())
 
-    @classmethod
-    def check_empty_entry(cls, ui):
-        cls.CheckValue = True
+    def check_empty_entry(self, ui):
+        self.CheckValue = True
         children = ui.content_widget.children()
         del children[0]
         for child in children:
@@ -141,7 +140,7 @@ class UIFunctions(EditWindow):
                     """background-color: rgb(255, 255, 255); 
                     border: 2px solid rgb(225, 0 , 0); 
                     border-radius: 12px;""")
-                cls.CheckValue = False
+                self.CheckValue = False
             else:
                 child.title_entry.setStyleSheet(
                     """background-color: rgb(255, 255, 255); 
@@ -152,7 +151,7 @@ class UIFunctions(EditWindow):
                 child.ex_file_entry.setStyleSheet(
                     """background-color: rgb(255, 255, 255); 
                     border: 2px solid rgb(225, 0 , 0); border-radius: 12px;""")
-                cls.CheckValue = False
+                self.CheckValue = False
             else:
                 child.ex_file_entry.setStyleSheet(
                     """background-color: rgb(255, 255, 255); 
@@ -163,7 +162,7 @@ class UIFunctions(EditWindow):
                     """background-color: rgb(255, 255, 255); 
                     border: 2px solid rgb(225, 0 , 0); 
                     border-radius: 12px;""")
-                cls.CheckValue = False
+                self.CheckValue = False
             else:
                 child.test_file_entry.setStyleSheet(
                     """background-color: rgb(255, 255, 255); 
@@ -174,17 +173,16 @@ class UIFunctions(EditWindow):
                     """background-color: rgb(255, 255, 255); 
                     border: 2px solid rgb(225, 0 , 0); 
                     border-radius: 12px;""")
-                cls.CheckValue = False
+                self.CheckValue = False
             else:
                 child.Score_edit.setStyleSheet(
                     """background-color: rgb(255, 255, 255); 
                     border: 0px solid black; 
                     border-radius: 12px;""")
-        if cls.CheckValue:
-            cls.show_file_dialog(ui, OPENED_ASSIGNMENT_PATH)
+        if self.CheckValue:
+            self.show_file_dialog(ui, OPENED_ASSIGNMENT_PATH)
 
-    @classmethod
-    def check_empty(cls, ui, filename):
+    def check_empty(self, ui, filename):
         if os.path.exists(filename):
             if os.path.getsize(filename) > 0:
                 ui.stacked_widget.setCurrentIndex(1)
@@ -193,28 +191,25 @@ class UIFunctions(EditWindow):
                     data = unpickler.load()
                     title = data[0]
                     assignments = data[1]
-                    
-                    cls.put_frame_in_list(ui, len(assignments))
-                    cls.setup_frame(ui, title, assignments)
 
-    @classmethod
-    def go_to_second(cls, ui):
-        cls.change_lesson_title(ui, ui.name_entry.text())
-        cls.put_frame_in_list(ui, ui.num_entry.value())
+                    self.put_frame_in_list(ui, len(assignments))
+                    self.setup_frame(ui, title, assignments)
+
+    def go_to_second(self, ui):
+        self.change_lesson_title(ui, ui.name_entry.text())
+        self.put_frame_in_list(ui, ui.num_entry.value())
         ui.stacked_widget.setCurrentIndex(1)
 
-    @classmethod
-    def returnStatus(cls):
-        return cls.GLOBAL_STATE
+    def returnStatus(self):
+        return self.GLOBAL_STATE
 
-    @classmethod
-    def maximize_restore(cls, ui):
-        status = cls.GLOBAL_STATE
+    def maximize_restore(self, ui):
+        status = self.GLOBAL_STATE
 
         if status == False:
             ui.showMaximized()
 
-            cls.GLOBAL_STATE = True
+            self.GLOBAL_STATE = True
 
             ui.bg_layout.setContentsMargins(0, 0, 0, 0)
             ui.bg_frame.setStyleSheet(
@@ -224,7 +219,7 @@ class UIFunctions(EditWindow):
             )
             ui.btn_maximize.setToolTip("khôi phục")
         else:
-            cls.GLOBAL_STATE = False
+            self.GLOBAL_STATE = False
             ui.showNormal()
             ui.resize(ui.width() + 1, ui.height() + 1)
             ui.bg_layout.setContentsMargins(0, 0, 0, 0)
@@ -235,8 +230,7 @@ class UIFunctions(EditWindow):
             )
             ui.btn_maximize.setToolTip("Phóng to")
 
-    @classmethod
-    def show_file_dialog(cls, ui, filename):
+    def show_file_dialog(self, ui, filename):
         file_path = open(filename).read().rstrip()
         if not file_path:
             HOME_PATH = os.path.join(os.path.join(
@@ -247,7 +241,7 @@ class UIFunctions(EditWindow):
             with open(filename, "w", encoding='utf8') as f:
                 f.write(file_path)
         if file_path:
-            cls.load_assignments(ui, file_path)
+            self.load_assignments(ui, file_path)
 
     class EditFrame(QWidget):
         def __init__(self, *args, **kwargs):
@@ -279,15 +273,13 @@ class UIFunctions(EditWindow):
             if file_name[0]:
                 entry.setText(file_name[0])
 
-    @classmethod
-    def change_lesson_title(cls, ui, title):
+    def change_lesson_title(self, ui, title):
         ui.lesson_title.setText(title if title else "Bài học không tên")
 
-    @classmethod
-    def setup_frame(cls, ui, title, assignments):
+    def setup_frame(self, ui, title, assignments):
         children = ui.content_widget.children()
         i = 1
-        cls.change_lesson_title(ui, title)
+        self.change_lesson_title(ui, title)
         for assignment in assignments:
             children[i].title_entry.setText(assignment.name)
             children[i].ex_file_entry.setText(assignment.ex_file)
@@ -296,8 +288,7 @@ class UIFunctions(EditWindow):
             children[i].Score_edit.setValue(assignment.mark)
             i += 1
 
-    @classmethod
-    def put_frame_in_list(cls, ui, num):
+    def put_frame_in_list(self, ui, num):
         current_layout = ui.content_widget.layout()
         if not current_layout:
             current_layout = QVBoxLayout()
@@ -308,42 +299,37 @@ class UIFunctions(EditWindow):
 
         ui.scrollArea.verticalScrollBar().setValue(1)
 
-        cls.add_frame(ui, num)
+        self.add_frame(ui, num)
 
-    @classmethod
-    def add_frame(cls, ui, num):
+    def add_frame(self, ui, num):
         for _ in range(num):
-            ui.frame = cls.EditFrame()
+            ui.frame = self.EditFrame()
             ui.frame.close_btn.clicked.connect(
-                lambda: cls.close_frame(ui, ui.frame))
+                lambda: self.close_frame(ui, ui.frame))
             ui.content_widget.layout().addWidget(ui.frame)
 
-    @classmethod
-    def close_frame(cls, ui, frame):
+    def close_frame(self, ui, frame):
         children = ui.content_widget.children()
         del children[0]
         pos = len(children) - children.index(frame) - 1
-        cls.warn_close_frame(ui, children[pos])
-        if cls.deleted == True:
+        self.warn_close_frame(ui, children[pos])
+        if self.deleted == True:
             children[pos].setParent(None)
             ui.scrollArea.verticalScrollBar().setValue(1)
 
-    @classmethod
-    def warn_close_frame(cls, ui, frame):
+    def warn_close_frame(self, ui, frame):
         msg = QMessageBox(ui)
         msg.setWindowTitle("Xóa bài tập")
         msg.setText(f"'{frame.title_entry.text()}' sẽ được xóa")
         msg.setIcon(QMessageBox.Information)
         msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-        msg.buttonClicked.connect(cls.popup_button)
+        msg.buttonClicked.connect(self.popup_button)
         msg.exec_()
 
-    @classmethod
-    def popup_button(cls, i):
-        cls.deleted = False if i.text().lower() == "cancel" else True
+    def popup_button(self, i):
+        self.deleted = False if i.text().lower() == "cancel" else True
 
-    @classmethod
-    def load_assignments(cls, ui, filename):
+    def load_assignments(self, ui, filename):
         children = ui.content_widget.children()
         del children[0]
         assignments = []
@@ -363,7 +349,7 @@ class UIFunctions(EditWindow):
         with open(filename, "wb") as f:
             pickle.dump([ui.lesson_title.text(), assignments], f, -1)
 
-        cls.reopen_main(ui)
+        self.reopen_main(ui)
 
     @staticmethod
     def reopen_main(ui):

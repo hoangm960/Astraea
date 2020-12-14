@@ -46,7 +46,7 @@ class ResultWindow(QMainWindow):
 
         self.title_bar.mouseMoveEvent = moveWindow
 
-        UIFunctions.uiDefinitions(self)
+        UIFunctions(self)
 
     def mousePressEvent(self, event):
         self.dragPos = event.globalPos()
@@ -66,10 +66,49 @@ class UIFunctions(ResultWindow):
     KEY_PATH = "./data/encryption/users.key"
     OPENED_USER = "./data/Users/opened_user.ou"
 
-    @classmethod
-    def load_assignments(cls, ui, filename):
+    def __init__(self, ui):
+        # Delete title bar
+        ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
+        ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        # Make drop shadow
+        ui.shadow = QGraphicsDropShadowEffect(ui)
+        ui.shadow.setBlurRadius(20)
+        ui.shadow.setXOffset(0)
+        ui.shadow.setYOffset(0)
+        ui.shadow.setColor(QColor(0, 0, 0, 100))
+        ui.bg_frame.setGraphicsEffect(ui.shadow)
+        ui.stacked_widget.setCurrentIndex(1)
+        ui.return_btn.clicked.connect(lambda: self.reopen_main(ui))
+        ui.inform.hide()
+        ui.Frame_close.hide()
+        # Button function
+        ui.OkCancelFrame.move(0, 0)
+        ui.OkCancelFrame.move(280, 148)
+        ui.btn_maximize.clicked.connect(lambda: self.maximize_restore(ui))
+        ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
+
+        def quit():
+            ui.Accept1.clicked.connect(lambda: ui.close())
+            ui.Accept1.clicked.connect(
+                lambda: main_ui.main("student", ui.pg))
+            ui.Deny1.clicked.connect(lambda: ui.bg_frame.setStyleSheet(
+                """background-color: rgb(30, 30, 30); border-radius: 10px; color: rgb(255, 255, 255);"""))
+            ui.bg_frame.setStyleSheet(
+                """background-color: rgba(255, 255, 255, 200); border-radius: 10px; color: rgb(255, 255, 255);""")
+        ui.btn_quit.clicked.connect(lambda: quit())
+
+        # Window size grip
+        ui.sizegrip = QSizeGrip(ui.frame_grip)
+        ui.sizegrip.setStyleSheet(
+            "QSizeGrip { width: 20px; height: 20px; margin: 5px; border-radius: 10px; } QSizeGrip:hover { background-color: rgb(201, 21, 8) }"
+        )
+        ui.sizegrip.setToolTip("Resize Window")
+        self.load_assignments(open(OPENED_LESSON_PATH).read().rstrip())
+        self.check_empty(ui, len(self.assignments))
+
+    def load_assignments(self, ui, filename):
         ui.textBrowser.clear()
-        cls.lesson.clear()
+        self.lesson.clear()
         if os.path.exists(filename):
             if os.path.getsize(filename) > 0:
                 with open(filename, "rb") as f:
@@ -78,219 +117,177 @@ class UIFunctions(ResultWindow):
                     title = data[0]
                     assignments = data[1]
                     for assignment in assignments:
-                        cls.lesson[assignment.name] = assignment.details
+                        self.lesson[assignment.name] = assignment.details
                         ui.textBrowser.addItem(assignment.name)
 
-    @classmethod
-    def uiDefinitions(cls, self):
-        # Delete title bar
-        self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-        # Make drop shadow
-        self.shadow = QGraphicsDropShadowEffect(self)
-        self.shadow.setBlurRadius(20)
-        self.shadow.setXOffset(0)
-        self.shadow.setYOffset(0)
-        self.shadow.setColor(QColor(0, 0, 0, 100))
-        self.bg_frame.setGraphicsEffect(self.shadow)
-        self.stacked_widget.setCurrentIndex(1)
-        self.return_btn.clicked.connect(lambda: cls.reopen_main(self))
-        self.inform.hide()
-        self.Frame_close.hide()
-        # Button function
-        self.OkCancelFrame.move(0, 0)
-        self.OkCancelFrame.move(280, 148)
-        self.btn_maximize.clicked.connect(lambda: cls.maximize_restore(self))
-        self.btn_minimize.clicked.connect(lambda: self.showMinimized())
-        def quit():
-            self.Accept1.clicked.connect(lambda: self.close())
-            self.Accept1.clicked.connect(lambda: main_ui.main("student", self.pg))
-            self.Deny1.clicked.connect(lambda: self.bg_frame.setStyleSheet(
-                """background-color: rgb(30, 30, 30); border-radius: 10px; color: rgb(255, 255, 255);"""))
-            self.bg_frame.setStyleSheet(
-                """background-color: rgba(255, 255, 255, 200); border-radius: 10px; color: rgb(255, 255, 255);""")
-        self.btn_quit.clicked.connect(lambda: quit())
+    def returnStatus(self):
+        return self.GLOBAL_STATE
 
-        # Window size grip
-        self.sizegrip = QSizeGrip(self.frame_grip)
-        self.sizegrip.setStyleSheet(
-            "QSizeGrip { width: 20px; height: 20px; margin: 5px; border-radius: 10px; } QSizeGrip:hover { background-color: rgb(201, 21, 8) }"
-        )
-        self.sizegrip.setToolTip("Resize Window")
-        cls.load_assignments(open(OPENED_LESSON_PATH).read().rstrip())
-        cls.check_empty(self, len(cls.assignments))
-
-    @classmethod
-    def returnStatus(cls):
-        return cls.GLOBAL_STATE
-
-    @classmethod
-    def maximize_restore(cls, self):
-        status = cls.GLOBAL_STATE
+    def maximize_restore(self, ui):
+        status = self.GLOBAL_STATE
 
         if status == False:
-            self.showMaximized()
+            ui.showMaximized()
 
-            cls.GLOBAL_STATE = True
-            self.bg_layout.setContentsMargins(0, 0, 0, 0)
-            self.bg_frame.setStyleSheet(
+            self.GLOBAL_STATE = True
+            ui.bg_layout.setContentsMargins(0, 0, 0, 0)
+            ui.bg_frame.setStyleSheet(
                 """
                 background-color: rgb(30, 30, 30);\n border-radius: 0px;"""
             )
-            self.inform.move(
-                round((self.ScrollAreaT.width() - 280) / 2),
-                round((self.ScrollAreaT.height() - 70) / 2),
+            ui.inform.move(
+                round((ui.ScrollAreaT.width() - 280) / 2),
+                round((ui.ScrollAreaT.height() - 70) / 2),
             )
-            self.btn_maximize.setToolTip("khôi phục")
+            ui.btn_maximize.setToolTip("khôi phục")
         else:
-            cls.GLOBAL_STATE = False
-            self.showNormal()
-            self.resize(self.width() + 1, self.height() + 1)
-            self.bg_layout.setContentsMargins(0, 0, 0, 0)
-            self.bg_frame.setStyleSheet(
+            self.GLOBAL_STATE = False
+            ui.showNormal()
+            ui.resize(ui.width() + 1, ui.height() + 1)
+            ui.bg_layout.setContentsMargins(0, 0, 0, 0)
+            ui.bg_frame.setStyleSheet(
                 """background-color: rgb(30, 30, 30); \nborder-radius: 10px;"""
             )
-            self.inform.move(
-                round((self.ScrollAreaT.width() - 280) / 2),
-                round((self.ScrollAreaT.height() - 70) / 2),
+            ui.inform.move(
+                round((ui.ScrollAreaT.width() - 280) / 2),
+                round((ui.ScrollAreaT.height() - 70) / 2),
             )
-            self.btn_maximize.setToolTip("Phóng to")
+            ui.btn_maximize.setToolTip("Phóng to")
 
     class ResultFrame(QWidget):
-        def __init__(self, *args, **kwargs):
+        def __init__(ui, *args, **kwargs):
             super().__init__(*args, **kwargs)
-            uic.loadUi(RESULT_FRAME_PATH, self)
+            uic.loadUi(RESULT_FRAME_PATH, ui)
 
     class TestFrame(QWidget):
-        def __init__(self, *args, **kwargs):
+        def __init__(ui, *args, **kwargs):
             super().__init__(*args, **kwargs)
-            uic.loadUi(TEST_FRAME_PATH, self)
+            uic.loadUi(TEST_FRAME_PATH, ui)
 
-            self.ans_file_btn.clicked.connect(
-                lambda: self.showDialog(self.ans_file_entry)
+            ui.ans_file_btn.clicked.connect(
+                lambda: ui.showDialog(ui.ans_file_entry)
             )
 
-        def showDialog(self, entry):
+        def showDialog(ui, entry):
             HOME_PATH = os.path.join(os.path.join(
                 os.environ["USERPROFILE"]), "Desktop")
             file_name = QFileDialog.getOpenFileName(
-                self, "Open file", HOME_PATH, "*.py"
+                ui, "Open file", HOME_PATH, "*.py"
             )
 
             if file_name[0]:
                 entry.setText(file_name[0])
 
-    @classmethod
-    def load_assignments(cls, filename):
-        cls.assignments.clear()
+    def load_assignments(self, filename):
+        self.assignments.clear()
         if os.path.exists(filename):
             if os.path.getsize(filename) > 0:
                 with open(filename, "rb") as f:
                     unpickler = pickle.Unpickler(f)
                     data = unpickler.load()
-                    cls.assignments = data[1]
+                    self.assignments = data[1]
 
-    @classmethod
-    def check_empty(cls, self, num):
+    def check_empty(self, ui, num):
         if num == 0:
-            self.Out_btn.clicked.connect(lambda: self.close())
-            self.Out_btn.clicked.connect(lambda: cls.reopen_main(self))
-            self.Out_btn.setText("Thoát")
-            self.inform.show()
-            self.inform.move(340, 220)
+            ui.Out_btn.clicked.connect(lambda: ui.close())
+            ui.Out_btn.clicked.connect(lambda: self.reopen_main(ui))
+            ui.Out_btn.setText("Thoát")
+            ui.inform.show()
+            ui.inform.move(340, 220)
         else:
-            self.Out_btn.clicked.connect(lambda: self.OkCancelFrame.show())
-            self.Accept.clicked.connect(
-                lambda: self.stacked_widget.setCurrentIndex(0))
-            self.Accept.clicked.connect(
-                lambda: cls.check_true(self, len(cls.assignments)))
-            cls.put_frame_in_list(self, len(cls.assignments))
+            ui.Out_btn.clicked.connect(lambda: ui.OkCancelFrame.show())
+            ui.Accept.clicked.connect(
+                lambda: ui.stacked_widget.setCurrentIndex(0))
+            ui.Accept.clicked.connect(
+                lambda: self.check_true(ui, len(self.assignments)))
+            self.put_frame_in_list(ui, len(self.assignments))
 
-    @classmethod
-    def put_frame_in_list(cls, self, num):
-        current_layout = self.content_widgetT.layout()
+    def put_frame_in_list(self, ui, num):
+        current_layout = ui.content_widgetT.layout()
         if not current_layout:
             current_layout = QVBoxLayout()
             current_layout.setContentsMargins(9, 9, 9, 9)
-            self.content_widgetT.setLayout(current_layout)
-        self.scrollArea.verticalScrollBar().setValue(1)
-        self.results = cls.ResultFrame()
+            ui.content_widgetT.setLayout(current_layout)
+        ui.scrollArea.verticalScrollBar().setValue(1)
+        ui.results = self.ResultFrame()
 
         for i in range(num):
-            self.TestFrame = cls.TestFrame()
-            self.content_widgetT.layout().addWidget(self.TestFrame)
-            self.TestFrame.details_label.setText(cls.assignments[i].name)
-            self.TestFrame.details_entry.setText(cls.assignments[i].details)
+            ui.TestFrame = self.TestFrame()
+            ui.content_widgetT.layout().addWidget(ui.TestFrame)
+            ui.TestFrame.details_label.setText(self.assignments[i].name)
+            ui.TestFrame.details_entry.setText(self.assignments[i].details)
 
-    @classmethod
-    def check_result(cls, frame, num):
-        assignments = cls.assignments[num]
+    def check_result(self, frame, num):
+        assignments = self.assignments[num]
         return check_algorithm.main(
             filename=frame.ans_file_entry.text(),
             ex_file=assignments.ex_file,
             tests=assignments.tests,
         )
 
-    @classmethod
-    def check_true(cls, self, num):
-        children = self.content_widgetT.children()
+    def check_true(self, ui, num):
+        children = ui.content_widgetT.children()
         del children[0:2]
         for i in range(num):
             correct = 0
             results = []
-            self.TestFrame = children[i]
+            ui.TestFrame = children[i]
 
-            if self.TestFrame.ans_file_entry.text():
-                results = cls.check_result(self.TestFrame, i)
+            if ui.TestFrame.ans_file_entry.text():
+                results = self.check_result(ui.TestFrame, i)
                 for result in results[:-1]:
                     if result[1]:
                         correct += 1
 
-            current_layout = self.content_widget.layout()
+            current_layout = ui.content_widget.layout()
             if not current_layout:
                 current_layout = QVBoxLayout()
                 current_layout.setContentsMargins(9, 9, 9, 9)
-                self.content_widget.setLayout(current_layout)
+                ui.content_widget.setLayout(current_layout)
 
-            self.ResultFrame = cls.ResultFrame()
-            self.content_widget.layout().addWidget(self.ResultFrame)
-            self.ResultFrame.correct_num.setText(
-                f'{str(correct)}/{str(len(cls.assignments[i].tests))}')
-            self.ResultFrame.test_file_label.setText(cls.assignments[i].name)
-            cls.TotalTest += len(cls.assignments[i].tests)
+            ui.ResultFrame = self.ResultFrame()
+            ui.content_widget.layout().addWidget(ui.ResultFrame)
+            ui.ResultFrame.correct_num.setText(
+                f'{str(correct)}/{str(len(self.assignments[i].tests))}')
+            ui.ResultFrame.test_file_label.setText(self.assignments[i].name)
+            self.TotalTest += len(self.assignments[i].tests)
             if len(results) != 0:
-                self.ResultFrame.Score_box.setText(
-                    str(correct / len(results[:-1]) * cls.assignments[i].mark)
+                ui.ResultFrame.Score_box.setText(
+                    str(correct / len(results[:-1]) * self.assignments[i].mark)
                 )
                 if results[-1]:
-                    self.ResultFrame.detail_entry.setText("Bài làm đã tối ưu hóa.")
+                    ui.ResultFrame.detail_entry.setText(
+                        "Bài làm đã tối ưu hóa.")
                 else:
-                    self.ResultFrame.detail_entry.setText("Bài làm chưa tối ưu hóa.")
-                cls.Total += correct
-                cls.TotalScore += (correct /
-                                len(cls.assignments[i].tests) * cls.assignments[i].mark)
-                if correct<(len(results[:-1])/2):
-                        self.ResultFrame.detail_entry.setText("Bài làm chưa hoàn thiện tốt.")
+                    ui.ResultFrame.detail_entry.setText(
+                        "Bài làm chưa tối ưu hóa.")
+                self.Total += correct
+                self.TotalScore += (correct /
+                                    len(self.assignments[i].tests) * self.assignments[i].mark)
+                if correct < (len(results[:-1])/2):
+                    ui.ResultFrame.detail_entry.setText(
+                        "Bài làm chưa hoàn thiện tốt.")
             else:
-                self.ResultFrame.detail_entry.setText("Chưa làm câu này")
+                ui.ResultFrame.detail_entry.setText("Chưa làm câu này")
 
         totalScore = int()
-        for assignment in cls.assignments:
+        for assignment in self.assignments:
             totalScore += assignment.mark
-        if cls.TotalScore != 0:
-            self.progressBar.setValue(int((cls.TotalScore / totalScore)*100))
-            self.Score.setText(str(round(cls.TotalScore, 2)))
+        if self.TotalScore != 0:
+            ui.progressBar.setValue(int((self.TotalScore / totalScore)*100))
+            ui.Score.setText(str(round(self.TotalScore, 2)))
         else:
-            self.progressBar.setValue(0)
-        if float(self.Score.text()) < 0.7:
-            self.Judge.setText("Bài làm vẫn chưa đạt chuẩn.")
+            ui.progressBar.setValue(0)
+        if float(ui.Score.text()) < 0.7:
+            ui.Judge.setText("Bài làm vẫn chưa đạt chuẩn.")
         else:
-            self.Judge.setText("Bài làm đạt chuẩn")
-            
-        with open(f"{OPENED_RESULT_PATH}{open(cls.OPENED_USER, encoding = 'utf-8').readline().rstrip()}.rf", 'a+', encoding='utf-8') as f:
-            name_account = open(cls.OPENED_USER, encoding = 'utf-8').readline().rstrip()
+            ui.Judge.setText("Bài làm đạt chuẩn")
+
+        with open(f"{OPENED_RESULT_PATH}{open(self.OPENED_USER, encoding = 'utf-8').readline().rstrip()}.rf", 'a+', encoding='utf-8') as f:
+            name_account = open(
+                self.OPENED_USER, encoding='utf-8').readline().rstrip()
             current_time = datetime.now().strftime("%H:%M:%S %d/%m/%Y")
-            text = f'{name_account} :  {self.Score.text()} ({current_time})\n'
+            text = f'{name_account} :  {ui.Score.text()} ({current_time})\n'
             f.write(text)
 
     @staticmethod

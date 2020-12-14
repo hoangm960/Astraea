@@ -20,14 +20,13 @@ class DocWindow(QMainWindow):
         uic.loadUi(DOC_UI, self)
         self.role = role
         self.pg = pg
-        UIFunctions.uiDefinitions(self)
+        UIFunctions(self)
 
 
 class UIFunctions(DocWindow):
     docs = {}
 
-    @classmethod
-    def uiDefinitions(cls, ui):
+    def __init__(self, ui):
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         ui.move(
@@ -35,13 +34,14 @@ class UIFunctions(DocWindow):
             round((QApplication.primaryScreen().size().height() - ui.height()) / 2),
         )
         ui.showMaximized()
-        ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
-        cls.load_assignments(
+        ui.btn_quit.clicked.connect(lambda: self.close_pg(ui))
+        self.load_assignments(
             ui, open(main_ui.OPENED_LESSON_PATH).read().rstrip())
-        cls.define_role(ui)
-        ui.del_btn.clicked.connect(lambda: cls.options(ui))
-        ui.Delete.clicked.connect(lambda: cls.Delete(ui))
-        ui.Save_btn.clicked.connect(lambda: cls.Change(ui, ui.Name_edit.text()))
+        self.define_role(ui)
+        ui.del_btn.clicked.connect(lambda: self.options(ui))
+        ui.Delete.clicked.connect(lambda: self.Delete(ui))
+        ui.Save_btn.clicked.connect(
+            lambda: self.Change(ui, ui.Name_edit.text()))
         ui.deleteBox_frame.hide()
 
     @staticmethod
@@ -55,38 +55,35 @@ class UIFunctions(DocWindow):
             ui.deleteBox_frame.show()
             ui.text_entry.hide()
 
-    @classmethod
-    def Delete(cls, ui):
+    def Delete(self, ui):
         selected_items = ui.titles.selectedItems()
         if selected_items:
             item = selected_items[0]
-            if item.text() in cls.docs:
-                del cls.docs[item.text()]
+            if item.text() in self.docs:
+                del self.docs[item.text()]
             ui.titles.takeItem(ui.titles.row(item))
             ui.text_entry.clear()
             ui.deleteBox_frame.hide()
-        
-    @classmethod
-    def Change(cls, ui, text):
+
+    def Change(self, ui, text):
         selected_items = ui.titles.selectedItems()
-        if selected_items and not ui.Name_edit.text() in cls.docs:
+        if selected_items and not ui.Name_edit.text() in self.docs:
             item = selected_items[0]
-            temp = cls.docs[item.text()]
-            cls.docs.pop(item.text())
+            temp = self.docs[item.text()]
+            self.docs.pop(item.text())
             item.setText(text)
-            cls.docs[item.text()] = temp
+            self.docs[item.text()] = temp
             ui.Name_edit.clear()
 
-    @classmethod
-    def load_assignments(cls, ui, filename):
+    def load_assignments(self, ui, filename):
         ui.titles.clear()
-        cls.docs.clear()
+        self.docs.clear()
         if os.path.exists(filename):
             if os.path.getsize(filename) > 0:
                 with open(filename, "rb") as f:
                     unpickler = pickle.Unpickler(f)
                     data = unpickler.load()
-                    for i in range(1, len(cls.docs) + 1):
+                    for i in range(1, len(self.docs) + 1):
                         ui.titles.addItem(str(i))
 
     class TeacherUiFunctions:
@@ -150,7 +147,8 @@ class UIFunctions(DocWindow):
             os.remove(f"{os.path.splitext(filename)[0]}.html")
             shutil.rmtree(f"{os.path.splitext(filename)[0]}_files")
 
-        def add_titles(self, ui):
+        @staticmethod
+        def add_titles(ui):
             title = QLabel()
             title_item = QListWidgetItem()
             ui.titles.addItem(title_item)
@@ -179,12 +177,11 @@ class UIFunctions(DocWindow):
         def __init__(self, ui):
             ui.confirm_frame.close()
 
-    @classmethod
-    def define_role(cls, ui):
+    def define_role(self, ui):
         if ui.role.lower() == "teacher":
-            cls.TeacherUiFunctions(ui)
+            self.TeacherUiFunctions(ui)
         if ui.role.lower() == "student":
-            cls.StudentUiFunctions(ui)
+            self.StudentUiFunctions(ui)
 
 
 if __name__ == "__main__":

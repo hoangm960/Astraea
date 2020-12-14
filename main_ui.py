@@ -1,11 +1,6 @@
 import os
 import pickle
-import subprocess
 import sys
-from time import sleep, time
-from PyQt5 import QtGui
-import win32con
-import win32gui
 from PyQt5 import QtCore, uic
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (QApplication, QFileDialog,
@@ -14,7 +9,6 @@ from PyQt5.QtWidgets import (QApplication, QFileDialog,
 
 from UI_Files import Resources
 from win32api import GetMonitorInfo, MonitorFromPoint
-import pygetwindow as gw
 
 
 UI_MAIN_PATH = "./UI_Files/ui_main.ui"
@@ -30,7 +24,7 @@ class MainWindow(QMainWindow):
         uic.loadUi(UI_MAIN_PATH, self)
         self.role = role
         self.pg = pg
-        UIFunctions.uiDefinitions(self)
+        UIFunctions(self)
 
     def changeEvent(self, event):
         if event.type() == QtCore.QEvent.WindowStateChange:
@@ -43,52 +37,52 @@ class MainWindow(QMainWindow):
                 try:
                     self.pg.restore()
                     self.pg.moveTo(-8, 0)
-                    self.pg.resizeTo(SCREEN_WIDTH - self.width() + 16, self.height() + 8)
+                    self.pg.resizeTo(
+                        SCREEN_WIDTH - self.width() + 16, self.height() + 8)
                 except:
                     pass
         QMainWindow.changeEvent(self, event)
-    
+
 
 class UIFunctions(MainWindow):
     assignments = {}
-    @classmethod
-    def uiDefinitions(cls, ui):
+
+    def __init__(self, ui):
         ui.setGeometry(SCREEN_WIDTH, SCREEN_HEIGHT, ui.width(), SCREEN_HEIGHT)
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-        cls.resize_idle(ui, ui.pg)
+        self.resize_idle(ui, ui.pg)
         ui.shadow = QGraphicsDropShadowEffect(ui)
         ui.shadow.setBlurRadius(50)
         ui.shadow.setXOffset(0)
         ui.shadow.setYOffset(0)
         ui.shadow.setColor(QColor(0, 0, 0, 200))
         ui.bg_frame.setGraphicsEffect(ui.shadow)
+
         def open_profile():
             import profile
             ui.mainWin = profile.ProfileWindow()
             ui.mainWin.show()
         ui.profile_btn.clicked.connect(lambda: open_profile())
-        
-        
-        cls.define_role(ui)
-        cls.connect_btn(ui)
-        cls.check_opened_lesson(ui, OPENED_LESSON_PATH)
-        
-    @classmethod
-    def connect_btn(cls, ui):
+
+        self.define_role(ui)
+        self.connect_btn(ui)
+        self.check_opened_lesson(ui, OPENED_LESSON_PATH)
+
+    def connect_btn(self, ui):
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
         if ui.pg:
             ui.btn_quit.clicked.connect(lambda: ui.pg.close())
-        ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui, ui.pg))
+        ui.btn_quit.clicked.connect(lambda: self.close_pg(ui, ui.pg))
 
         ui.load_btn.clicked.connect(
-            lambda: cls.show_file_dialog(ui, OPENED_LESSON_PATH)
+            lambda: self.show_file_dialog(ui, OPENED_LESSON_PATH)
         )
-        ui.main_btn.clicked.connect(lambda: cls.close_pg(ui, ui.pg))
-        ui.LessonButton.clicked.connect(lambda: cls.close_pg(ui, ui.pg))
-        ui.LessonButton.clicked.connect(lambda: cls.open_doc(ui, ui.pg))
+        ui.main_btn.clicked.connect(lambda: self.close_pg(ui, ui.pg))
+        ui.LessonButton.clicked.connect(lambda: self.close_pg(ui, ui.pg))
+        ui.LessonButton.clicked.connect(lambda: self.open_doc(ui, ui.pg))
 
-        ui.list_assignments.itemPressed.connect(lambda: cls.load_details(ui))
+        ui.list_assignments.itemPressed.connect(lambda: self.load_details(ui))
 
     @staticmethod
     def resize_idle(ui, pg):
@@ -103,16 +97,14 @@ class UIFunctions(MainWindow):
             pg.maximize()
         ui.close()
 
-    @classmethod
-    def check_opened_lesson(cls, ui, filename):
+    def check_opened_lesson(self, ui, filename):
         if os.path.exists(filename):
             if os.path.getsize(filename) > 0:
                 with open(filename) as f:
                     file_path = f.read().rstrip("\n")
-                    cls.load_assignments(ui, file_path)
+                    self.load_assignments(ui, file_path)
 
-    @classmethod
-    def show_file_dialog(cls, ui, filename):
+    def show_file_dialog(self, ui, filename):
         HOME_PATH = os.path.join(os.path.join(
             os.environ["USERPROFILE"]), "Desktop")
         file_path = QFileDialog.getOpenFileName(
@@ -120,12 +112,11 @@ class UIFunctions(MainWindow):
         if file_path:
             with open(filename, "w", encoding='utf8') as f:
                 f.write(file_path)
-            cls.load_assignments(ui, file_path)
+            self.load_assignments(ui, file_path)
 
-    @classmethod
-    def load_assignments(cls, ui, filename):
+    def load_assignments(self, ui, filename):
         ui.list_assignments.clear()
-        cls.assignments.clear()
+        self.assignments.clear()
         if os.path.exists(filename):
             if os.path.getsize(filename) > 0:
                 with open(filename, "rb") as f:
@@ -134,14 +125,13 @@ class UIFunctions(MainWindow):
                     title = data[0]
                     assignments = data[1]
                     for assignment in assignments:
-                        cls.assignments[assignment.name] = assignment.details
+                        self.assignments[assignment.name] = assignment.details
                         ui.list_assignments.addItem(assignment.name)
-                    cls.change_assignment_title(ui, title)
+                    self.change_assignment_title(ui, title)
 
-    @classmethod
-    def load_details(cls, ui):
+    def load_details(self, ui):
         ui.assignment_details.setText(
-            cls.assignments[ui.list_assignments.currentItem().text()]
+            self.assignments[ui.list_assignments.currentItem().text()]
         )
 
     @staticmethod
@@ -189,12 +179,11 @@ class UIFunctions(MainWindow):
             window = result_main.ResultWindow(ui.pg)
             window.show()
 
-    @classmethod
-    def define_role(cls, ui):
+    def define_role(self, ui):
         if ui.role.lower() == "teacher":
-            cls.TeacherUiFunctions(cls, ui)
+            self.TeacherUiFunctions(self, ui)
         if ui.role.lower() == "student":
-            cls.StudentUiFunctions(cls, ui)
+            self.StudentUiFunctions(self, ui)
 
 
 def main(role, pg):

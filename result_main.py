@@ -94,9 +94,7 @@ class UIFunctions(ResultWindow):
         self.shadow.setColor(QColor(0, 0, 0, 100))
         self.bg_frame.setGraphicsEffect(self.shadow)
         self.stacked_widget.setCurrentIndex(1)
-        self.return_btn.clicked.connect(lambda: self.close())
-        if self.pg:
-            self.return_btn.clicked.connect(lambda: self.pg.close())
+        self.return_btn.clicked.connect(lambda: cls.reopen_main(self))
         self.inform.hide()
         self.Frame_close.hide()
         # Button function

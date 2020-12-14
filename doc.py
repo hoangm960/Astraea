@@ -35,14 +35,13 @@ class UIFunctions(DocWindow):
             round((QApplication.primaryScreen().size().height() - ui.height()) / 2),
         )
         ui.showMaximized()
-        ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui, ui.pg))
+        ui.btn_quit.clicked.connect(lambda: cls.close_pg(ui))
         cls.load_assignments(
             ui, open(main_ui.OPENED_LESSON_PATH).read().rstrip())
         cls.define_role(ui)
-        ui.Delete.clicked.connect(
-            lambda: cls.Delete(ui, ui.Delete_spin.value()-1))
-        ui.Save_btn.clicked.connect(lambda: cls.Change(
-            ui, ui.Name_spin.value()-1, ui.Name_edit.text()))
+        ui.del_btn.clicked.connect(lambda: cls.options(ui))
+        ui.Delete.clicked.connect(lambda: cls.Delete(ui, ui.titles.selectedItems()[0]))
+        ui.Save_btn.clicked.connect(lambda: cls.Change(ui, ui.Name_spin.value()-1, ui.Name_edit.text()))
         ui.deleteBox_frame.hide()
 
     @staticmethod
@@ -50,10 +49,19 @@ class UIFunctions(DocWindow):
         ui.close()
         main_ui.main(ui.role, None)
 
+    @staticmethod
+    def options(ui):
+        if ui.titles.selectedItems():
+            ui.deleteBox_frame.show()
+            ui.text_entry.hide()
+
     @classmethod
-    def Delete(cls, ui, number):
-        ui.titles.takeItem(number)
+    def Delete(cls, ui, item):
+        if item.text() in cls.docs:
+            del cls.docs[item.text()]
+        ui.titles.takeItem(ui.titles.row(item))
         ui.text_entry.clear()
+        ui.deleteBox_frame.hide()
         
     @classmethod
     def Change(cls, ui, number, text):

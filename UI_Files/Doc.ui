@@ -1193,5 +1193,37 @@ QPushButton:pressed {
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>Save_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>deleteBox_frame</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>577</x>
+     <y>386</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>578</x>
+     <y>323</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Save_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>text_entry</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>576</x>
+     <y>392</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>350</x>
+     <y>457</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
 </ui>

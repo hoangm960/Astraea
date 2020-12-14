@@ -40,8 +40,8 @@ class UIFunctions(DocWindow):
             ui, open(main_ui.OPENED_LESSON_PATH).read().rstrip())
         cls.define_role(ui)
         ui.del_btn.clicked.connect(lambda: cls.options(ui))
-        ui.Delete.clicked.connect(lambda: cls.Delete(ui, ui.titles.selectedItems()[0]))
-        ui.Save_btn.clicked.connect(lambda: cls.Change(ui, ui.Name_spin.value()-1, ui.Name_edit.text()))
+        ui.Delete.clicked.connect(lambda: cls.Delete(ui))
+        ui.Save_btn.clicked.connect(lambda: cls.Change(ui, ui.Name_edit.text()))
         ui.deleteBox_frame.hide()
 
     @staticmethod
@@ -56,20 +56,26 @@ class UIFunctions(DocWindow):
             ui.text_entry.hide()
 
     @classmethod
-    def Delete(cls, ui, item):
-        if item.text() in cls.docs:
-            del cls.docs[item.text()]
-        ui.titles.takeItem(ui.titles.row(item))
-        ui.text_entry.clear()
-        ui.deleteBox_frame.hide()
+    def Delete(cls, ui):
+        selected_items = ui.titles.selectedItems()
+        if selected_items:
+            item = selected_items[0]
+            if item.text() in cls.docs:
+                del cls.docs[item.text()]
+            ui.titles.takeItem(ui.titles.row(item))
+            ui.text_entry.clear()
+            ui.deleteBox_frame.hide()
         
     @classmethod
-    def Change(cls, ui, number, text):
-        if number < ui.titles.count() and len(UIFunctions.docs) > 0:
-            temp = UIFunctions.docs[ui.titles.item(number).text()]
-            UIFunctions.docs.pop(ui.titles.item(number).text())
-            ui.titles.item(number).setText(text)
-            UIFunctions.docs[ui.titles.item(number).text()] = temp
+    def Change(cls, ui, text):
+        selected_items = ui.titles.selectedItems()
+        if selected_items and not ui.Name_edit.text() in cls.docs:
+            item = selected_items[0]
+            temp = cls.docs[item.text()]
+            cls.docs.pop(item.text())
+            item.setText(text)
+            cls.docs[item.text()] = temp
+            ui.Name_edit.clear()
 
     @classmethod
     def load_assignments(cls, ui, filename):

@@ -169,7 +169,6 @@ class UIFunctions(DocWindow):
             ui.add_btn.clicked.connect(lambda: self.add_titles(ui))
             # ui.load_btn.clicked.connect(lambda: self.get_doc(ui))
             ui.titles.itemClicked.connect(lambda: self.open_doc(ui))
-            # ui.titles.itemDoubleClicked.connect(lambda: self.change_title(ui, True, ui.titles.selectedItems()[0].text()))
             ui.SaveDocx.clicked.connect(lambda: self.saveDocx(
                 ui, self.save_file_dialog(ui, "*.sd")))
 

@@ -7,7 +7,7 @@ from time import sleep
 from PyQt5.QtWidgets import QMessageBox
 import pygetwindow as gw
 
-VERSION = 2.4
+VERSION = 2.5
 
 parser = argparse.ArgumentParser(
     description="Astraea - Công cụ hỗ trợ dạy học"

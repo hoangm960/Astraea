@@ -30,24 +30,24 @@ def create_file():
     Path(OPENED_RESULT_PATH).mkdir(parents=True, exist_ok=True)
 
 
-def find_idle():
-    class Error(Exception):
-        pass
+# def find_idle():
+#     class Error(Exception):
+#         pass
 
-    def _find(pathname, matchFunc=os.path.isfile):
-        for dirname in sys.path:
-            candidate = os.path.join(dirname, pathname)
-            if matchFunc(candidate):
-                return candidate
-        raise Error("Can't find file %s" % pathname)
+#     def _find(pathname, matchFunc=os.path.isfile):
+#         for dirname in sys.path:
+#             candidate = os.path.join(dirname, pathname)
+#             if matchFunc(candidate):
+#                 return candidate
+#         raise Error("Can't find file %s" % pathname)
 
-    return _find("Lib\site-packages\pythonwin\Pythonwin.ex")
+#     return _find("Lib\site-packages\pythonwin\Pythonwin.ex")
 
 
 pg = None
 def open_idle():
     global pg
-    subprocess.Popen([find_idle()])
+    os.system("start pythonwin")
     sleep(1)
     if gw.getWindowsWithTitle("PythonWin"):
         pg = gw.getWindowsWithTitle("PythonWin")[0]

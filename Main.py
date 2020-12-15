@@ -4,8 +4,10 @@ import subprocess
 import sys
 from pathlib import Path
 from time import sleep
-from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtWidgets import (QApplication, QFileDialog, QLabel, QLineEdit,
+                             QListWidgetItem, QMainWindow, QMessageBox)
 import pygetwindow as gw
+from PyQt5 import QtCore
 
 VERSION = 2.5
 
@@ -27,40 +29,32 @@ def create_file():
     Path(ENCRYPTION_PATH).mkdir(parents=True, exist_ok=True)
     Path(OPENED_RESULT_PATH).mkdir(parents=True, exist_ok=True)
 
-try:
-    def find_idle():
-        class Error(Exception):
-            pass
 
-        def _find(pathname, matchFunc=os.path.isfile):
-            for dirname in sys.path:
-                candidate = os.path.join(dirname, pathname)
-                if matchFunc(candidate):
-                    return candidate
-            raise Error("Can't find file %s" % pathname)
+def find_idle():
+    class Error(Exception):
+        pass
 
-        return _find("Lib\site-packages\pythonwin\Pythonwin.exe")
+    def _find(pathname, matchFunc=os.path.isfile):
+        for dirname in sys.path:
+            candidate = os.path.join(dirname, pathname)
+            if matchFunc(candidate):
+                return candidate
+        raise Error("Can't find file %s" % pathname)
 
-    pg = None
+    return _find("Lib\site-packages\pythonwin\Pythonwin.ex")
 
-    def open_idle():
-        global pg
-        subprocess.Popen([find_idle()])
-        sleep(1)
-        if gw.getWindowsWithTitle("PythonWin"):
-            pg = gw.getWindowsWithTitle("PythonWin")[0]
-        pg.minimize()
-    open_idle()
 
-except:
-    msg = QMessageBox()
-    msg.setWindowTitle("Đang khởi chạy")
-    msg.setText(
-        'Ứng dụng đang khởi động. Hãy chạy lại ứng dụng.'
-    )
-    msg.setIcon(QMessageBox.Information)
-    msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-    msg.buttonClicked.connect(sys.exit())
+pg = None
+def open_idle():
+    global pg
+    subprocess.Popen([find_idle()])
+    sleep(1)
+    if gw.getWindowsWithTitle("PythonWin"):
+        pg = gw.getWindowsWithTitle("PythonWin")[0]
+    pg.minimize()
+
+
+open_idle()
 
 if __name__ == "__main__":
     import login_main

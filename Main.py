@@ -4,7 +4,7 @@ from pathlib import Path
 from time import sleep
 import pygetwindow as gw
 
-VERSION = 2.5
+VERSION = 2.6
 PG = None
 
 parser = argparse.ArgumentParser(

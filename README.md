@@ -55,3 +55,5 @@ Phần mềm hỗ trợ dạy và học lập trình
 #### v2.5 (13/12): 
 	+ Thêm chức năng lưu thông tin người dùng.
 	+ Thêm chức năng xóa, đổi tên các mục Docx.
+#### v2.6 (16/12):
+	+ Sửa đóng gói app

@@ -4,8 +4,7 @@ import shutil
 import sys
 
 from PyQt5 import QtCore, uic
-from PyQt5.QtWidgets import (QApplication, QFileDialog, QLabel, QLineEdit,
-                             QListWidgetItem, QMainWindow)
+from PyQt5.QtWidgets import (QApplication, QFileDialog, QLabel, QListWidgetItem, QMainWindow)
 from win32com import client as wc
 
 import main_ui

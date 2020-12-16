@@ -1,4 +1,3 @@
-import Main 
 import os
 import pickle
 import sys
@@ -379,4 +378,4 @@ def main(pg, version, file=''):
 
 
 if __name__ == "__main__":
-    main(None, Main.VERSION)
+    main(None, 2.5)

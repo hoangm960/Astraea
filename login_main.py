@@ -1,3 +1,4 @@
+import Main 
 import os
 import pickle
 import sys
@@ -114,7 +115,8 @@ class LoginFunctions(LoginWindow):
         ui.btn_maximize.clicked.connect(lambda: self.move_TaskClose(ui))
         ui.btn_quit.clicked.connect(lambda: ui.OkCancelFrame.show())
         ui.Accept.clicked.connect(lambda: ui.close())
-        ui.Accept.clicked.connect(lambda: ui.pg.close())
+        if ui.pg:
+            ui.Accept.clicked.connect(lambda: ui.pg.close())
         ui.Deny.clicked.connect(lambda: ui.OkCancelFrame.hide())
         ui.eyeHide_SI.clicked.connect(
             lambda: ui.PassBox_SI.setEchoMode(QtWidgets.QLineEdit.Password)
@@ -377,4 +379,4 @@ def main(pg, version, file=''):
 
 
 if __name__ == "__main__":
-    main(None)
+    main(None, Main.VERSION)

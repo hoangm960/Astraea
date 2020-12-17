@@ -10,6 +10,7 @@ from PyQt5.QtWidgets import (QApplication, QFileDialog,
                              QGraphicsDropShadowEffect, QMainWindow, QSizeGrip,
                              QVBoxLayout, QWidget)
 from win32api import GetMonitorInfo, MonitorFromPoint
+
 import check_algorithm
 import main_ui
 

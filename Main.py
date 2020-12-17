@@ -2,6 +2,7 @@ import argparse
 import os
 from pathlib import Path
 from time import sleep
+
 import pygetwindow as gw
 
 VERSION = 2.6
@@ -39,7 +40,10 @@ def open_idle():
 
 
 create_file()
-open_idle()
+try:
+    open_idle()
+except:
+    pass
 
 if __name__ == "__main__":
     import login_main

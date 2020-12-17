@@ -6,7 +6,7 @@ from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (QApplication, QFileDialog,
-                             QGraphicsDropShadowEffect, QMainWindow, QMessageBox,
+                             QMainWindow, QMessageBox,
                              QSizeGrip, QVBoxLayout, QWidget)
 
 import main_ui
@@ -17,7 +17,7 @@ EDIT_FRAME_PATH = "./UI_Files/edit_frame.ui"
 OPENED_ASSIGNMENT_PATH = "./data/Users/opened_assignment.oa"
 HTML_CONVERT_PATH = "./data/html_convert"
 if not os.path.exists(OPENED_ASSIGNMENT_PATH):
-    open(OPENED_ASSIGNMENT_PATH, "w").close()
+    open(OPENED_ASSIGNMENT_PATH, "w", encoding="utf").close()
 
 
 class Assignment:
@@ -36,7 +36,7 @@ class Assignment:
 
     def load_io(self):
         self.tests = []
-        with open(self.test_file) as f:
+        with open(self.test_file,encoding = 'utf-8') as f:
             lines = f.readlines()
             sep = lines[0].rstrip()
             del lines[0]
@@ -49,7 +49,7 @@ class Assignment:
 class EditWindow(QMainWindow):
     def __init__(self, pg=None):
         self.pg = pg
-        QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
+        QMainWindow.__init__(self, None)
         uic.loadUi(EDIT_FORM_PATH, self)
         self.setGeometry(
             round((QApplication.primaryScreen().size().width() - self.width()) / 2),
@@ -59,7 +59,7 @@ class EditWindow(QMainWindow):
         )
 
         def moveWindow(event):
-            if UIFunctions.returnStatus() == True:
+            if UIFunctions.GLOBAL_STATE == True:
                 UIFunctions.maximize_restore(self)
             if event.buttons() == Qt.LeftButton:
                 self.move(self.pos() + event.globalPos() - self.dragPos)
@@ -85,14 +85,6 @@ class UIFunctions(EditWindow):
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 
-        # Make drop shadow
-        ui.shadow = QGraphicsDropShadowEffect(ui)
-        ui.shadow.setBlurRadius(20)
-        ui.shadow.setXOffset(0)
-        ui.shadow.setYOffset(0)
-        ui.shadow.setColor(QColor(0, 0, 0, 100))
-        ui.bg_frame.setGraphicsEffect(ui.shadow)
-
         # Button function
         ui.btn_maximize.clicked.connect(lambda: self.maximize_restore(ui))
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
@@ -111,7 +103,7 @@ class UIFunctions(EditWindow):
         ui.return_btn.clicked.connect(
             lambda: ui.stacked_widget.setCurrentIndex(0))
         ui.return_btn.clicked.connect(
-            lambda: open(OPENED_ASSIGNMENT_PATH, 'w').write(''))
+            lambda: open(OPENED_ASSIGNMENT_PATH, 'w',encoding='utf8').write(''))
         ui.add_btn.clicked.connect(
             lambda: ui.stacked_widget.setCurrentIndex(2))
         ui.add_btn.clicked.connect(
@@ -128,7 +120,7 @@ class UIFunctions(EditWindow):
         ui.Minutes_entry.setDisabled(True)
         ui.checkBox.clicked.connect(lambda: ui.Hours_entry.setValue(0))
         ui.checkBox.clicked.connect(lambda: ui.Minutes_entry.setValue(0))
-        self.check_empty(ui, open(OPENED_ASSIGNMENT_PATH).read().rstrip())
+        self.check_empty(ui, open(OPENED_ASSIGNMENT_PATH, encoding = 'utf-8').read().rstrip())
 
     def check_empty_entry(self, ui):
         self.CheckValue = True
@@ -231,7 +223,7 @@ class UIFunctions(EditWindow):
             ui.btn_maximize.setToolTip("Phóng to")
 
     def show_file_dialog(self, ui, filename):
-        file_path = open(filename).read().rstrip()
+        file_path = open(filename, encoding = 'utf-8').read().rstrip()
         if not file_path:
             HOME_PATH = os.path.join(os.path.join(
                 os.environ["USERPROFILE"]), "Desktop")

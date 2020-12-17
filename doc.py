@@ -20,6 +20,7 @@ class DocWindow(QMainWindow):
         uic.loadUi(DOC_UI, self)
         self.role = role
         self.pg = pg
+        
         UIFunctions(self)
 
 
@@ -36,7 +37,7 @@ class UIFunctions(DocWindow):
         ui.showMaximized()
         ui.btn_quit.clicked.connect(lambda: self.close_pg(ui))
         self.load_assignments(
-            ui, open(main_ui.OPENED_LESSON_PATH).read().rstrip())
+            ui, open(main_ui.OPENED_LESSON_PATH, encoding = 'utf8').read().rstrip())
         self.define_role(ui)
         ui.del_btn.clicked.connect(lambda: self.options(ui))
         ui.Delete.clicked.connect(lambda: self.Delete(ui))
@@ -47,7 +48,7 @@ class UIFunctions(DocWindow):
     @staticmethod
     def close_pg(ui):
         ui.close()
-        main_ui.main(ui.role, None)
+        main_ui.main(ui.role, ui.pg)
 
     @staticmethod
     def options(ui):
@@ -162,7 +163,7 @@ class UIFunctions(DocWindow):
         @staticmethod
         def reopen_main(ui):
             import main_ui
-            main_ui.main(ui.role, None)
+            main_ui.main(ui.role, ui.pg)
             ui.close()
 
         def connect_btn(self, ui):

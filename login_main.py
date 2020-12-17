@@ -7,7 +7,7 @@ from random import randrange
 from PyQt5 import QtCore, QtWidgets, uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import (QApplication, QGraphicsDropShadowEffect,
+from PyQt5.QtWidgets import (QApplication, 
                              QMainWindow)
 from win32api import GetMonitorInfo, MonitorFromPoint
 
@@ -40,10 +40,11 @@ class LoginWindow(QMainWindow):
         uic.loadUi(self.UI_PATH, self)
         LoginFunctions(self)
 
+        
         self.OkCancelFrame.move(440, 247)
 
         def moveWindow(event):
-            if LoginFunctions.returnStatus() == True:
+            if LoginFunctions.GLOBAL_STATE == True:
                 LoginFunctions.maximize_restore(self)
             if event.buttons() == Qt.LeftButton:
                 self.move(self.pos() + event.globalPos() - self.dragPos)
@@ -51,10 +52,10 @@ class LoginWindow(QMainWindow):
                 event.accept()
 
         self.title_bar.mouseMoveEvent = moveWindow
-
+    
     def mousePressEvent(self, event):
         self.dragPos = event.globalPos()
-
+    
 
 class LoginFunctions(LoginWindow):
     users = []
@@ -75,7 +76,6 @@ class LoginFunctions(LoginWindow):
         ui.Note_Name.hide()
         ui.Note_Pass.hide()
         ui.Note_User.hide()
-        ui.Note_Name.clicked.connect(lambda: ui.Note_Name.QToolTip.show())
         ui.setGeometry(
             round((SCREEN_WIDTH - ui.width()) / 2),
             round((SCREEN_HEIGHT - ui.height()) / 2),
@@ -99,22 +99,15 @@ class LoginFunctions(LoginWindow):
             round((ui.frame.height() - 180) / 2),
         )
 
-    @staticmethod
-    def create_dropshadow(ui):
-        ui.shadow = QGraphicsDropShadowEffect(ui)
-        ui.shadow.setBlurRadius(50)
-        ui.shadow.setXOffset(0)
-        ui.shadow.setYOffset(0)
-        ui.shadow.setColor(QColor(0, 0, 0, 200))
-        ui.bg_frame.setGraphicsEffect(ui.shadow)
-
     def connect_btn(self, ui):
+        
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
         ui.btn_maximize.clicked.connect(lambda: self.maximize_restore(ui))
         ui.btn_maximize.clicked.connect(lambda: self.move_TaskClose(ui))
         ui.btn_quit.clicked.connect(lambda: ui.OkCancelFrame.show())
         ui.Accept.clicked.connect(lambda: ui.close())
-        ui.Accept.clicked.connect(lambda: ui.pg.close())
+        if ui.pg:
+            ui.Accept.clicked.connect(lambda: ui.pg.close())
         ui.Deny.clicked.connect(lambda: ui.OkCancelFrame.hide())
         ui.eyeHide_SI.clicked.connect(
             lambda: ui.PassBox_SI.setEchoMode(QtWidgets.QLineEdit.Password)
@@ -133,6 +126,7 @@ class LoginFunctions(LoginWindow):
         ui.ConvertButton.clicked.connect(
             lambda: ui.stacked_widget.setCurrentIndex(1)
         )
+        
         ui.ConvertButton_SU.clicked.connect(
             lambda: ui.stacked_widget.setCurrentIndex(0)
         )
@@ -140,7 +134,7 @@ class LoginFunctions(LoginWindow):
             lambda: ui.stacked_widget.setCurrentIndex(0)
         )
         ui.ConvertButton.clicked.connect(lambda: default())
-
+    
         def default():
             ui.STATE_ECHOPASS = True
             ui.PassBox.clear()
@@ -227,7 +221,8 @@ class LoginFunctions(LoginWindow):
                         self.users[i].auto_saved = False
                     if ui.SavePass.isChecked():
                         self.users[self.users.index(user)].auto_saved = True
-
+                    else:
+                        self.users[self.users.index(user)].auto_saved = False    
                     decrypt(self.USER_PATH_ENCRYPTED,
                             self.USER_PATH, self.KEY_PATH)
                     time.sleep(1)
@@ -246,6 +241,7 @@ class LoginFunctions(LoginWindow):
         name = ui.NameBox.text()[:31]
         password = ui.PassBox.text()[:22]
         name_account = ui.UserBox.text()[:30]
+        
         if len(name) < 8 or list(
             set(False for i in name.lower() if i not in self.enabled)
         ) == [False]:
@@ -292,14 +288,20 @@ class LoginFunctions(LoginWindow):
                 pickle.dump(self.users, f)
 
             encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
+            for user in self.users:
+                if user.auto_saved:
+                    user.auto_saved = False
+            ui.NameBox_SI.clear()
+            ui.PassBox_SI.clear()
+            ui.SavePass.setChecked(False)
             ui.stacked_widget.setCurrentIndex(2)
-
 
 class Loading_Screen(QMainWindow):
     counter = 0
 
     def __init__(self, pg, version):
         self.pg = pg
+        self.version = version
 
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi("./UI_files/Loading_Screen.ui", self)
@@ -377,4 +379,4 @@ def main(pg, version, file=''):
 
 
 if __name__ == "__main__":
-    main(None)
+    main(None,'1.2')

@@ -3,8 +3,7 @@ import pickle
 import sys
 from PyQt5 import QtCore, uic
 from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import (QApplication, QFileDialog,
-                             QGraphicsDropShadowEffect, QMainWindow)
+from PyQt5.QtWidgets import (QApplication, QFileDialog, QMainWindow)
 
 
 from UI_Files import Resources
@@ -19,13 +18,12 @@ SCREEN_WIDTH, SCREEN_HEIGHT = work_area[2], work_area[3]
 
 
 class MainWindow(QMainWindow):
-    def __init__(self, role, pg=None):
+    def __init__(self, role, pg):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(UI_MAIN_PATH, self)
         self.role = role
         self.pg = pg
         UIFunctions(self)
-
     def changeEvent(self, event):
         if event.type() == QtCore.QEvent.WindowStateChange:
             if self.windowState() & QtCore.Qt.WindowMinimized:
@@ -46,18 +44,16 @@ class MainWindow(QMainWindow):
 
 class UIFunctions(MainWindow):
     assignments = {}
-
     def __init__(self, ui):
+        if ui.pg:
+            ui.pg.restore()
+            ui.pg.moveTo(-8, 0)
+            ui.pg.resizeTo(
+                SCREEN_WIDTH - ui.width() + 16, ui.height() + 8)
         ui.setGeometry(SCREEN_WIDTH, SCREEN_HEIGHT, ui.width(), SCREEN_HEIGHT)
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.resize_idle(ui, ui.pg)
-        ui.shadow = QGraphicsDropShadowEffect(ui)
-        ui.shadow.setBlurRadius(50)
-        ui.shadow.setXOffset(0)
-        ui.shadow.setYOffset(0)
-        ui.shadow.setColor(QColor(0, 0, 0, 200))
-        ui.bg_frame.setGraphicsEffect(ui.shadow)
 
         def open_profile():
             import profile
@@ -100,7 +96,7 @@ class UIFunctions(MainWindow):
     def check_opened_lesson(self, ui, filename):
         if os.path.exists(filename):
             if os.path.getsize(filename) > 0:
-                with open(filename) as f:
+                with open(filename, encoding = 'utf8') as f:
                     file_path = f.read().rstrip("\n")
                     self.load_assignments(ui, file_path)
 

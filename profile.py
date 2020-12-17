@@ -5,6 +5,7 @@ from encryption import decrypt, encrypt
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5 import uic
+from PyQt5.QtCore import Qt
 import sys
 
 UI_PATH = './UI_Files/profile_form.ui'
@@ -14,6 +15,16 @@ class ProfileWindow(QMainWindow):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(UI_PATH, self)
         UIFunctions.uiDefinitions(self)
+        def moveWindow(event):
+            if UIFunctions.GLOBAL_STATE == True:
+                UIFunctions.maximize_restore(self)
+            if event.buttons() == Qt.LeftButton:
+                self.move(self.pos() + event.globalPos() - self.dragPos)
+                self.dragPos = event.globalPos()
+                event.accept()
+        self.TitleBar.mouseMoveEvent = moveWindow
+    def mousePressEvent(self, event):
+        self.dragPos = event.globalPos()
 class UIFunctions(ProfileWindow):
     GLOBAL_STATE = False
     @classmethod

@@ -5,7 +5,7 @@ from time import sleep
 
 import pygetwindow as gw
 
-VERSION = 2.6
+VERSION = 2.7
 PG = None
 
 parser = argparse.ArgumentParser(

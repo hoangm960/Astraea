@@ -7,7 +7,7 @@ from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (QApplication, QFileDialog,
-                             QGraphicsDropShadowEffect, QMainWindow, QSizeGrip,
+                             QMainWindow, QSizeGrip,
                              QVBoxLayout, QWidget)
 from win32api import GetMonitorInfo, MonitorFromPoint
 
@@ -38,7 +38,7 @@ class ResultWindow(QMainWindow):
         )
 
         def moveWindow(event):
-            if UIFunctions.returnStatus() == True:
+            if UIFunctions.GLOBAL_STATE == True:
                 UIFunctions.maximize_restore(self)
             if event.buttons() == Qt.LeftButton:
                 self.move(self.pos() + event.globalPos() - self.dragPos)
@@ -71,13 +71,7 @@ class UIFunctions(ResultWindow):
         # Delete title bar
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-        # Make drop shadow
-        ui.shadow = QGraphicsDropShadowEffect(ui)
-        ui.shadow.setBlurRadius(20)
-        ui.shadow.setXOffset(0)
-        ui.shadow.setYOffset(0)
-        ui.shadow.setColor(QColor(0, 0, 0, 100))
-        ui.bg_frame.setGraphicsEffect(ui.shadow)
+        
         ui.stacked_widget.setCurrentIndex(1)
         ui.return_btn.clicked.connect(lambda: self.reopen_main(ui))
         ui.inform.hide()
@@ -104,7 +98,7 @@ class UIFunctions(ResultWindow):
             "QSizeGrip { width: 20px; height: 20px; margin: 5px; border-radius: 10px; } QSizeGrip:hover { background-color: rgb(201, 21, 8) }"
         )
         ui.sizegrip.setToolTip("Resize Window")
-        self.load_assignments(open(OPENED_LESSON_PATH).read().rstrip())
+        self.load_assignments(open(OPENED_LESSON_PATH, encoding = 'utf-8').read().rstrip())
         self.check_empty(ui, len(self.assignments))
 
     def load_assignments(self, ui, filename):
@@ -294,7 +288,6 @@ class UIFunctions(ResultWindow):
 
     @staticmethod
     def reopen_main(ui):
-        import main_ui
         main_ui.main("student", ui.pg)
         ui.close()
 

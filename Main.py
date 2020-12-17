@@ -21,12 +21,13 @@ def create_file():
     USER_PATH = "./data/Users/"
     ENCRYPTION_PATH = "./data/encryption/"
     OPENED_RESULT_PATH = "./data/results/"
-    OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
+    OPENED_ASSIGNMENT_PATH = "./data/Users/opened_assignment.oa"
 
     Path(USER_PATH).mkdir(parents=True, exist_ok=True)
     Path(ENCRYPTION_PATH).mkdir(parents=True, exist_ok=True)
     Path(OPENED_RESULT_PATH).mkdir(parents=True, exist_ok=True)
-    open(OPENED_LESSON_PATH, 'w').close()
+    if not os.path.exists(OPENED_ASSIGNMENT_PATH):
+        open(OPENED_ASSIGNMENT_PATH, "w").close()
 
 
 

@@ -14,10 +14,7 @@ import main_ui
 KEY_PATH = "./data/Lesson/assignments.key"
 EDIT_FORM_PATH = "./UI_Files/edit_form.ui"
 EDIT_FRAME_PATH = "./UI_Files/edit_frame.ui"
-OPENED_ASSIGNMENT_PATH = "./data/Users/opened_assignment.oa"
 HTML_CONVERT_PATH = "./data/html_convert"
-if not os.path.exists(OPENED_ASSIGNMENT_PATH):
-    open(OPENED_ASSIGNMENT_PATH, "w").close()
 
 
 class Assignment:

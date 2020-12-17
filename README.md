@@ -57,5 +57,5 @@ Phần mềm hỗ trợ dạy và học lập trình
 	+ Thêm chức năng xóa, đổi tên các mục Docx.
 #### v2.6 (16/12):
 	+ Sửa đóng gói app
-#### v2.6 (17/12):
+#### v2.7 (17/12):
 	+ Hỗ trợ thêm ngôn ngữ Pascal

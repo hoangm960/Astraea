@@ -10,6 +10,7 @@ from PyQt5.QtWidgets import (QApplication, QFileDialog,
                              QMainWindow, QSizeGrip,
                              QVBoxLayout, QWidget)
 from win32api import GetMonitorInfo, MonitorFromPoint
+
 import check_algorithm
 import main_ui
 
@@ -113,7 +114,8 @@ class UIFunctions(ResultWindow):
                     for assignment in assignments:
                         self.lesson[assignment.name] = assignment.details
                         ui.textBrowser.addItem(assignment.name)
-
+    
+    @classmethod
     def returnStatus(self):
         return self.GLOBAL_STATE
 

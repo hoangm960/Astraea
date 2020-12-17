@@ -16,8 +16,6 @@ EDIT_FORM_PATH = "./UI_Files/edit_form.ui"
 EDIT_FRAME_PATH = "./UI_Files/edit_frame.ui"
 OPENED_ASSIGNMENT_PATH = "./data/Users/opened_assignment.oa"
 HTML_CONVERT_PATH = "./data/html_convert"
-if not os.path.exists(OPENED_ASSIGNMENT_PATH):
-    open(OPENED_ASSIGNMENT_PATH, "w", encoding="utf").close()
 
 
 class Assignment:
@@ -192,6 +190,7 @@ class UIFunctions(EditWindow):
         self.put_frame_in_list(ui, ui.num_entry.value())
         ui.stacked_widget.setCurrentIndex(1)
 
+    @classmethod
     def returnStatus(self):
         return self.GLOBAL_STATE
 
@@ -265,7 +264,8 @@ class UIFunctions(EditWindow):
             if file_name[0]:
                 entry.setText(file_name[0])
 
-    def change_lesson_title(self, ui, title):
+    @staticmethod
+    def change_lesson_title(ui, title):
         ui.lesson_title.setText(title if title else "Bài học không tên")
 
     def setup_frame(self, ui, title, assignments):
@@ -300,15 +300,15 @@ class UIFunctions(EditWindow):
                 lambda: self.close_frame(ui, ui.frame))
             ui.content_widget.layout().addWidget(ui.frame)
 
+    @classmethod
     def close_frame(self, ui, frame):
-        children = ui.content_widget.children()
-        del children[0]
-        pos = len(children) - children.index(frame) - 1
-        self.warn_close_frame(ui, children[pos])
-        if self.deleted == True:
-            children[pos].setParent(None)
+        self.warn_close_frame(ui, frame)
+        if self.deleted:
+            frame.setParent(None)
             ui.scrollArea.verticalScrollBar().setValue(1)
+            self.deleted = False
 
+    @classmethod
     def warn_close_frame(self, ui, frame):
         msg = QMessageBox(ui)
         msg.setWindowTitle("Xóa bài tập")
@@ -318,8 +318,9 @@ class UIFunctions(EditWindow):
         msg.buttonClicked.connect(self.popup_button)
         msg.exec_()
 
+    @classmethod
     def popup_button(self, i):
-        self.deleted = False if i.text().lower() == "cancel" else True
+        self.deleted = True if i.text().lower() == "ok" else False
 
     def load_assignments(self, ui, filename):
         children = ui.content_widget.children()

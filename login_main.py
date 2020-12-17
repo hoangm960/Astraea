@@ -153,9 +153,6 @@ class LoginFunctions(LoginWindow):
                 ui.SavePass.setChecked(True)
                 break
 
-    def returnStatus(self):
-        return self.GLOBAL_STATE
-
     def maximize_restore(self, ui):
         status = self.GLOBAL_STATE
 
@@ -379,4 +376,4 @@ def main(pg, version, file=''):
 
 
 if __name__ == "__main__":
-    main(None,'1.2')
+    main(None, 2.5)

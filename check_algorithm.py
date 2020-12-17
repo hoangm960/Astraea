@@ -1,5 +1,6 @@
+from subprocess import STDOUT
 import os
-from subprocess import PIPE, Popen, TimeoutExpired, check_output, run
+from subprocess import PIPE, Popen, TimeoutExpired
 
 
 def main(filename, ex_file, tests, time_limit=2, size_range=50):
@@ -12,7 +13,7 @@ def main(filename, ex_file, tests, time_limit=2, size_range=50):
         check.result = [time_err, correct]
         try:
             process = Popen(
-                ["python", filename], stdin=PIPE, stdout=PIPE, encoding="utf8"
+                ["python", filename], stdin=PIPE, stdout=PIPE, stderr=STDOUT, encoding="utf8"
             )
             output = process.communicate(input=input, timeout=time_limit)[0]
         except TimeoutExpired:

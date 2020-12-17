@@ -274,7 +274,8 @@ class UIFunctions(EditWindow):
             if file_name[0]:
                 entry.setText(file_name[0])
 
-    def change_lesson_title(self, ui, title):
+    @staticmethod
+    def change_lesson_title(ui, title):
         ui.lesson_title.setText(title if title else "Bài học không tên")
 
     def setup_frame(self, ui, title, assignments):
@@ -309,6 +310,7 @@ class UIFunctions(EditWindow):
                 lambda: self.close_frame(ui, ui.frame))
             ui.content_widget.layout().addWidget(ui.frame)
 
+    @classmethod
     def close_frame(self, ui, frame):
         self.warn_close_frame(ui, frame)
         if self.deleted:
@@ -316,7 +318,7 @@ class UIFunctions(EditWindow):
             ui.scrollArea.verticalScrollBar().setValue(1)
             self.deleted = False
 
-
+    @classmethod
     def warn_close_frame(self, ui, frame):
         msg = QMessageBox(ui)
         msg.setWindowTitle("Xóa bài tập")
@@ -326,6 +328,7 @@ class UIFunctions(EditWindow):
         msg.buttonClicked.connect(self.popup_button)
         msg.exec_()
 
+    @classmethod
     def popup_button(self, i):
         self.deleted = True if i.text().lower() == "ok" else False
 

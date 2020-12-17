@@ -28,9 +28,12 @@ def main(filename, ex_file, tests, time_limit=2, size_range=50):
 
         command = get_command()
         output = get_output(command, input)
+        base_file = os.path.splitext(filename)[0]
         if command[0] == "fpc":
-            command = [os.path.splitext(filename)[0]]
+            command = [base_file]
             output = get_output(command, input)
+            os.remove(f'{base_file}.o')
+            os.remove(f'{base_file}.exe')
 
         check.result[1] = True if output.rstrip() == ans.rstrip() else False
 

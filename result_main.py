@@ -109,7 +109,6 @@ class UIFunctions(ResultWindow):
                 with open(filename, "rb") as f:
                     unpickler = pickle.Unpickler(f)
                     data = unpickler.load()
-                    title = data[0]
                     assignments = data[1]
                     for assignment in assignments:
                         self.lesson[assignment.name] = assignment.details
@@ -161,14 +160,14 @@ class UIFunctions(ResultWindow):
             uic.loadUi(TEST_FRAME_PATH, ui)
 
             ui.ans_file_btn.clicked.connect(
-                lambda: ui.showDialog(ui.ans_file_entry)
+                lambda: ui.showDialog(ui.ans_file_entry, "Python (*.py);;Free Pascal (*.pas)")
             )
 
-        def showDialog(ui, entry):
+        def showDialog(ui, entry, filter):
             HOME_PATH = os.path.join(os.path.join(
                 os.environ["USERPROFILE"]), "Desktop")
             file_name = QFileDialog.getOpenFileName(
-                ui, "Open file", HOME_PATH
+                ui, "Open file", HOME_PATH, filter
             )
 
             if file_name[0]:

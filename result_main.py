@@ -174,7 +174,7 @@ class UIFunctions(ResultWindow):
             HOME_PATH = os.path.join(os.path.join(
                 os.environ["USERPROFILE"]), "Desktop")
             file_name = QFileDialog.getOpenFileName(
-                ui, "Open file", HOME_PATH, "*.py"
+                ui, "Open file", HOME_PATH
             )
 
             if file_name[0]:

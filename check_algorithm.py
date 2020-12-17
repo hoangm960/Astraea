@@ -1,23 +1,36 @@
-from subprocess import STDOUT
 import os
-from subprocess import PIPE, Popen, TimeoutExpired
+from subprocess import PIPE, STDOUT, Popen, TimeoutExpired
 
 
 def main(filename, ex_file, tests, time_limit=2, size_range=50):
     main.results = []
 
+    def get_command():
+        program_langs = {".py": "python", ".pas": "fpc"}
+        command = [program_langs[os.path.splitext(filename)[1]], filename]
+        return command
 
-    def check(input, ans):
-        output = ""
-        time_err = correct = False
-        check.result = [time_err, correct]
+    def get_output(command, input=''):
+        output = ''
         try:
             process = Popen(
-                ["python", filename], stdin=PIPE, stdout=PIPE, stderr=STDOUT, encoding="utf8"
+                command, stdin=PIPE, stdout=PIPE, stderr=STDOUT, encoding="utf8"
             )
             output = process.communicate(input=input, timeout=time_limit)[0]
         except TimeoutExpired:
             check.result[0] = True
+
+        return output
+
+    def check(input, ans):
+        time_err = correct = False
+        check.result = [time_err, correct]
+
+        command = get_command()
+        output = get_output(command, input)
+        if command[0] == "fpc":
+            command = [os.path.splitext(filename)[0]]
+            output = get_output(command, input)
 
         check.result[1] = True if output.rstrip() == ans.rstrip() else False
 
@@ -44,5 +57,3 @@ def main(filename, ex_file, tests, time_limit=2, size_range=50):
 
     check_file_size()
     return main.results
-
-

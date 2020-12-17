@@ -194,6 +194,6 @@ def main(role, pg):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    main("teacher", None)
-    # main("student")
+    # main("teacher", None)
+    main("student", None)
     sys.exit(app.exec_())

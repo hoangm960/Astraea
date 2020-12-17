@@ -120,7 +120,8 @@ class UIFunctions(ResultWindow):
                     for assignment in assignments:
                         self.lesson[assignment.name] = assignment.details
                         ui.textBrowser.addItem(assignment.name)
-
+    
+    @classmethod
     def returnStatus(self):
         return self.GLOBAL_STATE
 

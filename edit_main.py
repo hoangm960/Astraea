@@ -200,6 +200,7 @@ class UIFunctions(EditWindow):
         self.put_frame_in_list(ui, ui.num_entry.value())
         ui.stacked_widget.setCurrentIndex(1)
 
+    @classmethod
     def returnStatus(self):
         return self.GLOBAL_STATE
 
@@ -309,13 +310,12 @@ class UIFunctions(EditWindow):
             ui.content_widget.layout().addWidget(ui.frame)
 
     def close_frame(self, ui, frame):
-        children = ui.content_widget.children()
-        del children[0]
-        pos = len(children) - children.index(frame) - 1
-        self.warn_close_frame(ui, children[pos])
-        if self.deleted == True:
-            children[pos].setParent(None)
+        self.warn_close_frame(ui, frame)
+        if self.deleted:
+            frame.setParent(None)
             ui.scrollArea.verticalScrollBar().setValue(1)
+            self.deleted = False
+
 
     def warn_close_frame(self, ui, frame):
         msg = QMessageBox(ui)
@@ -327,7 +327,7 @@ class UIFunctions(EditWindow):
         msg.exec_()
 
     def popup_button(self, i):
-        self.deleted = False if i.text().lower() == "cancel" else True
+        self.deleted = True if i.text().lower() == "ok" else False
 
     def load_assignments(self, ui, filename):
         children = ui.content_widget.children()

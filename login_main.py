@@ -43,7 +43,7 @@ class LoginWindow(QMainWindow):
         self.OkCancelFrame.move(440, 247)
 
         def moveWindow(event):
-            if LoginFunctions.returnStatus() == True:
+            if LoginFunctions.returnStatus():
                 LoginFunctions.maximize_restore(self)
             if event.buttons() == Qt.LeftButton:
                 self.move(self.pos() + event.globalPos() - self.dragPos)
@@ -160,6 +160,7 @@ class LoginFunctions(LoginWindow):
                 ui.SavePass.setChecked(True)
                 break
 
+    @classmethod
     def returnStatus(self):
         return self.GLOBAL_STATE
 

@@ -1,6 +1,6 @@
 from subprocess import STDOUT
 import os
-from subprocess import PIPE, Popen, TimeoutExpired, check_output, run
+from subprocess import PIPE, Popen, TimeoutExpired
 
 
 def main(filename, ex_file, tests, time_limit=2, size_range=50):

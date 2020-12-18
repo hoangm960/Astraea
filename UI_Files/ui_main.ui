@@ -265,6 +265,9 @@ QPushButton:hover {
                 <iconset resource="Resources.qrc">
                  <normaloff>:/images/icons/close_white.png</normaloff>:/images/icons/close_white.png</iconset>
                </property>
+               <property name="shortcut">
+                <string>Alt+X</string>
+               </property>
               </widget>
              </item>
             </layout>

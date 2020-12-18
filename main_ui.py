@@ -1,7 +1,6 @@
 import os
 import pickle
 import sys
-import keyboard
 from PyQt5 import QtCore, uic
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (QApplication, QFileDialog, QMainWindow)
@@ -29,7 +28,6 @@ class MainWindow(QMainWindow):
             self.pg.moveTo(-8, 0)
             self.pg.resizeTo(
             SCREEN_WIDTH - self.width() + 16, self.height() + 8)
-        keyboard.add_hotkey('alt+x',lambda: self.close())
         UIFunctions(self)
     def changeEvent(self, event):
         if event.type() == QtCore.QEvent.WindowStateChange:

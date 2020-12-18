@@ -32,6 +32,8 @@ def create_file():
 
 
 def open_idle():
+
+    
     global PG
     os.system("start pythonwin")
     sleep(1)

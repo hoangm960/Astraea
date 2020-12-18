@@ -8,7 +8,6 @@ from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5 import uic
 from PyQt5.QtCore import Qt
 import sys
-import keyboard
 
 UI_PATH = './UI_Files/profile_form.ui'
 USER_PATH = './data/Users/opened_user.ou'

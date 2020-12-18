@@ -39,7 +39,7 @@ class LoginWindow(QMainWindow):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(self.UI_PATH, self)
         LoginFunctions(self)
-
+        
         
         self.OkCancelFrame.move(440, 247)
 
@@ -56,7 +56,6 @@ class LoginWindow(QMainWindow):
     def mousePressEvent(self, event):
         self.dragPos = event.globalPos()
     
-
 class LoginFunctions(LoginWindow):
     users = []
     enabled = "qwertyuiopasdfghjklzxcvbnm1234567890 @/._"

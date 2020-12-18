@@ -1,17 +1,21 @@
 import os
 import pickle
 import time
+import pyautogui
 from encryption import decrypt, encrypt
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5 import uic
 from PyQt5.QtCore import Qt
 import sys
+import keyboard
 
 UI_PATH = './UI_Files/profile_form.ui'
 USER_PATH = './data/Users/opened_user.ou'
 class ProfileWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self, ui, pg):
+        self.ui = ui
+        self.pg = pg
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(UI_PATH, self)
         UIFunctions.uiDefinitions(self)
@@ -29,18 +33,31 @@ class UIFunctions(ProfileWindow):
     GLOBAL_STATE = False
     @classmethod
     def uiDefinitions(cls, Ui):
+        cls.connect_btn(Ui)        
+    @classmethod    
+    def connect_btn(cls, Ui): 
+        def SignOut(Ui):
+            if Ui.ui:
+                Ui.ui.close()
+            Ui.close()
+            if Ui.pg:
+                Ui.pg.minimize()
+            import login_main
+            
+            Ui.main = login_main.LoginWindow(Ui.pg)
+            Ui.main.show()           
+        Ui.OutAccount.clicked.connect(lambda: SignOut(Ui))
+        
         Ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         Ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         Ui.btn_quit.clicked.connect(lambda: Ui.close())
         Ui.btn_minimize.clicked.connect(lambda: Ui.showMinimized())
         Ui.btn_maximize.clicked.connect(lambda: cls.maximize_restore(Ui))
-
         cls.Update(Ui)
         Ui.Save_btn.setDisabled(True)
     @classmethod
     def maximize_restore(cls, self):
         status = cls.GLOBAL_STATE
-
         if status == False:
             self.showMaximized()
 
@@ -68,7 +85,7 @@ border-radius: 20px;""")
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    window = ProfileWindow()
+    window = ProfileWindow(None, None)
     window.show()
     sys.exit(app.exec_())
 

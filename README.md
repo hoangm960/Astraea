@@ -59,3 +59,5 @@ Phần mềm hỗ trợ dạy và học lập trình
 	+ Sửa đóng gói app
 #### v2.7 (17/12):
 	+ Hỗ trợ thêm ngôn ngữ Pascal
+#### v2.8 (19/12):
+	+ Chuyển môi trường lập trình sang Thonny từ thonny

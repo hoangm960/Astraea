@@ -1,11 +1,12 @@
 import argparse
 import os
+import subprocess
 from pathlib import Path
 from time import sleep
 
 import pygetwindow as gw
 
-VERSION = 2.7
+VERSION = 2.8
 PG = None
 
 parser = argparse.ArgumentParser(
@@ -32,21 +33,21 @@ def create_file():
 
 
 def open_idle():
-
-    
     global PG
-    os.system("start pythonwin")
-    sleep(1)
-    if gw.getWindowsWithTitle("PythonWin"):
-        PG = gw.getWindowsWithTitle("PythonWin")[0]
-    PG.minimize()
-
+    subprocess.Popen(['thonny'], shell=True)
+    sleep(2)
+    ide_title = ''
+    titles = gw.getAllTitles()
+    for title in titles:
+        if "thonny" in title.lower():
+            ide_title = title
+            break
+    if gw.getWindowsWithTitle(ide_title):
+        PG = gw.getWindowsWithTitle(ide_title)[0]
+        PG.minimize()
 
 create_file()
-try:
-    open_idle()
-except:
-    pass
+open_idle()
 
 if __name__ == "__main__":
     import login_main

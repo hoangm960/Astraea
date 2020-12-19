@@ -39,9 +39,7 @@ class LoginWindow(QMainWindow):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(self.UI_PATH, self)
         LoginFunctions(self)
-
         
-        self.OkCancelFrame.move(440, 247)
 
         def moveWindow(event):
             if LoginFunctions.GLOBAL_STATE == True:
@@ -56,7 +54,6 @@ class LoginWindow(QMainWindow):
     def mousePressEvent(self, event):
         self.dragPos = event.globalPos()
     
-
 class LoginFunctions(LoginWindow):
     users = []
     enabled = "qwertyuiopasdfghjklzxcvbnm1234567890 @/._"
@@ -87,23 +84,15 @@ class LoginFunctions(LoginWindow):
         ui.btn_maximize.setToolTip("Phóng to")
         ui.btn_minimize.setToolTip("Thu nhỏ")
         ui.btn_quit.setToolTip("Đóng")
+        ui.HorizontalSpacer_L.hide()
         self.connect_btn(ui)
         self.load_users()
         self.check_autosave(ui)
-        self.move_TaskClose(ui)
-
-    @staticmethod
-    def move_TaskClose(ui):
-        ui.OkCancelFrame.move(
-            round((ui.frame.width() - 400) / 2),
-            round((ui.frame.height() - 180) / 2),
-        )
 
     def connect_btn(self, ui):
         
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
         ui.btn_maximize.clicked.connect(lambda: self.maximize_restore(ui))
-        ui.btn_maximize.clicked.connect(lambda: self.move_TaskClose(ui))
         ui.btn_quit.clicked.connect(lambda: ui.OkCancelFrame.show())
         ui.Accept.clicked.connect(lambda: ui.close())
         if ui.pg:

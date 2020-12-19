@@ -137,7 +137,7 @@ class UIFunctions(EditWindow):
                     border: 0px solid black; 
                     border-radius: 12px;""")
 
-            if not os.path.exists(child.ex_file_entry.text()) or child.ex_file_entry.text()[-2:] != 'py':
+            if not os.path.exists(child.ex_file_entry.text()) or child.ex_file_entry.text()[-2:] not in ['as','py']:
                 child.ex_file_entry.setStyleSheet(
                     """background-color: rgb(255, 255, 255); 
                     border: 2px solid rgb(225, 0 , 0); border-radius: 12px;""")
@@ -259,7 +259,7 @@ class UIFunctions(EditWindow):
             HOME_PATH = os.path.join(os.path.join(
                 os.environ["USERPROFILE"]), "Desktop")
             file_name = QFileDialog.getOpenFileName(
-                self, "Open file", HOME_PATH, "*.py")
+                self, "Open file", HOME_PATH, "*.py;;*.pas")
 
             if file_name[0]:
                 entry.setText(file_name[0])

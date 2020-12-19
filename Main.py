@@ -33,6 +33,8 @@ def create_file():
 
 
 def open_idle():
+
+    
     global PG
     subprocess.check_output(['start', 'pythonwin'], shell=True)
     sleep(1)

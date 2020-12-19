@@ -23,6 +23,11 @@ class MainWindow(QMainWindow):
         uic.loadUi(UI_MAIN_PATH, self)
         self.role = role
         self.pg = pg
+        if self.pg:
+            self.pg.restore()
+            self.pg.moveTo(-8, 0)
+            self.pg.resizeTo(
+            SCREEN_WIDTH - self.width() + 16, self.height() + 8)
         UIFunctions(self)
     def changeEvent(self, event):
         if event.type() == QtCore.QEvent.WindowStateChange:
@@ -55,11 +60,11 @@ class UIFunctions(MainWindow):
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.resize_idle(ui, ui.pg)
 
-        def open_profile():
+        def open_profile(ui, pg):
             import profile
-            ui.mainWin = profile.ProfileWindow()
+            ui.mainWin = profile.ProfileWindow(ui, pg)
             ui.mainWin.show()
-        ui.profile_btn.clicked.connect(lambda: open_profile())
+        ui.profile_btn.clicked.connect(lambda: open_profile(ui , ui.pg))
 
         self.define_role(ui)
         self.connect_btn(ui)

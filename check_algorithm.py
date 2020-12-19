@@ -14,7 +14,7 @@ def main(filename, ex_file, tests, time_limit=2, size_range=50):
         output = ''
         try:
             process = Popen(
-                command, stdin=PIPE, stdout=PIPE, stderr=STDOUT, encoding="utf8"
+                command, stdin=PIPE, stdout=PIPE, stderr=STDOUT, encoding = 'utf8'
             )
             output = process.communicate(input=input, timeout=time_limit)[0]
         except TimeoutExpired:

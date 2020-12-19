@@ -359,7 +359,7 @@ min-height: 20px;
 background-color: transparent;</string>
                </property>
                <property name="currentIndex">
-                <number>1</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="result_frame">
                 <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -647,6 +647,12 @@ QProgressBar::chunk {
                       <layout class="QHBoxLayout" name="horizontalLayout_10">
                        <item>
                         <widget class="QLabel" name="Score_frame">
+                         <property name="minimumSize">
+                          <size>
+                           <width>80</width>
+                           <height>32</height>
+                          </size>
+                         </property>
                          <property name="maximumSize">
                           <size>
                            <width>16777215</width>
@@ -671,6 +677,12 @@ QProgressBar::chunk {
                        </item>
                        <item>
                         <widget class="QLabel" name="Score">
+                         <property name="minimumSize">
+                          <size>
+                           <width>100</width>
+                           <height>32</height>
+                          </size>
+                         </property>
                          <property name="maximumSize">
                           <size>
                            <width>16777215</width>
@@ -728,6 +740,12 @@ QProgressBar::chunk {
                        </property>
                        <item>
                         <widget class="QLabel" name="judge_frame">
+                         <property name="minimumSize">
+                          <size>
+                           <width>120</width>
+                           <height>32</height>
+                          </size>
+                         </property>
                          <property name="maximumSize">
                           <size>
                            <width>120</width>
@@ -752,9 +770,15 @@ QProgressBar::chunk {
                        </item>
                        <item>
                         <widget class="QLabel" name="Judge">
+                         <property name="minimumSize">
+                          <size>
+                           <width>280</width>
+                           <height>0</height>
+                          </size>
+                         </property>
                          <property name="maximumSize">
                           <size>
-                           <width>340</width>
+                           <width>16777215</width>
                            <height>32</height>
                           </size>
                          </property>

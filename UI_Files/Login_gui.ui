@@ -393,7 +393,7 @@ border-radius: 9px;</string>
               <enum>QFrame::Raised</enum>
              </property>
              <property name="currentIndex">
-              <number>2</number>
+              <number>1</number>
              </property>
              <widget class="QWidget" name="SignIn_Page">
               <property name="sizePolicy">
@@ -1268,7 +1268,7 @@ color: rgb(255, 255, 255);</string>
                            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tên đăng ký yêu cầu tối thiểu 8 kí tự, tối đa 31 kí tự, không dấu&lt;/p&gt;&lt;p&gt;Bao gồm phạm vi kí tự A..Z a..z 0..9 @_/. và khoảng trắng &lt;/p&gt;&lt;p&gt;Hoặc tên tài khoản này đã tồn tại.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                           </property>
                           <property name="toolTipDuration">
-                           <number>0</number>
+                           <number>-1</number>
                           </property>
                           <property name="styleSheet">
                            <string notr="true">QPushButton {

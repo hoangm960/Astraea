@@ -248,7 +248,7 @@ class UIFunctions(ResultWindow):
             self.TotalTest += len(self.assignments[i].tests)
             if len(results) != 0:
                 ui.ResultFrame.Score_box.setText(
-                    str(correct / len(results[:-1]) * self.assignments[i].mark)
+                    str(round(float(str(correct / len(results[:-1]) * self.assignments[i].mark)),2))
                 )
                 if results[-1]:
                     ui.ResultFrame.detail_entry.setText(

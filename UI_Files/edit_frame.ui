@@ -412,11 +412,11 @@ QPushButton:pressed {
         <property name="maximum">
          <number>100</number>
         </property>
-        <property name="stepType">
-         <enum>QAbstractSpinBox::DefaultStepType</enum>
-        </property>
         <property name="value">
          <number>1</number>
+        </property>
+        <property name="displayIntegerBase">
+         <number>10</number>
         </property>
        </widget>
       </item>

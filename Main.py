@@ -1,5 +1,6 @@
 import argparse
 import os
+import subprocess
 from pathlib import Path
 from time import sleep
 
@@ -33,20 +34,16 @@ def create_file():
 
 def open_idle():
     global PG
-    os.system("start pythonwin")
+    subprocess.check_output(['start', 'pythonwin'], shell=True)
     sleep(1)
     if gw.getWindowsWithTitle("PythonWin"):
         PG = gw.getWindowsWithTitle("PythonWin")[0]
     PG.minimize()
 
-
 create_file()
-try:
-    open_idle()
-except:
-    pass
+open_idle()
 
 if __name__ == "__main__":
     import login_main
     login_main.main(PG, VERSION)
-    # login_main.main(args.file)
+    login_main.main(args.file)

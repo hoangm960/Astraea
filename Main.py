@@ -33,14 +33,18 @@ def create_file():
 
 
 def open_idle():
-
-    
     global PG
-    subprocess.check_output(['start', 'pythonwin'], shell=True)
-    sleep(1)
-    if gw.getWindowsWithTitle("PythonWin"):
-        PG = gw.getWindowsWithTitle("PythonWin")[0]
-    PG.minimize()
+    subprocess.Popen(['thonny'], shell=True)
+    sleep(2)
+    ide_title = ''
+    titles = gw.getAllTitles()
+    for title in titles:
+        if "thonny" in title.lower():
+            ide_title = title
+            break
+    if gw.getWindowsWithTitle(ide_title):
+        PG = gw.getWindowsWithTitle(ide_title)[0]
+        PG.minimize()
 
 create_file()
 open_idle()
@@ -48,4 +52,4 @@ open_idle()
 if __name__ == "__main__":
     import login_main
     login_main.main(PG, VERSION)
-    login_main.main(args.file)
+    # login_main.main(args.file)

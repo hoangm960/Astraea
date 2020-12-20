@@ -31,23 +31,32 @@ def create_file():
         open(OPENED_ASSIGNMENT_PATH, "w").close()
 
 
+def check_ide():
+    try:
+        import thonny
+    except ImportError:
+        subprocess.call('pip3 install thonny')
+        sleep(2)
 
-def open_idle():
+
+def open_ide():
     global PG
     subprocess.Popen(['thonny'], shell=True)
     sleep(2)
     ide_title = ''
-    titles = gw.getAllTitles()
-    for title in titles:
-        if "thonny" in title.lower():
-            ide_title = title
-            break
+    while not ide_title:
+        titles = gw.getAllTitles()
+        for title in titles:
+            if "thonny" in title.lower():
+                ide_title = title
+                break
     if gw.getWindowsWithTitle(ide_title):
         PG = gw.getWindowsWithTitle(ide_title)[0]
         PG.minimize()
 
+check_ide()
 create_file()
-open_idle()
+open_ide()
 
 if __name__ == "__main__":
     import login_main

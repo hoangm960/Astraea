@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>960</width>
-    <height>643</height>
+    <height>644</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -458,21 +458,18 @@ background-color: transparent;</string>
                    <property name="frameShadow">
                     <enum>QFrame::Raised</enum>
                    </property>
-                   <layout class="QHBoxLayout" name="horizontalLayout_4">
-                    <property name="spacing">
-                     <number>0</number>
-                    </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_8">
                     <property name="leftMargin">
                      <number>0</number>
                     </property>
                     <property name="topMargin">
-                     <number>0</number>
+                     <number>6</number>
                     </property>
                     <property name="rightMargin">
                      <number>0</number>
                     </property>
                     <property name="bottomMargin">
-                     <number>0</number>
+                     <number>6</number>
                     </property>
                     <item>
                      <widget class="QScrollArea" name="scrollArea">
@@ -531,10 +528,156 @@ QScrollBar::add-page, QScrollBar::sub-page {
                          <x>0</x>
                          <y>0</y>
                          <width>960</width>
-                         <height>450</height>
+                         <height>198</height>
                         </rect>
                        </property>
                       </widget>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QFrame" name="ERROR_WINDOW">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>200</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">QFrame {
+	background-color: rgba(62, 62, 62, 150);
+}
+QScrollArea {
+	background-color: rgba(255, 255, 255, 50);
+	outline: 0;
+} 
+QScrollArea::item { 
+	margin: 20px;
+	background-color: transparent;
+	border: 0px solid black;
+}
+
+QScrollBar{
+	background : rgb(255, 255, 255);	
+}
+
+QScrollBar::handle{
+	background : rgb(158, 158, 158);
+	border-radius: 5px;
+	margin: 3px 3px 3px 3px;
+}
+
+QScrollBar::handle::pressed{
+	background : rgb(85, 85, 85);
+}
+
+QScrollBar::add-line {
+	height: 0px;
+}
+
+QScrollBar::sub-line {
+	height: 0px;
+}
+
+QScrollBar::add-page, QScrollBar::sub-page {
+	height: 0px;
+}</string>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_10">
+                       <property name="spacing">
+                        <number>6</number>
+                       </property>
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>6</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
+                       <item alignment="Qt::AlignRight">
+                        <widget class="QPushButton" name="close_btn">
+                         <property name="minimumSize">
+                          <size>
+                           <width>100</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>30</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="font">
+                          <font>
+                           <family>Segoe UI Black</family>
+                           <pointsize>11</pointsize>
+                           <weight>75</weight>
+                           <bold>true</bold>
+                          </font>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QPushButton {
+	background: rgb(193,193,193);
+	border-radius: 15px;
+	color: rgb(255,255,255);
+}
+QPushButton:hover {
+	background: rgb(255, 0, 0);
+}</string>
+                         </property>
+                         <property name="locale">
+                          <locale language="Vietnamese" country="Vietnam"/>
+                         </property>
+                         <property name="text">
+                          <string>Trở về</string>
+                         </property>
+                         <property name="icon">
+                          <iconset resource="Resources.qrc">
+                           <normaloff>:/images/icons/close_white.png</normaloff>:/images/icons/close_white.png</iconset>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QTextBrowser" name="Error_text">
+                         <property name="font">
+                          <font>
+                           <family>Segoe UI</family>
+                           <pointsize>14</pointsize>
+                           <weight>50</weight>
+                           <bold>false</bold>
+                          </font>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: rgb(0,0,0);
+color: rgb(255,255,255);
+padding: 10px;</string>
+                         </property>
+                         <property name="locale">
+                          <locale language="Vietnamese" country="Vietnam"/>
+                         </property>
+                         <property name="horizontalScrollBarPolicy">
+                          <enum>Qt::ScrollBarAlwaysOff</enum>
+                         </property>
+                         <property name="lineWrapMode">
+                          <enum>QTextEdit::WidgetWidth</enum>
+                         </property>
+                         <property name="placeholderText">
+                          <string>...</string>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
                      </widget>
                     </item>
                    </layout>
@@ -574,7 +717,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                      <number>0</number>
                     </property>
                     <property name="rightMargin">
-                     <number>0</number>
+                     <number>20</number>
                     </property>
                     <property name="bottomMargin">
                      <number>0</number>
@@ -733,7 +876,7 @@ QProgressBar::chunk {
                         <number>0</number>
                        </property>
                        <property name="rightMargin">
-                        <number>0</number>
+                        <number>20</number>
                        </property>
                        <property name="bottomMargin">
                         <number>0</number>
@@ -798,6 +941,50 @@ QProgressBar::chunk {
                          </property>
                          <property name="alignment">
                           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="return_btn_2">
+                         <property name="minimumSize">
+                          <size>
+                           <width>120</width>
+                           <height>30</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>100</width>
+                           <height>16777215</height>
+                          </size>
+                         </property>
+                         <property name="font">
+                          <font>
+                           <family>Montserrat</family>
+                           <pointsize>12</pointsize>
+                           <weight>75</weight>
+                           <bold>true</bold>
+                          </font>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QPushButton {
+	background-color: rgb(0, 0, 0);
+	border-radius: 10px;	
+	color: rgb(255,255,255);
+}
+
+QPushButton:hover {
+	color: rgba(0,0,0,150);
+	background-color: rgb(255,255,255);
+}
+
+QPushButton:pressed {
+	color: rgb(255, 255, 255);
+	background-color: rgb(0, 0, 0);
+}r</string>
+                         </property>
+                         <property name="text">
+                          <string>Kiểm tra lỗi</string>
                          </property>
                         </widget>
                        </item>
@@ -1708,6 +1895,102 @@ QPushButton:pressed {
     <hint type="destinationlabel">
      <x>509</x>
      <y>608</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>return_btn_2</sender>
+   <signal>clicked()</signal>
+   <receiver>scrollArea</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>910</x>
+     <y>555</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>942</x>
+     <y>236</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>return_btn_2</sender>
+   <signal>clicked()</signal>
+   <receiver>ERROR_WINDOW</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>936</x>
+     <y>553</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>947</x>
+     <y>313</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>return_btn_2</sender>
+   <signal>clicked()</signal>
+   <receiver>return_btn_2</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>926</x>
+     <y>563</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>919</x>
+     <y>555</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>close_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>return_btn_2</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>923</x>
+     <y>293</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>927</x>
+     <y>562</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>close_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>ERROR_WINDOW</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>922</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>903</x>
+     <y>297</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>close_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>scrollArea</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>927</x>
+     <y>298</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>932</x>
+     <y>227</y>
     </hint>
    </hints>
   </connection>

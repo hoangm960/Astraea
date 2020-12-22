@@ -58,6 +58,7 @@ class UIFunctions(ResultWindow):
     assignments = {}
     lesson = {}
     users = []
+    count = 0
     mark = int()
     Total = int()
     TotalTest = int()
@@ -66,7 +67,7 @@ class UIFunctions(ResultWindow):
     USER_PATH_ENCRYPTED = "./data/Users/User.encrypted"
     KEY_PATH = "./data/encryption/users.key"
     OPENED_USER = "./data/Users/opened_user.ou"
-
+    FILE_ERROR = "./data/ERROR.txt"
     def __init__(self, ui):
         # Delete title bar
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
@@ -76,6 +77,7 @@ class UIFunctions(ResultWindow):
         ui.return_btn.clicked.connect(lambda: self.reopen_main(ui))
         ui.inform.hide()
         ui.Frame_close.hide()
+        ui.ERROR_WINDOW.hide()
         # Button function
         ui.OkCancelFrame.move(0, 0)
         ui.OkCancelFrame.move(280, 148)
@@ -221,18 +223,24 @@ class UIFunctions(ResultWindow):
         )
 
     def check_true(self, ui, num):
+        self.count+=1
+        error = False
+        with open(self.FILE_ERROR, 'w', encoding = 'utf-8', errors = 'ignore') as file_error:
+            file_error.write('\nBài {}'.format(self.count))
         children = ui.content_widgetT.children()
         del children[0:2]
         for i in range(num):
             correct = 0
             results = []
             ui.TestFrame = children[i]
-
-            if ui.TestFrame.ans_file_entry.text():
+            if os.path.exists(ui.TestFrame.ans_file_entry.text()):
                 results = self.check_result(ui.TestFrame, i)
                 for result in results[:-1]:
                     if result[1]:
                         correct += 1
+            elif ui.TestFrame.ans_file_entry.text():
+                with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:
+                    file_error.write('\nFileExistsERROR: Lỗi không tìm thấy file bài làm.')
 
             current_layout = ui.content_widget.layout()
             if not current_layout:
@@ -262,8 +270,24 @@ class UIFunctions(ResultWindow):
                 if correct < (len(results[:-1])/2):
                     ui.ResultFrame.detail_entry.setText(
                         "Bài làm chưa hoàn thiện tốt.")
-            else:
+                if results[0][0] == True:
+                    with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:
+                        file_error.write('\n>>> TimeoutExpired: Thuật toán vượt quá thời gian yêu cầu.')    
+                elif results[0][0] == True:    
+                    with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:
+                        file_error.write('\n>>> OutputMISSING: Không xuất được output. Có lẽ chưa print()?')
+                
+            elif not ui.TestFrame.ans_file_entry.text():
                 ui.ResultFrame.detail_entry.setText("Chưa làm câu này")
+                with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:
+                    file_error.write('\n>>> Chưa làm bài')
+            with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:
+                check_str = str(file_error.read()).replace('Bài1234567890 ','').rstrip()
+            if check_str.isspace():
+                with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:    
+                    file_error.write('\n>>> Không xảy ra thêm lỗi nào.')
+            with open(self.FILE_ERROR, 'r', encoding = 'utf-8', errors = 'ignore') as file_error:    
+                ui.Error_text.setText(str(file_error.read()))
 
         totalScore = int()
         for assignment in self.assignments:
@@ -284,7 +308,6 @@ class UIFunctions(ResultWindow):
             current_time = datetime.now().strftime("%H:%M:%S %d/%m/%Y")
             text = f'{name_account} :  {ui.Score.text()} ({current_time})\n'
             f.write(text)
-
     @staticmethod
     def reopen_main(ui):
         main_ui.main("student", ui.pg)

@@ -2,7 +2,7 @@ import os
 from subprocess import PIPE, STDOUT, Popen, TimeoutExpired
 
 
-def main(filename, ex_file, tests, time_limit=2, size_range=50):
+def main(filename, ex_file, tests, time_limit=2):
     main.results = []
 
     def get_command():

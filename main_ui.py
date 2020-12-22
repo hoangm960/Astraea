@@ -1,9 +1,11 @@
+from datetime import datetime
 import os
 import pickle
 import sys
 from PyQt5 import QtCore, uic
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (QApplication, QFileDialog, QMainWindow)
+import pyodbc
 
 
 from UI_Files import Resources
@@ -84,6 +86,24 @@ class UIFunctions(MainWindow):
         ui.LessonButton.clicked.connect(lambda: self.open_doc(ui, ui.pg))
 
         ui.list_assignments.itemPressed.connect(lambda: self.load_details(ui))
+        ui.up_btn.clicked.connect(lambda: self.upload_assignment(open(OPENED_LESSON_PATH).read()))
+
+    def upload_assignment(self, filename):
+        server = 'ADMIN' 
+        database = 'Astraea-v1'
+        connection = pyodbc.connect(
+            'DRIVER={ODBC Driver 17 for SQL Server};'
+            f'SERVER={server};'
+            f'DATABASE={database};'
+            'Trusted_Connection=yes;')
+
+        cursor = connection.cursor()
+        data = self.get_assignments(filename)
+        current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        print((data[0], current_time, tuple(data[1])))
+        cursor.execute("INSERT INTO [Astraea-v1].[dbo].[Lesson] VALUES (?, ?, ?);", 
+        (data[0], current_time, str(data[1])))
+        connection.commit()
 
     @staticmethod
     def resize_idle(ui, pg):
@@ -115,20 +135,24 @@ class UIFunctions(MainWindow):
                 f.write(file_path)
             self.load_assignments(ui, file_path)
 
-    def load_assignments(self, ui, filename):
-        ui.list_assignments.clear()
-        self.assignments.clear()
+    @staticmethod
+    def get_assignments(filename):
         if os.path.exists(filename):
             if os.path.getsize(filename) > 0:
                 with open(filename, "rb") as f:
                     unpickler = pickle.Unpickler(f)
-                    data = unpickler.load()
-                    title = data[0]
-                    assignments = data[1]
-                    for assignment in assignments:
-                        self.assignments[assignment.name] = assignment.details
-                        ui.list_assignments.addItem(assignment.name)
-                    self.change_assignment_title(ui, title)
+                    return unpickler.load()
+
+    def load_assignments(self, ui, filename):
+        ui.list_assignments.clear()
+        self.assignments.clear()
+        data = self.get_assignments(filename)
+        title = data[0]
+        assignments = data[1]
+        for assignment in assignments:
+            self.assignments[assignment.name] = assignment.details
+            ui.list_assignments.addItem(assignment.name)
+        self.change_assignment_title(ui, title)
 
     def load_details(self, ui):
         ui.assignment_details.setText(

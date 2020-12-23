@@ -192,7 +192,7 @@ class UIFunctions(MainWindow):
                 connection.close()
 
     class StudentUiFunctions:
-        class ConnectWindow(QMainWindow):
+        class DownloadWindow(QMainWindow):
             CONNECT_UI = "./UI_Files/connect.ui"
 
             def __init__(self, *args, **kwargs):
@@ -206,6 +206,24 @@ class UIFunctions(MainWindow):
                     round((QApplication.primaryScreen().size().height() - self.height()) / 2),
                 )
                 self.btn_quit.clicked.connect(self.close)
+                self.download_btn.clicked.connect(lambda: self.download(self.id_entry.text()))
+
+            @staticmethod
+            def download(id):
+                if id:
+                    server = 'ADMIN' 
+                    database = 'Astraea-v1'
+                    connection = pyodbc.connect(
+                        'DRIVER={ODBC Driver 17 for SQL Server};'
+                        f'SERVER={server};'
+                        f'DATABASE={database};'
+                        'Trusted_Connection=yes;')
+
+                    cursor = connection.cursor()
+                    cursor.execute("SELECT * FROM [Astraea-v1].[dbo].[Lesson] WHERE LessonId = ?", id)
+                    for row in cursor:
+                        print(row)
+                    connection.close()
 
         def __init__(self, parent, ui):
             self.parent = parent
@@ -218,7 +236,7 @@ class UIFunctions(MainWindow):
             ui.Server_btn.clicked.connect(lambda: self.open_connect(ui))
 
         def open_connect(self, ui):
-            window = self.ConnectWindow(ui)
+            window = self.DownloadWindow(ui)
             window.show()
 
         @staticmethod
@@ -226,23 +244,6 @@ class UIFunctions(MainWindow):
             import result_main
             window = result_main.ResultWindow(ui.pg)
             window.show()
-        
-        def download(self, filename, id):
-            if filename:
-                server = 'ADMIN' 
-                database = 'Astraea-v1'
-                connection = pyodbc.connect(
-                    'DRIVER={ODBC Driver 17 for SQL Server};'
-                    f'SERVER={server};'
-                    f'DATABASE={database};'
-                    'Trusted_Connection=yes;')
-
-                cursor = connection.cursor()
-                cursor.execute("SELECT * FROM [Astraea-v1].[dbo].[Lesson] WHERE LessonId = ?", id)
-                for row in cursor:
-                    print(row)
-                connection.commit()
-                connection.close()
 
     def define_role(self, ui):
         if ui.role.lower() == "teacher":

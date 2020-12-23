@@ -87,7 +87,7 @@ border-radius: 3px;</string>
 background-color: transparent;</string>
          </property>
          <property name="text">
-          <string>Nhập ID kết nối</string>
+          <string>Nhập ID bài học</string>
          </property>
         </widget>
        </item>
@@ -210,7 +210,7 @@ min-height: 20px;
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="lineEdit">
+     <widget class="QLineEdit" name="id_entry">
       <property name="minimumSize">
        <size>
         <width>0</width>
@@ -237,7 +237,7 @@ min-height: 20px;
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="download_btn">
       <property name="minimumSize">
        <size>
         <width>0</width>

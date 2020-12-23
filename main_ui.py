@@ -86,24 +86,7 @@ class UIFunctions(MainWindow):
         ui.LessonButton.clicked.connect(lambda: self.open_doc(ui, ui.pg))
 
         ui.list_assignments.itemPressed.connect(lambda: self.load_details(ui))
-        ui.up_btn.clicked.connect(lambda: self.upload_assignment(open(OPENED_LESSON_PATH).read()))
 
-    def upload_assignment(self, filename):
-        server = 'ADMIN' 
-        database = 'Astraea-v1'
-        connection = pyodbc.connect(
-            'DRIVER={ODBC Driver 17 for SQL Server};'
-            f'SERVER={server};'
-            f'DATABASE={database};'
-            'Trusted_Connection=yes;')
-
-        cursor = connection.cursor()
-        data = self.get_assignments(filename)
-        current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        print((data[0], current_time, tuple(data[1])))
-        cursor.execute("INSERT INTO [Astraea-v1].[dbo].[Lesson] VALUES (?, ?, ?);", 
-        (data[0], current_time, str(data[1])))
-        connection.commit()
 
     @staticmethod
     def resize_idle(ui, pg):
@@ -181,12 +164,31 @@ class UIFunctions(MainWindow):
             QPushButton:hover {background-color: rgba(156, 220, 254, 150);}"""
             )
             ui.main_btn.clicked.connect(lambda: self.open_edit_form(ui))
+            ui.up_down_btn.clicked.connect(lambda: self.upload(open(OPENED_LESSON_PATH).read()))
 
         @staticmethod
         def open_edit_form(ui):
             import edit_main
             window = edit_main.EditWindow(ui.pg)
             window.show()
+
+        def upload(self, filename):
+            if filename:
+                server = 'ADMIN' 
+                database = 'Astraea-v1'
+                connection = pyodbc.connect(
+                    'DRIVER={ODBC Driver 17 for SQL Server};'
+                    f'SERVER={server};'
+                    f'DATABASE={database};'
+                    'Trusted_Connection=yes;')
+
+                cursor = connection.cursor()
+                data = self.parent.get_assignments(filename)
+                current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                cursor.execute("INSERT INTO [Astraea-v1].[dbo].[Lesson] VALUES (?, ?, ?);", 
+                (data[0], current_time, str(data[1])))
+                connection.commit()
+                connection.close()
 
     class StudentUiFunctions:
         def __init__(self, parent, ui):
@@ -197,12 +199,30 @@ class UIFunctions(MainWindow):
             QPushButton:hover {background-color: rgba(156, 220, 254, 150);}"""
             )
             ui.main_btn.clicked.connect(lambda: self.open_result_form(ui))
+            ui.up_down_btn.clicked.connect(lambda: self.download(open(OPENED_LESSON_PATH).read(), open('data/Users/download.txt').read()))
 
         @staticmethod
         def open_result_form(ui):
             import result_main
             window = result_main.ResultWindow(ui.pg)
             window.show()
+        
+        def download(self, filename, id):
+            if filename:
+                server = 'ADMIN' 
+                database = 'Astraea-v1'
+                connection = pyodbc.connect(
+                    'DRIVER={ODBC Driver 17 for SQL Server};'
+                    f'SERVER={server};'
+                    f'DATABASE={database};'
+                    'Trusted_Connection=yes;')
+
+                cursor = connection.cursor()
+                cursor.execute("SELECT * FROM [Astraea-v1].[dbo].[Lesson] WHERE LessonId = ?", id)
+                for row in cursor:
+                    print(row)
+                connection.commit()
+                connection.close()
 
     def define_role(self, ui):
         if ui.role.lower() == "teacher":
@@ -219,6 +239,6 @@ def main(role, pg):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    # main("teacher", None)
-    main("student", None)
+    main("teacher", None)
+    # main("student", None)
     sys.exit(app.exec_())

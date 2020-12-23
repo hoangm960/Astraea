@@ -393,7 +393,7 @@ border-radius: 9px;</string>
               <enum>QFrame::Raised</enum>
              </property>
              <property name="currentIndex">
-              <number>1</number>
+              <number>2</number>
              </property>
              <widget class="QWidget" name="SignIn_Page">
               <property name="sizePolicy">
@@ -2292,6 +2292,9 @@ color: rgb(207,207,207);
                           </property>
                           <property name="text">
                            <string>Đăng nhập</string>
+                          </property>
+                          <property name="shortcut">
+                           <string>Return</string>
                           </property>
                           <property name="autoRepeat">
                            <bool>true</bool>

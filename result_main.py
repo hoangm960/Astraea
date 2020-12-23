@@ -223,24 +223,28 @@ class UIFunctions(ResultWindow):
         )
 
     def check_true(self, ui, num):
-        self.count+=1
-        error = False
-        with open(self.FILE_ERROR, 'w', encoding = 'utf-8', errors = 'ignore') as file_error:
-            file_error.write('\nBài {}'.format(self.count))
         children = ui.content_widgetT.children()
         del children[0:2]
+        with open(self.FILE_ERROR, 'w', encoding = 'utf-8', errors = 'ignore') as file_error:
+            file_error.write('\nPython {}'.format(str(sys.version_info[0])+'.'+str(sys.version_info[1])))
         for i in range(num):
+            with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:
+                file_error.write('\nBài {}'.format(str(i+1)))
             correct = 0
             results = []
             ui.TestFrame = children[i]
             if os.path.exists(ui.TestFrame.ans_file_entry.text()):
-                results = self.check_result(ui.TestFrame, i)
+                try:
+                    results = self.check_result(ui.TestFrame, i)
+                except:
+                    with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:
+                        file_error.write('\n>>> FileERROR: File bài làm không đúng yêu cầu của đề')
                 for result in results[:-1]:
                     if result[1]:
                         correct += 1
             elif ui.TestFrame.ans_file_entry.text():
                 with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:
-                    file_error.write('\nFileExistsERROR: Lỗi không tìm thấy file bài làm.')
+                    file_error.write('\n>>> FileExistsERROR: Lỗi không tìm thấy file bài làm.')
 
             current_layout = ui.content_widget.layout()
             if not current_layout:
@@ -255,37 +259,45 @@ class UIFunctions(ResultWindow):
             ui.ResultFrame.test_file_label.setText(self.assignments[i].name)
             self.TotalTest += len(self.assignments[i].tests)
             if len(results) != 0:
-                ui.ResultFrame.Score_box.setText(
-                    str(round(float(str(correct / len(results[:-1]) * self.assignments[i].mark)),2))
-                )
-                if results[-1]:
-                    ui.ResultFrame.detail_entry.setText(
-                        "Bài làm đã tối ưu hóa.")
-                else:
-                    ui.ResultFrame.detail_entry.setText(
-                        "Bài làm chưa tối ưu hóa.")
-                self.Total += correct
-                self.TotalScore += (correct /
-                                    len(self.assignments[i].tests) * self.assignments[i].mark)
-                if correct < (len(results[:-1])/2):
-                    ui.ResultFrame.detail_entry.setText(
-                        "Bài làm chưa hoàn thiện tốt.")
-                if results[0][0] == True:
+                try:
+                    ui.ResultFrame.Score_box.setText(
+                        str(round(float(str(correct / len(self.assignments[i].tests) * self.assignments[i].mark)),2))
+                    )
+                    if results[-1]:
+                        ui.ResultFrame.detail_entry.setText(
+                            "Bài làm đã tối ưu hóa.")
+                        self.Total += correct
+                    else:
+                        ui.ResultFrame.detail_entry.setText(
+                            "Bài làm chưa tối ưu hóa.")
+                        self.Total += correct
+                        self.Total -= 0.25
+                    print(correct)
+                    self.TotalScore += (correct /len(self.assignments[i].tests) * self.assignments[i].mark)
+                    
+                    if correct < (len(results[:-1])/2):
+                        ui.ResultFrame.detail_entry.setText(
+                            "Bài làm chưa hoàn thiện tốt.")
+                    if results[0][0] == True:
+                        with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:
+                            file_error.write('\n>>> TimeoutExpired: Thuật toán vượt quá thời gian yêu cầu.')    
+                    elif results[0][0] == True:    
+                        with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:
+                            file_error.write('\n>>> OutputMISSING: Không xuất được output. Có lẽ chưa print()?')
+                except ZeroDivisionError:
                     with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:
-                        file_error.write('\n>>> TimeoutExpired: Thuật toán vượt quá thời gian yêu cầu.')    
-                elif results[0][0] == True:    
-                    with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:
-                        file_error.write('\n>>> OutputMISSING: Không xuất được output. Có lẽ chưa print()?')
-                
+                        file_error.write('\n>>> ZeroDivisonError: Tồn tại phép tính chia cho 0')
+                    ui.ResultFrame.detail_entry.setText(
+                        "Câu này đã xảy ra sự cố.")
             elif not ui.TestFrame.ans_file_entry.text():
                 ui.ResultFrame.detail_entry.setText("Chưa làm câu này")
                 with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:
                     file_error.write('\n>>> Chưa làm bài')
-            with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:
-                check_str = str(file_error.read()).replace('Bài1234567890 ','').rstrip()
-            if check_str.isspace():
-                with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:    
-                    file_error.write('\n>>> Không xảy ra thêm lỗi nào.')
+            with open(self.FILE_ERROR, 'r', encoding = 'utf-8', errors = 'ignore') as file_error:    
+                list_file = file_error.readlines()
+                if '>>>' not in list_file[-1]:
+                    with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error_w:
+                        file_error_w.write('\n>>> Không xảy ra lỗi')
             with open(self.FILE_ERROR, 'r', encoding = 'utf-8', errors = 'ignore') as file_error:    
                 ui.Error_text.setText(str(file_error.read()))
 

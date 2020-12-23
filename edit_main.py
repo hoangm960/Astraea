@@ -47,7 +47,7 @@ class Assignment:
 class EditWindow(QMainWindow):
     def __init__(self, pg=None):
         self.pg = pg
-        QMainWindow.__init__(self, None)
+        QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(EDIT_FORM_PATH, self)
         self.setGeometry(
             round((QApplication.primaryScreen().size().width() - self.width()) / 2),
@@ -233,6 +233,8 @@ class UIFunctions(EditWindow):
                 f.write(file_path)
         if file_path:
             self.load_assignments(ui, file_path)
+            ui.stacked_widget.setCurrentIndex(3)
+            ui.Push.clicked.connect(lambda: self.reopen_main(ui))
 
     class EditFrame(QWidget):
         def __init__(self, *args, **kwargs):
@@ -317,7 +319,7 @@ class UIFunctions(EditWindow):
         msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
         msg.buttonClicked.connect(self.popup_button)
         msg.exec_()
-
+    
     @classmethod
     def popup_button(self, i):
         self.deleted = True if i.text().lower() == "ok" else False
@@ -341,11 +343,8 @@ class UIFunctions(EditWindow):
                 )
         with open(filename, "wb") as f:
             pickle.dump([ui.lesson_title.text(), assignments], f, -1)
-
-        self.reopen_main(ui)
-
-    @staticmethod
-    def reopen_main(ui):
+        
+    def reopen_main(self, ui):
         ui.close()
         main_ui.main("teacher", ui.pg)
 

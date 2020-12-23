@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>300</width>
-    <height>700</height>
+    <width>264</width>
+    <height>613</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -762,35 +762,25 @@ QPushButton:hover {
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="up_down_btn">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
+           <widget class="QPushButton" name="Server_btn">
             <property name="minimumSize">
              <size>
-              <width>80</width>
-              <height>40</height>
+              <width>30</width>
+              <height>30</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>80</width>
-              <height>40</height>
+              <width>30</width>
+              <height>30</height>
              </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>Montserrat</family>
-              <pointsize>8</pointsize>
-             </font>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton {
 	background-color: rgb(255, 255, 255);
-	border-radius: 20px;
+	border-radius: 5px;
+	image: url(:/images/icons/link.png);
+	padding:3px;
 }
 
 QPushButton:hover {
@@ -798,30 +788,8 @@ QPushButton:hover {
 }</string>
             </property>
             <property name="text">
-             <string>Up/DownButton</string>
-            </property>
-            <property name="checkable">
-             <bool>false</bool>
-            </property>
-            <property name="checked">
-             <bool>false</bool>
-            </property>
-            <property name="flat">
-             <bool>false</bool>
+             <string/>
             </property>
            </widget>
           </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-   </layout>
-  </widget>
- </widget>
- <resources>
-  <include location="Resources.qrc"/>
- </resources>
  <connections/>
-</ui>

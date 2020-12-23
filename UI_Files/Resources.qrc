@@ -1,6 +1,5 @@
 <RCC>
   <qresource prefix="images">
-    <file>icons/three-dots-ellipsis.png</file>
     <file>icons/three-dots-more-indicator.png</file>
     <file>icons/Bg.jpg</file>
     <file>icons/minimize.png</file>
@@ -17,5 +16,6 @@
     <file>icons/user.png</file>
     <file>icons/user_white.png</file>
     <file>icons/Edit.png</file>
+    <file>icons/link.png</file>
   </qresource>
 </RCC>

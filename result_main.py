@@ -229,18 +229,22 @@ class UIFunctions(ResultWindow):
             file_error.write('\nPython {}'.format(str(sys.version_info[0])+'.'+str(sys.version_info[1])))
         for i in range(num):
             with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:
-                file_error.write('\nBài {}'.format(str(i+1)+'\n'))
+                file_error.write('\nBài {}'.format(str(i+1)))
             correct = 0
             results = []
             ui.TestFrame = children[i]
             if os.path.exists(ui.TestFrame.ans_file_entry.text()):
-                results = self.check_result(ui.TestFrame, i)
+                try:
+                    results = self.check_result(ui.TestFrame, i)
+                except:
+                    with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:
+                        file_error.write('\n>>> FileERROR: File bài làm không đúng yêu cầu của đề')
                 for result in results[:-1]:
                     if result[1]:
                         correct += 1
             elif ui.TestFrame.ans_file_entry.text():
                 with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:
-                    file_error.write('\nFileExistsERROR: Lỗi không tìm thấy file bài làm.')
+                    file_error.write('\n>>> FileExistsERROR: Lỗi không tìm thấy file bài làm.')
 
             current_layout = ui.content_widget.layout()
             if not current_layout:
@@ -257,17 +261,20 @@ class UIFunctions(ResultWindow):
             if len(results) != 0:
                 try:
                     ui.ResultFrame.Score_box.setText(
-                        str(round(float(str(correct / len(results[:-1]) * self.assignments[i].mark)),2))
+                        str(round(float(str(correct / len(self.assignments[i].tests) * self.assignments[i].mark)),2))
                     )
                     if results[-1]:
                         ui.ResultFrame.detail_entry.setText(
                             "Bài làm đã tối ưu hóa.")
+                        self.Total += correct
                     else:
                         ui.ResultFrame.detail_entry.setText(
                             "Bài làm chưa tối ưu hóa.")
-                    self.Total += correct
-                    self.TotalScore += (correct /
-                                        len(self.assignments[i].tests) * self.assignments[i].mark)
+                        self.Total += correct
+                        self.Total -= 0.25
+                    print(correct)
+                    self.TotalScore += (correct /len(self.assignments[i].tests) * self.assignments[i].mark)
+                    
                     if correct < (len(results[:-1])/2):
                         ui.ResultFrame.detail_entry.setText(
                             "Bài làm chưa hoàn thiện tốt.")

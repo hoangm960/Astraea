@@ -792,4 +792,17 @@ QPushButton:hover {
             </property>
            </widget>
           </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources>
+  <include location="Resources.qrc"/>
+ </resources>
  <connections/>
+</ui>

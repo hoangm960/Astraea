@@ -27,7 +27,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(88, 88, 88);
-border-radius: 10px;</string>
+border-radius: 3px;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">

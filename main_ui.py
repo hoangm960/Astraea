@@ -86,7 +86,6 @@ class UIFunctions(MainWindow):
         ui.LessonButton.clicked.connect(lambda: self.open_doc(ui, ui.pg))
 
         ui.list_assignments.itemPressed.connect(lambda: self.load_details(ui))
-        ui.Server_btn.clicked.connect(lambda: self.open_connect(ui))
     
     @staticmethod
     def resize_idle(ui, pg):
@@ -94,12 +93,8 @@ class UIFunctions(MainWindow):
             pg.restore()
             pg.moveTo(-8, 0)    
             pg.resizeTo(SCREEN_WIDTH - ui.width() + 16, ui.height() + 8)
-    @staticmethod
-    def open_connect(ui):
-        import connect_f
-        window = connect_f.ConnectWindow(ui.pg)
-        window.show()
-        ui.close()
+            
+    
 
     @staticmethod
     def close_pg(ui, pg):
@@ -164,14 +159,13 @@ class UIFunctions(MainWindow):
 
         def __init__(self, parent, ui):
             self.parent = parent
-            ui.Server_btn.close()
             ui.main_btn.setText("Sửa đổi")
             ui.main_btn.setStyleSheet(
                 """QPushButton {background-color: rgb(156, 220, 254); border-radius: 5px;}
             QPushButton:hover {background-color: rgba(156, 220, 254, 150);}"""
             )
             ui.main_btn.clicked.connect(lambda: self.open_edit_form(ui))
-            ui.up_down_btn.clicked.connect(lambda: self.upload(open(OPENED_LESSON_PATH).read()))
+            ui.Server_btn.clicked.connect(lambda: self.upload(open(OPENED_LESSON_PATH).read()))
 
         @staticmethod
         def open_edit_form(ui):
@@ -198,6 +192,21 @@ class UIFunctions(MainWindow):
                 connection.close()
 
     class StudentUiFunctions:
+        class ConnectWindow(QMainWindow):
+            CONNECT_UI = "./UI_Files/connect.ui"
+
+            def __init__(self, *args, **kwargs):
+                QMainWindow.__init__(self, *args, **kwargs)
+                uic.loadUi(self.CONNECT_UI, self)
+
+                self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
+                self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+                self.move(
+                    round((QApplication.primaryScreen().size().width() - self.width()) / 2),
+                    round((QApplication.primaryScreen().size().height() - self.height()) / 2),
+                )
+                self.btn_quit.clicked.connect(self.close)
+
         def __init__(self, parent, ui):
             self.parent = parent
             ui.main_btn.setText("Kiểm tra")
@@ -206,8 +215,11 @@ class UIFunctions(MainWindow):
             QPushButton:hover {background-color: rgba(156, 220, 254, 150);}"""
             )
             ui.main_btn.clicked.connect(lambda: self.open_result_form(ui))
-            ui.up_down_btn.clicked.connect(lambda: self.download(open(OPENED_LESSON_PATH).read(), open('data/Users/download.txt').read()))
-            ui.load_btn.close()
+            ui.Server_btn.clicked.connect(lambda: self.open_connect(ui))
+
+        def open_connect(self, ui):
+            window = self.ConnectWindow(ui)
+            window.show()
 
         @staticmethod
         def open_result_form(ui):
@@ -247,6 +259,6 @@ def main(role, pg):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    main("teacher", None)
-    # main("student", None)
+    # main("teacher", None)
+    main("student", None)
     sys.exit(app.exec_())

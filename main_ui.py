@@ -84,13 +84,20 @@ class UIFunctions(MainWindow):
         ui.LessonButton.clicked.connect(lambda: self.open_doc(ui, ui.pg))
 
         ui.list_assignments.itemPressed.connect(lambda: self.load_details(ui))
-
+        ui.Server_btn.clicked.connect(lambda: self.open_connect(ui))
+    
     @staticmethod
     def resize_idle(ui, pg):
         if pg:
             pg.restore()
-            pg.moveTo(-8, 0)
+            pg.moveTo(-8, 0)    
             pg.resizeTo(SCREEN_WIDTH - ui.width() + 16, ui.height() + 8)
+    @staticmethod
+    def open_connect(ui):
+        import connect_f
+        window = connect_f.ConnectWindow(ui.pg)
+        window.show()
+        ui.close()
 
     @staticmethod
     def close_pg(ui, pg):
@@ -134,6 +141,7 @@ class UIFunctions(MainWindow):
         ui.assignment_details.setText(
             self.assignments[ui.list_assignments.currentItem().text()]
         )
+    
 
     @staticmethod
     def change_assignment_title(ui, title):
@@ -150,7 +158,7 @@ class UIFunctions(MainWindow):
 
         def __init__(self, parent, ui):
             self.parent = parent
-
+            ui.Server_btn.close()
             ui.main_btn.setText("Sửa đổi")
             ui.main_btn.setStyleSheet(
                 """QPushButton {background-color: rgb(156, 220, 254); border-radius: 5px;}
@@ -173,13 +181,15 @@ class UIFunctions(MainWindow):
             QPushButton:hover {background-color: rgba(156, 220, 254, 150);}"""
             )
             ui.main_btn.clicked.connect(lambda: self.open_result_form(ui))
+            ui.load_btn.close()
 
         @staticmethod
         def open_result_form(ui):
             import result_main
             window = result_main.ResultWindow(ui.pg)
             window.show()
-
+        
+        
     def define_role(self, ui):
         if ui.role.lower() == "teacher":
             self.TeacherUiFunctions(self, ui)

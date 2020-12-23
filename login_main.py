@@ -35,7 +35,6 @@ class LoginWindow(QMainWindow):
 
     def __init__(self, pg):
         self.pg = pg
-
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(self.UI_PATH, self)
         LoginFunctions(self)

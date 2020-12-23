@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>300</width>
-    <height>700</height>
+    <width>264</width>
+    <height>613</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -758,6 +758,37 @@ QPushButton:hover {
             </property>
             <property name="flat">
              <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Server_btn">
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+	background-color: rgb(255, 255, 255);
+	border-radius: 5px;
+	image: url(:/images/icons/link.png);
+	padding:3px;
+}
+
+QPushButton:hover {
+	background-color: rgba(255, 255, 255, 150)
+}</string>
+            </property>
+            <property name="text">
+             <string/>
             </property>
            </widget>
           </item>

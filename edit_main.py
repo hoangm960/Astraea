@@ -19,29 +19,14 @@ HTML_CONVERT_PATH = "./data/html_convert"
 
 
 class Assignment:
-    class Test:
-        def __init__(self, inputs, outputs):
-            self.inputs = inputs
-            self.outputs = outputs
 
-    def __init__(self, name, ex_file, test_file, details, mark):
+    def __init__(self, name, details, mark, inputs, outputs):
         self.name = name
-        self.ex_file = ex_file
-        self.test_file = test_file
+        # self.ex_file = ex_file
         self.details = details
         self.mark = mark
-        self.load_io()
-
-    def load_io(self):
-        self.tests = []
-        with open(self.test_file,encoding = 'utf-8') as f:
-            lines = f.readlines()
-            sep = lines[0].rstrip()
-            del lines[0]
-            for line in lines:
-                inputs, outputs = line.strip("\n\r").split(sep)
-                self.tests.append(
-                    self.Test(inputs.split('&'), outputs.split('&')))
+        self.input = inputs
+        self.output = outputs
 
 
 class EditWindow(QMainWindow):
@@ -101,7 +86,7 @@ class UIFunctions(EditWindow):
         ui.return_btn.clicked.connect(
             lambda: ui.stacked_widget.setCurrentIndex(0))
         ui.return_btn.clicked.connect(
-            lambda: open(OPENED_ASSIGNMENT_PATH, 'w',encoding='utf8').write(''))
+            lambda: open(OPENED_ASSIGNMENT_PATH, 'w', encoding='utf8').write(''))
         ui.add_btn.clicked.connect(
             lambda: ui.stacked_widget.setCurrentIndex(2))
         ui.add_btn.clicked.connect(
@@ -118,7 +103,8 @@ class UIFunctions(EditWindow):
         ui.Minutes_entry.setDisabled(True)
         ui.checkBox.clicked.connect(lambda: ui.Hours_entry.setValue(0))
         ui.checkBox.clicked.connect(lambda: ui.Minutes_entry.setValue(0))
-        self.check_empty(ui, open(OPENED_ASSIGNMENT_PATH, encoding = 'utf-8').read().rstrip())
+        self.check_empty(ui, open(OPENED_ASSIGNMENT_PATH,
+                                  encoding='utf-8').read().rstrip())
 
     def check_empty_entry(self, ui):
         self.CheckValue = True
@@ -137,7 +123,7 @@ class UIFunctions(EditWindow):
                     border: 0px solid black; 
                     border-radius: 12px;""")
 
-            if not os.path.exists(child.ex_file_entry.text()) or child.ex_file_entry.text()[-2:] not in ['as','py']:
+            if not os.path.exists(child.ex_file_entry.text()) or child.ex_file_entry.text()[-2:] not in ['as', 'py']:
                 child.ex_file_entry.setStyleSheet(
                     """background-color: rgb(255, 255, 255); 
                     border: 2px solid rgb(225, 0 , 0); border-radius: 12px;""")
@@ -222,7 +208,7 @@ class UIFunctions(EditWindow):
             ui.btn_maximize.setToolTip("Phóng to")
 
     def show_file_dialog(self, ui, filename):
-        file_path = open(filename, encoding = 'utf-8').read().rstrip()
+        file_path = open(filename, encoding='utf-8').read().rstrip()
         if not file_path:
             HOME_PATH = os.path.join(os.path.join(
                 os.environ["USERPROFILE"]), "Desktop")
@@ -319,10 +305,20 @@ class UIFunctions(EditWindow):
         msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
         msg.buttonClicked.connect(self.popup_button)
         msg.exec_()
-    
+
     @classmethod
     def popup_button(self, i):
         self.deleted = True if i.text().lower() == "ok" else False
+
+    def load_io(self, test_file):
+        self.tests = []
+        with open(test_file, encoding = 'utf-8') as f:
+            lines = f.readlines()
+            sep = lines[0].rstrip()
+            del lines[0]
+            for line in lines:
+                inputs, outputs = line.strip("\n\r").split(sep).split('&')
+                return inputs, outputs
 
     def load_assignments(self, ui, filename):
         children = ui.content_widget.children()
@@ -332,19 +328,22 @@ class UIFunctions(EditWindow):
             if not children[i].title_entry.text() in [
                 assignment.name for assignment in assignments
             ]:
+                inputs, outputs = self.load_io(children[i].test_file_entry.text())
                 assignments.append(
                     Assignment(
                         children[i].title_entry.text(),
-                        children[i].ex_file_entry.text(),
-                        children[i].test_file_entry.text(),
+                        # children[i].ex_file_entry.text(),
+                        # children[i].test_file_entry.text(),
                         children[i].details_entry.toPlainText(),
                         children[i].Score_edit.value(),
+                        inputs[i],
+                        outputs[i]
                     )
                 )
         with open(filename, "wb") as f:
             pickle.dump([ui.lesson_title.text(), assignments], f, -1)
-        
-    def reopen_main(self, ui):
+
+    def reopen_main(ui):
         ui.close()
         main_ui.main("teacher", ui.pg)
 

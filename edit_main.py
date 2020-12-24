@@ -233,8 +233,7 @@ class UIFunctions(EditWindow):
                 f.write(file_path)
         if file_path:
             self.load_assignments(ui, file_path)
-            ui.stacked_widget.setCurrentIndex(3)
-            ui.Push.clicked.connect(lambda: self.reopen_main(ui))
+            self.reopen_main(ui)
 
     class EditFrame(QWidget):
         def __init__(self, *args, **kwargs):

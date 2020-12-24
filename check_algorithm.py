@@ -19,8 +19,10 @@ def main(filename, ex_file, tests, time_limit=2):
             output = process.communicate(input=input, timeout=time_limit)[0]
         except TimeoutExpired:
             check.result[0] = True
+            return output
+        except Exception:
+            return False
 
-        return output
 
     def check(input, ans):
         time_err = correct = False

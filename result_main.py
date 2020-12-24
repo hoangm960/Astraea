@@ -238,13 +238,17 @@ class UIFunctions(ResultWindow):
                     results = self.check_result(ui.TestFrame, i)
                 except:
                     with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:
-                        file_error.write('\n>>> FileERROR: File bài làm không đúng yêu cầu của đề')
+                        file_error.write('\n>>> FileERROR: File bài làm không đúng yêu cầu của đề.')
+                        ui.ResultFrame.detail_entry.setText("Sai yêu cầu của đề")
+
                 for result in results[:-1]:
                     if result[1]:
                         correct += 1
             elif ui.TestFrame.ans_file_entry.text():
                 with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:
                     file_error.write('\n>>> FileExistsERROR: Lỗi không tìm thấy file bài làm.')
+                    ui.ResultFrame.detail_entry.setText("Không thể kiểm tra.")
+
 
             current_layout = ui.content_widget.layout()
             if not current_layout:
@@ -272,7 +276,6 @@ class UIFunctions(ResultWindow):
                             "Bài làm chưa tối ưu hóa.")
                         self.Total += correct
                         self.Total -= 0.25
-                    print(correct)
                     self.TotalScore += (correct /len(self.assignments[i].tests) * self.assignments[i].mark)
                     
                     if correct < (len(results[:-1])/2):

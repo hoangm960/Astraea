@@ -206,10 +206,23 @@ class UIFunctions(MainWindow):
                     round((QApplication.primaryScreen().size().height() - self.height()) / 2),
                 )
                 self.btn_quit.clicked.connect(self.close)
-                self.download_btn.clicked.connect(lambda: self.download(self.id_entry.text()))
-
+                def id():
+                    try: 
+                        self.download(self.id_entry.text())
+                    except:
+                        self.id_entry.setStyleSheet("""background-color: rgb(255, 255, 255);
+                                                        color: rgb(255,0,0); """)
+                        self.id_entry.setText("Id không chính xác.") 
+                        def restore():
+                            self.id_entry.setStyleSheet("""background-color: rgb(255, 255, 255);""")
+                            self.id_entry.clear() 
+                        timer = QtCore.QTimer()
+                        timer.singleShot(1000, lambda: restore())
+                self.download_btn.clicked.connect(lambda: id())
+                
             @staticmethod
             def download(id):
+                
                 if id:
                     server = 'ADMIN' 
                     database = 'Astraea-v1'

@@ -3,7 +3,6 @@ import os
 import pickle
 import sys
 from PyQt5 import QtCore, uic
-from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (QApplication, QFileDialog, QMainWindow)
 import pyodbc
 
@@ -95,7 +94,6 @@ class UIFunctions(MainWindow):
             pg.resizeTo(SCREEN_WIDTH - ui.width() + 16, ui.height() + 8)
             
     
-
     @staticmethod
     def close_pg(ui, pg):
         if pg:
@@ -125,14 +123,13 @@ class UIFunctions(MainWindow):
             if os.path.getsize(filename) > 0:
                 with open(filename, "rb") as f:
                     unpickler = pickle.Unpickler(f)
-                    return unpickler.load()
+                    data = unpickler.load()
+                    return data[0], data[1]
 
     def load_assignments(self, ui, filename):
         ui.list_assignments.clear()
         self.assignments.clear()
-        data = self.get_assignments(filename)
-        title = data[0]
-        assignments = data[1]
+        title, assignments = self.get_assignments(filename) 
         for assignment in assignments:
             self.assignments[assignment.name] = assignment.details
             ui.list_assignments.addItem(assignment.name)
@@ -192,52 +189,6 @@ class UIFunctions(MainWindow):
                 connection.close()
 
     class StudentUiFunctions:
-        class DownloadWindow(QMainWindow):
-            CONNECT_UI = "./UI_Files/connect.ui"
-
-            def __init__(self, *args, **kwargs):
-                QMainWindow.__init__(self, *args, **kwargs)
-                uic.loadUi(self.CONNECT_UI, self)
-
-                self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-                self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-                self.move(
-                    round((QApplication.primaryScreen().size().width() - self.width()) / 2),
-                    round((QApplication.primaryScreen().size().height() - self.height()) / 2),
-                )
-                self.btn_quit.clicked.connect(self.close)
-                def id():
-                    try: 
-                        self.download(self.id_entry.text())
-                    except:
-                        self.id_entry.setStyleSheet("""background-color: rgb(255, 255, 255);
-                                                        color: rgb(255,0,0); """)
-                        self.id_entry.setText("Id không chính xác.") 
-                        def restore():
-                            self.id_entry.setStyleSheet("""background-color: rgb(255, 255, 255);""")
-                            self.id_entry.clear() 
-                        timer = QtCore.QTimer()
-                        timer.singleShot(1000, lambda: restore())
-                self.download_btn.clicked.connect(lambda: id())
-                
-            @staticmethod
-            def download(id):
-                
-                if id:
-                    server = 'ADMIN' 
-                    database = 'Astraea-v1'
-                    connection = pyodbc.connect(
-                        'DRIVER={ODBC Driver 17 for SQL Server};'
-                        f'SERVER={server};'
-                        f'DATABASE={database};'
-                        'Trusted_Connection=yes;')
-
-                    cursor = connection.cursor()
-                    cursor.execute("SELECT * FROM [Astraea-v1].[dbo].[Lesson] WHERE LessonId = ?", id)
-                    for row in cursor:
-                        print(row)
-                    connection.close()
-
         def __init__(self, parent, ui):
             self.parent = parent
             ui.main_btn.setText("Kiểm tra")
@@ -248,9 +199,12 @@ class UIFunctions(MainWindow):
             ui.main_btn.clicked.connect(lambda: self.open_result_form(ui))
             ui.Server_btn.clicked.connect(lambda: self.open_connect(ui))
 
-        def open_connect(self, ui):
-            window = self.DownloadWindow(ui)
+        @staticmethod
+        def open_connect(ui):
+            import download_popup
+            window = download_popup.DownloadWindow(ui.pg)
             window.show()
+            ui.close()
 
         @staticmethod
         def open_result_form(ui):

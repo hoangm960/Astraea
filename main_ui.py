@@ -94,7 +94,6 @@ class UIFunctions(MainWindow):
             pg.resizeTo(SCREEN_WIDTH - ui.width() + 16, ui.height() + 8)
             
     
-
     @staticmethod
     def close_pg(ui, pg):
         if pg:
@@ -190,8 +189,6 @@ class UIFunctions(MainWindow):
                 connection.close()
 
     class StudentUiFunctions:
-        
-
         def __init__(self, parent, ui):
             self.parent = parent
             ui.main_btn.setText("Kiểm tra")
@@ -205,7 +202,7 @@ class UIFunctions(MainWindow):
         @staticmethod
         def open_connect(ui):
             import download_popup
-            window = download_popup.DownloadWindow()
+            window = download_popup.DownloadWindow(ui.pg)
             window.show()
             ui.close()
 

@@ -25,8 +25,8 @@ class Assignment:
         # self.ex_file = ex_file
         self.details = details
         self.mark = mark
-        self.input = inputs
-        self.output = outputs
+        self.inputs = inputs
+        self.outputs = outputs
 
 
 class EditWindow(QMainWindow):

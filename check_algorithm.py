@@ -2,7 +2,7 @@ import os
 from subprocess import PIPE, STDOUT, Popen, TimeoutExpired
 
 
-def main(filename, ex_file, tests, time_limit=2):
+def main(filename, inputs, outputs, time_limit=2):
     main.results = []
 
     def get_command():
@@ -19,8 +19,10 @@ def main(filename, ex_file, tests, time_limit=2):
             output = process.communicate(input=input, timeout=time_limit)[0]
         except TimeoutExpired:
             check.result[0] = True
-
-        return output
+        except Exception:
+            return False
+        finally:
+            return output
 
     def check(input, ans):
         time_err = correct = False
@@ -37,13 +39,8 @@ def main(filename, ex_file, tests, time_limit=2):
 
         check.result[1] = True if output.rstrip() == ans.rstrip() else False
 
-    for test in tests:
-        input = output = ''
-        for i in test.inputs:
-            input += i + "\n"
-        for i in test.outputs:
-            output += i + "\n"
-        check(input, output)
-        main.results.append(check.result)
+    input, output = '\n'.join(inputs) if inputs else '', '\n'.join(outputs)
+    check(input, output)
+    main.results.append(check.result)
 
     return main.results

@@ -298,7 +298,7 @@ QPushButton:pressed {
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="upload_btn">
          <property name="minimumSize">
           <size>
            <width>130</width>

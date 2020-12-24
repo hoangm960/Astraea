@@ -4,7 +4,6 @@ import sys
 
 from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (QApplication, QFileDialog,
                              QMainWindow, QMessageBox,
                              QSizeGrip, QVBoxLayout, QWidget)
@@ -220,7 +219,9 @@ class UIFunctions(EditWindow):
         if file_path:
             self.load_assignments(ui, file_path)
             self.reopen_main(ui)
-
+    def reopen_main(self, ui):
+        ui.close()
+        main_ui.main("teacher", ui.pg)
     class EditFrame(QWidget):
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
@@ -341,10 +342,8 @@ class UIFunctions(EditWindow):
                 )
         with open(filename, "wb") as f:
             pickle.dump([ui.lesson_title.text(), assignments], f, -1)
+    
 
-    def reopen_main(ui):
-        ui.close()
-        main_ui.main("teacher", ui.pg)
 
 
 if __name__ == "__main__":

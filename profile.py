@@ -1,8 +1,3 @@
-import os
-import pickle
-import time
-import pyautogui
-from encryption import decrypt, encrypt
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5 import uic

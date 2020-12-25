@@ -120,7 +120,7 @@ class UIFunctions(EditWindow):
                     """background-color: rgb(255, 255, 255); 
                     border: 0px solid black; 
                     border-radius: 12px;""")
-                    
+
             if not os.path.exists(child.test_file_entry.text()) or child.test_file_entry.text()[-2:] != 'xt':
                 child.test_file_entry.setStyleSheet(
                     """background-color: rgb(255, 255, 255); 
@@ -301,7 +301,8 @@ class UIFunctions(EditWindow):
             sep = lines[0].rstrip()
             del lines[0]
             for line in lines:
-                inputs, outputs = line.strip("\n\r").split(sep).split('&')
+                inputs, outputs = line.strip("\n\r").split(sep)
+                inputs, outputs = inputs.split('&'), outputs.split('&')
                 return inputs, outputs
 
     def load_assignments(self, ui, filename):

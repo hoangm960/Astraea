@@ -17,7 +17,7 @@ class DownloadWindow(QMainWindow):
 
 class UIFunctions(DownloadWindow):
     OPENED_ASSIGNMENT_PATH = "./data/Users/opened_assignment.oa"
-    server = 'ADMIN'
+    server = 'localhost'
     database = 'Astraea-v1'
     connection = pyodbc.connect(
         'DRIVER={ODBC Driver 17 for SQL Server};'

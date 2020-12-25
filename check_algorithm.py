@@ -30,6 +30,7 @@ def main(filename, inputs, outputs, time_limit=2):
 
         command = get_command()
         output = get_output(command, input)
+        
         base_file = os.path.splitext(filename)[0]
         if command[0] == "fpc":
             command = [base_file]

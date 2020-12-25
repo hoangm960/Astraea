@@ -1,15 +1,14 @@
-from datetime import datetime
 import os
 import pickle
 import sys
-from PyQt5 import QtCore, uic
-from PyQt5.QtWidgets import (QApplication, QFileDialog, QMainWindow)
+from datetime import datetime
+
 import pyodbc
-
-
-from UI_Files import Resources
+from PyQt5 import QtCore, uic
+from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 from win32api import GetMonitorInfo, MonitorFromPoint
 
+from UI_Files import Resources
 
 UI_MAIN_PATH = "./UI_Files/ui_main.ui"
 OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
@@ -197,7 +196,7 @@ class UIFunctions(MainWindow):
             QPushButton:hover {background-color: rgba(156, 220, 254, 150);}"""
             )
             ui.main_btn.clicked.connect(lambda: self.open_result_form(ui))
-            ui.Server_btn.clicked.connect(lambda: self.open_connect(ui))
+            # ui.Server_btn.clicked.connect(lambda: self.open_connect(ui))
 
         @staticmethod
         def open_connect(ui):

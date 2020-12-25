@@ -340,6 +340,7 @@ class UIFunctions(EditWindow):
                         outputs[i]
                     )
                 )
+
         with open(filename, "wb") as f:
             pickle.dump([ui.lesson_title.text(), assignments], f, -1)
 

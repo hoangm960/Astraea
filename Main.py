@@ -36,7 +36,6 @@ def check_ide():
         import thonny
     except ImportError:
         subprocess.call('pip3 install thonny')
-        
         sleep(2)
 
 

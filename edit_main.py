@@ -319,8 +319,8 @@ class UIFunctions(EditWindow):
                         children[i].title_entry.text(),
                         children[i].details_entry.toPlainText(),
                         children[i].Score_edit.value(),
-                        inputs[i],
-                        outputs[i]
+                        inputs,
+                        outputs
                     )
                 )
 

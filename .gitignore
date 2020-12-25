@@ -2,11 +2,8 @@ __pycache__/
 test/
 Test/
 data/
-old gui/
 .vscode/
 .gitignore
 data/
 temp.py
 output/
-test.docx
-test.html

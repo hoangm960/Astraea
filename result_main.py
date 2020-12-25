@@ -246,6 +246,8 @@ class UIFunctions(ResultWindow):
             elif ui.TestFrame.ans_file_entry.text():
                 with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:
                     file_error.write('\n>>> FileExistsERROR: Lỗi không tìm thấy file bài làm.')
+                    ui.ResultFrame.detail_entry.setText("Không thể kiểm tra.")
+
 
             current_layout = ui.content_widget.layout()
             if not current_layout:

@@ -6,7 +6,6 @@ from random import randrange
 
 from PyQt5 import QtCore, QtWidgets, uic
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (QApplication, 
                              QMainWindow)
 from win32api import GetMonitorInfo, MonitorFromPoint

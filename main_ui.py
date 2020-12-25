@@ -1,7 +1,6 @@
 import os
 import pickle
 import sys
-from datetime import datetime
 
 import pyodbc
 from PyQt5 import QtCore, uic
@@ -161,31 +160,20 @@ class UIFunctions(MainWindow):
             QPushButton:hover {background-color: rgba(156, 220, 254, 150);}"""
             )
             ui.main_btn.clicked.connect(lambda: self.open_edit_form(ui))
-            ui.Server_btn.clicked.connect(lambda: self.upload(open(OPENED_LESSON_PATH).read()))
+            ui.Server_btn.clicked.connect(lambda: self.open_connect(ui))
+        
+        @staticmethod
+        def open_connect(ui):
+            import download_popup
+            window = download_popup.DownloadWindow(ui.pg, ui.role)
+            window.show()
+            ui.close()
 
         @staticmethod
         def open_edit_form(ui):
             import edit_main
             window = edit_main.EditWindow(ui.pg)
             window.show()
-
-        def upload(self, filename):
-            if filename:
-                server = 'ADMIN' 
-                database = 'Astraea-v1'
-                connection = pyodbc.connect(
-                    'DRIVER={ODBC Driver 17 for SQL Server};'
-                    f'SERVER={server};'
-                    f'DATABASE={database};'
-                    'Trusted_Connection=yes;')
-
-                cursor = connection.cursor()
-                data = self.parent.get_assignments(filename)
-                current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                cursor.execute("INSERT INTO [Astraea-v1].[dbo].[Lesson] VALUES (?, ?, ?);", 
-                (data[0], current_time, str(data[1])))
-                connection.commit()
-                connection.close()
 
     class StudentUiFunctions:
         def __init__(self, parent, ui):
@@ -201,7 +189,7 @@ class UIFunctions(MainWindow):
         @staticmethod
         def open_connect(ui):
             import download_popup
-            window = download_popup.DownloadWindow(ui.pg)
+            window = download_popup.DownloadWindow(ui.pg, ui.role)
             window.show()
             ui.close()
 

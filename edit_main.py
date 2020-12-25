@@ -4,9 +4,8 @@ import sys
 
 from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (QApplication, QFileDialog,
-                             QMainWindow, QMessageBox,
-                             QSizeGrip, QVBoxLayout, QWidget)
+from PyQt5.QtWidgets import (QApplication, QFileDialog, QMainWindow,
+                             QMessageBox, QSizeGrip, QVBoxLayout, QWidget)
 
 import main_ui
 
@@ -227,9 +226,6 @@ class UIFunctions(EditWindow):
             super().__init__(*args, **kwargs)
             uic.loadUi(EDIT_FRAME_PATH, self)
 
-            self.ex_file_btn.clicked.connect(
-                lambda: self.show_file_dialog_Py(self.ex_file_entry)
-            )
             self.test_file_btn.clicked.connect(
                 lambda: self.show_file_dialog_Txt(self.test_file_entry)
             )
@@ -262,8 +258,6 @@ class UIFunctions(EditWindow):
         self.change_lesson_title(ui, title)
         for assignment in assignments:
             children[i].title_entry.setText(assignment.name)
-            children[i].ex_file_entry.setText(assignment.ex_file)
-            children[i].test_file_entry.setText(assignment.test_file)
             children[i].details_entry.setText(assignment.details)
             children[i].Score_edit.setValue(assignment.mark)
             i += 1
@@ -332,8 +326,6 @@ class UIFunctions(EditWindow):
                 assignments.append(
                     Assignment(
                         children[i].title_entry.text(),
-                        # children[i].ex_file_entry.text(),
-                        # children[i].test_file_entry.text(),
                         children[i].details_entry.toPlainText(),
                         children[i].Score_edit.value(),
                         inputs[i],

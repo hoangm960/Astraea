@@ -363,4 +363,5 @@ def main(pg, version, file=''):
 
 
 if __name__ == "__main__":
-    main(None, 2.5)
+    import Main
+    main(None, Main.PG)

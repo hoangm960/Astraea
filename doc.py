@@ -174,7 +174,29 @@ class UIFunctions(DocWindow):
 
     class StudentUiFunctions:
         def __init__(self, ui):
-            ui.confirm_frame.close()
+            ui.SaveDocx.close()
+            ui.add_btn.close()
+            ui.del_btn.clicked.connect(lambda: self.load_file(ui))
+            ui.titles.itemClicked.connect(lambda: ui.text_entry.setText(UIFunctions.docs[ui.titles.currentItem().text()]))
+
+        @classmethod
+        def load_file(self, ui):
+            filename = self.get_file_dialog(ui, "*.sd")
+            if os.path.exists(filename):
+                if os.path.getsize(filename) > 0:
+                    with open(filename, "rb") as f:
+                        unpickler = pickle.Unpickler(f)
+                        UIFunctions.docs = unpickler.load()
+                        for key in UIFunctions.docs.keys():
+                            ui.titles.addItem(key)
+
+        @staticmethod
+        def get_file_dialog(ui, filter):
+            HOME_PATH = os.path.join(os.path.join(
+                os.environ["USERPROFILE"]), "Desktop")
+            file_path = QFileDialog.getOpenFileName(
+                ui, "Open file", HOME_PATH, filter)[0]
+            return file_path
 
     def define_role(self, ui):
         if ui.role.lower() == "teacher":
@@ -185,6 +207,6 @@ class UIFunctions(DocWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = DocWindow("teacher", None)
+    window = DocWindow("student", None)
     window.show()
     sys.exit(app.exec_())

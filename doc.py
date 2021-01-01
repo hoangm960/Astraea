@@ -4,13 +4,13 @@ import shutil
 import sys
 
 from PyQt5 import QtCore, uic
-from PyQt5.QtWidgets import (QApplication, QFileDialog, QLabel, QListWidgetItem, QMainWindow)
+from PyQt5.QtWidgets import (
+    QApplication, QFileDialog, QLabel, QListWidgetItem, QMainWindow)
 from win32com import client as wc
 
 import main_ui
 
 DOC_UI = "./UI_Files/Doc.ui"
-HTML_CONVERT_PATH = "./data/html_convert"
 
 
 class DocWindow(QMainWindow):
@@ -19,7 +19,7 @@ class DocWindow(QMainWindow):
         uic.loadUi(DOC_UI, self)
         self.role = role
         self.pg = pg
-        
+
         UIFunctions(self)
 
 
@@ -34,15 +34,25 @@ class UIFunctions(DocWindow):
             round((QApplication.primaryScreen().size().height() - ui.height()) / 2),
         )
         ui.showMaximized()
-        ui.btn_quit.clicked.connect(lambda: self.close_pg(ui))
-        self.load_assignments(
-            ui, open(main_ui.OPENED_LESSON_PATH, encoding = 'utf8').read().rstrip())
+        ui.deleteBox_frame.hide()
+        self.connect_btn(ui)
         self.define_role(ui)
+
+    @staticmethod
+    def get_file_dialog(ui, filter):
+        HOME_PATH = os.path.join(os.path.join(
+            os.environ["USERPROFILE"]), "Desktop")
+        file_path = QFileDialog.getOpenFileName(
+            ui, "Open file", HOME_PATH, filter)[0]
+        return file_path
+
+    def connect_btn(self, ui):
+        ui.btn_quit.clicked.connect(lambda: self.close_pg(ui))
         ui.del_btn.clicked.connect(lambda: self.options(ui))
         ui.Delete.clicked.connect(lambda: self.Delete(ui))
         ui.Save_btn.clicked.connect(
             lambda: self.Change(ui, ui.Name_edit.text()))
-        ui.deleteBox_frame.hide()
+        ui.load_btn.clicked.connect(lambda: self.load_doc(ui))
 
     @staticmethod
     def close_pg(ui):
@@ -75,20 +85,24 @@ class UIFunctions(DocWindow):
             self.docs[item.text()] = temp
             ui.Name_edit.clear()
 
-    def load_assignments(self, ui, filename):
-        ui.titles.clear()
-        self.docs.clear()
+    @classmethod
+    def load_doc(self, ui):
+        filename = self.get_file_dialog(ui, "*.sd")
         if os.path.exists(filename):
             if os.path.getsize(filename) > 0:
                 with open(filename, "rb") as f:
                     unpickler = pickle.Unpickler(f)
-                    data = unpickler.load()
-                    for i in range(1, len(self.docs) + 1):
-                        ui.titles.addItem(str(i))
+                    UIFunctions.docs = unpickler.load()
+                    ui.titles.clear()
+                    for key in UIFunctions.docs.keys():
+                        ui.titles.addItem(key)
 
     class TeacherUiFunctions:
+        OPENED_DOC = "./data/Users/opened_doc.od"
+
         def __init__(self, ui):
             self.connect_btn(ui)
+            self.check_opened_doc(ui)
 
         def open_doc(self, ui):
             if not ui.titles.currentItem().text():
@@ -101,6 +115,17 @@ class UIFunctions(DocWindow):
             else:
                 self.load_doc(ui)
 
+        def check_opened_doc(self, ui):
+            doc_path = open(self.OPENED_DOC).read()
+            if os.path.exists(doc_path):
+                if os.path.getsize(doc_path) > 0:
+                    with open(doc_path, "rb") as f:
+                        unpickler = pickle.Unpickler(f)
+                        UIFunctions.docs = unpickler.load()
+                        ui.titles.clear()
+                        for key in UIFunctions.docs.keys():
+                            ui.titles.addItem(key)
+
         @staticmethod
         def get_file_dialog(ui, filter):
             HOME_PATH = os.path.join(os.path.join(
@@ -111,11 +136,12 @@ class UIFunctions(DocWindow):
 
         @staticmethod
         def save_file_dialog(ui, filter):
-            HOME_PATH = os.path.join(os.path.join(
-                os.environ["USERPROFILE"]), "Desktop")
-            file_path = QFileDialog.getSaveFileName(
-                ui, "Open file", HOME_PATH, filter)[0]
-            return file_path
+            if ui.titles.count():
+                HOME_PATH = os.path.join(os.path.join(
+                    os.environ["USERPROFILE"]), "Desktop")
+                file_path = QFileDialog.getSaveFileName(
+                    ui, "Open file", HOME_PATH, filter)[0]
+                return file_path
 
         @staticmethod
         def convert_doc_to_html(filename):
@@ -154,49 +180,26 @@ class UIFunctions(DocWindow):
             ui.titles.addItem(title_item)
             ui.titles.setItemWidget(title_item, title)
 
-        def saveDocx(self, ui, filename):
-            with open(filename, "wb") as f:
-                pickle.dump(UIFunctions.docs, f, -1)
-            self.reopen_main(ui)
-
-        @staticmethod
-        def reopen_main(ui):
-            import main_ui
-            main_ui.main(ui.role, ui.pg)
-            ui.close()
+        def saveDocx(self, ui, filename=''):
+            if not filename:
+                filename = self.save_file_dialog(ui, "*.sd")
+            if os.path.exists(filename):
+                if os.path.getsize(filename) > 0:
+                    with open(filename, "wb") as f:
+                        pickle.dump(UIFunctions.docs, f, -1)
+                    open(self.OPENED_DOC, 'w').write(filename)
 
         def connect_btn(self, ui):
             ui.add_btn.clicked.connect(lambda: self.add_titles(ui))
-            # ui.load_btn.clicked.connect(lambda: self.get_doc(ui))
             ui.titles.itemClicked.connect(lambda: self.open_doc(ui))
-            ui.SaveDocx.clicked.connect(lambda: self.saveDocx(
-                ui, self.save_file_dialog(ui, "*.sd")))
+            ui.SaveDocx.clicked.connect(
+                lambda: self.saveDocx(ui, open(self.OPENED_DOC).read()))
 
     class StudentUiFunctions:
         def __init__(self, ui):
-            ui.SaveDocx.close()
-            ui.add_btn.close()
-            ui.del_btn.clicked.connect(lambda: self.load_file(ui))
-            ui.titles.itemClicked.connect(lambda: ui.text_entry.setText(UIFunctions.docs[ui.titles.currentItem().text()]))
-
-        @classmethod
-        def load_file(self, ui):
-            filename = self.get_file_dialog(ui, "*.sd")
-            if os.path.exists(filename):
-                if os.path.getsize(filename) > 0:
-                    with open(filename, "rb") as f:
-                        unpickler = pickle.Unpickler(f)
-                        UIFunctions.docs = unpickler.load()
-                        for key in UIFunctions.docs.keys():
-                            ui.titles.addItem(key)
-
-        @staticmethod
-        def get_file_dialog(ui, filter):
-            HOME_PATH = os.path.join(os.path.join(
-                os.environ["USERPROFILE"]), "Desktop")
-            file_path = QFileDialog.getOpenFileName(
-                ui, "Open file", HOME_PATH, filter)[0]
-            return file_path
+            ui.edit_btn_frame.close()
+            ui.titles.itemClicked.connect(lambda: ui.text_entry.setText(
+                UIFunctions.docs[ui.titles.currentItem().text()]))
 
     def define_role(self, ui):
         if ui.role.lower() == "teacher":
@@ -207,6 +210,7 @@ class UIFunctions(DocWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+    # window = DocWindow("teacher", None)
     window = DocWindow("student", None)
     window.show()
     sys.exit(app.exec_())

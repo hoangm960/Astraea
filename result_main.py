@@ -5,7 +5,6 @@ from datetime import datetime
 
 from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (QApplication, QFileDialog,
                              QMainWindow, QSizeGrip,
                              QVBoxLayout, QWidget)
@@ -67,12 +66,13 @@ class UIFunctions(ResultWindow):
     USER_PATH_ENCRYPTED = "./data/Users/User.encrypted"
     KEY_PATH = "./data/encryption/users.key"
     OPENED_USER = "./data/Users/opened_user.ou"
-    FILE_ERROR = "./data/ERROR.txt"
+    FILE_ERROR = "./data/Users/ERROR.txt"
+
     def __init__(self, ui):
         # Delete title bar
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-        
+
         ui.stacked_widget.setCurrentIndex(1)
         ui.return_btn.clicked.connect(lambda: self.reopen_main(ui))
         ui.inform.hide()
@@ -100,7 +100,8 @@ class UIFunctions(ResultWindow):
             "QSizeGrip { width: 20px; height: 20px; margin: 5px; border-radius: 10px; } QSizeGrip:hover { background-color: rgb(201, 21, 8) }"
         )
         ui.sizegrip.setToolTip("Resize Window")
-        self.load_assignments(open(OPENED_LESSON_PATH, encoding = 'utf-8').read().rstrip())
+        self.load_assignments(
+            open(OPENED_LESSON_PATH, encoding='utf-8').read().rstrip())
         self.check_empty(ui, len(self.assignments))
 
     def load_assignments(self, ui, filename):
@@ -115,7 +116,7 @@ class UIFunctions(ResultWindow):
                     for assignment in assignments:
                         self.lesson[assignment.name] = assignment.details
                         ui.textBrowser.addItem(assignment.name)
-    
+
     @classmethod
     def returnStatus(self):
         return self.GLOBAL_STATE
@@ -162,7 +163,8 @@ class UIFunctions(ResultWindow):
             uic.loadUi(TEST_FRAME_PATH, ui)
 
             ui.ans_file_btn.clicked.connect(
-                lambda: ui.showDialog(ui.ans_file_entry, "Python (*.py);;Free Pascal (*.pas)")
+                lambda: ui.showDialog(
+                    ui.ans_file_entry, "Python (*.py);;Free Pascal (*.pas)")
             )
 
         def showDialog(ui, entry, filter):
@@ -218,16 +220,17 @@ class UIFunctions(ResultWindow):
         assignment = self.assignments[num]
         return check_algorithm.main(
             filename=frame.ans_file_entry.text(),
-            tests= assignment.tests
+            tests=assignment.tests
         )
 
     def check_true(self, ui, num):
         children = ui.content_widgetT.children()
         del children[0:2]
-        with open(self.FILE_ERROR, 'w', encoding = 'utf-8', errors = 'ignore') as file_error:
-            file_error.write('\nPython {}'.format(str(sys.version_info[0])+'.'+str(sys.version_info[1])))
+        with open(self.FILE_ERROR, 'w', encoding='utf-8', errors='ignore') as file_error:
+            file_error.write('\nPython {}'.format(
+                str(sys.version_info[0])+'.'+str(sys.version_info[1])))
         for i in range(num):
-            with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:
+            with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
                 file_error.write('\nBài {}'.format(str(i+1)))
             correct = 0
             results = []
@@ -243,10 +246,10 @@ class UIFunctions(ResultWindow):
                     if result[1]:
                         correct += 1
             elif ui.TestFrame.ans_file_entry.text():
-                with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:
-                    file_error.write('\n>>> FileExistsERROR: Lỗi không tìm thấy file bài làm.')
+                with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
+                    file_error.write(
+                        '\n>>> FileExistsERROR: Lỗi không tìm thấy file bài làm.')
                     ui.ResultFrame.detail_entry.setText("Không thể kiểm tra.")
-
 
             current_layout = ui.content_widget.layout()
             if not current_layout:
@@ -263,7 +266,8 @@ class UIFunctions(ResultWindow):
             if len(results) != 0:
                 try:
                     ui.ResultFrame.Score_box.setText(
-                        str(round(float(str(correct / len(self.assignments[i].tests) * self.assignments[i].mark)),2))
+                        str(round(float(
+                            str(correct / len(self.assignments[i].tests) * self.assignments[i].mark)), 2))
                     )
                     if results[-1]:
                         ui.ResultFrame.detail_entry.setText(
@@ -274,32 +278,36 @@ class UIFunctions(ResultWindow):
                             "Bài làm chưa tối ưu hóa.")
                         self.Total += correct
                         self.Total -= 0.25
-                    self.TotalScore += (correct /len(self.assignments[i].tests) * self.assignments[i].mark)
-                    
+                    self.TotalScore += (correct /
+                                        len(self.assignments[i].tests) * self.assignments[i].mark)
+
                     if correct < (len(results[:-1])/2):
                         ui.ResultFrame.detail_entry.setText(
                             "Bài làm chưa hoàn thiện tốt.")
                     if results[0][0] == True:
-                        with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:
-                            file_error.write('\n>>> TimeoutExpired: Thuật toán vượt quá thời gian yêu cầu.')    
-                    elif results[0][0] == True:    
-                        with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:
-                            file_error.write('\n>>> OutputMISSING: Không xuất được output. Có lẽ chưa print()?')
+                        with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
+                            file_error.write(
+                                '\n>>> TimeoutExpired: Thuật toán vượt quá thời gian yêu cầu.')
+                    elif results[0][0] == True:
+                        with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
+                            file_error.write(
+                                '\n>>> OutputMISSING: Không xuất được output. Có lẽ chưa print()?')
                 except ZeroDivisionError:
-                    with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:
-                        file_error.write('\n>>> ZeroDivisonError: Tồn tại phép tính chia cho 0')
+                    with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
+                        file_error.write(
+                            '\n>>> ZeroDivisonError: Tồn tại phép tính chia cho 0')
                     ui.ResultFrame.detail_entry.setText(
                         "Câu này đã xảy ra sự cố.")
             elif not ui.TestFrame.ans_file_entry.text():
                 ui.ResultFrame.detail_entry.setText("Chưa làm câu này")
-                with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:
+                with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
                     file_error.write('\n>>> Chưa làm bài')
-            with open(self.FILE_ERROR, 'r', encoding = 'utf-8', errors = 'ignore') as file_error:    
+            with open(self.FILE_ERROR, 'r', encoding='utf-8', errors='ignore') as file_error:
                 list_file = file_error.readlines()
                 if '>>>' not in list_file[-1]:
-                    with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error_w:
+                    with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error_w:
                         file_error_w.write('\n>>> Không xảy ra lỗi')
-            with open(self.FILE_ERROR, 'r', encoding = 'utf-8', errors = 'ignore') as file_error:    
+            with open(self.FILE_ERROR, 'r', encoding='utf-8', errors='ignore') as file_error:
                 ui.Error_text.setText(str(file_error.read()))
 
         totalScore = int()
@@ -321,6 +329,7 @@ class UIFunctions(ResultWindow):
             current_time = datetime.now().strftime("%H:%M:%S %d/%m/%Y")
             text = f'{name_account} :  {ui.Score.text()} ({current_time})\n'
             f.write(text)
+
     @staticmethod
     def reopen_main(ui):
         main_ui.main("student", ui.pg)

@@ -30,7 +30,7 @@ class ResultWindow(QMainWindow):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(RESULT_FORM_PATH, self)
         self.setGeometry(
-            round((SCREEN_WIDTH - self.width()) / 3),
+            round((SCREEN_WIDTH - self.width()) / 2),
             round((SCREEN_HEIGHT - self.height()) / 2),
             self.width(),
             self.height(),
@@ -270,27 +270,23 @@ class UIFunctions(ResultWindow):
                         self.TotalScore += (correct /
                                             len(self.assignments[i].tests) * self.assignments[i].mark)
 
-                        if correct < (len(results[:-1])/2):
-                            ui.ResultFrame.detail_entry.setText(
-                                "Bài làm chưa hoàn thiện tốt.")
-                        else:
-                            ui.ResultFrame.detail_entry.setText(
-                                "Bài làm hoàn thiện tốt.")
-
                         if result[0] == True:
                             with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
                                 file_error.write(
                                     '\n>>> TimeoutExpired: Thuật toán vượt quá thời gian yêu cầu.')
+                            ui.ResultFrame.detail_entry.setText(
+                                "Thuật toán vượt quá thời gian yêu cầu.")
                         elif result[0] == True:
                             with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
                                 file_error.write(
-                                    '\n>>> OutputMISSING: Không xuất được output. Có lẽ chưa print()?')
+                                    '\n>>> OutputMISSING: Không xuất được output.')
+                                ui.ResultFrame.detail_entry.setText("Không xuất được output. Có thể bài làm chưa in ra màn hình.")
                     except ZeroDivisionError:
                         with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
                             file_error.write(
-                                '\n>>> ZeroDivisionError: Tồn tại phép tính chia cho 0')
+                                '\n>>> ZeroDivisionError: Tồn tại phép tính chia cho 0.')
                         ui.ResultFrame.detail_entry.setText(
-                            "Câu này đã xảy ra sự cố.")
+                            "Tồn tại phép tính chia cho 0")
                 if errors:
                     for message in errors:
                         with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
@@ -301,12 +297,17 @@ class UIFunctions(ResultWindow):
                 ui.ResultFrame.detail_entry.setText("Chưa làm câu này")
                 with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
                     file_error.write('\n>>> Chưa làm bài')
+                    ui.ResultFrame.detail_entry.setText(
+                        "Chưa làm bài.")
 
             with open(self.FILE_ERROR, 'r', encoding='utf-8', errors='ignore') as file_error:
                 list_file = file_error.readlines()
                 if '>>>' not in list_file[-1]:
                     with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error_w:
                         file_error_w.write('\n>>> Không xảy ra lỗi')
+                    ui.ResultFrame.detail_entry.setText(
+                        "Bài làm hoàn thiện tốt.")
+
             with open(self.FILE_ERROR, 'r', encoding='utf-8', errors='ignore') as file_error:
                 ui.Error_text.setText(str(file_error.read()))
 

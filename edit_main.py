@@ -17,12 +17,12 @@ HTML_CONVERT_PATH = "./data/html_convert"
 
 
 class Assignment:
-    def __init__(self, name, details, mark, tests, errors):
+    def __init__(self, name, details, mark, tests, infos):
         self.name = name
         self.details = details
         self.mark = mark
         self.tests = tests
-        self.errors = errors
+        self.infos = infos
 
 
 class EditWindow(QMainWindow):
@@ -122,7 +122,7 @@ class UIFunctions(EditWindow):
                     border: 0px solid black; 
                     border-radius: 12px;""")
 
-            if not os.path.exists(child.test_file_entry.text()) or child.test_file_entry.text()[-2:] != 'xt':
+            if not os.path.exists(child.test_file_entry.text()) or child.test_file_entry.text()[-4:] != '.txt':
                 child.test_file_entry.setStyleSheet(
                     """background-color: rgb(255, 255, 255); 
                     border: 2px solid rgb(225, 0 , 0); 
@@ -133,6 +133,19 @@ class UIFunctions(EditWindow):
                     """background-color: rgb(255, 255, 255); 
                     border: 0px solid black; 
                     border-radius: 12px;""")
+
+            if not os.path.exists(child.info_file_entry.text()) or child.info_file_entry.text()[-4:] != '.txt':
+                child.info_file_entry.setStyleSheet(
+                    """background-color: rgb(255, 255, 255); 
+                    border: 2px solid rgb(225, 0 , 0); 
+                    border-radius: 12px;""")
+                self.CheckValue = False
+            else:
+                child.info_file_entry.setStyleSheet(
+                    """background-color: rgb(255, 255, 255); 
+                    border: 0px solid black; 
+                    border-radius: 12px;""")
+
             if child.Score_edit.value() < 0:
                 child.Score_edit.setStyleSheet(
                     """background-color: rgb(255, 255, 255); 
@@ -144,6 +157,7 @@ class UIFunctions(EditWindow):
                     """background-color: rgb(255, 255, 255); 
                     border: 0px solid black; 
                     border-radius: 12px;""")
+
         if self.CheckValue:
             self.show_file_dialog(ui, OPENED_ASSIGNMENT_PATH)
 
@@ -304,6 +318,7 @@ class UIFunctions(EditWindow):
                 tests.append([inputs, outputs])
             return tests
 
+    @staticmethod
     def load_info(info_file):
         with open(info_file, encoding = 'utf-8') as f:
             lines = f.readlines()
@@ -325,7 +340,7 @@ class UIFunctions(EditWindow):
                 assignment.name for assignment in assignments
             ]:
                 tests = self.load_io(children[i].test_file_entry.text())
-                infos = self.load_io(children[i].info_file_entry.text())
+                infos = self.load_info(children[i].info_file_entry.text())
                 assignments.append(
                     Assignment(
                         children[i].title_entry.text(),

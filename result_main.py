@@ -221,7 +221,7 @@ class UIFunctions(ResultWindow):
         return check_algorithm.main(
             filename=frame.ans_file_entry.text(),
             tests=assignment.tests,
-            info= assignment.info
+            infos=assignment.infos
         )
 
     def check_true(self, ui, num):
@@ -235,14 +235,10 @@ class UIFunctions(ResultWindow):
                 file_error.write('\nBài {}'.format(str(i+1)))
             correct = 0
             results = []
+            errors = []
             ui.TestFrame = children[i]
             if os.path.exists(ui.TestFrame.ans_file_entry.text()):
-                # try:
-                results = self.check_result(ui.TestFrame, i)
-                # except:
-                #     with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:
-                #         file_error.write('\n>>> FileERROR: File bài làm không đúng yêu cầu của đề')
-
+                results, errors = self.check_result(ui.TestFrame, i)
                 for result in results:
                     if result[1]:
                         correct += 1
@@ -265,44 +261,47 @@ class UIFunctions(ResultWindow):
             ui.ResultFrame.test_file_label.setText(self.assignments[i].name)
             self.TotalTest += len(self.assignments[i].tests)
             if len(results) != 0:
-                try:
-                    ui.ResultFrame.Score_box.setText(
-                        str(round(float(
-                            str(correct / len(self.assignments[i].tests) * self.assignments[i].mark)), 2))
-                    )
-                    if results[-1]:
-                        ui.ResultFrame.detail_entry.setText(
-                            "Bài làm đã tối ưu hóa.")
-                        self.Total += correct
-                    else:
-                        ui.ResultFrame.detail_entry.setText(
-                            "Bài làm chưa tối ưu hóa.")
-                        self.Total += correct
-                        self.Total -= 0.25
-                    self.TotalScore += (correct /
-                                        len(self.assignments[i].tests) * self.assignments[i].mark)
+                for result in results:
+                    try:
+                        ui.ResultFrame.Score_box.setText(
+                            str(round(float(
+                                str(correct / len(self.assignments[i].tests) * self.assignments[i].mark)), 2))
+                        )
+                        self.TotalScore += (correct /
+                                            len(self.assignments[i].tests) * self.assignments[i].mark)
 
-                    if correct < (len(results[:-1])/2):
+                        if correct < (len(results[:-1])/2):
+                            ui.ResultFrame.detail_entry.setText(
+                                "Bài làm chưa hoàn thiện tốt.")
+                        else:
+                            ui.ResultFrame.detail_entry.setText(
+                                "Bài làm hoàn thiện tốt.")
+
+                        if result[0] == True:
+                            with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
+                                file_error.write(
+                                    '\n>>> TimeoutExpired: Thuật toán vượt quá thời gian yêu cầu.')
+                        elif result[0] == True:
+                            with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
+                                file_error.write(
+                                    '\n>>> OutputMISSING: Không xuất được output. Có lẽ chưa print()?')
+                    except ZeroDivisionError:
+                        with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
+                            file_error.write(
+                                '\n>>> ZeroDivisionError: Tồn tại phép tính chia cho 0')
                         ui.ResultFrame.detail_entry.setText(
-                            "Bài làm chưa hoàn thiện tốt.")
-                    if results[0][0] == True:
+                            "Câu này đã xảy ra sự cố.")
+                if errors:
+                    for message in errors:
                         with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
-                            file_error.write(
-                                '\n>>> TimeoutExpired: Thuật toán vượt quá thời gian yêu cầu.')
-                    elif results[0][0] == True:
-                        with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
-                            file_error.write(
-                                '\n>>> OutputMISSING: Không xuất được output. Có lẽ chưa print()?')
-                except ZeroDivisionError:
-                    with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
-                        file_error.write(
-                            '\n>>> ZeroDivisonError: Tồn tại phép tính chia cho 0')
-                    ui.ResultFrame.detail_entry.setText(
-                        "Câu này đã xảy ra sự cố.")
+                            file_error.write(f'\n>>> {message}')
+                        ui.ResultFrame.detail_entry.setText(message)
+
             elif not ui.TestFrame.ans_file_entry.text():
                 ui.ResultFrame.detail_entry.setText("Chưa làm câu này")
                 with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
                     file_error.write('\n>>> Chưa làm bài')
+
             with open(self.FILE_ERROR, 'r', encoding='utf-8', errors='ignore') as file_error:
                 list_file = file_error.readlines()
                 if '>>>' not in list_file[-1]:

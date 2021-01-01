@@ -2,7 +2,7 @@ import os
 from subprocess import PIPE, STDOUT, Popen, TimeoutExpired
 
 
-def main(filename, inputs, outputs, time_limit=2):
+def main(filename, tests, time_limit=2):
     main.results = []
 
     def get_command():
@@ -40,8 +40,15 @@ def main(filename, inputs, outputs, time_limit=2):
 
         check.result[1] = True if output.rstrip() == ans.rstrip() else False
 
-    input, output = '\n'.join(inputs) if inputs else '', '\n'.join(outputs)
-    check(input, output)
-    main.results.append(check.result)
+
+    for test in tests:
+        inputs, outputs = test[0], test[1]
+        input = '\n'.join(inputs) if inputs else ''
+        if outputs:
+            output = '\n'.join(outputs)
+        else:
+            break
+        check(input, output)
+        main.results.append(check.result)
 
     return main.results

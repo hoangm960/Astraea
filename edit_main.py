@@ -18,13 +18,11 @@ HTML_CONVERT_PATH = "./data/html_convert"
 
 class Assignment:
 
-    def __init__(self, name, details, mark, inputs, outputs):
+    def __init__(self, name, details, mark, tests):
         self.name = name
-        # self.ex_file = ex_file
         self.details = details
         self.mark = mark
-        self.inputs = inputs
-        self.outputs = outputs
+        self.tests = tests
 
 
 class EditWindow(QMainWindow):
@@ -294,16 +292,18 @@ class UIFunctions(EditWindow):
     def popup_button(self, i):
         self.deleted = True if i.text().lower() == "ok" else False
 
-    def load_io(self, test_file):
-        self.tests = []
+    @staticmethod
+    def load_io(test_file):
         with open(test_file, encoding = 'utf-8') as f:
             lines = f.readlines()
             sep = lines[0].rstrip()
             del lines[0]
+            tests = []
             for line in lines:
                 inputs, outputs = line.strip("\n\r").split(sep)
                 inputs, outputs = inputs.split('&'), outputs.split('&')
-                return inputs, outputs
+                tests.append([inputs, outputs])
+            return tests
 
     def load_assignments(self, ui, filename):
         children = ui.content_widget.children()
@@ -313,14 +313,13 @@ class UIFunctions(EditWindow):
             if not children[i].title_entry.text() in [
                 assignment.name for assignment in assignments
             ]:
-                inputs, outputs = self.load_io(children[i].test_file_entry.text())
+                tests = self.load_io(children[i].test_file_entry.text())
                 assignments.append(
                     Assignment(
                         children[i].title_entry.text(),
                         children[i].details_entry.toPlainText(),
                         children[i].Score_edit.value(),
-                        inputs,
-                        outputs
+                        tests
                     )
                 )
 

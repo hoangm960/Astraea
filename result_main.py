@@ -218,8 +218,7 @@ class UIFunctions(ResultWindow):
         assignment = self.assignments[num]
         return check_algorithm.main(
             filename=frame.ans_file_entry.text(),
-            inputs= assignment.inputs,
-            outputs= assignment.outputs
+            tests= assignment.tests
         )
 
     def check_true(self, ui, num):
@@ -234,11 +233,11 @@ class UIFunctions(ResultWindow):
             results = []
             ui.TestFrame = children[i]
             if os.path.exists(ui.TestFrame.ans_file_entry.text()):
-                try:
-                    results = self.check_result(ui.TestFrame, i)
-                except:
-                    with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:
-                        file_error.write('\n>>> FileERROR: File bài làm không đúng yêu cầu của đề')
+                # try:
+                results = self.check_result(ui.TestFrame, i)
+                # except:
+                #     with open(self.FILE_ERROR, 'a+', encoding = 'utf-8', errors = 'ignore') as file_error:
+                #         file_error.write('\n>>> FileERROR: File bài làm không đúng yêu cầu của đề')
 
                 for result in results:
                     if result[1]:
@@ -258,13 +257,13 @@ class UIFunctions(ResultWindow):
             ui.ResultFrame = self.ResultFrame()
             ui.content_widget.layout().addWidget(ui.ResultFrame)
             ui.ResultFrame.correct_num.setText(
-                f'{str(correct)}/{str(len(self.assignments[i].outputs))}')
+                f'{str(correct)}/{str(len(self.assignments[i].tests))}')
             ui.ResultFrame.test_file_label.setText(self.assignments[i].name)
-            self.TotalTest += len(self.assignments[i].outputs)
+            self.TotalTest += len(self.assignments[i].tests)
             if len(results) != 0:
                 try:
                     ui.ResultFrame.Score_box.setText(
-                        str(round(float(str(correct / len(self.assignments[i].outputs) * self.assignments[i].mark)),2))
+                        str(round(float(str(correct / len(self.assignments[i].tests) * self.assignments[i].mark)),2))
                     )
                     if results[-1]:
                         ui.ResultFrame.detail_entry.setText(
@@ -275,7 +274,7 @@ class UIFunctions(ResultWindow):
                             "Bài làm chưa tối ưu hóa.")
                         self.Total += correct
                         self.Total -= 0.25
-                    self.TotalScore += (correct /len(self.assignments[i].outputs) * self.assignments[i].mark)
+                    self.TotalScore += (correct /len(self.assignments[i].tests) * self.assignments[i].mark)
                     
                     if correct < (len(results[:-1])/2):
                         ui.ResultFrame.detail_entry.setText(

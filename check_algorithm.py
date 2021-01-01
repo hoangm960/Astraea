@@ -63,7 +63,7 @@ def main(filename, tests, infos, time_limit=2):
     return main.results, check_info.info
 
 if __name__ == "__main__":
-    filename = "Test/read_doc.py"
+    filename = "Test/test1.py"
     tests = [[[""], ["Hello World"]]]
     infos = [["print", "Chưa in ra màn hình", ["1"]]]
     print(main(filename, tests, infos))

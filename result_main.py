@@ -220,7 +220,8 @@ class UIFunctions(ResultWindow):
         assignment = self.assignments[num]
         return check_algorithm.main(
             filename=frame.ans_file_entry.text(),
-            tests=assignment.tests
+            tests=assignment.tests,
+            info= assignment.info
         )
 
     def check_true(self, ui, num):

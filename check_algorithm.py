@@ -2,7 +2,7 @@ import os
 from subprocess import PIPE, STDOUT, Popen, TimeoutExpired
 
 
-def main(filename, tests, time_limit=2):
+def main(filename, tests, info, time_limit=2):
     main.results = []
 
     def get_command():
@@ -40,15 +40,29 @@ def main(filename, tests, time_limit=2):
 
         check.result[1] = True if output.rstrip() == ans.rstrip() else False
 
+    def check_info(info):
+        key, message, nums = (info[i] for i in range(len(info)))
+        data = open(filename).read()
+        if str(data.count(key)) not in nums:
+            check.result.append(message)
+
 
     for test in tests:
-        inputs, outputs = test[0], test[1]
+        inputs, outputs = (test[i] for i in range(len(test)))
         input = '\n'.join(inputs) if inputs else ''
         if outputs:
             output = '\n'.join(outputs)
         else:
             break
         check(input, output)
+        for info in infos:
+            check_info(info)
         main.results.append(check.result)
 
     return main.results
+
+if __name__ == "__main__":
+    filename = "Test/read_doc.py"
+    tests = [[[""], ["Hello World"]]]
+    infos = [["print", "Chưa in ra màn hình", ["1"]]]
+    print(main(filename, tests, infos))

@@ -17,12 +17,12 @@ HTML_CONVERT_PATH = "./data/html_convert"
 
 
 class Assignment:
-
-    def __init__(self, name, details, mark, tests):
+    def __init__(self, name, details, mark, tests, errors):
         self.name = name
         self.details = details
         self.mark = mark
         self.tests = tests
+        self.errors = errors
 
 
 class EditWindow(QMainWindow):
@@ -65,11 +65,7 @@ class UIFunctions(EditWindow):
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 
         # Button function
-        ui.btn_maximize.clicked.connect(lambda: self.maximize_restore(ui))
-        ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
-        ui.btn_quit.clicked.connect(lambda: self.reopen_main(ui))
-        ui.confirm_btn.clicked.connect(
-            lambda: self.check_empty_entry(ui))
+        self.connect_btn(ui)
 
         # Window size grip
         ui.sizegrip = QSizeGrip(ui.frame_grip)
@@ -78,6 +74,18 @@ class UIFunctions(EditWindow):
         )
         ui.sizegrip.setToolTip("Resize Window")
 
+        ui.stacked_widget.setCurrentIndex(0)
+        ui.Hours_entry.setDisabled(True)
+        ui.Minutes_entry.setDisabled(True)
+        self.check_empty(ui, open(OPENED_ASSIGNMENT_PATH,
+                                  encoding='utf-8').read().rstrip())
+
+    def connect_btn(self, ui):
+        ui.btn_maximize.clicked.connect(lambda: self.maximize_restore(ui))
+        ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
+        ui.btn_quit.clicked.connect(lambda: self.reopen_main(ui))
+        ui.confirm_btn.clicked.connect(
+            lambda: self.check_empty_entry(ui))
         ui.confirm_button.clicked.connect(lambda: self.go_to_second(ui))
         ui.return_btn.clicked.connect(
             lambda: ui.stacked_widget.setCurrentIndex(0))
@@ -94,13 +102,8 @@ class UIFunctions(EditWindow):
         )
         ui.confirm_add_btn.clicked.connect(
             lambda: ui.stacked_widget.setCurrentIndex(1))
-        ui.stacked_widget.setCurrentIndex(0)
-        ui.Hours_entry.setDisabled(True)
-        ui.Minutes_entry.setDisabled(True)
         ui.checkBox.clicked.connect(lambda: ui.Hours_entry.setValue(0))
         ui.checkBox.clicked.connect(lambda: ui.Minutes_entry.setValue(0))
-        self.check_empty(ui, open(OPENED_ASSIGNMENT_PATH,
-                                  encoding='utf-8').read().rstrip())
 
     def check_empty_entry(self, ui):
         self.CheckValue = True
@@ -206,7 +209,9 @@ class UIFunctions(EditWindow):
         if file_path:
             self.load_assignments(ui, file_path)
             self.reopen_main(ui)
-    def reopen_main(self, ui):
+
+    @staticmethod
+    def reopen_main(ui):
         ui.close()
         main_ui.main("teacher", ui.pg)
     class EditFrame(QWidget):
@@ -215,23 +220,17 @@ class UIFunctions(EditWindow):
             uic.loadUi(EDIT_FRAME_PATH, self)
 
             self.test_file_btn.clicked.connect(
-                lambda: self.show_file_dialog_Txt(self.test_file_entry)
+                lambda: self.get_file(self.test_file_entry, "*.txt")
+            )
+            self.info_file_btn.clicked.connect(
+                lambda: self.get_file(self.info_file_entry, "*.txt")
             )
 
-        def show_file_dialog_Txt(self, entry):
+        def get_file(self, entry, filter):
             HOME_PATH = os.path.join(os.path.join(
                 os.environ["USERPROFILE"]), "Desktop")
             file_name = QFileDialog.getOpenFileName(
-                self, "Open file", HOME_PATH, "*.txt")
-
-            if file_name[0]:
-                entry.setText(file_name[0])
-
-        def show_file_dialog_Py(self, entry):
-            HOME_PATH = os.path.join(os.path.join(
-                os.environ["USERPROFILE"]), "Desktop")
-            file_name = QFileDialog.getOpenFileName(
-                self, "Open file", HOME_PATH, "*.py;;*.pas")
+                self, "Open file", HOME_PATH, filter)
 
             if file_name[0]:
                 entry.setText(file_name[0])
@@ -305,6 +304,18 @@ class UIFunctions(EditWindow):
                 tests.append([inputs, outputs])
             return tests
 
+    def load_info(info_file):
+        with open(info_file, encoding = 'utf-8') as f:
+            lines = f.readlines()
+            sep = lines[0].rstrip()
+            del lines[0]
+            infos = []
+            for line in lines:
+                key, message, nums = line.strip("\n\r").split(sep)
+                nums = nums.split(",")
+                infos.append([key, message, nums])
+            return infos
+
     def load_assignments(self, ui, filename):
         children = ui.content_widget.children()
         del children[0]
@@ -314,12 +325,14 @@ class UIFunctions(EditWindow):
                 assignment.name for assignment in assignments
             ]:
                 tests = self.load_io(children[i].test_file_entry.text())
+                infos = self.load_io(children[i].info_file_entry.text())
                 assignments.append(
                     Assignment(
                         children[i].title_entry.text(),
                         children[i].details_entry.toPlainText(),
                         children[i].Score_edit.value(),
-                        tests
+                        tests,
+                        infos
                     )
                 )
 

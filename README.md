@@ -56,8 +56,10 @@ Phần mềm hỗ trợ dạy và học lập trình
 	+ Thêm chức năng lưu thông tin người dùng.
 	+ Thêm chức năng xóa, đổi tên các mục Docx.
 #### v2.6 (16/12):
-	+ Sửa đóng gói app
+	+ Sửa đóng gói app.
 #### v2.7 (17/12):
-	+ Hỗ trợ thêm ngôn ngữ Pascal
+	+ Hỗ trợ thêm ngôn ngữ Pascal.
 #### v2.8 (19/12):
-	+ Chuyển môi trường lập trình sang Thonny từ thonny
+	+ Chuyển môi trường lập trình sang Thonny từ thonny.
+#### v2.9 (1/1/2021):
+	+ Giáo viên có thể thêm file chú thích.

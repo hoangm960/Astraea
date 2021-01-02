@@ -9,15 +9,6 @@ import pygetwindow as gw
 VERSION = "2.9"
 PG = None
 
-parser = argparse.ArgumentParser(
-    description="Astraea - Công cụ hỗ trợ dạy học"
-)
-parser.add_argument(
-    "--file", type=str, help="Mở ứng dụng với file cho trước."
-)
-args = parser.parse_args()
-
-
 def create_file():
     USER_PATH = "./data/Users/"
     ENCRYPTION_PATH = "./data/encryption/"
@@ -54,11 +45,20 @@ def open_ide():
         PG = gw.getWindowsWithTitle(ide_title)[0]
         PG.minimize()
 
-check_ide()
-create_file()
-open_ide()
 
 if __name__ == "__main__":
+    check_ide()
+    create_file()
+    open_ide()
+
+    parser = argparse.ArgumentParser(
+    description="Astraea - Công cụ hỗ trợ dạy học"
+    )
+    parser.add_argument(
+        "--file", type=str, help="Mở ứng dụng với file cho trước."
+    )
+    args = parser.parse_args()
+    
     import login_main
     login_main.main(PG, VERSION)
     # login_main.main(args.file)

@@ -198,7 +198,7 @@ class UIFunctions(ResultWindow):
             ui.Accept.clicked.connect(
                 lambda: ui.stacked_widget.setCurrentIndex(0))
             ui.Accept.clicked.connect(
-                lambda: self.check_true(ui, len(self.assignments)))
+                lambda: self.check_true(ui))
             self.put_frame_in_list(ui, len(self.assignments))
 
     def put_frame_in_list(self, ui, num):
@@ -208,7 +208,6 @@ class UIFunctions(ResultWindow):
             current_layout.setContentsMargins(9, 9, 9, 9)
             ui.content_widgetT.setLayout(current_layout)
         ui.scrollArea.verticalScrollBar().setValue(1)
-        ui.results = self.ResultFrame()
 
         for i in range(num):
             ui.TestFrame = self.TestFrame()
@@ -224,52 +223,56 @@ class UIFunctions(ResultWindow):
             infos=assignment.infos
         )
 
-    def check_true(self, ui, num):
-        children = ui.content_widgetT.children()
-        del children[0:2]
+    def format_file_error(self):
         with open(self.FILE_ERROR, 'w', encoding='utf-8', errors='ignore') as file_error:
             file_error.write('\nPython {}'.format(
                 str(sys.version_info[0])+'.'+str(sys.version_info[1])))
-        for i in range(num):
+
+    def get_results(self, ui, child, num):
+        with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
+            file_error.write(f'\nBài {self.assignments[num].name}')
+        correct = 0
+        results = []
+        errors = []
+        ui.TestFrame = child
+        if os.path.exists(ui.TestFrame.ans_file_entry.text()):
+            results, errors = self.check_result(ui.TestFrame, num)
+            for result in results:
+                if result[1]:
+                    correct += 1
+            return correct, results, errors
+
+        elif ui.TestFrame.ans_file_entry.text():
             with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
-                file_error.write('\nBài {}'.format(str(i+1)))
-            correct = 0
-            results = []
-            errors = []
-            ui.TestFrame = children[i]
-            if os.path.exists(ui.TestFrame.ans_file_entry.text()):
-                results, errors = self.check_result(ui.TestFrame, i)
-                for result in results:
-                    if result[1]:
-                        correct += 1
-            elif ui.TestFrame.ans_file_entry.text():
-                with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
-                    file_error.write(
-                        '\n>>> FileExistsERROR: Lỗi không tìm thấy file bài làm.')
-                    ui.ResultFrame.detail_entry.setText("Không thể kiểm tra.")
+                file_error.write(
+                    '\n>>> FileExistsERROR: Lỗi không tìm thấy file bài làm.')
+                ui.ResultFrame.detail_entry.setText("Không thể kiểm tra.")
 
-            current_layout = ui.content_widget.layout()
-            if not current_layout:
-                current_layout = QVBoxLayout()
-                current_layout.setContentsMargins(9, 9, 9, 9)
-                ui.content_widget.setLayout(current_layout)
+    def check_true(self, ui):
+        children = ui.content_widgetT.children()
+        del children[0:2]
+        self.format_file_error()
 
+        current_layout = ui.content_widget.layout()
+        if not current_layout:
+            current_layout = QVBoxLayout()
+            current_layout.setContentsMargins(9, 9, 9, 9)
+            ui.content_widget.setLayout(current_layout)
+
+        for i in range(len(self.assignments)):
+            correct, results, errors = self.get_results(ui, children[i], i)
+            
             ui.ResultFrame = self.ResultFrame()
             ui.content_widget.layout().addWidget(ui.ResultFrame)
+            ui.ResultFrame.test_file_label.setText(self.assignments[i].name)
             ui.ResultFrame.correct_num.setText(
                 f'{str(correct)}/{str(len(self.assignments[i].tests))}')
-            ui.ResultFrame.test_file_label.setText(self.assignments[i].name)
-            self.TotalTest += len(self.assignments[i].tests)
+
             if len(results) != 0:
+                ui.ResultFrame.Score_box.setText(str(
+                    round(correct / len(self.assignments[i].tests) * self.assignments[i].mark, 2)))
                 for result in results:
                     try:
-                        ui.ResultFrame.Score_box.setText(
-                            str(round(float(
-                                str(correct / len(self.assignments[i].tests) * self.assignments[i].mark)), 2))
-                        )
-                        self.TotalScore += (correct /
-                                            len(self.assignments[i].tests) * self.assignments[i].mark)
-
                         if result[0] == True:
                             with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
                                 file_error.write(
@@ -280,7 +283,8 @@ class UIFunctions(ResultWindow):
                             with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
                                 file_error.write(
                                     '\n>>> OutputMISSING: Không xuất được output.')
-                                ui.ResultFrame.detail_entry.setText("Không xuất được output. Có thể bài làm chưa in ra màn hình.")
+                                ui.ResultFrame.detail_entry.setText(
+                                    "Không xuất được output. Có thể bài làm chưa in ra màn hình.")
                     except ZeroDivisionError:
                         with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
                             file_error.write(
@@ -314,6 +318,11 @@ class UIFunctions(ResultWindow):
         totalScore = int()
         for assignment in self.assignments:
             totalScore += assignment.mark
+        
+        children = ui.content_widget.children()
+        del children[0]
+        for child in children:
+            self.TotalScore += float(child.Score_box.text())
         if self.TotalScore != 0:
             ui.progressBar.setValue(int((self.TotalScore / totalScore)*100))
             ui.Score.setText(str(round(self.TotalScore, 2)))

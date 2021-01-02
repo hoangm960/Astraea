@@ -5,6 +5,7 @@ import sys
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 from win32api import GetMonitorInfo, MonitorFromPoint
+import mysql.connector
 
 from UI_Files import Resources
 
@@ -175,12 +176,28 @@ class UIFunctions(MainWindow):
             QPushButton:hover {background-color: rgba(156, 220, 254, 150);}"""
             )
             ui.main_btn.clicked.connect(lambda: self.open_result_form(ui))
+            ui.main_btn_2.clicked.connect(lambda: self.get_data("user"))
 
         @staticmethod
         def open_result_form(ui):
             import result_main
             window = result_main.ResultWindow(ui.pg)
             window.show()
+        
+        @staticmethod
+        def get_data(selection):
+            db = mysql.connector.connect(
+                host="remotemysql.com",
+                user="K63yMSwITl",
+                password="zRtA9VtyHq",
+                database="K63yMSwITl"
+            )
+            cursor = db.cursor()
+            cursor.execute(f"SELECT * FROM {selection}")
+            result = cursor.fetchall()
+            db.close()
+
+            return [i for i in result]
 
     def define_role(self, ui):
         if ui.role.lower() == "teacher":

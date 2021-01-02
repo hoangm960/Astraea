@@ -5,8 +5,7 @@ from datetime import datetime
 
 from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (QApplication, QFileDialog,
-                             QMainWindow, QSizeGrip,
+from PyQt5.QtWidgets import (QApplication, QFileDialog, QMainWindow, QSizeGrip,
                              QVBoxLayout, QWidget)
 from win32api import GetMonitorInfo, MonitorFromPoint
 
@@ -55,12 +54,6 @@ class ResultWindow(QMainWindow):
 class UIFunctions(ResultWindow):
     GLOBAL_STATE = False
     assignments = {}
-    lesson = {}
-    users = []
-    count = 0
-    mark = int()
-    Total = int()
-    TotalTest = int()
     TotalScore = int()
     USER_PATH = "./data/Users/User.txt"
     USER_PATH_ENCRYPTED = "./data/Users/User.encrypted"
@@ -103,19 +96,6 @@ class UIFunctions(ResultWindow):
         self.load_assignments(
             open(OPENED_LESSON_PATH, encoding='utf-8').read().rstrip())
         self.check_empty(ui, len(self.assignments))
-
-    def load_assignments(self, ui, filename):
-        ui.textBrowser.clear()
-        self.lesson.clear()
-        if os.path.exists(filename):
-            if os.path.getsize(filename) > 0:
-                with open(filename, "rb") as f:
-                    unpickler = pickle.Unpickler(f)
-                    data = unpickler.load()
-                    assignments = data[1]
-                    for assignment in assignments:
-                        self.lesson[assignment.name] = assignment.details
-                        ui.textBrowser.addItem(assignment.name)
 
     @classmethod
     def returnStatus(self):
@@ -230,7 +210,7 @@ class UIFunctions(ResultWindow):
 
     def get_results(self, ui, child, num):
         with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
-            file_error.write(f'\nBài {self.assignments[num].name}')
+            file_error.write(f'\n{self.assignments[num].name}')
         correct = 0
         results = []
         errors = []
@@ -261,7 +241,7 @@ class UIFunctions(ResultWindow):
 
         for i in range(len(self.assignments)):
             correct, results, errors = self.get_results(ui, children[i], i)
-            
+
             ui.ResultFrame = self.ResultFrame()
             ui.content_widget.layout().addWidget(ui.ResultFrame)
             ui.ResultFrame.test_file_label.setText(self.assignments[i].name)

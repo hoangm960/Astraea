@@ -75,8 +75,6 @@ class UIFunctions(EditWindow):
         ui.sizegrip.setToolTip("Resize Window")
 
         ui.stacked_widget.setCurrentIndex(0)
-        ui.Hours_entry.setDisabled(True)
-        ui.Minutes_entry.setDisabled(True)
         self.check_empty(ui, open(OPENED_ASSIGNMENT_PATH,
                                   encoding='utf-8').read().rstrip())
 
@@ -102,8 +100,6 @@ class UIFunctions(EditWindow):
         )
         ui.confirm_add_btn.clicked.connect(
             lambda: ui.stacked_widget.setCurrentIndex(1))
-        ui.checkBox.clicked.connect(lambda: ui.Hours_entry.setValue(0))
-        ui.checkBox.clicked.connect(lambda: ui.Minutes_entry.setValue(0))
 
     def check_empty_entry(self, ui):
         self.CheckValue = True

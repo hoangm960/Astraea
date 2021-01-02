@@ -15,6 +15,13 @@ monitor_info = GetMonitorInfo(MonitorFromPoint((0, 0)))
 work_area = monitor_info.get("Work")
 SCREEN_WIDTH, SCREEN_HEIGHT = work_area[2], work_area[3]
 
+connection = mysql.connector.connect(
+        host="remotemysql.com",
+        user="K63yMSwITl",
+        password="zRtA9VtyHq",
+        database="K63yMSwITl"
+)
+
 
 class MainWindow(QMainWindow):
     def __init__(self, role, pg):
@@ -181,7 +188,7 @@ class UIFunctions(MainWindow):
         @staticmethod
         def open_connect(ui):
             import download_popup
-            window = download_popup.DownloadWindow(ui.pg, ui.role)
+            window = download_popup.DownloadWindow(ui.pg, ui.role, connection)
             window.show()
             ui.close()
 
@@ -190,21 +197,6 @@ class UIFunctions(MainWindow):
             import result_main
             window = result_main.ResultWindow(ui.pg)
             window.show()
-        
-        @staticmethod
-        def get_data(selection):
-            db = mysql.connector.connect(
-                host="remotemysql.com",
-                user="K63yMSwITl",
-                password="zRtA9VtyHq",
-                database="K63yMSwITl"
-            )
-            cursor = db.cursor()
-            cursor.execute(f"SELECT * FROM {selection}")
-            result = cursor.fetchall()
-            db.close()
-
-            return [i for i in result]
 
     def define_role(self, ui):
         if ui.role.lower() == "teacher":

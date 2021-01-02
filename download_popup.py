@@ -3,15 +3,15 @@ import os
 import pickle
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import (QApplication, QMainWindow, QFileDialog)
-import pyodbc
 
 
 class DownloadWindow(QMainWindow):
     CONNECT_UI = "./UI_Files/connect.ui"
 
-    def __init__(self, pg, role,  *args, **kwargs):
+    def __init__(self, pg, role, connection, *args, **kwargs):
         self.pg = pg
         self.role = role
+        self.connection = connection
         QMainWindow.__init__(self, *args, **kwargs)
         uic.loadUi(self.CONNECT_UI, self)
         UIFunctions(self)
@@ -19,14 +19,10 @@ class DownloadWindow(QMainWindow):
 
 class UIFunctions(DownloadWindow):
     OPENED_ASSIGNMENT_PATH = "./data/Users/opened_assignment.oa"
-    server = 'localhost'
-    database = 'Astraea-v1'
-    connection = pyodbc.connect(
-        'DRIVER={ODBC Driver 17 for SQL Server};'
-        f'SERVER={server};'
-        f'DATABASE={database};'
-        'Trusted_Connection=yes;')
+    
     def __init__(self, ui):
+        self.connection = ui.connection
+        
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         ui.move(
@@ -40,21 +36,23 @@ class UIFunctions(DownloadWindow):
             lambda: self.upload(open(self.OPENED_LESSON_PATH).read()))
         if ui.role == 'student':
             ui.upload_btn.close()
+
     @classmethod
     def download(self, ui, id):
         if id:
             cursor = self.connection.cursor()
             cursor.execute(
-                "SELECT Name FROM [Astraea-v1].[dbo].[Lesson] WHERE LessonId = ?", id)
+                "SELECT Name FROM Lesson WHERE LessonId = ?", id)
             titles = [row for row in cursor]
             if titles:
                 title = titles[0][0]
                 cursor.execute(
-                    "SELECT AssignmentId FROM [Astraea-v1].[dbo].[Assignment] WHERE LessonId = ?", id)
+                    "SELECT AssignmentId FROM Assignment WHERE LessonId = ?", id)
                 assignments = [row[0] for row in cursor]
                 self.show_file_dialog(self.OPENED_ASSIGNMENT_PATH)
                 self.load_assignments(ui, open(
                     self.OPENED_ASSIGNMENT_PATH, encoding='utf-8').read().rstrip(), title, assignments)
+
     @staticmethod
     def show_file_dialog(filename):
         file_path = open(filename, encoding='utf-8').read().rstrip()
@@ -72,13 +70,13 @@ class UIFunctions(DownloadWindow):
         if id:
             cursor = self.connection.cursor()
             cursor.execute(
-                "SELECT Name, Details, Mark FROM [Astraea-v1].dbo.Assignment WHERE AssignmentId = ?", id)
+                "SELECT Name, Details, Mark FROM Assignment WHERE AssignmentId = ?", id)
             titles, details, mark = [row for row in cursor if row[0]][0]
             cursor.execute(
-                "SELECT InputContent FROM [Astraea-v1].dbo.Input WHERE AssignmentId = ?", id)
+                "SELECT InputContent FROM Input WHERE AssignmentId = ?", id)
             inputs = [row[0] for row in cursor if row[0]]
             cursor.execute(
-                "SELECT OutputContent FROM [Astraea-v1].dbo.Output WHERE AssignmentId = ?", id)
+                "SELECT OutputContent FROM Output WHERE AssignmentId = ?", id)
             outputs = [row[0] for row in cursor]
             return titles, details, mark, inputs, outputs
 
@@ -96,24 +94,18 @@ class UIFunctions(DownloadWindow):
             pickle.dump([title, assignments], f, -1)
 
         self.close_pg(ui)
+
     @classmethod
     def upload(self, filename):
-            if filename:
-                server = 'ADMIN' 
-                database = 'Astraea-v1'
-                connection = pyodbc.connect(
-                    'DRIVER={ODBC Driver 17 for SQL Server};'
-                    f'SERVER={server};'
-                    f'DATABASE={database};'
-                    'Trusted_Connection=yes;')
+        if filename:
+            cursor = self.connection.cursor()
+            data = self.parent.get_assignments(filename)
+            current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            cursor.execute("INSERT INTO Lesson VALUES (?, ?, ?);", 
+            (data[0], current_time, str(data[1])))
+            self.connection.commit()
+            self.connection.close()
 
-                cursor = connection.cursor()
-                data = self.parent.get_assignments(filename)
-                current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                cursor.execute("INSERT INTO [Astraea-v1].[dbo].[Lesson] VALUES (?, ?, ?);", 
-                (data[0], current_time, str(data[1])))
-                connection.commit()
-                connection.close()
     @staticmethod
     def close_pg(ui):
         import main_ui

@@ -1,4 +1,3 @@
-import argparse
 import os
 import subprocess
 from pathlib import Path
@@ -50,15 +49,6 @@ if __name__ == "__main__":
     check_ide()
     create_file()
     open_ide()
-
-    parser = argparse.ArgumentParser(
-    description="Astraea - Công cụ hỗ trợ dạy học"
-    )
-    parser.add_argument(
-        "--file", type=str, help="Mở ứng dụng với file cho trước."
-    )
-    args = parser.parse_args()
     
     import login_main
     login_main.main(PG, VERSION)
-    # login_main.main(args.file)

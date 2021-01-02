@@ -175,15 +175,14 @@ class UIFunctions(MainWindow):
             window.show()
 
     class StudentUiFunctions:
-        def __init__(self, parent, ui):
-            self.parent = parent
+        def __init__(self, ui):
             ui.main_btn.setText("Kiểm tra")
             ui.main_btn.setStyleSheet(
                 """QPushButton {background-color: rgb(156, 220, 254); border-radius: 5px;}
             QPushButton:hover {background-color: rgba(156, 220, 254, 150);}"""
             )
             ui.main_btn.clicked.connect(lambda: self.open_result_form(ui))
-            ui.Server_btn.clicked.connect(lambda: self.open_connect(ui))
+            ui.Server_btn.clicked.connect(lambda: self.open_result_form(ui))
 
         @staticmethod
         def open_connect(ui):
@@ -202,7 +201,7 @@ class UIFunctions(MainWindow):
         if ui.role.lower() == "teacher":
             self.TeacherUiFunctions(self, ui)
         if ui.role.lower() == "student":
-            self.StudentUiFunctions(self, ui)
+            self.StudentUiFunctions(ui)
 
 
 def main(role, pg):

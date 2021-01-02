@@ -1,8 +1,10 @@
 import datetime
 import os
 import pickle
+import sys
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import (QApplication, QMainWindow, QFileDialog)
+import mysql.connector
 
 
 class DownloadWindow(QMainWindow):
@@ -19,10 +21,10 @@ class DownloadWindow(QMainWindow):
 
 class UIFunctions(DownloadWindow):
     OPENED_ASSIGNMENT_PATH = "./data/Users/opened_assignment.oa"
-    
+
     def __init__(self, ui):
         self.connection = ui.connection
-        
+
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         ui.move(
@@ -37,17 +39,16 @@ class UIFunctions(DownloadWindow):
         if ui.role == 'student':
             ui.upload_btn.close()
 
-    @classmethod
     def download(self, ui, id):
         if id:
             cursor = self.connection.cursor()
             cursor.execute(
-                "SELECT Name FROM Lesson WHERE LessonId = ?", id)
+                f"SELECT Name FROM lesson WHERE LessonId = '{id}'")
             titles = [row for row in cursor]
             if titles:
                 title = titles[0][0]
                 cursor.execute(
-                    "SELECT AssignmentId FROM Assignment WHERE LessonId = ?", id)
+                    f"SELECT AssignmentId FROM assignment WHERE LessonId = '{id}'")
                 assignments = [row[0] for row in cursor]
                 self.show_file_dialog(self.OPENED_ASSIGNMENT_PATH)
                 self.load_assignments(ui, open(
@@ -70,25 +71,25 @@ class UIFunctions(DownloadWindow):
         if id:
             cursor = self.connection.cursor()
             cursor.execute(
-                "SELECT Name, Details, Mark FROM Assignment WHERE AssignmentId = ?", id)
+                f"SELECT Name, Details, Mark FROM assignment WHERE AssignmentId = '{id}'")
             titles, details, mark = [row for row in cursor if row[0]][0]
             cursor.execute(
-                "SELECT InputContent FROM Input WHERE AssignmentId = ?", id)
+                f"SELECT InputContent FROM input WHERE AssignmentId = '{id}'")
             inputs = [row[0] for row in cursor if row[0]]
             cursor.execute(
-                "SELECT OutputContent FROM Output WHERE AssignmentId = ?", id)
+                f"SELECT OutputContent FROM output WHERE AssignmentId = '{id}'")
             outputs = [row[0] for row in cursor]
             return titles, details, mark, inputs, outputs
 
     @classmethod
     def load_assignments(self, ui, filename, title, assignment_ids):
-        from edit_main import Assignment
+        from edit_main import assignment
         assignments = []
         for assignment_id in assignment_ids:
             titles, details, mark, inputs, outputs = self.get_assignment(
                 assignment_id)
             assignments.append(
-                Assignment(titles, details, mark, inputs, outputs)
+                assignment(titles, details, mark, inputs, outputs)
             )
         with open(filename, "wb") as f:
             pickle.dump([title, assignments], f, -1)
@@ -101,8 +102,8 @@ class UIFunctions(DownloadWindow):
             cursor = self.connection.cursor()
             data = self.parent.get_assignments(filename)
             current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            cursor.execute("INSERT INTO Lesson VALUES (?, ?, ?);", 
-            (data[0], current_time, str(data[1])))
+            cursor.execute(f"INSERT INTO lesson VALUES {data[0]}, {current_time}, {str(data[1])};", 
+            )
             self.connection.commit()
             self.connection.close()
 
@@ -112,3 +113,14 @@ class UIFunctions(DownloadWindow):
         main_ui.main(ui.role, ui.pg)
         ui.close()
 
+if __name__ == "__main__":
+    connection = mysql.connector.connect(
+        host="remotemysql.com",
+        user="K63yMSwITl",
+        password="zRtA9VtyHq",
+        database="K63yMSwITl"
+    )
+    app = QApplication(sys.argv)
+    window = DownloadWindow(None, "teacher", connection)
+    window.show()
+    sys.exit(app.exec_())

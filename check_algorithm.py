@@ -42,10 +42,10 @@ def main(filename, tests, infos, time_limit=2):
         check.result[1] = True if output.rstrip() == ans.rstrip() else False
 
     def check_info(info):
-        key, message, nums = (info[i] for i in range(len(info)))
+        key, message, num = (i for i in info)
         data = open(filename).read()
         data = [i for i in re.split('[;()\s]\s*', data) if i]
-        if str(data.count(key)) not in nums:
+        if str(data.count(key)) == num:
             check_info.info.append(message)
 
     for test in tests:

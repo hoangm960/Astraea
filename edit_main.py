@@ -323,7 +323,6 @@ class UIFunctions(EditWindow):
             infos = []
             for line in lines:
                 key, message, nums = line.strip("\n\r").split(sep)
-                nums = nums.split(",")
                 infos.append([key, message, nums])
             return infos
 

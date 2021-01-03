@@ -5,7 +5,7 @@ from time import sleep
 
 import pygetwindow as gw
 
-VERSION = "2.9"
+VERSION = "2.6"
 PG = None
 
 def create_file():

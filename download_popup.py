@@ -1,10 +1,11 @@
-import datetime
+from datetime import datetime
 import os
 import pickle
 import sys
-from PyQt5 import QtCore, uic
-from PyQt5.QtWidgets import (QApplication, QMainWindow, QFileDialog)
+
 import mysql.connector
+from PyQt5 import QtCore, uic
+from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 
 
 class DownloadWindow(QMainWindow):
@@ -20,10 +21,10 @@ class DownloadWindow(QMainWindow):
 
 
 class UIFunctions(DownloadWindow):
-    OPENED_ASSIGNMENT_PATH = "./data/Users/opened_assignment.oa"
+    OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
 
     def __init__(self, ui):
-        self.connection = ui.connection
+        ui.connection = ui.connection
 
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
@@ -35,13 +36,13 @@ class UIFunctions(DownloadWindow):
         ui.download_btn.clicked.connect(
             lambda: self.download(ui, ui.id_entry.text()))
         ui.upload_btn.clicked.connect(
-            lambda: self.upload(open(self.OPENED_LESSON_PATH).read()))
+            lambda: self.upload(ui, open(self.OPENED_LESSON_PATH).read()))
         if ui.role == 'student':
             ui.upload_btn.close()
 
     def download(self, ui, id):
         if id:
-            cursor = self.connection.cursor()
+            cursor = ui.connection.cursor()
             cursor.execute(
                 f"SELECT Name FROM lesson WHERE LessonId = '{id}'")
             titles = [row for row in cursor]
@@ -50,9 +51,9 @@ class UIFunctions(DownloadWindow):
                 cursor.execute(
                     f"SELECT AssignmentId FROM assignment WHERE LessonId = '{id}'")
                 assignments = [row[0] for row in cursor]
-                self.show_file_dialog(self.OPENED_ASSIGNMENT_PATH)
+                self.show_file_dialog(self.OPENED_LESSON_PATH)
                 self.load_assignments(ui, open(
-                    self.OPENED_ASSIGNMENT_PATH, encoding='utf-8').read().rstrip(), title, assignments)
+                    self.OPENED_LESSON_PATH, encoding='utf-8').read().rstrip(), title, assignments)
 
     @staticmethod
     def show_file_dialog(filename):
@@ -66,10 +67,10 @@ class UIFunctions(DownloadWindow):
             with open(filename, "w", encoding='utf8') as f:
                 f.write(file_path)
 
-    @classmethod
-    def get_assignment(self, id):
+    @staticmethod
+    def get_assignment(ui, id):
         if id:
-            cursor = self.connection.cursor()
+            cursor = ui.connection.cursor()
             cursor.execute(
                 f"SELECT Name, Details, Mark FROM assignment WHERE AssignmentId = '{id}'")
             titles, details, mark = [row for row in cursor if row[0]][0]
@@ -83,35 +84,66 @@ class UIFunctions(DownloadWindow):
 
     @classmethod
     def load_assignments(self, ui, filename, title, assignment_ids):
-        from edit_main import assignment
+        from edit_main import Assignment
         assignments = []
         for assignment_id in assignment_ids:
             titles, details, mark, inputs, outputs = self.get_assignment(
                 assignment_id)
             assignments.append(
-                assignment(titles, details, mark, inputs, outputs)
+                Assignment(titles, details, mark, inputs, outputs)
             )
         with open(filename, "wb") as f:
             pickle.dump([title, assignments], f, -1)
 
         self.close_pg(ui)
 
+    @staticmethod
+    def get_lesson(filename):
+        if os.path.exists(filename):
+            if os.path.getsize(filename) > 0:
+                with open(filename, "rb") as f:
+                    unpickler = pickle.Unpickler(f)
+                    data = unpickler.load()
+                    return data[0], data[1]
+
     @classmethod
-    def upload(self, filename):
+    def upload(self, ui, filename):
         if filename:
-            cursor = self.connection.cursor()
-            data = self.parent.get_assignments(filename)
+            cursor = ui.connection.cursor()
+            title, assignments = self.get_lesson(filename)
             current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            cursor.execute(f"INSERT INTO lesson VALUES {data[0]}, {current_time}, {str(data[1])};", 
-            )
-            self.connection.commit()
-            self.connection.close()
+            cursor.execute(
+                f"INSERT INTO lesson(Name, CreatedDate) VALUES('{title}', '{current_time}');")
+            lesson_id = cursor.lastrowid
+            for assignment in assignments:
+                name, details, mark = assignment.name, assignment.details, assignment.mark
+                cursor.execute(
+                    f"INSERT INTO assignment(LessonId, Name, Details, Mark) VALUES({lesson_id}, '{name}', '{details}', {mark});")
+                assignment_id = cursor.lastrowid
+                for test in assignment.tests:
+                    cursor.execute(
+                        f"INSERT INTO test(AssignmentId) VALUES({assignment_id});")
+                    test_id = cursor.lastrowid
+                    for input in test[0]:
+                        cursor.execute(
+                            f"INSERT INTO input(TestId, InputContent) VALUES({test_id}, '{input}');")
+                    for output in test[0]:
+                        cursor.execute(
+                            f"INSERT INTO output(TestId, OutputContent) VALUES({test_id}, '{output}');")
+                for info in assignment.infos:
+                    key, message, num = (i for i in info)
+                    cursor.execute(
+                        f"INSERT INTO info(AssignmentId, KeyWord, Message, Quantity) VALUES({assignment_id}, '{key}', '{message}', {num});")
+
+            ui.connection.commit()
+            ui.connection.close()
 
     @staticmethod
     def close_pg(ui):
         import main_ui
         main_ui.main(ui.role, ui.pg)
         ui.close()
+
 
 if __name__ == "__main__":
     connection = mysql.connector.connect(

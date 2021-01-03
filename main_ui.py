@@ -90,7 +90,15 @@ class UIFunctions(MainWindow):
         ui.LessonButton.clicked.connect(lambda: self.open_doc(ui, ui.pg))
 
         ui.list_assignments.itemPressed.connect(lambda: self.load_details(ui))
-    
+        ui.Server_btn.clicked.connect(lambda: self.open_connect(ui))
+
+    @staticmethod
+    def open_connect(ui):
+        import download_popup
+        window = download_popup.DownloadWindow(ui.pg, ui.role, connection)
+        window.show()
+        ui.close()
+
     @staticmethod
     def resize_idle(ui, pg):
         if pg:
@@ -182,14 +190,6 @@ class UIFunctions(MainWindow):
             QPushButton:hover {background-color: rgba(156, 220, 254, 150);}"""
             )
             ui.main_btn.clicked.connect(lambda: self.open_result_form(ui))
-            ui.Server_btn.clicked.connect(lambda: self.open_result_form(ui))
-
-        @staticmethod
-        def open_connect(ui):
-            import download_popup
-            window = download_popup.DownloadWindow(ui.pg, ui.role, connection)
-            window.show()
-            ui.close()
 
         @staticmethod
         def open_result_form(ui):

@@ -253,18 +253,18 @@ class UIFunctions(ResultWindow):
                     round(correct / len(self.assignments[i].tests) * self.assignments[i].mark, 2)))
                 for result in results:
                     try:
-                        if result[0] == True:
+                        if result[0]:
                             with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
                                 file_error.write(
                                     '\n>>> TimeoutExpired: Thuật toán vượt quá thời gian yêu cầu.')
                             ui.ResultFrame.detail_entry.setText(
                                 "Thuật toán vượt quá thời gian yêu cầu.")
-                        elif result[0] == True:
+                        elif not result[1]:
                             with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
                                 file_error.write(
-                                    '\n>>> OutputMISSING: Không xuất được output.')
+                                    '\n>>> WrongOutput: Bài làm sai kết quả.')
                                 ui.ResultFrame.detail_entry.setText(
-                                    "Không xuất được output. Có thể bài làm chưa in ra màn hình.")
+                                    "Bài làm sai kết quả.")
                     except ZeroDivisionError:
                         with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
                             file_error.write(

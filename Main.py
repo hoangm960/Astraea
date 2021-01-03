@@ -13,10 +13,12 @@ def create_file():
     ENCRYPTION_PATH = "./data/encryption/"
     OPENED_RESULT_PATH = "./data/results/"
     OPENED_ASSIGNMENT_PATH = "./data/Users/opened_assignment.oa"
+    DOC_UI = "./UI_Files/Doc.ui"
 
     Path(USER_PATH).mkdir(parents=True, exist_ok=True)
     Path(ENCRYPTION_PATH).mkdir(parents=True, exist_ok=True)
     Path(OPENED_RESULT_PATH).mkdir(parents=True, exist_ok=True)
+    Path(DOC_UI).mkdir(parents=True, exist_ok=True)
     if not os.path.exists(OPENED_ASSIGNMENT_PATH):
         open(OPENED_ASSIGNMENT_PATH, "w").close()
 

@@ -134,7 +134,7 @@ class UIFunctions(DownloadWindow):
                     key, message, num = (i for i in info)
                     cursor.execute(
                         f"INSERT INTO info(AssignmentId, KeyWord, Message, Quantity) VALUES({assignment_id}, '{key}', '{message}', {num});")
-
+            print(lesson_id)
             ui.connection.commit()
             ui.connection.close()
 

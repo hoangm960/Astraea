@@ -45,15 +45,8 @@ class UIFunctions(DownloadWindow):
             cursor = ui.connection.cursor()
             cursor.execute(
                 f"SELECT Name FROM lesson WHERE LessonId = '{id}'")
-            titles = [row for row in cursor]
-            if titles:
-                title = titles[0][0]
-                cursor.execute(
-                    f"SELECT AssignmentId FROM assignment WHERE LessonId = '{id}'")
-                assignments = [row[0] for row in cursor]
-                self.show_file_dialog(self.OPENED_LESSON_PATH)
-                self.load_assignments(ui, open(
-                    self.OPENED_LESSON_PATH, encoding='utf-8').read().rstrip(), title, assignments)
+            title = [row for row in cursor]
+            print()
 
     @staticmethod
     def show_file_dialog(filename):
@@ -127,7 +120,7 @@ class UIFunctions(DownloadWindow):
                     for input in test[0]:
                         cursor.execute(
                             f"INSERT INTO input(TestId, InputContent) VALUES({test_id}, '{input}');")
-                    for output in test[0]:
+                    for output in test[1]:
                         cursor.execute(
                             f"INSERT INTO output(TestId, OutputContent) VALUES({test_id}, '{output}');")
                 for info in assignment.infos:

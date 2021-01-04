@@ -1,8 +1,8 @@
 import os
 import pickle
 import sys
-
 import mysql.connector
+
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 from win32api import GetMonitorInfo, MonitorFromPoint
@@ -15,26 +15,22 @@ monitor_info = GetMonitorInfo(MonitorFromPoint((0, 0)))
 work_area = monitor_info.get("Work")
 SCREEN_WIDTH, SCREEN_HEIGHT = work_area[2], work_area[3]
 
-connection = mysql.connector.connect(
-        host="remotemysql.com",
-        user="K63yMSwITl",
-        password="zRtA9VtyHq",
-        database="K63yMSwITl"
-)
-
 
 class MainWindow(QMainWindow):
-    def __init__(self, role, pg):
-        QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
-        uic.loadUi(UI_MAIN_PATH, self)
+    def __init__(self, role, pg, connection):
         self.role = role
         self.pg = pg
+        self.connection = connection
+
+        QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
+        uic.loadUi(UI_MAIN_PATH, self)
         if self.pg:
             self.pg.restore()
             self.pg.moveTo(-8, 0)
             self.pg.resizeTo(
             SCREEN_WIDTH - self.width() + 16, self.height() + 8)
         UIFunctions(self)
+
     def changeEvent(self, event):
         if event.type() == QtCore.QEvent.WindowStateChange:
             if self.windowState() & QtCore.Qt.WindowMinimized:
@@ -95,7 +91,7 @@ class UIFunctions(MainWindow):
     @staticmethod
     def open_connect(ui):
         import download_popup
-        window = download_popup.DownloadWindow(ui.pg, ui.role, connection)
+        window = download_popup.DownloadWindow(ui.pg, ui.role, ui.connection)
         window.show()
         ui.close()
 
@@ -199,20 +195,26 @@ class UIFunctions(MainWindow):
             window.show()
 
     def define_role(self, ui):
-        if ui.role.lower() == "teacher":
+        if ui.role == 1:
             self.TeacherUiFunctions(self, ui)
-        if ui.role.lower() == "student":
+        if ui.role == 0:
             self.StudentUiFunctions(ui)
 
 
-def main(role, pg):
-    window = MainWindow(role, pg)
+def main(role, pg, connection):
+    window = MainWindow(role, pg, connection)
     window.move(SCREEN_WIDTH - window.width(), 0)
     window.show()
 
 
 if __name__ == "__main__":
+    connection = mysql.connector.connect(
+        host="remotemysql.com",
+        user="K63yMSwITl",
+        password="zRtA9VtyHq",
+        database="K63yMSwITl"
+    )
     app = QApplication(sys.argv)
-    main("teacher", None)
+    main("teacher", None, connection)
     # main("student", None)
     sys.exit(app.exec_())

@@ -89,7 +89,6 @@ class UIFunctions(DownloadWindow):
                 ui.label_2.setText('Tải xuống đã hoàn tất\nid: {}'.format(id))
                 ui.timer = QtCore.QTimer()
                 ui.timer.singleShot(1000, lambda: self.close_pg(ui))
-                self.close_pg(ui)
 
         except:
             ui.id_entry.clear()
@@ -191,7 +190,7 @@ class UIFunctions(DownloadWindow):
     @staticmethod
     def close_pg(ui):
         import main_ui
-        main_ui.main(ui.role, ui.pg)
+        main_ui.main(ui.role, ui.pg, ui.connection)
         ui.close()
 
 

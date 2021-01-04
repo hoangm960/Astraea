@@ -4,6 +4,7 @@ import subprocess
 import sys
 import time
 from random import randrange
+import mysql.connector
 
 from PyQt5 import QtCore, QtWidgets, uic
 from PyQt5.QtCore import Qt
@@ -21,20 +22,21 @@ SCREEN_WIDTH, SCREEN_HEIGHT = work_area[2], work_area[3]
 
 
 class User:
-    def __init__(self, name, password, role, name_user, id, auto_saved):
+    def __init__(self, id, name, name_user, password, role, auto_saved):
+        self.id = id
         self.name = name
+        self.name_user = name_user
         self.password = password
         self.role = role
         self.auto_saved = auto_saved
-        self.name_user = name_user
-        self.id = id
 
 
 class LoginWindow(QMainWindow):
     UI_PATH = "UI_Files/Login_gui.ui"
 
-    def __init__(self, pg):
+    def __init__(self, pg, connection):
         self.pg = pg
+        self.connection = connection
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(self.UI_PATH, self)
         LoginFunctions(self)
@@ -85,7 +87,7 @@ class LoginFunctions(LoginWindow):
         ui.btn_quit.setToolTip("Đóng")
         ui.HorizontalSpacer_L.hide()
         self.connect_btn(ui)
-        self.load_users()
+        self.load_users(ui)
         self.check_autosave(ui)
 
     def connect_btn(self, ui):
@@ -168,7 +170,21 @@ class LoginFunctions(LoginWindow):
                     }"""
             )
 
-    def load_users(self):
+    def download_users_data(self, ui):
+        cursor = ui.connection.cursor()
+        cursor.execute(f"SELECT UserId, Username, ShowName, Password, Type FROM user;")
+        users = [row for row in cursor]
+        file_users = []
+        for user in users:
+            id, username, name, password, role = (i for i in user)
+            file_users.append(User(id, username, name, password, role, False))
+        with open(self.USER_PATH, "wb") as f:
+            pickle.dump(file_users, f, -1)
+        encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
+
+    def load_users(self, ui):
+        self.download_users_data(ui)
+
         self.users.clear()
         decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
         time.sleep(1)
@@ -196,12 +212,9 @@ class LoginFunctions(LoginWindow):
             for user in self.users:
                 if user.name == name:
                     with open(self.OPENED_USER, 'w', encoding='utf-8') as f:
-                        f.write(user.name_user)
-                        f.write('\n')
-                        f.write(user.id)
-                        f.write('\n')
-                        f.write(user.password)
-                        f.write('\n')
+                        f.write(f'{user.name_user}\n')
+                        f.write(f'{str(user.id)}\n')
+                        f.write(f'{user.password}\n')
                     for i in range(len(self.users)):
                         self.users[i].auto_saved = False
                     if ui.SavePass.isChecked():
@@ -217,7 +230,7 @@ class LoginFunctions(LoginWindow):
                             self.USER_PATH_ENCRYPTED, self.KEY_PATH)
 
                     ui.close()
-                    main_ui.main(user.role, ui.pg)
+                    main_ui.main(user.role, ui.pg, ui.connection)
                     break
         QtCore.QTimer.singleShot(3000, lambda: ui.frameError.hide())
 
@@ -297,6 +310,7 @@ class Loading_Screen(QMainWindow):
 
 class UILoadingFunctions(Loading_Screen):
     PG = None
+    connection = None
     def __init__(self, ui, version):
         self.update_version(ui, str(version))
 
@@ -311,17 +325,15 @@ class UILoadingFunctions(Loading_Screen):
     def update_version(ui, version):
         ui.version.setText(f'<html><head/><body><p align="right"><span style=" font-size:14pt; color:#ffffff;">v{version}</span></p></body></html>')
 
-    @classmethod
     def delay(self, point, wait):
         if self.counter == point:
             time.sleep(wait)
 
-    @classmethod
     def progress(self, ui):
         ui.progressBar.setValue(self.counter)
         if self.counter > 100:
             ui.timer.stop()
-            ui.main = LoginWindow(self.PG)
+            ui.main = LoginWindow(self.PG, self.connection)
             ui.main.setGeometry(
                 round((SCREEN_WIDTH - ui.main.width()) / 2),
                 round((SCREEN_HEIGHT - ui.main.height()) / 5),
@@ -330,6 +342,7 @@ class UILoadingFunctions(Loading_Screen):
             )
             ui.main.show()
             ui.close()
+            
         if self.counter == 6:
             ui.timer.singleShot(
                 1500, lambda: ui.Loading_label.setText(
@@ -364,6 +377,13 @@ class UILoadingFunctions(Loading_Screen):
                 1500, lambda: ui.Loading_label.setText(
                     "Kết nối dữ liệu ...")
             )
+            self.connection = mysql.connector.connect(
+                    host="remotemysql.com",
+                    user="K63yMSwITl",
+                    password="zRtA9VtyHq",
+                    database="K63yMSwITl"
+            )
+
         self.delay(randrange(5, 10), 0.1)
         self.delay(randrange(20, 30), 0.23)
         self.delay(randrange(40, 50), 0.43)
@@ -374,8 +394,7 @@ class UILoadingFunctions(Loading_Screen):
         self.counter += 1
 
 
-def main(version, file=''):
-    FILE = file
+def main(version):
     app = QApplication(sys.argv)
     splash_window = Loading_Screen(version)
     splash_window.show()
@@ -383,5 +402,4 @@ def main(version, file=''):
 
 
 if __name__ == "__main__":
-    import Main
-    main(None, Main.PG)
+    main('2.6')

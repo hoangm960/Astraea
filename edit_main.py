@@ -7,7 +7,6 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (QApplication, QFileDialog, QMainWindow,
                              QMessageBox, QSizeGrip, QVBoxLayout, QWidget)
 
-import main_ui
 
 KEY_PATH = "./data/Lesson/assignments.key"
 EDIT_FORM_PATH = "./UI_Files/edit_form.ui"
@@ -254,8 +253,10 @@ class UIFunctions(EditWindow):
 
     @staticmethod
     def reopen_main(ui):
-        ui.close()
+        import main_ui
         main_ui.main("teacher", ui.pg)
+        ui.close()
+
     class EditFrame(QWidget):
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)

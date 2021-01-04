@@ -77,14 +77,31 @@ class UIFunctions(EditWindow):
         ui.stacked_widget.setCurrentIndex(0)
         self.check_empty(ui, open(OPENED_ASSIGNMENT_PATH,
                                   encoding='utf-8').read().rstrip())
-
     def connect_btn(self, ui):
         ui.btn_maximize.clicked.connect(lambda: self.maximize_restore(ui))
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
         ui.btn_quit.clicked.connect(lambda: self.reopen_main(ui))
         ui.confirm_btn.clicked.connect(
             lambda: self.check_empty_entry(ui))
-        ui.confirm_button.clicked.connect(lambda: self.go_to_second(ui))
+        def check():
+            if "'" in ui.name_entry.text():
+                ui.name_entry.setStyleSheet("""border-radius: 10px;
+                                                color: rgb(255, 0, 0);
+                                                border: 2px solid rgb(255,0,0);
+                                                background-color: rgb(255, 255, 255);""")
+                ui.name_entry.setText("Vui lòng không chứa kí tự '. Có thể thay bằng \"")
+                ui.name_entry.setDisabled(True)
+                ui.timer = QtCore.QTimer()
+                def setDefaut():
+                    ui.name_entry.clear()
+                    ui.name_entry.setStyleSheet("""border-radius: 10px;
+                                                color: rgb(0, 0, 0);
+                                                background-color: rgb(255, 255, 255);""")
+                    ui.name_entry.setDisabled(False)
+                ui.timer.singleShot(2500, lambda: setDefaut())
+            else:
+                self.go_to_second(ui)
+        ui.confirm_button.clicked.connect(lambda: check())
         ui.return_btn.clicked.connect(
             lambda: ui.stacked_widget.setCurrentIndex(0))
         ui.return_btn.clicked.connect(
@@ -106,7 +123,7 @@ class UIFunctions(EditWindow):
         children = ui.content_widget.children()
         del children[0]
         for child in children:
-            if not child.title_entry.text():
+            if not child.title_entry.text() or "'" in child.title_entry.text():
                 child.title_entry.setStyleSheet(
                     """background-color: rgb(255, 255, 255); 
                     border: 2px solid rgb(225, 0 , 0); 
@@ -118,7 +135,7 @@ class UIFunctions(EditWindow):
                     border: 0px solid black; 
                     border-radius: 12px;""")
 
-            if not os.path.exists(child.test_file_entry.text()) or child.test_file_entry.text()[-4:] != '.txt':
+            if not os.path.exists(child.test_file_entry.text()) or child.test_file_entry.text()[-4:] != '.txt' or "'" in child.test_file_entry.text():
                 child.test_file_entry.setStyleSheet(
                     """background-color: rgb(255, 255, 255); 
                     border: 2px solid rgb(225, 0 , 0); 
@@ -130,7 +147,7 @@ class UIFunctions(EditWindow):
                     border: 0px solid black; 
                     border-radius: 12px;""")
 
-            if not os.path.exists(child.info_file_entry.text()) or child.info_file_entry.text()[-4:] != '.txt':
+            if not os.path.exists(child.info_file_entry.text()) or child.info_file_entry.text()[-4:] != '.txt' or "'" in child.info_file_entry.text():
                 child.info_file_entry.setStyleSheet(
                     """background-color: rgb(255, 255, 255); 
                     border: 2px solid rgb(225, 0 , 0); 
@@ -153,6 +170,21 @@ class UIFunctions(EditWindow):
                     """background-color: rgb(255, 255, 255); 
                     border: 0px solid black; 
                     border-radius: 12px;""")
+            if "'" in child.details_entry.toPlainText():
+                text = child.details_entry.toPlainText()
+                child.details_entry.setText("Dấu nháy ' không hợp lệ, có thể thay bằng dấu nháy \"")
+                child.details_entry.setStyleSheet("""background-color: rgb(255, 255, 255); 
+                    border: 2px solid rgb(255,0,0); 
+                    border-radius: 12px;""")
+                child.details_entry.setDisabled(True)
+                ui.timer = QtCore.QTimer()
+                def setDefaut():
+                    child.details_entry.setStyleSheet("""background-color: rgb(255, 255, 255);
+                                    border-radius: 12px;""")
+                    child.details_entry.setText(text)
+                    child.details_entry.setDisabled(False)
+                ui.timer.singleShot(2500, lambda: setDefaut())
+
 
         if self.CheckValue:
             self.show_file_dialog(ui, OPENED_ASSIGNMENT_PATH)

@@ -5,7 +5,6 @@ from time import sleep
 
 
 VERSION = "2.6"
-PG = None
 
 def create_file():
     USER_PATH = "./data/Users/"

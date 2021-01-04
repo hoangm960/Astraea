@@ -374,7 +374,7 @@ class UILoadingFunctions(Loading_Screen):
         self.counter += 1
 
 
-def main(pg, version, file=''):
+def main(version, file=''):
     FILE = file
     app = QApplication(sys.argv)
     splash_window = Loading_Screen(version)

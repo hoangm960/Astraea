@@ -92,13 +92,13 @@ class UIFunctions(EditWindow):
                 ui.name_entry.setText("Vui lòng không chứa kí tự '. Có thể thay bằng \"")
                 ui.name_entry.setDisabled(True)
                 ui.timer = QtCore.QTimer()
-                def setDefaut():
+                def setDefault():
                     ui.name_entry.clear()
                     ui.name_entry.setStyleSheet("""border-radius: 10px;
                                                 color: rgb(0, 0, 0);
                                                 background-color: rgb(255, 255, 255);""")
                     ui.name_entry.setDisabled(False)
-                ui.timer.singleShot(2500, lambda: setDefaut())
+                ui.timer.singleShot(2500, lambda: setDefault())
             else:
                 self.go_to_second(ui)
         ui.confirm_button.clicked.connect(lambda: check())
@@ -178,12 +178,12 @@ class UIFunctions(EditWindow):
                     border-radius: 12px;""")
                 child.details_entry.setDisabled(True)
                 ui.timer = QtCore.QTimer()
-                def setDefaut():
+                def setDefault():
                     child.details_entry.setStyleSheet("""background-color: rgb(255, 255, 255);
                                     border-radius: 12px;""")
                     child.details_entry.setText(text)
                     child.details_entry.setDisabled(False)
-                ui.timer.singleShot(2500, lambda: setDefaut())
+                ui.timer.singleShot(2500, lambda: setDefault())
 
 
         if self.CheckValue:

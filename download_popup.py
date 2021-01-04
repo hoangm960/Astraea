@@ -40,25 +40,59 @@ class UIFunctions(DownloadWindow):
         if ui.role == 'student':
             ui.upload_btn.close()
 
-    def download(self, ui, id):
-        if id:
+    def download(self, ui, lesson_id):
+        from edit_main import Assignment
+        if lesson_id:
             cursor = ui.connection.cursor()
             cursor.execute(
-                f"SELECT Name FROM lesson WHERE LessonId = '{id}'")
-            title = [row for row in cursor]
-            print()
+                f"SELECT Name FROM lesson WHERE LessonId = '{lesson_id}'")
+            title = [row for row in cursor][0][0]
+            if title:
+                cursor.execute(
+                    f"SELECT AssignmentId, Name, Details, Mark FROM assignment WHERE LessonId = '{lesson_id}'")
+                assignments = [row for row in cursor]
+
+                file_assignments = []
+                for assignment in assignments:
+                    assignment_id, name, details, mark = (
+                        i for i in assignment)
+                    cursor.execute(
+                        f"SELECT TestId FROM test WHERE AssignmentId = '{assignment_id}'")
+                    tests = [row for row in cursor]
+
+                    file_tests = []
+                    for test in tests:
+                        test_id = test[0]
+                        cursor.execute(
+                            f"SELECT InputContent FROM input WHERE TestId = '{test_id}'")
+                        inputs = [row[0] for row in cursor]
+                        cursor.execute(
+                            f"SELECT OutputContent FROM output WHERE TestId = '{test_id}'")
+                        outputs = [row[0] for row in cursor]
+                        file_tests.append([inputs, outputs])
+
+                    cursor.execute(
+                        f"SELECT KeyWord, Message, Quantity FROM info WHERE AssignmentId = '{assignment_id}'")
+                    infos = [row for row in cursor]
+
+                    file_assignments.append(Assignment(
+                        name, details, mark, file_tests, infos))
+
+                with open(self.show_file_dialog(self.OPENED_LESSON_PATH), "wb") as f:
+                    pickle.dump([title, file_assignments], f, -1)
+
+        self.close_pg(ui)
 
     @staticmethod
     def show_file_dialog(filename):
-        file_path = open(filename, encoding='utf-8').read().rstrip()
-        if not file_path:
-            HOME_PATH = os.path.join(os.path.join(
-                os.environ["USERPROFILE"]), "Desktop")
-            file_path = QFileDialog.getSaveFileName(
-                None, "Open file", HOME_PATH, "*.list"
-            )[0]
-            with open(filename, "w", encoding='utf8') as f:
-                f.write(file_path)
+        HOME_PATH = os.path.join(os.path.join(
+            os.environ["USERPROFILE"]), "Desktop")
+        file_path = QFileDialog.getSaveFileName(
+            None, "Open file", HOME_PATH, "*.list"
+        )[0]
+        with open(filename, "w", encoding='utf8') as f:
+            f.write(file_path)
+        return file_path
 
     @staticmethod
     def get_assignment(ui, id):
@@ -130,6 +164,8 @@ class UIFunctions(DownloadWindow):
             print(lesson_id)
             ui.connection.commit()
             ui.connection.close()
+
+        self.close_pg(ui)
 
     @staticmethod
     def close_pg(ui):

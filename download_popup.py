@@ -39,7 +39,6 @@ class UIFunctions(DownloadWindow):
             lambda: self.upload(ui, open(self.OPENED_LESSON_PATH).read()))
         if ui.role == 'student':
             ui.upload_btn.close()
-        
 
     def download(self, ui, lesson_id):
         from edit_main import Assignment
@@ -89,19 +88,22 @@ class UIFunctions(DownloadWindow):
                 ui.id_entry.close()
                 ui.label_2.setText('Tải xuống đã hoàn tất\nid: {}'.format(id))
                 ui.timer = QtCore.QTimer()
-                ui.timer.singleShot(1000,lambda: self.close_pg(ui))
+                ui.timer.singleShot(1000, lambda: self.close_pg(ui))
                 self.close_pg(ui)
 
         except:
             ui.id_entry.clear()
             ui.id_entry.setText('ID không chính xác')
-            ui.id_entry.setStyleSheet("""background-color: rgb(255, 255, 255); color: rgb(255,0,0);""")
-            def set_defaut():
+            ui.id_entry.setStyleSheet(
+                """background-color: rgb(255, 255, 255); color: rgb(255,0,0);""")
+
+            def set_default():
                 ui.id_entry.clear()
-                ui.id_entry.setStyleSheet("""background-color: rgb(255, 255, 255);""")
+                ui.id_entry.setStyleSheet(
+                    """background-color: rgb(255, 255, 255);""")
             timer = QtCore.QTimer()
-            timer.singleShot(1000, lambda: set_defaut())
-        
+            timer.singleShot(1000, lambda: set_default())
+
     @staticmethod
     def show_file_dialog(filename):
         HOME_PATH = os.path.join(os.path.join(
@@ -154,52 +156,37 @@ class UIFunctions(DownloadWindow):
 
     @classmethod
     def upload(self, ui, filename):
-        try:
-            cursor = ui.connection.cursor()
-            title, assignments = self.get_lesson(filename)
-            current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        cursor = ui.connection.cursor()
+        title, assignments = self.get_lesson(filename)
+        current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        cursor.execute(
+            f"INSERT INTO lesson(Name, CreatedDate) VALUES('{title}', '{current_time}');")
+        lesson_id = cursor.lastrowid
+        for assignment in assignments:
+            name, details, mark = assignment.name, assignment.details, assignment.mark
             cursor.execute(
-                f"INSERT INTO lesson(Name, CreatedDate) VALUES('{title}', '{current_time}');")
-            lesson_id = cursor.lastrowid
-            for assignment in assignments:
-                name, details, mark = assignment.name, assignment.details, assignment.mark
+                f"INSERT INTO assignment(LessonId, Name, Details, Mark) VALUES({lesson_id}, '{name}', '{details}', {mark});")
+            assignment_id = cursor.lastrowid
+            for test in assignment.tests:
                 cursor.execute(
-                    f"INSERT INTO assignment(LessonId, Name, Details, Mark) VALUES({lesson_id}, '{name}', '{details}', {mark});")
-                assignment_id = cursor.lastrowid
-                for test in assignment.tests:
+                    f"INSERT INTO test(AssignmentId) VALUES({assignment_id});")
+                test_id = cursor.lastrowid
+                for input in test[0]:
                     cursor.execute(
-                        f"INSERT INTO test(AssignmentId) VALUES({assignment_id});")
-                    test_id = cursor.lastrowid
-                    for input in test[0]:
-                        cursor.execute(
-                            f"INSERT INTO input(TestId, InputContent) VALUES({test_id}, '{input}');")
-                    for output in test[1]:
-                        cursor.execute(
-                            f"INSERT INTO output(TestId, OutputContent) VALUES({test_id}, '{output}');")
-                for info in assignment.infos:
-                    key, message, num = (i for i in info)
+                        f"INSERT INTO input(TestId, InputContent) VALUES({test_id}, '{input}');")
+                for output in test[1]:
                     cursor.execute(
-                        f"INSERT INTO info(AssignmentId, KeyWord, Message, Quantity) VALUES({assignment_id}, '{key}', '{message}', {num});")
-            # print(lesson_id)
-            ui.connection.commit()
-            ui.connection.close()
-            ui.frame.close()
-            ui.label_2.show()
-            ui.frame_2.close()
-            ui.id_entry.close()
-            ui.label_2.setText('Hoàn tất đăng bài\nid: {}'.format(lesson_id))
-            ui.timer = QtCore.QTimer()
-            ui.timer.singleShot(1000,lambda: self.close_pg(ui))
-        except:
-            ui.id_entry.clear()
-            ui.id_entry.setText('ID không chính xác')
-            ui.id_entry.setStyleSheet("""background-color: rgb(255, 255, 255); color: rgb(255,0,0);""")
-            def set_defaut():
-                ui.id_entry.clear()
-                ui.id_entry.setStyleSheet("""background-color: rgb(255, 255, 255);""")
-            timer = QtCore.QTimer()
-            timer.singleShot(1000, lambda: set_defaut())
-
+                        f"INSERT INTO output(TestId, OutputContent) VALUES({test_id}, '{output}');")
+            for info in assignment.infos:
+                key, message, num = (i for i in info)
+                cursor.execute(
+                    f"INSERT INTO info(AssignmentId, KeyWord, Message, Quantity) VALUES({assignment_id}, '{key}', '{message}', {num});")
+        ui.connection.commit()
+        ui.connection.close()
+        ui.label_2.show()
+        ui.frame_2.close()
+        ui.id_entry.close()
+        ui.label_2.setText('Hoàn tất đăng bài\nid: {}'.format(lesson_id))
 
     @staticmethod
     def close_pg(ui):

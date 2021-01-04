@@ -39,29 +39,60 @@ class UIFunctions(DownloadWindow):
             lambda: self.upload(ui, open(self.OPENED_LESSON_PATH).read()))
         if ui.role == 'student':
             ui.upload_btn.close()
+        
 
-    def download(self, ui, id):
-        cursor = ui.connection.cursor()
-        cursor.execute(
-            f"SELECT Name FROM lesson WHERE LessonId = '{id}'")
-        titles = [row for row in cursor]
-        if titles:
-            title = titles[0][0]
+    def download(self, ui, lesson_id):
+        from edit_main import Assignment
+        try:
+            cursor = ui.connection.cursor()
             cursor.execute(
-                f"SELECT AssignmentId FROM assignment WHERE LessonId = '{id}'")
-            assignments = [row[0] for row in cursor]
-            self.show_file_dialog(self.OPENED_LESSON_PATH)
-            self.load_assignments(ui, open(
-                self.OPENED_LESSON_PATH, encoding='utf-8').read().rstrip(), title, assignments)
-            ui.frame.close()
-            ui.frame_2.close()
-            ui.label_2.show()
-            id = ui.id_entry.text()
-            ui.id_entry.close()
-            ui.label_2.setText('Tải xuống đã hoàn tất\nid: {}'.format(id))
-            ui.timer = QtCore.QTimer()
-            ui.timer.singleShot(1000,lambda: self.close_pg(ui))
-        else:
+                f"SELECT Name FROM lesson WHERE LessonId = '{lesson_id}'")
+            title = [row for row in cursor][0][0]
+            if title:
+                cursor.execute(
+                    f"SELECT AssignmentId, Name, Details, Mark FROM assignment WHERE LessonId = '{lesson_id}'")
+                assignments = [row for row in cursor]
+
+                file_assignments = []
+                for assignment in assignments:
+                    assignment_id, name, details, mark = (
+                        i for i in assignment)
+                    cursor.execute(
+                        f"SELECT TestId FROM test WHERE AssignmentId = '{assignment_id}'")
+                    tests = [row for row in cursor]
+
+                    file_tests = []
+                    for test in tests:
+                        test_id = test[0]
+                        cursor.execute(
+                            f"SELECT InputContent FROM input WHERE TestId = '{test_id}'")
+                        inputs = [row[0] for row in cursor]
+                        cursor.execute(
+                            f"SELECT OutputContent FROM output WHERE TestId = '{test_id}'")
+                        outputs = [row[0] for row in cursor]
+                        file_tests.append([inputs, outputs])
+
+                    cursor.execute(
+                        f"SELECT KeyWord, Message, Quantity FROM info WHERE AssignmentId = '{assignment_id}'")
+                    infos = [row for row in cursor]
+
+                    file_assignments.append(Assignment(
+                        name, details, mark, file_tests, infos))
+
+                with open(self.show_file_dialog(self.OPENED_LESSON_PATH), "wb") as f:
+                    pickle.dump([title, file_assignments], f, -1)
+
+                ui.frame.close()
+                ui.frame_2.close()
+                ui.label_2.show()
+                id = ui.id_entry.text()
+                ui.id_entry.close()
+                ui.label_2.setText('Tải xuống đã hoàn tất\nid: {}'.format(id))
+                ui.timer = QtCore.QTimer()
+                ui.timer.singleShot(1000,lambda: self.close_pg(ui))
+                self.close_pg(ui)
+
+        except:
             ui.id_entry.clear()
             ui.id_entry.setText('ID không chính xác')
             ui.id_entry.setStyleSheet("""background-color: rgb(255, 255, 255); color: rgb(255,0,0);""")
@@ -70,19 +101,17 @@ class UIFunctions(DownloadWindow):
                 ui.id_entry.setStyleSheet("""background-color: rgb(255, 255, 255);""")
             timer = QtCore.QTimer()
             timer.singleShot(1000, lambda: set_defaut())
-
-
+        
     @staticmethod
     def show_file_dialog(filename):
-        file_path = open(filename, encoding='utf-8').read().rstrip()
-        if not file_path:
-            HOME_PATH = os.path.join(os.path.join(
-                os.environ["USERPROFILE"]), "Desktop")
-            file_path = QFileDialog.getSaveFileName(
-                None, "Open file", HOME_PATH, "*.list"
-            )[0]
-            with open(filename, "w", encoding='utf8') as f:
-                f.write(file_path)
+        HOME_PATH = os.path.join(os.path.join(
+            os.environ["USERPROFILE"]), "Desktop")
+        file_path = QFileDialog.getSaveFileName(
+            None, "Open file", HOME_PATH, "*.list"
+        )[0]
+        with open(filename, "w", encoding='utf8') as f:
+            f.write(file_path)
+        return file_path
 
     @staticmethod
     def get_assignment(ui, id):
@@ -144,7 +173,7 @@ class UIFunctions(DownloadWindow):
                     for input in test[0]:
                         cursor.execute(
                             f"INSERT INTO input(TestId, InputContent) VALUES({test_id}, '{input}');")
-                    for output in test[0]:
+                    for output in test[1]:
                         cursor.execute(
                             f"INSERT INTO output(TestId, OutputContent) VALUES({test_id}, '{output}');")
                 for info in assignment.infos:
@@ -170,6 +199,8 @@ class UIFunctions(DownloadWindow):
                 ui.id_entry.setStyleSheet("""background-color: rgb(255, 255, 255);""")
             timer = QtCore.QTimer()
             timer.singleShot(1000, lambda: set_defaut())
+
+
     @staticmethod
     def close_pg(ui):
         import main_ui

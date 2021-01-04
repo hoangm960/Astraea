@@ -350,8 +350,6 @@ class UIFunctions(EditWindow):
             pickle.dump([ui.lesson_title.text(), assignments], f, -1)
     
 
-
-
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = EditWindow()

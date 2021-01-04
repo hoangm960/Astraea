@@ -142,17 +142,18 @@ class UIFunctions(MainWindow):
     def load_assignments(self, ui, filename):
         ui.list_assignments.clear()
         self.assignments.clear()
-        title, assignments = self.get_assignments(filename) 
-        for assignment in assignments:
-            self.assignments[assignment.name] = assignment.details
-            ui.list_assignments.addItem(assignment.name)
-        self.change_assignment_title(ui, title)
+        lesson = self.get_assignments(filename) 
+        if lesson:
+            title, assignments = lesson
+            for assignment in assignments:
+                self.assignments[assignment.name] = assignment.details
+                ui.list_assignments.addItem(assignment.name)
+            self.change_assignment_title(ui, title)
 
     def load_details(self, ui):
         ui.assignment_details.setText(
             self.assignments[ui.list_assignments.currentItem().text()]
         )
-    
 
     @staticmethod
     def change_assignment_title(ui, title):

@@ -284,8 +284,7 @@ class LoginFunctions(LoginWindow):
 class Loading_Screen(QMainWindow):
     counter = 0
 
-    def __init__(self, pg, version):
-        self.pg = pg
+    def __init__(self, version):
         self.version = version
 
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
@@ -297,6 +296,7 @@ class Loading_Screen(QMainWindow):
         UILoadingFunctions(self, version)
 
 class UILoadingFunctions(Loading_Screen):
+    PG = None
     def __init__(self, ui, version):
         self.update_version(ui, str(version))
 
@@ -321,7 +321,7 @@ class UILoadingFunctions(Loading_Screen):
         ui.progressBar.setValue(self.counter)
         if self.counter > 100:
             ui.timer.stop()
-            ui.main = LoginWindow(ui.pg)
+            ui.main = LoginWindow(self.PG)
             ui.main.setGeometry(
                 round((SCREEN_WIDTH - ui.main.width()) / 2),
                 round((SCREEN_HEIGHT - ui.main.height()) / 5),
@@ -357,8 +357,8 @@ class UILoadingFunctions(Loading_Screen):
                         ide_title = title
                         break
             if gw.getWindowsWithTitle(ide_title):
-                PG = gw.getWindowsWithTitle(ide_title)[0]
-                PG.minimize()
+                self.PG = gw.getWindowsWithTitle(ide_title)[0]
+                self.PG.minimize()
         if self.counter == 73:
             ui.timer.singleShot(
                 1500, lambda: ui.Loading_label.setText(
@@ -377,7 +377,7 @@ class UILoadingFunctions(Loading_Screen):
 def main(pg, version, file=''):
     FILE = file
     app = QApplication(sys.argv)
-    splash_window = Loading_Screen(pg, version)
+    splash_window = Loading_Screen(version)
     splash_window.show()
     sys.exit(app.exec_())
 

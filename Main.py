@@ -25,10 +25,9 @@ def create_file():
 
 
 
-
 if __name__ == "__main__":
     
     create_file()
 
     import login_main
-    login_main.main(PG, VERSION)
+    login_main.main(VERSION)

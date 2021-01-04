@@ -330,7 +330,7 @@ class UILoadingFunctions(Loading_Screen):
             )
             ui.main.show()
             ui.close()
-        if self.counter == 20:
+        if self.counter == 6:
             ui.timer.singleShot(
                 1500, lambda: ui.Loading_label.setText(
                     "Kiểm tra cài đặt ...")
@@ -341,12 +341,24 @@ class UILoadingFunctions(Loading_Screen):
                 ui.timer.singleShot(500, lambda: ui.Loading_label.setText("Tải Thonny...")) 
                 subprocess.call('pip3 install thonny')
                 time.sleep(6)      
-        if self.counter == 34:
+        if self.counter == 14:
             ui.timer.singleShot(
                 2905, lambda: ui.Loading_label.setText(
                     "Khởi động Thonny ...")
             )
-            Main.open_ide()
+            import pygetwindow as gw        
+            subprocess.Popen(['thonny'], shell=True)
+            time.sleep(2)
+            ide_title = ''
+            while not ide_title:
+                titles = gw.getAllTitles()
+                for title in titles:
+                    if "thonny" in title.lower():
+                        ide_title = title
+                        break
+            if gw.getWindowsWithTitle(ide_title):
+                PG = gw.getWindowsWithTitle(ide_title)[0]
+                PG.minimize()
         if self.counter == 73:
             ui.timer.singleShot(
                 1500, lambda: ui.Loading_label.setText(

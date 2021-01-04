@@ -3,7 +3,6 @@ import subprocess
 from pathlib import Path
 from time import sleep
 
-import pygetwindow as gw
 
 VERSION = "2.6"
 PG = None
@@ -24,20 +23,7 @@ def create_file():
     if not os.path.exists(OPENED_ASSIGNMENT_PATH):
         open(OPENED_ASSIGNMENT_PATH, "w").close()
 
-def open_ide():
-    global PG
-    subprocess.Popen(['thonny'], shell=True)
-    sleep(2)
-    ide_title = ''
-    while not ide_title:
-        titles = gw.getAllTitles()
-        for title in titles:
-            if "thonny" in title.lower():
-                ide_title = title
-                break
-    if gw.getWindowsWithTitle(ide_title):
-        PG = gw.getWindowsWithTitle(ide_title)[0]
-        PG.minimize()
+
 
 
 if __name__ == "__main__":

@@ -25,7 +25,7 @@ class UIFunctions(DownloadWindow):
 
     def __init__(self, ui):
         ui.connection = ui.connection
-
+        ui.label_2.hide()
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         ui.move(
@@ -41,19 +41,36 @@ class UIFunctions(DownloadWindow):
             ui.upload_btn.close()
 
     def download(self, ui, id):
-        if id:
-            cursor = ui.connection.cursor()
+        cursor = ui.connection.cursor()
+        cursor.execute(
+            f"SELECT Name FROM lesson WHERE LessonId = '{id}'")
+        titles = [row for row in cursor]
+        if titles:
+            title = titles[0][0]
             cursor.execute(
-                f"SELECT Name FROM lesson WHERE LessonId = '{id}'")
-            titles = [row for row in cursor]
-            if titles:
-                title = titles[0][0]
-                cursor.execute(
-                    f"SELECT AssignmentId FROM assignment WHERE LessonId = '{id}'")
-                assignments = [row[0] for row in cursor]
-                self.show_file_dialog(self.OPENED_LESSON_PATH)
-                self.load_assignments(ui, open(
-                    self.OPENED_LESSON_PATH, encoding='utf-8').read().rstrip(), title, assignments)
+                f"SELECT AssignmentId FROM assignment WHERE LessonId = '{id}'")
+            assignments = [row[0] for row in cursor]
+            self.show_file_dialog(self.OPENED_LESSON_PATH)
+            self.load_assignments(ui, open(
+                self.OPENED_LESSON_PATH, encoding='utf-8').read().rstrip(), title, assignments)
+            ui.frame.close()
+            ui.frame_2.close()
+            ui.label_2.show()
+            id = ui.id_entry.text()
+            ui.id_entry.close()
+            ui.label_2.setText('Tải xuống đã hoàn tất\nid: {}'.format(id))
+            ui.timer = QtCore.QTimer()
+            ui.timer.singleShot(1000,lambda: self.close_pg(ui))
+        else:
+            ui.id_entry.clear()
+            ui.id_entry.setText('ID không chính xác')
+            ui.id_entry.setStyleSheet("""background-color: rgb(255, 255, 255); color: rgb(255,0,0);""")
+            def set_defaut():
+                ui.id_entry.clear()
+                ui.id_entry.setStyleSheet("""background-color: rgb(255, 255, 255);""")
+            timer = QtCore.QTimer()
+            timer.singleShot(1000, lambda: set_defaut())
+
 
     @staticmethod
     def show_file_dialog(filename):
@@ -108,7 +125,7 @@ class UIFunctions(DownloadWindow):
 
     @classmethod
     def upload(self, ui, filename):
-        if filename:
+        try:
             cursor = ui.connection.cursor()
             title, assignments = self.get_lesson(filename)
             current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -134,10 +151,25 @@ class UIFunctions(DownloadWindow):
                     key, message, num = (i for i in info)
                     cursor.execute(
                         f"INSERT INTO info(AssignmentId, KeyWord, Message, Quantity) VALUES({assignment_id}, '{key}', '{message}', {num});")
-            print(lesson_id)
+            # print(lesson_id)
             ui.connection.commit()
             ui.connection.close()
-
+            ui.frame.close()
+            ui.label_2.show()
+            ui.frame_2.close()
+            ui.id_entry.close()
+            ui.label_2.setText('Hoàn tất đăng bài\nid: {}'.format(lesson_id))
+            ui.timer = QtCore.QTimer()
+            ui.timer.singleShot(1000,lambda: self.close_pg(ui))
+        except:
+            ui.id_entry.clear()
+            ui.id_entry.setText('ID không chính xác')
+            ui.id_entry.setStyleSheet("""background-color: rgb(255, 255, 255); color: rgb(255,0,0);""")
+            def set_defaut():
+                ui.id_entry.clear()
+                ui.id_entry.setStyleSheet("""background-color: rgb(255, 255, 255);""")
+            timer = QtCore.QTimer()
+            timer.singleShot(1000, lambda: set_defaut())
     @staticmethod
     def close_pg(ui):
         import main_ui

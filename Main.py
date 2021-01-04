@@ -24,15 +24,6 @@ def create_file():
     if not os.path.exists(OPENED_ASSIGNMENT_PATH):
         open(OPENED_ASSIGNMENT_PATH, "w").close()
 
-
-def check_ide():
-    try:
-        import thonny
-    except ImportError:
-        subprocess.call('pip3 install thonny')
-        sleep(2)
-
-
 def open_ide():
     global PG
     subprocess.Popen(['thonny'], shell=True)
@@ -50,9 +41,8 @@ def open_ide():
 
 
 if __name__ == "__main__":
-    check_ide()
-    create_file()
-    open_ide()
     
+    create_file()
+
     import login_main
     login_main.main(PG, VERSION)

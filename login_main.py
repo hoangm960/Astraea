@@ -1,5 +1,6 @@
 import os
 import pickle
+import subprocess
 import sys
 import time
 from random import randrange
@@ -333,16 +334,23 @@ class UILoadingFunctions(Loading_Screen):
             ui.timer.singleShot(
                 1500, lambda: ui.Loading_label.setText(
                     "Kiểm tra cài đặt ...")
-            )
-        if self.counter == 45:
+            )  
+            try:
+                import thonny
+            except ImportError:
+                ui.timer.singleShot(500, lambda: ui.Loading_label.setText("Tải Thonny...")) 
+                subprocess.call('pip3 install thonny')
+                time.sleep(6)      
+        if self.counter == 34:
             ui.timer.singleShot(
                 2905, lambda: ui.Loading_label.setText(
-                    "Thiết lập giao diện ...")
+                    "Khởi động Thonny ...")
             )
+            Main.open_ide()
         if self.counter == 73:
             ui.timer.singleShot(
                 1500, lambda: ui.Loading_label.setText(
-                    "Kết nối dữ liệu  ...")
+                    "Kết nối dữ liệu ...")
             )
         self.delay(randrange(5, 10), 0.1)
         self.delay(randrange(20, 30), 0.23)

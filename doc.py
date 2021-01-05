@@ -202,9 +202,9 @@ class UIFunctions(DocWindow):
                 UIFunctions.docs[ui.titles.currentItem().text()]))
 
     def define_role(self, ui):
-        if ui.role.lower() == 1:
+        if ui.role == 1:
             self.TeacherUiFunctions(ui)
-        if ui.role.lower() == 0:
+        if ui.role == 0:
             self.StudentUiFunctions(ui)
 
 

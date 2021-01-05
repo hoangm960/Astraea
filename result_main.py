@@ -80,7 +80,7 @@ class UIFunctions(ResultWindow):
         def quit():
             ui.Accept1.clicked.connect(lambda: ui.close())
             ui.Accept1.clicked.connect(
-                lambda: main_ui.main("student", ui.pg))
+                lambda: main_ui.main(0, ui.pg))
             ui.Deny1.clicked.connect(lambda: ui.bg_frame.setStyleSheet(
                 """background-color: rgb(30, 30, 30); border-radius: 10px; color: rgb(255, 255, 255);"""))
             ui.bg_frame.setStyleSheet(
@@ -322,7 +322,7 @@ class UIFunctions(ResultWindow):
 
     @staticmethod
     def reopen_main(ui):
-        main_ui.main("student", ui.pg)
+        main_ui.main(0, ui.pg)
         ui.close()
 
 

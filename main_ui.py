@@ -88,12 +88,11 @@ class UIFunctions(MainWindow):
         ui.list_assignments.itemPressed.connect(lambda: self.load_details(ui))
         ui.Server_btn.clicked.connect(lambda: self.open_connect(ui))
 
-    @staticmethod
-    def open_connect(ui):
+    def open_connect(self, ui):
+        self.close_pg(ui, ui.pg)
         import download_popup
         window = download_popup.DownloadWindow(ui.pg, ui.role, ui.connection)
         window.show()
-        ui.close()
 
     @staticmethod
     def resize_idle(ui, pg):
@@ -176,7 +175,7 @@ class UIFunctions(MainWindow):
         @staticmethod
         def open_edit_form(ui):
             import edit_main
-            window = edit_main.EditWindow(ui.pg)
+            window = edit_main.EditWindow(ui.pg, ui.connection)
             window.show()
 
     class StudentUiFunctions:
@@ -215,6 +214,6 @@ if __name__ == "__main__":
         database="K63yMSwITl"
     )
     app = QApplication(sys.argv)
-    main("teacher", None, connection)
-    # main("student", None)
+    main(1, None, connection)
+    # main(0, None)
     sys.exit(app.exec_())

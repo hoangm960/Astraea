@@ -202,6 +202,6 @@ if __name__ == "__main__":
         database="K63yMSwITl"
     )
     app = QApplication(sys.argv)
-    window = DownloadWindow(None, "teacher", connection)
+    window = DownloadWindow(None, 1, connection)
     window.show()
     sys.exit(app.exec_())

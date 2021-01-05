@@ -202,15 +202,15 @@ class UIFunctions(DocWindow):
                 UIFunctions.docs[ui.titles.currentItem().text()]))
 
     def define_role(self, ui):
-        if ui.role.lower() == "teacher":
+        if ui.role.lower() == 1:
             self.TeacherUiFunctions(ui)
-        if ui.role.lower() == "student":
+        if ui.role.lower() == 0:
             self.StudentUiFunctions(ui)
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    # window = DocWindow("teacher", None)
-    window = DocWindow("student", None)
+    # window = DocWindow(1, None)
+    window = DocWindow(0, None)
     window.show()
     sys.exit(app.exec_())

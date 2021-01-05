@@ -25,8 +25,9 @@ class Assignment:
 
 
 class EditWindow(QMainWindow):
-    def __init__(self, pg=None):
+    def __init__(self, pg, connection):
         self.pg = pg
+        self.connection = connection
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(EDIT_FORM_PATH, self)
         self.setGeometry(
@@ -254,7 +255,7 @@ class UIFunctions(EditWindow):
     @staticmethod
     def reopen_main(ui):
         import main_ui
-        main_ui.main("teacher", ui.pg)
+        main_ui.main(1, ui.pg, ui.connection)
         ui.close()
 
     class EditFrame(QWidget):

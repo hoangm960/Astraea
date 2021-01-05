@@ -253,15 +253,8 @@ class LoginFunctions(LoginWindow):
         if check:
             role = 1 if ui.teacher.isChecked() else 0
             cursor.execute(f"INSERT INTO user(Username, ShowName, Password, Type) VALUES('{username}', '{name}', '{password}', {role});")
+            ui.connection.commit()
 
-            decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
-            with open(self.USER_PATH, 'w', encoding='utf-8') as f:
-                f.write(f'{username}\n')
-                f.write(f'{name}\n')
-                f.write(f'{password}\n')
-                f.write('True' if ui.SavePass.isChecked() else 'False')
-            encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
-            
             ui.NameBox_SI.clear()
             ui.PassBox_SI.clear()
             ui.SavePass.setChecked(False)

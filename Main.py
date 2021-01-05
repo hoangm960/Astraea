@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 
 
-VERSION = "2.6"
+VERSION = "2.6.2"
 
 
 def create_file():

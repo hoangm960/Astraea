@@ -50,3 +50,8 @@ Phần mềm hỗ trợ dạy và học lập trình
 + Giáo viên có thể thêm file chú thích.
 #### v2.6 (16/12): 
 + Hỗ trợ cơ sở dữ liệu.
+#### v2.6.1 (4/12): 
++ Các bài học có thể được tải lên và tải xuống thông qua cơ sở dữ liệu.
+#### v2.6.2 (4/12): 
++ Dữ liệu, thông tin của người dùng được lưu trữ thông qua cơ sở dữ liệu.
+

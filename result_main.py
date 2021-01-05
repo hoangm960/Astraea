@@ -59,7 +59,7 @@ class UIFunctions(ResultWindow):
     USER_PATH_ENCRYPTED = "./data/Users/User.encrypted"
     KEY_PATH = "./data/encryption/users.key"
     OPENED_USER = "./data/Users/opened_user.ou"
-    FILE_ERROR = "./data/Users/ERROR.txt"
+    FILE_ERROR = "./data/results/ERROR.txt"
 
     def __init__(self, ui):
         # Delete title bar

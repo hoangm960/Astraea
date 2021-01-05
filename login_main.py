@@ -22,13 +22,12 @@ SCREEN_WIDTH, SCREEN_HEIGHT = work_area[2], work_area[3]
 
 
 class User:
-    def __init__(self, id, name, name_user, password, role, auto_saved):
+    def __init__(self, id, name, name_user, password, role):
         self.id = id
         self.name = name
         self.name_user = name_user
         self.password = password
         self.role = role
-        self.auto_saved = auto_saved
 
 
 class LoginWindow(QMainWindow):
@@ -56,14 +55,12 @@ class LoginWindow(QMainWindow):
         self.dragPos = event.globalPos()
     
 class LoginFunctions(LoginWindow):
-    users = []
     enabled = "qwertyuiopasdfghjklzxcvbnm1234567890 @/._"
     GLOBAL_STATE = False
     STATE_ECHOPASS = True
     USER_PATH = "data/Users/User.txt"
     USER_PATH_ENCRYPTED = "data/Users/User.encrypted"
     KEY_PATH = "data/encryption/users.key"
-    OPENED_USER = "data/Users/opened_user.ou"
 
     def __init__(self, ui):
         ui.OkCancelFrame.hide()
@@ -139,12 +136,15 @@ class LoginFunctions(LoginWindow):
             ui.student.setChecked(True)
 
     def check_autosave(self, ui):
-        for user in self.users:
-            if user.auto_saved:
-                ui.NameBox_SI.setText(user.name)
-                ui.PassBox_SI.setText(user.password)
+        decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
+        with open(self.USER_PATH) as f:
+            lines = f.readlines()
+        if lines:
+            if bool(lines[-1]):
+                ui.NameBox_SI.setText(lines[0].rstrip())
+                ui.PassBox_SI.setText(lines[2].rstrip())
                 ui.SavePass.setChecked(True)
-                break
+        encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
 
     def maximize_restore(self, ui):
         status = self.GLOBAL_STATE
@@ -196,10 +196,14 @@ class LoginFunctions(LoginWindow):
                 else:
                     cursor.execute(f"SELECT ShowName, Password, Type FROM user WHERE Username = '{username}'")
                     name, password, role = (row[i] for row in cursor for i in range(len(row)))
-                    with open(self.OPENED_USER, 'w', encoding='utf-8') as f:
+
+                    decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
+                    with open(self.USER_PATH, 'w', encoding='utf-8') as f:
                         f.write(f'{username}\n')
                         f.write(f'{name}\n')
                         f.write(f'{password}\n')
+                        f.write('True' if ui.SavePass.isChecked() else 'False')
+                    encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
 
                     ui.close()
                     main_ui.main(role, ui.pg, ui.connection)
@@ -244,22 +248,20 @@ class LoginFunctions(LoginWindow):
             ui.Note_User.show()
             check = False
         if check:
-            decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
-            with open(self.USER_PATH, "wb") as f:
-                name = ui.NameBox.text()
-                password = ui.PassBox.text()
-                role = "teacher" if ui.teacher.isChecked() else "student"
-                code = ''
-                for i in range(0, 8):
-                    code += str(randrange(0, 10))
-                self.users.append(
-                    User(name, password, role, name_account, code, False))
-                pickle.dump(self.users, f)
+            # decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
+            # with open(self.USER_PATH, "wb") as f:
+            #     name = ui.NameBox.text()
+            #     password = ui.PassBox.text()
+            #     role = "teacher" if ui.teacher.isChecked() else "student"
+            #     code = ''
+            #     for i in range(0, 8):
+            #         code += str(randrange(0, 10))
+            #     self.users.append(
+            #         User(name, password, role, name_account, code))
+            #     pickle.dump(self.users, f)
 
-            encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
-            for user in self.users:
-                if user.auto_saved:
-                    user.auto_saved = False
+            # encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
+            
             ui.NameBox_SI.clear()
             ui.PassBox_SI.clear()
             ui.SavePass.setChecked(False)

@@ -181,7 +181,6 @@ class UIFunctions(DownloadWindow):
                 cursor.execute(
                     f"INSERT INTO info(AssignmentId, KeyWord, Message, Quantity) VALUES({assignment_id}, '{key}', '{message}', {num});")
         ui.connection.commit()
-        ui.connection.close()
         ui.label_2.show()
         ui.frame_2.close()
         ui.id_entry.close()

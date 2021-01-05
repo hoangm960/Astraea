@@ -87,7 +87,6 @@ class LoginFunctions(LoginWindow):
         ui.btn_quit.setToolTip("Đóng")
         ui.HorizontalSpacer_L.hide()
         self.connect_btn(ui)
-        self.load_users(ui)
         self.check_autosave(ui)
 
     def connect_btn(self, ui):
@@ -96,8 +95,12 @@ class LoginFunctions(LoginWindow):
         ui.btn_maximize.clicked.connect(lambda: self.maximize_restore(ui))
         ui.btn_quit.clicked.connect(lambda: ui.OkCancelFrame.show())
         ui.Accept.clicked.connect(lambda: ui.close())
-        if ui.pg:
-            ui.Accept.clicked.connect(lambda: ui.pg.close())
+        def close_pg():
+            try:
+                ui.pg.close()
+            except:
+                pass
+        ui.Accept.clicked.connect(close_pg)
         ui.Deny.clicked.connect(lambda: ui.OkCancelFrame.hide())
         ui.eyeHide_SI.clicked.connect(
             lambda: ui.PassBox_SI.setEchoMode(QtWidgets.QLineEdit.Password)
@@ -170,69 +173,37 @@ class LoginFunctions(LoginWindow):
                     }"""
             )
 
-    def download_users_data(self, ui):
-        cursor = ui.connection.cursor()
-        cursor.execute(f"SELECT UserId, Username, ShowName, Password, Type FROM user;")
-        users = [row for row in cursor]
-        file_users = []
-        for user in users:
-            id, username, name, password, role = (i for i in user)
-            file_users.append(User(id, username, name, password, role, False))
-        with open(self.USER_PATH, "wb") as f:
-            pickle.dump(file_users, f, -1)
-        encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
-
-    def load_users(self, ui):
-        self.download_users_data(ui)
-
-        self.users.clear()
-        decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
-        time.sleep(1)
-        if os.path.getsize(self.USER_PATH) > 0:
-            with open(self.USER_PATH, "rb") as f:
-                unpickler = pickle.Unpickler(f)
-                self.users = unpickler.load()
-        encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
-
     def check_SI(self, ui):
-        name = ui.NameBox_SI.text()[:31]
+        cursor = ui.connection.cursor()
+        username = ui.NameBox_SI.text()[:31]
         password = ui.PassBox_SI.text()[:22]
-        if len(password)*len(name) == 0:
+
+        if len(password)*len(username) == 0:
             ui.frameError.show()
             ui.Error_Content.setText("Chưa điền đầy đủ thông tin đăng nhập")
-        elif not [True for user in self.users if user.name == name]:
-            ui.frameError.show()
-            ui.Error_Content.setText(
-                "Tên tài khoản không tồn tại. Hãy nhập lại.")
-        elif not [True for user in self.users if user.name == name and user.password == password]:
-            ui.frameError.show()
-            ui.Error_Content.setText(
-                "Mật khẩu không chính xác. Hãy nhập lại.")
         else:
-            for user in self.users:
-                if user.name == name:
+            cursor.execute(f"SELECT Username FROM user WHERE Username = '{username}'")
+            if username not in [row[0] for row in cursor]:
+                ui.frameError.show()
+                ui.Error_Content.setText(
+                    "Tên tài khoản không tồn tại. Hãy nhập lại.")
+            else:
+                cursor.execute(f"SELECT Username, Password FROM user WHERE Username = '{username}' and Password = '{password}'")
+                if not [row[0] for row in cursor]:
+                    ui.frameError.show()
+                    ui.Error_Content.setText(
+                        "Mật khẩu không chính xác. Hãy nhập lại.")
+                else:
+                    cursor.execute(f"SELECT ShowName, Password, Type FROM user WHERE Username = '{username}'")
+                    name, password, role = (row[i] for row in cursor for i in range(len(row)))
                     with open(self.OPENED_USER, 'w', encoding='utf-8') as f:
-                        f.write(f'{user.name_user}\n')
-                        f.write(f'{str(user.id)}\n')
-                        f.write(f'{user.password}\n')
-                    for i in range(len(self.users)):
-                        self.users[i].auto_saved = False
-                    if ui.SavePass.isChecked():
-                        self.users[self.users.index(user)].auto_saved = True
-                    else:
-                        self.users[self.users.index(user)].auto_saved = False    
-                    decrypt(self.USER_PATH_ENCRYPTED,
-                            self.USER_PATH, self.KEY_PATH)
-                    time.sleep(1)
-                    with open(self.USER_PATH, "wb") as f:
-                        pickle.dump(self.users, f)
-                    encrypt(self.USER_PATH,
-                            self.USER_PATH_ENCRYPTED, self.KEY_PATH)
+                        f.write(f'{username}\n')
+                        f.write(f'{name}\n')
+                        f.write(f'{password}\n')
 
                     ui.close()
-                    main_ui.main(user.role, ui.pg, ui.connection)
-                    break
-        QtCore.QTimer.singleShot(3000, lambda: ui.frameError.hide())
+                    main_ui.main(role, ui.pg, ui.connection)
+                QtCore.QTimer.singleShot(3000, lambda: ui.frameError.hide())
 
     def check_SU(self, ui):
         check = True

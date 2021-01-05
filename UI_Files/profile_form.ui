@@ -294,7 +294,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-151</y>
+            <y>-211</y>
             <width>1024</width>
             <height>628</height>
            </rect>
@@ -305,7 +305,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
-            <widget class="QFrame" name="IDFrame">
+            <widget class="QFrame" name="username_frame">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -344,13 +344,13 @@ QScrollBar::add-page, QScrollBar::sub-page {
                <widget class="QLabel" name="label_6">
                 <property name="minimumSize">
                  <size>
-                  <width>150</width>
+                  <width>200</width>
                   <height>50</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>150</width>
+                  <width>200</width>
                   <height>50</height>
                  </size>
                 </property>
@@ -361,12 +361,15 @@ QScrollBar::add-page, QScrollBar::sub-page {
                  </font>
                 </property>
                 <property name="text">
-                 <string>ID:</string>
+                 <string>Tên người dùng:</string>
+                </property>
+                <property name="wordWrap">
+                 <bool>false</bool>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="IDBox">
+               <widget class="QLabel" name="username_box">
                 <property name="font">
                  <font>
                   <family>Segoe UI</family>
@@ -453,13 +456,13 @@ background: transparent;</string>
                <widget class="QLabel" name="Name">
                 <property name="minimumSize">
                  <size>
-                  <width>140</width>
+                  <width>200</width>
                   <height>50</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>150</width>
+                  <width>200</width>
                   <height>50</height>
                  </size>
                 </property>
@@ -476,7 +479,7 @@ background: transparent;</string>
                 </property>
                </widget>
               </item>
-              <item alignment="Qt::AlignHCenter">
+              <item>
                <widget class="QLineEdit" name="NameBox">
                 <property name="minimumSize">
                  <size>
@@ -499,6 +502,9 @@ background: transparent;</string>
                 <property name="styleSheet">
                  <string notr="true">background: transparent;
 border:none;</string>
+                </property>
+                <property name="text">
+                 <string>Text label</string>
                 </property>
                 <property name="readOnly">
                  <bool>true</bool>
@@ -684,13 +690,13 @@ background: transparent;</string>
                <widget class="QLabel" name="label_3">
                 <property name="minimumSize">
                  <size>
-                  <width>150</width>
+                  <width>200</width>
                   <height>50</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>150</width>
+                  <width>200</width>
                   <height>50</height>
                  </size>
                 </property>
@@ -787,13 +793,13 @@ background: transparent;</string>
                <widget class="QLabel" name="label_2">
                 <property name="minimumSize">
                  <size>
-                  <width>150</width>
+                  <width>200</width>
                   <height>50</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>150</width>
+                  <width>200</width>
                   <height>50</height>
                  </size>
                 </property>
@@ -890,13 +896,13 @@ background: transparent;</string>
                <widget class="QLabel" name="label_Birth">
                 <property name="minimumSize">
                  <size>
-                  <width>150</width>
+                  <width>200</width>
                   <height>50</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>150</width>
+                  <width>200</width>
                   <height>50</height>
                  </size>
                 </property>
@@ -993,13 +999,13 @@ background: transparent;</string>
                <widget class="QLabel" name="label_country">
                 <property name="minimumSize">
                  <size>
-                  <width>150</width>
+                  <width>200</width>
                   <height>50</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>150</width>
+                  <width>200</width>
                   <height>50</height>
                  </size>
                 </property>
@@ -1102,13 +1108,13 @@ background: transparent;</string>
                <widget class="QLabel" name="label_Pass">
                 <property name="minimumSize">
                  <size>
-                  <width>140</width>
+                  <width>200</width>
                   <height>50</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>140</width>
+                  <width>200</width>
                   <height>50</height>
                  </size>
                 </property>

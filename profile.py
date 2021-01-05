@@ -3,13 +3,15 @@ from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5 import uic
 from PyQt5.QtCore import Qt
 import sys
+import mysql.connector
 
 UI_PATH = './UI_Files/profile_form.ui'
 USER_PATH = './data/Users/opened_user.ou'
 class ProfileWindow(QMainWindow):
-    def __init__(self, ui, pg):
+    def __init__(self, ui, pg, connection):
         self.ui = ui
         self.pg = pg
+        self.connection = connection
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(UI_PATH, self)
         UIFunctions.uiDefinitions(self)
@@ -26,29 +28,29 @@ class ProfileWindow(QMainWindow):
 class UIFunctions(ProfileWindow):
     GLOBAL_STATE = False
     @classmethod
-    def uiDefinitions(cls, Ui):
-        cls.connect_btn(Ui)        
+    def uiDefinitions(cls, ui):
+        cls.connect_btn(ui)        
     @classmethod    
-    def connect_btn(cls, Ui): 
-        def SignOut(Ui):
-            if Ui.ui:
-                Ui.ui.close()
-            Ui.close()
-            if Ui.pg:
-                Ui.pg.minimize()
+    def connect_btn(cls, ui): 
+        def SignOut(ui):
+            if ui.ui:
+                ui.ui.close()
+            ui.close()
+            if ui.pg:
+                ui.pg.minimize()
             import login_main
             
-            Ui.main = login_main.LoginWindow(Ui.pg)
-            Ui.main.show()           
-        Ui.OutAccount.clicked.connect(lambda: SignOut(Ui))
+            ui.main = login_main.LoginWindow(ui.pg)
+            ui.main.show()           
+        ui.OutAccount.clicked.connect(lambda: SignOut(ui))
         
-        Ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-        Ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-        Ui.btn_quit.clicked.connect(lambda: Ui.close())
-        Ui.btn_minimize.clicked.connect(lambda: Ui.showMinimized())
-        Ui.btn_maximize.clicked.connect(lambda: cls.maximize_restore(Ui))
-        cls.Update(Ui)
-        Ui.Save_btn.setDisabled(True)
+        ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
+        ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        ui.btn_quit.clicked.connect(lambda: ui.close())
+        ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
+        ui.btn_maximize.clicked.connect(lambda: cls.maximize_restore(ui))
+        cls.Update(ui)
+        ui.Save_btn.setDisabled(True)
     @classmethod
     def maximize_restore(cls, self):
         status = cls.GLOBAL_STATE
@@ -66,20 +68,26 @@ border-radius: 0px;""")
             self.centralwidget.setStyleSheet("""background-color: rgb(74, 74, 74);
 border-radius: 20px;""")
             self.btn_maximize.setToolTip("Phóng to")
-    @classmethod 
-    def Update(cls, Ui):
+
+    @staticmethod 
+    def Update(ui):
         with open(USER_PATH, 'r', encoding = 'utf-8') as f:
-            name = f.readline().rstrip()
-            Ui.NameBox.setText(name)
-            id = f.readline().rstrip()
-            Ui.IDBox.setText(id)
-            password = f.readline().rstrip()
-            Ui.PassBox.setText(password)
+            username, name, password = (line.rstrip() for line in f.readlines())
+            ui.username_box.setText(username)
+            ui.NameBox.setText(name)
+            ui.PassBox.setText(password)
+            
 
 
 if __name__ == '__main__':
+    connection = mysql.connector.connect(
+        host="remotemysql.com",
+        user="K63yMSwITl",
+        password="zRtA9VtyHq",
+        database="K63yMSwITl"
+    )
     app = QApplication(sys.argv)
-    window = ProfileWindow(None, None)
+    window = ProfileWindow(None, None, connection)
     window.show()
     sys.exit(app.exec_())
 

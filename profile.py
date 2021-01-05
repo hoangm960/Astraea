@@ -8,10 +8,9 @@ import mysql.connector
 UI_PATH = './UI_Files/profile_form.ui'
 USER_PATH = './data/Users/opened_user.ou'
 class ProfileWindow(QMainWindow):
-    def __init__(self, ui, pg, connection):
+    def __init__(self, ui, pg):
         self.ui = ui
         self.pg = pg
-        self.connection = connection
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(UI_PATH, self)
         UIFunctions.uiDefinitions(self)
@@ -80,14 +79,8 @@ border-radius: 20px;""")
 
 
 if __name__ == '__main__':
-    connection = mysql.connector.connect(
-        host="remotemysql.com",
-        user="K63yMSwITl",
-        password="zRtA9VtyHq",
-        database="K63yMSwITl"
-    )
     app = QApplication(sys.argv)
-    window = ProfileWindow(None, None, connection)
+    window = ProfileWindow(None, None)
     window.show()
     sys.exit(app.exec_())
 

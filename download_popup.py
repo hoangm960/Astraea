@@ -1,7 +1,7 @@
-from datetime import datetime
 import os
 import pickle
 import sys
+from datetime import datetime
 
 import mysql.connector
 from PyQt5 import QtCore, uic

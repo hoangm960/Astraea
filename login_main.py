@@ -210,6 +210,7 @@ class LoginFunctions(LoginWindow):
                 QtCore.QTimer.singleShot(3000, lambda: ui.frameError.hide())
 
     def check_SU(self, ui):
+        cursor = ui.connection.cursor()
         check = True
         username = ui.NameBox.text()[:31]
         password = ui.PassBox.text()[:22]
@@ -221,11 +222,10 @@ class LoginFunctions(LoginWindow):
             ui.Note_Name.show()
             check = False
         else:
-            for user in self.users:
-                if username == user.name:
-                    ui.Note_Name.show()
-                    check = False
-                    break
+            cursor.execute(f"SELECT Username FROM user WHERE Username = '{username}'")
+            if [row for row in cursor]:
+                ui.Note_Name.show()
+                check = False
             else:
                 ui.Note_Name.hide()
 
@@ -236,6 +236,7 @@ class LoginFunctions(LoginWindow):
             check = False
         else:
             ui.Note_Pass.hide()
+
         if not "".join([i for i in name.lower() if i not in self.enabled]).isalnum():
             if (not "".join([i for i in name.lower() if i not in self.enabled]) == ""):
                 ui.Note_User.show()
@@ -244,14 +245,15 @@ class LoginFunctions(LoginWindow):
                 ui.Note_User.hide()
         else:
             ui.Note_User.hide()
+
         if len(name) < 6:
             ui.Note_User.show()
             check = False
+
         if check:
-            cursor = ui.connection.cursor()
             role = 1 if ui.teacher.isChecked() else 0
-            cursor.execute(f"INSERT INTO user(Username, ShowName, Password, Type) VALUES '{username}', '{name}', '{password}', '{role}'")
-            
+            cursor.execute(f"INSERT INTO user(Username, ShowName, Password, Type) VALUES('{username}', '{name}', '{password}', {role});")
+
             decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
             with open(self.USER_PATH, 'w', encoding='utf-8') as f:
                 f.write(f'{username}\n')

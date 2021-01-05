@@ -57,7 +57,7 @@ class UIFunctions(DocWindow):
     @staticmethod
     def close_pg(ui):
         ui.close()
-        main_ui.main(ui.role, ui.pg)
+        main_ui.main(ui.role, ui.pg, ui.connection)
 
     @staticmethod
     def options(ui):

@@ -211,18 +211,18 @@ class LoginFunctions(LoginWindow):
 
     def check_SU(self, ui):
         check = True
-        name = ui.NameBox.text()[:31]
+        username = ui.NameBox.text()[:31]
         password = ui.PassBox.text()[:22]
-        name_account = ui.UserBox.text()[:30]
+        name = ui.UserBox.text()[:30]
         
-        if len(name) < 8 or list(
-            set(False for i in name.lower() if i not in self.enabled)
+        if len(username) < 8 or list(
+            set(False for i in username.lower() if i not in self.enabled)
         ) == [False]:
             ui.Note_Name.show()
             check = False
         else:
             for user in self.users:
-                if name == user.name:
+                if username == user.name:
                     ui.Note_Name.show()
                     check = False
                     break
@@ -236,31 +236,29 @@ class LoginFunctions(LoginWindow):
             check = False
         else:
             ui.Note_Pass.hide()
-        if not "".join([i for i in name_account.lower() if i not in self.enabled]).isalnum():
-            if (not "".join([i for i in name_account.lower() if i not in self.enabled]) == ""):
+        if not "".join([i for i in name.lower() if i not in self.enabled]).isalnum():
+            if (not "".join([i for i in name.lower() if i not in self.enabled]) == ""):
                 ui.Note_User.show()
                 check = False
             else:
                 ui.Note_User.hide()
         else:
             ui.Note_User.hide()
-        if len(name_account) < 6:
+        if len(name) < 6:
             ui.Note_User.show()
             check = False
         if check:
-            # decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
-            # with open(self.USER_PATH, "wb") as f:
-            #     name = ui.NameBox.text()
-            #     password = ui.PassBox.text()
-            #     role = "teacher" if ui.teacher.isChecked() else "student"
-            #     code = ''
-            #     for i in range(0, 8):
-            #         code += str(randrange(0, 10))
-            #     self.users.append(
-            #         User(name, password, role, name_account, code))
-            #     pickle.dump(self.users, f)
-
-            # encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
+            cursor = ui.connection.cursor()
+            role = 1 if ui.teacher.isChecked() else 0
+            cursor.execute(f"INSERT INTO user(Username, ShowName, Password, Type) VALUES '{username}', '{name}', '{password}', '{role}'")
+            
+            decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
+            with open(self.USER_PATH, 'w', encoding='utf-8') as f:
+                f.write(f'{username}\n')
+                f.write(f'{name}\n')
+                f.write(f'{password}\n')
+                f.write('True' if ui.SavePass.isChecked() else 'False')
+            encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
             
             ui.NameBox_SI.clear()
             ui.PassBox_SI.clear()

@@ -64,7 +64,7 @@ class UIFunctions(MainWindow):
 
         def open_profile(ui, pg):
             import profile
-            ui.mainWin = profile.ProfileWindow(ui, pg)
+            ui.mainWin = profile.ProfileWindow(ui, pg, ui.connection)
             ui.mainWin.show()
         ui.profile_btn.clicked.connect(lambda: open_profile(ui , ui.pg))
 

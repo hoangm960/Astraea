@@ -18,7 +18,6 @@ RESULT_FORM_PATH = "./UI_Files/result_form.ui"
 RESULT_FRAME_PATH = "./UI_Files/result_frame.ui"
 TEST_FRAME_PATH = "./UI_Files/Test_frame.ui"
 OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
-OPENED_LESSON_ID = "./data/Users/opened_lesson_id.ol"
 OPENED_RESULT_PATH = "./data/results/"
 
 monitor_info = GetMonitorInfo(MonitorFromPoint((0, 0)))
@@ -97,7 +96,7 @@ class UIFunctions(ResultWindow):
         )
         ui.sizegrip.setToolTip("Resize Window")
         self.load_assignments(
-            open(OPENED_LESSON_PATH, encoding='utf-8').read().rstrip())
+            open(OPENED_LESSON_PATH, encoding='utf-8').readline().rstrip())
         self.check_empty(ui, len(self.assignments))
 
     @classmethod
@@ -301,7 +300,7 @@ class UIFunctions(ResultWindow):
         totalScore = int()
         for assignment in self.assignments:
             totalScore += assignment.mark
-        
+
         children = ui.content_widget.children()
         del children[0]
         for child in children:
@@ -326,9 +325,13 @@ class UIFunctions(ResultWindow):
         encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
 
         current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        cursor.execute(f"INSERT INTO submission(Username, LessonId, SubmissionDate, Mark, Comment) VALUES('{name_account}', {open(OPENED_LESSON_ID).read()}, '{current_time}', {round(self.TotalScore, 2)}, '{open(self.FILE_COMMENT).read()}')")
+        try:
+            cursor.execute(
+                f"INSERT INTO submission(Username, LessonId, SubmissionDate, Mark, Comment) VALUES('{name_account}', {open(OPENED_LESSON_PATH).readlines()[1]}, '{current_time}', {round(self.TotalScore, 2)}, '{open(self.FILE_COMMENT).read()}')")
+        except mysql.connector.errors.IntegrityError:
+            cursor.execute(f"UPDATE submission SET Username = '{name_account}', LessonId = {open(OPENED_LESSON_PATH).readlines()[1]}, SubmissionDate = '{current_time}', Mark = {round(self.TotalScore, 2)}, Comment = '{open(self.FILE_COMMENT).read()}'")
+
         ui.connection.commit()
-        
 
     @staticmethod
     def reopen_main(ui):

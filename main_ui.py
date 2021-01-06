@@ -62,11 +62,11 @@ class UIFunctions(MainWindow):
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.resize_idle(ui, ui.pg)
 
-        def open_profile(ui, pg):
+        def open_profile(ui):
             import profile
-            ui.mainWin = profile.ProfileWindow(ui, pg, ui.connection)
+            ui.mainWin = profile.ProfileWindow(ui, ui.pg, ui.connection)
             ui.mainWin.show()
-        ui.profile_btn.clicked.connect(lambda: open_profile(ui , ui.pg))
+        ui.profile_btn.clicked.connect(lambda: open_profile(ui))
 
         self.define_role(ui)
         self.connect_btn(ui)
@@ -76,20 +76,19 @@ class UIFunctions(MainWindow):
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
         if ui.pg:
             ui.btn_quit.clicked.connect(lambda: ui.pg.close())
-        ui.btn_quit.clicked.connect(lambda: self.close_pg(ui, ui.pg))
+        ui.btn_quit.clicked.connect(lambda: self.close_pg(ui))
 
         ui.load_btn.clicked.connect(
             lambda: self.show_file_dialog(ui, OPENED_LESSON_PATH)
         )
-        ui.main_btn.clicked.connect(lambda: self.close_pg(ui, ui.pg))
-        ui.LessonButton.clicked.connect(lambda: self.close_pg(ui, ui.pg))
-        ui.LessonButton.clicked.connect(lambda: self.open_doc(ui, ui.pg))
+        ui.main_btn.clicked.connect(lambda: self.close_pg(ui))
+        ui.LessonButton.clicked.connect(lambda: self.open_doc(ui))
 
         ui.list_assignments.itemPressed.connect(lambda: self.load_details(ui))
         ui.Server_btn.clicked.connect(lambda: self.open_connect(ui))
 
     def open_connect(self, ui):
-        self.close_pg(ui, ui.pg)
+        self.close_pg(ui)
         import download_popup
         window = download_popup.DownloadWindow(ui.pg, ui.role, ui.connection)
         window.show()
@@ -103,9 +102,9 @@ class UIFunctions(MainWindow):
             
     
     @staticmethod
-    def close_pg(ui, pg):
-        if pg:
-            pg.maximize()
+    def close_pg(ui):
+        if ui.pg:
+            ui.pg.maximize()
         ui.close()
 
     def check_opened_lesson(self, ui, filename):
@@ -155,11 +154,11 @@ class UIFunctions(MainWindow):
         ui.lesson_title.setText(
             title) if title else ui.lesson_title.setParent(None)
 
-    @staticmethod
-    def open_doc(ui, pg):
+    def open_doc(self, ui):
+        self.close_pg(ui)
         import doc
-        ui.main = doc.DocWindow(ui.role, pg)
-        ui.main.show()
+        window = doc.DocWindow(ui.role, ui.pg, ui.connection)
+        window.show()
 
     class TeacherUiFunctions:
 
@@ -190,7 +189,7 @@ class UIFunctions(MainWindow):
         @staticmethod
         def open_result_form(ui):
             import result_main
-            window = result_main.ResultWindow(ui.pg)
+            window = result_main.ResultWindow(ui.pg, ui.connection)
             window.show()
 
     def define_role(self, ui):
@@ -214,6 +213,6 @@ if __name__ == "__main__":
         database="K63yMSwITl"
     )
     app = QApplication(sys.argv)
-    main(1, None, connection)
-    # main(0, None)
+    # main(1, None, connection)
+    main(0, None, connection)
     sys.exit(app.exec_())

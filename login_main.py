@@ -137,6 +137,7 @@ class LoginFunctions(LoginWindow):
 
     def check_autosave(self, ui):
         decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
+        time.sleep(1)
         with open(self.USER_PATH) as f:
             lines = f.readlines()
         if lines:

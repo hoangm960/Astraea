@@ -1,8 +1,10 @@
+from encryption import decrypt, encrypt
 import os
 import pickle
 import sys
 from datetime import datetime
 
+import mysql.connector
 from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (QApplication, QFileDialog, QMainWindow, QSizeGrip,
@@ -16,6 +18,7 @@ RESULT_FORM_PATH = "./UI_Files/result_form.ui"
 RESULT_FRAME_PATH = "./UI_Files/result_frame.ui"
 TEST_FRAME_PATH = "./UI_Files/Test_frame.ui"
 OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
+OPENED_LESSON_ID = "./data/Users/opened_lesson_id.ol"
 OPENED_RESULT_PATH = "./data/results/"
 
 monitor_info = GetMonitorInfo(MonitorFromPoint((0, 0)))
@@ -24,8 +27,9 @@ SCREEN_WIDTH, SCREEN_HEIGHT = work_area[2], work_area[3]
 
 
 class ResultWindow(QMainWindow):
-    def __init__(self, pg=None):
+    def __init__(self, pg, connection):
         self.pg = pg
+        self.connection = connection
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(RESULT_FORM_PATH, self)
         self.setGeometry(
@@ -58,8 +62,7 @@ class UIFunctions(ResultWindow):
     USER_PATH = "./data/Users/User.txt"
     USER_PATH_ENCRYPTED = "./data/Users/User.encrypted"
     KEY_PATH = "./data/encryption/users.key"
-    OPENED_USER = "./data/Users/opened_user.ou"
-    FILE_ERROR = "./data/results/ERROR.txt"
+    FILE_COMMENT = "./data/results/comment.txt"
 
     def __init__(self, ui):
         # Delete title bar
@@ -80,7 +83,7 @@ class UIFunctions(ResultWindow):
         def quit():
             ui.Accept1.clicked.connect(lambda: ui.close())
             ui.Accept1.clicked.connect(
-                lambda: main_ui.main(0, ui.pg))
+                lambda: main_ui.main(0, ui.pg, ui.connection))
             ui.Deny1.clicked.connect(lambda: ui.bg_frame.setStyleSheet(
                 """background-color: rgb(30, 30, 30); border-radius: 10px; color: rgb(255, 255, 255);"""))
             ui.bg_frame.setStyleSheet(
@@ -204,12 +207,12 @@ class UIFunctions(ResultWindow):
         )
 
     def format_file_error(self):
-        with open(self.FILE_ERROR, 'w', encoding='utf-8', errors='ignore') as file_error:
+        with open(self.FILE_COMMENT, 'w', encoding='utf-8', errors='ignore') as file_error:
             file_error.write('\nPython {}'.format(
                 str(sys.version_info[0])+'.'+str(sys.version_info[1])))
 
     def get_results(self, ui, child, num):
-        with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
+        with open(self.FILE_COMMENT, 'a+', encoding='utf-8', errors='ignore') as file_error:
             file_error.write(f'\n{self.assignments[num].name}')
         correct = 0
         results = []
@@ -223,7 +226,7 @@ class UIFunctions(ResultWindow):
             return correct, results, errors
 
         elif ui.TestFrame.ans_file_entry.text():
-            with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
+            with open(self.FILE_COMMENT, 'a+', encoding='utf-8', errors='ignore') as file_error:
                 file_error.write(
                     '\n>>> FileExistsERROR: Lỗi không tìm thấy file bài làm.')
                 ui.ResultFrame.detail_entry.setText("Không thể kiểm tra.")
@@ -254,46 +257,46 @@ class UIFunctions(ResultWindow):
                 for result in results:
                     try:
                         if result[0]:
-                            with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
-                                file_error.write(
+                            with open(self.FILE_COMMENT, 'a+', encoding='utf-8', errors='ignore') as f:
+                                f.write(
                                     '\n>>> TimeoutExpired: Thuật toán vượt quá thời gian yêu cầu.')
                             ui.ResultFrame.detail_entry.setText(
                                 "Thuật toán vượt quá thời gian yêu cầu.")
                         elif not result[1]:
-                            with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
-                                file_error.write(
+                            with open(self.FILE_COMMENT, 'a+', encoding='utf-8', errors='ignore') as f:
+                                f.write(
                                     '\n>>> WrongOutput: Bài làm sai kết quả.')
                                 ui.ResultFrame.detail_entry.setText(
                                     "Bài làm sai kết quả.")
                     except ZeroDivisionError:
-                        with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
-                            file_error.write(
+                        with open(self.FILE_COMMENT, 'a+', encoding='utf-8', errors='ignore') as f:
+                            f.write(
                                 '\n>>> ZeroDivisionError: Tồn tại phép tính chia cho 0.')
                         ui.ResultFrame.detail_entry.setText(
                             "Tồn tại phép tính chia cho 0")
                 if errors:
                     for message in errors:
-                        with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
-                            file_error.write(f'\n>>> {message}')
+                        with open(self.FILE_COMMENT, 'a+', encoding='utf-8', errors='ignore') as f:
+                            f.write(f'\n>>> {message}')
                         ui.ResultFrame.detail_entry.setText(message)
 
             elif not ui.TestFrame.ans_file_entry.text():
                 ui.ResultFrame.detail_entry.setText("Chưa làm câu này")
-                with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error:
-                    file_error.write('\n>>> Chưa làm bài')
+                with open(self.FILE_COMMENT, 'a+', encoding='utf-8', errors='ignore') as f:
+                    f.write('\n>>> Chưa làm bài')
                     ui.ResultFrame.detail_entry.setText(
                         "Chưa làm bài.")
 
-            with open(self.FILE_ERROR, 'r', encoding='utf-8', errors='ignore') as file_error:
-                list_file = file_error.readlines()
+            with open(self.FILE_COMMENT, 'r', encoding='utf-8', errors='ignore') as f:
+                list_file = f.readlines()
                 if '>>>' not in list_file[-1]:
-                    with open(self.FILE_ERROR, 'a+', encoding='utf-8', errors='ignore') as file_error_w:
+                    with open(self.FILE_COMMENT, 'a+', encoding='utf-8', errors='ignore') as file_error_w:
                         file_error_w.write('\n>>> Không xảy ra lỗi')
                     ui.ResultFrame.detail_entry.setText(
                         "Bài làm hoàn thiện tốt.")
 
-            with open(self.FILE_ERROR, 'r', encoding='utf-8', errors='ignore') as file_error:
-                ui.Error_text.setText(str(file_error.read()))
+            with open(self.FILE_COMMENT, 'r', encoding='utf-8', errors='ignore') as f:
+                ui.Error_text.setText(str(f.read()))
 
         totalScore = int()
         for assignment in self.assignments:
@@ -308,30 +311,43 @@ class UIFunctions(ResultWindow):
             ui.Score.setText(str(round(self.TotalScore, 2)))
         else:
             ui.progressBar.setValue(0)
-        if float(ui.Score.text()) < 0.7:
-            ui.Judge.setText("Bài làm vẫn chưa đạt chuẩn.")
-        else:
-            ui.Judge.setText("Bài làm đạt chuẩn")
+        with open(self.FILE_COMMENT, 'a', encoding='utf-8', errors='ignore') as f:
+            if float(ui.Score.text()) < 0.7:
+                f.write("\nBài làm vẫn chưa đạt chuẩn.")
+                ui.Judge.setText("Bài làm vẫn chưa đạt chuẩn.")
+            else:
+                f.write("\nBài làm vẫn đạt chuẩn.")
+                ui.Judge.setText("Bài làm đạt chuẩn")
 
-        with open(f"{OPENED_RESULT_PATH}{open(self.OPENED_USER, encoding = 'utf-8').readline().rstrip()}.rf", 'a+', encoding='utf-8') as f:
-            name_account = open(
-                self.OPENED_USER, encoding='utf-8').readline().rstrip()
-            current_time = datetime.now().strftime("%H:%M:%S %d/%m/%Y")
-            text = f'{name_account} :  {ui.Score.text()} ({current_time})\n'
-            f.write(text)
+        cursor = ui.connection.cursor()
+
+        decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
+        name_account = open(self.USER_PATH, encoding='utf-8').readline().rstrip()
+        encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
+
+        current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        cursor.execute(f"INSERT INTO submission(Username, LessonId, SubmissionDate, Mark, Comment) VALUES('{name_account}', {open(OPENED_LESSON_ID).read()}, '{current_time}', {round(self.TotalScore, 2)}, '{open(self.FILE_COMMENT).read()}')")
+        ui.connection.commit()
+        
 
     @staticmethod
     def reopen_main(ui):
-        main_ui.main(0, ui.pg)
+        main_ui.main(0, ui.pg, ui.connection)
         ui.close()
 
 
-def main(pg):
+def main(pg, connection):
     app = QApplication(sys.argv)
-    window = ResultWindow(pg)
+    window = ResultWindow(pg, connection)
     window.show()
     sys.exit(app.exec_())
 
 
 if __name__ == "__main__":
-    main(None)
+    connection = mysql.connector.connect(
+        host="remotemysql.com",
+        user="K63yMSwITl",
+        password="zRtA9VtyHq",
+        database="K63yMSwITl"
+    )
+    main(None, connection)

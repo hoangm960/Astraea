@@ -22,6 +22,7 @@ class DownloadWindow(QMainWindow):
 
 class UIFunctions(DownloadWindow):
     OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
+    OPENED_LESSON_ID = "./data/Users/opened_lesson_id.ol"
 
     def __init__(self, ui):
         ui.connection = ui.connection
@@ -90,6 +91,7 @@ class UIFunctions(DownloadWindow):
                 ui.timer = QtCore.QTimer()
                 ui.timer.singleShot(1000, lambda: self.close_pg(ui))
 
+            open(self.OPENED_LESSON_ID, 'w').write(lesson_id).close()
         except:
             ui.id_entry.clear()
             ui.id_entry.setText('ID không chính xác')

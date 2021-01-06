@@ -14,11 +14,12 @@ DOC_UI = "./UI_Files/Doc.ui"
 
 
 class DocWindow(QMainWindow):
-    def __init__(self, role, pg):
+    def __init__(self, role, pg, connection):
         QMainWindow.__init__(self)
         uic.loadUi(DOC_UI, self)
         self.role = role
         self.pg = pg
+        self.connection = connection
 
         UIFunctions(self)
 

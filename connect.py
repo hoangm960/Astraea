@@ -47,14 +47,12 @@ class UIFunctions(DownloadWindow):
         ui.room_btn.clicked.connect(lambda: self.create_room(ui))
         ui.Go_Room.clicked.connect(lambda: self.Go_Room(ui))
         ui.Quit.clicked.connect(lambda: self.Quit(ui))
-        if open(self.OPENED_ROOM_PATH, 'r').read() != '':
+        if open(self.OPENED_ROOM_PATH, 'r').read():
             ui.room_btn.hide()
-            ui.Quit.show()
-            ui.Go_Room.show()
+            ui.In_btn.hide()
         else:
             ui.Quit.hide()
             ui.Go_Room.hide()
-            ui.room_btn.show()
     def download(self, ui, lesson_id):
         from edit_main import Assignment
         try:
@@ -231,7 +229,6 @@ class UIFunctions(DownloadWindow):
             ui.frame_2.show()
             ui.id_entry.show()
         timer.singleShot(2000, lambda: complete())    
-        
     def Go_Room(self, ui):
         import Room
         room_id = open(self.OPENED_ROOM_PATH).read().rstrip()

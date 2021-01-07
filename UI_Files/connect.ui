@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>212</width>
-    <height>274</height>
+    <height>338</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -414,6 +414,52 @@ QPushButton:pressed {
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="In_btn">
+         <property name="minimumSize">
+          <size>
+           <width>130</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-color: rgb(255, 255, 255);
+	border-radius: 10px;
+	color: rgb(0,0,0);
+}
+
+QPushButton:hover {
+	color: rgb(255, 255, 255);
+	background-color: rgba(0, 0, 0, 150);
+}
+
+QPushButton:pressed {
+	color: rgb(255, 255, 255);
+	background-color: rgb(0, 0, 0);
+}r</string>
+         </property>
+         <property name="locale">
+          <locale language="Vietnamese" country="Vietnam"/>
+         </property>
+         <property name="text">
+          <string>Truy cập phòng</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="Go_Room">
          <property name="minimumSize">
           <size>
@@ -512,5 +558,134 @@ QPushButton:pressed {
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>Quit</sender>
+   <signal>clicked()</signal>
+   <receiver>Quit</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>22</x>
+     <y>256</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>23</x>
+     <y>256</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Quit</sender>
+   <signal>clicked()</signal>
+   <receiver>Go_Room</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>21</x>
+     <y>259</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>24</x>
+     <y>233</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>room_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>In_btn</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>174</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>202</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>room_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>room_btn</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>26</x>
+     <y>173</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>27</x>
+     <y>171</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Quit</sender>
+   <signal>clicked()</signal>
+   <receiver>room_btn</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>191</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>194</x>
+     <y>175</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Quit</sender>
+   <signal>clicked()</signal>
+   <receiver>In_btn</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>183</x>
+     <y>261</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>188</x>
+     <y>208</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>room_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>Go_Room</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>167</x>
+     <y>174</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>175</x>
+     <y>231</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>room_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>Quit</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>157</x>
+     <y>173</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>166</x>
+     <y>264</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

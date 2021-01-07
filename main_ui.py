@@ -89,8 +89,8 @@ class UIFunctions(MainWindow):
 
     def open_connect(self, ui):
         self.close_pg(ui)
-        import download_popup
-        window = download_popup.DownloadWindow(ui.pg, ui.role, ui.connection)
+        import connect
+        window = connect.DownloadWindow(ui.pg, ui.role, ui.connection)
         window.show()
 
     @staticmethod

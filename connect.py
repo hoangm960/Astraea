@@ -22,6 +22,7 @@ class DownloadWindow(QMainWindow):
 
 class UIFunctions(DownloadWindow):
     OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
+    OPENED_ROOM_PATH = "./data/Users/opened_room.or"
 
     def __init__(self, ui):
         ui.connection = ui.connection
@@ -32,6 +33,8 @@ class UIFunctions(DownloadWindow):
             round((QApplication.primaryScreen().size().width() - ui.width()) / 2),
             round((QApplication.primaryScreen().size().height() - ui.height()) / 2),
         )
+
+        self.check_room(ui)
         ui.btn_quit.clicked.connect(lambda: self.close_pg(ui))
         ui.download_btn.clicked.connect(
             lambda: self.download(ui, ui.id_entry.text()))
@@ -39,6 +42,7 @@ class UIFunctions(DownloadWindow):
             lambda: self.upload(ui, open(self.OPENED_LESSON_PATH).readline()))
         if ui.role == 'student':
             ui.upload_btn.close()
+        ui.room_btn.clicked.connect(lambda: self.create_room(ui))
 
     def download(self, ui, lesson_id):
         from edit_main import Assignment
@@ -186,6 +190,23 @@ class UIFunctions(DownloadWindow):
         ui.frame_2.close()
         ui.id_entry.close()
         ui.label_2.setText('Hoàn tất đăng bài\nid: {}'.format(lesson_id))
+
+    def create_room(self, ui):
+        cursor = ui.connection.cursor()
+        cursor.execute(f"INSERT INTO room(Status) VALUES(1)")
+        lesson_id = cursor.lastrowid
+        open(self.OPENED_ROOM_PATH, 'w').write(str(lesson_id))
+        ui.connection.commit()
+        ui.label_2.show()
+        ui.frame_2.close()
+        ui.id_entry.close()
+        ui.label_2.setText('Hoàn tất tạo phòng\nid: {}'.format(lesson_id))
+
+    def check_room(self, ui):
+        room_id = open(self.OPENED_ROOM_PATH).read().rstrip()
+        if room_id:
+            ui.label.setText(f'ID Phòng: {room_id}')
+
 
     @staticmethod
     def close_pg(ui):

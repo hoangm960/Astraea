@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>302</width>
-    <height>249</height>
+    <width>212</width>
+    <height>274</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -113,7 +113,7 @@ background-color: transparent;</string>
            <number>0</number>
           </property>
           <property name="leftMargin">
-           <number>50</number>
+           <number>30</number>
           </property>
           <property name="topMargin">
            <number>0</number>
@@ -245,6 +245,9 @@ min-height: 20px;
       </property>
       <property name="styleSheet">
        <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="inputMethodHints">
+       <set>Qt::ImhNone</set>
       </property>
       <property name="text">
        <string/>
@@ -406,7 +409,99 @@ QPushButton:pressed {
           <locale language="Vietnamese" country="Vietnam"/>
          </property>
          <property name="text">
-          <string>Tạo phòng</string>
+          <string>Tạo ID phòng</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="Go_Room">
+         <property name="minimumSize">
+          <size>
+           <width>130</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-color: rgb(255, 255, 255);
+	border-radius: 10px;
+	color: rgb(0,0,0);
+}
+
+QPushButton:hover {
+	color: rgb(255, 255, 255);
+	background-color: rgba(0, 0, 0, 150);
+}
+
+QPushButton:pressed {
+	color: rgb(255, 255, 255);
+	background-color: rgb(0, 0, 0);
+}r</string>
+         </property>
+         <property name="locale">
+          <locale language="Vietnamese" country="Vietnam"/>
+         </property>
+         <property name="text">
+          <string>Vào phòng</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="Quit">
+         <property name="minimumSize">
+          <size>
+           <width>130</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-color: rgb(255, 255, 255);
+	border-radius: 10px;
+	color: rgb(0,0,0);
+}
+
+QPushButton:hover {
+	color: rgb(255, 255, 255);
+	background-color: rgba(0, 0, 0, 150);
+}
+
+QPushButton:pressed {
+	color: rgb(255, 255, 255);
+	background-color: rgb(0, 0, 0);
+}r</string>
+         </property>
+         <property name="locale">
+          <locale language="Vietnamese" country="Vietnam"/>
+         </property>
+         <property name="text">
+          <string>Rời phòng</string>
          </property>
         </widget>
        </item>

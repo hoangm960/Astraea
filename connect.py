@@ -39,7 +39,7 @@ class UIFunctions(DownloadWindow):
         ui.download_btn.clicked.connect(
             lambda: self.download(ui, ui.id_entry.text()))
         ui.upload_btn.clicked.connect(
-            lambda: self.upload(ui, open(self.OPENED_LESSON_PATH).readline()))
+            lambda: self.upload(ui, open(self.OPENED_LESSON_PATH).readline().rstrip()))
         if ui.role == 'student':
             ui.upload_btn.close()
         ui.room_btn.clicked.connect(lambda: self.create_room(ui))

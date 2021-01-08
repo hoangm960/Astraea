@@ -30,6 +30,7 @@ class UIFunctions(RoomWindow):
         self.add_lesson_list(ui)
         if ui.role == 0:
             ui.student_list_frame.close()
+            ui.download_btn.setText('Tải xuống bài học')
         else:
             self.add_student_list(ui)
         self.connect_btn(ui)
@@ -39,6 +40,24 @@ class UIFunctions(RoomWindow):
         ui.btn_quit.clicked.connect(lambda: ui.close())
         ui.btn_quit.clicked.connect(lambda: self.close_pg(ui))
         ui.download_btn.clicked.connect(lambda: self.download_lesson(ui))
+        if ui.role == 0:
+            ui.del_lesson_btn.close()
+        else:
+            ui.del_lesson_btn.clicked.connect(lambda: self.del_lesson(ui))
+
+    @staticmethod
+    def del_lesson(ui):
+        items = ui.lesson_list.selectedItems()
+        if items:
+            for item in items:
+                ui.lesson_list.takeItem(ui.lesson_list.row(item))
+        
+                text = item.text()
+                lesson_id = text.replace('ID: ', '').replace('Tên: ', '').split(', ')[0]
+                if lesson_id:
+                    cursor = ui.connection.cursor()
+                    cursor.execute(f'DELETE FROM lesson_in_room WHERE LessonId = {lesson_id}')
+                    ui.connection.commit()
 
     def download_lesson(self, ui):
         item = ui.lesson_list.currentItem()

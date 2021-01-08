@@ -169,49 +169,57 @@ class UIFunctions(DownloadWindow):
 
     @classmethod
     def upload(self, ui, filename):
-        try:
-            cursor = ui.connection.cursor()
-            title, assignments = self.get_lesson(filename)
-            current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            cursor.execute(
-                f"INSERT INTO lesson(Name, CreatedDate) VALUES('{title}', '{current_time}');")
-            lesson_id = cursor.lastrowid
-            for assignment in assignments:
-                name, details, mark = assignment.name, assignment.details, assignment.mark
+        room_id = open(self.OPENED_ROOM_PATH).read().rstrip()
+        lesson_id = int()
+        if room_id:
+            try:
+                cursor = ui.connection.cursor()
+                title, assignments = self.get_lesson(filename)
+                current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 cursor.execute(
-                    f"INSERT INTO assignment(LessonId, Name, Details, Mark) VALUES({lesson_id}, '{name}', '{details}', {mark});")
-                assignment_id = cursor.lastrowid
-                for test in assignment.tests:
+                    f"INSERT INTO lesson(Name, CreatedDate) VALUES('{title}', '{current_time}');")
+                lesson_id = cursor.lastrowid
+                for assignment in assignments:
+                    name, details, mark = assignment.name, assignment.details, assignment.mark
                     cursor.execute(
-                        f"INSERT INTO test(AssignmentId) VALUES({assignment_id});")
-                    test_id = cursor.lastrowid
-                    for input in test[0]:
+                        f"INSERT INTO assignment(LessonId, Name, Details, Mark) VALUES({lesson_id}, '{name}', '{details}', {mark});")
+                    assignment_id = cursor.lastrowid
+                    for test in assignment.tests:
                         cursor.execute(
-                            f"INSERT INTO input(TestId, InputContent) VALUES({test_id}, '{input}');")
-                    for output in test[1]:
+                            f"INSERT INTO test(AssignmentId) VALUES({assignment_id});")
+                        test_id = cursor.lastrowid
+                        for input in test[0]:
+                            cursor.execute(
+                                f"INSERT INTO input(TestId, InputContent) VALUES({test_id}, '{input}');")
+                        for output in test[1]:
+                            cursor.execute(
+                                f"INSERT INTO output(TestId, OutputContent) VALUES({test_id}, '{output}');")
+                    for info in assignment.infos:
+                        key, message, num = (i for i in info)
                         cursor.execute(
-                            f"INSERT INTO output(TestId, OutputContent) VALUES({test_id}, '{output}');")
-                for info in assignment.infos:
-                    key, message, num = (i for i in info)
-                    cursor.execute(
-                        f"INSERT INTO info(AssignmentId, KeyWord, Message, Quantity) VALUES({assignment_id}, '{key}', '{message}', {num});")
-            ui.connection.commit()
-            ui.label_2.show()
-            ui.frame_2.close()
-            ui.id_entry.close()
-            ui.label_2.setText('Hoàn tất đăng bài\nid: {}'.format(lesson_id))
-        except:
-            ui.id_entry.clear()
-            ui.id_entry.setText('Không thể đăng bài.')
-            ui.id_entry.setStyleSheet(
-                """background-color: rgb(255, 255, 255); color: rgb(255,0,0);""")
-
-            def set_default():
+                            f"INSERT INTO info(AssignmentId, KeyWord, Message, Quantity) VALUES({assignment_id}, '{key}', '{message}', {num});")
+                ui.connection.commit()
+                ui.label_2.show()
+                ui.frame_2.close()
+                ui.id_entry.close()
+            except:
                 ui.id_entry.clear()
+                ui.id_entry.setText('Không thể đăng bài.')
                 ui.id_entry.setStyleSheet(
-                    """background-color: rgb(255, 255, 255);""")
-            timer = QtCore.QTimer()
-            timer.singleShot(1000, lambda: set_default())    
+                    """background-color: rgb(255, 255, 255); color: rgb(255,0,0);""")
+                def set_default():
+                    ui.id_entry.clear()
+                    ui.id_entry.setStyleSheet(
+                        """background-color: rgb(255, 255, 255);""")
+                timer = QtCore.QTimer()
+                timer.singleShot(1000, lambda: set_default())    
+
+            if lesson_id:
+                cursor = ui.connection.cursor()
+                cursor.execute(f"INSERT INTO lesson_in_room(RoomId, LessonId) VALUES({room_id}, {lesson_id})")
+                ui.label_2.setText(f'Hoàn tất đăng bài\nid_room: {room_id}\nid_lesson: {lesson_id}')
+                ui.connection.commit()
+
     def create_room(self, ui):
         cursor = ui.connection.cursor()
         cursor.execute(f"INSERT INTO room(Status) VALUES(1)")

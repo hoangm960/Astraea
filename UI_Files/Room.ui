@@ -248,25 +248,48 @@ min-height: 20px;
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <property name="spacing">
-        <number>10</number>
-       </property>
        <item>
-        <widget class="QListWidget" name="listWidget">
-         <property name="minimumSize">
-          <size>
-           <width>200</width>
-           <height>0</height>
-          </size>
+        <widget class="QFrame" name="lesson_list_frame">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
          </property>
-         <property name="maximumSize">
-          <size>
-           <width>200</width>
-           <height>16777215</height>
-          </size>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
          </property>
-         <property name="styleSheet">
-          <string notr="true">QListWidget {
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QLabel" name="lessong_label">
+            <property name="font">
+             <font>
+              <pointsize>13</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255,255,255);</string>
+            </property>
+            <property name="text">
+             <string>Danh sách bài học</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QListWidget" name="lesson_list">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QListWidget {
 	padding: 10px;
 	background-color: rgb(255, 255, 255);
 }
@@ -312,27 +335,72 @@ QScrollBar::sub-line {
 QScrollBar::add-page, QScrollBar::sub-page {
 	height: 0px;
 }</string>
-         </property>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
-        <widget class="QTextBrowser" name="textBrowser">
-         <property name="styleSheet">
-          <string notr="true">QTextBrowser {
-background-color: rgb(255,255,255);
-color: rgb(0, 0, 0);
-outline: 0;
+        <widget class="QFrame" name="student_list_frame">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QLabel" name="student_label">
+            <property name="font">
+             <font>
+              <pointsize>13</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255,255,255);</string>
+            </property>
+            <property name="text">
+             <string>Danh sách học sinh</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QListWidget" name="student_list">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QListWidget {
+	padding: 10px;
+	background-color: rgb(255, 255, 255);
 }
-QScrollArea {
-	border-radius: 10px;
-	background-color: rgb(255,255,255);
-	outline: 0;
-	padding: 20px;
-} 
-QScrollArea::item { 
-	margin: 20px;
+
+QListWidget::item {
+	border-radius: 5px;
+	margin: 0px 0px 10px 0px;	
+	background-color: rgb(193, 193, 193);
+}
+
+QLineEdit {
+	color: rgb(0,0,0);
 	background-color: transparent;
-	border: 0px solid black;
+}
+
+QLabel {
+	color: rgb(0,0,0);
+	background-color: transparent;
 }
 
 QScrollBar{
@@ -360,7 +428,10 @@ QScrollBar::sub-line {
 QScrollBar::add-page, QScrollBar::sub-page {
 	height: 0px;
 }</string>
-         </property>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>
@@ -387,8 +458,8 @@ QScrollBar::add-page, QScrollBar::sub-page {
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <widget class="QPushButton" name="room_btn_2">
+       <item row="0" column="2">
+        <widget class="QPushButton" name="download_btn">
          <property name="minimumSize">
           <size>
            <width>130</width>
@@ -430,6 +501,43 @@ QPushButton:pressed {
          </property>
          <property name="text">
           <string>Tải dữ liệu của học sinh</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QPushButton" name="config_btn">
+         <property name="minimumSize">
+          <size>
+           <width>30</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-color: rgb(255, 255, 255);
+	border-radius: 10px;
+	color: rgb(0,0,0);
+}
+
+QPushButton:hover {
+	color: rgb(255, 255, 255);
+	background-color: rgba(0, 0, 0, 150);
+}
+
+QPushButton:pressed {
+	color: rgb(255, 255, 255);
+	background-color: rgb(0, 0, 0);
+}</string>
+         </property>
+         <property name="text">
+          <string>Sửa đổi phòng</string>
          </property>
         </widget>
        </item>

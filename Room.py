@@ -18,6 +18,7 @@ class RoomWindow(QMainWindow):
         super(RoomWindow, self).__init__()
         uic.loadUi(self.ROOM_UI, self)
         UIFunctions(self)
+
 class UIFunctions(RoomWindow):
     def __init__(self, ui):
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
@@ -27,11 +28,13 @@ class UIFunctions(RoomWindow):
         ui.btn_quit.clicked.connect(lambda: self.close_pg(ui))
         ui.showMaximized()
         ui.ID_Room.setText(ui.id)
+        
     @staticmethod
     def close_pg(ui):
         import main_ui
         main_ui.main(ui.role, ui.pg, ui.connection)
         ui.close()
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = RoomWindow('123ABCD63NG')

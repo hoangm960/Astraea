@@ -237,6 +237,7 @@ class UIFunctions(DownloadWindow):
             ui.frame_2.show()
             ui.id_entry.show()
         timer.singleShot(2000, lambda: complete())    
+        
     def Go_Room(self, ui):
         import Room
         room_id = open(self.OPENED_ROOM_PATH).read().rstrip()
@@ -256,16 +257,19 @@ class UIFunctions(DownloadWindow):
                     """background-color: rgb(255, 255, 255);""")
             timer = QtCore.QTimer()
             timer.singleShot(1000, lambda: set_default())
+
     def check_room(self, ui):
         room_id = open(self.OPENED_ROOM_PATH).read().rstrip()
         if room_id:
             ui.label.setText(f'ID Phòng: {room_id}')
+
     def Quit(self, ui):
         open(self.OPENED_ROOM_PATH,'w').close()
         ui.label.setText('Nhập ID bài học')
         ui.room_btn.show()
         ui.Go_Room.hide()
         ui.Quit.hide()
+
     @staticmethod
     def close_pg(ui):
         import main_ui

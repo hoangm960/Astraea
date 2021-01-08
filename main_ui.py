@@ -28,7 +28,7 @@ class MainWindow(QMainWindow):
             self.pg.restore()
             self.pg.moveTo(-8, 0)
             self.pg.resizeTo(
-            SCREEN_WIDTH - self.width() + 16, self.height() + 8)
+                SCREEN_WIDTH - self.width() + 16, self.height() + 8)
         UIFunctions(self)
 
     def changeEvent(self, event):
@@ -51,6 +51,7 @@ class MainWindow(QMainWindow):
 
 class UIFunctions(MainWindow):
     assignments = {}
+
     def __init__(self, ui):
         if ui.pg:
             ui.pg.restore()
@@ -97,10 +98,9 @@ class UIFunctions(MainWindow):
     def resize_idle(ui, pg):
         if pg:
             pg.restore()
-            pg.moveTo(-8, 0)    
+            pg.moveTo(-8, 0)
             pg.resizeTo(SCREEN_WIDTH - ui.width() + 16, ui.height() + 8)
-            
-    
+
     @staticmethod
     def close_pg(ui):
         if ui.pg:
@@ -110,8 +110,8 @@ class UIFunctions(MainWindow):
     def check_opened_lesson(self, ui, filename):
         if os.path.exists(filename):
             if os.path.getsize(filename) > 0:
-                with open(filename, encoding = 'utf8') as f:
-                    file_path = f.read().rstrip("\n")
+                with open(filename, encoding='utf8') as f:
+                    file_path = f.readline().rstrip("\n")
                     self.load_assignments(ui, file_path)
 
     def show_file_dialog(self, ui, filename):
@@ -136,7 +136,7 @@ class UIFunctions(MainWindow):
     def load_assignments(self, ui, filename):
         ui.list_assignments.clear()
         self.assignments.clear()
-        lesson = self.get_assignments(filename) 
+        lesson = self.get_assignments(filename)
         if lesson:
             title, assignments = lesson
             for assignment in assignments:

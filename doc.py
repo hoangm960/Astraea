@@ -2,6 +2,7 @@ import os
 import pickle
 import shutil
 import sys
+import mysql.connector
 
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import (
@@ -210,8 +211,14 @@ class UIFunctions(DocWindow):
 
 
 if __name__ == "__main__":
+    connection = mysql.connector.connect(
+        host="remotemysql.com",
+        user="K63yMSwITl",
+        password="zRtA9VtyHq",
+        database="K63yMSwITl"
+    )
     app = QApplication(sys.argv)
-    # window = DocWindow(1, None)
-    window = DocWindow(0, None)
+    window = DocWindow(1, None, connection)
+    # window = DocWindow(0, None, connection)
     window.show()
     sys.exit(app.exec_())

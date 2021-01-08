@@ -11,6 +11,7 @@ def create_file():
     OPENED_RESULT_PATH = "./data/results/"
     OPENED_ASSIGNMENT_PATH = "./data/Users/opened_assignment.oa"
     OPENED_DOC = "./data/Users/opened_doc.od"
+    OPENED_ROOM_PATH = "./data/Users/opened_room.or"
 
     Path(USER_PATH).mkdir(parents=True, exist_ok=True)
     Path(ENCRYPTION_PATH).mkdir(parents=True, exist_ok=True)
@@ -19,6 +20,8 @@ def create_file():
         open(OPENED_DOC, "w").close()
     if not os.path.exists(OPENED_ASSIGNMENT_PATH):
         open(OPENED_ASSIGNMENT_PATH, "w").close()
+    if not os.path.exists(OPENED_ROOM_PATH):
+        open(OPENED_ROOM_PATH, 'w').close()
 
 
 if __name__ == "__main__":

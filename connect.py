@@ -23,8 +23,6 @@ class DownloadWindow(QMainWindow):
 class UIFunctions(DownloadWindow):
     OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
     OPENED_ROOM_PATH = "./data/Users/opened_room.or"
-    if not os.path.exists(OPENED_ROOM_PATH):
-        open(OPENED_ROOM_PATH, 'w').close()
 
     def __init__(self, ui):
         ui.connection = ui.connection
@@ -53,6 +51,7 @@ class UIFunctions(DownloadWindow):
         else:
             ui.Quit.hide()
             ui.Go_Room.hide()
+
     def download(self, ui, lesson_id):
         from edit_main import Assignment
         try:
@@ -103,7 +102,7 @@ class UIFunctions(DownloadWindow):
                 ui.timer = QtCore.QTimer()
                 ui.timer.singleShot(1000, lambda: self.close_pg(ui))
 
-            open(self.OPENED_LESSON_PATH, 'a').write(f'\n{lesson_id}').close()
+            open(self.OPENED_LESSON_PATH, 'a').write(f'\n{lesson_id}')
         except:
             ui.id_entry.clear()
             ui.id_entry.setText('ID không chính xác')
@@ -237,7 +236,7 @@ class UIFunctions(DownloadWindow):
             ui.frame_2.show()
             ui.id_entry.show()
         timer.singleShot(2000, lambda: complete())    
-        
+
     def Go_Room(self, ui):
         import Room
         room_id = open(self.OPENED_ROOM_PATH).read().rstrip()

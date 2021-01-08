@@ -7,11 +7,12 @@ import mysql.connector
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 
+from UI_Files import Resources
+
 
 class RoomWindow(QMainWindow):
     ROOM_UI = "./UI_Files/Room.ui"
-    def __init__(self, id, role, pg, connection):
-        self.id = id
+    def __init__(self, role, pg, connection):
         self.role = role
         self.pg = pg 
         self.connection = connection
@@ -21,12 +22,14 @@ class RoomWindow(QMainWindow):
 
 class UIFunctions(RoomWindow):
     OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
+    OPENED_ROOM_PATH = "./data/Users/opened_room.or"
+    room_id = open(OPENED_ROOM_PATH).readline().rstrip()
 
     def __init__(self, ui):
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         ui.showMaximized()
-        ui.ID_Room.setText(ui.id)
+        ui.ID_Room.setText(self.room_id)
         self.add_lesson_list(ui)
         if ui.role == 0:
             ui.student_list_frame.close()
@@ -42,8 +45,63 @@ class UIFunctions(RoomWindow):
         ui.download_btn.clicked.connect(lambda: self.download_lesson(ui))
         if ui.role == 0:
             ui.del_lesson_btn.close()
+            ui.add_btn.close()
         else:
             ui.del_lesson_btn.clicked.connect(lambda: self.del_lesson(ui))
+            ui.add_btn.clicked.connect(lambda: self.upload(ui))
+
+    @staticmethod
+    def get_file_dialog(ui, filter):
+        HOME_PATH = os.path.join(os.path.join(
+            os.environ["USERPROFILE"]), "Desktop")
+        file_path = QFileDialog.getOpenFileName(
+            ui, "Open file", HOME_PATH, filter)[0]
+        return file_path
+
+    @staticmethod
+    def get_lesson(filename):
+        if os.path.exists(filename):
+            if os.path.getsize(filename) > 0:
+                with open(filename, "rb") as f:
+                    unpickler = pickle.Unpickler(f)
+                    data = unpickler.load()
+                    return data[0], data[1]
+
+    def upload(self, ui):
+        filename = self.get_file_dialog(ui, '*.list')
+        if self.room_id and filename:
+            cursor = ui.connection.cursor()
+            title, assignments = self.get_lesson(filename)
+            current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            cursor.execute(
+                f"INSERT INTO lesson(Name, CreatedDate) VALUES('{title}', '{current_time}');")
+            lesson_id = cursor.lastrowid
+            for assignment in assignments:
+                name, details, mark = assignment.name, assignment.details, assignment.mark
+                cursor.execute(
+                    f"INSERT INTO assignment(LessonId, Name, Details, Mark) VALUES({lesson_id}, '{name}', '{details}', {mark});")
+                assignment_id = cursor.lastrowid
+                for test in assignment.tests:
+                    cursor.execute(
+                        f"INSERT INTO test(AssignmentId) VALUES({assignment_id});")
+                    test_id = cursor.lastrowid
+                    for input in test[0]:
+                        cursor.execute(
+                            f"INSERT INTO input(TestId, InputContent) VALUES({test_id}, '{input}');")
+                    for output in test[1]:
+                        cursor.execute(
+                            f"INSERT INTO output(TestId, OutputContent) VALUES({test_id}, '{output}');")
+                for info in assignment.infos:
+                    key, message, num = (i for i in info)
+                    cursor.execute(
+                        f"INSERT INTO info(AssignmentId, KeyWord, Message, Quantity) VALUES({assignment_id}, '{key}', '{message}', {num});")
+
+            if lesson_id:
+                cursor = ui.connection.cursor()
+                cursor.execute(f"INSERT INTO lesson_in_room(RoomId, LessonId) VALUES({self.room_id}, {lesson_id})")
+
+            ui.connection.commit()
+            self.add_lesson_list(ui)
 
     @staticmethod
     def del_lesson(ui):
@@ -121,20 +179,20 @@ class UIFunctions(RoomWindow):
             f.write(file_path)
         return file_path
 
-    @staticmethod
-    def add_lesson_list(ui):
+    def add_lesson_list(self, ui):
+        ui.lesson_list.clear()
         cursor = ui.connection.cursor()
-        cursor.execute(f'SELECT LessonId FROM lesson_in_room WHERE RoomId = {ui.id}')
+        cursor.execute(f'SELECT LessonId FROM lesson_in_room WHERE RoomId = {self.room_id}')
         lesson_ids = [row[0] for row in cursor]
         for lesson_id in lesson_ids:
             cursor.execute(f'SELECT Name FROM lesson WHERE LessonId = {lesson_id}')
             lesson_name = [row[0] for row in cursor][0]
             ui.lesson_list.addItem(f'ID: {lesson_id}, Tên: {lesson_name}')
 
-    @staticmethod
-    def add_student_list(ui):
+    def add_student_list(self, ui):
+        ui.student_list.clear()
         cursor = ui.connection.cursor()
-        cursor.execute(f'SELECT Username, ShowName FROM user WHERE RoomId = {ui.id} AND Type = 0')
+        cursor.execute(f'SELECT Username, ShowName FROM user WHERE RoomId = {self.room_id} AND Type = 0')
         students = [row for row in cursor]
         for student in students:
             username, name = student
@@ -154,6 +212,7 @@ if __name__ == '__main__':
         database="K63yMSwITl"
     )
     app = QApplication(sys.argv)
-    window = RoomWindow('16', 1, None, connection)
+    # window = RoomWindow(1, None, connection)
+    window = RoomWindow(0, None, connection)
     window.show()
     sys.exit(app.exec_())

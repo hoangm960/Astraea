@@ -213,6 +213,6 @@ if __name__ == "__main__":
         database="K63yMSwITl"
     )
     app = QApplication(sys.argv)
-    main(1, None, connection)
-    # main(0, None, connection)
+    # main(1, None, connection)
+    main(0, None, connection)
     sys.exit(app.exec_())

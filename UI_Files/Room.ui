@@ -474,7 +474,53 @@ QScrollBar::add-page, QScrollBar::sub-page {
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="2">
+       <item row="0" column="1">
+        <widget class="QPushButton" name="del_lesson_btn">
+         <property name="minimumSize">
+          <size>
+           <width>130</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-color: rgb(255, 255, 255);
+	border-radius: 10px;
+	color: rgb(0,0,0);
+}
+
+QPushButton:hover {
+	color: rgb(255, 255, 255);
+	background-color: rgba(0, 0, 0, 150);
+}
+
+QPushButton:pressed {
+	color: rgb(255, 255, 255);
+	background-color: rgb(0, 0, 0);
+}r</string>
+         </property>
+         <property name="locale">
+          <locale language="Vietnamese" country="Vietnam"/>
+         </property>
+         <property name="text">
+          <string>Xóa bài học</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
         <widget class="QPushButton" name="download_btn">
          <property name="minimumSize">
           <size>
@@ -521,10 +567,10 @@ QPushButton:pressed {
         </widget>
        </item>
        <item row="0" column="0">
-        <widget class="QPushButton" name="del_lesson_btn">
+        <widget class="QPushButton" name="add_btn">
          <property name="minimumSize">
           <size>
-           <width>130</width>
+           <width>204</width>
            <height>30</height>
           </size>
          </property>
@@ -562,7 +608,11 @@ QPushButton:pressed {
           <locale language="Vietnamese" country="Vietnam"/>
          </property>
          <property name="text">
-          <string>Xóa bài học</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="Resources.qrc">
+           <normaloff>:/images/icons/plus.png</normaloff>:/images/icons/plus.png</iconset>
          </property>
         </widget>
        </item>
@@ -572,6 +622,8 @@ QPushButton:pressed {
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="Resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

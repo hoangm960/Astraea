@@ -40,8 +40,9 @@ class UIFunctions(DownloadWindow):
         ui.btn_quit.clicked.connect(lambda: self.close_pg(ui))
         ui.In_btn.clicked.connect(lambda: self.enter_room(ui))
         if ui.role == 0:
-            ui.room_btn.close()
-        ui.room_btn.clicked.connect(lambda: self.create_room(ui))
+            ui.room_btn.hide()
+        else:
+            ui.room_btn.clicked.connect(lambda: self.create_room(ui))
         ui.Go_Room.clicked.connect(lambda: self.Go_Room(ui))
         ui.Quit.clicked.connect(lambda: self.Quit(ui))
         if open(self.OPENED_ROOM_PATH).readline().rstrip():
@@ -67,7 +68,8 @@ class UIFunctions(DownloadWindow):
         def complete():
             ui.label_2.hide()
             ui.frame_2.show()
-            ui.id_entry.show()
+            ui.id_entry.hide()
+            self.check_room(ui)
         timer.singleShot(2000, lambda: complete())  
 
     def enter_room(self, ui):

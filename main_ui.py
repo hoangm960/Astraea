@@ -1,8 +1,8 @@
 import os
 import pickle
 import sys
-import mysql.connector
 
+import mysql.connector
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 from win32api import GetMonitorInfo, MonitorFromPoint

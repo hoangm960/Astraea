@@ -74,7 +74,7 @@ class UIFunctions(DownloadWindow):
         id = ui.id_entry.text()
         if id:
             cursor = ui.connection.cursor()
-            cursor.execute(f'SELECT RoomId FROM room WHERE RoomId = {id} Status = 1')
+            cursor.execute(f'SELECT RoomId FROM room WHERE RoomId = {id}')
             if [row for row in cursor]:
                 ui.frame.close()
                 ui.frame_2.close()

@@ -239,7 +239,7 @@ class UIFunctions(EditWindow):
             ui.btn_maximize.setToolTip("Phóng to")
 
     def show_file_dialog(self, ui, filename):
-        file_path = open(filename, encoding='utf-8').read().rstrip()
+        file_path = open(filename, encoding='utf-8').readline().rstrip()
         if not file_path:
             HOME_PATH = os.path.join(os.path.join(
                 os.environ["USERPROFILE"]), "Desktop")

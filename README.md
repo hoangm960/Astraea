@@ -54,4 +54,5 @@ Phần mềm hỗ trợ dạy và học lập trình
 + Các bài học có thể được tải lên và tải xuống thông qua cơ sở dữ liệu.
 #### v2.6.2 (4/12): 
 + Dữ liệu, thông tin của người dùng được lưu trữ thông qua cơ sở dữ liệu.
-
+#### v2.6.3 (8/1):
++ Dữ liệu bài học giáo viên được đăng trên cơ sở dữ liệu

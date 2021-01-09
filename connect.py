@@ -77,6 +77,7 @@ class UIFunctions(DownloadWindow):
             cursor.execute(f'SELECT RoomId FROM room WHERE RoomId = {id} AND Status = 1')
             if [row for row in cursor]:
                 open(self.OPENED_ROOM_PATH, 'w').write(id)
+                cursor.execute(f'UPDATE user SET RoomId = {id}')
                 ui.frame.close()
                 ui.frame_2.close()
                 ui.label_2.show()
@@ -84,6 +85,7 @@ class UIFunctions(DownloadWindow):
                 ui.label_2.setText('Đã vào được phòng\nid: {}'.format(id))
                 ui.timer = QtCore.QTimer()
                 ui.timer.singleShot(1000, lambda: self.close_pg(ui))
+            ui.connection.commit()
 
 
     def Go_Room(self, ui):

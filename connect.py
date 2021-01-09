@@ -1,11 +1,9 @@
-import os
-import pickle
+from encryption import decrypt, encrypt
 import sys
-from datetime import datetime
 
 import mysql.connector
 from PyQt5 import QtCore, uic
-from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow
 
 
 class DownloadWindow(QMainWindow):
@@ -48,13 +46,7 @@ class UIFunctions(DownloadWindow):
             ui.room_btn.clicked.connect(lambda: self.create_room(ui))
         ui.Go_Room.clicked.connect(lambda: self.Go_Room(ui))
         ui.Quit.clicked.connect(lambda: self.Quit(ui))
-        if open(self.OPENED_ROOM_PATH).readline().rstrip():
-            ui.room_btn.hide()
-            ui.In_btn.hide()
-            ui.id_entry.hide()
-        else:
-            ui.Quit.hide()
-            ui.Go_Room.hide()
+            
 
     def create_room(self, ui):
         cursor = ui.connection.cursor()
@@ -76,7 +68,6 @@ class UIFunctions(DownloadWindow):
         timer.singleShot(2000, lambda: complete())  
 
     def enter_room(self, ui):
-        from encryption import decrypt, encrypt
         decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
         username = open(self.USER_PATH).readline().rstrip()
         encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
@@ -108,10 +99,22 @@ class UIFunctions(DownloadWindow):
     def check_room(self, ui):
         room_id = open(self.OPENED_ROOM_PATH).read().rstrip()
         if room_id:
-            ui.label.setText(f'ID Phòng: {room_id}')
+            decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
+            username = open(self.USER_PATH).readline().rstrip()
+            encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
+            cursor = ui.connection.cursor()
+            cursor.execute(f"SELECT RoomId FROM user WHERE RoomId = {room_id} AND Username = '{username}'")
+            if [row for row in cursor]:
+                ui.label.setText(f'ID Phòng: {room_id}')
+
+                ui.room_btn.hide()
+                ui.In_btn.hide()
+                ui.id_entry.hide()
+            else:
+                ui.Quit.hide()
+                ui.Go_Room.hide()
 
     def Quit(self, ui):
-        from encryption import decrypt, encrypt
         decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
         username = open(self.USER_PATH).readline().rstrip()
         encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)

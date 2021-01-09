@@ -229,6 +229,8 @@ class UIFunctions(ResultWindow):
                 file_error.write(
                     '\n>>> FileExistsERROR: Lỗi không tìm thấy file bài làm.')
                 ui.ResultFrame.detail_entry.setText("Không thể kiểm tra.")
+        else:
+            return 0, [], []
 
     def check_true(self, ui):
         children = ui.content_widgetT.children()

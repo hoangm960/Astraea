@@ -76,7 +76,7 @@ class UIFunctions(EditWindow):
 
         ui.stacked_widget.setCurrentIndex(0)
         self.check_empty(ui, open(OPENED_ASSIGNMENT_PATH,
-                                  encoding='utf-8').read().rstrip())
+                                  encoding='utf-8').readline().rstrip())
     def connect_btn(self, ui):
         ui.btn_maximize.clicked.connect(lambda: self.maximize_restore(ui))
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())

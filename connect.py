@@ -23,6 +23,9 @@ class DownloadWindow(QMainWindow):
 class UIFunctions(DownloadWindow):
     OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
     OPENED_ROOM_PATH = "./data/Users/opened_room.or"
+    KEY_PATH = "data/encryption/users.key"
+    USER_PATH = "data/Users/User.txt"
+    USER_PATH_ENCRYPTED = "data/Users/User.encrypted"
 
     def __init__(self, ui):
         ui.connection = ui.connection
@@ -73,18 +76,22 @@ class UIFunctions(DownloadWindow):
         timer.singleShot(2000, lambda: complete())  
 
     def enter_room(self, ui):
-        id = ui.id_entry.text()
-        if id:
+        from encryption import decrypt, encrypt
+        decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
+        username = open(self.USER_PATH).readline().rstrip()
+        encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
+        room_id = ui.id_entry.text()
+        if room_id:
             cursor = ui.connection.cursor()
-            cursor.execute(f'SELECT RoomId FROM room WHERE RoomId = {id} AND Status = 1')
+            cursor.execute(f'SELECT RoomId FROM room WHERE RoomId = {room_id} AND Status = 1')
             if [row for row in cursor]:
-                open(self.OPENED_ROOM_PATH, 'w').write(id)
-                cursor.execute(f'UPDATE user SET RoomId = {id}')
+                open(self.OPENED_ROOM_PATH, 'w').write(room_id)
+                cursor.execute(f"UPDATE user SET RoomId = {room_id} WHERE Username = '{username}'")
                 ui.frame.close()
                 ui.frame_2.close()
                 ui.label_2.show()
                 ui.id_entry.close()
-                ui.label_2.setText('Đã vào được phòng\nid: {}'.format(id))
+                ui.label_2.setText('Đã vào được phòng\nid: {}'.format(room_id))
                 ui.timer = QtCore.QTimer()
                 ui.timer.singleShot(1000, lambda: self.close_pg(ui))
             ui.connection.commit()
@@ -104,7 +111,15 @@ class UIFunctions(DownloadWindow):
             ui.label.setText(f'ID Phòng: {room_id}')
 
     def Quit(self, ui):
+        from encryption import decrypt, encrypt
+        decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
+        username = open(self.USER_PATH).readline().rstrip()
+        encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
+
         open(self.OPENED_ROOM_PATH, 'w').close()
+        cursor = ui.connection.cursor()
+        cursor.execute(f"UPDATE user SET RoomId = NULL WHERE Username = '{username}'")
+        ui.connection.commit()
         ui.label.setText('Nhập ID Phòng')
         ui.room_btn.show()
         ui.Go_Room.hide()

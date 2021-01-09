@@ -57,7 +57,7 @@ def decrypt(input_file, output_file, key_file):
 
 
 if __name__ == "__main__":
-    KEY_PATH = "data/encryption/user.key"
+    KEY_PATH = "data/encryption/users.key"
     USER_PATH = "data/Users/User.txt"
     USER_PATH_ENCRYPTED = "data/Users/User.encrypted"
     encrypt(USER_PATH, USER_PATH_ENCRYPTED, KEY_PATH)

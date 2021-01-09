@@ -49,6 +49,7 @@ class UIFunctions(RoomWindow):
         else:
             ui.del_lesson_btn.clicked.connect(lambda: self.del_lesson(ui))
             ui.add_btn.clicked.connect(lambda: self.upload(ui))
+            ui.reload_btn.clicked.connect(lambda: self.add_student_list(ui))
 
     @staticmethod
     def get_file_dialog(ui, filter):

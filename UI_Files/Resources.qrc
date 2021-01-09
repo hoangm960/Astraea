@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="images">
+    <file>icons/loading.png</file>
     <file>icons/three-dots-more-indicator.png</file>
     <file>icons/Bg.jpg</file>
     <file>icons/minimize.png</file>

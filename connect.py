@@ -74,13 +74,14 @@ class UIFunctions(DownloadWindow):
         id = ui.id_entry.text()
         if id:
             cursor = ui.connection.cursor()
-            cursor.execute(f'SELECT RoomId FROM room WHERE RoomId = {id}')
+            cursor.execute(f'SELECT RoomId FROM room WHERE RoomId = {id} AND Status = 1')
             if [row for row in cursor]:
+                open(self.OPENED_ROOM_PATH, 'w').write(id)
                 ui.frame.close()
                 ui.frame_2.close()
                 ui.label_2.show()
                 ui.id_entry.close()
-                ui.label_2.setText('Tải xuống đã hoàn tất\nid: {}'.format(id))
+                ui.label_2.setText('Đã vào được phòng\nid: {}'.format(id))
                 ui.timer = QtCore.QTimer()
                 ui.timer.singleShot(1000, lambda: self.close_pg(ui))
 

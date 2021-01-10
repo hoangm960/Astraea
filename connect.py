@@ -46,7 +46,7 @@ class UIFunctions(DownloadWindow):
             ui.room_btn.clicked.connect(lambda: self.create_room(ui))
         ui.Go_Room.clicked.connect(lambda: self.Go_Room(ui))
         ui.Quit.clicked.connect(lambda: self.Quit(ui))
-            
+        ui.Quit.clicked.connect(lambda: open('./data/Users/opened_assignment.oa', 'w').close())
 
     def create_room(self, ui):
         cursor = ui.connection.cursor()

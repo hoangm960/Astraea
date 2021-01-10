@@ -104,19 +104,22 @@ class UIFunctions(DocWindow):
     def get_doc(self, ui):
         self.docs.clear()
         lesson_path, lesson_id = open(self.OPENED_LESSON_PATH).readlines()
-        if lesson_id:
-            cursor = ui.connection.cursor()
-            cursor.execute(f"SELECT DocName, DocContent FROM doc WHERE LessonId = {lesson_id}")
-            docs = [row for row in cursor]
-            for doc in docs:
-                title, content = doc
-                self.docs[title] = content.replace("''", "'")
-            
-            filename = f'{os.path.dirname(lesson_path).rstrip()}/doc.sd'
-            open(filename, 'w').close()
-            with open(filename, "wb") as f:
-                pickle.dump(self.docs, f, -1)
-            open(OPENED_DOC, 'w').write(filename)
+        try:
+            if lesson_id:
+                cursor = ui.connection.cursor()
+                cursor.execute(f"SELECT DocName, DocContent FROM doc WHERE LessonId = {lesson_id}")
+                docs = [row for row in cursor]
+                for doc in docs:
+                    title, content = doc
+                    self.docs[title] = content.replace("''", "'")
+                
+                filename = f'{os.path.dirname(lesson_path).rstrip()}/doc.sd'
+                open(filename, 'w').close()
+                with open(filename, "wb") as f:
+                    pickle.dump(self.docs, f, -1)
+                open(OPENED_DOC, 'w').write(filename)
+        except:
+            pass
 
 
     def load_doc(self, ui):

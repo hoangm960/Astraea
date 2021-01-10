@@ -63,6 +63,9 @@ background-color: rgb(35, 44, 51);
        </item>
        <item alignment="Qt::AlignHCenter">
         <widget class="QLabel" name="Slogan_Pylearn">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="minimumSize">
           <size>
            <width>470</width>
@@ -71,7 +74,7 @@ background-color: rgb(35, 44, 51);
          </property>
          <property name="maximumSize">
           <size>
-           <width>470</width>
+           <width>16777215</width>
            <height>60</height>
           </size>
          </property>
@@ -181,7 +184,7 @@ font-size: 18px;
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>25</height>
+           <height>30</height>
           </size>
          </property>
          <property name="font">

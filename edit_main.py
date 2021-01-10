@@ -1,7 +1,7 @@
 import os
 import pickle
 import sys
-
+from UI_Files import Resources
 from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (QApplication, QFileDialog, QMainWindow,
@@ -75,7 +75,8 @@ class UIFunctions(EditWindow):
         ui.sizegrip.setToolTip("Resize Window")
 
         ui.stacked_widget.setCurrentIndex(0)
-        self.check_empty(ui, open(OPENED_ASSIGNMENT_PATH,
+        if os.path.exists(OPENED_ASSIGNMENT_PATH):
+            self.check_empty(ui, open(OPENED_ASSIGNMENT_PATH,
                                   encoding='utf-8').readline().rstrip())
     def connect_btn(self, ui):
         ui.btn_maximize.clicked.connect(lambda: self.maximize_restore(ui))
@@ -386,6 +387,6 @@ class UIFunctions(EditWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = EditWindow()
+    window = EditWindow(None, None)
     window.show()
     sys.exit(app.exec_())

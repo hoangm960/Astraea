@@ -88,6 +88,8 @@ class UIFunctions(MainWindow):
                 ui.LessonButton.clicked.connect(lambda: self.open_doc(ui))
             else:
                 ui.LessonButton.hide()
+        else:
+            ui.LessonButton.hide()
 
         ui.list_assignments.itemPressed.connect(lambda: self.load_details(ui))
         ui.Server_btn.clicked.connect(lambda: self.open_connect(ui))

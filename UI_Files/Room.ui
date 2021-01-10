@@ -247,112 +247,8 @@ min-height: 20px;
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <widget class="QFrame" name="lesson_list_frame">
-         <property name="styleSheet">
-          <string notr="true">border-radius: 8px;</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <item>
-           <widget class="QLabel" name="lessong_label">
-            <property name="font">
-             <font>
-              <pointsize>13</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(255,255,255);</string>
-            </property>
-            <property name="text">
-             <string>Danh sách bài học</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QListWidget" name="lesson_list">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>iCiel Effra</family>
-              <pointsize>14</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QListWidget {
-	padding: 10px;
-	background-color: rgb(255, 255, 255);
-}
-
-QListWidget::item {
-	border-radius: 5px;
-	margin: 0px 0px 10px 0px;	
-	background-color: rgb(193, 193, 193);
-}
-
-QLineEdit {
-	color: rgb(0,0,0);
-	background-color: transparent;
-}
-
-QLabel {
-	color: rgb(0,0,0);
-	background-color: transparent;
-}
-
-QScrollBar{
-	background : rgb(255, 255, 255);	
-}
-
-QScrollBar::handle{
-	background : rgb(158, 158, 158);
-	border-radius: 5px;
-	margin: 3px 3px 3px 3px;
-}
-
-QScrollBar::handle::pressed{
-	background : rgb(85, 85, 85);
-}
-
-QScrollBar::add-line {
-	height: 0px;
-}
-
-QScrollBar::sub-line {
-	height: 0px;
-}
-
-QScrollBar::add-page, QScrollBar::sub-page {
-	height: 0px;
-}</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="1">
         <widget class="QFrame" name="student_list_frame">
          <property name="styleSheet">
           <string notr="true">border-radius: 8px;</string>
@@ -512,6 +408,252 @@ QPushButton:pressed {
          </layout>
         </widget>
        </item>
+       <item row="0" column="0">
+        <widget class="QFrame" name="lesson_list_frame">
+         <property name="styleSheet">
+          <string notr="true">border-radius: 8px;</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="2" column="0">
+           <widget class="QPushButton" name="add_btn">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+	background-color: rgb(255, 255, 255);
+	border-radius: 10px;
+	color: rgb(0,0,0);
+}
+
+QPushButton:hover {
+	color: rgb(255, 255, 255);
+	background-color: rgba(0, 0, 0, 150);
+}
+
+QPushButton:pressed {
+	color: rgb(255, 255, 255);
+	background-color: rgb(0, 0, 0);
+}r</string>
+            </property>
+            <property name="locale">
+             <locale language="Vietnamese" country="Vietnam"/>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="Resources.qrc">
+              <normaloff>:/images/icons/plus.png</normaloff>:/images/icons/plus.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QListWidget" name="lesson_list">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>iCiel Effra</family>
+              <pointsize>14</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QListWidget {
+	padding: 10px;
+	background-color: rgb(255, 255, 255);
+}
+
+QListWidget::item {
+	border-radius: 5px;
+	margin: 0px 0px 10px 0px;	
+	background-color: rgb(193, 193, 193);
+}
+
+QLineEdit {
+	color: rgb(0,0,0);
+	background-color: transparent;
+}
+
+QLabel {
+	color: rgb(0,0,0);
+	background-color: transparent;
+}
+
+QScrollBar{
+	background : rgb(255, 255, 255);	
+}
+
+QScrollBar::handle{
+	background : rgb(158, 158, 158);
+	border-radius: 5px;
+	margin: 3px 3px 3px 3px;
+}
+
+QScrollBar::handle::pressed{
+	background : rgb(85, 85, 85);
+}
+
+QScrollBar::add-line {
+	height: 0px;
+}
+
+QScrollBar::sub-line {
+	height: 0px;
+}
+
+QScrollBar::add-page, QScrollBar::sub-page {
+	height: 0px;
+}</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QPushButton" name="download_btn">
+            <property name="minimumSize">
+             <size>
+              <width>130</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+	background-color: rgb(255, 255, 255);
+	border-radius: 10px;
+	color: rgb(0,0,0);
+}
+
+QPushButton:hover {
+	color: rgb(255, 255, 255);
+	background-color: rgba(0, 0, 0, 150);
+}
+
+QPushButton:pressed {
+	color: rgb(255, 255, 255);
+	background-color: rgb(0, 0, 0);
+}r</string>
+            </property>
+            <property name="locale">
+             <locale language="Vietnamese" country="Vietnam"/>
+            </property>
+            <property name="text">
+             <string>Tải xuống bài học</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="lessong_label">
+            <property name="font">
+             <font>
+              <pointsize>13</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255,255,255);</string>
+            </property>
+            <property name="text">
+             <string>Danh sách bài học</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QPushButton" name="del_lesson_btn">
+            <property name="minimumSize">
+             <size>
+              <width>130</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+	background-color: rgb(255, 255, 255);
+	border-radius: 10px;
+	color: rgb(0,0,0);
+}
+
+QPushButton:hover {
+	color: rgb(255, 255, 255);
+	background-color: rgba(0, 0, 0, 150);
+}
+
+QPushButton:pressed {
+	color: rgb(255, 255, 255);
+	background-color: rgb(0, 0, 0);
+}r</string>
+            </property>
+            <property name="locale">
+             <locale language="Vietnamese" country="Vietnam"/>
+            </property>
+            <property name="text">
+             <string>Xóa bài học</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
       </layout>
      </widget>
     </item>
@@ -539,8 +681,8 @@ QPushButton:pressed {
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="1">
-        <widget class="QPushButton" name="del_lesson_btn">
+       <item row="0" column="4">
+        <widget class="QPushButton" name="download_info_btn">
          <property name="minimumSize">
           <size>
            <width>130</width>
@@ -581,103 +723,7 @@ QPushButton:pressed {
           <locale language="Vietnamese" country="Vietnam"/>
          </property>
          <property name="text">
-          <string>Xóa bài học</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="3">
-        <widget class="QPushButton" name="download_btn">
-         <property name="minimumSize">
-          <size>
-           <width>130</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>12</pointsize>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-	background-color: rgb(255, 255, 255);
-	border-radius: 10px;
-	color: rgb(0,0,0);
-}
-
-QPushButton:hover {
-	color: rgb(255, 255, 255);
-	background-color: rgba(0, 0, 0, 150);
-}
-
-QPushButton:pressed {
-	color: rgb(255, 255, 255);
-	background-color: rgb(0, 0, 0);
-}r</string>
-         </property>
-         <property name="locale">
-          <locale language="Vietnamese" country="Vietnam"/>
-         </property>
-         <property name="text">
-          <string>Tải xuống bài học</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QPushButton" name="add_btn">
-         <property name="minimumSize">
-          <size>
-           <width>204</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>12</pointsize>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-	background-color: rgb(255, 255, 255);
-	border-radius: 10px;
-	color: rgb(0,0,0);
-}
-
-QPushButton:hover {
-	color: rgb(255, 255, 255);
-	background-color: rgba(0, 0, 0, 150);
-}
-
-QPushButton:pressed {
-	color: rgb(255, 255, 255);
-	background-color: rgb(0, 0, 0);
-}r</string>
-         </property>
-         <property name="locale">
-          <locale language="Vietnamese" country="Vietnam"/>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="Resources.qrc">
-           <normaloff>:/images/icons/plus.png</normaloff>:/images/icons/plus.png</iconset>
+          <string>Tải xuống dữ liệu bài làm học sinh</string>
          </property>
         </widget>
        </item>

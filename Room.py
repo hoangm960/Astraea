@@ -2,6 +2,7 @@ import os
 import pickle
 import sys
 from datetime import datetime
+import pandas
 
 import mysql.connector
 from PyQt5 import QtCore, uic
@@ -45,10 +46,12 @@ class UIFunctions(RoomWindow):
         if ui.role == 0:
             ui.del_lesson_btn.close()
             ui.add_btn.close()
+            ui.ButtonFrame.close()
         else:
             ui.del_lesson_btn.clicked.connect(lambda: self.del_lesson(ui))
             ui.add_btn.clicked.connect(lambda: self.upload(ui))
             ui.reload_btn.clicked.connect(lambda: self.add_student_list(ui))
+            ui.download_info_btn.clicked.connect(lambda: self.get_students_submission(ui))
 
     @staticmethod
     def get_file_dialog(ui, filter):
@@ -199,6 +202,21 @@ class UIFunctions(RoomWindow):
             ui.student_list.addItem(f'Tên người dùng: {username}, Tên: {name}')
 
     @staticmethod
+    def save_file_dialog(ui, filter):
+        HOME_PATH = os.path.join(os.path.join(
+            os.environ["USERPROFILE"]), "Desktop")
+        file_path = QFileDialog.getSaveFileName(
+            ui, "Open file", HOME_PATH, filter)[0]
+        return file_path
+
+    def get_students_submission(self, ui):
+        lesson_id = open(self.OPENED_LESSON_PATH).readlines()[1]
+        submission = pandas.read_sql(f"SELECT UserName, SubmissionDate, Mark, Comment FROM submission WHERE LessonId = {lesson_id}", ui.connection)
+        filename = self.save_file_dialog(ui, '*.xlsx')
+        if filename:
+            submission.to_excel(filename)
+
+    @staticmethod
     def close_pg(ui):
         import main_ui
         main_ui.main(ui.role, ui.pg, ui.connection)
@@ -212,7 +230,7 @@ if __name__ == '__main__':
         database="K63yMSwITl"
     )
     app = QApplication(sys.argv)
-    # window = RoomWindow(1, None, connection)
-    window = RoomWindow(0, None, connection)
+    window = RoomWindow(1, None, connection)
+    # window = RoomWindow(0, None, connection)
     window.show()
     sys.exit(app.exec_())

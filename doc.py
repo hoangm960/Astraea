@@ -43,6 +43,7 @@ class UIFunctions(DocWindow):
 
         self.connect_btn(ui)
         self.get_doc(ui)
+        self.check_opened_doc(ui)
         self.define_role(ui)
 
     @staticmethod
@@ -106,39 +107,37 @@ class UIFunctions(DocWindow):
     def get_doc(self, ui):
         self.docs.clear()
         lesson_path, lesson_id = open(self.OPENED_LESSON_PATH).readlines()
-        try:
-            if lesson_id:
-                cursor = ui.connection.cursor()
-                cursor.execute(f"SELECT DocName, DocContent FROM doc WHERE LessonId = {lesson_id}")
-                docs = [row for row in cursor]
-                for doc in docs:
-                    title, content = doc
-                    self.docs[title] = content.replace("''", "'")
-                
-                filename = f'{os.path.dirname(lesson_path).rstrip()}/doc.sd'
-                open(filename, 'w').close()
-                with open(filename, "wb") as f:
-                    pickle.dump(self.docs, f, -1)
-                open(OPENED_DOC, 'w').write(filename)
-        except:
-            pass
+        # try:
+        if lesson_id:
+            cursor = ui.connection.cursor()
+            cursor.execute(f"SELECT DocName, DocContent FROM doc WHERE LessonId = {lesson_id}")
+            docs = [row for row in cursor]
+            for doc in docs:
+                title, content = doc
+                self.docs[title] = content.replace("''", "'")
+            
+            filename = f'{os.path.dirname(lesson_path).rstrip()}/doc.sd'
+            open(filename, 'w').close()
+            with open(filename, "wb") as f:
+                pickle.dump(self.docs, f, -1)
+            open(OPENED_DOC, 'w').write(filename)
+        # except:
+        #     pass
 
-
-    def load_doc(self, ui):
-        filename = self.get_file_dialog(ui, "*.sd")
-        if os.path.exists(filename):
-            if os.path.getsize(filename) > 0:
-                with open(filename, "rb") as f:
+    def check_opened_doc(self, ui):
+        doc_path = open(OPENED_DOC).read()
+        if os.path.exists(doc_path):
+            if os.path.getsize(doc_path) > 0:
+                with open(doc_path, "rb") as f:
                     unpickler = pickle.Unpickler(f)
-                    UIFunctions.docs = unpickler.load()
+                    self.docs = unpickler.load()
                     ui.titles.clear()
-                    for key in UIFunctions.docs.keys():
+                    for key in self.docs.keys():
                         ui.titles.addItem(key)
 
     class TeacherUiFunctions:
         def __init__(self, ui):
             self.connect_btn(ui)
-            self.check_opened_doc(ui)
 
         def open_doc(self, ui):
             if not ui.titles.currentItem().text():
@@ -151,16 +150,6 @@ class UIFunctions(DocWindow):
             else:
                 self.load_doc(ui)
 
-        def check_opened_doc(self, ui):
-            doc_path = open(OPENED_DOC).read()
-            if os.path.exists(doc_path):
-                if os.path.getsize(doc_path) > 0:
-                    with open(doc_path, "rb") as f:
-                        unpickler = pickle.Unpickler(f)
-                        UIFunctions.docs = unpickler.load()
-                        ui.titles.clear()
-                        for key in UIFunctions.docs.keys():
-                            ui.titles.addItem(key)
 
         @staticmethod
         def get_file_dialog(ui, filter):
@@ -237,7 +226,7 @@ class UIFunctions(DocWindow):
 
     class StudentUiFunctions:
         def __init__(self, ui):
-            ui.edit_btn_frame.close()
+            ui.confirm_frame.close()
             ui.titles.itemClicked.connect(lambda: ui.text_entry.setText(
                 UIFunctions.docs[ui.titles.currentItem().text()]))
 
@@ -256,7 +245,7 @@ if __name__ == "__main__":
         database="K63yMSwITl"
     )
     app = QApplication(sys.argv)
-    window = DocWindow(1, None, connection)
-    # window = DocWindow(0, None, connection)
+    # window = DocWindow(1, None, connection)
+    window = DocWindow(0, None, connection)
     window.show()
     sys.exit(app.exec_())

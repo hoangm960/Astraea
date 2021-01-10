@@ -81,6 +81,11 @@ class UIFunctions(DocWindow):
             ui.text_entry.clear()
             ui.deleteBox_frame.hide()
 
+            lesson_id = open(UIFunctions.OPENED_LESSON_PATH).readlines()[1]
+            cursor = ui.connection.cursor()
+            cursor.execute(f"DELETE FROM doc WHERE DocName = '{item.text()}' AND LessonId = {lesson_id}")
+            ui.connection.commit()
+
     def Change(self, ui, text):
         selected_items = ui.titles.selectedItems()
         if selected_items and not ui.Name_edit.text() in self.docs:
@@ -90,6 +95,11 @@ class UIFunctions(DocWindow):
             item.setText(text)
             self.docs[item.text()] = temp
             ui.Name_edit.clear()
+
+            lesson_id = open(UIFunctions.OPENED_LESSON_PATH).readlines()[1]
+            cursor = ui.connection.cursor()
+            cursor.execute(f"UPDATE doc SET DocName = '{text}' WHERE DocName = '{item.text()}' AND LessonId = {lesson_id}")
+            ui.connection.commit()
 
     def get_doc(self, ui):
         self.docs.clear()
@@ -128,7 +138,6 @@ class UIFunctions(DocWindow):
         def open_doc(self, ui):
             if not ui.titles.currentItem().text():
                 file_path = self.get_file_dialog(ui, "*.docx")
-                print(file_path)
                 if file_path:
                     ui.titles.currentItem().setText(
                         os.path.splitext(os.path.basename(file_path))[0])

@@ -56,3 +56,5 @@ Phần mềm hỗ trợ dạy và học lập trình
 + Dữ liệu, thông tin của người dùng được lưu trữ thông qua cơ sở dữ liệu.
 #### v2.6.3 (8/1):
 + Dữ liệu bài học giáo viên được đăng trên cơ sở dữ liệu
+#### v2.6.4 (8/1):
++ Dữ liệu lý thuyết được đăng trên cơ sở dữ liệu

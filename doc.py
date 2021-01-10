@@ -40,6 +40,7 @@ class UIFunctions(DocWindow):
         )
         ui.showMaximized()
         ui.deleteBox_frame.hide()
+
         self.connect_btn(ui)
         self.get_doc(ui)
         self.define_role(ui)
@@ -90,16 +91,17 @@ class UIFunctions(DocWindow):
         selected_items = ui.titles.selectedItems()
         if selected_items and not ui.Name_edit.text() in self.docs:
             item = selected_items[0]
-            temp = self.docs[item.text()]
-            self.docs.pop(item.text())
-            item.setText(text)
-            self.docs[item.text()] = temp
-            ui.Name_edit.clear()
 
             lesson_id = open(UIFunctions.OPENED_LESSON_PATH).readlines()[1]
             cursor = ui.connection.cursor()
             cursor.execute(f"UPDATE doc SET DocName = '{text}' WHERE DocName = '{item.text()}' AND LessonId = {lesson_id}")
             ui.connection.commit()
+
+            temp = self.docs[item.text()]
+            self.docs.pop(item.text())
+            item.setText(text)
+            self.docs[item.text()] = temp
+            ui.Name_edit.clear()
 
     def get_doc(self, ui):
         self.docs.clear()

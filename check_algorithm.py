@@ -45,7 +45,7 @@ def main(filename, tests, infos, time_limit=2):
         key, message, num = (i for i in info)
         data = open(filename).read()
         data = [i for i in re.split('[;()\s]\s*', data) if i]
-        if data.count(key) >= int(num):
+        if data.count(key) < int(num):
             check_info.info.append(message)
 
     for test in tests:

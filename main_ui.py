@@ -83,7 +83,11 @@ class UIFunctions(MainWindow):
             lambda: self.show_file_dialog(ui, OPENED_LESSON_PATH)
         )
         ui.main_btn.clicked.connect(lambda: self.close_pg(ui))
-        ui.LessonButton.clicked.connect(lambda: self.open_doc(ui))
+        if os.path.getsize(OPENED_LESSON_PATH) > 0:
+            if open(OPENED_LESSON_PATH).readlines()[1] != '0':
+                ui.LessonButton.clicked.connect(lambda: self.open_doc(ui))
+            else:
+                ui.LessonButton.hide()
 
         ui.list_assignments.itemPressed.connect(lambda: self.load_details(ui))
         ui.Server_btn.clicked.connect(lambda: self.open_connect(ui))
@@ -120,9 +124,9 @@ class UIFunctions(MainWindow):
         file_path = QFileDialog.getOpenFileName(
             ui, "Open file", HOME_PATH, "*.list")[0]
         if file_path:
-            with open(filename, "w", encoding='utf8') as f:
-                f.write(file_path)
             self.load_assignments(ui, file_path)
+            with open(filename, "w", encoding='utf8') as f:
+                f.writelines([f'{file_path}\n', '0'])
 
     @staticmethod
     def get_assignments(filename):

@@ -12,6 +12,8 @@ from win32com import client as wc
 import main_ui
 
 DOC_UI = "./UI_Files/Doc.ui"
+OPENED_DOC = "./data/Users/opened_doc.od"
+
 
 
 class DocWindow(QMainWindow):
@@ -26,6 +28,7 @@ class DocWindow(QMainWindow):
 
 
 class UIFunctions(DocWindow):
+    OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
     docs = {}
 
     def __init__(self, ui):
@@ -38,6 +41,7 @@ class UIFunctions(DocWindow):
         ui.showMaximized()
         ui.deleteBox_frame.hide()
         self.connect_btn(ui)
+        self.get_doc(ui)
         self.define_role(ui)
 
     @staticmethod
@@ -87,7 +91,24 @@ class UIFunctions(DocWindow):
             self.docs[item.text()] = temp
             ui.Name_edit.clear()
 
-    @classmethod
+    def get_doc(self, ui):
+        self.docs.clear()
+        lesson_path, lesson_id = open(self.OPENED_LESSON_PATH).readlines()
+        if lesson_id:
+            cursor = ui.connection.cursor()
+            cursor.execute(f"SELECT DocName, DocContent FROM doc WHERE LessonId = {lesson_id}")
+            docs = [row for row in cursor]
+            for doc in docs:
+                title, content = doc
+                self.docs[title] = content
+            
+            filename = f'{os.path.dirname(lesson_path).rstrip()}/doc.sd'
+            open(filename, 'w').close()
+            with open(filename, "wb") as f:
+                pickle.dump(self.docs, f, -1)
+            open(OPENED_DOC, 'w').write(filename)
+
+
     def load_doc(self, ui):
         filename = self.get_file_dialog(ui, "*.sd")
         if os.path.exists(filename):
@@ -100,8 +121,6 @@ class UIFunctions(DocWindow):
                         ui.titles.addItem(key)
 
     class TeacherUiFunctions:
-        OPENED_DOC = "./data/Users/opened_doc.od"
-
         def __init__(self, ui):
             self.connect_btn(ui)
             self.check_opened_doc(ui)
@@ -118,7 +137,7 @@ class UIFunctions(DocWindow):
                 self.load_doc(ui)
 
         def check_opened_doc(self, ui):
-            doc_path = open(self.OPENED_DOC).read()
+            doc_path = open(OPENED_DOC).read()
             if os.path.exists(doc_path):
                 if os.path.getsize(doc_path) > 0:
                     with open(doc_path, "rb") as f:
@@ -189,13 +208,13 @@ class UIFunctions(DocWindow):
                 if os.path.getsize(filename) > 0:
                     with open(filename, "wb") as f:
                         pickle.dump(UIFunctions.docs, f, -1)
-                    open(self.OPENED_DOC, 'w').write(filename)
+                    open(OPENED_DOC, 'w').write(filename)
 
         def connect_btn(self, ui):
             ui.add_btn.clicked.connect(lambda: self.add_titles(ui))
             ui.titles.itemClicked.connect(lambda: self.open_doc(ui))
             ui.SaveDocx.clicked.connect(
-                lambda: self.saveDocx(ui, open(self.OPENED_DOC).read()))
+                lambda: self.saveDocx(ui, open(OPENED_DOC).read()))
 
     class StudentUiFunctions:
         def __init__(self, ui):

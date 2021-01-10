@@ -164,10 +164,10 @@ class UIFunctions(RoomWindow):
                 file_assignments.append(Assignment(
                     name, details, mark, file_tests, infos))
 
-            with open(self.show_file_dialog(self.OPENED_LESSON_PATH), "wb") as f:
+            filename = self.show_file_dialog(self.OPENED_LESSON_PATH)
+            with open(filename, "wb") as f:
                 pickle.dump([title, file_assignments], f, -1)
-
-            open(self.OPENED_LESSON_PATH, 'a').write(f'\n{lesson_id}')
+            open(self.OPENED_LESSON_PATH, 'w').write(f'{filename}\n{lesson_id}')
 
     @staticmethod
     def show_file_dialog(filename):

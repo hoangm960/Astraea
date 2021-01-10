@@ -627,7 +627,7 @@ QPushButton:pressed {
           <locale language="Vietnamese" country="Vietnam"/>
          </property>
          <property name="text">
-          <string>Tải dữ liệu của học sinh</string>
+          <string>Tải xuống bài học</string>
          </property>
         </widget>
        </item>

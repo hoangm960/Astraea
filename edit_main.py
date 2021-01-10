@@ -101,17 +101,6 @@ class UIFunctions(EditWindow):
                 ui.timer.singleShot(2500, lambda: setDefault())
             else:
                 self.go_to_second(ui)
-        def get_file(entry, filter):
-            HOME_PATH = os.path.join(os.path.join(
-                os.environ["USERPROFILE"]), "Desktop")
-            file_name = QFileDialog.getOpenFileName(
-                ui, "Open file", HOME_PATH, filter)
-
-            if file_name[0]:
-                entry.setText(file_name[0])
-        ui.Open_Theory.clicked.connect(
-                lambda: get_file(ui.Theory_link, "*.docx")
-            )
 
         ui.confirm_button.clicked.connect(lambda: check())
         ui.return_btn.clicked.connect(

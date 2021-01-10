@@ -100,7 +100,7 @@ class UIFunctions(DocWindow):
             docs = [row for row in cursor]
             for doc in docs:
                 title, content = doc
-                self.docs[title] = content
+                self.docs[title] = content.replace("''", "'")
             
             filename = f'{os.path.dirname(lesson_path).rstrip()}/doc.sd'
             open(filename, 'w').close()
@@ -128,6 +128,7 @@ class UIFunctions(DocWindow):
         def open_doc(self, ui):
             if not ui.titles.currentItem().text():
                 file_path = self.get_file_dialog(ui, "*.docx")
+                print(file_path)
                 if file_path:
                     ui.titles.currentItem().setText(
                         os.path.splitext(os.path.basename(file_path))[0])
@@ -201,20 +202,24 @@ class UIFunctions(DocWindow):
             ui.titles.addItem(title_item)
             ui.titles.setItemWidget(title_item, title)
 
-        def saveDocx(self, ui, filename=''):
-            if not filename:
-                filename = self.save_file_dialog(ui, "*.sd")
-            if os.path.exists(filename):
-                if os.path.getsize(filename) > 0:
-                    with open(filename, "wb") as f:
-                        pickle.dump(UIFunctions.docs, f, -1)
-                    open(OPENED_DOC, 'w').write(filename)
+        def saveDocx(self, ui):
+            cursor = ui.connection.cursor()
+            lesson_id = open(UIFunctions.OPENED_LESSON_PATH).readlines()[1]
+            cursor.execute(f"SELECT DocName FROM doc WHERE LessonId = {lesson_id}")
+            doc_names = [row[0] for row in cursor]
+            for key in UIFunctions.docs:
+                content = UIFunctions.docs[key].replace("'", "''")
+                if key in doc_names:
+                    cursor.execute(f"UPDATE doc SET DocContent = '{content}' WHERE DocName = '{key}'")
+                else:
+                    cursor.execute(f"INSERT INTO doc(LessonId, DocName, DocContent) VALUES({lesson_id},'{key}', '{content}')")
+                ui.connection.commit()
 
         def connect_btn(self, ui):
             ui.add_btn.clicked.connect(lambda: self.add_titles(ui))
             ui.titles.itemClicked.connect(lambda: self.open_doc(ui))
             ui.SaveDocx.clicked.connect(
-                lambda: self.saveDocx(ui, open(OPENED_DOC).read()))
+                lambda: self.saveDocx(ui))
 
     class StudentUiFunctions:
         def __init__(self, ui):

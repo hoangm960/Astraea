@@ -33,7 +33,6 @@ class UIFunctions(RoomWindow):
         self.add_lesson_list(ui)
         if ui.role == 0:
             ui.student_list_frame.close()
-            ui.download_btn.setText('Tải xuống bài học')
         else:
             self.add_student_list(ui)
         self.connect_btn(ui)

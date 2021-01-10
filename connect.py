@@ -97,22 +97,26 @@ class UIFunctions(DownloadWindow):
             ui.close()
 
     def check_room(self, ui):
+        decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
+        username = open(self.USER_PATH).readline().rstrip()
+        encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
+        cursor = ui.connection.cursor()
+        cursor.execute(f"SELECT RoomId FROM user WHERE Username = '{username}'")
+        room_ids = [row for row in cursor]
+        if room_ids:
+            for room_id in room_ids:
+                open(self.OPENED_ROOM_PATH, 'w').write(str(room_id[0]))
+
         room_id = open(self.OPENED_ROOM_PATH).read().rstrip()
         if room_id:
-            decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
-            username = open(self.USER_PATH).readline().rstrip()
-            encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
-            cursor = ui.connection.cursor()
-            cursor.execute(f"SELECT RoomId FROM user WHERE RoomId = {room_id} AND Username = '{username}'")
-            if [row for row in cursor]:
-                ui.label.setText(f'ID Phòng: {room_id}')
+            ui.label.setText(f'ID Phòng: {room_id}')
 
-                ui.room_btn.hide()
-                ui.In_btn.hide()
-                ui.id_entry.hide()
-            else:
-                ui.Quit.hide()
-                ui.Go_Room.hide()
+            ui.room_btn.hide()
+            ui.In_btn.hide()
+            ui.id_entry.hide()
+        else:
+            ui.Quit.hide()
+            ui.Go_Room.hide()
 
     def Quit(self, ui):
         decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)

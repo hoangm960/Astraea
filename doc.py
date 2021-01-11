@@ -85,7 +85,7 @@ class UIFunctions(DocWindow):
 
             lesson_id = open(UIFunctions.OPENED_LESSON_PATH).readlines()[1]
             cursor = ui.connection.cursor()
-            cursor.execute(f"DELETE FROM doc WHERE DocName = '{item.text()}' AND LessonId = {lesson_id}")
+            cursor.execute("DELETE FROM doc WHERE DocName = %s AND LessonId = %s", (item.text(), lesson_id))
             ui.connection.commit()
 
     def Change(self, ui, text):
@@ -95,7 +95,7 @@ class UIFunctions(DocWindow):
 
             lesson_id = open(UIFunctions.OPENED_LESSON_PATH).readlines()[1]
             cursor = ui.connection.cursor()
-            cursor.execute(f"UPDATE doc SET DocName = '{text}' WHERE DocName = '{item.text()}' AND LessonId = {lesson_id}")
+            cursor.execute("UPDATE doc SET DocName = %s WHERE DocName = %s AND LessonId = %s", (text, item.text(), lesson_id))
             ui.connection.commit()
 
             temp = self.docs[item.text()]
@@ -110,7 +110,7 @@ class UIFunctions(DocWindow):
         # try:
         if lesson_id:
             cursor = ui.connection.cursor()
-            cursor.execute(f"SELECT DocName, DocContent FROM doc WHERE LessonId = {lesson_id}")
+            cursor.execute("SELECT DocName, DocContent FROM doc WHERE LessonId = %s", (lesson_id, ))
             docs = [row for row in cursor]
             for doc in docs:
                 title, content = doc
@@ -205,17 +205,18 @@ class UIFunctions(DocWindow):
             ui.titles.addItem(title_item)
             ui.titles.setItemWidget(title_item, title)
 
-        def saveDocx(self, ui):
+        @staticmethod
+        def saveDocx(ui):
             cursor = ui.connection.cursor()
             lesson_id = open(UIFunctions.OPENED_LESSON_PATH).readlines()[1]
-            cursor.execute(f"SELECT DocName FROM doc WHERE LessonId = {lesson_id}")
+            cursor.execute("SELECT DocName FROM doc WHERE LessonId = %s", (lesson_id, ))
             doc_names = [row[0] for row in cursor]
             for key in UIFunctions.docs:
                 content = UIFunctions.docs[key].replace("'", "''")
                 if key in doc_names:
-                    cursor.execute(f"UPDATE doc SET DocContent = '{content}' WHERE DocName = '{key}'")
+                    cursor.execute("UPDATE doc SET DocContent = %s WHERE DocName = %s", (content, key))
                 else:
-                    cursor.execute(f"INSERT INTO doc(LessonId, DocName, DocContent) VALUES({lesson_id},'{key}', '{content}')")
+                    cursor.execute("INSERT INTO doc(LessonId, DocName, DocContent) VALUES(%s, %s, %s)", (lesson_id, key, content))
                 ui.connection.commit()
 
         def connect_btn(self, ui):

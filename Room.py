@@ -77,31 +77,31 @@ class UIFunctions(RoomWindow):
             title, assignments = self.get_lesson(filename)
             current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             cursor.execute(
-                f"INSERT INTO lesson(Name, CreatedDate) VALUES('{title}', '{current_time}');")
+                "INSERT INTO lesson(Name, CreatedDate) VALUES(%s, %s", (title, current_time))
             lesson_id = cursor.lastrowid
             for assignment in assignments:
                 name, details, mark = assignment.name, assignment.details, assignment.mark
                 cursor.execute(
-                    f"INSERT INTO assignment(LessonId, Name, Details, Mark) VALUES({lesson_id}, '{name}', '{details}', {mark});")
+                    "INSERT INTO assignment(LessonId, Name, Details, Mark) VALUES(%s, %s, %s, %s)", (lesson_id, name, details, mark))
                 assignment_id = cursor.lastrowid
                 for test in assignment.tests:
                     cursor.execute(
-                        f"INSERT INTO test(AssignmentId) VALUES({assignment_id});")
+                        "INSERT INTO test(AssignmentId) VALUES(%s)", (assignment_id, ))
                     test_id = cursor.lastrowid
                     for input in test[0]:
                         cursor.execute(
-                            f"INSERT INTO input(TestId, InputContent) VALUES({test_id}, '{input}');")
+                            "INSERT INTO input(TestId, InputContent) VALUES(%s, %s)", (test_id, input))
                     for output in test[1]:
                         cursor.execute(
-                            f"INSERT INTO output(TestId, OutputContent) VALUES({test_id}, '{output}');")
+                            "INSERT INTO output(TestId, OutputContent) VALUES(%s, %s)", (test_id, output))
                 for info in assignment.infos:
                     key, message, num = (i for i in info)
                     cursor.execute(
-                        f"INSERT INTO info(AssignmentId, KeyWord, Message, Quantity) VALUES({assignment_id}, '{key}', '{message}', {num});")
+                        "INSERT INTO info(AssignmentId, KeyWord, Message, Quantity) VALUES(%s, %s, %s, %s)", (assignment_id, key, message, num))
 
             if lesson_id:
                 cursor = ui.connection.cursor()
-                cursor.execute(f"INSERT INTO lesson_in_room(RoomId, LessonId) VALUES({self.room_id}, {lesson_id})")
+                cursor.execute("INSERT INTO lesson_in_room(RoomId, LessonId) VALUES(%s, %s)", (self.room_id, lesson_id))
 
             ui.connection.commit()
             self.add_lesson_list(ui)
@@ -117,7 +117,7 @@ class UIFunctions(RoomWindow):
                 lesson_id = text.replace('ID: ', '').replace('Tên: ', '').split(', ')[0]
                 if lesson_id:
                     cursor = ui.connection.cursor()
-                    cursor.execute(f'DELETE FROM lesson_in_room WHERE LessonId = {lesson_id}')
+                    cursor.execute('DELETE FROM lesson_in_room WHERE LessonId = %s', (lesson_id, ))
                     ui.connection.commit()
 
     def download_lesson(self, ui):
@@ -145,22 +145,22 @@ class UIFunctions(RoomWindow):
                 assignment_id, name, details, mark = (
                     i for i in assignment)
                 cursor.execute(
-                    f"SELECT TestId FROM test WHERE AssignmentId = '{assignment_id}'")
+                    "SELECT TestId FROM test WHERE AssignmentId = %s", (assignment_id, ))
                 tests = [row for row in cursor]
 
                 file_tests = []
                 for test in tests:
                     test_id = test[0]
                     cursor.execute(
-                        f"SELECT InputContent FROM input WHERE TestId = '{test_id}'")
+                        "SELECT InputContent FROM input WHERE TestId = %s", (test_id, ))
                     inputs = [row[0] for row in cursor]
                     cursor.execute(
-                        f"SELECT OutputContent FROM output WHERE TestId = '{test_id}'")
+                        "SELECT OutputContent FROM output WHERE TestId = %s", (test_id, ))
                     outputs = [row[0] for row in cursor]
                     file_tests.append([inputs, outputs])
 
                 cursor.execute(
-                    f"SELECT KeyWord, Message, Quantity FROM info WHERE AssignmentId = '{assignment_id}'")
+                    "SELECT KeyWord, Message, Quantity FROM info WHERE AssignmentId = %s", (assignment_id, ))
                 infos = [row for row in cursor]
 
                 file_assignments.append(Assignment(
@@ -185,17 +185,17 @@ class UIFunctions(RoomWindow):
     def add_lesson_list(self, ui):
         ui.lesson_list.clear()
         cursor = ui.connection.cursor()
-        cursor.execute(f'SELECT LessonId FROM lesson_in_room WHERE RoomId = {self.room_id}')
+        cursor.execute('SELECT LessonId FROM lesson_in_room WHERE RoomId = %s', (self.room_id, ))
         lesson_ids = [row[0] for row in cursor]
         for lesson_id in lesson_ids:
-            cursor.execute(f'SELECT Name FROM lesson WHERE LessonId = {lesson_id}')
+            cursor.execute('SELECT Name FROM lesson WHERE LessonId = %s', (lesson_id, ))
             lesson_name = [row[0] for row in cursor][0]
             ui.lesson_list.addItem(f'ID: {lesson_id}, Tên: {lesson_name}')
 
     def add_student_list(self, ui):
         ui.student_list.clear()
         cursor = ui.connection.cursor()
-        cursor.execute(f'SELECT Username, ShowName FROM user WHERE RoomId = {self.room_id} AND Type = 0')
+        cursor.execute('SELECT Username, ShowName FROM user WHERE RoomId = %s AND Type = %s', (self.room_id, 0))
         students = [row for row in cursor]
         for student in students:
             username, name = student
@@ -211,7 +211,7 @@ class UIFunctions(RoomWindow):
 
     def get_students_submission(self, ui):
         lesson_id = open(self.OPENED_LESSON_PATH).readlines()[1]
-        submission = pandas.read_sql(f"SELECT UserName, SubmissionDate, Mark, Comment FROM submission WHERE LessonId = {lesson_id}", ui.connection)
+        submission = pandas.read_sql("SELECT UserName, SubmissionDate, Mark, Comment FROM submission WHERE LessonId = %s", (lesson_id, ), ui.connection)
         filename = self.save_file_dialog(ui, '*.xlsx')
         if filename:
             submission.to_excel(filename)

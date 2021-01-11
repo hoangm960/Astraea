@@ -250,7 +250,7 @@ class UIFunctions(EditWindow):
                 ui, "Open file", HOME_PATH, "*.list"
             )[0]
             with open(filename, "w", encoding='utf8') as f:
-                f.write(file_path)
+                f.write(f"{file_path}\n0")
         if file_path:
             self.load_assignments(ui, file_path)
             self.reopen_main(ui)

@@ -105,7 +105,7 @@ class UIFunctions(DownloadWindow):
         room_ids = [row for row in cursor]
         if room_ids:
             for room_id in room_ids:
-                if room_id:
+                if room_id[0]:
                     open(self.OPENED_ROOM_PATH, 'w').write(str(room_id[0]))
 
         room_id = open(self.OPENED_ROOM_PATH).read().rstrip()

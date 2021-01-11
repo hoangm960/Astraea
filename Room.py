@@ -211,7 +211,7 @@ class UIFunctions(RoomWindow):
 
     def get_students_submission(self, ui):
         lesson_id = open(self.OPENED_LESSON_PATH).readlines()[1]
-        submission = pandas.read_sql("SELECT UserName, SubmissionDate, Mark, Comment FROM submission WHERE LessonId = %s", (lesson_id, ), ui.connection)
+        submission = pandas.read_sql(f"SELECT UserName, SubmissionDate, Mark, Comment FROM submission WHERE LessonId = {lesson_id}", ui.connection)
         filename = self.save_file_dialog(ui, '*.xlsx')
         if filename:
             submission.to_excel(filename)

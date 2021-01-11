@@ -6,6 +6,7 @@ import mysql.connector
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow, QMessageBox
 from win32api import GetMonitorInfo, MonitorFromPoint
+import pygetwindow
 
 from UI_Files import Resources
 
@@ -24,11 +25,13 @@ class MainWindow(QMainWindow):
 
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(UI_MAIN_PATH, self)
-        if self.pg:
+        try:
             self.pg.restore()
             self.pg.moveTo(-8, 0)
             self.pg.resizeTo(
                 SCREEN_WIDTH - self.width() + 16, self.height() + 8)
+        except pygetwindow.PyGetWindowException:
+            pass
         UIFunctions(self)
 
     def changeEvent(self, event):

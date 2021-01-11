@@ -109,7 +109,7 @@ class UIFunctions(DownloadWindow):
                     open(self.OPENED_ROOM_PATH, 'w').write(str(room_id[0]))
 
         room_id = open(self.OPENED_ROOM_PATH).read().rstrip()
-        if room_id!='None':
+        if room_id:
             ui.label.setText(f'ID Phòng: {room_id}')
 
             ui.room_btn.hide()

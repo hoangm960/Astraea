@@ -2,11 +2,11 @@ import os
 import pickle
 import shutil
 import sys
-import mysql.connector
 
+import mysql.connector
 from PyQt5 import QtCore, uic
-from PyQt5.QtWidgets import (
-    QApplication, QFileDialog, QLabel, QListWidgetItem, QMainWindow)
+from PyQt5.QtWidgets import (QApplication, QFileDialog, QLabel,
+                             QListWidgetItem, QMainWindow)
 from win32com import client as wc
 
 import main_ui
@@ -245,7 +245,7 @@ if __name__ == "__main__":
         database="K63yMSwITl"
     )
     app = QApplication(sys.argv)
-    # window = DocWindow(1, None, connection)
-    window = DocWindow(0, None, connection)
+    window = DocWindow(1, None, connection)
+    # window = DocWindow(0, None, connection)
     window.show()
     sys.exit(app.exec_())

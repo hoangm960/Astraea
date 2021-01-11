@@ -185,18 +185,7 @@ class UIFunctions(RoomWindow):
     def add_lesson_list(self, ui):
         ui.lesson_list.clear()
         cursor = ui.connection.cursor()
-        try:
-            cursor.execute(f'SELECT LessonId FROM lesson_in_room WHERE RoomId = {self.room_id}')
-        except:
-            msg = QMessageBox(ui)
-            msg.setWindowTitle("Bắt được lỗi chương trình.")
-            msg.move(round((QApplication.primaryScreen().size().width() - msg.width()) / 2),
-            round((QApplication.primaryScreen().size().height() - msg.height()) / 2),
-            )
-            msg.setText(f"1054 (42S22): không tồn tại Column")
-            msg.setIcon(QMessageBox.Information)
-            msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-            msg.exec_()
+        cursor.execute(f'SELECT LessonId FROM lesson_in_room WHERE RoomId = {self.room_id}')
         lesson_ids = [row[0] for row in cursor]
         for lesson_id in lesson_ids:
             cursor.execute(f'SELECT Name FROM lesson WHERE LessonId = {lesson_id}')
@@ -241,7 +230,7 @@ if __name__ == '__main__':
         database="K63yMSwITl"
     )
     app = QApplication(sys.argv)
-    window = RoomWindow(1, None, connection)
-    # window = RoomWindow(0, None, connection)
+    # window = RoomWindow(1, None, connection)
+    window = RoomWindow(0, None, connection)
     window.show()
     sys.exit(app.exec_())

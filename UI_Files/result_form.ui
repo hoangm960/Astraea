@@ -335,7 +335,7 @@ QPushButton:hover {
 background-color: transparent;</string>
                </property>
                <property name="currentIndex">
-                <number>1</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="result_frame">
                 <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -503,7 +503,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>100</width>
+                         <width>1099</width>
                          <height>198</height>
                         </rect>
                        </property>
@@ -1609,8 +1609,8 @@ QPushButton:pressed {
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>330</x>
-     <y>521</y>
+     <x>433</x>
+     <y>530</y>
     </hint>
     <hint type="destinationlabel">
      <x>484</x>
@@ -1625,8 +1625,8 @@ QPushButton:pressed {
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>764</x>
-     <y>522</y>
+     <x>933</x>
+     <y>530</y>
     </hint>
     <hint type="destinationlabel">
      <x>471</x>
@@ -1705,8 +1705,8 @@ QPushButton:pressed {
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>796</x>
-     <y>518</y>
+     <x>933</x>
+     <y>530</y>
     </hint>
     <hint type="destinationlabel">
      <x>775</x>
@@ -1757,8 +1757,8 @@ QPushButton:pressed {
      <y>524</y>
     </hint>
     <hint type="destinationlabel">
-     <x>457</x>
-     <y>593</y>
+     <x>623</x>
+     <y>613</y>
     </hint>
    </hints>
   </connection>
@@ -1769,8 +1769,8 @@ QPushButton:pressed {
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>816</x>
-     <y>521</y>
+     <x>933</x>
+     <y>530</y>
     </hint>
     <hint type="destinationlabel">
      <x>509</x>
@@ -1785,12 +1785,12 @@ QPushButton:pressed {
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>910</x>
-     <y>555</y>
+     <x>119</x>
+     <y>97</y>
     </hint>
     <hint type="destinationlabel">
-     <x>942</x>
-     <y>236</y>
+     <x>99</x>
+     <y>88</y>
     </hint>
    </hints>
   </connection>
@@ -1801,12 +1801,12 @@ QPushButton:pressed {
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>936</x>
-     <y>553</y>
+     <x>119</x>
+     <y>97</y>
     </hint>
     <hint type="destinationlabel">
-     <x>947</x>
-     <y>313</y>
+     <x>99</x>
+     <y>258</y>
     </hint>
    </hints>
   </connection>
@@ -1817,12 +1817,12 @@ QPushButton:pressed {
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>926</x>
-     <y>563</y>
+     <x>119</x>
+     <y>97</y>
     </hint>
     <hint type="destinationlabel">
-     <x>919</x>
-     <y>555</y>
+     <x>119</x>
+     <y>97</y>
     </hint>
    </hints>
   </connection>
@@ -1833,12 +1833,12 @@ QPushButton:pressed {
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>923</x>
-     <y>293</y>
+     <x>99</x>
+     <y>88</y>
     </hint>
     <hint type="destinationlabel">
-     <x>927</x>
-     <y>562</y>
+     <x>119</x>
+     <y>97</y>
     </hint>
    </hints>
   </connection>
@@ -1849,12 +1849,12 @@ QPushButton:pressed {
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>922</x>
-     <y>299</y>
+     <x>99</x>
+     <y>88</y>
     </hint>
     <hint type="destinationlabel">
-     <x>903</x>
-     <y>297</y>
+     <x>99</x>
+     <y>258</y>
     </hint>
    </hints>
   </connection>
@@ -1865,12 +1865,76 @@ QPushButton:pressed {
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>927</x>
-     <y>298</y>
+     <x>99</x>
+     <y>88</y>
     </hint>
     <hint type="destinationlabel">
-     <x>932</x>
-     <y>227</y>
+     <x>99</x>
+     <y>88</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_quit</sender>
+   <signal>clicked()</signal>
+   <receiver>ScrollAreaT</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1092</x>
+     <y>21</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1004</x>
+     <y>174</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_quit</sender>
+   <signal>clicked()</signal>
+   <receiver>Frame_close</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1076</x>
+     <y>34</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1082</x>
+     <y>401</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_quit</sender>
+   <signal>clicked()</signal>
+   <receiver>OkCancelFrame</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1074</x>
+     <y>27</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>495</x>
+     <y>393</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_quit</sender>
+   <signal>clicked()</signal>
+   <receiver>Out_btn</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1091</x>
+     <y>29</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>603</x>
+     <y>607</y>
     </hint>
    </hints>
   </connection>

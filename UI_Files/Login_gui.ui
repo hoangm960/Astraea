@@ -2503,7 +2503,7 @@ color: rgb(0, 0, 0);</string>
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1031</x>
+     <x>1041</x>
      <y>368</y>
     </hint>
     <hint type="destinationlabel">
@@ -2523,7 +2523,7 @@ color: rgb(0, 0, 0);</string>
      <y>361</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1033</x>
+     <x>1043</x>
      <y>367</y>
     </hint>
    </hints>
@@ -2551,11 +2551,11 @@ color: rgb(0, 0, 0);</string>
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1030</x>
+     <x>1040</x>
      <y>368</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1029</x>
+     <x>1039</x>
      <y>363</y>
     </hint>
    </hints>
@@ -2567,12 +2567,12 @@ color: rgb(0, 0, 0);</string>
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1048</x>
-     <y>343</y>
+     <x>735</x>
+     <y>141</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1048</x>
-     <y>343</y>
+     <x>735</x>
+     <y>141</y>
     </hint>
    </hints>
   </connection>
@@ -2583,12 +2583,12 @@ color: rgb(0, 0, 0);</string>
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1048</x>
-     <y>343</y>
+     <x>735</x>
+     <y>141</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1048</x>
-     <y>343</y>
+     <x>735</x>
+     <y>141</y>
     </hint>
    </hints>
   </connection>
@@ -2599,12 +2599,12 @@ color: rgb(0, 0, 0);</string>
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1048</x>
-     <y>343</y>
+     <x>735</x>
+     <y>141</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1048</x>
-     <y>343</y>
+     <x>735</x>
+     <y>141</y>
     </hint>
    </hints>
   </connection>
@@ -2615,12 +2615,12 @@ color: rgb(0, 0, 0);</string>
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1048</x>
-     <y>343</y>
+     <x>735</x>
+     <y>141</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1048</x>
-     <y>343</y>
+     <x>735</x>
+     <y>141</y>
     </hint>
    </hints>
   </connection>
@@ -2669,6 +2669,54 @@ color: rgb(0, 0, 0);</string>
     <hint type="destinationlabel">
      <x>35</x>
      <y>642</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_quit</sender>
+   <signal>clicked()</signal>
+   <receiver>frame_4</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1255</x>
+     <y>29</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1085</x>
+     <y>326</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_quit</sender>
+   <signal>clicked()</signal>
+   <receiver>HorizontalFrame</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1241</x>
+     <y>39</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>106</x>
+     <y>81</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_quit</sender>
+   <signal>clicked()</signal>
+   <receiver>HorizontalSpacer_L</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1242</x>
+     <y>25</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>247</x>
+     <y>147</y>
     </hint>
    </hints>
   </connection>

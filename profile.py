@@ -37,12 +37,13 @@ class UIFunctions(ProfileWindow):
 
     def __init__(self, ui, win):
         self.connect_btn(ui)
-        win.profile_btn.setDisabled(True)
+        if win:
+            win.profile_btn.setDisabled(True)
         ui.btn_quit.clicked.connect(lambda: win.profile_btn.setDisabled(False))
     def connect_btn(self, ui):
         def SignOut(ui):
-            if ui.ui:
-                ui.ui.close()
+            if ui.win:
+                ui.win.close()
             ui.close()
             if ui.pg:
                 ui.pg.minimize()
@@ -88,6 +89,6 @@ border-radius: 20px;""")
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    window = ProfileWindow(None, None)
+    window = ProfileWindow(None, None, None)
     window.show()
     sys.exit(app.exec_())

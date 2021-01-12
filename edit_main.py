@@ -1,12 +1,13 @@
 import os
 import pickle
 import sys
-from UI_Files import Resources
+
 from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (QApplication, QFileDialog, QMainWindow,
                              QMessageBox, QSizeGrip, QVBoxLayout, QWidget)
 
+from UI_Files import Resources
 
 KEY_PATH = "./data/Lesson/assignments.key"
 EDIT_FORM_PATH = "./UI_Files/edit_form.ui"
@@ -249,7 +250,7 @@ class UIFunctions(EditWindow):
                 ui, "Open file", HOME_PATH, "*.list"
             )[0]
             with open(filename, "w", encoding='utf8') as f:
-                f.write(file_path)
+                f.write(f"{file_path}\n0")
         if file_path:
             self.load_assignments(ui, file_path)
             self.reopen_main(ui)
@@ -264,7 +265,6 @@ class UIFunctions(EditWindow):
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
             uic.loadUi(EDIT_FRAME_PATH, self)
-
             self.test_file_btn.clicked.connect(
                 lambda: self.get_file(self.test_file_entry, "*.txt")
             )

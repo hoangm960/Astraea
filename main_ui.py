@@ -6,6 +6,7 @@ import mysql.connector
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow, QMessageBox
 from win32api import GetMonitorInfo, MonitorFromPoint
+import pygetwindow
 
 from UI_Files import Resources
 
@@ -24,11 +25,13 @@ class MainWindow(QMainWindow):
 
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(UI_MAIN_PATH, self)
-        if self.pg:
+        try:
             self.pg.restore()
             self.pg.moveTo(-8, 0)
             self.pg.resizeTo(
                 SCREEN_WIDTH - self.width() + 16, self.height() + 8)
+        except pygetwindow.PyGetWindowException:
+            pass
         UIFunctions(self)
 
     def changeEvent(self, event):
@@ -83,23 +86,14 @@ class UIFunctions(MainWindow):
             lambda: self.show_file_dialog(ui, OPENED_LESSON_PATH)
         )
         ui.main_btn.clicked.connect(lambda: self.close_pg(ui))
-        try:
-            if os.path.getsize(OPENED_LESSON_PATH) > 0:
-                if open(OPENED_LESSON_PATH).readlines()[1] != '0':
-                    ui.LessonButton.clicked.connect(lambda: self.open_doc(ui))
-                else:
-                    ui.LessonButton.hide()
+        
+        if os.path.getsize(OPENED_LESSON_PATH) > 0:
+            if open(OPENED_LESSON_PATH).readlines()[1] != '0':
+                ui.LessonButton.clicked.connect(lambda: self.open_doc(ui))
             else:
                 ui.LessonButton.hide()
-        except:
+        else:
             ui.LessonButton.hide()
-            msg = QMessageBox(ui)
-            msg.setWindowTitle("lỗi")
-            msg.move(round((SCREEN_WIDTH-msg.width())/2), round((SCREEN_HEIGHT-msg.height())/2))
-            msg.setText(f"Bài học từ giáo viên không thích hợp.")
-            msg.setIcon(QMessageBox.Information)
-            msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-            msg.exec_()
 
         ui.list_assignments.itemPressed.connect(lambda: self.load_details(ui))
         ui.Server_btn.clicked.connect(lambda: self.open_connect(ui))

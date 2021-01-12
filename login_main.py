@@ -183,13 +183,13 @@ class LoginFunctions(LoginWindow):
             ui.frameError.show()
             ui.Error_Content.setText("Chưa điền đầy đủ thông tin đăng nhập")
         else:
-            cursor.execute(f"SELECT Username FROM user WHERE Username = '{username}'")
+            cursor.execute("SELECT Username FROM user WHERE Username = %s", (username, ))
             if username not in [row[0] for row in cursor]:
                 ui.frameError.show()
                 ui.Error_Content.setText(
                     "Tên tài khoản không tồn tại. Hãy nhập lại.")
             else:
-                cursor.execute(f"SELECT Username, Password FROM user WHERE Username = '{username}' and Password = '{password}'")
+                cursor.execute("SELECT Username, Password FROM user WHERE Username = %s AND Password = %s", (username, password))
                 if not [row[0] for row in cursor]:
                     ui.frameError.show()
                     ui.Error_Content.setText(
@@ -223,7 +223,7 @@ class LoginFunctions(LoginWindow):
             ui.Note_Name.show()
             check = False
         else:
-            cursor.execute(f"SELECT Username FROM user WHERE Username = '{username}'")
+            cursor.execute("SELECT Username FROM user WHERE Username = %s", (username, ))
             if [row for row in cursor]:
                 ui.Note_Name.show()
                 check = False
@@ -253,7 +253,7 @@ class LoginFunctions(LoginWindow):
 
         if check:
             role = 1 if ui.teacher.isChecked() else 0
-            cursor.execute(f"INSERT INTO user(Username, ShowName, Password, Type) VALUES('{username}', '{name}', '{password}', {role});")
+            cursor.execute("INSERT INTO user(Username, ShowName, Password, Type) VALUES(%s, %s, %s, %s", (username, name, password, role))
             ui.connection.commit()
 
             ui.NameBox_SI.clear()

@@ -51,7 +51,7 @@ class UIFunctions(DownloadWindow):
 
     def create_room(self, ui):
         cursor = ui.connection.cursor()
-        cursor.execute(f"INSERT INTO room(Status) VALUES(1)")
+        cursor.execute("INSERT INTO room(Status) VALUES(1)")
         lesson_id = cursor.lastrowid
         open(self.OPENED_ROOM_PATH, 'w').write(str(lesson_id))
         ui.connection.commit()
@@ -75,10 +75,10 @@ class UIFunctions(DownloadWindow):
         room_id = ui.id_entry.text()
         if room_id:
             cursor = ui.connection.cursor()
-            cursor.execute(f'SELECT RoomId FROM room WHERE RoomId = {room_id} AND Status = 1')
+            cursor.execute('SELECT RoomId FROM room WHERE RoomId = %s AND Status = %s', (room_id, 1))
             if [row for row in cursor]:
                 open(self.OPENED_ROOM_PATH, 'w').write(room_id)
-                cursor.execute(f"UPDATE user SET RoomId = {room_id} WHERE Username = '{username}'")
+                cursor.execute("UPDATE user SET RoomId = %s WHERE Username = %s", (room_id, username))
                 ui.frame.close()
                 ui.frame_2.close()
                 ui.label_2.show()
@@ -102,11 +102,12 @@ class UIFunctions(DownloadWindow):
         username = open(self.USER_PATH).readline().rstrip()
         encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
         cursor = ui.connection.cursor()
-        cursor.execute(f"SELECT RoomId FROM user WHERE Username = '{username}'")
+        cursor.execute("SELECT RoomId FROM user WHERE Username = %s", (username, ))
         room_ids = [row for row in cursor]
         if room_ids:
             for room_id in room_ids:
-                open(self.OPENED_ROOM_PATH, 'w').write(str(room_id[0]))
+                if room_id[0]:
+                    open(self.OPENED_ROOM_PATH, 'w').write(str(room_id[0]))
 
         room_id = open(self.OPENED_ROOM_PATH).read().rstrip()
         if room_id:
@@ -126,7 +127,7 @@ class UIFunctions(DownloadWindow):
 
         open(self.OPENED_ROOM_PATH, 'w').close()
         cursor = ui.connection.cursor()
-        cursor.execute(f"UPDATE user SET RoomId = NULL WHERE Username = '{username}'")
+        cursor.execute("UPDATE user SET RoomId = NULL WHERE Username = %s", (username, ))
         ui.connection.commit()
         ui.label.setText('Nhập ID Phòng')
         ui.room_btn.show()

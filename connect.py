@@ -40,6 +40,7 @@ class UIFunctions(DownloadWindow):
     def connect_btn(self, ui):
         ui.btn_quit.clicked.connect(lambda: self.close_pg(ui))
         ui.In_btn.clicked.connect(lambda: self.enter_room(ui))
+        ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
         if ui.role == 0:
             ui.room_btn.hide()
         else:

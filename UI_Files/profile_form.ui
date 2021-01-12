@@ -104,27 +104,34 @@ border-radius: 20px;</string>
            <widget class="QPushButton" name="btn_quit">
             <property name="minimumSize">
              <size>
-              <width>20</width>
-              <height>20</height>
+              <width>30</width>
+              <height>30</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>20</width>
-              <height>20</height>
+              <width>30</width>
+              <height>30</height>
              </size>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton {
-	border-radius: 10px;	
-	background-color: rgb(255,0,0);
+	background: transparent;
+	border-radius: 15px;
 }
 QPushButton:hover {
-	background-color: rgba(255,0,0,150);
+	background: rgb(255, 0, 0);
 }</string>
             </property>
             <property name="text">
              <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="Resources.qrc">
+              <normaloff>:/images/icons/close_white.png</normaloff>:/images/icons/close_white.png</iconset>
+            </property>
+            <property name="shortcut">
+             <string>Alt+X</string>
             </property>
            </widget>
           </item>
@@ -132,23 +139,25 @@ QPushButton:hover {
            <widget class="QPushButton" name="btn_maximize">
             <property name="minimumSize">
              <size>
-              <width>20</width>
-              <height>20</height>
+              <width>30</width>
+              <height>30</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>20</width>
-              <height>20</height>
+              <width>30</width>
+              <height>30</height>
              </size>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton {
-	border-radius: 10px;	
-	background-color: rgb(193,193,193);
+	padding: 5px;
+	image: url(:/images/icons/maxmin.png);
+	background: transparent;
+	border-radius: 15px;
 }
 QPushButton:hover {
-	background-color: rgba(193,193,193,150);
+	background: rgb(108, 108, 108);
 }</string>
             </property>
             <property name="text">
@@ -160,27 +169,31 @@ QPushButton:hover {
            <widget class="QPushButton" name="btn_minimize">
             <property name="minimumSize">
              <size>
-              <width>20</width>
-              <height>20</height>
+              <width>30</width>
+              <height>30</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>20</width>
-              <height>20</height>
+              <width>30</width>
+              <height>30</height>
              </size>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton {
-	border-radius: 10px;	
-	background-color: rgb(255, 255, 255);
+	background: transparent;
+	border-radius: 15px;
 }
 QPushButton:hover {
-	background-color: rgba(255,255,255,150);
+	background: rgb(108, 108, 108);
 }</string>
             </property>
             <property name="text">
              <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="Resources.qrc">
+              <normaloff>:/images/icons/minimize_white.png</normaloff>:/images/icons/minimize_white.png</iconset>
             </property>
            </widget>
           </item>
@@ -294,7 +307,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-211</y>
+            <y>0</y>
             <width>1024</width>
             <height>628</height>
            </rect>

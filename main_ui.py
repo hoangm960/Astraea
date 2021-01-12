@@ -62,7 +62,7 @@ class UIFunctions(MainWindow):
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.resize_idle(ui, ui.pg)
-
+        ui.profile_btn.setDisabled(False)
         def open_profile(ui):
             import profile
             ui.mainWin = profile.ProfileWindow(ui, ui.pg, ui.connection)

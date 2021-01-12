@@ -18,5 +18,6 @@
     <file>icons/user_white.png</file>
     <file>icons/Edit.png</file>
     <file>icons/link.png</file>
+    <file>icons/maxmin.png</file>
   </qresource>
 </RCC>

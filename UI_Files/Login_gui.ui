@@ -160,41 +160,50 @@ background : transparent;</string>
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>9</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
              <item>
               <widget class="QPushButton" name="btn_quit">
                <property name="minimumSize">
                 <size>
-                 <width>20</width>
-                 <height>20</height>
+                 <width>30</width>
+                 <height>30</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>20</width>
-                 <height>20</height>
+                 <width>30</width>
+                 <height>30</height>
                 </size>
-               </property>
-               <property name="toolTip">
-                <string>Close</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
-	border: none;
-	border-radius: 10px;
-	background-color: rgb(255, 0, 0);
+	background: transparent;
+	border-radius: 15px;
 }
 QPushButton:hover {
-	background-color: rgba(255, 0, 0, 150);
-}
-QToolTip {
-color: rgb(0,0,0);
-background-color: rgb(255,255,255);
-min-width: 45px;
-min-height: 20px;
+	background: rgb(255, 0, 0);
 }</string>
                </property>
                <property name="text">
                 <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/images/icons/close_white.png</normaloff>:/images/icons/close_white.png</iconset>
                </property>
                <property name="shortcut">
                 <string>Alt+X</string>
@@ -205,35 +214,25 @@ min-height: 20px;
               <widget class="QPushButton" name="btn_maximize">
                <property name="minimumSize">
                 <size>
-                 <width>20</width>
-                 <height>20</height>
+                 <width>30</width>
+                 <height>30</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>20</width>
-                 <height>20</height>
+                 <width>30</width>
+                 <height>30</height>
                 </size>
-               </property>
-               <property name="toolTip">
-                <string>Maximize</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
-	border: none;
-	border-radius: 10px;
-	background-color: rgb(85, 255, 127);
-	background-color: rgb(255, 255, 255);
+	padding: 5px;
+	image: url(:/images/icons/maxmin.png);
+	background: transparent;
+	border-radius: 15px;
 }
 QPushButton:hover {
-	background-color: rgba(85, 255, 127, 150);
-	background-color: rgba(255, 255, 255, 150);
-}
-QToolTip {
-color: rgb(0,0,0);
-background-color: rgb(255,255,255);
-min-width: 60px;
-min-height: 20px;
+	background: rgb(108, 108, 108);
 }</string>
                </property>
                <property name="text">
@@ -245,39 +244,31 @@ min-height: 20px;
               <widget class="QPushButton" name="btn_minimize">
                <property name="minimumSize">
                 <size>
-                 <width>20</width>
-                 <height>20</height>
+                 <width>30</width>
+                 <height>30</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>20</width>
-                 <height>20</height>
+                 <width>30</width>
+                 <height>30</height>
                 </size>
-               </property>
-               <property name="toolTip">
-                <string>Minimize</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
-	border: none;
-	border-radius: 10px;
-	background-color: rgb(255, 170, 0);
-	background-color: rgb(199, 199, 199);
+	background: transparent;
+	border-radius: 15px;
 }
 QPushButton:hover {
-	background-color: rgba(255, 170, 0, 150);
-	background-color: rgba(199, 199, 199, 150);
-}
-QToolTip {
-color: rgb(0,0,0);
-background-color: rgb(255,255,255);
-min-width: 60px;
-min-height: 20px;
+	background: rgb(108, 108, 108);
 }</string>
                </property>
                <property name="text">
                 <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/images/icons/minimize_white.png</normaloff>:/images/icons/minimize_white.png</iconset>
                </property>
               </widget>
              </item>
@@ -2478,9 +2469,6 @@ color: rgb(0, 0, 0);</string>
   </widget>
  </widget>
  <tabstops>
-  <tabstop>btn_quit</tabstop>
-  <tabstop>btn_maximize</tabstop>
-  <tabstop>btn_minimize</tabstop>
   <tabstop>Accept</tabstop>
   <tabstop>Deny</tabstop>
   <tabstop>NameBox_SI</tabstop>
@@ -2637,22 +2625,6 @@ color: rgb(0, 0, 0);</string>
    </hints>
   </connection>
   <connection>
-   <sender>btn_quit</sender>
-   <signal>clicked()</signal>
-   <receiver>frame_4</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1256</x>
-     <y>26</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>737</x>
-     <y>117</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>Deny</sender>
    <signal>clicked()</signal>
    <receiver>frame_4</receiver>
@@ -2685,22 +2657,6 @@ color: rgb(0, 0, 0);</string>
    </hints>
   </connection>
   <connection>
-   <sender>btn_quit</sender>
-   <signal>clicked()</signal>
-   <receiver>HorizontalSpacer_L</receiver>
-   <slot>show()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1249</x>
-     <y>32</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>188</x>
-     <y>338</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>Deny</sender>
    <signal>clicked()</signal>
    <receiver>HorizontalFrame</receiver>
@@ -2713,22 +2669,6 @@ color: rgb(0, 0, 0);</string>
     <hint type="destinationlabel">
      <x>35</x>
      <y>642</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_quit</sender>
-   <signal>clicked()</signal>
-   <receiver>HorizontalFrame</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1253</x>
-     <y>26</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>93</x>
-     <y>58</y>
     </hint>
    </hints>
   </connection>

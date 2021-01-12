@@ -171,39 +171,31 @@ background: transparent;</string>
               <widget class="QPushButton" name="btn_minimize">
                <property name="minimumSize">
                 <size>
-                 <width>20</width>
-                 <height>20</height>
+                 <width>30</width>
+                 <height>30</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>20</width>
-                 <height>20</height>
+                 <width>30</width>
+                 <height>30</height>
                 </size>
-               </property>
-               <property name="toolTip">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Thu nhỏ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
-	border: none;
-	border-radius: 10px;
-	background-color: rgb(255, 170, 0);
-	background-color: rgb(199, 199, 199);
+	background: transparent;
+	border-radius: 15px;
 }
 QPushButton:hover {
-	background-color: rgba(255, 170, 0, 150);
-	background-color: rgba(199, 199, 199, 150);
-}
-QToolTip {
-color: rgb(0,0,0);
-background-color: rgb(255,255,255);
-min-width: 45px;
-min-height: 20px;
+	background: rgb(108, 108, 108);
 }</string>
                </property>
                <property name="text">
                 <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/images/icons/minimize_white.png</normaloff>:/images/icons/minimize_white.png</iconset>
                </property>
               </widget>
              </item>
@@ -211,35 +203,25 @@ min-height: 20px;
               <widget class="QPushButton" name="btn_maximize">
                <property name="minimumSize">
                 <size>
-                 <width>20</width>
-                 <height>20</height>
+                 <width>30</width>
+                 <height>30</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>20</width>
-                 <height>20</height>
+                 <width>30</width>
+                 <height>30</height>
                 </size>
-               </property>
-               <property name="toolTip">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Phóng to&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
-	border: none;
-	border-radius: 10px;
-	background-color: rgb(85, 255, 127);
-	background-color: rgb(255, 255, 255);
+	padding: 5px;
+	image: url(:/images/icons/maxmin.png);
+	background: transparent;
+	border-radius: 15px;
 }
 QPushButton:hover {
-	background-color: rgba(85, 255, 127, 150);
-	background-color: rgba(255, 255, 255, 150);
-}
-QToolTip {
-color: rgb(0,0,0);
-background-color: rgb(255,255,255);
-min-width: 45px;
-min-height: 20px;
+	background: rgb(108, 108, 108);
 }</string>
                </property>
                <property name="text">
@@ -251,37 +233,31 @@ min-height: 20px;
               <widget class="QPushButton" name="btn_quit">
                <property name="minimumSize">
                 <size>
-                 <width>20</width>
-                 <height>20</height>
+                 <width>30</width>
+                 <height>30</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>20</width>
-                 <height>20</height>
+                 <width>30</width>
+                 <height>30</height>
                 </size>
-               </property>
-               <property name="toolTip">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Đóng&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton {
-	border: none;
-	border-radius: 10px;
-	background-color: rgb(255, 0, 0);
+	background: transparent;
+	border-radius: 15px;
 }
 QPushButton:hover {
-	background-color: rgba(255, 0, 0, 150);
-}
-QToolTip {
-color: rgb(0,0,0);
-background-color: rgb(255,255,255);
-min-width: 45px;
-min-height: 20px;
+	background: rgb(255, 0, 0);
 }</string>
                </property>
                <property name="text">
                 <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/images/icons/close_white.png</normaloff>:/images/icons/close_white.png</iconset>
                </property>
                <property name="shortcut">
                 <string>Alt+X</string>
@@ -527,7 +503,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>1099</width>
+                         <width>100</width>
                          <height>198</height>
                         </rect>
                        </property>
@@ -1659,38 +1635,6 @@ QPushButton:pressed {
    </hints>
   </connection>
   <connection>
-   <sender>Accept</sender>
-   <signal>clicked()</signal>
-   <receiver>btn_quit</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>193</x>
-     <y>519</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>937</x>
-     <y>24</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_quit</sender>
-   <signal>clicked()</signal>
-   <receiver>OkCancelFrame</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>937</x>
-     <y>23</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>193</x>
-     <y>387</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>Out_btn</sender>
    <signal>clicked()</signal>
    <receiver>OkCancelFrameQuit</receiver>
@@ -1703,22 +1647,6 @@ QPushButton:pressed {
     <hint type="destinationlabel">
      <x>764</x>
      <y>459</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_quit</sender>
-   <signal>clicked()</signal>
-   <receiver>OkCancelFrameQuit</receiver>
-   <slot>show()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>933</x>
-     <y>19</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>890</x>
-     <y>481</y>
     </hint>
    </hints>
   </connection>
@@ -1755,22 +1683,6 @@ QPushButton:pressed {
    </hints>
   </connection>
   <connection>
-   <sender>btn_quit</sender>
-   <signal>clicked()</signal>
-   <receiver>Frame_close</receiver>
-   <slot>show()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>933</x>
-     <y>25</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>939</x>
-     <y>414</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>Out_btn</sender>
    <signal>clicked()</signal>
    <receiver>ScrollAreaT</receiver>
@@ -1783,22 +1695,6 @@ QPushButton:pressed {
     <hint type="destinationlabel">
      <x>483</x>
      <y>264</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_quit</sender>
-   <signal>clicked()</signal>
-   <receiver>ScrollAreaT</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>938</x>
-     <y>24</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>934</x>
-     <y>260</y>
     </hint>
    </hints>
   </connection>
@@ -1831,22 +1727,6 @@ QPushButton:pressed {
     <hint type="destinationlabel">
      <x>339</x>
      <y>331</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_quit</sender>
-   <signal>clicked()</signal>
-   <receiver>Out_btn</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>937</x>
-     <y>25</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>490</x>
-     <y>598</y>
     </hint>
    </hints>
   </connection>

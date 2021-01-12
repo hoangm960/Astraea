@@ -8,13 +8,13 @@ import sys
 class ProfileWindow(QMainWindow):
     UI_PATH = './UI_Files/profile_form.ui'
 
-    def __init__(self, ui, pg, connection):
-        self.ui = ui
+    def __init__(self, window, pg, connection):
+        self.win = window
         self.pg = pg
         self.connection = connection
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(self.UI_PATH, self)
-        UIFunctions(self)
+        UIFunctions(self, self.win)
 
         def moveWindow(event):
             if UIFunctions.GLOBAL_STATE == True:
@@ -35,9 +35,10 @@ class UIFunctions(ProfileWindow):
     USER_PATH_ENCRYPTED = "data/Users/User.encrypted"
     KEY_PATH = "data/encryption/users.key"
 
-    def __init__(self, ui):
+    def __init__(self, ui, win):
         self.connect_btn(ui)
-
+        win.profile_btn.setDisabled(True)
+        ui.btn_quit.clicked.connect(lambda: win.profile_btn.setDisabled(False))
     def connect_btn(self, ui):
         def SignOut(ui):
             if ui.ui:
@@ -50,7 +51,6 @@ class UIFunctions(ProfileWindow):
             ui.main = login_main.LoginWindow(ui.pg, ui.connection)
             ui.main.show()
         ui.OutAccount.clicked.connect(lambda: SignOut(ui))
-
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         ui.btn_quit.clicked.connect(lambda: ui.close())

@@ -134,39 +134,31 @@ background-color: transparent;</string>
            <widget class="QPushButton" name="btn_minimize">
             <property name="minimumSize">
              <size>
-              <width>16</width>
-              <height>16</height>
+              <width>30</width>
+              <height>30</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>16</width>
-              <height>16</height>
+              <width>30</width>
+              <height>30</height>
              </size>
-            </property>
-            <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Thu nhỏ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton {
-	border: none;
-	border-radius: 8px;
-	background-color: rgb(85, 255, 127);
-	background-color: rgb(255, 255, 255);
+	background: transparent;
+	border-radius: 15px;
 }
 QPushButton:hover {
-	background-color: rgba(85, 255, 127, 150);
-	background-color: rgba(255, 255, 255, 150);
-}
-QToolTip {
-color: rgb(0,0,0);
-background-color: rgb(255,255,255);
-min-width: 45px;
-min-height: 20px;
+	background: rgb(108, 108, 108);
 }</string>
             </property>
             <property name="text">
              <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="Resources.qrc">
+              <normaloff>:/images/icons/minimize_white.png</normaloff>:/images/icons/minimize_white.png</iconset>
             </property>
            </widget>
           </item>
@@ -174,38 +166,34 @@ min-height: 20px;
            <widget class="QPushButton" name="btn_quit">
             <property name="minimumSize">
              <size>
-              <width>16</width>
-              <height>16</height>
+              <width>30</width>
+              <height>30</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>16</width>
-              <height>16</height>
+              <width>30</width>
+              <height>30</height>
              </size>
-            </property>
-            <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Đóng&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton {
-	border: none;
-	border-radius: 8px;
-	background-color: rgb(255, 0,0);
+	background: transparent;
+	border-radius: 15px;
 }
 QPushButton:hover {
-	background-color: rgba(85, 255, 127, 150);
-	background-color: rgba(255, 255, 255, 150);
-}
-QToolTip {
-color: rgb(0,0,0);
-background-color: rgb(255,255,255);
-min-width: 45px;
-min-height: 20px;
+	background: rgb(255, 0, 0);
 }</string>
             </property>
             <property name="text">
              <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="Resources.qrc">
+              <normaloff>:/images/icons/close_white.png</normaloff>:/images/icons/close_white.png</iconset>
+            </property>
+            <property name="shortcut">
+             <string>Alt+X</string>
             </property>
            </widget>
           </item>
@@ -477,7 +465,9 @@ QPushButton:pressed {
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="Resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>Quit</sender>

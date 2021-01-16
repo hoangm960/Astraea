@@ -30,7 +30,7 @@ class MainWindow(QMainWindow):
             self.pg.moveTo(-8, 0)
             self.pg.resizeTo(
                 SCREEN_WIDTH - self.width() + 16, self.height() + 8)
-        except pygetwindow.PyGetWindowException:
+        except (pygetwindow.PyGetWindowException, AttributeError):
             pass
         UIFunctions(self)
 
@@ -122,7 +122,10 @@ class UIFunctions(MainWindow):
             if os.path.getsize(filename) > 0:
                 with open(filename, encoding='utf8') as f:
                     file_path = f.readline().rstrip("\n")
-                    self.load_assignments(ui, file_path)
+                    if os.path.exists(file_path):
+                        self.load_assignments(ui, file_path)
+                    else:
+                        open(filename, 'w').write('')
 
     def show_file_dialog(self, ui, filename):
         HOME_PATH = os.path.join(os.path.join(

@@ -77,7 +77,7 @@ class UIFunctions(RoomWindow):
             title, assignments = self.get_lesson(filename)
             current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             cursor.execute(
-                "INSERT INTO lesson(Name, CreatedDate) VALUES(%s, %s", (title, current_time))
+                "INSERT INTO lesson(Name, CreatedDate) VALUES(%s, %s)", (title, current_time))
             lesson_id = cursor.lastrowid
             for assignment in assignments:
                 name, details, mark = assignment.name, assignment.details, assignment.mark
@@ -230,7 +230,7 @@ if __name__ == '__main__':
         database="K63yMSwITl"
     )
     app = QApplication(sys.argv)
-    # window = RoomWindow(1, None, connection)
-    window = RoomWindow(0, None, connection)
+    window = RoomWindow(1, None, connection)
+    # window = RoomWindow(0, None, connection)
     window.show()
     sys.exit(app.exec_())

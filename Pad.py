@@ -16,8 +16,20 @@ class MainPad(QMainWindow):
         super(QMainWindow, self).__init__()
         uic.loadUi(PAD_UI, self)    
         self.doc = doc
+        def moveWindow(event):
+            if UIFunction.GLOBAL_STATE == True:
+                UIFunction.maximize_restore(self)
+            if event.buttons() == Qt.LeftButton:
+                self.move(self.pos() + event.globalPos() - self.dragPos)
+                self.dragPos = event.globalPos()
+                event.accept()
+
+        self.title_bar.mouseMoveEvent = moveWindow
         UIFunction(self)
 
+    def mousePressEvent(self, event):
+        self.dragPos = event.globalPos()
+    
 class UIFunction(MainPad):
     GLOBAL_STATE = False
     path = None
@@ -26,6 +38,7 @@ class UIFunction(MainPad):
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.connect(ui)
+        
         
     def connect(self, ui):
         ui.btn_quit.clicked.connect(lambda: self.Quit(ui))

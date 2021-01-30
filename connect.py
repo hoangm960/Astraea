@@ -42,7 +42,7 @@ class UIFunctions(DownloadWindow):
         ui.In_btn.clicked.connect(lambda: self.enter_room(ui))
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
         if ui.role == 0:
-            ui.room_btn.hide()
+            ui.room_btn.close()
         else:
             ui.room_btn.clicked.connect(lambda: self.create_room(ui))
         ui.Go_Room.clicked.connect(lambda: self.Go_Room(ui))
@@ -129,7 +129,8 @@ class UIFunctions(DownloadWindow):
         cursor.execute("UPDATE user SET RoomId = NULL WHERE Username = %s", (username, ))
         ui.connection.commit()
         ui.label.setText('Nhập ID Phòng')
-        ui.room_btn.show()
+        if ui.role == 1:
+            ui.room_btn.show()
         ui.Go_Room.hide()
         ui.Quit.hide()
 

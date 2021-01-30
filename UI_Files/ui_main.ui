@@ -150,7 +150,7 @@
                <property name="font">
                 <font>
                  <family>Montserrat</family>
-                 <pointsize>17</pointsize>
+                 <pointsize>25</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                  <kerning>true</kerning>
@@ -308,7 +308,7 @@ QPushButton:hover {
             <property name="font">
              <font>
               <family>Montserrat</family>
-              <pointsize>13</pointsize>
+              <pointsize>15</pointsize>
               <weight>75</weight>
               <bold>true</bold>
               <kerning>true</kerning>
@@ -563,6 +563,7 @@ QPushButton:hover {
                </property>
                <property name="font">
                 <font>
+                 <pointsize>10</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
@@ -686,7 +687,7 @@ QPushButton:hover {
             <property name="font">
              <font>
               <family>Montserrat</family>
-              <pointsize>8</pointsize>
+              <pointsize>10</pointsize>
              </font>
             </property>
             <property name="styleSheet">

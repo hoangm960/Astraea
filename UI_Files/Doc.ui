@@ -89,8 +89,8 @@ QFrame{
            <widget class="QLabel" name="title_label">
             <property name="font">
              <font>
-              <family>Montserrat Semi Bold</family>
-              <pointsize>22</pointsize>
+              <family>Montserrat</family>
+              <pointsize>25</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>

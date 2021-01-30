@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
+    <width>750</width>
     <height>600</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>100</width>
+    <width>750</width>
     <height>600</height>
    </size>
   </property>
@@ -39,13 +39,13 @@
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>40</height>
+        <height>50</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
         <width>16777215</width>
-        <height>40</height>
+        <height>50</height>
        </size>
       </property>
       <property name="frameShape">
@@ -105,7 +105,8 @@ background: transparent;</string>
         <widget class="QLabel" name="ID_Room">
          <property name="font">
           <font>
-           <pointsize>13</pointsize>
+           <family>Montserrat</family>
+           <pointsize>15</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
@@ -114,7 +115,7 @@ background: transparent;</string>
           <string notr="true">color: rgb(255,255,255);</string>
          </property>
          <property name="text">
-          <string>61920TSD1234</string>
+          <string>[CODE]</string>
          </property>
         </widget>
        </item>
@@ -238,6 +239,12 @@ QPushButton:hover {
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="0" column="1">
         <widget class="QFrame" name="student_list_frame">
+         <property name="minimumSize">
+          <size>
+           <width>250</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="styleSheet">
           <string notr="true">border-radius: 8px;</string>
          </property>
@@ -250,9 +257,16 @@ QPushButton:hover {
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
            <widget class="QLabel" name="student_label">
+            <property name="minimumSize">
+             <size>
+              <width>240</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="font">
              <font>
-              <pointsize>13</pointsize>
+              <family>Montserrat</family>
+              <pointsize>15</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -281,8 +295,8 @@ QPushButton:hover {
             </property>
             <property name="font">
              <font>
-              <family>iCiel Effra</family>
-              <pointsize>14</pointsize>
+              <family>iCiel Effra Regular</family>
+              <pointsize>15</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -353,7 +367,8 @@ QScrollBar::add-page, QScrollBar::sub-page {
             </property>
             <property name="font">
              <font>
-              <pointsize>12</pointsize>
+              <family>iCiel Effra Regular</family>
+              <pointsize>15</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -474,8 +489,8 @@ QPushButton:pressed {
             </property>
             <property name="font">
              <font>
-              <family>iCiel Effra</family>
-              <pointsize>14</pointsize>
+              <family>iCiel Effra Regular</family>
+              <pointsize>15</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -546,7 +561,8 @@ QScrollBar::add-page, QScrollBar::sub-page {
             </property>
             <property name="font">
              <font>
-              <pointsize>12</pointsize>
+              <family>iCiel Effra Regular</family>
+              <pointsize>15</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -578,9 +594,16 @@ QPushButton:pressed {
           </item>
           <item row="0" column="0">
            <widget class="QLabel" name="lessong_label">
+            <property name="minimumSize">
+             <size>
+              <width>240</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="font">
              <font>
-              <pointsize>13</pointsize>
+              <family>Montserrat</family>
+              <pointsize>15</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -609,7 +632,8 @@ QPushButton:pressed {
             </property>
             <property name="font">
              <font>
-              <pointsize>12</pointsize>
+              <family>iCiel Effra Regular</family>
+              <pointsize>15</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -682,8 +706,8 @@ QPushButton:pressed {
             </property>
             <property name="font">
              <font>
-              <family>iCiel Effra</family>
-              <pointsize>14</pointsize>
+              <family>iCiel Effra Regular</family>
+              <pointsize>15</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -740,9 +764,16 @@ QScrollBar::add-page, QScrollBar::sub-page {
           </item>
           <item row="0" column="0">
            <widget class="QLabel" name="Achievements">
+            <property name="minimumSize">
+             <size>
+              <width>240</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="font">
              <font>
-              <pointsize>13</pointsize>
+              <family>Montserrat</family>
+              <pointsize>15</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -801,7 +832,8 @@ QScrollBar::add-page, QScrollBar::sub-page {
          </property>
          <property name="font">
           <font>
-           <pointsize>12</pointsize>
+           <family>iCiel Effra Regular</family>
+           <pointsize>15</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>

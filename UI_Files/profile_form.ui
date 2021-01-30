@@ -42,13 +42,13 @@ border-radius: 20px;</string>
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>48</height>
+        <height>50</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
         <width>16777215</width>
-        <height>48</height>
+        <height>50</height>
        </size>
       </property>
       <property name="font">
@@ -204,20 +204,20 @@ QPushButton:hover {
         <widget class="QLabel" name="label">
          <property name="minimumSize">
           <size>
-           <width>350</width>
+           <width>400</width>
            <height>0</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>350</width>
+           <width>400</width>
            <height>16777215</height>
           </size>
          </property>
          <property name="font">
           <font>
            <family>Segoe UI Black</family>
-           <pointsize>18</pointsize>
+           <pointsize>20</pointsize>
            <weight>50</weight>
            <italic>false</italic>
            <bold>false</bold>
@@ -369,7 +369,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                 </property>
                 <property name="font">
                  <font>
-                  <family>Segoe UI Black</family>
+                  <family>Montserrat</family>
                   <pointsize>15</pointsize>
                  </font>
                 </property>
@@ -385,8 +385,8 @@ QScrollBar::add-page, QScrollBar::sub-page {
                <widget class="QLabel" name="username_box">
                 <property name="font">
                  <font>
-                  <family>Segoe UI</family>
-                  <pointsize>14</pointsize>
+                  <family>iCiel Effra Regular</family>
+                  <pointsize>15</pointsize>
                  </font>
                 </property>
                 <property name="styleSheet">
@@ -481,7 +481,7 @@ background: transparent;</string>
                 </property>
                 <property name="font">
                  <font>
-                  <family>Segoe UI Black</family>
+                  <family>Montserrat</family>
                   <pointsize>15</pointsize>
                   <weight>75</weight>
                   <bold>true</bold>
@@ -508,8 +508,8 @@ background: transparent;</string>
                 </property>
                 <property name="font">
                  <font>
-                  <family>Segoe UI</family>
-                  <pointsize>14</pointsize>
+                  <family>iCiel Effra Regular</family>
+                  <pointsize>15</pointsize>
                  </font>
                 </property>
                 <property name="styleSheet">
@@ -560,6 +560,14 @@ background: transparent;</string>
                   <width>80</width>
                   <height>30</height>
                  </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                  <weight>50</weight>
+                  <bold>false</bold>
+                  <underline>true</underline>
+                 </font>
                 </property>
                 <property name="styleSheet">
                  <string notr="true">QPushButton {
@@ -625,8 +633,8 @@ QPushButton:hover {
                 </property>
                 <property name="font">
                  <font>
-                  <family>Segoe UI</family>
-                  <pointsize>14</pointsize>
+                  <family>iCiel Effra Regular</family>
+                  <pointsize>15</pointsize>
                  </font>
                 </property>
                 <property name="styleSheet">
@@ -715,7 +723,7 @@ background: transparent;</string>
                 </property>
                 <property name="font">
                  <font>
-                  <family>Segoe UI Black</family>
+                  <family>Montserrat</family>
                   <pointsize>15</pointsize>
                  </font>
                 </property>
@@ -728,8 +736,8 @@ background: transparent;</string>
                <widget class="QLabel" name="SchoolBox">
                 <property name="font">
                  <font>
-                  <family>Segoe UI</family>
-                  <pointsize>14</pointsize>
+                  <family>iCiel Effra Regular</family>
+                  <pointsize>15</pointsize>
                  </font>
                 </property>
                 <property name="styleSheet">
@@ -818,7 +826,7 @@ background: transparent;</string>
                 </property>
                 <property name="font">
                  <font>
-                  <family>Segoe UI Black</family>
+                  <family>Montserrat</family>
                   <pointsize>15</pointsize>
                  </font>
                 </property>
@@ -831,8 +839,8 @@ background: transparent;</string>
                <widget class="QLabel" name="ClassBox">
                 <property name="font">
                  <font>
-                  <family>Segoe UI</family>
-                  <pointsize>14</pointsize>
+                  <family>iCiel Effra Regular</family>
+                  <pointsize>15</pointsize>
                  </font>
                 </property>
                 <property name="styleSheet">
@@ -921,7 +929,7 @@ background: transparent;</string>
                 </property>
                 <property name="font">
                  <font>
-                  <family>Segoe UI Black</family>
+                  <family>Montserrat</family>
                   <pointsize>15</pointsize>
                  </font>
                 </property>
@@ -934,8 +942,8 @@ background: transparent;</string>
                <widget class="QLabel" name="BirthBox">
                 <property name="font">
                  <font>
-                  <family>Segoe UI</family>
-                  <pointsize>14</pointsize>
+                  <family>iCiel Effra Regular</family>
+                  <pointsize>15</pointsize>
                  </font>
                 </property>
                 <property name="styleSheet">
@@ -1024,7 +1032,7 @@ background: transparent;</string>
                 </property>
                 <property name="font">
                  <font>
-                  <family>Segoe UI Black</family>
+                  <family>Montserrat</family>
                   <pointsize>15</pointsize>
                  </font>
                 </property>
@@ -1037,8 +1045,8 @@ background: transparent;</string>
                <widget class="QLabel" name="CountryBox">
                 <property name="font">
                  <font>
-                  <family>Segoe UI</family>
-                  <pointsize>14</pointsize>
+                  <family>iCiel Effra Regular</family>
+                  <pointsize>15</pointsize>
                  </font>
                 </property>
                 <property name="styleSheet">
@@ -1133,7 +1141,7 @@ background: transparent;</string>
                 </property>
                 <property name="font">
                  <font>
-                  <family>Segoe UI Black</family>
+                  <family>Montserrat</family>
                   <pointsize>15</pointsize>
                  </font>
                 </property>
@@ -1181,6 +1189,13 @@ color: rgb(0,0,0);</string>
                   <width>150</width>
                   <height>30</height>
                  </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>iCiel Effra Regular</family>
+                  <pointsize>10</pointsize>
+                  <underline>true</underline>
+                 </font>
                 </property>
                 <property name="styleSheet">
                  <string notr="true">QPushButton {
@@ -1257,7 +1272,7 @@ QPushButton:hover {
                 </property>
                 <property name="font">
                  <font>
-                  <family>Segoe UI Black</family>
+                  <family>Montserrat</family>
                   <pointsize>15</pointsize>
                  </font>
                 </property>
@@ -1270,8 +1285,8 @@ QPushButton:hover {
                <widget class="QLabel" name="label_20">
                 <property name="font">
                  <font>
-                  <family>Segoe UI</family>
-                  <pointsize>14</pointsize>
+                  <family>iCiel Effra Regular</family>
+                  <pointsize>15</pointsize>
                  </font>
                 </property>
                 <property name="styleSheet">
@@ -1366,7 +1381,7 @@ background: transparent;</string>
                 </property>
                 <property name="font">
                  <font>
-                  <family>Segoe UI Black</family>
+                  <family>Montserrat</family>
                   <pointsize>15</pointsize>
                  </font>
                 </property>
@@ -1379,8 +1394,8 @@ background: transparent;</string>
                <widget class="QLabel" name="TeleBox">
                 <property name="font">
                  <font>
-                  <family>Segoe UI</family>
-                  <pointsize>14</pointsize>
+                  <family>iCiel Effra Regular</family>
+                  <pointsize>15</pointsize>
                  </font>
                 </property>
                 <property name="styleSheet">
@@ -1475,7 +1490,7 @@ background: transparent;</string>
                 </property>
                 <property name="font">
                  <font>
-                  <family>Segoe UI Black</family>
+                  <family>Montserrat</family>
                   <pointsize>15</pointsize>
                  </font>
                 </property>
@@ -1488,8 +1503,8 @@ background: transparent;</string>
                <widget class="QLabel" name="AdressBox">
                 <property name="font">
                  <font>
-                  <family>Segoe UI</family>
-                  <pointsize>14</pointsize>
+                  <family>iCiel Effra Regular</family>
+                  <pointsize>15</pointsize>
                  </font>
                 </property>
                 <property name="styleSheet">
@@ -1542,7 +1557,7 @@ background: transparent;</string>
              </property>
              <property name="font">
               <font>
-               <family>Segoe UI Black</family>
+               <family>Montserrat</family>
                <pointsize>15</pointsize>
                <weight>75</weight>
                <bold>true</bold>

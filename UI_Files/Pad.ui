@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>850</width>
     <height>400</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>800</width>
+    <width>850</width>
     <height>400</height>
    </size>
   </property>
@@ -25,7 +25,7 @@
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
     <string notr="true">background-color: rgb(74, 74, 74);
-border-radius: 20px;</string>
+border-radius: 5px;</string>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <property name="spacing">
@@ -111,7 +111,7 @@ border-radius: 20px;</string>
             <property name="font">
              <font>
               <family>Montserrat Semi Bold</family>
-              <pointsize>22</pointsize>
+              <pointsize>25</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -146,7 +146,7 @@ border-radius: 20px;</string>
               <widget class="QLabel" name="Title">
                <property name="font">
                 <font>
-                 <pointsize>13</pointsize>
+                 <pointsize>15</pointsize>
                  <weight>50</weight>
                  <bold>false</bold>
                 </font>
@@ -358,13 +358,13 @@ background-color: rgb(255, 255, 255);</string>
            <widget class="QFrame" name="Wrap_Tools">
             <property name="minimumSize">
              <size>
-              <width>750</width>
+              <width>800</width>
               <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>700</width>
+              <width>800</width>
               <height>16777215</height>
              </size>
             </property>
@@ -573,13 +573,13 @@ QPushButton:hover {
               <widget class="QFrame" name="frame_4">
                <property name="minimumSize">
                 <size>
-                 <width>300</width>
+                 <width>350</width>
                  <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>300</width>
+                 <width>350</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -595,7 +595,7 @@ QPushButton:hover {
                <property name="frameShadow">
                 <enum>QFrame::Raised</enum>
                </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0">
+               <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0,0,0">
                 <property name="spacing">
                  <number>0</number>
                 </property>
@@ -680,6 +680,11 @@ QFontComboBox:hover {
                     <height>25</height>
                    </size>
                   </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>8</pointsize>
+                   </font>
+                  </property>
                   <property name="toolTip">
                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cỡ chữ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                   </property>
@@ -748,6 +753,72 @@ QSpinBox::down-arrow {
                   </property>
                   <property name="displayIntegerBase">
                    <number>10</number>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="ColorText">
+                  <property name="minimumSize">
+                   <size>
+                    <width>30</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>30</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Màu chữ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+	image: url(:/images/icons/edit-color.png);
+	background: rgb(0,0,0);
+}</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="shortcut">
+                   <string>Ctrl+U</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="Color">
+                  <property name="minimumSize">
+                   <size>
+                    <width>30</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>30</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Màu nền&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+background: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(255, 255, 255, 255), stop:0.227273 rgba(255, 255, 255, 255), stop:0.232955 rgba(0, 0, 0, 255), stop:0.727273 rgba(0, 0, 0, 255), stop:0.732955 rgba(255, 255, 255, 255), stop:1 rgba(255, 255, 255, 255))
+}
+QToolTip {
+	background: rgb(255,255,255);
+	color: rgb(0,0,0);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="shortcut">
+                   <string>Ctrl+U</string>
                   </property>
                  </widget>
                 </item>
@@ -877,41 +948,6 @@ QSpinBox::down-arrow {
                    <string notr="true">QPushButton {
 	image: url(:/images/icons/edit-underline.png);
 }</string>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="shortcut">
-                   <string>Ctrl+U</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="Color">
-                  <property name="minimumSize">
-                   <size>
-                    <width>30</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>30</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="toolTip">
-                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Đổi màu&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">QPushButton {
-background: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(255, 255, 255, 255), stop:0.227273 rgba(255, 255, 255, 255), stop:0.232955 rgba(0, 0, 0, 255), stop:0.727273 rgba(0, 0, 0, 255), stop:0.732955 rgba(255, 255, 255, 255), stop:1 rgba(255, 255, 255, 255))
-}
-QToolTip {
-	background: rgb(255,255,255);
-	color: rgb(0,0,0);
-}
-</string>
                   </property>
                   <property name="text">
                    <string/>

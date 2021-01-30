@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>EditFrame</class>
- <widget class="QWidget" name="EditFrame">
+ <class>ResultFrame</class>
+ <widget class="QWidget" name="ResultFrame">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1099</width>
-    <height>59</height>
+    <width>1337</width>
+    <height>70</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>70</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>70</height>
+   </size>
   </property>
   <property name="font">
    <font>
@@ -23,7 +35,7 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">font: 14pt &quot;iCiel Effra&quot;;</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -76,6 +88,15 @@ border-radius: 10px;</string>
           <width>300</width>
           <height>16777215</height>
          </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>iCiel Effra Regular</family>
+          <pointsize>18</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
         </property>
         <property name="styleSheet">
          <string notr="true"/>
@@ -159,6 +180,18 @@ border-radius: 10px;</string>
                </property>
                <item row="0" column="0">
                 <widget class="QFrame" name="frame_5">
+                 <property name="minimumSize">
+                  <size>
+                   <width>150</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>150</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
                  <property name="frameShape">
                   <enum>QFrame::StyledPanel</enum>
                  </property>
@@ -168,6 +201,12 @@ border-radius: 10px;</string>
                  <layout class="QGridLayout" name="gridLayout_5">
                   <item row="0" column="0">
                    <widget class="QLabel" name="label">
+                    <property name="font">
+                     <font>
+                      <family>iCiel Effra Regular</family>
+                      <pointsize>18</pointsize>
+                     </font>
+                    </property>
                     <property name="text">
                      <string>Số test đúng:</string>
                     </property>
@@ -178,6 +217,23 @@ border-radius: 10px;</string>
                </item>
                <item row="0" column="1">
                 <widget class="QFrame" name="frame_6">
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>100</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>15</pointsize>
+                  </font>
+                 </property>
                  <property name="frameShape">
                   <enum>QFrame::StyledPanel</enum>
                  </property>
@@ -187,6 +243,11 @@ border-radius: 10px;</string>
                  <layout class="QGridLayout" name="gridLayout_6">
                   <item row="0" column="0">
                    <widget class="QLabel" name="correct_num">
+                    <property name="font">
+                     <font>
+                      <pointsize>18</pointsize>
+                     </font>
+                    </property>
                     <property name="text">
                      <string>0</string>
                     </property>
@@ -227,6 +288,18 @@ border-radius: 10px;</string>
                </property>
                <item row="0" column="0">
                 <widget class="QFrame" name="frame_7">
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>100</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
                  <property name="frameShape">
                   <enum>QFrame::StyledPanel</enum>
                  </property>
@@ -236,6 +309,12 @@ border-radius: 10px;</string>
                  <layout class="QGridLayout" name="gridLayout_7">
                   <item row="0" column="0">
                    <widget class="QLabel" name="label_3">
+                    <property name="font">
+                     <font>
+                      <family>iCiel Effra Regular</family>
+                      <pointsize>18</pointsize>
+                     </font>
+                    </property>
                     <property name="text">
                      <string>Điểm:</string>
                     </property>
@@ -246,6 +325,18 @@ border-radius: 10px;</string>
                </item>
                <item row="0" column="1">
                 <widget class="QFrame" name="frame_8">
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>100</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
                  <property name="frameShape">
                   <enum>QFrame::StyledPanel</enum>
                  </property>
@@ -255,6 +346,11 @@ border-radius: 10px;</string>
                  <layout class="QGridLayout" name="gridLayout_8">
                   <item row="0" column="0">
                    <widget class="QLabel" name="Score_box">
+                    <property name="font">
+                     <font>
+                      <pointsize>18</pointsize>
+                     </font>
+                    </property>
                     <property name="text">
                      <string>0</string>
                     </property>
@@ -316,6 +412,11 @@ border-radius: 10px;</string>
                       <height>16777215</height>
                      </size>
                     </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>18</pointsize>
+                     </font>
+                    </property>
                     <property name="text">
                      <string/>
                     </property>
@@ -329,6 +430,12 @@ border-radius: 10px;</string>
                </item>
                <item row="0" column="0">
                 <widget class="QFrame" name="frame_12">
+                 <property name="font">
+                  <font>
+                   <family>iCiel Effra Regular</family>
+                   <pointsize>20</pointsize>
+                  </font>
+                 </property>
                  <property name="frameShape">
                   <enum>QFrame::StyledPanel</enum>
                  </property>
@@ -338,8 +445,25 @@ border-radius: 10px;</string>
                  <layout class="QGridLayout" name="gridLayout_13">
                   <item row="0" column="0">
                    <widget class="QLabel" name="details_label">
+                    <property name="minimumSize">
+                     <size>
+                      <width>100</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>100</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>18</pointsize>
+                     </font>
+                    </property>
                     <property name="text">
-                     <string>Lời phê:</string>
+                     <string>Đánh giá:</string>
                     </property>
                    </widget>
                   </item>

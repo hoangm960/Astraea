@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1099</width>
-    <height>644</height>
+    <height>643</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -84,6 +84,12 @@ color: rgb(255, 255, 255);</string>
        </property>
        <item>
         <widget class="QFrame" name="title_bar">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>50</height>
+          </size>
+         </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
@@ -132,7 +138,7 @@ color: rgb(255, 255, 255);</string>
                <property name="font">
                 <font>
                  <family>Montserrat Semi Bold</family>
-                 <pointsize>22</pointsize>
+                 <pointsize>25</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
                 </font>
@@ -359,7 +365,13 @@ background-color: transparent;</string>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
-                     <height>20</height>
+                     <height>40</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>40</height>
                     </size>
                    </property>
                    <property name="frameShape">
@@ -373,7 +385,7 @@ background-color: transparent;</string>
                      <number>0</number>
                     </property>
                     <property name="leftMargin">
-                     <number>6</number>
+                     <number>0</number>
                     </property>
                     <property name="topMargin">
                      <number>0</number>
@@ -389,19 +401,19 @@ background-color: transparent;</string>
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
-                        <height>20</height>
+                        <height>40</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
                         <width>16777215</width>
-                        <height>20</height>
+                        <height>40</height>
                        </size>
                       </property>
                       <property name="font">
                        <font>
                         <family>Montserrat</family>
-                        <pointsize>16</pointsize>
+                        <pointsize>20</pointsize>
                         <weight>75</weight>
                         <bold>true</bold>
                        </font>
@@ -454,6 +466,12 @@ background-color: transparent;</string>
                         <width>0</width>
                         <height>0</height>
                        </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>iCiel Effra Regular</family>
+                        <pointsize>15</pointsize>
+                       </font>
                       </property>
                       <property name="styleSheet">
                        <string notr="true">QScrollArea {
@@ -596,8 +614,8 @@ QScrollBar::add-page, QScrollBar::sub-page {
                          </property>
                          <property name="font">
                           <font>
-                           <family>Segoe UI Black</family>
-                           <pointsize>11</pointsize>
+                           <family>Montserrat</family>
+                           <pointsize>15</pointsize>
                            <weight>75</weight>
                            <bold>true</bold>
                           </font>
@@ -628,9 +646,10 @@ QPushButton:hover {
                         <widget class="QTextBrowser" name="Error_text">
                          <property name="font">
                           <font>
-                           <family>Segoe UI</family>
-                           <pointsize>14</pointsize>
+                           <family>iCiel Effra Regular</family>
+                           <pointsize>20</pointsize>
                            <weight>50</weight>
+                           <italic>false</italic>
                            <bold>false</bold>
                           </font>
                          </property>
@@ -684,19 +703,19 @@ padding: 10px;</string>
                    </property>
                    <layout class="QHBoxLayout" name="horizontalLayout_7">
                     <property name="spacing">
-                     <number>20</number>
+                     <number>15</number>
                     </property>
                     <property name="leftMargin">
-                     <number>20</number>
+                     <number>9</number>
                     </property>
                     <property name="topMargin">
-                     <number>0</number>
+                     <number>9</number>
                     </property>
                     <property name="rightMargin">
-                     <number>20</number>
+                     <number>9</number>
                     </property>
                     <property name="bottomMargin">
-                     <number>0</number>
+                     <number>9</number>
                     </property>
                     <item>
                      <widget class="QProgressBar" name="progressBar">
@@ -715,7 +734,7 @@ padding: 10px;</string>
                       <property name="font">
                        <font>
                         <family>Segoe UI Black</family>
-                        <pointsize>11</pointsize>
+                        <pointsize>15</pointsize>
                         <weight>75</weight>
                         <italic>true</italic>
                         <bold>true</bold>
@@ -764,6 +783,21 @@ QProgressBar::chunk {
                        <enum>QFrame::Raised</enum>
                       </property>
                       <layout class="QHBoxLayout" name="horizontalLayout_10">
+                       <property name="spacing">
+                        <number>10</number>
+                       </property>
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
                        <item>
                         <widget class="QLabel" name="Score_frame">
                          <property name="minimumSize">
@@ -780,10 +814,10 @@ QProgressBar::chunk {
                          </property>
                          <property name="font">
                           <font>
-                           <family>Segoe UI Black</family>
-                           <pointsize>16</pointsize>
-                           <weight>75</weight>
-                           <bold>true</bold>
+                           <family>Montserrat</family>
+                           <pointsize>20</pointsize>
+                           <weight>50</weight>
+                           <bold>false</bold>
                           </font>
                          </property>
                          <property name="styleSheet">
@@ -810,7 +844,7 @@ QProgressBar::chunk {
                          </property>
                          <property name="font">
                           <font>
-                           <family>Segoe UI Black</family>
+                           <family>iCiel Effra Regular</family>
                            <pointsize>12</pointsize>
                            <weight>75</weight>
                            <bold>true</bold>
@@ -843,7 +877,7 @@ QProgressBar::chunk {
                       </property>
                       <layout class="QHBoxLayout" name="horizontalLayout_11">
                        <property name="spacing">
-                        <number>0</number>
+                        <number>10</number>
                        </property>
                        <property name="leftMargin">
                         <number>0</number>
@@ -852,7 +886,7 @@ QProgressBar::chunk {
                         <number>0</number>
                        </property>
                        <property name="rightMargin">
-                        <number>20</number>
+                        <number>0</number>
                        </property>
                        <property name="bottomMargin">
                         <number>0</number>
@@ -867,16 +901,16 @@ QProgressBar::chunk {
                          </property>
                          <property name="maximumSize">
                           <size>
-                           <width>120</width>
+                           <width>16777215</width>
                            <height>32</height>
                           </size>
                          </property>
                          <property name="font">
                           <font>
-                           <family>Segoe UI Black</family>
-                           <pointsize>16</pointsize>
-                           <weight>75</weight>
-                           <bold>true</bold>
+                           <family>Montserrat</family>
+                           <pointsize>20</pointsize>
+                           <weight>50</weight>
+                           <bold>false</bold>
                           </font>
                          </property>
                          <property name="styleSheet">
@@ -903,8 +937,8 @@ QProgressBar::chunk {
                          </property>
                          <property name="font">
                           <font>
-                           <family>Segoe UI Black</family>
-                           <pointsize>11</pointsize>
+                           <family>iCiel Effra Regular</family>
+                           <pointsize>15</pointsize>
                            <weight>75</weight>
                            <bold>true</bold>
                           </font>
@@ -924,20 +958,20 @@ QProgressBar::chunk {
                         <widget class="QPushButton" name="return_btn_2">
                          <property name="minimumSize">
                           <size>
-                           <width>120</width>
+                           <width>130</width>
                            <height>30</height>
                           </size>
                          </property>
                          <property name="maximumSize">
                           <size>
-                           <width>100</width>
+                           <width>130</width>
                            <height>16777215</height>
                           </size>
                          </property>
                          <property name="font">
                           <font>
                            <family>Montserrat</family>
-                           <pointsize>12</pointsize>
+                           <pointsize>15</pointsize>
                            <weight>75</weight>
                            <bold>true</bold>
                           </font>
@@ -1017,13 +1051,13 @@ QPushButton:pressed {
                       <property name="maximumSize">
                        <size>
                         <width>100</width>
-                        <height>16777215</height>
+                        <height>30</height>
                        </size>
                       </property>
                       <property name="font">
                        <font>
                         <family>Montserrat</family>
-                        <pointsize>12</pointsize>
+                        <pointsize>15</pointsize>
                         <weight>75</weight>
                         <bold>true</bold>
                        </font>
@@ -1197,8 +1231,8 @@ QScrollBar::add-page, QScrollBar::sub-page {
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>1081</width>
-                         <height>254</height>
+                         <width>942</width>
+                         <height>253</height>
                         </rect>
                        </property>
                        <widget class="QLabel" name="inform">

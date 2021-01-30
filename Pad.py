@@ -1,8 +1,8 @@
 import os
 from PyQt5 import QtWidgets, uic
 from PyQt5 import QtCore
-from PyQt5.QtGui import QFont, QIcon, QPixmap, QTextCharFormat, QTextCursor 
-from PyQt5.QtWidgets import QAction, QFileDialog, QFontDialog, QMainWindow, QApplication, QColorDialog, QMessageBox
+from PyQt5.QtGui import QTextCursor
+from PyQt5.QtWidgets import QFileDialog, QMainWindow, QApplication, QColorDialog, QMessageBox
 from PyQt5.QtCore import Qt
 from UI_Files import Resources
 import sys 
@@ -44,7 +44,9 @@ class UIFunction(MainPad):
         ui.btn_quit.clicked.connect(lambda: self.Quit(ui))
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
         ui.btn_maximize.clicked.connect(lambda: self.maximize_restore(ui))
-        ui.Color.clicked.connect(lambda: self.textColor(ui))
+        ui.ColorText.clicked.connect(lambda: self.textColor(ui))
+        ui.Color.clicked.connect(lambda: self.textBackgroundColor(ui))
+
         ui.Center_Align.clicked.connect(lambda: ui.editor.setAlignment(Qt.AlignCenter))
         ui.Left_Align.clicked.connect(lambda: ui.editor.setAlignment(Qt.AlignLeft))
         ui.Right_Align.clicked.connect(lambda: ui.editor.setAlignment(Qt.AlignRight))
@@ -105,13 +107,20 @@ class UIFunction(MainPad):
     border-radius: 20px;""")
             ui.btn_maximize.setToolTip("Phóng to")
 
-    
     def textColor(self, ui):
         col = QColorDialog.getColor(ui.editor.textColor(), ui)
         if not col.isValid():
             return
         ui.editor.setTextColor(col)
-        ui.Color.setStyleSheet("""background: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(255, 255, 255, 255), stop:0.227273 rgba(255, 255, 255, 255), stop:0.232955 {}, stop:0.727273 {}, stop:0.732955 rgba(255, 255, 255, 255), stop:1 rgba(255, 255, 255, 255))""".format(ui.editor.textColor().name(),ui.editor.textColor().name()))
+        ui.ColorText.setStyleSheet("""image: url(:/images/icons/edit-color.png);background: {};""".format(col.name()))
+    
+    def textBackgroundColor(self, ui):
+        col = QColorDialog.getColor(ui.editor.textBackgroundColor(), ui)
+        if not col.isValid():
+            return
+        ui.editor.setTextBackgroundColor(col)
+        ui.Color.setStyleSheet("""background: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(255, 255, 255, 255), stop:0.227273 rgba(255, 255, 255, 255), stop:0.232955 {}, stop:0.727273 {}, stop:0.732955 rgba(255, 255, 255, 255), stop:1 rgba(255, 255, 255, 255))""".format(col.name(),col.name()))
+
 
     def setBold(self, ui):
         if self.Format[0]:
@@ -159,14 +168,16 @@ class UIFunction(MainPad):
                                     }""")
 
     def Function_Save_As(self, ui):
-        path = QFileDialog.getSaveFileName(ui, "Save file", "", "HTML documents (*.html);;Text documents (*.txt);;All files (*.*)")
+        path = QFileDialog.getSaveFileName(ui, "Lưu file", "", "HTML documents (*.html);;Text documents (*.txt);;All files (*.*)")
         if not path:
             return  
         try:
-            self.path = str(path[0])
-            ui.Title.setText("%s - ASTRAEA Document" % (os.path.basename(self.path) if self.path else "Untitled"))
-            with open(self.path, 'w') as f:
-                f.write(ui.editor.toHtml())
+            path = str(path[0])
+            if path:
+                ui.Title.setText("%s - ASTRAEA Document" % (os.path.basename(path)))
+                with open(path, 'w', encoding = 'utf8') as f:
+                    f.write(ui.editor.toHtml())
+                    self.path = path
         except:
             pass
 
@@ -179,7 +190,7 @@ class UIFunction(MainPad):
                 f.write(ui.editor.toHtml())
     
     def Function_Open(self, ui):
-        path = QFileDialog.getOpenFileName(ui, "Open file", "", "HTML documents (*.html);;Text documents (*.txt);;All files (*.*)")
+        path = QFileDialog.getOpenFileName(ui, "Mở file", "", "HTML documents (*.html);;Text documents (*.txt);;All files (*.*)")
         try:
             self.path = str(path[0])
             with open(self.path, 'r', encoding = 'utf8') as f:
@@ -198,4 +209,5 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = MainPad(None)
     window.show()
+    print('')
     sys.exit(app.exec_())

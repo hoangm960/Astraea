@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>253</width>
-    <height>338</height>
+    <width>300</width>
+    <height>350</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,8 +18,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>0</width>
-    <height>338</height>
+    <width>300</width>
+    <height>350</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -50,11 +50,17 @@ border-radius: 3px;</string>
      <number>0</number>
     </property>
     <item>
-     <widget class="QFrame" name="frame">
+     <widget class="QFrame" name="TitleBar">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>50</height>
+       </size>
+      </property>
       <property name="maximumSize">
        <size>
         <width>16777215</width>
-        <height>30</height>
+        <height>50</height>
        </size>
       </property>
       <property name="frameShape">
@@ -83,7 +89,8 @@ border-radius: 3px;</string>
         <widget class="QLabel" name="label">
          <property name="font">
           <font>
-           <pointsize>11</pointsize>
+           <family>Montserrat</family>
+           <pointsize>15</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
@@ -97,7 +104,7 @@ background-color: transparent;</string>
          </property>
         </widget>
        </item>
-       <item>
+       <item alignment="Qt::AlignRight">
         <widget class="QFrame" name="btn_frame">
          <property name="maximumSize">
           <size>
@@ -208,7 +215,7 @@ QPushButton:hover {
       <property name="font">
        <font>
         <family>Montserrat</family>
-        <pointsize>13</pointsize>
+        <pointsize>15</pointsize>
         <weight>75</weight>
         <bold>true</bold>
        </font>
@@ -234,7 +241,8 @@ QPushButton:hover {
       </property>
       <property name="font">
        <font>
-        <pointsize>11</pointsize>
+        <family>iCiel Effra Regular</family>
+        <pointsize>15</pointsize>
        </font>
       </property>
       <property name="styleSheet">
@@ -259,6 +267,12 @@ QPushButton:hover {
     </item>
     <item>
      <widget class="QFrame" name="frame_2">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>200</height>
+       </size>
+      </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>
@@ -291,6 +305,7 @@ QPushButton:hover {
          </property>
          <property name="font">
           <font>
+           <family>Montserrat</family>
            <pointsize>12</pointsize>
            <weight>75</weight>
            <bold>true</bold>
@@ -337,6 +352,7 @@ QPushButton:pressed {
          </property>
          <property name="font">
           <font>
+           <family>Montserrat</family>
            <pointsize>12</pointsize>
            <weight>75</weight>
            <bold>true</bold>
@@ -383,6 +399,7 @@ QPushButton:pressed {
          </property>
          <property name="font">
           <font>
+           <family>Montserrat</family>
            <pointsize>12</pointsize>
            <weight>75</weight>
            <bold>true</bold>
@@ -429,6 +446,7 @@ QPushButton:pressed {
          </property>
          <property name="font">
           <font>
+           <family>Montserrat</family>
            <pointsize>12</pointsize>
            <weight>75</weight>
            <bold>true</bold>

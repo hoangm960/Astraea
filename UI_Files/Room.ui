@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
+    <width>750</width>
     <height>600</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>100</width>
+    <width>750</width>
     <height>600</height>
    </size>
   </property>
@@ -39,13 +39,13 @@
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>40</height>
+        <height>50</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
         <width>16777215</width>
-        <height>40</height>
+        <height>50</height>
        </size>
       </property>
       <property name="frameShape">
@@ -105,7 +105,8 @@ background: transparent;</string>
         <widget class="QLabel" name="ID_Room">
          <property name="font">
           <font>
-           <pointsize>13</pointsize>
+           <family>Montserrat</family>
+           <pointsize>15</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
@@ -114,7 +115,7 @@ background: transparent;</string>
           <string notr="true">color: rgb(255,255,255);</string>
          </property>
          <property name="text">
-          <string>61920TSD1234</string>
+          <string>[CODE]</string>
          </property>
         </widget>
        </item>
@@ -152,7 +153,7 @@ background: transparent;</string>
            <number>0</number>
           </property>
           <property name="bottomMargin">
-           <number>0</number>
+           <number>10</number>
           </property>
           <item>
            <widget class="QPushButton" name="btn_minimize">
@@ -238,6 +239,12 @@ QPushButton:hover {
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="0" column="1">
         <widget class="QFrame" name="student_list_frame">
+         <property name="minimumSize">
+          <size>
+           <width>250</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="styleSheet">
           <string notr="true">border-radius: 8px;</string>
          </property>
@@ -250,9 +257,16 @@ QPushButton:hover {
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
            <widget class="QLabel" name="student_label">
+            <property name="minimumSize">
+             <size>
+              <width>240</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="font">
              <font>
-              <pointsize>13</pointsize>
+              <family>Montserrat</family>
+              <pointsize>15</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -281,8 +295,8 @@ QPushButton:hover {
             </property>
             <property name="font">
              <font>
-              <family>iCiel Effra</family>
-              <pointsize>14</pointsize>
+              <family>iCiel Effra Regular</family>
+              <pointsize>15</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -353,7 +367,8 @@ QScrollBar::add-page, QScrollBar::sub-page {
             </property>
             <property name="font">
              <font>
-              <pointsize>12</pointsize>
+              <family>iCiel Effra Regular</family>
+              <pointsize>15</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -474,8 +489,8 @@ QPushButton:pressed {
             </property>
             <property name="font">
              <font>
-              <family>iCiel Effra</family>
-              <pointsize>14</pointsize>
+              <family>iCiel Effra Regular</family>
+              <pointsize>15</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -546,7 +561,8 @@ QScrollBar::add-page, QScrollBar::sub-page {
             </property>
             <property name="font">
              <font>
-              <pointsize>12</pointsize>
+              <family>iCiel Effra Regular</family>
+              <pointsize>15</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -578,9 +594,16 @@ QPushButton:pressed {
           </item>
           <item row="0" column="0">
            <widget class="QLabel" name="lessong_label">
+            <property name="minimumSize">
+             <size>
+              <width>240</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="font">
              <font>
-              <pointsize>13</pointsize>
+              <family>Montserrat</family>
+              <pointsize>15</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -609,7 +632,8 @@ QPushButton:pressed {
             </property>
             <property name="font">
              <font>
-              <pointsize>12</pointsize>
+              <family>iCiel Effra Regular</family>
+              <pointsize>15</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -636,6 +660,129 @@ QPushButton:pressed {
             </property>
             <property name="text">
              <string>Xóa bài học</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QFrame" name="lesson_list_frame_2">
+         <property name="minimumSize">
+          <size>
+           <width>210</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>210</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">border-radius: 8px;</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_4">
+          <item row="1" column="0">
+           <widget class="QListWidget" name="Achievements_list">
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>iCiel Effra Regular</family>
+              <pointsize>15</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QListWidget {
+	padding: 10px;
+	background-color: rgb(255, 255, 255);
+}
+
+QListWidget::item {
+	border-radius: 5px;
+	margin: 0px 0px 10px 0px;	
+	background-color: rgb(193, 193, 193);
+}
+
+QLineEdit {
+	color: rgb(0,0,0);
+	background-color: transparent;
+}
+
+QLabel {
+	color: rgb(0,0,0);
+	background-color: transparent;
+}
+
+QScrollBar{
+	background : rgb(255, 255, 255);	
+}
+
+QScrollBar::handle{
+	background : rgb(158, 158, 158);
+	border-radius: 5px;
+	margin: 3px 3px 3px 3px;
+}
+
+QScrollBar::handle::pressed{
+	background : rgb(85, 85, 85);
+}
+
+QScrollBar::add-line {
+	height: 0px;
+}
+
+QScrollBar::sub-line {
+	height: 0px;
+}
+
+QScrollBar::add-page, QScrollBar::sub-page {
+	height: 0px;
+}</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="Achievements">
+            <property name="minimumSize">
+             <size>
+              <width>240</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Montserrat</family>
+              <pointsize>15</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255,255,255);</string>
+            </property>
+            <property name="text">
+             <string>Xếp hạng</string>
             </property>
            </widget>
           </item>
@@ -685,7 +832,8 @@ QPushButton:pressed {
          </property>
          <property name="font">
           <font>
-           <pointsize>12</pointsize>
+           <family>iCiel Effra Regular</family>
+           <pointsize>15</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>

@@ -19,5 +19,17 @@
     <file>icons/Edit.png</file>
     <file>icons/link.png</file>
     <file>icons/maxmin.png</file>
+    <file>icons/edit-bold.png</file>
+    <file>icons/edit-italic.png</file>
+    <file>icons/edit-underline.png</file>
+    <file>icons/blue-folder-open-document.png</file>
+    <file>icons/disk--pencil.png</file>
+    <file>icons/disk.png</file>
+    <file>icons/edit-alignment-center.png</file>
+    <file>icons/edit-alignment-justify.png</file>
+    <file>icons/edit-alignment-right.png</file>
+    <file>icons/edit-alignment.png</file>
+    <file>icons/edit-color.png</file>
+    <file>icons/ui-tab--plus.png</file>
   </qresource>
 </RCC>

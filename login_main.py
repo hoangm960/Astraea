@@ -253,7 +253,7 @@ class LoginFunctions(LoginWindow):
 
         if check:
             role = 1 if ui.teacher.isChecked() else 0
-            cursor.execute("INSERT INTO user(Username, ShowName, Password, Type) VALUES(%s, %s, %s, %s", (username, name, password, role))
+            cursor.execute("INSERT INTO user(Username, ShowName, Password, Type) VALUES(%s, %s, %s, %s)", (username, name, password, role))
             ui.connection.commit()
 
             ui.NameBox_SI.clear()
@@ -324,7 +324,7 @@ class UILoadingFunctions(Loading_Screen):
         if self.counter == 14:
             ui.timer.singleShot(
                 2905, lambda: ui.Loading_label.setText(
-                    "Khởi động Thonny ...")
+                    "Khởi động ...")
             )
             import pygetwindow as gw        
             subprocess.Popen(['thonny'], shell=True)

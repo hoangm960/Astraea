@@ -8,7 +8,6 @@ import mysql.connector
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow, QMessageBox
 
-from UI_Files import Resources
 
 
 class RoomWindow(QMainWindow):
@@ -52,7 +51,6 @@ class UIFunctions(RoomWindow):
             ui.add_btn.clicked.connect(lambda: self.upload(ui))
             ui.reload_btn.clicked.connect(lambda: self.add_student_list(ui))
             ui.download_info_btn.clicked.connect(lambda: self.get_students_submission(ui))
-
     @staticmethod
     def get_file_dialog(ui, filter):
         HOME_PATH = os.path.join(os.path.join(
@@ -210,12 +208,18 @@ class UIFunctions(RoomWindow):
         return file_path
 
     def get_students_submission(self, ui):
-        lesson_id = open(self.OPENED_LESSON_PATH).readlines()[1]
-        submission = pandas.read_sql(f"SELECT UserName, SubmissionDate, Mark, Comment FROM submission WHERE LessonId = {lesson_id}", ui.connection)
-        filename = self.save_file_dialog(ui, '*.xlsx')
-        if filename:
-            submission.to_excel(filename)
-
+        try:
+            lesson_id = open(self.OPENED_LESSON_PATH).readlines()[1]
+            submission = pandas.read_sql(f"SELECT UserName, SubmissionDate, Mark, Comment FROM submission WHERE LessonId = {lesson_id}", ui.connection)
+            filename = self.save_file_dialog(ui, '*.xlsx')
+            if filename:
+                submission.to_excel(filename)
+        except:
+            ui.download_info_btn.setText('Chưa có dữ liệu')
+            ui.download_info_btn.setDisabled(True)
+            timer = QtCore.QTimer()
+            timer.singleShot(1000, lambda: ui.download_info_btn.setDisabled(False))
+            timer.singleShot(1000, lambda: ui.download_info_btn.setText('Tải xuống dữ liệu bài làm học sinh'))
     @staticmethod
     def close_pg(ui):
         import main_ui

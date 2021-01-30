@@ -79,7 +79,6 @@ class UIFunctions(DownloadWindow):
             if [row for row in cursor]:
                 open(self.OPENED_ROOM_PATH, 'w').write(room_id)
                 cursor.execute("UPDATE user SET RoomId = %s WHERE Username = %s", (room_id, username))
-                ui.frame.close()
                 ui.frame_2.close()
                 ui.label_2.show()
                 ui.id_entry.close()

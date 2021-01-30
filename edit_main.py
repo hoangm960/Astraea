@@ -7,8 +7,6 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (QApplication, QFileDialog, QMainWindow,
                              QMessageBox, QSizeGrip, QVBoxLayout, QWidget)
 
-from UI_Files import Resources
-
 KEY_PATH = "./data/Lesson/assignments.key"
 EDIT_FORM_PATH = "./UI_Files/edit_form.ui"
 EDIT_FRAME_PATH = "./UI_Files/edit_frame.ui"

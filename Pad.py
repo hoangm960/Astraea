@@ -4,7 +4,6 @@ from PyQt5 import QtCore
 from PyQt5.QtGui import QTextCursor
 from PyQt5.QtWidgets import QFileDialog, QMainWindow, QApplication, QColorDialog, QMessageBox
 from PyQt5.QtCore import Qt
-from UI_Files import Resources
 import sys 
 
 PAD_UI = './UI_Files/Pad.ui'

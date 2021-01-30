@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1337</width>
+    <width>1283</width>
     <height>70</height>
    </rect>
   </property>
@@ -79,13 +79,13 @@ border-radius: 10px;</string>
        <widget class="QLabel" name="test_file_label">
         <property name="minimumSize">
          <size>
-          <width>300</width>
+          <width>200</width>
           <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>300</width>
+          <width>200</width>
           <height>16777215</height>
          </size>
         </property>
@@ -172,6 +172,9 @@ border-radius: 10px;</string>
                <property name="topMargin">
                 <number>0</number>
                </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
                <property name="bottomMargin">
                 <number>0</number>
                </property>
@@ -219,13 +222,13 @@ border-radius: 10px;</string>
                 <widget class="QFrame" name="frame_6">
                  <property name="minimumSize">
                   <size>
-                   <width>100</width>
+                   <width>50</width>
                    <height>0</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>100</width>
+                   <width>50</width>
                    <height>16777215</height>
                   </size>
                  </property>
@@ -241,6 +244,21 @@ border-radius: 10px;</string>
                   <enum>QFrame::Raised</enum>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_6">
+                  <property name="leftMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
                   <item row="0" column="0">
                    <widget class="QLabel" name="correct_num">
                     <property name="font">
@@ -327,13 +345,13 @@ border-radius: 10px;</string>
                 <widget class="QFrame" name="frame_8">
                  <property name="minimumSize">
                   <size>
-                   <width>100</width>
+                   <width>50</width>
                    <height>0</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>100</width>
+                   <width>50</width>
                    <height>16777215</height>
                   </size>
                  </property>
@@ -344,8 +362,35 @@ border-radius: 10px;</string>
                   <enum>QFrame::Raised</enum>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_8">
+                  <property name="leftMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
                   <item row="0" column="0">
                    <widget class="QLabel" name="Score_box">
+                    <property name="minimumSize">
+                     <size>
+                      <width>50</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>50</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
                     <property name="font">
                      <font>
                       <pointsize>18</pointsize>
@@ -367,6 +412,12 @@ border-radius: 10px;</string>
             </item>
             <item>
              <widget class="QFrame" name="frame_9">
+              <property name="minimumSize">
+               <size>
+                <width>700</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="frameShape">
                <enum>QFrame::StyledPanel</enum>
               </property>
@@ -375,7 +426,7 @@ border-radius: 10px;</string>
               </property>
               <layout class="QGridLayout" name="gridLayout_12">
                <property name="leftMargin">
-                <number>9</number>
+                <number>0</number>
                </property>
                <property name="topMargin">
                 <number>0</number>
@@ -398,6 +449,21 @@ border-radius: 10px;</string>
                   <enum>QFrame::Raised</enum>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_14">
+                  <property name="leftMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
                   <item row="0" column="0">
                    <widget class="QLabel" name="detail_entry">
                     <property name="minimumSize">

@@ -55,7 +55,6 @@ class EditWindow(QMainWindow):
 class UIFunctions(EditWindow):
     GLOBAL_STATE = False
     ASSIGNMENTS = []
-    deleted = False
     doc_files = []
 
     def __init__(self, ui):
@@ -260,7 +259,9 @@ class UIFunctions(EditWindow):
         ui.close()
 
     class EditFrame(QWidget):
-        def __init__(self, *args, **kwargs):
+        deleted = False
+
+        def __init__(self, ui, *args, **kwargs):
             super().__init__(*args, **kwargs)
             uic.loadUi(EDIT_FRAME_PATH, self)
             self.test_file_btn.clicked.connect(
@@ -269,6 +270,7 @@ class UIFunctions(EditWindow):
             self.info_file_btn.clicked.connect(
                 lambda: self.get_file(self.info_file_entry, "*.txt")
             )
+            self.close_btn.clicked.connect(lambda: self.closeFrame(ui))
 
         def get_file(self, entry, filter):
             HOME_PATH = os.path.join(os.path.join(
@@ -278,6 +280,25 @@ class UIFunctions(EditWindow):
 
             if file_name[0]:
                 entry.setText(file_name[0])
+
+        def closeFrame(self, ui):
+            self.warn_close_frame(ui)
+            if self.deleted:
+                self.setParent(None)
+                ui.scrollArea.verticalScrollBar().setValue(1)
+                self.deleted = False
+
+        def warn_close_frame(self, ui):
+            msg = QMessageBox(ui)
+            msg.setWindowTitle("Xóa bài tập")
+            msg.setText(f"'{self.title_entry.text()}' sẽ được xóa")
+            msg.setIcon(QMessageBox.Information)
+            msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+            msg.buttonClicked.connect(self.popup_button)
+            msg.exec_()
+
+        def popup_button(self, i):
+            self.deleted = True if i.text().lower() == "ok" else False
 
     @staticmethod
     def change_lesson_title(ui, title):
@@ -308,31 +329,8 @@ class UIFunctions(EditWindow):
 
     def add_frame(self, ui, num):
         for _ in range(num):
-            ui.frame = self.EditFrame()
-            ui.frame.close_btn.clicked.connect(
-                lambda: self.close_frame(ui, ui.frame))
+            ui.frame = self.EditFrame(ui)
             ui.content_widget.layout().addWidget(ui.frame)
-
-    @classmethod
-    def close_frame(self, ui, frame):
-        self.warn_close_frame(ui, frame)
-        if self.deleted:
-            frame.setParent(None)
-            ui.scrollArea.verticalScrollBar().setValue(1)
-            self.deleted = False
-    @classmethod
-    def warn_close_frame(self, ui, frame):
-        msg = QMessageBox(ui)
-        msg.setWindowTitle("Xóa bài tập")
-        msg.setText(f"'{frame.title_entry.text()}' sẽ được xóa")
-        msg.setIcon(QMessageBox.Information)
-        msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-        msg.buttonClicked.connect(self.popup_button)
-        msg.exec_()
-
-    @classmethod
-    def popup_button(self, i):
-        self.deleted = True if i.text().lower() == "ok" else False
 
     @staticmethod
     def load_io(test_file):

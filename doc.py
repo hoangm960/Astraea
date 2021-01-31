@@ -29,7 +29,7 @@ class DocWindow(QMainWindow):
 
 class UIFunctions(DocWindow):
     OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
-    docs = {}
+    docs = []
 
     def __init__(self, ui):
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
@@ -77,16 +77,20 @@ class UIFunctions(DocWindow):
         selected_items = ui.titles.selectedItems()
         if selected_items:
             item = selected_items[0]
-            if item.text() in self.docs:
-                del self.docs[item.text()]
+            lesson_id = open(UIFunctions.OPENED_LESSON_PATH).readlines()[1]
+            cursor = ui.connection.cursor()
+            for doc in self.docs:
+                if item.text() in doc:
+                    id = doc[0]
+                    cursor.execute("DELETE FROM doc WHERE DocId = %s AND LessonId = %s", (id, lesson_id))
+                    ui.connection.commit()
+                    del doc
+                    break
+
             ui.titles.takeItem(ui.titles.row(item))
             ui.text_entry.clear()
             ui.deleteBox_frame.hide()
 
-            lesson_id = open(UIFunctions.OPENED_LESSON_PATH).readlines()[1]
-            cursor = ui.connection.cursor()
-            cursor.execute("DELETE FROM doc WHERE DocName = %s AND LessonId = %s", (item.text(), lesson_id))
-            ui.connection.commit()
 
     def Change(self, ui, text):
         selected_items = ui.titles.selectedItems()
@@ -95,34 +99,30 @@ class UIFunctions(DocWindow):
 
             lesson_id = open(UIFunctions.OPENED_LESSON_PATH).readlines()[1]
             cursor = ui.connection.cursor()
-            cursor.execute("UPDATE doc SET DocName = %s WHERE DocName = %s AND LessonId = %s", (text, item.text(), lesson_id))
-            ui.connection.commit()
+            for doc in self.docs:
+                if item.text() in doc:
+                    id = doc[0]
+                    cursor.execute("UPDATE doc SET DocName = %s WHERE DocId = %s AND LessonId = %s", (text, id, lesson_id))
+                    ui.connection.commit()
 
-            temp = self.docs[item.text()]
-            self.docs.pop(item.text())
-            item.setText(text)
-            self.docs[item.text()] = temp
-            ui.Name_edit.clear()
+                    doc[1] = text
+                    ui.Name_edit.clear()
 
     def get_doc(self, ui):
         self.docs.clear()
         lesson_path, lesson_id = open(self.OPENED_LESSON_PATH).readlines()
-        # try:
         if lesson_id:
             cursor = ui.connection.cursor()
-            cursor.execute("SELECT DocName, DocContent FROM doc WHERE LessonId = %s", (lesson_id, ))
+            cursor.execute("SELECT DocId, DocName, DocContent FROM doc WHERE LessonId = %s", (lesson_id, ))
             docs = [row for row in cursor]
             for doc in docs:
-                title, content = doc
-                self.docs[title] = content.replace("''", "'")
+                doc[2] = doc[2].replace("''", "'")
             
             filename = f'{os.path.dirname(lesson_path).rstrip()}/doc.sd'
             open(filename, 'w').close()
             with open(filename, "wb") as f:
                 pickle.dump(self.docs, f, -1)
             open(OPENED_DOC, 'w').write(filename)
-        # except:
-        #     pass
 
     def check_opened_doc(self, ui):
         doc_path = open(OPENED_DOC).read()
@@ -132,8 +132,8 @@ class UIFunctions(DocWindow):
                     unpickler = pickle.Unpickler(f)
                     self.docs = unpickler.load()
                     ui.titles.clear()
-                    for key in self.docs.keys():
-                        ui.titles.addItem(key)
+                    for doc in self.docs:
+                        ui.titles.addItem(doc[1])
 
     class TeacherUiFunctions:
         def __init__(self, ui):
@@ -143,13 +143,20 @@ class UIFunctions(DocWindow):
             if not ui.titles.currentItem().text():
                 file_path = self.get_file_dialog(ui, "*.docx")
                 if file_path:
-                    ui.titles.currentItem().setText(
-                        os.path.splitext(os.path.basename(file_path))[0])
-                    self.load_doc(ui, file_path)
-                    self.delete_html_file(file_path)
-            else:
-                self.load_doc(ui)
+                    name = os.path.splitext(os.path.basename(file_path))[0]
+                    ui.titles.currentItem().setText(name)
+                    html_data = self.get_html(file_path)
+                    ui.text_entry.setText(html_data)
 
+                    lesson_id = open(UIFunctions.OPENED_LESSON_PATH).readlines()[1]
+                    cursor = ui.connection.cursor()
+                    cursor.execute("INSERT INTO doc(LessonId, DocName, DocContent) VALUES(%s, %s, %s)", (lesson_id, name, html_data))
+                    ui.connection.commit()
+
+
+                    self.delete_html_file(file_path)
+
+            self.load_doc(ui)
 
         @staticmethod
         def get_file_dialog(ui, filter):
@@ -184,14 +191,11 @@ class UIFunctions(DocWindow):
             with open(self.convert_doc_to_html(filename), 'r') as f:
                 return f.read()
 
-        def load_doc(self, ui, filename=''):
-            if filename:
-                html_data = self.get_html(filename)
-                UIFunctions.docs[ui.titles.currentItem().text()] = html_data
-                ui.text_entry.setText(html_data)
-            else:
-                ui.text_entry.setText(
-                    UIFunctions.docs[ui.titles.currentItem().text()])
+        def load_doc(self, ui):
+            name = ui.titles.currentItem().text()
+            for doc in UIFunctions.docs:
+                if name in doc:
+                    ui.text_entry.setText(doc[2])
 
         @staticmethod
         def delete_html_file(filename):
@@ -205,25 +209,9 @@ class UIFunctions(DocWindow):
             ui.titles.addItem(title_item)
             ui.titles.setItemWidget(title_item, title)
 
-        @staticmethod
-        def saveDocx(ui):
-            cursor = ui.connection.cursor()
-            lesson_id = open(UIFunctions.OPENED_LESSON_PATH).readlines()[1]
-            cursor.execute("SELECT DocName FROM doc WHERE LessonId = %s", (lesson_id, ))
-            doc_names = [row[0] for row in cursor]
-            for key in UIFunctions.docs:
-                content = UIFunctions.docs[key].replace("'", "''")
-                if key in doc_names:
-                    cursor.execute("UPDATE doc SET DocContent = %s WHERE DocName = %s", (content, key))
-                else:
-                    cursor.execute("INSERT INTO doc(LessonId, DocName, DocContent) VALUES(%s, %s, %s)", (lesson_id, key, content))
-                ui.connection.commit()
-
         def connect_btn(self, ui):
             ui.add_btn.clicked.connect(lambda: self.add_titles(ui))
             ui.titles.itemClicked.connect(lambda: self.open_doc(ui))
-            ui.SaveDocx.clicked.connect(
-                lambda: self.saveDocx(ui))
 
     class StudentUiFunctions:
         def __init__(self, ui):

@@ -22,8 +22,8 @@
   <widget class="QWidget" name="centralwidget">
    <property name="minimumSize">
     <size>
-     <width>736</width>
-     <height>418</height>
+     <width>1099</width>
+     <height>643</height>
     </size>
    </property>
    <property name="styleSheet">
@@ -132,6 +132,9 @@ color: rgb(255, 255, 255);</string>
             <layout class="QVBoxLayout" name="verticalLayout_3">
              <property name="leftMargin">
               <number>30</number>
+             </property>
+             <property name="bottomMargin">
+              <number>9</number>
              </property>
              <item>
               <widget class="QLabel" name="title_label">
@@ -278,6 +281,24 @@ QPushButton:hover {
        </item>
        <item>
         <widget class="QFrame" name="content_frame">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>580</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>iCiel Effra</family>
@@ -312,6 +333,12 @@ QPushButton:hover {
           </property>
           <item>
            <widget class="QFrame" name="stacked_frame">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>580</height>
+             </size>
+            </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
@@ -341,7 +368,7 @@ QPushButton:hover {
 background-color: transparent;</string>
                </property>
                <property name="currentIndex">
-                <number>0</number>
+                <number>1</number>
                </property>
                <widget class="QWidget" name="result_frame">
                 <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -365,13 +392,13 @@ background-color: transparent;</string>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
-                     <height>40</height>
+                     <height>35</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>40</height>
+                     <height>35</height>
                     </size>
                    </property>
                    <property name="frameShape">
@@ -401,13 +428,13 @@ background-color: transparent;</string>
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
-                        <height>40</height>
+                        <height>35</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
                         <width>16777215</width>
-                        <height>40</height>
+                        <height>35</height>
                        </size>
                       </property>
                       <property name="font">
@@ -451,7 +478,7 @@ background-color: transparent;</string>
                      <number>0</number>
                     </property>
                     <property name="topMargin">
-                     <number>6</number>
+                     <number>0</number>
                     </property>
                     <property name="rightMargin">
                      <number>0</number>
@@ -522,7 +549,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                          <x>0</x>
                          <y>0</y>
                          <width>1099</width>
-                         <height>198</height>
+                         <height>210</height>
                         </rect>
                        </property>
                       </widget>
@@ -590,7 +617,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                         <number>0</number>
                        </property>
                        <property name="topMargin">
-                        <number>6</number>
+                        <number>0</number>
                        </property>
                        <property name="rightMargin">
                         <number>0</number>
@@ -733,11 +760,11 @@ padding: 10px;</string>
                       </property>
                       <property name="font">
                        <font>
-                        <family>Segoe UI Black</family>
+                        <family>Montserrat Semi Bold</family>
                         <pointsize>15</pointsize>
-                        <weight>75</weight>
+                        <weight>50</weight>
                         <italic>true</italic>
-                        <bold>true</bold>
+                        <bold>false</bold>
                        </font>
                       </property>
                       <property name="styleSheet">
@@ -845,9 +872,9 @@ QProgressBar::chunk {
                          <property name="font">
                           <font>
                            <family>iCiel Effra Regular</family>
-                           <pointsize>12</pointsize>
-                           <weight>75</weight>
-                           <bold>true</bold>
+                           <pointsize>20</pointsize>
+                           <weight>50</weight>
+                           <bold>false</bold>
                           </font>
                          </property>
                          <property name="styleSheet">
@@ -938,9 +965,9 @@ QProgressBar::chunk {
                          <property name="font">
                           <font>
                            <family>iCiel Effra Regular</family>
-                           <pointsize>15</pointsize>
-                           <weight>75</weight>
-                           <bold>true</bold>
+                           <pointsize>20</pointsize>
+                           <weight>50</weight>
+                           <bold>false</bold>
                           </font>
                          </property>
                          <property name="styleSheet">
@@ -1009,13 +1036,13 @@ QPushButton:pressed {
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
-                     <height>30</height>
+                     <height>40</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>30</height>
+                     <height>40</height>
                     </size>
                    </property>
                    <property name="styleSheet">
@@ -1032,7 +1059,7 @@ QPushButton:pressed {
                      <number>0</number>
                     </property>
                     <property name="topMargin">
-                     <number>0</number>
+                     <number>10</number>
                     </property>
                     <property name="rightMargin">
                      <number>0</number>
@@ -1128,7 +1155,13 @@ QPushButton:pressed {
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
-                     <height>20</height>
+                     <height>35</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>35</height>
                     </size>
                    </property>
                    <property name="frameShape">
@@ -1138,12 +1171,39 @@ QPushButton:pressed {
                     <enum>QFrame::Raised</enum>
                    </property>
                    <layout class="QHBoxLayout" name="horizontalLayout_3">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
                     <item>
                      <widget class="QLabel" name="label">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>35</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>35</height>
+                       </size>
+                      </property>
                       <property name="font">
                        <font>
                         <family>Montserrat</family>
-                        <pointsize>16</pointsize>
+                        <pointsize>20</pointsize>
                         <weight>75</weight>
                         <bold>true</bold>
                        </font>
@@ -1178,6 +1238,21 @@ background: transparent;</string>
                     <enum>QFrame::Raised</enum>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_7">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
                     <item>
                      <widget class="QScrollArea" name="ScrollAreaT">
                       <property name="minimumSize">
@@ -1231,8 +1306,8 @@ QScrollBar::add-page, QScrollBar::sub-page {
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>1081</width>
-                         <height>253</height>
+                         <width>1099</width>
+                         <height>292</height>
                         </rect>
                        </property>
                        <widget class="QLabel" name="inform">
@@ -1534,7 +1609,7 @@ color: rgb(0, 0, 0);</string>
                      <number>0</number>
                     </property>
                     <property name="topMargin">
-                     <number>0</number>
+                     <number>15</number>
                     </property>
                     <property name="rightMargin">
                      <number>0</number>
@@ -1643,12 +1718,12 @@ QPushButton:pressed {
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>339</x>
-     <y>199</y>
+     <x>396</x>
+     <y>529</y>
     </hint>
     <hint type="destinationlabel">
-     <x>399</x>
-     <y>229</y>
+     <x>408</x>
+     <y>568</y>
     </hint>
    </hints>
   </connection>
@@ -1659,12 +1734,12 @@ QPushButton:pressed {
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>339</x>
-     <y>199</y>
+     <x>841</x>
+     <y>529</y>
     </hint>
     <hint type="destinationlabel">
-     <x>399</x>
-     <y>229</y>
+     <x>408</x>
+     <y>568</y>
     </hint>
    </hints>
   </connection>
@@ -1675,12 +1750,12 @@ QPushButton:pressed {
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>99</x>
-     <y>79</y>
+     <x>504</x>
+     <y>612</y>
     </hint>
     <hint type="destinationlabel">
-     <x>399</x>
-     <y>229</y>
+     <x>901</x>
+     <y>559</y>
     </hint>
    </hints>
   </connection>
@@ -1691,12 +1766,12 @@ QPushButton:pressed {
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>99</x>
-     <y>79</y>
+     <x>504</x>
+     <y>612</y>
     </hint>
     <hint type="destinationlabel">
-     <x>266</x>
-     <y>229</y>
+     <x>323</x>
+     <y>559</y>
     </hint>
    </hints>
   </connection>
@@ -1707,12 +1782,12 @@ QPushButton:pressed {
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>99</x>
-     <y>79</y>
+     <x>504</x>
+     <y>612</y>
     </hint>
     <hint type="destinationlabel">
-     <x>399</x>
-     <y>229</y>
+     <x>408</x>
+     <y>568</y>
     </hint>
    </hints>
   </connection>
@@ -1723,12 +1798,12 @@ QPushButton:pressed {
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>99</x>
-     <y>79</y>
+     <x>504</x>
+     <y>612</y>
     </hint>
     <hint type="destinationlabel">
-     <x>99</x>
-     <y>79</y>
+     <x>108</x>
+     <y>191</y>
     </hint>
    </hints>
   </connection>
@@ -1739,12 +1814,12 @@ QPushButton:pressed {
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>339</x>
-     <y>199</y>
+     <x>841</x>
+     <y>529</y>
     </hint>
     <hint type="destinationlabel">
-     <x>99</x>
-     <y>79</y>
+     <x>108</x>
+     <y>191</y>
     </hint>
    </hints>
   </connection>
@@ -1755,12 +1830,12 @@ QPushButton:pressed {
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>339</x>
-     <y>199</y>
+     <x>396</x>
+     <y>529</y>
     </hint>
     <hint type="destinationlabel">
-     <x>99</x>
-     <y>79</y>
+     <x>108</x>
+     <y>191</y>
     </hint>
    </hints>
   </connection>
@@ -1771,12 +1846,12 @@ QPushButton:pressed {
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>99</x>
-     <y>79</y>
+     <x>504</x>
+     <y>612</y>
     </hint>
     <hint type="destinationlabel">
-     <x>99</x>
-     <y>79</y>
+     <x>504</x>
+     <y>612</y>
     </hint>
    </hints>
   </connection>
@@ -1787,12 +1862,12 @@ QPushButton:pressed {
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>339</x>
-     <y>199</y>
+     <x>396</x>
+     <y>529</y>
     </hint>
     <hint type="destinationlabel">
-     <x>99</x>
-     <y>79</y>
+     <x>504</x>
+     <y>612</y>
     </hint>
    </hints>
   </connection>
@@ -1803,12 +1878,12 @@ QPushButton:pressed {
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>339</x>
-     <y>199</y>
+     <x>841</x>
+     <y>529</y>
     </hint>
     <hint type="destinationlabel">
-     <x>99</x>
-     <y>79</y>
+     <x>504</x>
+     <y>612</y>
     </hint>
    </hints>
   </connection>
@@ -1919,8 +1994,8 @@ QPushButton:pressed {
      <y>29</y>
     </hint>
     <hint type="destinationlabel">
-     <x>99</x>
-     <y>79</y>
+     <x>504</x>
+     <y>612</y>
     </hint>
    </hints>
   </connection>
@@ -1935,8 +2010,8 @@ QPushButton:pressed {
      <y>27</y>
     </hint>
     <hint type="destinationlabel">
-     <x>399</x>
-     <y>229</y>
+     <x>456</x>
+     <y>559</y>
     </hint>
    </hints>
   </connection>
@@ -1951,8 +2026,8 @@ QPushButton:pressed {
      <y>21</y>
     </hint>
     <hint type="destinationlabel">
-     <x>99</x>
-     <y>79</y>
+     <x>108</x>
+     <y>191</y>
     </hint>
    </hints>
   </connection>
@@ -1967,8 +2042,24 @@ QPushButton:pressed {
      <y>34</y>
     </hint>
     <hint type="destinationlabel">
-     <x>399</x>
-     <y>229</y>
+     <x>408</x>
+     <y>568</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_quit</sender>
+   <signal>clicked()</signal>
+   <receiver>OkCancelFrameQuit</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1079</x>
+     <y>23</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>752</x>
+     <y>413</y>
     </hint>
    </hints>
   </connection>

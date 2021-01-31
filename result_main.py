@@ -110,7 +110,6 @@ class UIFunctions(ResultWindow):
             ui.showMaximized()
 
             self.GLOBAL_STATE = True
-            ui.bg_layout.setContentsMargins(0, 0, 0, 0)
             ui.bg_frame.setStyleSheet(
                 """
                 background-color: rgb(30, 30, 30);\n border-radius: 0px;"""
@@ -124,7 +123,6 @@ class UIFunctions(ResultWindow):
             self.GLOBAL_STATE = False
             ui.showNormal()
             ui.resize(ui.width() + 1, ui.height() + 1)
-            ui.bg_layout.setContentsMargins(0, 0, 0, 0)
             ui.bg_frame.setStyleSheet(
                 """background-color: rgb(30, 30, 30); \nborder-radius: 10px;"""
             )
@@ -233,6 +231,7 @@ class UIFunctions(ResultWindow):
             return 0, [], []
 
     def check_true(self, ui):
+        ui.btn_quit.close()
         children = ui.content_widgetT.children()
         del children[0:2]
         self.format_file_error()

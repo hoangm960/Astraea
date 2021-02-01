@@ -8,15 +8,18 @@ import sys
 import main_ui
 
 PAD_UI = './UI_Files/Pad.ui'
+OPENED_DOC = "./data/Users/opened_doc.od"
 OPENED_DOC_CONTENT = "./data/Users/opened_doc_content.html"
 
 HTML_EXTENSIONS = ['.htm', '.html']
 
 class MainPad(QMainWindow):
-    def __init__(self, doc):
+    def __init__(self, pg, connection):
         super(QMainWindow, self).__init__()
         uic.loadUi(PAD_UI, self)    
-        self.doc = doc
+        self.pg = pg
+        self.connection = connection
+
         def moveWindow(event):
             if UIFunction.GLOBAL_STATE == True:
                 UIFunction.maximize_restore(self)
@@ -32,9 +35,11 @@ class MainPad(QMainWindow):
         self.dragPos = event.globalPos()
     
 class UIFunction(MainPad):
+    OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
     GLOBAL_STATE = False
     path = None
     Format = [False, False, False]
+
     def __init__(self, ui):
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
@@ -60,26 +65,29 @@ class UIFunction(MainPad):
         ui.Italic.clicked.connect(lambda: self.setItalic(ui))
         ui.Underline.clicked.connect(lambda: self.setUnderline(ui))
 
-        ui.Save_As.clicked.connect(lambda: self.Function_Save_As(ui))
-        ui.Save.clicked.connect(lambda: self.Function_Save(ui))
+        ui.Save.clicked.connect(lambda: self.Save(ui))
         ui.Open.clicked.connect(lambda: self.Function_Open(ui))
-        ui.New.clicked.connect(lambda: self.Function_New(ui))
         ui.editor.setCurrentFont(ui.Font.currentFont())
 
     @staticmethod
     def check_empty(ui):
-        content = open(OPENED_DOC_CONTENT).read().rstrip()
+        content = open(OPENED_DOC_CONTENT).read()
         if content:
             ui.editor.setText(content)
 
+    def Save(self, ui):
+        content = ui.editor.toHtml()
+        open(OPENED_DOC_CONTENT, 'w').write(content)
+        lesson_id = open(self.OPENED_LESSON_PATH).readlines()[1]
+        id = open(OPENED_DOC).readlines()[1]
+        cursor = ui.connection.cursor()
+        cursor.execute("UPDATE doc SET DocContent = %s WHERE DocId = %s AND LessonId = %s", (content, id, lesson_id))
+        ui.connection.commit()
+
     def Quit(self, ui):
-        text = ''
-        try:
-            with open(self.path,'r', encoding = 'utf8') as f:
-                text = f.read() 
-        except:
-            pass
-        if not self.path or text != ui.editor.toHtml():
+        with open(OPENED_DOC_CONTENT) as f:
+            text = f.read() 
+        if text != ui.editor.toHtml():
             msg = QMessageBox(ui)
             msg.setWindowTitle('Chú ý')
             msg.setText("Chưa lưu file. Đồng ý lưu file?")
@@ -87,16 +95,25 @@ class UIFunction(MainPad):
             msg.setStandardButtons(QMessageBox.Save | QMessageBox.No | QMessageBox.Cancel)
             clicked = msg.exec_()
             if clicked == QMessageBox.Save:
+                self.Save(ui)
                 msg.close()
-                self.Function_Save(ui)
+                ui.close()
+                self.reopen_doc(ui)
             elif clicked == QMessageBox.No:
                 ui.close()
                 msg.close()
+                self.reopen_doc(ui)
             else:
                 msg.close()
         else:
             ui.close()
-                
+            self.reopen_doc(ui)
+
+    @staticmethod
+    def reopen_doc(ui):
+        import doc
+        window = doc.DocWindow(1, ui.pg, ui.connection)
+        window.show()   
             
     def maximize_restore(self, ui):
         status = self.GLOBAL_STATE
@@ -174,28 +191,6 @@ class UIFunction(MainPad):
                                     background: rgb(193,193,193);
                                     image: url(:/images/icons/edit-underline.png);
                                     }""")
-
-    def Function_Save_As(self, ui):
-        path = QFileDialog.getSaveFileName(ui, "Lưu file", "", "HTML documents (*.html);;Text documents (*.txt);;All files (*.*)")
-        if not path:
-            return  
-        try:
-            path = str(path[0])
-            if path:
-                ui.Title.setText("%s - ASTRAEA Document" % (os.path.basename(path)))
-                with open(path, 'w', encoding = 'utf8') as f:
-                    f.write(ui.editor.toHtml())
-                    self.path = path
-        except:
-            pass
-
-    def Function_Save(self, ui):
-        if not self.path:
-            self.Function_Save_As(ui)  
-        else:
-            ui.Title.setText("%s - ASTRAEA Document" % (os.path.basename(self.path) if self.path else "Untitled"))
-            with open(self.path, 'w', encoding = 'utf8') as f:
-                f.write(ui.editor.toHtml())
     
     def Function_Open(self, ui):
         path = QFileDialog.getOpenFileName(ui, "Mở file", "", "HTML documents (*.html);;Text documents (*.txt);;All files (*.*)")
@@ -207,15 +202,16 @@ class UIFunction(MainPad):
             ui.editor.setText(text)
         except:
             pass
-        
-    def Function_New(self, ui):
-        self.path = None
-        ui.editor.clear()
-        ui.Title.setText('Untitled - ASTRAEA Document')
 
 if __name__ == '__main__':
+    import mysql.connector
+    connection = mysql.connector.connect(
+        host="remotemysql.com",
+        user="K63yMSwITl",
+        password="zRtA9VtyHq",
+        database="K63yMSwITl"
+    )
     app = QApplication(sys.argv)
-    window = MainPad(None)
+    window = MainPad(None, connection)
     window.show()
-    print('')
     sys.exit(app.exec_())

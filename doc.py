@@ -114,9 +114,7 @@ class UIFunctions(DocWindow):
         if lesson_id:
             cursor = ui.connection.cursor()
             cursor.execute("SELECT DocId, DocName, DocContent FROM doc WHERE LessonId = %s", (lesson_id, ))
-            docs = [row for row in cursor]
-            for doc in docs:
-                doc[2] = doc[2].replace("''", "'")
+            self.docs = [row for row in cursor]
             
             filename = f'{os.path.dirname(lesson_path).rstrip()}/doc.sd'
             open(filename, 'w').close()

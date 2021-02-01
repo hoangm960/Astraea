@@ -7,6 +7,7 @@ from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow, QMessageBox
 from win32api import GetMonitorInfo, MonitorFromPoint
 import pygetwindow
+from UI_Files import Resources
 
 
 UI_MAIN_PATH = "./UI_Files/ui_main.ui"

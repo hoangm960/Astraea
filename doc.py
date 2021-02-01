@@ -134,7 +134,8 @@ class UIFunctions(DocWindow):
                         ui.titles.addItem(doc[1])
 
     class TeacherUiFunctions:
-        def __init__(self, ui):
+        def __init__(self, ui, docs):
+            self.docs = docs
             self.connect_btn(ui)
 
         def open_doc(self, ui):
@@ -191,7 +192,7 @@ class UIFunctions(DocWindow):
 
         def load_doc(self, ui):
             name = ui.titles.currentItem().text()
-            for doc in UIFunctions.docs:
+            for doc in self.docs:
                 if name in doc:
                     ui.text_entry.setText(doc[2])
 
@@ -219,7 +220,7 @@ class UIFunctions(DocWindow):
 
     def define_role(self, ui):
         if ui.role == 1:
-            self.TeacherUiFunctions(ui)
+            self.TeacherUiFunctions(ui, self.docs)
         if ui.role == 0:
             self.StudentUiFunctions(ui)
 

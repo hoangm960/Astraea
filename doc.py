@@ -13,7 +13,7 @@ import main_ui
 
 DOC_UI = "./UI_Files/Doc.ui"
 OPENED_DOC = "./data/Users/opened_doc.od"
-
+OPENED_DOC_CONTENT = "./data/Users/opened_doc_content.html"
 
 
 class DocWindow(QMainWindow):
@@ -29,6 +29,7 @@ class DocWindow(QMainWindow):
 
 class UIFunctions(DocWindow):
     OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
+
     docs = []
 
     def __init__(self, ui):
@@ -82,7 +83,8 @@ class UIFunctions(DocWindow):
             for doc in self.docs:
                 if item.text() in doc:
                     id = doc[0]
-                    cursor.execute("DELETE FROM doc WHERE DocId = %s AND LessonId = %s", (id, lesson_id))
+                    cursor.execute(
+                        "DELETE FROM doc WHERE DocId = %s AND LessonId = %s", (id, lesson_id))
                     ui.connection.commit()
                     del doc
                     break
@@ -90,7 +92,6 @@ class UIFunctions(DocWindow):
             ui.titles.takeItem(ui.titles.row(item))
             ui.text_entry.clear()
             ui.deleteBox_frame.hide()
-
 
     def Change(self, ui, text):
         selected_items = ui.titles.selectedItems()
@@ -102,7 +103,8 @@ class UIFunctions(DocWindow):
             for doc in self.docs:
                 if item.text() in doc:
                     id = doc[0]
-                    cursor.execute("UPDATE doc SET DocName = %s WHERE DocId = %s AND LessonId = %s", (text, id, lesson_id))
+                    cursor.execute(
+                        "UPDATE doc SET DocName = %s WHERE DocId = %s AND LessonId = %s", (text, id, lesson_id))
                     ui.connection.commit()
 
                     doc[1] = text
@@ -113,9 +115,10 @@ class UIFunctions(DocWindow):
         lesson_path, lesson_id = open(self.OPENED_LESSON_PATH).readlines()
         if lesson_id:
             cursor = ui.connection.cursor()
-            cursor.execute("SELECT DocId, DocName, DocContent FROM doc WHERE LessonId = %s", (lesson_id, ))
+            cursor.execute(
+                "SELECT DocId, DocName, DocContent FROM doc WHERE LessonId = %s", (lesson_id, ))
             self.docs = [row for row in cursor]
-            
+
             filename = f'{os.path.dirname(lesson_path).rstrip()}/doc.sd'
             open(filename, 'w').close()
             with open(filename, "wb") as f:
@@ -138,6 +141,17 @@ class UIFunctions(DocWindow):
             self.docs = docs
             self.connect_btn(ui)
 
+        def connect_btn(self, ui):
+            ui.add_btn.clicked.connect(lambda: self.add_titles(ui))
+            ui.titles.itemClicked.connect(lambda: self.open_doc(ui))
+            ui.textpad.clicked.connect(lambda: self.open_textpad(ui))
+
+        @staticmethod
+        def open_textpad(ui):
+            import Pad
+            window = Pad.MainPad(ui.pg)
+            window.show()
+
         def open_doc(self, ui):
             if not ui.titles.currentItem().text():
                 file_path = self.get_file_dialog(ui, "*.docx")
@@ -147,11 +161,12 @@ class UIFunctions(DocWindow):
                     html_data = self.get_html(file_path)
                     ui.text_entry.setText(html_data)
 
-                    lesson_id = open(UIFunctions.OPENED_LESSON_PATH).readlines()[1]
+                    lesson_id = open(
+                        UIFunctions.OPENED_LESSON_PATH).readlines()[1]
                     cursor = ui.connection.cursor()
-                    cursor.execute("INSERT INTO doc(LessonId, DocName, DocContent) VALUES(%s, %s, %s)", (lesson_id, name, html_data))
+                    cursor.execute(
+                        "INSERT INTO doc(LessonId, DocName, DocContent) VALUES(%s, %s, %s)", (lesson_id, name, html_data))
                     ui.connection.commit()
-
 
                     self.delete_html_file(file_path)
 
@@ -194,7 +209,9 @@ class UIFunctions(DocWindow):
             name = ui.titles.currentItem().text()
             for doc in self.docs:
                 if name in doc:
-                    ui.text_entry.setText(doc[2])
+                    content = doc[2]
+                    ui.text_entry.setText(content)
+                    open(OPENED_DOC_CONTENT, 'w').write(content)
 
         @staticmethod
         def delete_html_file(filename):
@@ -207,10 +224,6 @@ class UIFunctions(DocWindow):
             title_item = QListWidgetItem()
             ui.titles.addItem(title_item)
             ui.titles.setItemWidget(title_item, title)
-
-        def connect_btn(self, ui):
-            ui.add_btn.clicked.connect(lambda: self.add_titles(ui))
-            ui.titles.itemClicked.connect(lambda: self.open_doc(ui))
 
     class StudentUiFunctions:
         def __init__(self, ui):

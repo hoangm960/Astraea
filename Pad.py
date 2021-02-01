@@ -5,8 +5,10 @@ from PyQt5.QtGui import QTextCursor
 from PyQt5.QtWidgets import QFileDialog, QMainWindow, QApplication, QColorDialog, QMessageBox
 from PyQt5.QtCore import Qt
 import sys 
+import main_ui
 
 PAD_UI = './UI_Files/Pad.ui'
+OPENED_DOC_CONTENT = "./data/Users/opened_doc_content.html"
 
 HTML_EXTENSIONS = ['.htm', '.html']
 
@@ -37,6 +39,7 @@ class UIFunction(MainPad):
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.connect(ui)
+        self.check_empty(ui)
         
         
     def connect(self, ui):
@@ -62,6 +65,12 @@ class UIFunction(MainPad):
         ui.Open.clicked.connect(lambda: self.Function_Open(ui))
         ui.New.clicked.connect(lambda: self.Function_New(ui))
         ui.editor.setCurrentFont(ui.Font.currentFont())
+
+    @staticmethod
+    def check_empty(ui):
+        content = open(OPENED_DOC_CONTENT).read().rstrip()
+        if content:
+            ui.editor.setText(content)
 
     def Quit(self, ui):
         text = ''

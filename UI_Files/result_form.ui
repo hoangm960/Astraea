@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1099</width>
-    <height>643</height>
+    <width>1046</width>
+    <height>650</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>960</width>
-    <height>643</height>
+    <width>1046</width>
+    <height>650</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -22,8 +22,8 @@
   <widget class="QWidget" name="centralwidget">
    <property name="minimumSize">
     <size>
-     <width>1099</width>
-     <height>643</height>
+     <width>1046</width>
+     <height>650</height>
     </size>
    </property>
    <property name="styleSheet">
@@ -290,7 +290,7 @@ QPushButton:hover {
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>580</height>
+           <height>0</height>
           </size>
          </property>
          <property name="maximumSize">
@@ -307,7 +307,7 @@ QPushButton:hover {
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: none</string>
+          <string notr="true">background: transparent;</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -336,7 +336,7 @@ QPushButton:hover {
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>580</height>
+              <height>0</height>
              </size>
             </property>
             <property name="frameShape">
@@ -368,12 +368,12 @@ QPushButton:hover {
 background-color: transparent;</string>
                </property>
                <property name="currentIndex">
-                <number>1</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="result_frame">
                 <layout class="QVBoxLayout" name="verticalLayout_5">
                  <property name="spacing">
-                  <number>5</number>
+                  <number>0</number>
                  </property>
                  <property name="leftMargin">
                   <number>0</number>
@@ -392,7 +392,7 @@ background-color: transparent;</string>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
-                     <height>35</height>
+                     <height>0</height>
                     </size>
                    </property>
                    <property name="maximumSize">
@@ -548,7 +548,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>1099</width>
+                         <width>1046</width>
                          <height>210</height>
                         </rect>
                        </property>
@@ -560,7 +560,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
-                        <height>200</height>
+                        <height>0</height>
                        </size>
                       </property>
                       <property name="styleSheet">
@@ -1036,13 +1036,13 @@ QPushButton:pressed {
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
-                     <height>40</height>
+                     <height>10</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>40</height>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="styleSheet">
@@ -1059,12 +1059,15 @@ QPushButton:pressed {
                      <number>0</number>
                     </property>
                     <property name="topMargin">
-                     <number>10</number>
+                     <number>5</number>
                     </property>
                     <property name="rightMargin">
                      <number>0</number>
                     </property>
                     <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="spacing">
                      <number>0</number>
                     </property>
                     <item row="0" column="0">
@@ -1306,8 +1309,8 @@ QScrollBar::add-page, QScrollBar::sub-page {
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>1099</width>
-                         <height>292</height>
+                         <width>1046</width>
+                         <height>282</height>
                         </rect>
                        </property>
                        <widget class="QLabel" name="inform">

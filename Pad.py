@@ -5,6 +5,7 @@ from PyQt5.QtGui import QTextCursor
 from PyQt5.QtWidgets import QFileDialog, QMainWindow, QApplication, QColorDialog, QMessageBox
 from PyQt5.QtCore import Qt
 import sys 
+import doc
 import main_ui
 
 PAD_UI = './UI_Files/Pad.ui'
@@ -13,10 +14,12 @@ OPENED_DOC_CONTENT = "./data/Users/opened_doc_content.html"
 HTML_EXTENSIONS = ['.htm', '.html']
 
 class MainPad(QMainWindow):
-    def __init__(self, doc):
+    def __init__(self, role, pg, connection):
         super(QMainWindow, self).__init__()
         uic.loadUi(PAD_UI, self)    
-        self.doc = doc
+        self.role = role
+        self.pg = pg
+        self.connection = connection
         def moveWindow(event):
             if UIFunction.GLOBAL_STATE == True:
                 UIFunction.maximize_restore(self)
@@ -91,13 +94,18 @@ class UIFunction(MainPad):
                 self.Function_Save(ui)
             elif clicked == QMessageBox.No:
                 ui.close()
+                import doc
+                window = doc.DocWindow(ui.role, ui.pg, ui.connection)
+                window.show()
                 msg.close()
             else:
                 msg.close()
         else:
             ui.close()
-                
-            
+            import doc
+            window = doc.DocWindow(ui.role, ui.pg, ui.connection)
+            window.show()
+
     def maximize_restore(self, ui):
         status = self.GLOBAL_STATE
         if status == False:
@@ -212,10 +220,3 @@ class UIFunction(MainPad):
         self.path = None
         ui.editor.clear()
         ui.Title.setText('Untitled - ASTRAEA Document')
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    window = MainPad(None)
-    window.show()
-    print('')
-    sys.exit(app.exec_())

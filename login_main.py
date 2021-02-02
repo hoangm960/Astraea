@@ -283,6 +283,9 @@ class UILoadingFunctions(Loading_Screen):
 
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        ui.frame.hide()
+        ui.Out.clicked.connect(lambda: ui.close())
+        ui.pushButton.clicked.connect(lambda: self.tryAgain(ui, version))
         ui.timer = QtCore.QTimer()
         ui.timer.timeout.connect(lambda: self.progress(ui))
         ui.timer.start(20)
@@ -295,6 +298,11 @@ class UILoadingFunctions(Loading_Screen):
     def delay(self, point, wait):
         if self.counter == point:
             time.sleep(wait)
+
+    def tryAgain(self, ui, version):
+        ui.close()
+        window = Loading_Screen(version)
+        window.show()
 
     def progress(self, ui):
         ui.progressBar.setValue(self.counter)
@@ -313,18 +321,18 @@ class UILoadingFunctions(Loading_Screen):
         if self.counter == 6:
             ui.timer.singleShot(
                 1500, lambda: ui.Loading_label.setText(
-                    "Kiểm tra cài đặt ...")
+                    "kiểm tra cài đặt ...")
             )  
             try:
                 import thonny
             except ImportError:
-                ui.timer.singleShot(500, lambda: ui.Loading_label.setText("Tải Thonny...")) 
+                ui.timer.singleShot(500, lambda: ui.Loading_label.setText("đang tải Thonny...")) 
                 subprocess.call('pip3 install thonny')
                 time.sleep(6)      
         if self.counter == 14:
             ui.timer.singleShot(
                 2905, lambda: ui.Loading_label.setText(
-                    "Khởi động ...")
+                    "khởi động ...")
             )
             import pygetwindow as gw        
             subprocess.Popen(['thonny'], shell=True)
@@ -339,26 +347,37 @@ class UILoadingFunctions(Loading_Screen):
             if gw.getWindowsWithTitle(ide_title):
                 self.PG = gw.getWindowsWithTitle(ide_title)[0]
                 self.PG.minimize()
+        if self.counter == 50:
+            ui.Loading_label.setText("đang kết nối...")
         if self.counter == 73:
-            ui.timer.singleShot(
-                1500, lambda: ui.Loading_label.setText(
-                    "Kết nối dữ liệu ...")
-            )
-            self.connection = mysql.connector.connect(
-                    host="remotemysql.com",
-                    user="K63yMSwITl",
-                    password="zRtA9VtyHq",
-                    database="K63yMSwITl"
-            )
-
+            time.sleep(3)
+            try:
+                    self.connection = mysql.connector.connect(
+                            host="remotemysql.com",
+                            user="K63yMSwITl",
+                            password="zRtA9VtyHq",
+                            database="K63yMSwITl"
+                    )
+            except:
+                ui.Loading_label.setText("kết nối thất bại. Đường truyền không ổn định.")
+                ui.frame.show()
+                ui.timer.stop()
+                ui.progressBar.hide()
+                self.PG.close()
         self.delay(randrange(5, 10), 0.1)
         self.delay(randrange(20, 30), 0.23)
         self.delay(randrange(40, 50), 0.43)
+        self.delay(randrange(60, 70), 0.93)
+        self.delay(randrange(60, 70), 0.93)
+        self.delay(randrange(60, 70), 0.93)
+        self.delay(randrange(60, 70), 0.93)
+        self.delay(randrange(60, 70), 0.93)
         self.delay(randrange(60, 70), 0.93)
         self.delay(randrange(80, 90), 0.17)
         self.delay(randrange(90, 99), 0.6)
         self.delay(99, 1)
         self.counter += 1
+        
 
 
 def main(version):

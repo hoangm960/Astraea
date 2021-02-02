@@ -149,7 +149,7 @@ class UIFunctions(DocWindow):
         @staticmethod
         def open_textpad(ui):
             import Pad
-            window = Pad.MainPad(ui.pg)
+            window = Pad.MainPad(ui.role, ui.pg, ui.connection)
             window.show()
 
         def open_doc(self, ui):

@@ -3,7 +3,6 @@ import pickle
 import shutil
 import sys
 
-import mysql.connector
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import (QApplication, QFileDialog, QLabel,
                              QListWidgetItem, QMainWindow)
@@ -119,6 +118,16 @@ class UIFunctions(DocWindow):
                 "SELECT DocId, DocName, DocContent FROM doc WHERE LessonId = %s", (lesson_id, ))
             self.docs = [row for row in cursor]
 
+            opened = ''
+            try:
+                opened = open(OPENED_DOC).readlines()[1]
+            except IndexError:
+                pass
+            if opened:
+                for doc in self.docs:
+                    if doc[0] == int(opened):
+                        self.docs[self.docs.index(doc)] = (doc[0], doc[1], open(OPENED_DOC_CONTENT).read())
+
             filename = f'{os.path.dirname(lesson_path).rstrip()}/doc.sd'
             open(filename, 'w').close()
             with open(filename, "wb") as f:
@@ -126,7 +135,7 @@ class UIFunctions(DocWindow):
             open(OPENED_DOC, 'w').write(filename)
 
     def check_opened_doc(self, ui):
-        doc_path = open(OPENED_DOC).read()
+        doc_path = open(OPENED_DOC).readline()
         if os.path.exists(doc_path):
             if os.path.getsize(doc_path) > 0:
                 with open(doc_path, "rb") as f:
@@ -146,10 +155,13 @@ class UIFunctions(DocWindow):
             ui.titles.itemClicked.connect(lambda: self.open_doc(ui))
             ui.textpad.clicked.connect(lambda: self.open_textpad(ui))
 
-        @staticmethod
-        def open_textpad(ui):
+        def open_textpad(self, ui):
+            for doc in self.docs:
+                if doc[1] == ui.titles.currentItem().text():
+                    id = doc[0]
+            open(OPENED_DOC, 'a').write('\n' + str(id))
             import Pad
-            window = Pad.MainPad(ui.role, ui.pg, ui.connection)
+            window = Pad.MainPad(ui.pg, ui.connection)
             window.show()
 
         def open_doc(self, ui):
@@ -239,6 +251,7 @@ class UIFunctions(DocWindow):
 
 
 if __name__ == "__main__":
+    import mysql.connector
     connection = mysql.connector.connect(
         host="remotemysql.com",
         user="K63yMSwITl",

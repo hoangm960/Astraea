@@ -427,41 +427,6 @@ background-color: rgb(255, 255, 255);</string>
                  <number>0</number>
                 </property>
                 <item>
-                 <widget class="QPushButton" name="New">
-                  <property name="minimumSize">
-                   <size>
-                    <width>30</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>30</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="toolTip">
-                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;File mới&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">QPushButton {
-	border-radius: 10px;
-	image: url(:/images/icons/ui-tab--plus.png);
-}
-
-QPushButton:hover {
-	background: rgb(193,193,193);
-}</string>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="shortcut">
-                   <string>Ctrl+N</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
                  <widget class="QPushButton" name="Open">
                   <property name="minimumSize">
                    <size>
@@ -528,41 +493,6 @@ QPushButton:hover {
                   </property>
                   <property name="shortcut">
                    <string>Ctrl+S</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="Save_As">
-                  <property name="minimumSize">
-                   <size>
-                    <width>30</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>30</width>
-                    <height>30</height>
-                   </size>
-                  </property>
-                  <property name="toolTip">
-                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lưu mới&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">QPushButton {
-	image: url(:/images/icons/disk--pencil.png);
-}
-
-
-QPushButton:hover {
-	background: rgb(193,193,193);
-}</string>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="shortcut">
-                   <string>Ctrl+Shift+S</string>
                   </property>
                  </widget>
                 </item>

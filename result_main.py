@@ -326,12 +326,14 @@ class UIFunctions(ResultWindow):
         encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
 
         current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        try:
-            cursor.execute("INSERT INTO submission(Username, LessonId, SubmissionDate, Mark, Comment) VALUES(%s, %s, %s, %s, %s)", (name_account, int(open(OPENED_LESSON_PATH).readlines()[1]), current_time, round(self.TotalScore, 2), open(self.FILE_COMMENT).read()))
-        except mysql.connector.errors.IntegrityError:
-            cursor.execute("UPDATE submission SET Username = %s, LessonId = %s, SubmissionDate = %s, Mark = %s, Comment = %s", (name_account, int(open(OPENED_LESSON_PATH).readlines()[1]), current_time, round(self.TotalScore, 2), open(self.FILE_COMMENT).read()))
+        lesson_id = int(open(OPENED_LESSON_PATH).readlines()[1])
+        if lesson_id:
+            try:
+                cursor.execute("INSERT INTO submission(Username, LessonId, SubmissionDate, Mark, Comment) VALUES(%s, %s, %s, %s, %s)", (name_account, lesson_id, current_time, round(self.TotalScore, 2), open(self.FILE_COMMENT).read()))
+            except mysql.connector.errors.IntegrityError:
+                cursor.execute("UPDATE submission SET Username = %s, LessonId = %s, SubmissionDate = %s, Mark = %s, Comment = %s", (name_account, lesson_id, current_time, round(self.TotalScore, 2), open(self.FILE_COMMENT).read()))
 
-        ui.connection.commit()
+            ui.connection.commit()
 
     @staticmethod
     def reopen_main(ui):

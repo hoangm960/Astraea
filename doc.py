@@ -156,6 +156,7 @@ class UIFunctions(DocWindow):
             ui.textpad.clicked.connect(lambda: self.open_textpad(ui))
 
         def open_textpad(self, ui):
+            id = 0
             for doc in self.docs:
                 if doc[1] == ui.titles.currentItem().text():
                     id = doc[0]

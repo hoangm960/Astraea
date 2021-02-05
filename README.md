@@ -58,3 +58,5 @@ Phần mềm hỗ trợ dạy và học lập trình
 + Dữ liệu bài học giáo viên được đăng trên cơ sở dữ liệu
 #### v2.6.4 (10/1):
 + Dữ liệu lý thuyết được đăng trên cơ sở dữ liệu
+#### v3.0 (5/2):
++ Thêm giao diện chỉnh sửa lý thuyết

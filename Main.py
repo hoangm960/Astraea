@@ -1,8 +1,9 @@
 import os
 from pathlib import Path
+
 from UI_Files import Resources
 
-VERSION = "2.6.4"
+VERSION = "3.0"
 
 
 def create_file():

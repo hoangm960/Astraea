@@ -65,7 +65,8 @@
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(209, 209, 209);</string>
+      <string notr="true">background-color: rgb(209, 209, 209);
+border-radius: 12px;</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -107,7 +108,8 @@ border-radius: 12px;</string>
    <item>
     <widget class="QFrame" name="ans_file_frame">
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(209, 209, 209);</string>
+      <string notr="true">background-color: rgb(209, 209, 209);
+border-radius: 12px;</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>

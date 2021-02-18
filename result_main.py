@@ -78,17 +78,10 @@ class UIFunctions(ResultWindow):
         ui.OkCancelFrame.move(280, 148)
         ui.btn_maximize.clicked.connect(lambda: self.maximize_restore(ui))
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
-
-        def quit():
-            ui.Accept1.clicked.connect(lambda: ui.close())
-            ui.Accept1.clicked.connect(
-                lambda: main_ui.main(0, ui.pg, ui.connection))
-            ui.Deny1.clicked.connect(lambda: ui.bg_frame.setStyleSheet(
-                """background-color: rgb(30, 30, 30); border-radius: 10px; color: rgb(255, 255, 255);"""))
-            ui.bg_frame.setStyleSheet(
-                """background-color: rgba(255, 255, 255, 200); border-radius: 10px; color: rgb(255, 255, 255);""")
-        ui.btn_quit.clicked.connect(lambda: quit())
-
+        ui.Accept1.clicked.connect(lambda: ui.close())
+        ui.Accept1.clicked.connect(
+            lambda: main_ui.main(0, ui.pg, ui.connection))
+        
         # Window size grip
         ui.sizegrip = QSizeGrip(ui.frame_grip)
         ui.sizegrip.setStyleSheet(
@@ -203,11 +196,6 @@ class UIFunctions(ResultWindow):
             infos=assignment.infos
         )
 
-    def format_file_error(self):
-        with open(self.FILE_COMMENT, 'w', encoding='utf-8', errors='ignore') as file_error:
-            file_error.write('\nPython {}'.format(
-                str(sys.version_info[0])+'.'+str(sys.version_info[1])))
-
     def get_results(self, ui, child, num):
         with open(self.FILE_COMMENT, 'a+', encoding='utf-8', errors='ignore') as file_error:
             file_error.write(f'\n{self.assignments[num].name}')
@@ -226,15 +214,14 @@ class UIFunctions(ResultWindow):
             with open(self.FILE_COMMENT, 'a+', encoding='utf-8', errors='ignore') as file_error:
                 file_error.write(
                     '\n>>> FileExistsERROR: Lỗi không tìm thấy file bài làm.')
-                ui.ResultFrame.detail_entry.setText("Không thể kiểm tra.")
         else:
             return 0, [], []
 
     def check_true(self, ui):
+        open(self.FILE_COMMENT,'w').close()
         ui.btn_quit.close()
         children = ui.content_widgetT.children()
         del children[0:2]
-        self.format_file_error()
 
         current_layout = ui.content_widget.layout()
         if not current_layout:
@@ -260,40 +247,29 @@ class UIFunctions(ResultWindow):
                             with open(self.FILE_COMMENT, 'a+', encoding='utf-8', errors='ignore') as f:
                                 f.write(
                                     '\n>>> TimeoutExpired: Thuật toán vượt quá thời gian yêu cầu.')
-                            ui.ResultFrame.detail_entry.setText(
-                                "Thuật toán vượt quá thời gian yêu cầu.")
                         elif not result[1]:
                             with open(self.FILE_COMMENT, 'a+', encoding='utf-8', errors='ignore') as f:
                                 f.write(
                                     '\n>>> WrongOutput: Bài làm sai kết quả.')
-                                ui.ResultFrame.detail_entry.setText(
-                                    "Bài làm sai kết quả.")
                     except ZeroDivisionError:
                         with open(self.FILE_COMMENT, 'a+', encoding='utf-8', errors='ignore') as f:
                             f.write(
                                 '\n>>> ZeroDivisionError: Tồn tại phép tính chia cho 0.')
-                        ui.ResultFrame.detail_entry.setText(
-                            "Tồn tại phép tính chia cho 0")
+                        
                 if errors:
                     for message in errors:
                         with open(self.FILE_COMMENT, 'a+', encoding='utf-8', errors='ignore') as f:
                             f.write(f'\n>>> {message}')
-                        ui.ResultFrame.detail_entry.setText(message)
 
             elif not ui.TestFrame.ans_file_entry.text():
-                ui.ResultFrame.detail_entry.setText("Chưa làm câu này")
                 with open(self.FILE_COMMENT, 'a+', encoding='utf-8', errors='ignore') as f:
                     f.write('\n>>> Chưa làm bài')
-                    ui.ResultFrame.detail_entry.setText(
-                        "Chưa làm bài.")
 
             with open(self.FILE_COMMENT, 'r', encoding='utf-8', errors='ignore') as f:
                 list_file = f.readlines()
                 if '>>>' not in list_file[-1]:
                     with open(self.FILE_COMMENT, 'a+', encoding='utf-8', errors='ignore') as file_error_w:
                         file_error_w.write('\n>>> Không xảy ra lỗi')
-                    ui.ResultFrame.detail_entry.setText(
-                        "Bài làm hoàn thiện tốt.")
 
             with open(self.FILE_COMMENT, 'r', encoding='utf-8', errors='ignore') as f:
                 ui.Error_text.setText(str(f.read()))

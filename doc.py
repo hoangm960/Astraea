@@ -105,9 +105,16 @@ class UIFunctions(DocWindow):
                     cursor.execute(
                         "UPDATE doc SET DocName = %s WHERE DocId = %s AND LessonId = %s", (text, id, lesson_id))
                     ui.connection.commit()
-
-                    doc[1] = text
+                    
+                    list_doc = list(doc)
+                    list_doc[1] = text
+                    self.docs[self.docs.index(doc)] = tuple(list_doc)
                     ui.Name_edit.clear()
+                    
+            ui.titles.clear()
+            for doc in self.docs:
+                ui.titles.addItem(doc[1])
+            ui.text_entry.clear()
 
     def get_doc(self, ui):
         self.docs.clear()
@@ -152,7 +159,7 @@ class UIFunctions(DocWindow):
 
         def connect_btn(self, ui):
             ui.add_btn.clicked.connect(lambda: self.add_titles(ui))
-            ui.titles.itemClicked.connect(lambda: self.open_doc(ui))
+            ui.titles.itemClicked.connect(lambda: self.load_doc(ui))
             ui.textpad.clicked.connect(lambda: self.open_textpad(ui))
 
         def open_textpad(self, ui):

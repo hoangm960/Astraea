@@ -1,9 +1,10 @@
-__pycache__/
-test/
-Test/
-data/
-.vscode/
+__pycache__
+test
+Test
+data
+.vscode
 .gitignore
-data/
+data
 temp.py
-output/
+output
+Astraea

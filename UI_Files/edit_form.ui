@@ -96,7 +96,7 @@ color: rgb(255, 255, 255);</string>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>50</height>
+           <height>16777215</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -159,7 +159,7 @@ color: rgb(255, 255, 255);</string>
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>50</height>
+                 <height>16777215</height>
                 </size>
                </property>
                <property name="font">
@@ -628,7 +628,7 @@ QSpinBox::down-arrow {
                             </property>
                             <property name="maximumSize">
                              <size>
-                              <width>100</width>
+                              <width>16777215</width>
                               <height>16777215</height>
                              </size>
                             </property>
@@ -730,7 +730,7 @@ QPushButton:pressed {
                       <property name="maximumSize">
                        <size>
                         <width>16777215</width>
-                        <height>40</height>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -843,7 +843,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                          <x>0</x>
                          <y>0</y>
                          <width>1046</width>
-                         <height>480</height>
+                         <height>479</height>
                         </rect>
                        </property>
                       </widget>
@@ -863,7 +863,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>40</height>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="styleSheet">
@@ -877,7 +877,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                    </property>
                    <layout class="QHBoxLayout" name="horizontalLayout_5">
                     <property name="spacing">
-                     <number>0</number>
+                     <number>200</number>
                     </property>
                     <property name="leftMargin">
                      <number>0</number>
@@ -901,7 +901,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>80</width>
+                        <width>16777215</width>
                         <height>16777215</height>
                        </size>
                       </property>
@@ -944,7 +944,7 @@ QPushButton:pressed {
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>100</width>
+                        <width>16777215</width>
                         <height>16777215</height>
                        </size>
                       </property>
@@ -987,7 +987,7 @@ QPushButton:pressed {
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>100</width>
+                        <width>16777215</width>
                         <height>16777215</height>
                        </size>
                       </property>
@@ -1087,7 +1087,7 @@ QPushButton:pressed {
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>100</width>
+                        <width>16777215</width>
                         <height>16777215</height>
                        </size>
                       </property>
@@ -1183,6 +1183,15 @@ QSpinBox::down-arrow {
                     <enum>QFrame::Raised</enum>
                    </property>
                    <layout class="QHBoxLayout" name="horizontalLayout_9">
+                    <property name="spacing">
+                     <number>100</number>
+                    </property>
+                    <property name="leftMargin">
+                     <number>200</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>200</number>
+                    </property>
                     <item>
                      <widget class="QPushButton" name="confirm_add_btn">
                       <property name="minimumSize">
@@ -1193,7 +1202,7 @@ QSpinBox::down-arrow {
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>100</width>
+                        <width>16777215</width>
                         <height>16777215</height>
                        </size>
                       </property>
@@ -1236,7 +1245,7 @@ QPushButton:pressed {
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>100</width>
+                        <width>16777215</width>
                         <height>16777215</height>
                        </size>
                       </property>

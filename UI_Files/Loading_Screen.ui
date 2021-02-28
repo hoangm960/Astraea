@@ -195,7 +195,7 @@ font-size: 18px;
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <property name="spacing">
-           <number>0</number>
+           <number>100</number>
           </property>
           <property name="leftMargin">
            <number>100</number>
@@ -219,8 +219,8 @@ font-size: 18px;
             </property>
             <property name="maximumSize">
              <size>
-              <width>100</width>
-              <height>30</height>
+              <width>16777215</width>
+              <height>16777215</height>
              </size>
             </property>
             <property name="font">
@@ -256,8 +256,8 @@ QPushButton:hover {
             </property>
             <property name="maximumSize">
              <size>
-              <width>100</width>
-              <height>30</height>
+              <width>16777215</width>
+              <height>16777215</height>
              </size>
             </property>
             <property name="font">

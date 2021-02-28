@@ -347,43 +347,33 @@ background: transparent;
           <property name="spacing">
            <number>0</number>
           </property>
-          <item row="0" column="0">
-           <widget class="QFrame" name="HorizontalSpacer_R">
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
+          <item row="0" column="2">
+           <spacer name="verticalSpacer_7">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
             </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="3">
-           <widget class="QFrame" name="HorizontalSpacer_L">
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="4">
-           <widget class="QFrame" name="HorizontalFrame">
-            <property name="maximumSize">
+            <property name="sizeHint" stdset="0">
              <size>
-              <width>100</width>
-              <height>16777215</height>
+              <width>20</width>
+              <height>40</height>
              </size>
             </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-           </widget>
+           </spacer>
           </item>
-          <item row="0" column="2">
+          <item row="2" column="2">
+           <spacer name="verticalSpacer_8">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="2">
            <widget class="QFrame" name="OkCancelFrame">
             <property name="minimumSize">
              <size>
@@ -393,7 +383,7 @@ background: transparent;
             </property>
             <property name="maximumSize">
              <size>
-              <width>480</width>
+              <width>16777215</width>
               <height>200</height>
              </size>
             </property>
@@ -427,6 +417,12 @@ background: transparent;
              </property>
              <item>
               <widget class="QFrame" name="frame_11">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="frameShape">
                 <enum>QFrame::StyledPanel</enum>
                </property>
@@ -581,7 +577,7 @@ QPushButton:hover {
             </layout>
            </widget>
           </item>
-          <item row="0" column="1">
+          <item row="1" column="1" alignment="Qt::AlignLeft">
            <widget class="QFrame" name="frame_4">
             <property name="minimumSize">
              <size>
@@ -591,8 +587,8 @@ QPushButton:hover {
             </property>
             <property name="maximumSize">
              <size>
-              <width>450</width>
-              <height>520</height>
+              <width>16777215</width>
+              <height>16777215</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -628,8 +624,8 @@ border-radius: 9px;</string>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>450</width>
-                 <height>520</height>
+                 <width>16777215</width>
+                 <height>16777215</height>
                 </size>
                </property>
                <property name="styleSheet">
@@ -639,7 +635,7 @@ border-radius: 9px;</string>
                 <enum>QFrame::Raised</enum>
                </property>
                <property name="currentIndex">
-                <number>0</number>
+                <number>1</number>
                </property>
                <widget class="QWidget" name="SignIn_Page">
                 <property name="sizePolicy">
@@ -1403,7 +1399,7 @@ font: italic;
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>520</height>
+                  <height>16777215</height>
                  </size>
                 </property>
                 <property name="styleSheet">
@@ -2556,6 +2552,26 @@ font: italic;
             </layout>
            </widget>
           </item>
+          <item row="1" column="0">
+           <widget class="QFrame" name="HorizontalSpacer_R">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QFrame" name="HorizontalSpacer_L">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -2603,12 +2619,12 @@ font: italic;
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1041</x>
-     <y>368</y>
+     <x>1076</x>
+     <y>402</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1041</x>
-     <y>360</y>
+     <x>1061</x>
+     <y>402</y>
     </hint>
    </hints>
   </connection>
@@ -2619,12 +2635,12 @@ font: italic;
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1047</x>
-     <y>361</y>
+     <x>1061</x>
+     <y>402</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1043</x>
-     <y>367</y>
+     <x>1076</x>
+     <y>402</y>
     </hint>
    </hints>
   </connection>
@@ -2635,12 +2651,12 @@ font: italic;
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1047</x>
-     <y>346</y>
+     <x>1061</x>
+     <y>402</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1049</x>
-     <y>348</y>
+     <x>1061</x>
+     <y>402</y>
     </hint>
    </hints>
   </connection>
@@ -2651,12 +2667,12 @@ font: italic;
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1040</x>
-     <y>368</y>
+     <x>1076</x>
+     <y>402</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1039</x>
-     <y>363</y>
+     <x>1076</x>
+     <y>402</y>
     </hint>
    </hints>
   </connection>
@@ -2667,44 +2683,12 @@ font: italic;
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>583</x>
-     <y>414</y>
+     <x>449</x>
+     <y>426</y>
     </hint>
     <hint type="destinationlabel">
      <x>794</x>
      <y>115</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>Deny</sender>
-   <signal>clicked()</signal>
-   <receiver>HorizontalSpacer_L</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>589</x>
-     <y>412</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>150</x>
-     <y>642</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>Deny</sender>
-   <signal>clicked()</signal>
-   <receiver>HorizontalFrame</receiver>
-   <slot>show()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>587</x>
-     <y>415</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>35</x>
-     <y>642</y>
     </hint>
    </hints>
   </connection>
@@ -2725,18 +2709,98 @@ font: italic;
    </hints>
   </connection>
   <connection>
-   <sender>btn_quit</sender>
+   <sender>eyeShow</sender>
    <signal>clicked()</signal>
-   <receiver>HorizontalFrame</receiver>
+   <receiver>eyeShow</receiver>
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1241</x>
-     <y>39</y>
+     <x>689</x>
+     <y>141</y>
     </hint>
     <hint type="destinationlabel">
-     <x>106</x>
-     <y>81</y>
+     <x>689</x>
+     <y>141</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eyeHide</sender>
+   <signal>clicked()</signal>
+   <receiver>eyeShow</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>689</x>
+     <y>141</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>689</x>
+     <y>141</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eyeShow</sender>
+   <signal>clicked()</signal>
+   <receiver>eyeHide</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>689</x>
+     <y>141</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>689</x>
+     <y>141</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eyeHide</sender>
+   <signal>clicked()</signal>
+   <receiver>eyeHide</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>689</x>
+     <y>141</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>689</x>
+     <y>141</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Deny</sender>
+   <signal>clicked()</signal>
+   <receiver>OkCancelFrame</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>318</x>
+     <y>414</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>323</x>
+     <y>365</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_quit</sender>
+   <signal>clicked()</signal>
+   <receiver>OkCancelFrame</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1244</x>
+     <y>12</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>460</x>
+     <y>306</y>
     </hint>
    </hints>
   </connection>
@@ -2751,72 +2815,24 @@ font: italic;
      <y>25</y>
     </hint>
     <hint type="destinationlabel">
-     <x>247</x>
-     <y>147</y>
+     <x>19</x>
+     <y>207</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>eyeShow</sender>
+   <sender>Deny</sender>
    <signal>clicked()</signal>
-   <receiver>eyeShow</receiver>
+   <receiver>HorizontalSpacer_L</receiver>
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>735</x>
-     <y>141</y>
+     <x>449</x>
+     <y>426</y>
     </hint>
     <hint type="destinationlabel">
-     <x>735</x>
-     <y>141</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>eyeHide</sender>
-   <signal>clicked()</signal>
-   <receiver>eyeShow</receiver>
-   <slot>show()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>735</x>
-     <y>141</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>735</x>
-     <y>141</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>eyeShow</sender>
-   <signal>clicked()</signal>
-   <receiver>eyeHide</receiver>
-   <slot>show()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>735</x>
-     <y>141</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>735</x>
-     <y>141</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>eyeHide</sender>
-   <signal>clicked()</signal>
-   <receiver>eyeHide</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>735</x>
-     <y>141</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>735</x>
-     <y>141</y>
+     <x>19</x>
+     <y>684</y>
     </hint>
    </hints>
   </connection>

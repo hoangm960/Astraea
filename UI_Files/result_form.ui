@@ -90,7 +90,7 @@ color: rgb(255, 255, 255);</string>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>50</height>
+           <height>16777215</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -365,7 +365,7 @@ QPushButton:hover {
 background-color: transparent;</string>
                </property>
                <property name="currentIndex">
-                <number>1</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="result_frame">
                 <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -395,7 +395,7 @@ background-color: transparent;</string>
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>35</height>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="frameShape">
@@ -431,7 +431,7 @@ background-color: transparent;</string>
                       <property name="maximumSize">
                        <size>
                         <width>16777215</width>
-                        <height>35</height>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -722,7 +722,7 @@ padding: 10px;</string>
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>50</height>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="styleSheet">
@@ -760,8 +760,8 @@ padding: 10px;</string>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>400</width>
-                        <height>32</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -842,7 +842,7 @@ QProgressBar::chunk {
                          <property name="maximumSize">
                           <size>
                            <width>16777215</width>
-                           <height>32</height>
+                           <height>16777215</height>
                           </size>
                          </property>
                          <property name="font">
@@ -872,7 +872,7 @@ QProgressBar::chunk {
                          <property name="maximumSize">
                           <size>
                            <width>16777215</width>
-                           <height>32</height>
+                           <height>16777215</height>
                           </size>
                          </property>
                          <property name="font">
@@ -935,7 +935,7 @@ QProgressBar::chunk {
                          <property name="maximumSize">
                           <size>
                            <width>16777215</width>
-                           <height>32</height>
+                           <height>16777215</height>
                           </size>
                          </property>
                          <property name="font">
@@ -965,7 +965,7 @@ QProgressBar::chunk {
                          <property name="maximumSize">
                           <size>
                            <width>16777215</width>
-                           <height>32</height>
+                           <height>16777215</height>
                           </size>
                          </property>
                          <property name="font">
@@ -997,7 +997,7 @@ QProgressBar::chunk {
                          </property>
                          <property name="maximumSize">
                           <size>
-                           <width>130</width>
+                           <width>16777215</width>
                            <height>16777215</height>
                           </size>
                          </property>
@@ -1042,7 +1042,7 @@ QPushButton:pressed {
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
-                     <height>10</height>
+                     <height>0</height>
                     </size>
                    </property>
                    <property name="maximumSize">
@@ -1076,18 +1076,18 @@ QPushButton:pressed {
                     <property name="spacing">
                      <number>0</number>
                     </property>
-                    <item row="0" column="0">
+                    <item row="0" column="1">
                      <widget class="QPushButton" name="return_btn">
                       <property name="minimumSize">
                        <size>
-                        <width>100</width>
+                        <width>150</width>
                         <height>30</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>100</width>
-                        <height>30</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -1118,6 +1118,32 @@ QPushButton:pressed {
                        <string>Thoát</string>
                       </property>
                      </widget>
+                    </item>
+                    <item row="0" column="0">
+                     <spacer name="horizontalSpacer_5">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item row="0" column="2">
+                     <spacer name="horizontalSpacer_6">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
                     </item>
                    </layout>
                   </widget>
@@ -1170,7 +1196,7 @@ QPushButton:pressed {
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>35</height>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="frameShape">
@@ -1206,7 +1232,7 @@ QPushButton:pressed {
                       <property name="maximumSize">
                        <size>
                         <width>16777215</width>
-                        <height>35</height>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -1317,7 +1343,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                          <x>0</x>
                          <y>0</y>
                          <width>1234</width>
-                         <height>282</height>
+                         <height>276</height>
                         </rect>
                        </property>
                        <layout class="QGridLayout" name="gridLayout_4">
@@ -1359,221 +1385,17 @@ QScrollBar::add-page, QScrollBar::sub-page {
                       </property>
                       <layout class="QGridLayout" name="gridLayout_3">
                        <item row="0" column="1">
-                        <widget class="QFrame" name="OkCancelFrame1">
-                         <property name="minimumSize">
-                          <size>
-                           <width>400</width>
-                           <height>180</height>
-                          </size>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>400</width>
-                           <height>180</height>
-                          </size>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">QFrame {
-	background-color: rgb(228, 228, 228);
-	border-radius: 8px;
-}</string>
-                         </property>
-                         <property name="frameShape">
-                          <enum>QFrame::NoFrame</enum>
-                         </property>
-                         <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
-                         </property>
-                         <layout class="QVBoxLayout" name="verticalLayout_13">
-                          <property name="spacing">
-                           <number>0</number>
-                          </property>
-                          <property name="leftMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="topMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="rightMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="bottomMargin">
-                           <number>0</number>
-                          </property>
-                          <item>
-                           <widget class="QFrame" name="frame_11">
-                            <property name="maximumSize">
-                             <size>
-                              <width>16777215</width>
-                              <height>16777215</height>
-                             </size>
-                            </property>
-                            <property name="frameShape">
-                             <enum>QFrame::StyledPanel</enum>
-                            </property>
-                            <property name="frameShadow">
-                             <enum>QFrame::Raised</enum>
-                            </property>
-                            <layout class="QVBoxLayout" name="verticalLayout_14">
-                             <property name="spacing">
-                              <number>0</number>
-                             </property>
-                             <property name="leftMargin">
-                              <number>0</number>
-                             </property>
-                             <property name="topMargin">
-                              <number>40</number>
-                             </property>
-                             <property name="rightMargin">
-                              <number>0</number>
-                             </property>
-                             <property name="bottomMargin">
-                              <number>0</number>
-                             </property>
-                             <item>
-                              <widget class="QLabel" name="label_4">
-                               <property name="font">
-                                <font>
-                                 <family>Montserrat</family>
-                                 <pointsize>20</pointsize>
-                                 <weight>75</weight>
-                                 <bold>true</bold>
-                                </font>
-                               </property>
-                               <property name="styleSheet">
-                                <string notr="true">background: transparent;
-color: rgb(0, 0, 0);</string>
-                               </property>
-                               <property name="text">
-                                <string>Xác nhận đóng cửa sổ?</string>
-                               </property>
-                               <property name="alignment">
-                                <set>Qt::AlignCenter</set>
-                               </property>
-                              </widget>
-                             </item>
-                            </layout>
-                           </widget>
-                          </item>
-                          <item>
-                           <widget class="QFrame" name="frame_10">
-                            <property name="frameShape">
-                             <enum>QFrame::StyledPanel</enum>
-                            </property>
-                            <property name="frameShadow">
-                             <enum>QFrame::Raised</enum>
-                            </property>
-                            <layout class="QHBoxLayout" name="horizontalLayout_8">
-                             <property name="spacing">
-                              <number>50</number>
-                             </property>
-                             <property name="leftMargin">
-                              <number>50</number>
-                             </property>
-                             <property name="topMargin">
-                              <number>0</number>
-                             </property>
-                             <property name="rightMargin">
-                              <number>50</number>
-                             </property>
-                             <property name="bottomMargin">
-                              <number>20</number>
-                             </property>
-                             <item>
-                              <widget class="QPushButton" name="Accept1">
-                               <property name="minimumSize">
-                                <size>
-                                 <width>0</width>
-                                 <height>0</height>
-                                </size>
-                               </property>
-                               <property name="font">
-                                <font>
-                                 <family>Montserrat</family>
-                                 <pointsize>15</pointsize>
-                                 <weight>75</weight>
-                                 <bold>true</bold>
-                                </font>
-                               </property>
-                               <property name="styleSheet">
-                                <string notr="true">QPushButton {
-border-radius:10;
-	border-color: rgb(0, 0, 0);
-	border : 1px solid ;
-}
-QPushButton:hover {
-	background-color: rgb(0, 0, 0);
-	color: rgb(255, 255, 255);
-}</string>
-                               </property>
-                               <property name="text">
-                                <string> Chấp nhận </string>
-                               </property>
-                              </widget>
-                             </item>
-                             <item>
-                              <widget class="QPushButton" name="Deny1">
-                               <property name="font">
-                                <font>
-                                 <family>Montserrat</family>
-                                 <pointsize>15</pointsize>
-                                 <weight>75</weight>
-                                 <italic>false</italic>
-                                 <bold>true</bold>
-                                </font>
-                               </property>
-                               <property name="toolTip">
-                                <string/>
-                               </property>
-                               <property name="styleSheet">
-                                <string notr="true">QPushButton {
-border-radius:10;
-	border-color: rgb(0, 0, 0);
-	border : 1px solid ;
-}
-QPushButton:hover {
-	background-color: rgb(0, 0, 0);
-	color: rgb(255, 255, 255);
-}</string>
-                               </property>
-                               <property name="text">
-                                <string> Từ chối </string>
-                               </property>
-                               <property name="shortcut">
-                                <string>Esc</string>
-                               </property>
-                               <property name="checkable">
-                                <bool>true</bool>
-                               </property>
-                               <property name="checked">
-                                <bool>true</bool>
-                               </property>
-                               <property name="autoRepeat">
-                                <bool>false</bool>
-                               </property>
-                               <property name="autoExclusive">
-                                <bool>true</bool>
-                               </property>
-                              </widget>
-                             </item>
-                            </layout>
-                           </widget>
-                          </item>
-                         </layout>
-                        </widget>
-                       </item>
-                       <item row="0" column="0">
                         <widget class="QFrame" name="OkCancelFrame">
                          <property name="minimumSize">
                           <size>
-                           <width>400</width>
+                           <width>500</width>
                            <height>180</height>
                           </size>
                          </property>
                          <property name="maximumSize">
                           <size>
-                           <width>400</width>
-                           <height>180</height>
+                           <width>16777215</width>
+                           <height>16777215</height>
                           </size>
                          </property>
                          <property name="styleSheet">
@@ -1772,6 +1594,236 @@ QPushButton:hover {
                          </layout>
                         </widget>
                        </item>
+                       <item row="0" column="2">
+                        <widget class="QFrame" name="OkCancelFrame1">
+                         <property name="minimumSize">
+                          <size>
+                           <width>500</width>
+                           <height>180</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>16777215</width>
+                           <height>16777215</height>
+                          </size>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QFrame {
+	background-color: rgb(228, 228, 228);
+	border-radius: 8px;
+}</string>
+                         </property>
+                         <property name="frameShape">
+                          <enum>QFrame::NoFrame</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <layout class="QVBoxLayout" name="verticalLayout_13">
+                          <property name="spacing">
+                           <number>0</number>
+                          </property>
+                          <property name="leftMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                          <item>
+                           <widget class="QFrame" name="frame_11">
+                            <property name="maximumSize">
+                             <size>
+                              <width>16777215</width>
+                              <height>16777215</height>
+                             </size>
+                            </property>
+                            <property name="frameShape">
+                             <enum>QFrame::StyledPanel</enum>
+                            </property>
+                            <property name="frameShadow">
+                             <enum>QFrame::Raised</enum>
+                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_14">
+                             <property name="spacing">
+                              <number>0</number>
+                             </property>
+                             <property name="leftMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="topMargin">
+                              <number>40</number>
+                             </property>
+                             <property name="rightMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="bottomMargin">
+                              <number>0</number>
+                             </property>
+                             <item>
+                              <widget class="QLabel" name="label_4">
+                               <property name="font">
+                                <font>
+                                 <family>Montserrat</family>
+                                 <pointsize>20</pointsize>
+                                 <weight>75</weight>
+                                 <bold>true</bold>
+                                </font>
+                               </property>
+                               <property name="styleSheet">
+                                <string notr="true">background: transparent;
+color: rgb(0, 0, 0);</string>
+                               </property>
+                               <property name="text">
+                                <string>Xác nhận đóng cửa sổ?</string>
+                               </property>
+                               <property name="alignment">
+                                <set>Qt::AlignCenter</set>
+                               </property>
+                              </widget>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QFrame" name="frame_10">
+                            <property name="frameShape">
+                             <enum>QFrame::StyledPanel</enum>
+                            </property>
+                            <property name="frameShadow">
+                             <enum>QFrame::Raised</enum>
+                            </property>
+                            <layout class="QHBoxLayout" name="horizontalLayout_8">
+                             <property name="spacing">
+                              <number>50</number>
+                             </property>
+                             <property name="leftMargin">
+                              <number>50</number>
+                             </property>
+                             <property name="topMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="rightMargin">
+                              <number>50</number>
+                             </property>
+                             <property name="bottomMargin">
+                              <number>20</number>
+                             </property>
+                             <item>
+                              <widget class="QPushButton" name="Accept1">
+                               <property name="minimumSize">
+                                <size>
+                                 <width>0</width>
+                                 <height>0</height>
+                                </size>
+                               </property>
+                               <property name="font">
+                                <font>
+                                 <family>Montserrat</family>
+                                 <pointsize>15</pointsize>
+                                 <weight>75</weight>
+                                 <bold>true</bold>
+                                </font>
+                               </property>
+                               <property name="styleSheet">
+                                <string notr="true">QPushButton {
+border-radius:10;
+	border-color: rgb(0, 0, 0);
+	border : 1px solid ;
+}
+QPushButton:hover {
+	background-color: rgb(0, 0, 0);
+	color: rgb(255, 255, 255);
+}</string>
+                               </property>
+                               <property name="text">
+                                <string> Chấp nhận </string>
+                               </property>
+                              </widget>
+                             </item>
+                             <item>
+                              <widget class="QPushButton" name="Deny1">
+                               <property name="font">
+                                <font>
+                                 <family>Montserrat</family>
+                                 <pointsize>15</pointsize>
+                                 <weight>75</weight>
+                                 <italic>false</italic>
+                                 <bold>true</bold>
+                                </font>
+                               </property>
+                               <property name="toolTip">
+                                <string/>
+                               </property>
+                               <property name="styleSheet">
+                                <string notr="true">QPushButton {
+border-radius:10;
+	border-color: rgb(0, 0, 0);
+	border : 1px solid ;
+}
+QPushButton:hover {
+	background-color: rgb(0, 0, 0);
+	color: rgb(255, 255, 255);
+}</string>
+                               </property>
+                               <property name="text">
+                                <string> Từ chối </string>
+                               </property>
+                               <property name="shortcut">
+                                <string>Esc</string>
+                               </property>
+                               <property name="checkable">
+                                <bool>true</bool>
+                               </property>
+                               <property name="checked">
+                                <bool>true</bool>
+                               </property>
+                               <property name="autoRepeat">
+                                <bool>false</bool>
+                               </property>
+                               <property name="autoExclusive">
+                                <bool>true</bool>
+                               </property>
+                              </widget>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                       </item>
+                       <item row="0" column="0">
+                        <spacer name="horizontalSpacer">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>40</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                       <item row="0" column="3">
+                        <spacer name="horizontalSpacer_2">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>40</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
                       </layout>
                      </widget>
                     </item>
@@ -1811,17 +1863,17 @@ QPushButton:hover {
                     <property name="spacing">
                      <number>0</number>
                     </property>
-                    <item row="0" column="0">
+                    <item row="0" column="1">
                      <widget class="QPushButton" name="Out_btn">
                       <property name="minimumSize">
                        <size>
-                        <width>100</width>
+                        <width>200</width>
                         <height>30</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>150</width>
+                        <width>16777215</width>
                         <height>16777215</height>
                        </size>
                       </property>
@@ -1853,6 +1905,32 @@ QPushButton:pressed {
                        <string>Nộp bài làm</string>
                       </property>
                      </widget>
+                    </item>
+                    <item row="0" column="0">
+                     <spacer name="horizontalSpacer_3">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item row="0" column="2">
+                     <spacer name="horizontalSpacer_4">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
                     </item>
                    </layout>
                   </widget>
@@ -2165,8 +2243,8 @@ QPushButton:pressed {
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>374</x>
-     <y>506</y>
+     <x>768</x>
+     <y>520</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -2181,8 +2259,8 @@ QPushButton:pressed {
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>419</x>
-     <y>508</y>
+     <x>768</x>
+     <y>520</y>
     </hint>
     <hint type="destinationlabel">
      <x>36</x>
@@ -2197,8 +2275,8 @@ QPushButton:pressed {
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1006</x>
-     <y>504</y>
+     <x>1174</x>
+     <y>520</y>
     </hint>
     <hint type="destinationlabel">
      <x>1123</x>
@@ -2213,8 +2291,8 @@ QPushButton:pressed {
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1026</x>
-     <y>502</y>
+     <x>1174</x>
+     <y>520</y>
     </hint>
     <hint type="destinationlabel">
      <x>1115</x>
@@ -2245,8 +2323,8 @@ QPushButton:pressed {
    <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>987</x>
-     <y>502</y>
+     <x>1174</x>
+     <y>520</y>
     </hint>
     <hint type="destinationlabel">
      <x>673</x>

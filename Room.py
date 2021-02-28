@@ -2,8 +2,11 @@ import os
 import pickle
 import sys
 from datetime import datetime
-import pandas
-
+try:
+    import pandas
+except:
+    os.system("pip install numpy==1.19.3")
+    
 import mysql.connector
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow, QMessageBox

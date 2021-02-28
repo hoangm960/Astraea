@@ -18,7 +18,7 @@ from encryption import *
 FILE = ""
 monitor_info = GetMonitorInfo(MonitorFromPoint((0, 0)))
 work_area = monitor_info.get("Work")
-SCREEN_WIDTH, SCREEN_HEIGHT = work_area[2], work_area[3]
+SCREEN_WIDTH, SCREEN_HEIGHT = work_area[2], work_area[3]    
 
 
 class User:
@@ -311,7 +311,7 @@ class UILoadingFunctions(Loading_Screen):
             ui.main = LoginWindow(self.PG, self.connection)
             ui.main.setGeometry(
                 round((SCREEN_WIDTH - ui.main.width()) / 2),
-                round((SCREEN_HEIGHT - ui.main.height()) / 5),
+                round((SCREEN_HEIGHT - ui.main.height()) / 2),
                 ui.main.width(),
                 ui.main.height(),
             )

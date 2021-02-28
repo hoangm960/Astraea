@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -96,13 +99,13 @@ background : transparent;</string>
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>50</height>
+           <height>60</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>50</height>
+           <height>16777215</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -384,14 +387,14 @@ background: transparent;
            <widget class="QFrame" name="OkCancelFrame">
             <property name="minimumSize">
              <size>
-              <width>400</width>
-              <height>180</height>
+              <width>480</width>
+              <height>200</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>400</width>
-              <height>180</height>
+              <width>480</width>
+              <height>200</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -582,13 +585,13 @@ QPushButton:hover {
            <widget class="QFrame" name="frame_4">
             <property name="minimumSize">
              <size>
-              <width>380</width>
+              <width>450</width>
               <height>520</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>380</width>
+              <width>450</width>
               <height>520</height>
              </size>
             </property>
@@ -619,13 +622,13 @@ border-radius: 9px;</string>
               <widget class="QStackedWidget" name="stacked_widget">
                <property name="minimumSize">
                 <size>
-                 <width>380</width>
+                 <width>450</width>
                  <height>520</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>380</width>
+                 <width>450</width>
                  <height>520</height>
                 </size>
                </property>
@@ -648,7 +651,7 @@ border-radius: 9px;</string>
                 <property name="minimumSize">
                  <size>
                   <width>380</width>
-                  <height>500</height>
+                  <height>520</height>
                  </size>
                 </property>
                 <property name="maximumSize">
@@ -711,8 +714,8 @@ background: transparent;</string>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>400</width>
-                     <height>75</height>
+                     <width>16777215</width>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="frameShape">
@@ -723,13 +726,13 @@ background: transparent;</string>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_2">
                     <property name="leftMargin">
-                     <number>0</number>
+                     <number>48</number>
                     </property>
                     <property name="topMargin">
                      <number>0</number>
                     </property>
                     <property name="rightMargin">
-                     <number>0</number>
+                     <number>48</number>
                     </property>
                     <property name="bottomMargin">
                      <number>0</number>
@@ -737,35 +740,6 @@ background: transparent;</string>
                     <property name="spacing">
                      <number>0</number>
                     </property>
-                    <item row="1" column="0" alignment="Qt::AlignRight">
-                     <widget class="QLabel" name="NameSI_label">
-                      <property name="minimumSize">
-                       <size>
-                        <width>305</width>
-                        <height>30</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>305</width>
-                        <height>30</height>
-                       </size>
-                      </property>
-                      <property name="font">
-                       <font>
-                        <family>iCiel Effra Regular</family>
-                        <pointsize>18</pointsize>
-                       </font>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">color: rgb(255, 255, 255);
-background: transparent;</string>
-                      </property>
-                      <property name="text">
-                       <string>Tên đăng nhập:</string>
-                      </property>
-                     </widget>
-                    </item>
                     <item row="2" column="0">
                      <widget class="QLineEdit" name="NameBox_SI">
                       <property name="minimumSize">
@@ -776,7 +750,7 @@ background: transparent;</string>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>305</width>
+                        <width>16777215</width>
                         <height>16777215</height>
                        </size>
                       </property>
@@ -815,8 +789,76 @@ border-bottom: 1px solid rgb(207, 207, 207);
                       </property>
                      </widget>
                     </item>
+                    <item row="1" column="0" alignment="Qt::AlignRight">
+                     <widget class="QLabel" name="NameSI_label">
+                      <property name="minimumSize">
+                       <size>
+                        <width>305</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>iCiel Effra Regular</family>
+                        <pointsize>18</pointsize>
+                       </font>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">color: rgb(255, 255, 255);
+background: transparent;</string>
+                      </property>
+                      <property name="text">
+                       <string>Tên đăng nhập:</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="3" column="0">
+                     <spacer name="verticalSpacer_5">
+                      <property name="orientation">
+                       <enum>Qt::Vertical</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>20</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item row="0" column="0">
+                     <spacer name="verticalSpacer_6">
+                      <property name="orientation">
+                       <enum>Qt::Vertical</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>20</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
                    </layout>
                   </widget>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_3">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
                  </item>
                  <item>
                   <widget class="QFrame" name="Frame_in_Frame">
@@ -828,8 +870,8 @@ border-bottom: 1px solid rgb(207, 207, 207);
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>400</width>
-                     <height>70</height>
+                     <width>16777215</width>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="frameShape">
@@ -840,13 +882,13 @@ border-bottom: 1px solid rgb(207, 207, 207);
                    </property>
                    <layout class="QGridLayout" name="gridLayout_3">
                     <property name="leftMargin">
-                     <number>0</number>
+                     <number>48</number>
                     </property>
                     <property name="topMargin">
                      <number>0</number>
                     </property>
                     <property name="rightMargin">
-                     <number>0</number>
+                     <number>48</number>
                     </property>
                     <property name="bottomMargin">
                      <number>0</number>
@@ -864,8 +906,8 @@ border-bottom: 1px solid rgb(207, 207, 207);
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>305</width>
-                        <height>30</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="frameShape">
@@ -895,13 +937,13 @@ border-bottom: 1px solid rgb(207, 207, 207);
                          <property name="minimumSize">
                           <size>
                            <width>30</width>
-                           <height>30</height>
+                           <height>31</height>
                           </size>
                          </property>
                          <property name="maximumSize">
                           <size>
                            <width>30</width>
-                           <height>30</height>
+                           <height>31</height>
                           </size>
                          </property>
                          <property name="styleSheet">
@@ -916,66 +958,71 @@ border-bottom: 1px solid rgb(236, 236, 236);
                          <property name="frameShadow">
                           <enum>QFrame::Raised</enum>
                          </property>
-                         <widget class="QPushButton" name="eyeHide_SI">
-                          <property name="geometry">
-                           <rect>
-                            <x>0</x>
-                            <y>0</y>
-                            <width>30</width>
-                            <height>30</height>
-                           </rect>
+                         <layout class="QHBoxLayout" name="horizontalLayout_5">
+                          <property name="spacing">
+                           <number>0</number>
                           </property>
-                          <property name="minimumSize">
-                           <size>
-                            <width>30</width>
-                            <height>30</height>
-                           </size>
+                          <property name="leftMargin">
+                           <number>0</number>
                           </property>
-                          <property name="maximumSize">
-                           <size>
-                            <width>30</width>
-                            <height>30</height>
-                           </size>
+                          <property name="topMargin">
+                           <number>0</number>
                           </property>
-                          <property name="styleSheet">
-                           <string notr="true">QPushButton:enabled {
-	image: url(:/images/icons/eye_hide.png);
-}</string>
+                          <property name="rightMargin">
+                           <number>0</number>
                           </property>
-                          <property name="text">
-                           <string/>
+                          <property name="bottomMargin">
+                           <number>0</number>
                           </property>
-                         </widget>
-                         <widget class="QPushButton" name="eyeShow_SI">
-                          <property name="geometry">
-                           <rect>
-                            <x>0</x>
-                            <y>0</y>
-                            <width>30</width>
-                            <height>30</height>
-                           </rect>
-                          </property>
-                          <property name="minimumSize">
-                           <size>
-                            <width>30</width>
-                            <height>30</height>
-                           </size>
-                          </property>
-                          <property name="maximumSize">
-                           <size>
-                            <width>30</width>
-                            <height>30</height>
-                           </size>
-                          </property>
-                          <property name="styleSheet">
-                           <string notr="true">QPushButton:enabled{
+                          <item>
+                           <widget class="QPushButton" name="eyeShow_SI">
+                            <property name="minimumSize">
+                             <size>
+                              <width>30</width>
+                              <height>30</height>
+                             </size>
+                            </property>
+                            <property name="maximumSize">
+                             <size>
+                              <width>30</width>
+                              <height>30</height>
+                             </size>
+                            </property>
+                            <property name="styleSheet">
+                             <string notr="true">QPushButton:enabled{
 	image: url(:/images/icons/eye_show.png);
 }</string>
-                          </property>
-                          <property name="text">
-                           <string/>
-                          </property>
-                         </widget>
+                            </property>
+                            <property name="text">
+                             <string/>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QPushButton" name="eyeHide_SI">
+                            <property name="minimumSize">
+                             <size>
+                              <width>30</width>
+                              <height>30</height>
+                             </size>
+                            </property>
+                            <property name="maximumSize">
+                             <size>
+                              <width>30</width>
+                              <height>30</height>
+                             </size>
+                            </property>
+                            <property name="styleSheet">
+                             <string notr="true">QPushButton:enabled {
+	image: url(:/images/icons/eye_hide.png);
+}</string>
+                            </property>
+                            <property name="text">
+                             <string/>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
                         </widget>
                        </item>
                        <item>
@@ -988,7 +1035,7 @@ border-bottom: 1px solid rgb(236, 236, 236);
                          </property>
                          <property name="maximumSize">
                           <size>
-                           <width>275</width>
+                           <width>16777215</width>
                            <height>16777215</height>
                           </size>
                          </property>
@@ -1043,8 +1090,8 @@ border-bottom: 1px solid rgb(236, 236, 236);
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>305</width>
-                        <height>30</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -1064,6 +1111,19 @@ background: transparent;</string>
                     </item>
                    </layout>
                   </widget>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_4">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
                  </item>
                  <item>
                   <widget class="QFrame" name="frame_36">
@@ -1146,7 +1206,7 @@ background: transparent;
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>40</height>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="styleSheet">
@@ -1241,13 +1301,13 @@ color: rgb(255, 255, 255);
                      <widget class="QPushButton" name="SignIn_Bt">
                       <property name="minimumSize">
                        <size>
-                        <width>120</width>
+                        <width>150</width>
                         <height>35</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>120</width>
+                        <width>150</width>
                         <height>35</height>
                        </size>
                       </property>
@@ -1398,7 +1458,7 @@ color: rgb(255, 255, 255);</string>
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>80</height>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="frameShape">
@@ -1409,13 +1469,13 @@ color: rgb(255, 255, 255);</string>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_9">
                     <property name="leftMargin">
-                     <number>0</number>
+                     <number>48</number>
                     </property>
                     <property name="topMargin">
                      <number>0</number>
                     </property>
                     <property name="rightMargin">
-                     <number>0</number>
+                     <number>48</number>
                     </property>
                     <property name="bottomMargin">
                      <number>0</number>
@@ -1423,7 +1483,7 @@ color: rgb(255, 255, 255);</string>
                     <property name="spacing">
                      <number>0</number>
                     </property>
-                    <item row="0" column="0" alignment="Qt::AlignRight">
+                    <item row="0" column="0">
                      <widget class="QFrame" name="UserLabel_3">
                       <property name="minimumSize">
                        <size>
@@ -1528,7 +1588,7 @@ min-height: 20px;
                          <property name="minimumSize">
                           <size>
                            <width>140</width>
-                           <height>30</height>
+                           <height>40</height>
                           </size>
                          </property>
                          <property name="maximumSize">
@@ -1565,8 +1625,8 @@ color: rgb(255, 255, 255);</string>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>305</width>
-                        <height>40</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -1621,7 +1681,7 @@ border-bottom: 1px solid rgb(207, 207, 207);
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>80</height>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="frameShape">
@@ -1632,13 +1692,13 @@ border-bottom: 1px solid rgb(207, 207, 207);
                    </property>
                    <layout class="QGridLayout" name="gridLayout_14">
                     <property name="leftMargin">
-                     <number>0</number>
+                     <number>48</number>
                     </property>
                     <property name="topMargin">
                      <number>0</number>
                     </property>
                     <property name="rightMargin">
-                     <number>0</number>
+                     <number>48</number>
                     </property>
                     <property name="bottomMargin">
                      <number>0</number>
@@ -1656,8 +1716,8 @@ border-bottom: 1px solid rgb(207, 207, 207);
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>305</width>
-                        <height>30</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="frameShape">
@@ -1717,7 +1777,7 @@ border-bottom: 1px solid rgb(207, 207, 207);
                           </font>
                          </property>
                          <property name="toolTip">
-                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tên đăng ký yêu cầu tối thiểu 8 kí tự, tối đa 22 kí tự&lt;/p&gt;&lt;p&gt;Bao gồm phạm vi kí tự A..Z a..z 0..9 @_/. và khoảng trắng&lt;/p&gt;&lt;p&gt;Gõ không dấu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mật khẩu đăng ký yêu cầu tối thiểu 8 kí tự, tối đa 22 kí tự, gõ không dấu.&lt;/p&gt;&lt;p&gt;Bao gồm phạm vi kí tự A..Z a..z 0..9 @_/. và khoảng trắng&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                          </property>
                          <property name="toolTipDuration">
                           <number>0</number>
@@ -1788,8 +1848,8 @@ background: transparent;</string>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>305</width>
-                        <height>30</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="frameShape">
@@ -1819,7 +1879,7 @@ background: transparent;</string>
                          <property name="minimumSize">
                           <size>
                            <width>30</width>
-                           <height>30</height>
+                           <height>31</height>
                           </size>
                          </property>
                          <property name="maximumSize">
@@ -1840,66 +1900,71 @@ border-bottom: 1px solid rgb(236, 236, 236);
                          <property name="frameShadow">
                           <enum>QFrame::Raised</enum>
                          </property>
-                         <widget class="QPushButton" name="eyeHide">
-                          <property name="geometry">
-                           <rect>
-                            <x>0</x>
-                            <y>0</y>
-                            <width>30</width>
-                            <height>30</height>
-                           </rect>
+                         <layout class="QHBoxLayout" name="horizontalLayout_7">
+                          <property name="spacing">
+                           <number>0</number>
                           </property>
-                          <property name="minimumSize">
-                           <size>
-                            <width>30</width>
-                            <height>30</height>
-                           </size>
+                          <property name="leftMargin">
+                           <number>0</number>
                           </property>
-                          <property name="maximumSize">
-                           <size>
-                            <width>30</width>
-                            <height>30</height>
-                           </size>
+                          <property name="topMargin">
+                           <number>0</number>
                           </property>
-                          <property name="styleSheet">
-                           <string notr="true">QPushButton:enabled {
-	image: url(:/images/icons/eye_hide.png);
-}</string>
+                          <property name="rightMargin">
+                           <number>0</number>
                           </property>
-                          <property name="text">
-                           <string/>
+                          <property name="bottomMargin">
+                           <number>0</number>
                           </property>
-                         </widget>
-                         <widget class="QPushButton" name="eyeShow">
-                          <property name="geometry">
-                           <rect>
-                            <x>0</x>
-                            <y>0</y>
-                            <width>30</width>
-                            <height>30</height>
-                           </rect>
-                          </property>
-                          <property name="minimumSize">
-                           <size>
-                            <width>30</width>
-                            <height>30</height>
-                           </size>
-                          </property>
-                          <property name="maximumSize">
-                           <size>
-                            <width>30</width>
-                            <height>30</height>
-                           </size>
-                          </property>
-                          <property name="styleSheet">
-                           <string notr="true">QPushButton:enabled{
+                          <item>
+                           <widget class="QPushButton" name="eyeShow">
+                            <property name="minimumSize">
+                             <size>
+                              <width>30</width>
+                              <height>30</height>
+                             </size>
+                            </property>
+                            <property name="maximumSize">
+                             <size>
+                              <width>30</width>
+                              <height>30</height>
+                             </size>
+                            </property>
+                            <property name="styleSheet">
+                             <string notr="true">QPushButton:enabled{
 	image: url(:/images/icons/eye_show.png);
 }</string>
-                          </property>
-                          <property name="text">
-                           <string/>
-                          </property>
-                         </widget>
+                            </property>
+                            <property name="text">
+                             <string/>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QPushButton" name="eyeHide">
+                            <property name="minimumSize">
+                             <size>
+                              <width>30</width>
+                              <height>30</height>
+                             </size>
+                            </property>
+                            <property name="maximumSize">
+                             <size>
+                              <width>30</width>
+                              <height>30</height>
+                             </size>
+                            </property>
+                            <property name="styleSheet">
+                             <string notr="true">QPushButton:enabled {
+	image: url(:/images/icons/eye_hide.png);
+}</string>
+                            </property>
+                            <property name="text">
+                             <string/>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
                         </widget>
                        </item>
                        <item>
@@ -1912,8 +1977,8 @@ border-bottom: 1px solid rgb(236, 236, 236);
                          </property>
                          <property name="maximumSize">
                           <size>
-                           <width>275</width>
-                           <height>40</height>
+                           <width>16777215</width>
+                           <height>16777215</height>
                           </size>
                          </property>
                          <property name="font">
@@ -1971,7 +2036,7 @@ border-bottom: 1px solid rgb(236, 236, 236);
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>80</height>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="frameShape">
@@ -1982,13 +2047,13 @@ border-bottom: 1px solid rgb(236, 236, 236);
                    </property>
                    <layout class="QGridLayout" name="gridLayout_6">
                     <property name="leftMargin">
-                     <number>0</number>
+                     <number>48</number>
                     </property>
                     <property name="topMargin">
                      <number>0</number>
                     </property>
                     <property name="rightMargin">
-                     <number>0</number>
+                     <number>48</number>
                     </property>
                     <property name="bottomMargin">
                      <number>0</number>
@@ -2067,7 +2132,7 @@ border-bottom: 1px solid rgb(236, 236, 236);
                           </font>
                          </property>
                          <property name="toolTip">
-                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tên người dùng yêu cầu tối thiểu 6 kí tự, không kí tự đặc biệt.&lt;/p&gt;&lt;p&gt;bao gồm trong phạm vi kí tự A..Z a..z 0..9 @/_. khoảng trắng và &lt;/p&gt;&lt;p&gt;có thể gõ chữ Tiếng Việt.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tên người dùng yêu cầu tối thiểu 6 kí tự.&lt;/p&gt;&lt;p&gt;bao gồm trong phạm vi kí tự A..Z a..z 0..9 @/_. khoảng trắng và &lt;/p&gt;&lt;p&gt;có thể gõ chữ Tiếng Việt.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                          </property>
                          <property name="toolTipDuration">
                           <number>0</number>
@@ -2138,8 +2203,8 @@ color: rgb(255, 255, 255);</string>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>305</width>
-                        <height>40</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -2303,13 +2368,13 @@ color: rgb(255, 255, 255);</string>
                      <widget class="QPushButton" name="SignUp_Bt">
                       <property name="minimumSize">
                        <size>
-                        <width>100</width>
+                        <width>150</width>
                         <height>35</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>100</width>
+                        <width>150</width>
                         <height>35</height>
                        </size>
                       </property>
@@ -2508,7 +2573,10 @@ font: italic;
   <tabstop>SavePass</tabstop>
   <tabstop>SignIn_Bt</tabstop>
   <tabstop>ConvertButton</tabstop>
+  <tabstop>NameBox</tabstop>
+  <tabstop>Note_User</tabstop>
   <tabstop>PassBox</tabstop>
+  <tabstop>Note_Pass</tabstop>
   <tabstop>eyeHide</tabstop>
   <tabstop>eyeShow</tabstop>
   <tabstop>UserBox</tabstop>
@@ -2516,8 +2584,13 @@ font: italic;
   <tabstop>student</tabstop>
   <tabstop>SignUp_Bt</tabstop>
   <tabstop>ConvertButton_SU</tabstop>
-  <tabstop>Note_Pass</tabstop>
-  <tabstop>Note_User</tabstop>
+  <tabstop>btn_quit</tabstop>
+  <tabstop>btn_maximize</tabstop>
+  <tabstop>btn_minimize</tabstop>
+  <tabstop>Deny</tabstop>
+  <tabstop>Accept</tabstop>
+  <tabstop>Note_Name</tabstop>
+  <tabstop>ConvertButton_4</tabstop>
  </tabstops>
  <resources>
   <include location="Resources.qrc"/>

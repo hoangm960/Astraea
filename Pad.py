@@ -46,40 +46,6 @@ class UIFunction(MainPad):
     path = None
     Format = [False, False, False]
 
-    class QPixmap2QByteArray(object):
-        def __call__(self, q_image: QtGui.QImage) -> QtCore.QByteArray:
-            """
-                Args:
-                    q_image: QImage to be converted to byte stream.
-                Returns:
-                                    The byte array converted from q_image.
-            """
-                    # Get an empty byte array
-            byte_array = QtCore.QByteArray()
-                    # Bind the byte array to the output stream
-            buffer = QtCore.QBuffer(byte_array)
-            buffer.open(QtCore.QIODevice.WriteOnly)
-                    # Save the data in png format
-            q_image.save(buffer, "png", quality=100)
-            return byte_array
-    
-    
-    class QByteArray2QPixelmap(object):
-        def __call__(self, byte_array: QtCore.QByteArray):
-            """
-            Args:
-                            byte_array: byte stream image.
-            Returns:
-                            The byte stream array corresponding to byte_array.
-            """
-                    # Set the byte stream input pool.
-            buffer = QtCore.QBuffer(byte_array)
-            buffer.open(QtCore.QIODevice.ReadOnly)
-                    # Read the picture.
-            reader = QtGui.QImageReader(buffer)
-            img = reader.read()
-            return img
-
     def __init__(self, ui):
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
@@ -113,16 +79,17 @@ class UIFunction(MainPad):
     def check_changed(self, ui):
         document = ui.editor.document()
         img = ImageGrab.grabclipboard()
+        if img:
+            img_bytes = io.BytesIO()
 
-        img_bytes = io.BytesIO()
-        img.save(img_bytes, format='PNG')
+            img.save(img_bytes, format='PNG')
 
-        base64_data = codecs.encode(img_bytes.getvalue(), 'base64')
+            base64_data = codecs.encode(img_bytes.getvalue(), 'base64')
 
-        base64_text = codecs.decode(base64_data, 'ascii')
+            base64_text = codecs.decode(base64_data, 'ascii')
 
-        html_img_tag = '<img src="data:image/png;base64, %s" />' % base64_text
-        document.setHtml(html_img_tag)
+            html_img_tag = '<img src="data:image/png;base64, %s" />' % base64_text
+            document.setHtml(html_img_tag)
 
     @staticmethod
     def check_empty(ui):

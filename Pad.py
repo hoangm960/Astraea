@@ -123,11 +123,8 @@ class UIFunction(MainPad):
                 self.reopen_doc(ui)
             elif clicked == QMessageBox.No:
                 ui.close()
-                import doc
-                window = doc.DocWindow(ui.role, ui.pg, ui.connection)
-                window.show()
-                msg.close()
                 self.reopen_doc(ui)
+                msg.close()
             else:
                 msg.close()
         else:

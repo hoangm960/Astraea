@@ -4,25 +4,21 @@ import subprocess
 import sys
 import time
 from random import randrange
-import mysql.connector
 
+import mysql.connector
 from PyQt5 import QtCore, QtWidgets, uic
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (QApplication, 
-                             QMainWindow)
+from PyQt5.QtWidgets import QApplication, QMainWindow
 from win32api import GetMonitorInfo, MonitorFromPoint
 
 import main_ui
 from encryption import *
+from result_main import SCREEN_HEIGHT
 
 FILE = ""
-monitor_info = GetMonitorInfo(MonitorFromPoint((0, 0)))
-work_area = monitor_info.get("Work")
-SCREEN_WIDTH, SCREEN_HEIGHT = 1920, 1040 
-
-QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True) 
-QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True) 
-
+app = QApplication(sys.argv)
+screen_resolution = app.desktop().screenGeometry()
+SCREEN_WIDTH, SCREEN_HEIGHT = screen_resolution.width(), screen_resolution.height() - 50
 
 class User:
     def __init__(self, id, name, name_user, password, role):
@@ -74,7 +70,6 @@ class LoginFunctions(LoginWindow):
         ui.Note_Name.hide()
         ui.Note_Pass.hide()
         ui.Note_User.hide()
-        print(SCREEN_WIDTH, SCREEN_HEIGHT)
         ui.setGeometry(
             round((SCREEN_WIDTH - ui.width()) / 2),
             round((SCREEN_HEIGHT - ui.height()) / 2),

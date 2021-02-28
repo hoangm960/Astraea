@@ -3,18 +3,18 @@ import pickle
 import sys
 
 import mysql.connector
-from PyQt5 import QtCore, uic
+import pygetwindow
+from PyQt5 import QtCore, QtWidgets, uic
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow, QMessageBox
 from win32api import GetMonitorInfo, MonitorFromPoint
-import pygetwindow
-from UI_Files import Resources
 
+from UI_Files import Resources
 
 UI_MAIN_PATH = "./UI_Files/ui_main.ui"
 OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
-monitor_info = GetMonitorInfo(MonitorFromPoint((0, 0)))
-work_area = monitor_info.get("Work")
-SCREEN_WIDTH, SCREEN_HEIGHT = work_area[2], work_area[3]
+app = QApplication(sys.argv)
+screen_resolution = app.desktop().screenGeometry()
+SCREEN_WIDTH, SCREEN_HEIGHT = screen_resolution.width(), screen_resolution.height() - 50
 
 
 class MainWindow(QMainWindow):

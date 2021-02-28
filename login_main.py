@@ -18,7 +18,10 @@ from encryption import *
 FILE = ""
 monitor_info = GetMonitorInfo(MonitorFromPoint((0, 0)))
 work_area = monitor_info.get("Work")
-SCREEN_WIDTH, SCREEN_HEIGHT = work_area[2], work_area[3]    
+SCREEN_WIDTH, SCREEN_HEIGHT = 1920, 1040 
+
+QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True) 
+QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True) 
 
 
 class User:
@@ -71,6 +74,7 @@ class LoginFunctions(LoginWindow):
         ui.Note_Name.hide()
         ui.Note_Pass.hide()
         ui.Note_User.hide()
+        print(SCREEN_WIDTH, SCREEN_HEIGHT)
         ui.setGeometry(
             round((SCREEN_WIDTH - ui.width()) / 2),
             round((SCREEN_HEIGHT - ui.height()) / 2),

@@ -2,10 +2,7 @@ import os
 import pickle
 import sys
 from datetime import datetime
-try:
-    import pandas
-except:
-    os.system("pip install numpy==1.19.3")
+import pandas
     
 import mysql.connector
 from PyQt5 import QtCore, uic
@@ -15,10 +12,11 @@ from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow, QMessageBox
 
 class RoomWindow(QMainWindow):
     ROOM_UI = "./UI_Files/Room.ui"
-    def __init__(self, role, pg, connection):
+    def __init__(self, role, pg, connection, id):
         self.role = role
         self.pg = pg 
         self.connection = connection
+        self.id = id
         super(RoomWindow, self).__init__()
         uic.loadUi(self.ROOM_UI, self)
         UIFunctions(self)
@@ -26,13 +24,12 @@ class RoomWindow(QMainWindow):
 class UIFunctions(RoomWindow):
     OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
     OPENED_ROOM_PATH = "./data/Users/opened_room.or"
-    room_id = open(OPENED_ROOM_PATH).readline().rstrip()
 
     def __init__(self, ui):
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         ui.showMaximized()
-        ui.ID_Room.setText(self.room_id)
+        ui.ID_Room.setText(ui.id)
         self.add_lesson_list(ui)
         if ui.role == 0:
             ui.student_list_frame.close()
@@ -73,7 +70,7 @@ class UIFunctions(RoomWindow):
 
     def upload(self, ui):
         filename = self.get_file_dialog(ui, '*.list')
-        if self.room_id and filename:
+        if ui.id and filename:
             cursor = ui.connection.cursor()
             title, assignments = self.get_lesson(filename)
             current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -102,7 +99,7 @@ class UIFunctions(RoomWindow):
 
             if lesson_id:
                 cursor = ui.connection.cursor()
-                cursor.execute("INSERT INTO lesson_in_room(RoomId, LessonId) VALUES(%s, %s)", (self.room_id, lesson_id))
+                cursor.execute("INSERT INTO lesson_in_room(RoomId, LessonId) VALUES(%s, %s)", (ui.id, lesson_id))
 
             ui.connection.commit()
             self.add_lesson_list(ui)
@@ -186,7 +183,7 @@ class UIFunctions(RoomWindow):
     def add_lesson_list(self, ui):
         ui.lesson_list.clear()
         cursor = ui.connection.cursor()
-        cursor.execute('SELECT LessonId FROM lesson_in_room WHERE RoomId = %s', (self.room_id, ))
+        cursor.execute('SELECT LessonId FROM lesson_in_room WHERE RoomId = %s', (ui.id, ))
         lesson_ids = [row[0] for row in cursor]
         for lesson_id in lesson_ids:
             cursor.execute('SELECT Name FROM lesson WHERE LessonId = %s', (lesson_id, ))
@@ -196,7 +193,7 @@ class UIFunctions(RoomWindow):
     def add_student_list(self, ui):
         ui.student_list.clear()
         cursor = ui.connection.cursor()
-        cursor.execute('SELECT Username, ShowName FROM user WHERE RoomId = %s AND Type = %s', (self.room_id, 0))
+        cursor.execute('SELECT Username, ShowName FROM user WHERE RoomId = %s AND Type = %s', (ui.id, 0))
         students = [row for row in cursor]
         for student in students:
             username, name = student

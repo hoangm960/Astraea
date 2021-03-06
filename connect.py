@@ -70,7 +70,7 @@ class UIFunctions(DownloadWindow):
 
     def enter_room(self, ui):
         decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
-        username = open(self.USER_PATH).readline().rstrip()
+        username = open(self.USER_PATH, encoding="utf8").readline().rstrip()
         encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
         room_id = ui.id_entry.text()
         if room_id:
@@ -98,15 +98,14 @@ class UIFunctions(DownloadWindow):
 
     def check_room(self, ui):
         decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
-        username = open(self.USER_PATH).readline().rstrip()
+        username = open(self.USER_PATH, encoding="utf8").readline().rstrip()
         encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
         cursor = ui.connection.cursor()
         cursor.execute("SELECT RoomId FROM user WHERE Username = %s", (username, ))
         room_ids = [row for row in cursor]
         if room_ids:
             for room_id in room_ids:
-                if room_id[0]:
-                    open(self.OPENED_ROOM_PATH, 'w').write(str(room_id[0]))
+                open(self.OPENED_ROOM_PATH, 'w').write(str(room_id[0]) if room_id[0] else '')
 
         room_id = open(self.OPENED_ROOM_PATH).read().rstrip()
         if room_id:

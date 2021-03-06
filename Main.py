@@ -1,5 +1,7 @@
 import os
 from pathlib import Path
+
+import mysql.connector
 from PyQt5.QtWidgets import QApplication
 
 from UI_Files import Resources
@@ -34,4 +36,7 @@ if __name__ == "__main__":
     create_file()
 
     import login_main
-    login_main.main(VERSION)
+    try:
+        login_main.main(VERSION)
+    except mysql.connector.errors.OperationalError:
+        pass

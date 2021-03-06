@@ -245,10 +245,6 @@ class UIFunctions(ResultWindow):
                             with open(self.FILE_COMMENT, 'a+', encoding='utf-8', errors='ignore') as f:
                                 f.write(
                                     '\n>>> TimeoutExpired: Thuật toán vượt quá thời gian yêu cầu.')
-                        elif not result[1]:
-                            with open(self.FILE_COMMENT, 'a+', encoding='utf-8', errors='ignore') as f:
-                                f.write(
-                                    '\n>>> WrongOutput: Bài làm sai kết quả.')
                     except ZeroDivisionError:
                         with open(self.FILE_COMMENT, 'a+', encoding='utf-8', errors='ignore') as f:
                             f.write(
@@ -300,10 +296,10 @@ class UIFunctions(ResultWindow):
         encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
 
         current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        lesson_id = int(open(OPENED_LESSON_PATH).readlines()[1])
+        lesson_id = int(open(OPENED_LESSON_PATH, encoding = 'utf-8').readlines()[1])
         if lesson_id:
             try:
-                cursor.execute("INSERT INTO submission(Username, LessonId, SubmissionDate, Mark, Comment) VALUES(%s, %s, %s, %s, %s)", (name_account, lesson_id, current_time, round(self.TotalScore, 2), open(self.FILE_COMMENT).read()))
+                cursor.execute("INSERT INTO submission(Username, LessonId, SubmissionDate, Mark, Comment) VALUES(%s, %s, %s, %s, %s)", (name_account, lesson_id, current_time, round(self.TotalScore, 2), open(self.FILE_COMMENT, encoding = 'utf-8').read()))
             except mysql.connector.errors.IntegrityError:
                 cursor.execute("UPDATE submission SET Username = %s, LessonId = %s, SubmissionDate = %s, Mark = %s, Comment = %s", (name_account, lesson_id, current_time, round(self.TotalScore, 2), open(self.FILE_COMMENT).read()))
 

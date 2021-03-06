@@ -2,6 +2,8 @@ import os
 import re
 from subprocess import PIPE, STDOUT, Popen, TimeoutExpired
 
+ANSWer = ''
+Cor = ''
 
 def main(filename, tests, infos, time_limit=2):
     main.results = []
@@ -40,7 +42,12 @@ def main(filename, tests, infos, time_limit=2):
             os.remove(f'{base_file}.exe')
 
         check.result[1] = True if output.rstrip() == ans.rstrip() else False
-
+        if not check.result[1]:
+            with open('./data/results/comment.txt', 'r', encoding='utf-8', errors='ignore') as f:
+                list_file = f.readlines()
+                if 'SAI' not in list_file[-1]:
+                    with open('./data/results/comment.txt', 'a+', encoding='utf-8', errors='ignore') as file_error_w:
+                        file_error_w.write('\n>>> SAI ĐÁP ÁN: "'+output.rstrip()+'" phải là "'+ans.rstrip()+'"...')
     def check_info(info):
         key, message, num = (i for i in info)
         data = open(filename).read()

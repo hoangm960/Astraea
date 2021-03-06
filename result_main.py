@@ -5,12 +5,14 @@ import sys
 from datetime import datetime
 
 import mysql.connector
-from PyQt5 import QtCore, uic
+from PyQt5 import QtCore, uic, QtWidgets
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (QApplication, QFileDialog, QMainWindow, QSizeGrip,
                              QVBoxLayout, QWidget)
-from win32api import GetMonitorInfo, MonitorFromPoint
 
+QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True) 
+QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
+import Main
 import check_algorithm
 import main_ui
 
@@ -20,10 +22,6 @@ TEST_FRAME_PATH = "./UI_Files/Test_frame.ui"
 OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
 OPENED_RESULT_PATH = "./data/results/"
 
-monitor_info = GetMonitorInfo(MonitorFromPoint((0, 0)))
-work_area = monitor_info.get("Work")
-SCREEN_WIDTH, SCREEN_HEIGHT = work_area[2], work_area[3]
-
 
 class ResultWindow(QMainWindow):
     def __init__(self, pg, connection):
@@ -32,8 +30,8 @@ class ResultWindow(QMainWindow):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(RESULT_FORM_PATH, self)
         self.setGeometry(
-            round((SCREEN_WIDTH - self.width()) / 2),
-            round((SCREEN_HEIGHT - self.height()) / 2),
+            round((Main.SCREEN_WIDTH - self.width()) / 2),
+            round((Main.SCREEN_HEIGHT - self.height()) / 2),
             self.width(),
             self.height(),
         )

@@ -92,7 +92,7 @@ class UIFunctions(DownloadWindow):
         import Room
         room_id = open(self.OPENED_ROOM_PATH).read().rstrip()
         if room_id:
-            window = Room.RoomWindow(ui.role, ui.pg, ui.connection)
+            window = Room.RoomWindow(ui.role, ui.pg, ui.connection, room_id)
             window.show()
             ui.close()
 

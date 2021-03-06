@@ -6,15 +6,13 @@ import mysql.connector
 import pygetwindow
 from PyQt5 import QtCore, QtWidgets, uic
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow, QMessageBox
-from win32api import GetMonitorInfo, MonitorFromPoint
 
+import Main
 from UI_Files import Resources
 
 UI_MAIN_PATH = "./UI_Files/ui_main.ui"
 OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
-app = QApplication(sys.argv)
-screen_resolution = app.desktop().screenGeometry()
-SCREEN_WIDTH, SCREEN_HEIGHT = screen_resolution.width(), screen_resolution.height() - 50
+
 
 
 class MainWindow(QMainWindow):
@@ -29,7 +27,7 @@ class MainWindow(QMainWindow):
             self.pg.restore()
             self.pg.moveTo(-8, 0)
             self.pg.resizeTo(
-                SCREEN_WIDTH - self.width() + 16, self.height() + 8)
+                Main.SCREEN_WIDTH - self.width() + 16, self.height() + 8)
         except (pygetwindow.PyGetWindowException, AttributeError):
             pass
         UIFunctions(self)
@@ -46,7 +44,7 @@ class MainWindow(QMainWindow):
                     self.pg.restore()
                     self.pg.moveTo(-8, 0)
                     self.pg.resizeTo(
-                        SCREEN_WIDTH - self.width() + 16, self.height() + 8)
+                        Main.SCREEN_WIDTH - self.width() + 16, self.height() + 8)
                 except:
                     pass
         QMainWindow.changeEvent(self, event)
@@ -60,8 +58,8 @@ class UIFunctions(MainWindow):
             ui.pg.restore()
             ui.pg.moveTo(-8, 0)
             ui.pg.resizeTo(
-                SCREEN_WIDTH - ui.width() + 16, ui.height() + 8)
-        ui.setGeometry(SCREEN_WIDTH, SCREEN_HEIGHT, ui.width(), SCREEN_HEIGHT)
+                Main.SCREEN_WIDTH - ui.width() + 16, ui.height() + 8)
+        ui.setGeometry(int(Main.SCREEN_WIDTH), int(Main.SCREEN_HEIGHT), ui.width(), int(Main.SCREEN_HEIGHT))
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.resize_idle(ui, ui.pg)
@@ -109,7 +107,7 @@ class UIFunctions(MainWindow):
         if pg:
             pg.restore()
             pg.moveTo(-8, 0)
-            pg.resizeTo(SCREEN_WIDTH - ui.width() + 16, ui.height() + 8)
+            pg.resizeTo(Main.SCREEN_WIDTH - ui.width() + 16, ui.height() + 8)
 
     @staticmethod
     def close_pg(ui):
@@ -214,7 +212,7 @@ class UIFunctions(MainWindow):
 
 def main(role, pg, connection):
     window = MainWindow(role, pg, connection)
-    window.move(SCREEN_WIDTH - window.width(), 0)
+    window.move(Main.SCREEN_WIDTH - window.width(), 0)
     window.show()
 
 

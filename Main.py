@@ -1,10 +1,14 @@
 import os
 from pathlib import Path
+from PyQt5.QtWidgets import QApplication
 
 from UI_Files import Resources
 
 VERSION = "3.0"
 
+app = QApplication([])
+screen_resolution = app.desktop().screenGeometry()
+SCREEN_WIDTH, SCREEN_HEIGHT = screen_resolution.width(), screen_resolution.height()*0.953
 
 def create_file():
     USER_PATH = "./data/Users/"

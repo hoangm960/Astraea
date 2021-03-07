@@ -754,7 +754,7 @@ padding: 10px;</string>
                      <widget class="QProgressBar" name="progressBar">
                       <property name="minimumSize">
                        <size>
-                        <width>200</width>
+                        <width>150</width>
                         <height>32</height>
                        </size>
                       </property>
@@ -865,7 +865,7 @@ QProgressBar::chunk {
                         <widget class="QLabel" name="Score">
                          <property name="minimumSize">
                           <size>
-                           <width>100</width>
+                           <width>60</width>
                            <height>32</height>
                           </size>
                          </property>
@@ -958,7 +958,7 @@ QProgressBar::chunk {
                         <widget class="QLabel" name="Judge">
                          <property name="minimumSize">
                           <size>
-                           <width>280</width>
+                           <width>300</width>
                            <height>0</height>
                           </size>
                          </property>
@@ -980,7 +980,7 @@ QProgressBar::chunk {
                           <string notr="true">color: rgb(255,255,255);</string>
                          </property>
                          <property name="text">
-                          <string>Đánh giá</string>
+                          <string>Bài làm không đạt tiêu chuẩn</string>
                          </property>
                          <property name="alignment">
                           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -991,7 +991,7 @@ QProgressBar::chunk {
                         <widget class="QPushButton" name="return_btn_2">
                          <property name="minimumSize">
                           <size>
-                           <width>130</width>
+                           <width>200</width>
                            <height>30</height>
                           </size>
                          </property>
@@ -1342,8 +1342,8 @@ QScrollBar::add-page, QScrollBar::sub-page {
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>1234</width>
-                         <height>276</height>
+                         <width>294</width>
+                         <height>50</height>
                         </rect>
                        </property>
                        <layout class="QGridLayout" name="gridLayout_4">

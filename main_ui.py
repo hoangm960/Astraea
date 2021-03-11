@@ -48,7 +48,7 @@ class MainWindow(QMainWindow):
                 except:
                     pass
         QMainWindow.changeEvent(self, event)
-
+ 
 
 class UIFunctions(MainWindow):
     assignments = {}

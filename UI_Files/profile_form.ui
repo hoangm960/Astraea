@@ -308,8 +308,8 @@ QScrollBar::add-page, QScrollBar::sub-page {
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1024</width>
-            <height>628</height>
+            <width>1041</width>
+            <height>415</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -373,6 +373,10 @@ QScrollBar::add-page, QScrollBar::sub-page {
                   <pointsize>15</pointsize>
                  </font>
                 </property>
+                <property name="styleSheet">
+                 <string notr="true">background: transparent;
+border: none;</string>
+                </property>
                 <property name="text">
                  <string>Tên người dùng:</string>
                 </property>
@@ -393,7 +397,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                  <string notr="true">border: none;</string>
                 </property>
                 <property name="text">
-                 <string>TextLabel</string>
+                 <string>Trống</string>
                 </property>
                </widget>
               </item>
@@ -487,6 +491,10 @@ background: transparent;</string>
                   <bold>true</bold>
                  </font>
                 </property>
+                <property name="styleSheet">
+                 <string notr="true">background: transparent;
+border: none;</string>
+                </property>
                 <property name="text">
                  <string>Họ và tên:</string>
                 </property>
@@ -517,7 +525,7 @@ background: transparent;</string>
 border:none;</string>
                 </property>
                 <property name="text">
-                 <string>Text label</string>
+                 <string>Trống</string>
                 </property>
                 <property name="readOnly">
                  <bool>true</bool>
@@ -612,6 +620,10 @@ QPushButton:hover {
                   <bold>true</bold>
                  </font>
                 </property>
+                <property name="styleSheet">
+                 <string notr="true">background: transparent;
+border: none;</string>
+                </property>
                 <property name="text">
                  <string>       Giới tính:</string>
                 </property>
@@ -638,10 +650,11 @@ QPushButton:hover {
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">border: none;</string>
+                 <string notr="true">background: transparent;
+border: none;</string>
                 </property>
                 <property name="text">
-                 <string>Nam / Nữ</string>
+                 <string>Nam</string>
                 </property>
                </widget>
               </item>
@@ -727,6 +740,10 @@ background: transparent;</string>
                   <pointsize>15</pointsize>
                  </font>
                 </property>
+                <property name="styleSheet">
+                 <string notr="true">background: transparent;
+border: none;</string>
+                </property>
                 <property name="text">
                  <string>Trường</string>
                 </property>
@@ -744,7 +761,7 @@ background: transparent;</string>
                  <string notr="true">border: none;</string>
                 </property>
                 <property name="text">
-                 <string>TextLabel</string>
+                 <string>Trống</string>
                 </property>
                </widget>
               </item>
@@ -830,6 +847,10 @@ background: transparent;</string>
                   <pointsize>15</pointsize>
                  </font>
                 </property>
+                <property name="styleSheet">
+                 <string notr="true">background: transparent;
+border: none;</string>
+                </property>
                 <property name="text">
                  <string>Lớp:</string>
                 </property>
@@ -847,218 +868,12 @@ background: transparent;</string>
                  <string notr="true">border: none;</string>
                 </property>
                 <property name="text">
-                 <string>TextLabel</string>
+                 <string>Trống</string>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QPushButton" name="pushButton_3">
-                <property name="minimumSize">
-                 <size>
-                  <width>30</width>
-                  <height>50</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>30</width>
-                  <height>50</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">image: url(:/images/icons/Edit.png);
-background: transparent;</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QFrame" name="BirthFrame">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>50</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QFrame {
-	border-bottom: 1px solid black;
-	border-radius: 0px;
-}</string>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_8">
-              <property name="spacing">
-               <number>0</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QLabel" name="label_Birth">
-                <property name="minimumSize">
-                 <size>
-                  <width>200</width>
-                  <height>50</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>200</width>
-                  <height>50</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Montserrat</family>
-                  <pointsize>15</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Năm sinh:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="BirthBox">
-                <property name="font">
-                 <font>
-                  <family>iCiel Effra Regular</family>
-                  <pointsize>15</pointsize>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">border: none;</string>
-                </property>
-                <property name="text">
-                 <string>TextLabel</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="pushButton_4">
-                <property name="minimumSize">
-                 <size>
-                  <width>30</width>
-                  <height>50</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>30</width>
-                  <height>50</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">image: url(:/images/icons/Edit.png);
-background: transparent;</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QFrame" name="CountryFrame">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>50</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QFrame {
-	border-bottom: 1px solid black;
-	border-radius: 0px;
-}</string>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_9">
-              <property name="spacing">
-               <number>0</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QLabel" name="label_country">
-                <property name="minimumSize">
-                 <size>
-                  <width>200</width>
-                  <height>50</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>200</width>
-                  <height>50</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Montserrat</family>
-                  <pointsize>15</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Quê quán:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="CountryBox">
-                <property name="font">
-                 <font>
-                  <family>iCiel Effra Regular</family>
-                  <pointsize>15</pointsize>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">border: none;</string>
-                </property>
-                <property name="text">
-                 <string>TextLabel</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="pushButton_5">
                 <property name="minimumSize">
                  <size>
                   <width>30</width>
@@ -1145,6 +960,10 @@ background: transparent;</string>
                   <pointsize>15</pointsize>
                  </font>
                 </property>
+                <property name="styleSheet">
+                 <string notr="true">background: transparent;
+border: none;</string>
+                </property>
                 <property name="text">
                  <string>Mật khẩu:</string>
                 </property>
@@ -1167,6 +986,9 @@ background: transparent;</string>
                  <string notr="true">border: none;
 background: transparent;
 color: rgb(0,0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Trống</string>
                 </property>
                 <property name="echoMode">
                  <enum>QLineEdit::Password</enum>
@@ -1276,6 +1098,10 @@ QPushButton:hover {
                   <pointsize>15</pointsize>
                  </font>
                 </property>
+                <property name="styleSheet">
+                 <string notr="true">background: transparent;
+border: none;</string>
+                </property>
                 <property name="text">
                  <string>Thư điện tử (email/gmail):</string>
                 </property>
@@ -1293,230 +1119,12 @@ QPushButton:hover {
                  <string notr="true">border: none;</string>
                 </property>
                 <property name="text">
-                 <string>TextLabel</string>
+                 <string>Trống</string>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QPushButton" name="pushButton_6">
-                <property name="minimumSize">
-                 <size>
-                  <width>30</width>
-                  <height>50</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>30</width>
-                  <height>50</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">image: url(:/images/icons/Edit.png);
-background: transparent;</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QFrame" name="TeleFrame">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>50</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>50</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QFrame {
-	border-bottom: 1px solid black;
-	border-radius: 0px;
-}</string>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_12">
-              <property name="spacing">
-               <number>0</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QLabel" name="label_Tele">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>50</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>150</width>
-                  <height>50</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Montserrat</family>
-                  <pointsize>15</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Số liên lạc:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="TeleBox">
-                <property name="font">
-                 <font>
-                  <family>iCiel Effra Regular</family>
-                  <pointsize>15</pointsize>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">border: none;</string>
-                </property>
-                <property name="text">
-                 <string>TextLabel</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="pushButton_9">
-                <property name="minimumSize">
-                 <size>
-                  <width>30</width>
-                  <height>50</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>30</width>
-                  <height>50</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">image: url(:/images/icons/Edit.png);
-background: transparent;</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QFrame" name="AdressFrame">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>50</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>50</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QFrame {
-	border-bottom: 1px solid black;
-	border-radius: 0px;
-}</string>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_13">
-              <property name="spacing">
-               <number>0</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QLabel" name="label_adress">
-                <property name="minimumSize">
-                 <size>
-                  <width>170</width>
-                  <height>50</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>150</width>
-                  <height>50</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Montserrat</family>
-                  <pointsize>15</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Địa chỉ liên lạc:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="AdressBox">
-                <property name="font">
-                 <font>
-                  <family>iCiel Effra Regular</family>
-                  <pointsize>15</pointsize>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">border: none;</string>
-                </property>
-                <property name="text">
-                 <string>TextLabel</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="pushButton_10">
                 <property name="minimumSize">
                  <size>
                   <width>30</width>
@@ -1632,22 +1240,5 @@ QPushButton:hover {
  <resources>
   <include location="Resources.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>pushButton_10</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>Save_btn</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1037</x>
-     <y>468</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>546</x>
-     <y>526</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

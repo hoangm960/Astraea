@@ -120,7 +120,7 @@ class UIFunctions(DownloadWindow):
 
     def Quit(self, ui):
         decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
-        username = open(self.USER_PATH).readline().rstrip()
+        username = open(self.USER_PATH, encoding = 'utf-8').readline().rstrip()
         encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
 
         open(self.OPENED_ROOM_PATH, 'w').close()

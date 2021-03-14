@@ -1,13 +1,14 @@
-from encryption import decrypt, encrypt
 import os
 import pickle
 import sys
 from datetime import datetime
-import pandas
 
 import mysql.connector
+import pandas
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow, QMessageBox
+
+from encryption import decrypt, encrypt
 
 
 class RoomWindow(QMainWindow):
@@ -37,6 +38,7 @@ class UIFunctions(RoomWindow):
             ui.student_list_frame.close()
         else:
             self.add_student_list(ui)
+            self.rank_student(ui)
         self.connect_btn(ui)
 
     def connect_btn(self, ui):
@@ -203,10 +205,10 @@ class UIFunctions(RoomWindow):
     @staticmethod
     def show_file_dialog(filename):
         HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
-        file_path = QFileDialog.getSaveFileName(None, "Open file", HOME_PATH, "*.list")[0]
+        path = QFileDialog.getSaveFileName(None, "Open file", HOME_PATH, "*.list")[0]
         with open(filename, "w", encoding="utf8") as f:
-            f.write(file_path)
-        return file_path
+            f.write(path)
+        return path
 
     def add_lesson_list(self, ui):
         ui.lesson_list.clear()
@@ -220,14 +222,18 @@ class UIFunctions(RoomWindow):
             lesson_name = [row[0] for row in cursor][0]
             ui.lesson_list.addItem(f"ID: {lesson_id}, Tên: {lesson_name}")
 
-    def add_student_list(self, ui):
-        ui.student_list.clear()
+    @staticmethod
+    def get_student_list(ui, filter):
         cursor = ui.connection.cursor()
         cursor.execute(
-            "SELECT Username, ShowName FROM user WHERE RoomId = %s AND Type = %s",
-            (ui.id, 0),
+            f"SELECT {filter} FROM user WHERE RoomId = {ui.id} AND Type = 0"
         )
-        students = [row for row in cursor]
+        return [row for row in cursor]
+
+    def add_student_list(self, ui):
+        ui.student_list.clear()
+        students = self.get_student_list(ui, "Username, ShowName")
+
         for student in students:
             username, name = student
             ui.student_list.addItem(f"Tên người dùng: {username}, Tên: {name}")
@@ -275,7 +281,21 @@ class UIFunctions(RoomWindow):
                     "UPDATE user SET RoomId = Null WHERE Username = %s", (username,)
                 )
                 ui.connection.commit()
-                
+
+    def rank_student(self, ui):
+        students = self.get_student_list(ui, "Username")
+        student_scores = tmp_scores = {i[0]:0 for i in students}
+        cursor = ui.connection.cursor()
+        cursor.execute(
+            "SELECT Username, Mark FROM submission"
+        )
+
+        mark_list = [list(row) for row in cursor]
+        for student in list(tmp_scores):
+            for mark in mark_list:
+                if student == mark[0]:
+                    student_scores[student] += mark[1]
+        print(student_scores)
 
     @staticmethod
     def close_pg(ui):

@@ -312,10 +312,8 @@ class UIFunctions(ResultWindow):
 
 
 def main(pg, connection):
-    app = QApplication(sys.argv)
     window = ResultWindow(pg, connection)
     window.show()
-    sys.exit(app.exec_())
 
 
 if __name__ == "__main__":

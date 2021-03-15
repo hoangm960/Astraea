@@ -76,8 +76,10 @@ class UIFunctions(MainWindow):
 
     def connect_btn(self, ui):
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
-        if ui.pg:
-            ui.btn_quit.clicked.connect(lambda: ui.pg.close())
+        def check():
+            if ui.pg:
+                ui.pg.close()
+        ui.btn_quit.clicked.connect(lambda: check())
         ui.btn_quit.clicked.connect(lambda: self.close_pg(ui))
 
         ui.load_btn.clicked.connect(

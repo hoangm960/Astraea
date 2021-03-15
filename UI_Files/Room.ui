@@ -729,7 +729,7 @@ QPushButton:pressed {
          </property>
          <property name="maximumSize">
           <size>
-           <width>210</width>
+           <width>16777215</width>
            <height>16777215</height>
           </size>
          </property>
@@ -747,13 +747,13 @@ QPushButton:pressed {
            <widget class="QListWidget" name="Achievements_list">
             <property name="minimumSize">
              <size>
-              <width>200</width>
+              <width>0</width>
               <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>200</width>
+              <width>16777215</width>
               <height>16777215</height>
              </size>
             </property>
@@ -764,6 +764,9 @@ QPushButton:pressed {
               <weight>75</weight>
               <bold>true</bold>
              </font>
+            </property>
+            <property name="autoFillBackground">
+             <bool>true</bool>
             </property>
             <property name="styleSheet">
              <string notr="true">QListWidget {
@@ -812,6 +815,9 @@ QScrollBar::sub-line {
 QScrollBar::add-page, QScrollBar::sub-page {
 	height: 0px;
 }</string>
+            </property>
+            <property name="sortingEnabled">
+             <bool>true</bool>
             </property>
            </widget>
           </item>

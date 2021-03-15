@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>809</width>
+    <width>880</width>
     <height>673</height>
    </rect>
   </property>
@@ -45,7 +45,7 @@ QFrame{
       <property name="maximumSize">
        <size>
         <width>16777215</width>
-        <height>16777215</height>
+        <height>65</height>
        </size>
       </property>
       <property name="styleSheet">

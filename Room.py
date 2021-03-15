@@ -5,7 +5,7 @@ from datetime import datetime
 
 import mysql.connector
 import pandas
-from PyQt5 import QtCore, uic
+from PyQt5 import QtCore, QtGui, uic
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow, QMessageBox
 
 from encryption import decrypt, encrypt
@@ -284,6 +284,7 @@ class UIFunctions(RoomWindow):
 
     def rank_student(self, ui):
         students = self.get_student_list(ui, "Username")
+        names = self.get_student_list(ui, 'ShowName')
         student_scores = tmp_scores = {i[0]:0 for i in students}
         cursor = ui.connection.cursor()
         cursor.execute(
@@ -295,15 +296,35 @@ class UIFunctions(RoomWindow):
             for mark in mark_list:
                 if student == mark[0]:
                     student_scores[student] += mark[1]
-        print(student_scores)
-
+        
+        check = list()
+        rank = list()
+        for _ in range(0, len(students)):
+            check.append(True)
+            rank.append(0)
+        stt = 1
+        while stt <= len(student_scores):
+            max = 0
+            x = 0
+            record = 0
+            for i in student_scores.keys():
+                if student_scores[i]>max and check[x]:
+                    max = student_scores[i]
+                    record = x
+                x+=1
+            rank[record] = stt
+            check[record] = False
+            stt+=1
+        stt = 0
+        for name in student_scores.keys():
+            ui.Achievements_list.addItem(f"{rank[stt]}. {names[stt-1][0]} : {student_scores[name]}")
+            stt+=1
+            
     @staticmethod
     def close_pg(ui):
         import main_ui
-
         main_ui.main(ui.role, ui.pg, ui.connection)
         ui.close()
-
 
 if __name__ == "__main__":
     connection = mysql.connector.connect(

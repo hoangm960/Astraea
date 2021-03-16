@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QApplication
 
 from UI_Files import Resources
 
-VERSION = "3.0"
+VERSION = "3.1"
 
 app = QApplication([])
 screen_resolution = app.desktop().screenGeometry()

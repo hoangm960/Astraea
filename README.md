@@ -60,3 +60,5 @@ Phần mềm hỗ trợ dạy và học lập trình
 + Dữ liệu lý thuyết được đăng trên cơ sở dữ liệu
 #### v3.0 (5/2):
 + Thêm giao diện chỉnh sửa lý thuyết
+#### v3.1 (10/3):
++ Thêm chức năng kick học sinh và bảng xếp hạng

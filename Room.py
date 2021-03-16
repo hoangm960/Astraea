@@ -34,11 +34,12 @@ class UIFunctions(RoomWindow):
         ui.showMaximized()
         ui.ID_Room.setText(ui.id)
         self.add_lesson_list(ui)
+        self.rank_student(ui)
+        
         if ui.role == 0:
             ui.student_list_frame.close()
         else:
             self.add_student_list(ui)
-            self.rank_student(ui)
         self.connect_btn(ui)
 
     def connect_btn(self, ui):

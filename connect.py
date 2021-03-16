@@ -110,10 +110,10 @@ class UIFunctions(DownloadWindow):
         room_id = open(self.OPENED_ROOM_PATH).read().rstrip()
         if room_id:
             ui.label.setText(f'ID Phòng: {room_id}')
-
             ui.room_btn.hide()
             ui.In_btn.hide()
             ui.id_entry.hide()
+            open('./data/Users/opened_assignment.oa', 'w').close()
         else:
             ui.Quit.hide()
             ui.Go_Room.hide()

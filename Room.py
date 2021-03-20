@@ -318,7 +318,7 @@ class UIFunctions(RoomWindow):
             stt+=1
         stt = 0
         for name in student_scores.keys():
-            ui.Achievements_list.addItem(f"{rank[stt]}. {names[stt-1][0]} : {student_scores[name]}")
+            ui.Achievements_list.addItem(f"{rank[stt]}. {names[stt-1][0]}")
             stt+=1
             
     @staticmethod

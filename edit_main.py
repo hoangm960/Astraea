@@ -171,18 +171,13 @@ class UIFunctions(EditWindow):
                     border: 0px solid black; 
                     border-radius: 12px;""")
             if "'" in child.details_entry.toPlainText():
-                text = child.details_entry.toPlainText()
-                child.details_entry.setText("Dấu nháy ' không hợp lệ, có thể thay bằng dấu nháy \"")
                 child.details_entry.setStyleSheet("""background-color: rgb(255, 255, 255); 
                     border: 2px solid rgb(255,0,0); 
                     border-radius: 12px;""")
-                child.details_entry.setDisabled(True)
                 ui.timer = QtCore.QTimer()
                 def setDefault():
                     child.details_entry.setStyleSheet("""background-color: rgb(255, 255, 255);
                                     border-radius: 12px;""")
-                    child.details_entry.setText(text)
-                    child.details_entry.setDisabled(False)
                 ui.timer.singleShot(2500, lambda: setDefault())
 
 

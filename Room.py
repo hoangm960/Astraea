@@ -309,7 +309,7 @@ class UIFunctions(RoomWindow):
             x = 0
             record = 0
             for i in student_scores.keys():
-                if student_scores[i]>max and check[x]:
+                if student_scores[i]>=max and check[x]:
                     max = student_scores[i]
                     record = x
                 x+=1
@@ -318,9 +318,8 @@ class UIFunctions(RoomWindow):
             stt+=1
         stt = 0
         for name in student_scores.keys():
-            ui.Achievements_list.addItem(f"{rank[stt]}. {names[stt-1][0]}")
+            ui.Achievements_list.addItem(f"{rank[stt]}. {names[stt][0]}")
             stt+=1
-            
     @staticmethod
     def close_pg(ui):
         import main_ui
@@ -335,7 +334,7 @@ if __name__ == "__main__":
         database="K63yMSwITl",
     )
     app = QApplication(sys.argv)
-    window = RoomWindow(1, None, connection, "1")
+    window = RoomWindow(1, None, connection, "11")
     # window = RoomWindow(0, None, connection, '1')
     window.show()
     sys.exit(app.exec_())

@@ -6,13 +6,14 @@ from random import randrange
 import mysql.connector
 from PyQt5 import QtCore, QtWidgets, uic
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWIDGETSIZE_MAX
 
 import main_ui
 from encryption import *
 import Main
 
 FILE = ""
+QuitFrameUI = "./UI_Files/QuitFrame.ui"
 
 class User:
     def __init__(self, id, name, name_user, password, role):
@@ -56,7 +57,6 @@ class LoginFunctions(LoginWindow):
     KEY_PATH = "data/encryption/users.key"
 
     def __init__(self, ui):
-        ui.OkCancelFrame.hide()
         ui.frameError.hide()
         ui.eyeHide_SI.hide()
         ui.eyeHide.hide()
@@ -75,7 +75,6 @@ class LoginFunctions(LoginWindow):
         ui.btn_maximize.setToolTip("Phóng to")
         ui.btn_minimize.setToolTip("Thu nhỏ")
         ui.btn_quit.setToolTip("Đóng")
-        ui.HorizontalSpacer_L.hide()
         self.connect_btn(ui)
         self.check_autosave(ui)
 
@@ -83,15 +82,8 @@ class LoginFunctions(LoginWindow):
         
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
         ui.btn_maximize.clicked.connect(lambda: self.maximize_restore(ui))
-        ui.btn_quit.clicked.connect(lambda: ui.OkCancelFrame.show())
-        ui.Accept.clicked.connect(lambda: ui.close())
-        def close_pg():
-            try:
-                ui.pg.close()
-            except:
-                pass
-        ui.Accept.clicked.connect(close_pg)
-        ui.Deny.clicked.connect(lambda: ui.OkCancelFrame.hide())
+        ui.btn_quit.clicked.connect(lambda: self.openQuitFrame(ui))
+        
         ui.eyeHide_SI.clicked.connect(
             lambda: ui.PassBox_SI.setEchoMode(QtWidgets.QLineEdit.Password)
         )
@@ -127,6 +119,9 @@ class LoginFunctions(LoginWindow):
             ui.Note_Pass.hide()
             ui.Note_User.hide()
             ui.student.setChecked(True)
+    def openQuitFrame(self, ui):
+        ui_main = QuitFrame(ui)
+        ui_main.show()
 
     def check_autosave(self, ui):
         decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
@@ -254,6 +249,22 @@ class LoginFunctions(LoginWindow):
             ui.SavePass.setChecked(False)
             ui.stacked_widget.setCurrentIndex(2)
 
+class QuitFrame(QMainWindow):
+    def __init__(self, ui):
+        QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
+        uic.loadUi(QuitFrameUI, self)
+        self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        def close_pg():
+            try:
+                ui.pg.close()
+            except:
+                pass
+        self.Accept.clicked.connect(lambda: exit())
+        self.Accept.clicked.connect(lambda: close_pg())
+        self.Deny.clicked.connect(lambda: self.close())
+        ui.setDisabled(True)
+        self.Deny.clicked.connect(lambda: ui.setDisabled(False))
 class Loading_Screen(QMainWindow):
     counter = 0
 
@@ -357,18 +368,18 @@ class UILoadingFunctions(Loading_Screen):
                 ui.timer.stop()
                 ui.progressBar.hide()
                 self.PG.close()
-        self.delay(randrange(5, 10), 0.1)
-        self.delay(randrange(20, 30), 0.23)
-        self.delay(randrange(40, 50), 0.43)
-        self.delay(randrange(60, 70), 0.93)
-        self.delay(randrange(60, 70), 0.93)
-        self.delay(randrange(60, 70), 0.93)
-        self.delay(randrange(60, 70), 0.93)
-        self.delay(randrange(60, 70), 0.93)
-        self.delay(randrange(60, 70), 0.93)
-        self.delay(randrange(80, 90), 0.17)
-        self.delay(randrange(90, 99), 0.6)
-        self.delay(99, 1)
+        # self.delay(randrange(5, 10), 0.1)
+        # self.delay(randrange(20, 30), 0.23)
+        # self.delay(randrange(40, 50), 0.43)
+        # self.delay(randrange(60, 70), 0.93)
+        # self.delay(randrange(60, 70), 0.93)
+        # self.delay(randrange(60, 70), 0.93)
+        # self.delay(randrange(60, 70), 0.93)
+        # self.delay(randrange(60, 70), 0.93)
+        # self.delay(randrange(60, 70), 0.93)
+        # self.delay(randrange(80, 90), 0.17)
+        # self.delay(randrange(90, 99), 0.6)
+        # self.delay(99, 1)
         self.counter += 1
         
 

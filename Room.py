@@ -31,7 +31,7 @@ class UIFunctions(RoomWindow):
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         ui.showMaximized()
-        ui.ID_Room.setText(ui.id)
+        ui.ID_Room.setText('ID phòng: {}'.format(ui.id))
         self.add_lesson_list(ui)
         self.rank_student(ui)
         

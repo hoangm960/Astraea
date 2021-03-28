@@ -1,6 +1,7 @@
 import os
 import pickle
 import sys
+from PyQt5.QtGui import QIcon
 
 import mysql.connector
 import pygetwindow

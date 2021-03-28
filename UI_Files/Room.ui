@@ -71,7 +71,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QLabel" name="label">
+        <widget class="QLabel" name="ID_Room">
          <property name="minimumSize">
           <size>
            <width>100</width>
@@ -80,8 +80,8 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>100</width>
-           <height>30</height>
+           <width>16777215</width>
+           <height>16777215</height>
           </size>
          </property>
          <property name="font">
@@ -98,24 +98,6 @@ background: transparent;</string>
          </property>
          <property name="text">
           <string>ID phòng: </string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="ID_Room">
-         <property name="font">
-          <font>
-           <family>Montserrat</family>
-           <pointsize>15</pointsize>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(255,255,255);</string>
-         </property>
-         <property name="text">
-          <string>[CODE]</string>
          </property>
         </widget>
        </item>

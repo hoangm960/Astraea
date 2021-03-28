@@ -22,7 +22,6 @@ class MainPad(QMainWindow):
         super(QMainWindow, self).__init__()
         uic.loadUi(PAD_UI, self)    
         self.pg = pg
-
         def moveWindow(event):
             if UIFunction.GLOBAL_STATE == True:
                 UIFunction.maximize_restore(self)

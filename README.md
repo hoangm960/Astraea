@@ -45,7 +45,7 @@ Phần mềm hỗ trợ dạy và học lập trình
 #### v2.3 (10/12): 
 + Hỗ trợ thêm ngôn ngữ Pascal
 #### v2.4 (14/12): 
-+ Chuyển môi trường lập trình sang Thonny từ thonny
++ Chuyển môi trường lập trình sang Thonny
 #### v2.5 (15/12): 
 + Giáo viên có thể thêm file chú thích.
 #### v2.6 (16/12): 

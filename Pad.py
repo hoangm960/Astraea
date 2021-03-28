@@ -4,14 +4,12 @@ from PIL import ImageGrab
 import io
 import codecs
 
-from PyQt5 import QtCore, QtWidgets, uic, QtGui, QtCore
+import mysql.connector
+from PyQt5 import QtCore, uic, QtCore
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QClipboard, QKeySequence, QTextCursor
+from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import (QApplication, QColorDialog, QFileDialog,
                              QMainWindow, QMessageBox, QShortcut)
-
-import doc
-import main_ui
 
 PAD_UI = './UI_Files/Pad.ui'
 OPENED_DOC = "./data/Users/opened_doc.od"
@@ -20,11 +18,10 @@ OPENED_DOC_CONTENT = "./data/Users/opened_doc_content.html"
 HTML_EXTENSIONS = ['.htm', '.html']
 
 class MainPad(QMainWindow):
-    def __init__(self, pg, connection):
+    def __init__(self, pg):
         super(QMainWindow, self).__init__()
         uic.loadUi(PAD_UI, self)    
         self.pg = pg
-        self.connection = connection
 
         def moveWindow(event):
             if UIFunction.GLOBAL_STATE == True:
@@ -92,6 +89,17 @@ class UIFunction(MainPad):
             document.setHtml(html_img_tag)
 
     @staticmethod
+    def get_connection():
+        connection = mysql.connector.connect(
+            host="remotemysql.com",
+            user="K63yMSwITl",
+            password="zRtA9VtyHq",
+            database="K63yMSwITl"
+        )
+
+        return connection
+
+    @staticmethod
     def check_empty(ui):
         content = open(OPENED_DOC_CONTENT).read()
         if content:
@@ -102,9 +110,11 @@ class UIFunction(MainPad):
         open(OPENED_DOC_CONTENT, 'w').write(content)
         lesson_id = open(self.OPENED_LESSON_PATH).readlines()[1]
         id = open(OPENED_DOC).readlines()[1]
-        cursor = ui.connection.cursor()
+        connection = self.get_connection()
+        cursor = connection.cursor()
         cursor.execute("UPDATE doc SET DocContent = %s WHERE DocId = %s AND LessonId = %s", (content, id, lesson_id))
-        ui.connection.commit()
+        connection.commit()
+        connection.close()
 
     def Quit(self, ui):
         with open(OPENED_DOC_CONTENT) as f:
@@ -226,14 +236,7 @@ class UIFunction(MainPad):
             pass
 
 if __name__ == '__main__':
-    import mysql.connector
-    connection = mysql.connector.connect(
-        host="remotemysql.com",
-        user="K63yMSwITl",
-        password="zRtA9VtyHq",
-        database="K63yMSwITl"
-    )
     app = QApplication(sys.argv)
-    window = MainPad(None, connection)
+    window = MainPad(None)
     window.show()
     sys.exit(app.exec_())

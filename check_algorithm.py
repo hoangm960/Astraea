@@ -48,6 +48,7 @@ def main(filename, tests, infos, time_limit=2):
                 if 'SAI' not in list_file[-1]:
                     with open('./data/results/comment.txt', 'a+', encoding='utf-8', errors='ignore') as file_error_w:
                         file_error_w.write('\n>>> SAI ĐÁP ÁN: "'+output.rstrip()+'" phải là "'+ans.rstrip()+'"...')
+                        
     def check_info(info):
         key, message, num = (i for i in info)
         data = open(filename).read()

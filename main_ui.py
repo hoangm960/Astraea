@@ -16,10 +16,9 @@ OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
 
 
 class MainWindow(QMainWindow):
-    def __init__(self, role, pg, connection):
+    def __init__(self, role, pg):
         self.role = role
         self.pg = pg
-        self.connection = connection
 
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(UI_MAIN_PATH, self)
@@ -66,7 +65,7 @@ class UIFunctions(MainWindow):
         ui.profile_btn.setDisabled(False)
         def open_profile(ui):
             import profile
-            ui.mainWin = profile.ProfileWindow(ui, ui.pg, ui.connection)
+            ui.mainWin = profile.ProfileWindow(ui, ui.pg)
             ui.mainWin.show()
         ui.profile_btn.clicked.connect(lambda: open_profile(ui))
 
@@ -101,7 +100,7 @@ class UIFunctions(MainWindow):
     def open_connect(self, ui):
         self.close_pg(ui)
         import connect
-        window = connect.DownloadWindow(ui.pg, ui.role, ui.connection)
+        window = connect.DownloadWindow(ui.pg, ui.role)
         window.show()
 
     @staticmethod
@@ -170,7 +169,7 @@ class UIFunctions(MainWindow):
     def open_doc(self, ui):
         self.close_pg(ui)
         import doc
-        window = doc.DocWindow(ui.role, ui.pg, ui.connection)
+        window = doc.DocWindow(ui.role, ui.pg)
         window.show()
 
     class TeacherUiFunctions:
@@ -187,7 +186,7 @@ class UIFunctions(MainWindow):
         @staticmethod
         def open_edit_form(ui):
             import edit_main
-            window = edit_main.EditWindow(ui.pg, ui.connection)
+            window = edit_main.EditWindow(ui.pg)
             window.show()
 
     class StudentUiFunctions:
@@ -202,7 +201,7 @@ class UIFunctions(MainWindow):
         @staticmethod
         def open_result_form(ui):
             import result_main
-            window = result_main.ResultWindow(ui.pg, ui.connection)
+            window = result_main.ResultWindow(ui.pg)
             window.show()
 
     def define_role(self, ui):
@@ -212,20 +211,14 @@ class UIFunctions(MainWindow):
             self.StudentUiFunctions(ui)
 
 
-def main(role, pg, connection):
-    window = MainWindow(role, pg, connection)
+def main(role, pg):
+    window = MainWindow(role, pg)
     window.move(Main.SCREEN_WIDTH - window.width(), 0)
     window.show()
 
 
 if __name__ == "__main__":
-    connection = mysql.connector.connect(
-        host="remotemysql.com",
-        user="K63yMSwITl",
-        password="zRtA9VtyHq",
-        database="K63yMSwITl"
-    )
     app = QApplication(sys.argv)
-    main(1, None, connection)
+    main(1, None)
     # main(0, None, connection)
     sys.exit(app.exec_())

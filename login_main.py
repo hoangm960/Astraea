@@ -199,8 +199,10 @@ class LoginFunctions(LoginWindow):
                         f.write('True' if ui.SavePass.isChecked() else 'False')
                     encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
 
+                    ui.connection.close()
                     ui.close()
-                    main_ui.main(role, ui.pg, ui.connection)
+                    main_ui.main(role, ui.pg)
+                    
                 QtCore.QTimer.singleShot(3000, lambda: ui.frameError.hide())
 
     def check_SU(self, ui):
@@ -357,6 +359,7 @@ class UILoadingFunctions(Loading_Screen):
                 ui.timer.stop()
                 ui.progressBar.hide()
                 self.PG.close()
+
         self.delay(randrange(5, 10), 0.1)
         self.delay(randrange(20, 30), 0.23)
         self.delay(randrange(40, 50), 0.43)

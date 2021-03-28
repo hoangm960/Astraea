@@ -14,10 +14,9 @@ from encryption import decrypt, encrypt
 class RoomWindow(QMainWindow):
     ROOM_UI = "./UI_Files/Room.ui"
 
-    def __init__(self, role, pg, connection, id):
+    def __init__(self, role, pg, id):
         self.role = role
         self.pg = pg
-        self.connection = connection
         self.id = id
         super(RoomWindow, self).__init__()
         uic.loadUi(self.ROOM_UI, self)
@@ -61,6 +60,17 @@ class UIFunctions(RoomWindow):
             ui.kick_btn.clicked.connect(lambda: self.kick_student(ui))
 
     @staticmethod
+    def get_connection():
+        connection = mysql.connector.connect(
+            host="remotemysql.com",
+            user="K63yMSwITl",
+            password="zRtA9VtyHq",
+            database="K63yMSwITl"
+        )
+
+        return connection
+
+    @staticmethod
     def get_file_dialog(ui, filter):
         HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
         file_path = QFileDialog.getOpenFileName(ui, "Open file", HOME_PATH, filter)[0]
@@ -78,7 +88,8 @@ class UIFunctions(RoomWindow):
     def upload(self, ui):
         filename = self.get_file_dialog(ui, "*.list")
         if ui.id and filename:
-            cursor = ui.connection.cursor()
+            connection = self.get_connection()
+            cursor = connection.cursor()
             title, assignments = self.get_lesson(filename)
             current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             cursor.execute(
@@ -126,12 +137,14 @@ class UIFunctions(RoomWindow):
                     (ui.id, lesson_id),
                 )
 
-            ui.connection.commit()
+            connection.commit()
+            connection.close()
             self.add_lesson_list(ui)
 
-    @staticmethod
-    def del_lesson(ui):
+    def del_lesson(self, ui):
         items = ui.lesson_list.selectedItems()
+        connection = self.get_connection()
+        cursor = connection.cursor()
         if items:
             for item in items:
                 ui.lesson_list.takeItem(ui.lesson_list.row(item))
@@ -139,11 +152,12 @@ class UIFunctions(RoomWindow):
                 text = item.text()
                 lesson_id = text.replace("ID: ", "").replace("Tên: ", "").split(", ")[0]
                 if lesson_id:
-                    cursor = ui.connection.cursor()
                     cursor.execute(
                         "DELETE FROM lesson_in_room WHERE LessonId = %s", (lesson_id,)
                     )
-                    ui.connection.commit()
+                    connection.commit()
+                    connection.close()
+                    break
 
     def download_lesson(self, ui):
         item = ui.lesson_list.currentItem()
@@ -156,7 +170,8 @@ class UIFunctions(RoomWindow):
     def download(self, ui, lesson_id):
         from edit_main import Assignment
 
-        cursor = ui.connection.cursor()
+        connection = self.get_connection()
+        cursor = connection.cursor()
         cursor.execute(f"SELECT Name FROM lesson WHERE LessonId = '{lesson_id}'")
         title = [row for row in cursor][0][0]
         if title:
@@ -195,6 +210,7 @@ class UIFunctions(RoomWindow):
                 file_assignments.append(
                     Assignment(name, details, mark, file_tests, infos)
                 )
+            connection.close()
 
             filename = self.show_file_dialog(self.OPENED_LESSON_PATH)
             if filename:
@@ -213,7 +229,8 @@ class UIFunctions(RoomWindow):
 
     def add_lesson_list(self, ui):
         ui.lesson_list.clear()
-        cursor = ui.connection.cursor()
+        connection = self.get_connection()
+        cursor = connection.cursor()
         cursor.execute(
             "SELECT LessonId FROM lesson_in_room WHERE RoomId = %s", (ui.id,)
         )
@@ -222,14 +239,17 @@ class UIFunctions(RoomWindow):
             cursor.execute("SELECT Name FROM lesson WHERE LessonId = %s", (lesson_id,))
             lesson_name = [row[0] for row in cursor][0]
             ui.lesson_list.addItem(f"ID: {lesson_id}, Tên: {lesson_name}")
+        connection.close()
 
-    @staticmethod
-    def get_student_list(ui, filter):
-        cursor = ui.connection.cursor()
+    def get_student_list(self, ui, filter):
+        connection = self.get_connection()
+        cursor = connection.cursor()
         cursor.execute(
             f"SELECT {filter} FROM user WHERE RoomId = {ui.id} AND Type = 0"
         )
-        return [row for row in cursor]
+        student_list = [row for row in cursor]
+        connection.close()
+        return student_list
 
     def add_student_list(self, ui):
         ui.student_list.clear()
@@ -247,14 +267,16 @@ class UIFunctions(RoomWindow):
 
     def get_students_submission(self, ui):
         try:
+            connection = self.get_connection()
             lesson_id = open(self.OPENED_LESSON_PATH).readlines()[1]
             submission = pandas.read_sql(
                 f"SELECT UserName, SubmissionDate, Mark, Comment FROM submission WHERE LessonId = {lesson_id}",
-                ui.connection,
+                connection,
             )
             filename = self.save_file_dialog(ui, "*.xlsx")
             if filename:
                 submission.to_excel(filename)
+            connection.close()
         except:
             ui.download_info_btn.setText("Chưa có dữ liệu")
             ui.download_info_btn.setDisabled(True)
@@ -267,8 +289,7 @@ class UIFunctions(RoomWindow):
                 ),
             )
 
-    @staticmethod
-    def kick_student(ui):
+    def kick_student(self, ui):
         item = ui.student_list.currentItem()
         if item:
             text = item.text()
@@ -277,22 +298,27 @@ class UIFunctions(RoomWindow):
             )
             if username:
                 ui.student_list.takeItem(ui.student_list.row(item))
-                cursor = ui.connection.cursor()
+                connection = self.get_connection()
+                cursor = connection.cursor()
                 cursor.execute(
                     "UPDATE user SET RoomId = Null WHERE Username = %s", (username,)
                 )
-                ui.connection.commit()
+                connection.commit()
+                connection.close()
 
     def rank_student(self, ui):
         students = self.get_student_list(ui, "Username")
         names = self.get_student_list(ui, 'ShowName')
         student_scores = tmp_scores = {i[0]:0 for i in students}
-        cursor = ui.connection.cursor()
+        connection = self.get_connection()
+        cursor = connection.cursor()
         cursor.execute(
             "SELECT Username, Mark FROM submission"
         )
 
         mark_list = [list(row) for row in cursor]
+        connection.close()
+
         for student in list(tmp_scores):
             for mark in mark_list:
                 if student == mark[0]:
@@ -317,13 +343,14 @@ class UIFunctions(RoomWindow):
             check[record] = False
             stt+=1
         stt = 0
-        for name in student_scores.keys():
+        for _ in student_scores.keys():
             ui.Achievements_list.addItem(f"{rank[stt]}. {names[stt][0]}")
             stt+=1
+
     @staticmethod
     def close_pg(ui):
         import main_ui
-        main_ui.main(ui.role, ui.pg, ui.connection)
+        main_ui.main(ui.role, ui.pg)
         ui.close()
 
 if __name__ == "__main__":
@@ -334,7 +361,7 @@ if __name__ == "__main__":
         database="K63yMSwITl",
     )
     app = QApplication(sys.argv)
-    window = RoomWindow(1, None, connection, "11")
-    # window = RoomWindow(0, None, connection, '1')
+    window = RoomWindow(1, None, "11")
+    # window = RoomWindow(0, None, '1')
     window.show()
     sys.exit(app.exec_())

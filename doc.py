@@ -3,6 +3,7 @@ import pickle
 import shutil
 import sys
 
+import mysql.connector
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import (QApplication, QFileDialog, QLabel,
                              QListWidgetItem, QMainWindow)
@@ -16,12 +17,11 @@ OPENED_DOC_CONTENT = "./data/Users/opened_doc_content.html"
 
 
 class DocWindow(QMainWindow):
-    def __init__(self, role, pg, connection):
+    def __init__(self, role, pg):
         QMainWindow.__init__(self)
         uic.loadUi(DOC_UI, self)
         self.role = role
         self.pg = pg
-        self.connection = connection
 
         UIFunctions(self)
 
@@ -42,7 +42,7 @@ class UIFunctions(DocWindow):
         ui.deleteBox_frame.hide()
 
         self.connect_btn(ui)
-        self.get_doc(ui)
+        self.get_doc()
         self.check_opened_doc(ui)
         self.define_role(ui)
 
@@ -61,11 +61,12 @@ class UIFunctions(DocWindow):
         ui.Save_btn.clicked.connect(
             lambda: self.Change(ui, ui.Name_edit.text()))
         ui.load_btn.clicked.connect(lambda: self.load_doc(ui))
+        ui.titles.itemClicked.connect(lambda: self.load_doc(ui))
 
     @staticmethod
     def close_pg(ui):
         ui.close()
-        main_ui.main(ui.role, ui.pg, ui.connection)
+        main_ui.main(ui.role, ui.pg)
 
     @staticmethod
     def options(ui):
@@ -73,57 +74,88 @@ class UIFunctions(DocWindow):
             ui.deleteBox_frame.show()
             ui.text_entry.hide()
 
+    @staticmethod
+    def get_connection():
+        connection = mysql.connector.connect(
+            host="remotemysql.com",
+            user="K63yMSwITl",
+            password="zRtA9VtyHq",
+            database="K63yMSwITl"
+        )
+
+        return connection
+
+    def load_doc(self, ui):
+        name = ui.titles.currentItem().text()
+        for doc in self.docs:
+            if name in doc:
+                content = doc[2]
+                ui.text_entry.setText(content)
+                open(OPENED_DOC_CONTENT,  'w').write(content)
+
     def Delete(self, ui):
+        connection = self.get_connection()
         selected_items = ui.titles.selectedItems()
         if selected_items:
             item = selected_items[0]
             lesson_id = open(UIFunctions.OPENED_LESSON_PATH).readlines()[1]
-            cursor = ui.connection.cursor()
+
+            cursor = connection.cursor()
             for doc in self.docs:
                 if item.text() in doc:
                     id = doc[0]
                     cursor.execute(
                         "DELETE FROM doc WHERE DocId = %s AND LessonId = %s", (id, lesson_id))
-                    ui.connection.commit()
                     del doc
                     break
+            connection.commit()
+            connection.close()
 
             ui.titles.takeItem(ui.titles.row(item))
             ui.text_entry.clear()
             ui.deleteBox_frame.hide()
 
     def Change(self, ui, text):
+        connection = self.get_connection()
         selected_items = ui.titles.selectedItems()
         if selected_items and not ui.Name_edit.text() in self.docs:
             item = selected_items[0]
 
             lesson_id = open(UIFunctions.OPENED_LESSON_PATH).readlines()[1]
-            cursor = ui.connection.cursor()
+            cursor = connection.cursor()
+
             for doc in self.docs:
                 if item.text() in doc:
                     id = doc[0]
                     cursor.execute(
                         "UPDATE doc SET DocName = %s WHERE DocId = %s AND LessonId = %s", (text, id, lesson_id))
-                    ui.connection.commit()
-                    
+                    connection.commit()
+                    connection.close()
+                
                     list_doc = list(doc)
                     list_doc[1] = text
                     self.docs[self.docs.index(doc)] = tuple(list_doc)
                     ui.Name_edit.clear()
+
+                    break
+
                     
             ui.titles.clear()
             for doc in self.docs:
                 ui.titles.addItem(doc[1])
             ui.text_entry.clear()
 
-    def get_doc(self, ui):
+    def get_doc(self):
+        connection = self.get_connection()
+
         self.docs.clear()
         lesson_path, lesson_id = open(self.OPENED_LESSON_PATH).readlines()
         if lesson_id:
-            cursor = ui.connection.cursor()
+            cursor = connection.cursor()
             cursor.execute(
                 "SELECT DocId, DocName, DocContent FROM doc WHERE LessonId = %s", (lesson_id, ))
             self.docs = [row for row in cursor]
+            connection.close()
 
             opened = ''
             try:
@@ -159,7 +191,6 @@ class UIFunctions(DocWindow):
 
         def connect_btn(self, ui):
             ui.add_btn.clicked.connect(lambda: self.add_titles(ui))
-            ui.titles.itemClicked.connect(lambda: self.load_doc(ui))
             ui.textpad.clicked.connect(lambda: self.open_textpad(ui))
 
         def open_textpad(self, ui):
@@ -169,10 +200,12 @@ class UIFunctions(DocWindow):
                     id = doc[0]
             open(OPENED_DOC, 'a').write('\n' + str(id))
             import Pad
-            window = Pad.MainPad(ui.pg, ui.connection)
+            window = Pad.MainPad(ui.pg)
             window.show()
 
         def open_doc(self, ui):
+            connection = UIFunctions.get_connection()
+            
             if not ui.titles.currentItem().text():
                 file_path = self.get_file_dialog(ui, "*.docx")
                 if file_path:
@@ -183,10 +216,11 @@ class UIFunctions(DocWindow):
 
                     lesson_id = open(
                         UIFunctions.OPENED_LESSON_PATH).readlines()[1]
-                    cursor = ui.connection.cursor()
+                    cursor = connection.cursor()
                     cursor.execute(
                         "INSERT INTO doc(LessonId, DocName, DocContent) VALUES(%s, %s, %s)", (lesson_id, name, html_data))
-                    ui.connection.commit()
+                    connection.commit()
+                    connection.close()
 
                     self.delete_html_file(file_path)
 
@@ -225,14 +259,6 @@ class UIFunctions(DocWindow):
             with open(self.convert_doc_to_html(filename), 'r') as f:
                 return f.read()
 
-        def load_doc(self, ui):
-            name = ui.titles.currentItem().text()
-            for doc in self.docs:
-                if name in doc:
-                    content = doc[2]
-                    ui.text_entry.setText(content)
-                    open(OPENED_DOC_CONTENT, 'w').write(content)
-
         @staticmethod
         def delete_html_file(filename):
             os.remove(f"{os.path.splitext(filename)[0]}.html")
@@ -246,28 +272,21 @@ class UIFunctions(DocWindow):
             ui.titles.setItemWidget(title_item, title)
 
     class StudentUiFunctions:
-        def __init__(self, ui):
+        def __init__(self, ui, docs):
+            self.docs = docs
             ui.confirm_frame.close()
-            ui.titles.itemClicked.connect(lambda: ui.text_entry.setText(
-                UIFunctions.docs[ui.titles.currentItem().text()]))
+
 
     def define_role(self, ui):
         if ui.role == 1:
             self.TeacherUiFunctions(ui, self.docs)
         if ui.role == 0:
-            self.StudentUiFunctions(ui)
+            self.StudentUiFunctions(ui, self.docs)
 
 
 if __name__ == "__main__":
-    import mysql.connector
-    connection = mysql.connector.connect(
-        host="remotemysql.com",
-        user="K63yMSwITl",
-        password="zRtA9VtyHq",
-        database="K63yMSwITl"
-    )
     app = QApplication(sys.argv)
-    window = DocWindow(1, None, connection)
-    # window = DocWindow(0, None, connection)
+    # window = DocWindow(1, None)
+    window = DocWindow(0, None)
     window.show()
     sys.exit(app.exec_())

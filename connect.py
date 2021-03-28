@@ -9,10 +9,9 @@ from PyQt5.QtWidgets import QApplication, QMainWindow
 class DownloadWindow(QMainWindow):
     CONNECT_UI = "./UI_Files/connect.ui"
 
-    def __init__(self, pg, role, connection, *args, **kwargs):
+    def __init__(self, pg, role, *args, **kwargs):
         self.pg = pg
         self.role = role
-        self.connection = connection
         QMainWindow.__init__(self, *args, **kwargs)
         uic.loadUi(self.CONNECT_UI, self)
         UIFunctions(self)
@@ -26,7 +25,6 @@ class UIFunctions(DownloadWindow):
     USER_PATH_ENCRYPTED = "data/Users/User.encrypted"
 
     def __init__(self, ui):
-        ui.connection = ui.connection
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         ui.move(
@@ -49,12 +47,26 @@ class UIFunctions(DownloadWindow):
         ui.Quit.clicked.connect(lambda: self.Quit(ui))
         ui.Quit.clicked.connect(lambda: open('./data/Users/opened_assignment.oa', 'w').close())
 
+    @staticmethod
+    def get_connection():
+        connection = mysql.connector.connect(
+            host="remotemysql.com",
+            user="K63yMSwITl",
+            password="zRtA9VtyHq",
+            database="K63yMSwITl"
+        )
+
+        return connection
+
     def create_room(self, ui):
-        cursor = ui.connection.cursor()
+        connection = self.get_connection()
+        cursor = connection.cursor()
         cursor.execute("INSERT INTO room(Status) VALUES(1)")
         lesson_id = cursor.lastrowid
+        connection.commit()
+        connection.close()
+
         open(self.OPENED_ROOM_PATH, 'w').write(str(lesson_id))
-        ui.connection.commit()
         ui.label_2.show()
         ui.frame_2.hide()
         ui.id_entry.hide()
@@ -73,8 +85,9 @@ class UIFunctions(DownloadWindow):
         username = open(self.USER_PATH, encoding="utf8").readline().rstrip()
         encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
         room_id = ui.id_entry.text()
+        connection = self.get_connection()
         if room_id:
-            cursor = ui.connection.cursor()
+            cursor = connection.cursor()
             cursor.execute('SELECT RoomId FROM room WHERE RoomId = %s AND Status = %s', (room_id, 1))
             if [row for row in cursor]:
                 open(self.OPENED_ROOM_PATH, 'w').write(room_id)
@@ -85,14 +98,15 @@ class UIFunctions(DownloadWindow):
                 ui.label_2.setText('Đã vào được phòng\nid: {}'.format(room_id))
                 ui.timer = QtCore.QTimer()
                 ui.timer.singleShot(1000, lambda: self.close_pg(ui))
-            ui.connection.commit()
+            connection.commit()
+            connection.close()
 
 
     def Go_Room(self, ui):
         import Room
         room_id = open(self.OPENED_ROOM_PATH).read().rstrip()
         if room_id:
-            window = Room.RoomWindow(ui.role, ui.pg, ui.connection, room_id)
+            window = Room.RoomWindow(ui.role, ui.pg, room_id)
             window.show()
             ui.close()
 
@@ -100,9 +114,11 @@ class UIFunctions(DownloadWindow):
         decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
         username = open(self.USER_PATH, encoding="utf8").readline().rstrip()
         encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
-        cursor = ui.connection.cursor()
+        connection = self.get_connection()
+        cursor = connection.cursor()
         cursor.execute("SELECT RoomId FROM user WHERE Username = %s", (username, ))
         room_ids = [row for row in cursor]
+        connection.close()
         if room_ids:
             for room_id in room_ids:
                 open(self.OPENED_ROOM_PATH, 'w').write(str(room_id[0]) if room_id[0] else '')
@@ -123,10 +139,13 @@ class UIFunctions(DownloadWindow):
         username = open(self.USER_PATH, encoding = 'utf-8').readline().rstrip()
         encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
 
+        connection = self.get_connection()
         open(self.OPENED_ROOM_PATH, 'w').close()
-        cursor = ui.connection.cursor()
+        cursor = connection.cursor()
         cursor.execute("UPDATE user SET RoomId = NULL WHERE Username = %s", (username, ))
-        ui.connection.commit()
+        connection.commit()
+        connection.close()
+        
         ui.label.setText('Nhập ID Phòng')
         if ui.role == 1:
             ui.room_btn.show()
@@ -136,19 +155,13 @@ class UIFunctions(DownloadWindow):
     @staticmethod
     def close_pg(ui):
         import main_ui
-        main_ui.main(ui.role, ui.pg, ui.connection)
+        main_ui.main(ui.role, ui.pg)
         ui.close()
 
 
 if __name__ == "__main__":
-    connection = mysql.connector.connect(
-        host="remotemysql.com",
-        user="K63yMSwITl",
-        password="zRtA9VtyHq",
-        database="K63yMSwITl"
-    )
     app = QApplication(sys.argv)
-    # window = DownloadWindow(None, 1, connection)
-    window = DownloadWindow(None, 0, connection)
+    # window = DownloadWindow(None, 1)
+    window = DownloadWindow(None, 0)
     window.show()
     sys.exit(app.exec_())

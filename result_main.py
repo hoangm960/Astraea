@@ -24,9 +24,8 @@ OPENED_RESULT_PATH = "./data/results/"
 
 
 class ResultWindow(QMainWindow):
-    def __init__(self, pg, connection):
+    def __init__(self, pg):
         self.pg = pg
-        self.connection = connection
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(RESULT_FORM_PATH, self)
         self.setGeometry(
@@ -78,7 +77,7 @@ class UIFunctions(ResultWindow):
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
         ui.Accept1.clicked.connect(lambda: ui.close())
         ui.Accept1.clicked.connect(
-            lambda: main_ui.main(0, ui.pg, ui.connection))
+            lambda: main_ui.main(0, ui.pg))
         
         # Window size grip
         ui.sizegrip = QSizeGrip(ui.frame_grip)
@@ -147,6 +146,17 @@ class UIFunctions(ResultWindow):
 
             if file_name[0]:
                 entry.setText(file_name[0])
+
+    @staticmethod
+    def get_connection():
+        connection = mysql.connector.connect(
+            host="remotemysql.com",
+            user="K63yMSwITl",
+            password="zRtA9VtyHq",
+            database="K63yMSwITl"
+        )
+
+        return connection
 
     def load_assignments(self, filename):
         self.assignments.clear()
@@ -289,12 +299,13 @@ class UIFunctions(ResultWindow):
                 f.write("\nBài làm vẫn đạt chuẩn.")
                 ui.Judge.setText("Bài làm đạt chuẩn")
 
-        cursor = ui.connection.cursor()
 
         decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
         name_account = open(self.USER_PATH, encoding='utf-8').readline().rstrip()
         encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
 
+        connection = self.get_connection()
+        cursor = connection.cursor()
         current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         lesson_id = int(open(OPENED_LESSON_PATH, encoding = 'utf-8').readlines()[1])
         if lesson_id:
@@ -303,24 +314,19 @@ class UIFunctions(ResultWindow):
             except mysql.connector.errors.IntegrityError:
                 cursor.execute("UPDATE submission SET Username = %s, LessonId = %s, SubmissionDate = %s, Mark = %s, Comment = %s", (name_account, lesson_id, current_time, round(self.TotalScore, 2), open(self.FILE_COMMENT).read()))
 
-            ui.connection.commit()
+            connection.commit()
+            connection.close()
 
     @staticmethod
     def reopen_main(ui):
-        main_ui.main(0, ui.pg, ui.connection)
+        main_ui.main(0, ui.pg)
         ui.close()
 
 
-def main(pg, connection):
-    window = ResultWindow(pg, connection)
+def main(pg):
+    window = ResultWindow(pg)
     window.show()
 
 
 if __name__ == "__main__":
-    connection = mysql.connector.connect(
-        host="remotemysql.com",
-        user="K63yMSwITl",
-        password="zRtA9VtyHq",
-        database="K63yMSwITl"
-    )
-    main(None, connection)
+    main(None)

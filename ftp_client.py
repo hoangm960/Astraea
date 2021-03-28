@@ -31,7 +31,7 @@ def upload_file(dir, des):
             ftp.storbinary("STOR " + filename, f)
 
 
-host = "123.19.151.58"
+host = "astraeaserver.zyrosite.com"
 user = "Administrator"
 password = "nhatminhb5/2901"
 

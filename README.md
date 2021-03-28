@@ -55,10 +55,12 @@ Phần mềm hỗ trợ dạy và học lập trình
 #### v2.6.2 (4/12): 
 + Dữ liệu, thông tin của người dùng được lưu trữ thông qua cơ sở dữ liệu.
 #### v2.6.3 (8/1):
-+ Dữ liệu bài học giáo viên được đăng trên cơ sở dữ liệu
++ Dữ liệu bài học giáo viên được đăng trên cơ sở dữ liệu.
 #### v2.6.4 (10/1):
-+ Dữ liệu lý thuyết được đăng trên cơ sở dữ liệu
++ Dữ liệu lý thuyết được đăng trên cơ sở dữ liệu.
 #### v3.0 (5/2):
-+ Thêm giao diện chỉnh sửa lý thuyết
++ Thêm giao diện chỉnh sửa lý thuyết.
 #### v3.1 (10/3):
-+ Thêm chức năng kick học sinh và bảng xếp hạng
++ Thêm chức năng kick học sinh và bảng xếp hạng.
+#### v3.1.1 (28/3):
++ Sửa lỗi không kết nối được với cơ sở dữ liệu sau một thời gian.

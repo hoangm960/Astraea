@@ -8,10 +8,9 @@ import sys
 class ProfileWindow(QMainWindow):
     UI_PATH = './UI_Files/profile_form.ui'
 
-    def __init__(self, window, pg, connection):
+    def __init__(self, window, pg):
         self.win = window
         self.pg = pg
-        self.connection = connection
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(self.UI_PATH, self)
         UIFunctions(self, self.win)
@@ -49,7 +48,7 @@ class UIFunctions(ProfileWindow):
                 ui.pg.minimize()
             import login_main
 
-            ui.main = login_main.LoginWindow(ui.pg, ui.connection)
+            ui.main = login_main.LoginWindow(ui.pg)
             ui.main.show()
         ui.OutAccount.clicked.connect(lambda: SignOut(ui))
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)

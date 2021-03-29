@@ -16,8 +16,6 @@ class ProfileWindow(QMainWindow):
         UIFunctions(self, self.win)
 
         def moveWindow(event):
-            if UIFunctions.GLOBAL_STATE == True:
-                UIFunctions.maximize_restore(self)
             if event.buttons() == Qt.LeftButton:
                 self.move(self.pos() + event.globalPos() - self.dragPos)
                 self.dragPos = event.globalPos()
@@ -29,7 +27,6 @@ class ProfileWindow(QMainWindow):
 
 
 class UIFunctions(ProfileWindow):
-    GLOBAL_STATE = False
     USER_PATH = "data/Users/User.txt"
     USER_PATH_ENCRYPTED = "data/Users/User.encrypted"
     KEY_PATH = "data/encryption/users.key"
@@ -55,27 +52,9 @@ class UIFunctions(ProfileWindow):
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         ui.btn_quit.clicked.connect(lambda: ui.close())
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
-        ui.btn_maximize.clicked.connect(lambda: self.maximize_restore(ui))
         self.Update(ui)
-        ui.Save_btn.setDisabled(True)
 
-    def maximize_restore(self, ui):
-        status = self.GLOBAL_STATE
-        if status == False:
-            ui.showMaximized()
-
-            self.GLOBAL_STATE = True
-            ui.centralwidget.setStyleSheet("""background-color: rgb(74, 74, 74);
-border-radius: 0px;""")
-            ui.btn_maximize.setToolTip("khôi phục")
-        else:
-            self.GLOBAL_STATE = False
-            ui.showNormal()
-            ui.resize(ui.width() + 1, ui.height() + 1)
-            ui.centralwidget.setStyleSheet("""background-color: rgb(74, 74, 74);
-border-radius: 20px;""")
-            ui.btn_maximize.setToolTip("Phóng to")
-
+    
     def Update(self, ui):
         decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
         with open(self.USER_PATH, 'r', encoding='utf-8') as f:

@@ -158,13 +158,13 @@ color: rgb(255, 255, 255);</string>
               <widget class="QFrame" name="frame_4">
                <property name="minimumSize">
                 <size>
-                 <width>180</width>
+                 <width>250</width>
                  <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>180</width>
+                 <width>250</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -949,7 +949,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                          <x>0</x>
                          <y>0</y>
                          <width>100</width>
-                         <height>400</height>
+                         <height>30</height>
                         </rect>
                        </property>
                       </widget>

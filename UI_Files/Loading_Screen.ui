@@ -305,7 +305,7 @@ font-size: 18px;
 }</string>
          </property>
          <property name="text">
-          <string>đang tải ...</string>
+          <string>Đang tải ...</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>

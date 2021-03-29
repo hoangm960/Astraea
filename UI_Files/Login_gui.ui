@@ -122,7 +122,7 @@ background : transparent;</string>
            <number>0</number>
           </property>
           <property name="leftMargin">
-           <number>30</number>
+           <number>100</number>
           </property>
           <property name="topMargin">
            <number>10</number>
@@ -278,7 +278,7 @@ QPushButton:hover {
             </layout>
            </widget>
           </item>
-          <item alignment="Qt::AlignRight">
+          <item>
            <widget class="QLabel" name="label_15">
             <property name="font">
              <font>
@@ -304,13 +304,13 @@ QPushButton:hover {
            <widget class="QFrame" name="frame_2">
             <property name="minimumSize">
              <size>
-              <width>200</width>
+              <width>230</width>
               <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>200</width>
+              <width>230</width>
               <height>16777215</height>
              </size>
             </property>
@@ -338,6 +338,12 @@ QPushButton:hover {
              </property>
              <item>
               <widget class="QLabel" name="label_6">
+               <property name="minimumSize">
+                <size>
+                 <width>150</width>
+                 <height>0</height>
+                </size>
+               </property>
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
@@ -491,13 +497,13 @@ background: transparent;
            <widget class="QFrame" name="SpacerL">
             <property name="minimumSize">
              <size>
-              <width>50</width>
+              <width>100</width>
               <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>50</width>
+              <width>150</width>
               <height>16777215</height>
              </size>
             </property>
@@ -739,7 +745,7 @@ border-bottom: 1px solid rgb(207, 207, 207);
                        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                       </property>
                       <property name="placeholderText">
-                       <string>Nhập tên tài khoản của bạn</string>
+                       <string>Nhập tên tài khoản</string>
                       </property>
                      </widget>
                     </item>
@@ -903,7 +909,6 @@ background: transparent;</string>
                          <property name="styleSheet">
                           <string notr="true">QFrame {
 border-radius: 0px;
-border-bottom: 1px solid rgb(236, 236, 236);
 }</string>
                          </property>
                          <property name="frameShape">
@@ -1027,7 +1032,7 @@ border-bottom: 1px solid rgb(236, 236, 236);
                           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                          </property>
                          <property name="placeholderText">
-                          <string>Nhập mật khẩu của bạn</string>
+                          <string>Nhập mật khẩu</string>
                          </property>
                         </widget>
                        </item>
@@ -1617,7 +1622,7 @@ border-bottom: 1px solid rgb(207, 207, 207);
                        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                       </property>
                       <property name="placeholderText">
-                       <string>Nhập tên tài khoản đăng ký</string>
+                       <string>Nhập tên đăng ký</string>
                       </property>
                      </widget>
                     </item>
@@ -1969,7 +1974,7 @@ border-bottom: 1px solid rgb(236, 236, 236);
                           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                          </property>
                          <property name="placeholderText">
-                          <string>Nhập mật khẩu đăng ký</string>
+                          <string>Nhập mật khẩu</string>
                          </property>
                         </widget>
                        </item>
@@ -2561,16 +2566,32 @@ font: italic;
   <connection>
    <sender>eyeShow_SI</sender>
    <signal>clicked()</signal>
-   <receiver>eyeHide_SI</receiver>
-   <slot>show()</slot>
+   <receiver>eyeShow_SI</receiver>
+   <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>477</x>
      <y>419</y>
     </hint>
     <hint type="destinationlabel">
-     <x>462</x>
+     <x>477</x>
      <y>419</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eyeHide</sender>
+   <signal>clicked()</signal>
+   <receiver>eyeShow</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>471</x>
+     <y>398</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>486</x>
+     <y>398</y>
     </hint>
    </hints>
   </connection>
@@ -2591,6 +2612,38 @@ font: italic;
    </hints>
   </connection>
   <connection>
+   <sender>eyeShow</sender>
+   <signal>clicked()</signal>
+   <receiver>eyeShow</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>486</x>
+     <y>398</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>486</x>
+     <y>398</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eyeShow</sender>
+   <signal>clicked()</signal>
+   <receiver>eyeHide</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>486</x>
+     <y>398</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>471</x>
+     <y>398</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
    <sender>eyeHide_SI</sender>
    <signal>clicked()</signal>
    <receiver>eyeHide_SI</receiver>
@@ -2603,86 +2656,38 @@ font: italic;
     <hint type="destinationlabel">
      <x>462</x>
      <y>419</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eyeHide</sender>
+   <signal>clicked()</signal>
+   <receiver>eyeHide</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>471</x>
+     <y>398</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>471</x>
+     <y>398</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>eyeShow_SI</sender>
    <signal>clicked()</signal>
-   <receiver>eyeShow_SI</receiver>
-   <slot>hide()</slot>
+   <receiver>eyeHide_SI</receiver>
+   <slot>show()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>477</x>
      <y>419</y>
     </hint>
     <hint type="destinationlabel">
-     <x>477</x>
+     <x>462</x>
      <y>419</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>eyeShow</sender>
-   <signal>clicked()</signal>
-   <receiver>eyeShow</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>486</x>
-     <y>398</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>486</x>
-     <y>398</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>eyeHide</sender>
-   <signal>clicked()</signal>
-   <receiver>eyeShow</receiver>
-   <slot>show()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>471</x>
-     <y>398</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>486</x>
-     <y>398</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>eyeShow</sender>
-   <signal>clicked()</signal>
-   <receiver>eyeHide</receiver>
-   <slot>show()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>486</x>
-     <y>398</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>471</x>
-     <y>398</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>eyeHide</sender>
-   <signal>clicked()</signal>
-   <receiver>eyeHide</receiver>
-   <slot>hide()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>471</x>
-     <y>398</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>471</x>
-     <y>398</y>
     </hint>
    </hints>
   </connection>

@@ -21,12 +21,12 @@
   </property>
   <property name="styleSheet">
    <string notr="true">background: transparent;
-border-radius: 8px;</string>
+border-radius: 10px;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
     <string notr="true">background: transparent;
-border-radius: 8px;</string>
+border-radius: 10px;</string>
    </property>
    <widget class="QFrame" name="OkCancelFrame">
     <property name="geometry">
@@ -52,7 +52,7 @@ border-radius: 8px;</string>
     <property name="styleSheet">
      <string notr="true">QFrame {
 	background-color: rgb(228, 228, 228);
-	border-radius: 8px;
+	border-radius: 10px;
 }</string>
     </property>
     <property name="frameShape">

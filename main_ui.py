@@ -13,7 +13,7 @@ from UI_Files import Resources
 
 UI_MAIN_PATH = "./UI_Files/ui_main.ui"
 OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
-
+QuitFile = "./UI_Files/QuitFrame.ui"
 
 
 class MainWindow(QMainWindow):
@@ -77,10 +77,9 @@ class UIFunctions(MainWindow):
     def connect_btn(self, ui):
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
         def check():
-            if ui.pg:
-                ui.pg.close()
+            ui_main = QuitFrame(ui)
+            ui_main.show()
         ui.btn_quit.clicked.connect(lambda: check())
-        ui.btn_quit.clicked.connect(lambda: self.close_pg(ui))
 
         ui.load_btn.clicked.connect(
             lambda: self.show_file_dialog(ui, OPENED_LESSON_PATH)
@@ -216,6 +215,19 @@ def main(role, pg):
     window = MainWindow(role, pg)
     window.move(Main.SCREEN_WIDTH - window.width(), 0)
     window.show()
+class QuitFrame(QMainWindow):
+    def __init__(self, ui):
+        QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
+        uic.loadUi(QuitFile, self)
+        self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        def AcceptQuit():
+            if ui.pg:
+                ui.pg.close()
+            ui.close()
+            self.close()
+        self.Accept.clicked.connect(lambda: AcceptQuit())
+        self.Deny.clicked.connect(lambda: self.close())
 
 
 if __name__ == "__main__":

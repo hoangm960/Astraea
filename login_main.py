@@ -6,7 +6,7 @@ from random import randrange
 import mysql.connector
 from PyQt5 import QtCore, QtWidgets, uic
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWIDGETSIZE_MAX
+from PyQt5.QtWidgets import QApplication, QMainWindow
 
 import main_ui
 from encryption import *

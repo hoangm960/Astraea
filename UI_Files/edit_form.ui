@@ -470,7 +470,7 @@ QPushButton:hover {
 background-color: transparent;</string>
                </property>
                <property name="currentIndex">
-                <number>2</number>
+                <number>1</number>
                </property>
                <widget class="QWidget" name="Edit_Main_Frame">
                 <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -948,8 +948,8 @@ QScrollBar::add-page, QScrollBar::sub-page {
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>100</width>
-                         <height>30</height>
+                         <width>1046</width>
+                         <height>473</height>
                         </rect>
                        </property>
                       </widget>
@@ -998,10 +998,23 @@ QScrollBar::add-page, QScrollBar::sub-page {
                      <number>0</number>
                     </property>
                     <item>
+                     <spacer name="horizontalSpacer_2">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item>
                      <widget class="QPushButton" name="confirm_btn">
                       <property name="minimumSize">
                        <size>
-                        <width>80</width>
+                        <width>200</width>
                         <height>40</height>
                        </size>
                       </property>
@@ -1044,7 +1057,7 @@ QPushButton:pressed {
                      <widget class="QPushButton" name="return_btn">
                       <property name="minimumSize">
                        <size>
-                        <width>100</width>
+                        <width>200</width>
                         <height>40</height>
                        </size>
                       </property>
@@ -1087,7 +1100,7 @@ QPushButton:pressed {
                      <widget class="QPushButton" name="add_btn">
                       <property name="minimumSize">
                        <size>
-                        <width>150</width>
+                        <width>200</width>
                         <height>40</height>
                        </size>
                       </property>
@@ -1125,6 +1138,19 @@ QPushButton:pressed {
                        <string>Thêm bài tập</string>
                       </property>
                      </widget>
+                    </item>
+                    <item>
+                     <spacer name="horizontalSpacer_4">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
                     </item>
                    </layout>
                   </widget>

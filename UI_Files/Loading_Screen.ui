@@ -141,13 +141,13 @@ background-color: rgb(35, 44, 51);
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>35</width>
-                 <height>80</height>
+                 <width>40</width>
+                 <height>90</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>35</width>
+                 <width>50</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -168,7 +168,7 @@ font: bold;
                <property name="minimumSize">
                 <size>
                  <width>50</width>
-                 <height>0</height>
+                 <height>90</height>
                 </size>
                </property>
                <property name="maximumSize">
@@ -195,8 +195,8 @@ font: bold;
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>400</width>
-                 <height>80</height>
+                 <width>430</width>
+                 <height>90</height>
                 </size>
                </property>
                <property name="maximumSize">

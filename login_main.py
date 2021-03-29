@@ -27,9 +27,8 @@ class User:
 class LoginWindow(QMainWindow):
     UI_PATH = "UI_Files/Login_gui.ui"
 
-    def __init__(self, pg, connection):
+    def __init__(self, pg):
         self.pg = pg
-        self.connection = connection
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(self.UI_PATH, self)
         LoginFunctions(self)
@@ -119,6 +118,18 @@ class LoginFunctions(LoginWindow):
             ui.Note_Pass.hide()
             ui.Note_User.hide()
             ui.student.setChecked(True)
+
+    @staticmethod
+    def get_connection():
+        connection = mysql.connector.connect(
+            host="remotemysql.com",
+            user="K63yMSwITl",
+            password="zRtA9VtyHq",
+            database="K63yMSwITl"
+        )
+
+        return connection
+
     def openQuitFrame(self, ui):
         ui_main = QuitFrame(ui)
         ui_main.show()
@@ -163,7 +174,8 @@ class LoginFunctions(LoginWindow):
             )
 
     def check_SI(self, ui):
-        cursor = ui.connection.cursor()
+        connection = self.get_connection()
+        cursor = connection.cursor()
         username = ui.NameBox_SI.text()[:31]
         password = ui.PassBox_SI.text()[:22]
 
@@ -193,15 +205,16 @@ class LoginFunctions(LoginWindow):
                         f.write(f'{password}\n')
                         f.write('True' if ui.SavePass.isChecked() else 'False')
                     encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
-
-                    ui.connection.close()
+                    connection.close()
+                    
                     ui.close()
                     main_ui.main(role, ui.pg)
                     
                 QtCore.QTimer.singleShot(3000, lambda: ui.frameError.hide())
 
     def check_SU(self, ui):
-        cursor = ui.connection.cursor()
+        connection = self.get_connection()
+        cursor = connection.cursor()
         check = True
         username = ui.NameBox.text()[:31]
         password = ui.PassBox.text()[:22]
@@ -244,7 +257,8 @@ class LoginFunctions(LoginWindow):
         if check:
             role = 1 if ui.teacher.isChecked() else 0
             cursor.execute("INSERT INTO user(Username, ShowName, Password, Type) VALUES(%s, %s, %s, %s)", (username, name, password, role))
-            ui.connection.commit()
+            connection.commit()
+            connection.close()
 
             ui.NameBox_SI.clear()
             ui.PassBox_SI.clear()
@@ -283,7 +297,6 @@ class Loading_Screen(QMainWindow):
 
 class UILoadingFunctions(Loading_Screen):
     PG = None
-    connection = None
     def __init__(self, ui, version):
         self.update_version(ui, str(version))
 
@@ -314,7 +327,7 @@ class UILoadingFunctions(Loading_Screen):
         ui.progressBar.setValue(self.counter)
         if self.counter > 100:
             ui.timer.stop()
-            ui.main = LoginWindow(self.PG, self.connection)
+            ui.main = LoginWindow(self.PG)
             ui.main.setGeometry(
                 round((Main.SCREEN_WIDTH - ui.main.width()) / 2),
                 round((Main.SCREEN_HEIGHT - ui.main.height()) / 2),
@@ -358,7 +371,7 @@ class UILoadingFunctions(Loading_Screen):
         if self.counter == 73:
             time.sleep(3)
             try:
-                    self.connection = mysql.connector.connect(
+                    mysql.connector.connect(
                             host="remotemysql.com",
                             user="K63yMSwITl",
                             password="zRtA9VtyHq",

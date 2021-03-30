@@ -1,9 +1,10 @@
-from encryption import decrypt, encrypt
 import sys
 
 import mysql.connector
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QApplication, QMainWindow
+
+from encryption import decrypt, encrypt
 
 
 class DownloadWindow(QMainWindow):
@@ -77,7 +78,8 @@ class UIFunctions(DownloadWindow):
             ui.label_2.hide()
             ui.frame_2.show()
             ui.id_entry.hide()
-            self.check_room(ui)
+            ui.In_btn.hide()
+            # self.check_room(ui)
         timer.singleShot(2000, lambda: complete())  
 
     def enter_room(self, ui):

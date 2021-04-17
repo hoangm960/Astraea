@@ -258,14 +258,9 @@ class UIFunctions(EditWindow):
         def __init__(self, ui, *args, **kwargs):
             super().__init__(*args, **kwargs)
             uic.loadUi(EDIT_FRAME_PATH, self)
-            self.test_file_btn.clicked.connect(
-                lambda: self.get_file(self.test_file_entry, "*.txt")
-            )
-            self.info_file_btn.clicked.connect(
-                lambda: self.get_file(self.info_file_entry, "*.txt")
-            )
             self.close_btn.clicked.connect(lambda: self.closeFrame(ui))
-
+            self.Test_Frame.hide()
+            self.Info_Frame.hide()
         def get_file(self, entry, filter):
             HOME_PATH = os.path.join(os.path.join(
                 os.environ["USERPROFILE"]), "Desktop")
@@ -377,6 +372,6 @@ class UIFunctions(EditWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = EditWindow(None, None)
+    window = EditWindow(None)
     window.show()
     sys.exit(app.exec_())

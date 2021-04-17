@@ -330,26 +330,28 @@ class UIFunctions(EditWindow):
     def load_io(test_file):
         with open(test_file, encoding = 'utf-8') as f:
             lines = f.readlines()
-            sep = lines[0].rstrip()
-            del lines[0]
-            tests = []
-            for line in lines:
-                inputs, outputs = line.strip("\n\r").split(sep)
-                inputs, outputs = inputs.split('&'), outputs.split('&')
-                tests.append([inputs, outputs])
-            return tests
+            if lines:
+                sep = lines[0].rstrip()
+                del lines[0]
+                tests = []
+                for line in lines:
+                    inputs, outputs = line.strip("\n\r").split(sep)
+                    inputs, outputs = inputs.split('&'), outputs.split('&')
+                    tests.append([inputs, outputs])
+                return tests
 
     @staticmethod
     def load_info(info_file):
         with open(info_file, encoding = 'utf-8') as f:
             lines = f.readlines()
-            sep = lines[0].rstrip()
-            del lines[0]
-            infos = []
-            for line in lines:
-                key, message, nums = line.strip("\n\r").split(sep)
-                infos.append([key, message, nums])
-            return infos
+            if lines:
+                sep = lines[0].rstrip()
+                del lines[0]
+                infos = []
+                for line in lines:
+                    key, message, nums = line.strip("\n\r").split(sep)
+                    infos.append([key, message, nums])
+                return infos
 
     def load_assignments(self, ui, filename):
         children = ui.content_widget.children()

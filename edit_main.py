@@ -133,31 +133,7 @@ class UIFunctions(EditWindow):
                     """background-color: rgb(255, 255, 255); 
                     border: 0px solid black; 
                     border-radius: 12px;""")
-
-            if not os.path.exists(child.test_file_entry.text()) or child.test_file_entry.text()[-4:] != '.txt' or "'" in child.test_file_entry.text():
-                child.test_file_entry.setStyleSheet(
-                    """background-color: rgb(255, 255, 255); 
-                    border: 2px solid rgb(225, 0 , 0); 
-                    border-radius: 12px;""")
-                self.CheckValue = False
-            else:
-                child.test_file_entry.setStyleSheet(
-                    """background-color: rgb(255, 255, 255); 
-                    border: 0px solid black; 
-                    border-radius: 12px;""")
-
-            if not os.path.exists(child.info_file_entry.text()) or child.info_file_entry.text()[-4:] != '.txt' or "'" in child.info_file_entry.text():
-                child.info_file_entry.setStyleSheet(
-                    """background-color: rgb(255, 255, 255); 
-                    border: 2px solid rgb(225, 0 , 0); 
-                    border-radius: 12px;""")
-                self.CheckValue = False
-            else:
-                child.info_file_entry.setStyleSheet(
-                    """background-color: rgb(255, 255, 255); 
-                    border: 0px solid black; 
-                    border-radius: 12px;""")
-
+            
             if child.Score_edit.value() < 0:
                 child.Score_edit.setStyleSheet(
                     """background-color: rgb(255, 255, 255); 
@@ -176,6 +152,24 @@ class UIFunctions(EditWindow):
                 ui.timer = QtCore.QTimer()
                 def setDefault():
                     child.details_entry.setStyleSheet("""background-color: rgb(255, 255, 255);
+                                    border-radius: 12px;""")
+                ui.timer.singleShot(2500, lambda: setDefault())
+            if "'" in child.Test.toPlainText():
+                child.Test.setStyleSheet("""background-color: rgb(255, 255, 255); 
+                    border: 2px solid rgb(255,0,0); 
+                    border-radius: 12px;""")
+                ui.timer = QtCore.QTimer()
+                def setDefault():
+                    child.Test.setStyleSheet("""background-color: rgb(255, 255, 255);
+                                    border-radius: 12px;""")
+                ui.timer.singleShot(2500, lambda: setDefault())
+            if "'" in child.Info.toPlainText():
+                child.Info.setStyleSheet("""background-color: rgb(255, 255, 255); 
+                    border: 2px solid rgb(255,0,0); 
+                    border-radius: 12px;""")
+                ui.timer = QtCore.QTimer()
+                def setDefault():
+                    child.Info.setStyleSheet("""background-color: rgb(255, 255, 255);
                                     border-radius: 12px;""")
                 ui.timer.singleShot(2500, lambda: setDefault())
 
@@ -258,23 +252,10 @@ class UIFunctions(EditWindow):
         def __init__(self, ui, *args, **kwargs):
             super().__init__(*args, **kwargs)
             uic.loadUi(EDIT_FRAME_PATH, self)
-            self.test_file_btn.clicked.connect(
-                lambda: self.get_file(self.test_file_entry, "*.txt")
-            )
-            self.info_file_btn.clicked.connect(
-                lambda: self.get_file(self.info_file_entry, "*.txt")
-            )
             self.close_btn.clicked.connect(lambda: self.closeFrame(ui))
-
-        def get_file(self, entry, filter):
-            HOME_PATH = os.path.join(os.path.join(
-                os.environ["USERPROFILE"]), "Desktop")
-            file_name = QFileDialog.getOpenFileName(
-                self, "Open file", HOME_PATH, filter)
-
-            if file_name[0]:
-                entry.setText(file_name[0])
-
+            self.Test_Frame.hide()
+            self.Info_Frame.hide()
+        
         def closeFrame(self, ui):
             self.warn_close_frame(ui)
             if self.deleted:
@@ -377,6 +358,6 @@ class UIFunctions(EditWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = EditWindow(None, None)
+    window = EditWindow(None)
     window.show()
     sys.exit(app.exec_())

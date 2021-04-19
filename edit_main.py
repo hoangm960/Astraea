@@ -255,7 +255,19 @@ class UIFunctions(EditWindow):
             self.close_btn.clicked.connect(lambda: self.closeFrame(ui))
             self.Test_Frame.hide()
             self.Info_Frame.hide()
+<<<<<<< HEAD
         
+=======
+        def get_file(self, entry, filter):
+            HOME_PATH = os.path.join(os.path.join(
+                os.environ["USERPROFILE"]), "Desktop")
+            file_name = QFileDialog.getOpenFileName(
+                self, "Open file", HOME_PATH, filter)
+
+            if file_name[0]:
+                entry.setText(file_name[0])
+
+>>>>>>> 6fdd3d2784291dadb602c02a0311a12d641cafb7
         def closeFrame(self, ui):
             self.warn_close_frame(ui)
             if self.deleted:
@@ -311,26 +323,28 @@ class UIFunctions(EditWindow):
     def load_io(test_file):
         with open(test_file, encoding = 'utf-8') as f:
             lines = f.readlines()
-            sep = lines[0].rstrip()
-            del lines[0]
-            tests = []
-            for line in lines:
-                inputs, outputs = line.strip("\n\r").split(sep)
-                inputs, outputs = inputs.split('&'), outputs.split('&')
-                tests.append([inputs, outputs])
-            return tests
+            if lines:
+                sep = lines[0].rstrip()
+                del lines[0]
+                tests = []
+                for line in lines:
+                    inputs, outputs = line.strip("\n\r").split(sep)
+                    inputs, outputs = inputs.split('&'), outputs.split('&')
+                    tests.append([inputs, outputs])
+                return tests
 
     @staticmethod
     def load_info(info_file):
         with open(info_file, encoding = 'utf-8') as f:
             lines = f.readlines()
-            sep = lines[0].rstrip()
-            del lines[0]
-            infos = []
-            for line in lines:
-                key, message, nums = line.strip("\n\r").split(sep)
-                infos.append([key, message, nums])
-            return infos
+            if lines:
+                sep = lines[0].rstrip()
+                del lines[0]
+                infos = []
+                for line in lines:
+                    key, message, nums = line.strip("\n\r").split(sep)
+                    infos.append([key, message, nums])
+                return infos
 
     def load_assignments(self, ui, filename):
         children = ui.content_widget.children()

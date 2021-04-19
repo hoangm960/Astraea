@@ -13,7 +13,7 @@
   <property name="minimumSize">
    <size>
     <width>0</width>
-    <height>0</height>
+    <height>450</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -235,6 +235,7 @@ QSpinBox::down-arrow {
        <number>20</number>
       </property>
       <item>
+<<<<<<< HEAD
        <widget class="QPushButton" name="Test_btn">
         <property name="styleSheet">
          <string notr="true">QPushButton {
@@ -252,6 +253,9 @@ QPushButton:hover {
       </item>
       <item>
        <widget class="QPushButton" name="Info_btn">
+=======
+       <widget class="QPushButton" name="pushButton_2">
+>>>>>>> 6fdd3d2784291dadb602c02a0311a12d641cafb7
         <property name="styleSheet">
          <string notr="true">QPushButton {
 	background-color: rgb(255, 255, 255);
@@ -262,12 +266,20 @@ QPushButton:hover {
 }</string>
         </property>
         <property name="text">
+<<<<<<< HEAD
          <string>Chú thích</string>
+=======
+         <string>Bộ Test</string>
+>>>>>>> 6fdd3d2784291dadb602c02a0311a12d641cafb7
         </property>
        </widget>
       </item>
       <item>
+<<<<<<< HEAD
        <widget class="QPushButton" name="Info_btn_2">
+=======
+       <widget class="QPushButton" name="pushButton">
+>>>>>>> 6fdd3d2784291dadb602c02a0311a12d641cafb7
         <property name="styleSheet">
          <string notr="true">QPushButton {
 	background-color: rgb(255, 255, 255);
@@ -278,7 +290,11 @@ QPushButton:hover {
 }</string>
         </property>
         <property name="text">
+<<<<<<< HEAD
          <string>Chi tiết</string>
+=======
+         <string>Chú thích</string>
+>>>>>>> 6fdd3d2784291dadb602c02a0311a12d641cafb7
         </property>
        </widget>
       </item>
@@ -297,6 +313,9 @@ QPushButton:hover {
        <widget class="QLabel" name="label">
         <property name="text">
          <string>Điểm:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
       </item>
@@ -338,11 +357,19 @@ QPushButton:hover {
     </widget>
    </item>
    <item>
+<<<<<<< HEAD
     <widget class="QFrame" name="Info_Frame">
      <property name="minimumSize">
       <size>
        <width>0</width>
        <height>170</height>
+=======
+    <widget class="QFrame" name="Test_Frame">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>200</height>
+>>>>>>> 6fdd3d2784291dadb602c02a0311a12d641cafb7
       </size>
      </property>
      <property name="sizeIncrement">
@@ -360,6 +387,7 @@ QPushButton:hover {
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
+<<<<<<< HEAD
      <layout class="QVBoxLayout" name="verticalLayout_6">
       <item>
        <widget class="QFrame" name="frame_2">
@@ -406,6 +434,70 @@ QPushButton:hover {
       </item>
       <item>
        <widget class="QTextEdit" name="Info">
+=======
+     <layout class="QVBoxLayout" name="verticalLayout_7">
+      <item alignment="Qt::AlignRight">
+       <widget class="QPushButton" name="close_info_3">
+        <property name="minimumSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+	background-color:transparent;
+	border-radius: 5px;
+}
+
+QPushButton:hover {
+	background-color: rgb(223, 223, 223);
+}
+
+QPushButton:pressed {
+	background-color: rgb(207, 207, 207);
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="Resources.qrc">
+          <normaloff>:/images/icons/close.png</normaloff>:/images/icons/close.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>8</width>
+          <height>8</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="Test_Label">
+        <property name="font">
+         <font>
+          <family>iCiel Effra</family>
+          <pointsize>15</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Nội dung bộ test</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTextEdit" name="Test_input">
+>>>>>>> 6fdd3d2784291dadb602c02a0311a12d641cafb7
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);
 border-radius: 12px;</string>
@@ -419,11 +511,19 @@ border-radius: 12px;</string>
     </widget>
    </item>
    <item>
+<<<<<<< HEAD
     <widget class="QFrame" name="Test_Frame">
      <property name="minimumSize">
       <size>
        <width>0</width>
        <height>170</height>
+=======
+    <widget class="QFrame" name="Info_Frame">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>200</height>
+>>>>>>> 6fdd3d2784291dadb602c02a0311a12d641cafb7
       </size>
      </property>
      <property name="sizeIncrement">
@@ -442,6 +542,7 @@ border-radius: 12px;</string>
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_4">
+<<<<<<< HEAD
       <item>
        <widget class="QFrame" name="frame">
         <property name="frameShape">
@@ -493,6 +594,75 @@ border-radius: 12px;</string>
         </property>
         <property name="horizontalScrollBarPolicy">
          <enum>Qt::ScrollBarAlwaysOff</enum>
+=======
+      <item alignment="Qt::AlignRight">
+       <widget class="QPushButton" name="close_info">
+        <property name="minimumSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+	background-color:transparent;
+	border-radius: 5px;
+}
+
+QPushButton:hover {
+	background-color: rgb(223, 223, 223);
+}
+
+QPushButton:pressed {
+	background-color: rgb(207, 207, 207);
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="Resources.qrc">
+          <normaloff>:/images/icons/close.png</normaloff>:/images/icons/close.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>8</width>
+          <height>8</height>
+         </size>
+>>>>>>> 6fdd3d2784291dadb602c02a0311a12d641cafb7
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="Info_Label">
+        <property name="font">
+         <font>
+          <family>iCiel Effra</family>
+          <pointsize>15</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Nội dung chú thích</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTextEdit" name="Info_input">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius: 12px;</string>
+        </property>
+        <property name="horizontalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
         </property>
        </widget>
       </item>
@@ -504,7 +674,7 @@ border-radius: 12px;</string>
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>170</height>
+       <height>200</height>
       </size>
      </property>
      <property name="sizeIncrement">
@@ -560,6 +730,7 @@ border-radius: 12px;</string>
  </resources>
  <connections>
   <connection>
+<<<<<<< HEAD
    <sender>Info_btn</sender>
    <signal>clicked()</signal>
    <receiver>Test_Frame</receiver>
@@ -572,10 +743,25 @@ border-radius: 12px;</string>
     <hint type="destinationlabel">
      <x>115</x>
      <y>332</y>
+=======
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>Info_Frame</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>154</x>
+     <y>114</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>6</x>
+     <y>328</y>
+>>>>>>> 6fdd3d2784291dadb602c02a0311a12d641cafb7
     </hint>
    </hints>
   </connection>
   <connection>
+<<<<<<< HEAD
    <sender>Test_btn</sender>
    <signal>clicked()</signal>
    <receiver>Test_Frame</receiver>
@@ -588,58 +774,112 @@ border-radius: 12px;</string>
     <hint type="destinationlabel">
      <x>99</x>
      <y>330</y>
+=======
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Info_Frame</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>204</x>
+     <y>121</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>8</x>
+     <y>350</y>
+>>>>>>> 6fdd3d2784291dadb602c02a0311a12d641cafb7
     </hint>
    </hints>
   </connection>
   <connection>
+<<<<<<< HEAD
    <sender>Test_btn</sender>
+=======
+   <sender>pushButton_2</sender>
+>>>>>>> 6fdd3d2784291dadb602c02a0311a12d641cafb7
    <signal>clicked()</signal>
    <receiver>details_frame</receiver>
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
+<<<<<<< HEAD
      <x>49</x>
      <y>119</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
      <y>533</y>
+=======
+     <x>151</x>
+     <y>115</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>14</x>
+     <y>457</y>
+>>>>>>> 6fdd3d2784291dadb602c02a0311a12d641cafb7
     </hint>
    </hints>
   </connection>
   <connection>
+<<<<<<< HEAD
    <sender>Info_btn</sender>
+=======
+   <sender>pushButton</sender>
+>>>>>>> 6fdd3d2784291dadb602c02a0311a12d641cafb7
    <signal>clicked()</signal>
    <receiver>details_frame</receiver>
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
+<<<<<<< HEAD
      <x>249</x>
      <y>109</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
      <y>523</y>
+=======
+     <x>204</x>
+     <y>114</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>11</x>
+     <y>441</y>
+>>>>>>> 6fdd3d2784291dadb602c02a0311a12d641cafb7
     </hint>
    </hints>
   </connection>
   <connection>
+<<<<<<< HEAD
    <sender>Test_btn</sender>
+=======
+   <sender>close_info</sender>
+>>>>>>> 6fdd3d2784291dadb602c02a0311a12d641cafb7
    <signal>clicked()</signal>
    <receiver>Info_Frame</receiver>
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
+<<<<<<< HEAD
      <x>94</x>
      <y>113</y>
     </hint>
     <hint type="destinationlabel">
      <x>82</x>
      <y>154</y>
+=======
+     <x>763</x>
+     <y>284</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>359</x>
+     <y>271</y>
+>>>>>>> 6fdd3d2784291dadb602c02a0311a12d641cafb7
     </hint>
    </hints>
   </connection>
   <connection>
+<<<<<<< HEAD
    <sender>Info_btn</sender>
    <signal>clicked()</signal>
    <receiver>Info_Frame</receiver>
@@ -652,10 +892,25 @@ border-radius: 12px;</string>
     <hint type="destinationlabel">
      <x>287</x>
      <y>157</y>
+=======
+   <sender>close_info</sender>
+   <signal>clicked()</signal>
+   <receiver>details_frame</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>761</x>
+     <y>278</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>11</x>
+     <y>403</y>
+>>>>>>> 6fdd3d2784291dadb602c02a0311a12d641cafb7
     </hint>
    </hints>
   </connection>
   <connection>
+<<<<<<< HEAD
    <sender>Info_btn_2</sender>
    <signal>clicked()</signal>
    <receiver>Info_Frame</receiver>
@@ -668,10 +923,25 @@ border-radius: 12px;</string>
     <hint type="destinationlabel">
      <x>327</x>
      <y>156</y>
+=======
+   <sender>close_info_3</sender>
+   <signal>clicked()</signal>
+   <receiver>Test_Frame</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>763</x>
+     <y>167</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>736</x>
+     <y>158</y>
+>>>>>>> 6fdd3d2784291dadb602c02a0311a12d641cafb7
     </hint>
    </hints>
   </connection>
   <connection>
+<<<<<<< HEAD
    <sender>Info_btn_2</sender>
    <signal>clicked()</signal>
    <receiver>Test_Frame</receiver>
@@ -684,10 +954,25 @@ border-radius: 12px;</string>
     <hint type="destinationlabel">
      <x>296</x>
      <y>330</y>
+=======
+   <sender>close_info_3</sender>
+   <signal>clicked()</signal>
+   <receiver>details_frame</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>756</x>
+     <y>166</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>10</x>
+     <y>451</y>
+>>>>>>> 6fdd3d2784291dadb602c02a0311a12d641cafb7
     </hint>
    </hints>
   </connection>
   <connection>
+<<<<<<< HEAD
    <sender>Info_btn_2</sender>
    <signal>clicked()</signal>
    <receiver>details_frame</receiver>
@@ -700,6 +985,36 @@ border-radius: 12px;</string>
     <hint type="destinationlabel">
      <x>299</x>
      <y>504</y>
+=======
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>Test_Frame</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>128</x>
+     <y>111</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>128</x>
+     <y>155</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Test_Frame</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>255</x>
+     <y>122</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>213</x>
+     <y>161</y>
+>>>>>>> 6fdd3d2784291dadb602c02a0311a12d641cafb7
     </hint>
    </hints>
   </connection>

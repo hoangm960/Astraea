@@ -9,9 +9,7 @@ from PyQt5 import QtCore, uic, QtWidgets
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (QApplication, QFileDialog, QMainWindow, QSizeGrip,
                              QVBoxLayout, QWidget)
-
-QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True) 
-QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
+                             
 import Main
 import check_algorithm
 import main_ui

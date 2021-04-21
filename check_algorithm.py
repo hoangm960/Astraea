@@ -65,9 +65,8 @@ def main(filename, tests, infos, time_limit=2):
             break
         check(input, output)
         check_info.info = []
-        if infos:
-            for info in infos:
-                check_info(info)
+        for info in infos:
+            check_info(info)
         main.results.append(check.result)
 
     return main.results, check_info.info

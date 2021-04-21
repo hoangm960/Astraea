@@ -294,7 +294,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>296</width>
+                 <width>183</width>
                  <height>85</height>
                 </rect>
                </property>
@@ -365,7 +365,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                 <number>0</number>
                </property>
                <item alignment="Qt::AlignRight">
-                <widget class="QPushButton" name="add_frame_btn">
+                <widget class="QPushButton" name="add_frame">
                  <property name="minimumSize">
                   <size>
                    <width>16</width>
@@ -532,7 +532,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>296</width>
+                 <width>183</width>
                  <height>85</height>
                 </rect>
                </property>
@@ -603,7 +603,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                 <number>0</number>
                </property>
                <item alignment="Qt::AlignRight">
-                <widget class="QPushButton" name="add_frame_btn_2">
+                <widget class="QPushButton" name="add_frame2">
                  <property name="minimumSize">
                   <size>
                    <width>16</width>
@@ -649,6 +649,84 @@ QPushButton:pressed {
                 </widget>
                </item>
               </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="Line" name="line_3">
+        <property name="styleSheet">
+         <string notr="true">border: 2px solid rgb(255,255,255);
+</string>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="frame_7">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_11">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QFrame" name="frame_12">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_10">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QSpinBox" name="spinBox">
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
              </widget>
             </item>
            </layout>

@@ -255,9 +255,7 @@ class UIFunctions(EditWindow):
             self.close_btn.clicked.connect(lambda: self.closeFrame(ui))
             self.Test_Frame.hide()
             self.Info_Frame.hide()
-<<<<<<< HEAD
-        
-=======
+            
         def get_file(self, entry, filter):
             HOME_PATH = os.path.join(os.path.join(
                 os.environ["USERPROFILE"]), "Desktop")
@@ -267,7 +265,6 @@ class UIFunctions(EditWindow):
             if file_name[0]:
                 entry.setText(file_name[0])
 
->>>>>>> 6fdd3d2784291dadb602c02a0311a12d641cafb7
         def closeFrame(self, ui):
             self.warn_close_frame(ui)
             if self.deleted:

@@ -224,7 +224,7 @@ class UIFunctions(ResultWindow):
             return 0, [], []
 
     def check_true(self, ui):
-        open(self.FILE_COMMENT,'w').close()
+        open(self.FILE_COMMENT,'w', encoding='utf8').close()
         ui.btn_quit.close()
         children = ui.content_widgetT.children()
         del children[0:2]
@@ -310,7 +310,7 @@ class UIFunctions(ResultWindow):
             try:
                 cursor.execute("INSERT INTO submission(Username, LessonId, SubmissionDate, Mark, Comment) VALUES(%s, %s, %s, %s, %s)", (name_account, lesson_id, current_time, round(self.TotalScore, 2), open(self.FILE_COMMENT, encoding = 'utf-8').read()))
             except mysql.connector.errors.IntegrityError:
-                cursor.execute("UPDATE submission SET Username = %s, LessonId = %s, SubmissionDate = %s, Mark = %s, Comment = %s", (name_account, lesson_id, current_time, round(self.TotalScore, 2), open(self.FILE_COMMENT).read()))
+                cursor.execute("UPDATE submission SET Username = %s, LessonId = %s, SubmissionDate = %s, Mark = %s, Comment = %s", (name_account, lesson_id, current_time, round(self.TotalScore, 2), open(self.FILE_COMMENT, encoding='utf8').read()))
 
             connection.commit()
             connection.close()

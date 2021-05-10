@@ -14,7 +14,7 @@ SCREEN_WIDTH, SCREEN_HEIGHT = screen_resolution.width(), screen_resolution.heigh
 def create():
     def create_file(file):
         if not os.path.exists(file):
-            open(file, "w").close()
+            open(file, "w", encoding='utf8').close()
     def create_dir(dir):
         Path(dir).mkdir(parents=True, exist_ok=True)
 

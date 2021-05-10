@@ -216,7 +216,7 @@ class UIFunctions(RoomWindow):
             if filename:
                 with open(filename, "wb") as f:
                     pickle.dump([title, file_assignments], f, -1)
-                open(self.OPENED_LESSON_PATH, "w").write(f"{filename}\n{lesson_id}")
+                open(self.OPENED_LESSON_PATH, "w", encoding='utf8').write(f"{filename}\n{lesson_id}")
                 self.close_pg(ui)
 
     @staticmethod
@@ -268,7 +268,7 @@ class UIFunctions(RoomWindow):
     def get_students_submission(self, ui):
         try:
             connection = self.get_connection()
-            lesson_id = open(self.OPENED_LESSON_PATH).readlines()[1]
+            lesson_id = open(self.OPENED_LESSON_PATH, encoding='utf8').readlines()[1]
             submission = pandas.read_sql(
                 f"SELECT UserName, SubmissionDate, Mark, Comment FROM submission WHERE LessonId = {lesson_id}",
                 connection,

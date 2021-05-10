@@ -87,7 +87,7 @@ class UIFunctions(MainWindow):
         ui.main_btn.clicked.connect(lambda: self.close_pg(ui))
         
         if os.path.getsize(OPENED_LESSON_PATH) > 0:
-            if open(OPENED_LESSON_PATH).readlines()[1] != '0':
+            if open(OPENED_LESSON_PATH, encoding='utf8').readlines()[1] != '0':
                 ui.LessonButton.clicked.connect(lambda: self.open_doc(ui))
             else:
                 ui.LessonButton.hide()
@@ -124,7 +124,7 @@ class UIFunctions(MainWindow):
                     if os.path.exists(file_path):
                         self.load_assignments(ui, file_path)
                     else:
-                        open(filename, 'w').write('')
+                        open(filename, 'w', encoding='utf8').write('')
 
     def show_file_dialog(self, ui, filename):
         HOME_PATH = os.path.join(os.path.join(

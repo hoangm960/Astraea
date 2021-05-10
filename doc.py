@@ -91,14 +91,14 @@ class UIFunctions(DocWindow):
             if name in doc:
                 content = doc[2]
                 ui.text_entry.setText(content)
-                open(OPENED_DOC_CONTENT,  'w').write(content)
+                open(OPENED_DOC_CONTENT,  'w', encoding='utf8').write(content)
 
     def Delete(self, ui):
         connection = self.get_connection()
         selected_items = ui.titles.selectedItems()
         if selected_items:
             item = selected_items[0]
-            lesson_id = open(UIFunctions.OPENED_LESSON_PATH).readlines()[1]
+            lesson_id = open(UIFunctions.OPENED_LESSON_PATH, encoding='utf8').readlines()[1]
 
             cursor = connection.cursor()
             for doc in self.docs:
@@ -121,7 +121,7 @@ class UIFunctions(DocWindow):
         if selected_items and not ui.Name_edit.text() in self.docs:
             item = selected_items[0]
 
-            lesson_id = open(UIFunctions.OPENED_LESSON_PATH).readlines()[1]
+            lesson_id = open(UIFunctions.OPENED_LESSON_PATH, encoding='utf8').readlines()[1]
             cursor = connection.cursor()
 
             for doc in self.docs:
@@ -149,7 +149,7 @@ class UIFunctions(DocWindow):
         connection = self.get_connection()
 
         self.docs.clear()
-        lesson_path, lesson_id = open(self.OPENED_LESSON_PATH).readlines()
+        lesson_path, lesson_id = open(self.OPENED_LESSON_PATH, encoding='utf8').readlines()
         if lesson_id:
             cursor = connection.cursor()
             cursor.execute(
@@ -159,22 +159,22 @@ class UIFunctions(DocWindow):
 
             opened = ''
             try:
-                opened = open(OPENED_DOC).readlines()[1]
+                opened = open(OPENED_DOC, encoding='utf8').readlines()[1]
             except IndexError:
                 pass
             if opened:
                 for doc in self.docs:
                     if doc[0] == int(opened):
-                        self.docs[self.docs.index(doc)] = (doc[0], doc[1], open(OPENED_DOC_CONTENT).read())
+                        self.docs[self.docs.index(doc)] = (doc[0], doc[1], open(OPENED_DOC_CONTENT, encoding='utf8').read())
 
             filename = f'{os.path.dirname(lesson_path).rstrip()}/doc.sd'
-            open(filename, 'w').close()
-            with open(filename, "wb") as f:
+            open(filename, 'w', encoding='utf8').close()
+            with open(filename, "wb", encoding='utf8') as f:
                 pickle.dump(self.docs, f, -1)
-            open(OPENED_DOC, 'w').write(filename)
+            open(OPENED_DOC, 'w', encoding='utf8').write(filename)
 
     def check_opened_doc(self, ui):
-        doc_path = open(OPENED_DOC).readline()
+        doc_path = open(OPENED_DOC, encoding='utf8').readline()
         if os.path.exists(doc_path):
             if os.path.getsize(doc_path) > 0:
                 with open(doc_path, "rb") as f:
@@ -198,7 +198,7 @@ class UIFunctions(DocWindow):
             for doc in self.docs:
                 if doc[1] == ui.titles.currentItem().text():
                     id = doc[0]
-            open(OPENED_DOC, 'a').write('\n' + str(id))
+            open(OPENED_DOC, 'a', encoding='utf8').write('\n' + str(id))
             import Pad
             window = Pad.MainPad(ui.pg)
             window.show()
@@ -214,8 +214,7 @@ class UIFunctions(DocWindow):
                     html_data = self.get_html(file_path)
                     ui.text_entry.setText(html_data)
 
-                    lesson_id = open(
-                        UIFunctions.OPENED_LESSON_PATH).readlines()[1]
+                    lesson_id = open(UIFunctions.OPENED_LESSON_PATH, encoding='utf8').readlines()[1]
                     cursor = connection.cursor()
                     cursor.execute(
                         "INSERT INTO doc(LessonId, DocName, DocContent) VALUES(%s, %s, %s)", (lesson_id, name, html_data))
@@ -256,7 +255,7 @@ class UIFunctions(DocWindow):
             return html_file
 
         def get_html(self, filename):
-            with open(self.convert_doc_to_html(filename), 'r') as f:
+            with open(self.convert_doc_to_html(filename), 'r', encoding='utf8') as f:
                 return f.read()
 
         @staticmethod

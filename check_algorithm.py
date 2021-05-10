@@ -51,7 +51,7 @@ def main(filename, tests, infos, time_limit=2):
                         
     def check_info(info):
         key, message, num = (i for i in info)
-        data = open(filename).read()
+        data = open(filename, encoding='utf8').read()
         data = [i for i in re.split('[;()\s]\s*', data) if i]
         if data.count(key) < int(num):
             check_info.info.append(message)

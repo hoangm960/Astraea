@@ -100,15 +100,15 @@ class UIFunction(MainPad):
 
     @staticmethod
     def check_empty(ui):
-        content = open(OPENED_DOC_CONTENT).read()
+        content = open(OPENED_DOC_CONTENT, encoding='utf8').read()
         if content:
             ui.editor.setText(content)
 
     def Save(self, ui):
         content = ui.editor.toHtml()
-        open(OPENED_DOC_CONTENT, 'w').write(content)
-        lesson_id = open(self.OPENED_LESSON_PATH).readlines()[1]
-        id = open(OPENED_DOC).readlines()[1]
+        open(OPENED_DOC_CONTENT, 'w', encoding='utf8').write(content)
+        lesson_id = open(self.OPENED_LESSON_PATH, encoding='utf8').readlines()[1]
+        id = open(OPENED_DOC, encoding='utf8').readlines()[1]
         connection = self.get_connection()
         cursor = connection.cursor()
         cursor.execute("UPDATE doc SET DocContent = %s WHERE DocId = %s AND LessonId = %s", (content, id, lesson_id))
@@ -116,7 +116,7 @@ class UIFunction(MainPad):
         connection.close()
 
     def Quit(self, ui):
-        with open(OPENED_DOC_CONTENT) as f:
+        with open(OPENED_DOC_CONTENT, encoding='utf8') as f:
             text = f.read() 
         if text != ui.editor.toHtml():
             msg = QMessageBox(ui)

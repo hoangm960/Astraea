@@ -4,8 +4,15 @@ import sys
 
 from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (QApplication, QFileDialog, QMainWindow,
-                             QMessageBox, QSizeGrip, QVBoxLayout, QWidget)
+from PyQt5.QtWidgets import (
+    QApplication,
+    QFileDialog,
+    QMainWindow,
+    QMessageBox,
+    QSizeGrip,
+    QVBoxLayout,
+    QWidget,
+)
 
 KEY_PATH = "./data/Lesson/assignments.key"
 EDIT_FORM_PATH = "./UI_Files/edit_form.ui"
@@ -73,49 +80,55 @@ class UIFunctions(EditWindow):
 
         ui.stacked_widget.setCurrentIndex(0)
         if os.path.exists(OPENED_ASSIGNMENT_PATH):
-            self.check_empty(ui, open(OPENED_ASSIGNMENT_PATH,
-                                  encoding='utf-8').readline().rstrip())
+            self.check_empty(
+                ui, open(OPENED_ASSIGNMENT_PATH, encoding="utf-8").readline().rstrip()
+            )
+
     def connect_btn(self, ui):
         ui.btn_maximize.clicked.connect(lambda: self.maximize_restore(ui))
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
         ui.btn_quit.clicked.connect(lambda: self.reopen_main(ui))
-        ui.confirm_btn.clicked.connect(
-            lambda: self.check_empty_entry(ui))
+        ui.confirm_btn.clicked.connect(lambda: self.check_empty_entry(ui))
+
         def check():
             if "'" in ui.name_entry.text():
-                ui.name_entry.setStyleSheet("""border-radius: 10px;
+                ui.name_entry.setStyleSheet(
+                    """border-radius: 10px;
                                                 color: rgb(255, 0, 0);
                                                 border: 2px solid rgb(255,0,0);
-                                                background-color: rgb(255, 255, 255);""")
-                ui.name_entry.setText("Vui lòng không chứa kí tự '. Có thể thay bằng \"")
+                                                background-color: rgb(255, 255, 255);"""
+                )
+                ui.name_entry.setText(
+                    "Vui lòng không chứa kí tự '. Có thể thay bằng \""
+                )
                 ui.name_entry.setDisabled(True)
                 ui.timer = QtCore.QTimer()
+
                 def setDefault():
                     ui.name_entry.clear()
-                    ui.name_entry.setStyleSheet("""border-radius: 10px;
+                    ui.name_entry.setStyleSheet(
+                        """border-radius: 10px;
                                                 color: rgb(0, 0, 0);
-                                                background-color: rgb(255, 255, 255);""")
+                                                background-color: rgb(255, 255, 255);"""
+                    )
                     ui.name_entry.setDisabled(False)
+
                 ui.timer.singleShot(2500, lambda: setDefault())
             else:
                 self.go_to_second(ui)
 
         ui.confirm_button.clicked.connect(lambda: check())
+        ui.return_btn.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(0))
         ui.return_btn.clicked.connect(
-            lambda: ui.stacked_widget.setCurrentIndex(0))
-        ui.return_btn.clicked.connect(
-            lambda: open(OPENED_ASSIGNMENT_PATH, 'w', encoding='utf8').write(''))
-        ui.add_btn.clicked.connect(
-            lambda: ui.stacked_widget.setCurrentIndex(2))
-        ui.add_btn.clicked.connect(
-            lambda: ui.stacked_widget.setCurrentIndex(2))
-        ui.return_add_btn.clicked.connect(
-            lambda: ui.stacked_widget.setCurrentIndex(1))
+            lambda: open(OPENED_ASSIGNMENT_PATH, "w", encoding="utf8").write("")
+        )
+        ui.add_btn.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(2))
+        ui.add_btn.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(2))
+        ui.return_add_btn.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(1))
         ui.confirm_add_btn.clicked.connect(
             lambda: self.add_frame(ui, int(ui.num_entry_3.text()))
         )
-        ui.confirm_add_btn.clicked.connect(
-            lambda: ui.stacked_widget.setCurrentIndex(1))
+        ui.confirm_add_btn.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(1))
 
     def check_empty_entry(self, ui):
         self.CheckValue = True
@@ -126,53 +139,74 @@ class UIFunctions(EditWindow):
                 child.title_entry.setStyleSheet(
                     """background-color: rgb(255, 255, 255); 
                     border: 2px solid rgb(225, 0 , 0); 
-                    border-radius: 12px;""")
+                    border-radius: 12px;"""
+                )
                 self.CheckValue = False
             else:
                 child.title_entry.setStyleSheet(
                     """background-color: rgb(255, 255, 255); 
                     border: 0px solid black; 
-                    border-radius: 12px;""")
-            
+                    border-radius: 12px;"""
+                )
+
             if child.Score_edit.value() < 0:
                 child.Score_edit.setStyleSheet(
                     """background-color: rgb(255, 255, 255); 
                     border: 2px solid rgb(225, 0 , 0); 
-                    border-radius: 12px;""")
+                    border-radius: 12px;"""
+                )
                 self.CheckValue = False
             else:
                 child.Score_edit.setStyleSheet(
                     """background-color: rgb(255, 255, 255); 
                     border: 0px solid black; 
-                    border-radius: 12px;""")
+                    border-radius: 12px;"""
+                )
             if "'" in child.details_entry.toPlainText():
-                child.details_entry.setStyleSheet("""background-color: rgb(255, 255, 255); 
+                child.details_entry.setStyleSheet(
+                    """background-color: rgb(255, 255, 255); 
                     border: 2px solid rgb(255,0,0); 
-                    border-radius: 12px;""")
+                    border-radius: 12px;"""
+                )
                 ui.timer = QtCore.QTimer()
+
                 def setDefault():
-                    child.details_entry.setStyleSheet("""background-color: rgb(255, 255, 255);
-                                    border-radius: 12px;""")
+                    child.details_entry.setStyleSheet(
+                        """background-color: rgb(255, 255, 255);
+                                    border-radius: 12px;"""
+                    )
+
                 ui.timer.singleShot(2500, lambda: setDefault())
             if "'" in child.Test.toPlainText():
-                child.Test.setStyleSheet("""background-color: rgb(255, 255, 255); 
+                child.Test.setStyleSheet(
+                    """background-color: rgb(255, 255, 255); 
                     border: 2px solid rgb(255,0,0); 
-                    border-radius: 12px;""")
+                    border-radius: 12px;"""
+                )
                 ui.timer = QtCore.QTimer()
+
                 def setDefault():
-                    child.Test.setStyleSheet("""background-color: rgb(255, 255, 255);
-                                    border-radius: 12px;""")
+                    child.Test.setStyleSheet(
+                        """background-color: rgb(255, 255, 255);
+                                    border-radius: 12px;"""
+                    )
+
                 ui.timer.singleShot(2500, lambda: setDefault())
             if "'" in child.Info.toPlainText():
-                child.Info.setStyleSheet("""background-color: rgb(255, 255, 255); 
+                child.Info.setStyleSheet(
+                    """background-color: rgb(255, 255, 255); 
                     border: 2px solid rgb(255,0,0); 
-                    border-radius: 12px;""")
+                    border-radius: 12px;"""
+                )
                 ui.timer = QtCore.QTimer()
-                def setDefault():
-                    child.Info.setStyleSheet("""background-color: rgb(255, 255, 255);
-                                    border-radius: 12px;""")
-                ui.timer.singleShot(2500, lambda: setDefault())
 
+                def setDefault():
+                    child.Info.setStyleSheet(
+                        """background-color: rgb(255, 255, 255);
+                                    border-radius: 12px;"""
+                    )
+
+                ui.timer.singleShot(2500, lambda: setDefault())
 
         if self.CheckValue:
             self.show_file_dialog(ui, OPENED_ASSIGNMENT_PATH)
@@ -227,14 +261,13 @@ class UIFunctions(EditWindow):
             ui.btn_maximize.setToolTip("Phóng to")
 
     def show_file_dialog(self, ui, filename):
-        file_path = open(filename, encoding='utf-8').readline().rstrip()
+        file_path = open(filename, encoding="utf-8").readline().rstrip()
         if not file_path:
-            HOME_PATH = os.path.join(os.path.join(
-                os.environ["USERPROFILE"]), "Desktop")
+            HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
             file_path = QFileDialog.getSaveFileName(
                 ui, "Open file", HOME_PATH, "*.list"
             )[0]
-            with open(filename, "w", encoding='utf8') as f:
+            with open(filename, "w", encoding="utf8") as f:
                 f.write(f"{file_path}\n0")
         if file_path:
             self.load_assignments(ui, file_path)
@@ -243,6 +276,7 @@ class UIFunctions(EditWindow):
     @staticmethod
     def reopen_main(ui):
         import main_ui
+
         main_ui.main(1, ui.pg)
         ui.close()
 
@@ -255,12 +289,12 @@ class UIFunctions(EditWindow):
             self.close_btn.clicked.connect(lambda: self.closeFrame(ui))
             self.Test_Frame.hide()
             self.Info_Frame.hide()
-            
+
         def get_file(self, entry, filter):
-            HOME_PATH = os.path.join(os.path.join(
-                os.environ["USERPROFILE"]), "Desktop")
+            HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
             file_name = QFileDialog.getOpenFileName(
-                self, "Open file", HOME_PATH, filter)
+                self, "Open file", HOME_PATH, filter
+            )
 
             if file_name[0]:
                 entry.setText(file_name[0])
@@ -318,7 +352,7 @@ class UIFunctions(EditWindow):
 
     @staticmethod
     def load_io(test_file):
-        with open(test_file, encoding = 'utf-8') as f:
+        with open(test_file, encoding="utf-8") as f:
             lines = f.readlines()
             if lines:
                 sep = lines[0].rstrip()
@@ -326,13 +360,13 @@ class UIFunctions(EditWindow):
                 tests = []
                 for line in lines:
                     inputs, outputs = line.strip("\n\r").split(sep)
-                    inputs, outputs = inputs.split('&'), outputs.split('&')
+                    inputs, outputs = inputs.split("&"), outputs.split("&")
                     tests.append([inputs, outputs])
                 return tests
 
     @staticmethod
     def load_info(info_file):
-        with open(info_file, encoding = 'utf-8') as f:
+        with open(info_file, encoding="utf-8") as f:
             lines = f.readlines()
             if lines:
                 sep = lines[0].rstrip()
@@ -359,13 +393,13 @@ class UIFunctions(EditWindow):
                         children[i].details_entry.toPlainText(),
                         children[i].Score_edit.value(),
                         tests,
-                        infos
+                        infos,
                     )
                 )
 
         with open(filename, "wb") as f:
             pickle.dump([ui.lesson_title.text(), assignments], f, -1)
-    
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

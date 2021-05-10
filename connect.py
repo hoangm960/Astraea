@@ -46,7 +46,7 @@ class UIFunctions(DownloadWindow):
             ui.room_btn.clicked.connect(lambda: self.create_room(ui))
         ui.Go_Room.clicked.connect(lambda: self.Go_Room(ui))
         ui.Quit.clicked.connect(lambda: self.Quit(ui))
-        ui.Quit.clicked.connect(lambda: open('./data/Users/opened_assignment.oa', 'w').close())
+        ui.Quit.clicked.connect(lambda: open('./data/Users/opened_assignment.oa', 'w', encoding='utf8').close())
 
     @staticmethod
     def get_connection():
@@ -67,7 +67,7 @@ class UIFunctions(DownloadWindow):
         connection.commit()
         connection.close()
 
-        open(self.OPENED_ROOM_PATH, 'w').write(str(lesson_id))
+        open(self.OPENED_ROOM_PATH, 'w', encoding='utf8').write(str(lesson_id))
         ui.label_2.show()
         ui.frame_2.hide()
         ui.id_entry.hide()
@@ -92,7 +92,7 @@ class UIFunctions(DownloadWindow):
             cursor = connection.cursor()
             cursor.execute('SELECT RoomId FROM room WHERE RoomId = %s AND Status = %s', (room_id, 1))
             if [row for row in cursor]:
-                open(self.OPENED_ROOM_PATH, 'w').write(room_id)
+                open(self.OPENED_ROOM_PATH, 'w', encoding='utf8').write(room_id)
                 cursor.execute("UPDATE user SET RoomId = %s WHERE Username = %s", (room_id, username))
                 ui.frame_2.close()
                 ui.label_2.show()
@@ -106,7 +106,7 @@ class UIFunctions(DownloadWindow):
 
     def Go_Room(self, ui):
         import Room
-        room_id = open(self.OPENED_ROOM_PATH).read().rstrip()
+        room_id = open(self.OPENED_ROOM_PATH, encoding='utf8').read().rstrip()
         if room_id:
             window = Room.RoomWindow(ui.role, ui.pg, room_id)
             window.show()
@@ -123,15 +123,15 @@ class UIFunctions(DownloadWindow):
         connection.close()
         if room_ids:
             for room_id in room_ids:
-                open(self.OPENED_ROOM_PATH, 'w').write(str(room_id[0]) if room_id[0] else '')
+                open(self.OPENED_ROOM_PATH, 'w', encoding='utf8').write(str(room_id[0]) if room_id[0] else '')
 
-        room_id = open(self.OPENED_ROOM_PATH).read().rstrip()
+        room_id = open(self.OPENED_ROOM_PATH, encoding='utf8').read().rstrip()
         if room_id:
             ui.label.setText(f'ID Phòng: {room_id}')
             ui.room_btn.hide()
             ui.In_btn.hide()
             ui.id_entry.hide()
-            open('./data/Users/opened_assignment.oa', 'w').close()
+            open('./data/Users/opened_assignment.oa', 'w', encoding='utf8').close()
         else:
             ui.Quit.hide()
             ui.Go_Room.hide()
@@ -142,7 +142,7 @@ class UIFunctions(DownloadWindow):
         encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
 
         connection = self.get_connection()
-        open(self.OPENED_ROOM_PATH, 'w').close()
+        open(self.OPENED_ROOM_PATH, 'w', encoding='utf8').close()
         cursor = connection.cursor()
         cursor.execute("UPDATE user SET RoomId = NULL WHERE Username = %s", (username, ))
         connection.commit()

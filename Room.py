@@ -131,7 +131,7 @@ class UIFunctions(RoomWindow):
                     )
 
             if lesson_id:
-                cursor = ui.connection.cursor()
+                cursor = connection.cursor()
                 cursor.execute(
                     "INSERT INTO lesson_in_room(RoomId, LessonId) VALUES(%s, %s)",
                     (ui.id, lesson_id),

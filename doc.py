@@ -159,7 +159,7 @@ class UIFunctions(DocWindow):
 
             opened = ''
             try:
-                opened = open(OPENED_DOC, encoding='utf8').readlines()[1]
+                opened = open(OPENED_DOC, 'r', encoding='utf8').readlines()[1]
             except IndexError:
                 pass
             if opened:
@@ -169,7 +169,7 @@ class UIFunctions(DocWindow):
 
             filename = f'{os.path.dirname(lesson_path).rstrip()}/doc.sd'
             open(filename, 'w', encoding='utf8').close()
-            with open(filename, "wb", encoding='utf8') as f:
+            with open(filename, "wb") as f:
                 pickle.dump(self.docs, f, -1)
             open(OPENED_DOC, 'w', encoding='utf8').write(filename)
 

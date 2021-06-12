@@ -71,8 +71,8 @@ class UIFunctions(MainWindow):
         ui.profile_btn.clicked.connect(lambda: open_profile(ui))
 
         self.define_role(ui)
-        self.connect_btn(ui)
         self.check_opened_lesson(ui, OPENED_LESSON_PATH)
+        self.connect_btn(ui)
 
     def connect_btn(self, ui):
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
@@ -124,7 +124,7 @@ class UIFunctions(MainWindow):
                     if os.path.exists(file_path):
                         self.load_assignments(ui, file_path)
                     else:
-                        open(filename, 'w', encoding='utf8').write('')
+                        open(filename, 'w', encoding='utf8').write('\n0')
 
     def show_file_dialog(self, ui, filename):
         HOME_PATH = os.path.join(os.path.join(

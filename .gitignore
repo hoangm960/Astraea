@@ -3,7 +3,6 @@ test
 Test
 data
 .vscode
-.gitignore
 data
 temp.py
 output

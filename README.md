@@ -64,3 +64,6 @@ Phần mềm hỗ trợ dạy và học lập trình
 + Thêm chức năng kick học sinh và bảng xếp hạng.
 #### v3.1.1 (28/3):
 + Sửa lỗi không kết nối được với cơ sở dữ liệu sau một thời gian.
+#### v3.1.2 (10/4):
++ Sửa lỗi không sử dụng được Tiếng Việt trong nội dung bài học.
+

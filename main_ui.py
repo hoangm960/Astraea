@@ -1,11 +1,9 @@
 import os
 import pickle
 import sys
-from PyQt5.QtGui import QIcon
 
-import mysql.connector
 import pygetwindow
-from PyQt5 import QtCore, QtWidgets, uic
+from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow, QMessageBox
 
 import Main

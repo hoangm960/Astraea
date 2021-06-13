@@ -230,6 +230,6 @@ class QuitFrame(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    main(1, None)
-    # main(0, None, connection)
+    # main(1, None)
+    main(0, None)
     sys.exit(app.exec_())

@@ -143,7 +143,7 @@ class UIFunction(MainPad):
     @staticmethod
     def reopen_doc(ui):
         import doc
-        window = doc.DocWindow(1, ui.pg, ui.connection)
+        window = doc.DocWindow(1, ui.pg)
         window.show()   
             
     def maximize_restore(self, ui):

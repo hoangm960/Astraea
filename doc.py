@@ -59,7 +59,7 @@ class UIFunctions(DocWindow):
         ui.del_btn.clicked.connect(lambda: self.options(ui))
         ui.Delete.clicked.connect(lambda: self.Delete(ui))
         ui.Save_btn.clicked.connect(
-            lambda: self.Change(ui, ui.Name_edit.text()))
+            lambda: self.change_title(ui, ui.Name_edit.text()))
         ui.load_btn.clicked.connect(lambda: self.load_doc(ui))
         ui.titles.itemClicked.connect(lambda: self.load_doc(ui))
 
@@ -115,43 +115,41 @@ class UIFunctions(DocWindow):
             ui.text_entry.clear()
             ui.deleteBox_frame.hide()
 
-    def Change(self, ui, text):
+    def change_title(self, ui, text):
         connection = self.get_connection()
         selected_items = ui.titles.selectedItems()
+        cursor = connection.cursor()
+        lesson_id = open(UIFunctions.OPENED_LESSON_PATH, encoding='utf8').readlines()[1]
         if selected_items and not ui.Name_edit.text() in self.docs:
             item = selected_items[0]
 
-            lesson_id = open(UIFunctions.OPENED_LESSON_PATH, encoding='utf8').readlines()[1]
-            cursor = connection.cursor()
-
             for doc in self.docs:
-                if item.text() in doc:
-                    id = doc[0]
+                id = doc[0]
+                
+                if item.text() == doc[1]:
                     cursor.execute(
                         "UPDATE doc SET DocName = %s WHERE DocId = %s AND LessonId = %s", (text, id, lesson_id))
-                    connection.commit()
-                    connection.close()
-                
                     list_doc = list(doc)
                     list_doc[1] = text
                     self.docs[self.docs.index(doc)] = tuple(list_doc)
                     ui.Name_edit.clear()
-
                     break
 
+        connection.commit()
+        connection.close()
                     
-            ui.titles.clear()
-            for doc in self.docs:
-                ui.titles.addItem(doc[1])
-            ui.text_entry.clear()
+        ui.titles.clear()
+        for doc in self.docs:
+            ui.titles.addItem(doc[1])
+        ui.text_entry.clear()
 
     def get_doc(self):
         connection = self.get_connection()
+        cursor = connection.cursor()
 
         self.docs.clear()
         lesson_path, lesson_id = open(self.OPENED_LESSON_PATH, encoding='utf8').readlines()
         if lesson_id:
-            cursor = connection.cursor()
             cursor.execute(
                 "SELECT DocId, DocName, DocContent FROM doc WHERE LessonId = %s", (lesson_id, ))
             self.docs = [row for row in cursor]
@@ -263,12 +261,26 @@ class UIFunctions(DocWindow):
             os.remove(f"{os.path.splitext(filename)[0]}.html")
             shutil.rmtree(f"{os.path.splitext(filename)[0]}_files")
 
-        @staticmethod
-        def add_titles(ui):
-            title = QLabel()
-            title_item = QListWidgetItem()
-            ui.titles.addItem(title_item)
-            ui.titles.setItemWidget(title_item, title)
+        def check_empty_doc(self):
+            for doc in self.docs:
+                if doc[1] == '':
+                    return True
+            return False
+
+        def add_titles(self, ui):
+            if not self.check_empty_doc():
+                title = QLabel()
+                title_item = QListWidgetItem()
+                ui.titles.addItem(title_item)
+                ui.titles.setItemWidget(title_item, title)
+
+                connection = UIFunctions.get_connection()
+                cursor = connection.cursor()
+                lesson_id = open(UIFunctions.OPENED_LESSON_PATH, encoding='utf8').readlines()[1]
+                cursor.execute("INSERT INTO doc(LessonId, DocName, DocContent) VALUES(%s, '', '')", (lesson_id,))
+                self.docs.append((cursor.lastrowid, '', ''))
+                connection.commit()
+                connection.close()
 
     class StudentUiFunctions:
         def __init__(self, ui, docs):
@@ -285,7 +297,7 @@ class UIFunctions(DocWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    # window = DocWindow(1, None)
-    window = DocWindow(0, None)
+    window = DocWindow(1, None)
+    # window = DocWindow(0, None)
     window.show()
     sys.exit(app.exec_())

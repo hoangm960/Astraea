@@ -106,8 +106,8 @@ class UIFunctions(DocWindow):
                     id = doc[0]
                     cursor.execute(
                         "DELETE FROM doc WHERE DocId = %s AND LessonId = %s", (id, lesson_id))
-                    del doc
-                    break
+                    self.docs.remove(doc)
+                    break        
             connection.commit()
             connection.close()
 
@@ -183,8 +183,8 @@ class UIFunctions(DocWindow):
                         ui.titles.addItem(doc[1])
 
     class TeacherUiFunctions:
-        def __init__(self, ui, docs):
-            self.docs = docs
+        def __init__(self, ui, function):
+            self.function = function
             self.connect_btn(ui)
 
         def connect_btn(self, ui):
@@ -261,8 +261,11 @@ class UIFunctions(DocWindow):
             os.remove(f"{os.path.splitext(filename)[0]}.html")
             shutil.rmtree(f"{os.path.splitext(filename)[0]}_files")
 
+
         def check_empty_doc(self):
-            for doc in self.docs:
+            if self.function.docs:
+                return True
+            for doc in self.function.docs:
                 if doc[1] == '':
                     return True
             return False
@@ -274,25 +277,24 @@ class UIFunctions(DocWindow):
                 ui.titles.addItem(title_item)
                 ui.titles.setItemWidget(title_item, title)
 
-                connection = UIFunctions.get_connection()
+                connection = self.function.get_connection()
                 cursor = connection.cursor()
-                lesson_id = open(UIFunctions.OPENED_LESSON_PATH, encoding='utf8').readlines()[1]
+                lesson_id = open(self.function.OPENED_LESSON_PATH, encoding='utf8').readlines()[1]
                 cursor.execute("INSERT INTO doc(LessonId, DocName, DocContent) VALUES(%s, '', '')", (lesson_id,))
-                self.docs.append((cursor.lastrowid, '', ''))
+                self.function.docs.append((cursor.lastrowid, '', ''))
                 connection.commit()
                 connection.close()
 
     class StudentUiFunctions:
-        def __init__(self, ui, docs):
-            self.docs = docs
+        def __init__(self, ui):
             ui.confirm_frame.close()
 
 
     def define_role(self, ui):
         if ui.role == 1:
-            self.TeacherUiFunctions(ui, self.docs)
+            self.TeacherUiFunctions(ui, self)
         if ui.role == 0:
-            self.StudentUiFunctions(ui, self.docs)
+            self.StudentUiFunctions(ui)
 
 
 if __name__ == "__main__":

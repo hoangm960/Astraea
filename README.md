@@ -66,4 +66,6 @@ Phần mềm hỗ trợ dạy và học lập trình
 + Sửa lỗi không kết nối được với cơ sở dữ liệu sau một thời gian.
 #### v3.1.2 (10/4):
 + Sửa lỗi không sử dụng được Tiếng Việt trong nội dung bài học.
+#### v3.1.3 (12/6):
++ Sửa lỗi database sập.
 

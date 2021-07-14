@@ -90,13 +90,14 @@ class UIFunction(MainPad):
     @staticmethod
     def get_connection():
         connection = mysql.connector.connect(
-            host="remotemysql.com",
-            user="K63yMSwITl",
-            password="zRtA9VtyHq",
-            database="K63yMSwITl"
+            host="sql6.freesqldatabase.com",
+            user="sql6425130",
+            password="VbV9wKzkms",
+            database="sql6425130"
         )
 
         return connection
+
 
     @staticmethod
     def check_empty(ui):

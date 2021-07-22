@@ -10,6 +10,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow
 from sys import exit
 
 import main_ui
+from quit import QuitFrame
 from encryption import *
 import Main
 
@@ -265,23 +266,7 @@ class LoginFunctions(LoginWindow):
             ui.PassBox_SI.clear()
             ui.SavePass.setChecked(False)
             ui.stacked_widget.setCurrentIndex(2)
-
-class QuitFrame(QMainWindow):
-    def __init__(self, ui):
-        QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
-        uic.loadUi(QuitFrameUI, self)
-        self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-        def close_pg():
-            try:
-                ui.pg.close()
-            except:
-                pass
-        self.Accept.clicked.connect(lambda: exit())
-        self.Accept.clicked.connect(lambda: close_pg())
-        self.Deny.clicked.connect(lambda: self.close())
-        ui.setDisabled(True)
-        self.Deny.clicked.connect(lambda: ui.setDisabled(False))
+            
 class Loading_Screen(QMainWindow):
     counter = 0
 

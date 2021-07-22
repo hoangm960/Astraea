@@ -4,14 +4,14 @@ import sys
 
 import pygetwindow
 from PyQt5 import QtCore, uic
-from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow, QMessageBox
+from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 
 import Main
+from quit import QuitFrame
 from UI_Files import Resources
 
 UI_MAIN_PATH = "./UI_Files/ui_main.ui"
 OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
-QuitFile = "./UI_Files/QuitFrame.ui"
 
 
 class MainWindow(QMainWindow):
@@ -213,20 +213,6 @@ def main(role, pg):
     window = MainWindow(role, pg)
     window.move(Main.SCREEN_WIDTH - window.width(), 0)
     window.show()
-class QuitFrame(QMainWindow):
-    def __init__(self, ui):
-        QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
-        uic.loadUi(QuitFile, self)
-        self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-        def AcceptQuit():
-            if ui.pg:
-                ui.pg.close()
-            ui.close()
-            self.close()
-        self.Accept.clicked.connect(lambda: AcceptQuit())
-        self.Deny.clicked.connect(lambda: self.close())
-
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

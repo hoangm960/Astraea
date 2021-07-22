@@ -7,6 +7,7 @@ import mysql.connector
 from PyQt5 import QtCore, QtWidgets, uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QMainWindow
+from sys import exit
 
 import main_ui
 from encryption import *

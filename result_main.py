@@ -290,7 +290,7 @@ class UIFunctions(ResultWindow):
         else:
             ui.progressBar.setValue(0)
         with open(self.FILE_COMMENT, 'a', encoding='utf-8', errors='ignore') as f:
-            if float(ui.Score.text()) < 7:
+            if float(self.TotalScore) < 0.7*totalScore:
                 f.write("\nBài làm vẫn chưa đạt chuẩn.")
                 ui.Judge.setText("Bài làm vẫn chưa đạt chuẩn.")
             else:

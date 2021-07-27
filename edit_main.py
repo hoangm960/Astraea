@@ -146,17 +146,18 @@ class UIFunctions(EditWindow):
                     border: 0px solid black; 
                     border-radius: 12px;""")
 
-            if not os.path.exists(child.info_file_entry.text()) or child.info_file_entry.text()[-4:] != '.txt' or "'" in child.info_file_entry.text():
-                child.info_file_entry.setStyleSheet(
-                    """background-color: rgb(255, 255, 255); 
-                    border: 2px solid rgb(225, 0 , 0); 
-                    border-radius: 12px;""")
-                self.CheckValue = False
-            else:
-                child.info_file_entry.setStyleSheet(
-                    """background-color: rgb(255, 255, 255); 
-                    border: 0px solid black; 
-                    border-radius: 12px;""")
+            if child.info_file_entry.text():
+                if not os.path.exists(child.info_file_entry.text()) or child.info_file_entry.text()[-4:] != '.txt' or "'" in child.info_file_entry.text():
+                    child.info_file_entry.setStyleSheet(
+                        """background-color: rgb(255, 255, 255); 
+                        border: 2px solid rgb(225, 0 , 0); 
+                        border-radius: 12px;""")
+                    self.CheckValue = False
+                else:
+                    child.info_file_entry.setStyleSheet(
+                        """background-color: rgb(255, 255, 255); 
+                        border: 0px solid black; 
+                        border-radius: 12px;""")
 
             if child.Score_edit.value() < 0:
                 child.Score_edit.setStyleSheet(
@@ -346,15 +347,18 @@ class UIFunctions(EditWindow):
 
     @staticmethod
     def load_info(info_file):
-        with open(info_file, encoding = 'utf-8') as f:
-            lines = f.readlines()
-            sep = lines[0].rstrip()
-            del lines[0]
-            infos = []
-            for line in lines:
-                key, message, nums = line.strip("\n\r").split(sep)
-                infos.append([key, message, nums])
-            return infos
+        if info_file:
+            with open(info_file, encoding = 'utf-8') as f:
+                lines = f.readlines()
+                sep = lines[0].rstrip()
+                del lines[0]
+                infos = []
+                for line in lines:
+                    key, message, nums = line.strip("\n\r").split(sep)
+                    infos.append([key, message, nums])
+                return infos
+        else:
+            return None
 
     def load_assignments(self, ui, filename):
         children = ui.content_widget.children()

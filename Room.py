@@ -122,12 +122,13 @@ class UIFunctions(RoomWindow):
                             "INSERT INTO output(TestId, OutputContent) VALUES(%s, %s)",
                             (test_id, output),
                         )
-                for info in assignment.infos:
-                    key, message, num = (i for i in info)
-                    cursor.execute(
-                        "INSERT INTO info(AssignmentId, KeyWord, Message, Quantity) VALUES(%s, %s, %s, %s)",
-                        (assignment_id, key, message, num),
-                    )
+                if assignment.infos:
+                    for info in assignment.infos:
+                        key, message, num = (i for i in info)
+                        cursor.execute(
+                            "INSERT INTO info(AssignmentId, KeyWord, Message, Quantity) VALUES(%s, %s, %s, %s)",
+                            (assignment_id, key, message, num),
+                        )
 
             if lesson_id:
                 cursor = connection.cursor()

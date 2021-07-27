@@ -198,8 +198,8 @@ class UIFunctions(DocWindow):
                 if doc[1] == ui.titles.currentItem().text():
                     id = doc[0]
             open(OPENED_DOC, 'a', encoding='utf8').write('\n' + str(id))
-            import Pad
-            window = Pad.MainPad(ui.pg)
+            import pad
+            window = pad.MainPad(ui.pg)
             window.show()
 
         def open_doc(self, ui):

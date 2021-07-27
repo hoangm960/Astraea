@@ -105,10 +105,10 @@ class UIFunctions(DownloadWindow):
 
 
     def Go_Room(self, ui):
-        import Room
+        import room
         room_id = open(self.OPENED_ROOM_PATH, encoding='utf8').read().rstrip()
         if room_id:
-            window = Room.RoomWindow(ui.role, ui.pg, room_id)
+            window = room.RoomWindow(ui.role, ui.pg, room_id)
             window.show()
             ui.close()
 

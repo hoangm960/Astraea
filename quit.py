@@ -1,7 +1,6 @@
 from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (QApplication, QFileDialog, QMainWindow,
-                             QMessageBox, QSizeGrip, QVBoxLayout, QWidget)
+from PyQt5.QtWidgets import QMainWindow,
 
 QUIT_FILE = "./UI_Files/QuitFrame.ui"
 

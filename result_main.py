@@ -1,13 +1,12 @@
 from encryption import decrypt, encrypt
 import os
 import pickle
-import sys
 from datetime import datetime
 
 import mysql.connector
-from PyQt5 import QtCore, uic, QtWidgets
+from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (QApplication, QFileDialog, QMainWindow, QSizeGrip,
+from PyQt5.QtWidgets import (QFileDialog, QMainWindow, QSizeGrip,
                              QVBoxLayout, QWidget)
                              
 import Main

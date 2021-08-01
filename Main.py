@@ -11,7 +11,7 @@ app = QApplication([])
 screen_resolution = app.desktop().screenGeometry()
 SCREEN_WIDTH, SCREEN_HEIGHT = screen_resolution.width(), screen_resolution.height()*0.953
 
-def create():
+def init():
     def create_file(file):
         if not os.path.exists(file):
             open(file, "w", encoding='utf8').close()
@@ -38,7 +38,7 @@ def create():
 
 if __name__ == "__main__":
 
-    create()
+    init()
 
-    import login_main
-    login_main.main(VERSION)
+    import ui_controller
+    ui_controller.main(VERSION)

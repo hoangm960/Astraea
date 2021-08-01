@@ -1,24 +1,36 @@
 import os
 import pickle
-import sys
 from datetime import datetime
 
 import mysql.connector
 import pandas
 from PyQt5 import QtCore, uic
-from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
+from PyQt5.QtWidgets import QFileDialog, QMainWindow
 
 
 class RoomWindow(QMainWindow):
     ROOM_UI = "./UI_Files/Room.ui"
+    switch_window = QtCore.pyqtSignal()
 
-    def __init__(self, role, pg, id):
+    def __init__(self, role, id):
         self.role = role
-        self.pg = pg
         self.id = id
         super(RoomWindow, self).__init__()
         uic.loadUi(self.ROOM_UI, self)
-        UIFunctions(self)
+        self.initUI()
+        self.define_role()
+
+    def initUI(self):
+        self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        self.showMaximized()
+        self.ID_Room.setText("ID phòng: {}".format(self.id))
+
+    def define_role(self):
+        if self.role == 1:
+            TeacherUIFunctions(self)
+        if self.role == 0:
+            StudentUIFunctions(self)
 
 
 class UIFunctions(RoomWindow):
@@ -26,36 +38,15 @@ class UIFunctions(RoomWindow):
     OPENED_ROOM_PATH = "./data/Users/opened_room.or"
 
     def __init__(self, ui):
-        ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-        ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-        ui.showMaximized()
-        ui.ID_Room.setText('ID phòng: {}'.format(ui.id))
         self.add_lesson_list(ui)
         self.rank_student(ui)
-        
-        if ui.role == 0:
-            ui.student_list_frame.close()
-        else:
-            self.add_student_list(ui)
         self.connect_btn(ui)
 
     def connect_btn(self, ui):
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
         ui.btn_quit.clicked.connect(lambda: ui.close())
-        ui.btn_quit.clicked.connect(lambda: self.close_pg(ui))
+        ui.btn_quit.clicked.connect(lambda: self.return_main(ui))
         ui.download_btn.clicked.connect(lambda: self.download_lesson(ui))
-        if ui.role == 0:
-            ui.del_lesson_btn.close()
-            ui.add_btn.close()
-            ui.ButtonFrame.close()
-        else:
-            ui.del_lesson_btn.clicked.connect(lambda: self.del_lesson(ui))
-            ui.add_btn.clicked.connect(lambda: self.upload(ui))
-            ui.reload_btn.clicked.connect(lambda: self.add_student_list(ui))
-            ui.download_info_btn.clicked.connect(
-                lambda: self.get_students_submission(ui)
-            )
-            ui.kick_btn.clicked.connect(lambda: self.kick_student(ui))
 
     @staticmethod
     def get_connection():
@@ -63,11 +54,10 @@ class UIFunctions(RoomWindow):
             host="remotemysql.com",
             user="53K73q3Z6I",
             password="DpXgsUvOuu",
-            database="53K73q3Z6I"
+            database="53K73q3Z6I",
         )
 
         return connection
-
 
     @staticmethod
     def get_file_dialog(ui, filter):
@@ -83,81 +73,6 @@ class UIFunctions(RoomWindow):
                     unpickler = pickle.Unpickler(f)
                     data = unpickler.load()
                     return data[0], data[1]
-
-    def upload(self, ui):
-        filename = self.get_file_dialog(ui, "*.list")
-        if ui.id and filename:
-            connection = self.get_connection()
-            cursor = connection.cursor()
-            title, assignments = self.get_lesson(filename)
-            current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            cursor.execute(
-                "INSERT INTO lesson(Name, CreatedDate) VALUES(%s, %s)",
-                (title, current_time),
-            )
-            lesson_id = cursor.lastrowid
-            for assignment in assignments:
-                name, details, mark = (
-                    assignment.name,
-                    assignment.details,
-                    assignment.mark,
-                )
-                cursor.execute(
-                    "INSERT INTO assignment(LessonId, Name, Details, Mark) VALUES(%s, %s, %s, %s)",
-                    (lesson_id, name, details, mark),
-                )
-                assignment_id = cursor.lastrowid
-                for test in assignment.tests:
-                    cursor.execute(
-                        "INSERT INTO test(AssignmentId) VALUES(%s)", (assignment_id,)
-                    )
-                    test_id = cursor.lastrowid
-                    for input in test[0]:
-                        cursor.execute(
-                            "INSERT INTO input(TestId, InputContent) VALUES(%s, %s)",
-                            (test_id, input),
-                        )
-                    for output in test[1]:
-                        cursor.execute(
-                            "INSERT INTO output(TestId, OutputContent) VALUES(%s, %s)",
-                            (test_id, output),
-                        )
-                if assignment.infos:
-                    for info in assignment.infos:
-                        key, message, num = (i for i in info)
-                        cursor.execute(
-                            "INSERT INTO info(AssignmentId, KeyWord, Message, Quantity) VALUES(%s, %s, %s, %s)",
-                            (assignment_id, key, message, num),
-                        )
-
-            if lesson_id:
-                cursor = connection.cursor()
-                cursor.execute(
-                    "INSERT INTO lesson_in_room(RoomId, LessonId) VALUES(%s, %s)",
-                    (ui.id, lesson_id),
-                )
-
-            connection.commit()
-            connection.close()
-            self.add_lesson_list(ui)
-
-    def del_lesson(self, ui):
-        items = ui.lesson_list.selectedItems()
-        connection = self.get_connection()
-        cursor = connection.cursor()
-        if items:
-            for item in items:
-                ui.lesson_list.takeItem(ui.lesson_list.row(item))
-
-                text = item.text()
-                lesson_id = text.replace("ID: ", "").replace("Tên: ", "").split(", ")[0]
-                if lesson_id:
-                    cursor.execute(
-                        "DELETE FROM lesson_in_room WHERE LessonId = %s", (lesson_id,)
-                    )
-                    connection.commit()
-                    connection.close()
-                    break
 
     def download_lesson(self, ui):
         item = ui.lesson_list.currentItem()
@@ -216,8 +131,10 @@ class UIFunctions(RoomWindow):
             if filename:
                 with open(filename, "wb") as f:
                     pickle.dump([title, file_assignments], f, -1)
-                open(self.OPENED_LESSON_PATH, "w", encoding='utf8').write(f"{filename}\n{lesson_id}")
-                self.close_pg(ui)
+                open(self.OPENED_LESSON_PATH, "w", encoding="utf8").write(
+                    f"{filename}\n{lesson_id}"
+                )
+                self.return_main(ui)
 
     @staticmethod
     def show_file_dialog(filename):
@@ -244,12 +161,146 @@ class UIFunctions(RoomWindow):
     def get_student_list(self, ui, filter):
         connection = self.get_connection()
         cursor = connection.cursor()
-        cursor.execute(
-            f"SELECT {filter} FROM user WHERE RoomId = {ui.id} AND Type = 0"
-        )
+        cursor.execute(f"SELECT {filter} FROM user WHERE RoomId = {ui.id} AND Type = 0")
         student_list = [row for row in cursor]
         connection.close()
         return student_list
+
+    @staticmethod
+    def save_file_dialog(ui, filter):
+        HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
+        file_path = QFileDialog.getSaveFileName(ui, "Open file", HOME_PATH, filter)[0]
+        return file_path
+
+    def rank_student(self, ui):
+        students = self.get_student_list(ui, "Username")
+        names = self.get_student_list(ui, "ShowName")
+        student_scores = tmp_scores = {i[0]: 0 for i in students}
+        connection = self.get_connection()
+        cursor = connection.cursor()
+        cursor.execute("SELECT Username, Mark FROM submission")
+
+        mark_list = [list(row) for row in cursor]
+        connection.close()
+
+        for student in list(tmp_scores):
+            for mark in mark_list:
+                if student == mark[0]:
+                    student_scores[student] += mark[1]
+
+        check = list()
+        rank = list()
+        for _ in range(0, len(students)):
+            check.append(True)
+            rank.append(0)
+        stt = 1
+        while stt <= len(student_scores):
+            max = 0
+            x = 0
+            record = 0
+            for i in student_scores.keys():
+                if student_scores[i] >= max and check[x]:
+                    max = student_scores[i]
+                    record = x
+                x += 1
+            rank[record] = stt
+            check[record] = False
+            stt += 1
+        stt = 0
+        for _ in student_scores.keys():
+            ui.Achievements_list.addItem(f"{rank[stt]}. {names[stt][0]}")
+            stt += 1
+
+    def return_main(self, ui):
+        ui.switch_window.emit()
+
+
+class TeacherUIFunctions(UIFunctions):
+    def __init__(self, ui):
+        super().__init__(ui)
+        self.add_student_list(ui)
+
+    def connect_btn(self, ui):
+        super().connect_btn(ui)
+        ui.del_lesson_btn.clicked.connect(lambda: self.del_lesson(ui))
+        ui.add_btn.clicked.connect(lambda: self.upload(ui))
+        ui.reload_btn.clicked.connect(lambda: self.add_student_list(ui))
+        ui.download_info_btn.clicked.connect(lambda: self.get_students_submission(ui))
+        ui.kick_btn.clicked.connect(lambda: self.kick_student(ui))
+
+    def del_lesson(self, ui):
+        items = ui.lesson_list.selectedItems()
+        connection = self.get_connection()
+        cursor = connection.cursor()
+        if items:
+            for item in items:
+                ui.lesson_list.takeItem(ui.lesson_list.row(item))
+
+                text = item.text()
+                lesson_id = text.replace("ID: ", "").replace("Tên: ", "").split(", ")[0]
+                if lesson_id:
+                    cursor.execute(
+                        "DELETE FROM lesson_in_room WHERE LessonId = %s", (lesson_id,)
+                    )
+                    connection.commit()
+                    connection.close()
+                    break
+
+    def upload(self, ui):
+        filename = self.get_file_dialog(ui, "*.list")
+        if ui.id and filename:
+            connection = self.get_connection()
+            cursor = connection.cursor()
+            title, assignments = self.get_lesson(filename)
+            current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            cursor.execute(
+                "INSERT INTO lesson(Name, CreatedDate) VALUES(%s, %s)",
+                (title, current_time),
+            )
+            lesson_id = cursor.lastrowid
+            for assignment in assignments:
+                name, details, mark = (
+                    assignment.name,
+                    assignment.details,
+                    assignment.mark,
+                )
+                cursor.execute(
+                    "INSERT INTO assignment(LessonId, Name, Details, Mark) VALUES(%s, %s, %s, %s)",
+                    (lesson_id, name, details, mark),
+                )
+                assignment_id = cursor.lastrowid
+                for test in assignment.tests:
+                    cursor.execute(
+                        "INSERT INTO test(AssignmentId) VALUES(%s)", (assignment_id,)
+                    )
+                    test_id = cursor.lastrowid
+                    for input in test[0]:
+                        cursor.execute(
+                            "INSERT INTO input(TestId, InputContent) VALUES(%s, %s)",
+                            (test_id, input),
+                        )
+                    for output in test[1]:
+                        cursor.execute(
+                            "INSERT INTO output(TestId, OutputContent) VALUES(%s, %s)",
+                            (test_id, output),
+                        )
+                for info in assignment.infos:
+                    key, message, num = (i for i in info)
+                    cursor.execute(
+                        "INSERT INTO info(AssignmentId, KeyWord, Message, Quantity) VALUES(%s, %s, %s, %s)",
+                        (assignment_id, key, message, num),
+                    )
+
+            if lesson_id:
+                cursor = connection.cursor()
+                cursor.execute(
+                    "INSERT INTO lesson_in_room(RoomId, LessonId) VALUES(%s, %s)",
+                    (ui.id, lesson_id),
+                )
+
+            connection.commit()
+            connection.close()
+            self.add_lesson_list(ui)
 
     def add_student_list(self, ui):
         ui.student_list.clear()
@@ -259,16 +310,10 @@ class UIFunctions(RoomWindow):
             username, name = student
             ui.student_list.addItem(f"Tên người dùng: {username}, Tên: {name}")
 
-    @staticmethod
-    def save_file_dialog(ui, filter):
-        HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
-        file_path = QFileDialog.getSaveFileName(ui, "Open file", HOME_PATH, filter)[0]
-        return file_path
-
     def get_students_submission(self, ui):
         try:
             connection = self.get_connection()
-            lesson_id = open(self.OPENED_LESSON_PATH, encoding='utf8').readlines()[1]
+            lesson_id = open(self.OPENED_LESSON_PATH, encoding="utf8").readlines()[1]
             submission = pandas.read_sql(
                 f"SELECT UserName, SubmissionDate, Mark, Comment FROM submission WHERE LessonId = {lesson_id}",
                 connection,
@@ -306,62 +351,11 @@ class UIFunctions(RoomWindow):
                 connection.commit()
                 connection.close()
 
-    def rank_student(self, ui):
-        students = self.get_student_list(ui, "Username")
-        names = self.get_student_list(ui, 'ShowName')
-        student_scores = tmp_scores = {i[0]:0 for i in students}
-        connection = self.get_connection()
-        cursor = connection.cursor()
-        cursor.execute(
-            "SELECT Username, Mark FROM submission"
-        )
 
-        mark_list = [list(row) for row in cursor]
-        connection.close()
-
-        for student in list(tmp_scores):
-            for mark in mark_list:
-                if student == mark[0]:
-                    student_scores[student] += mark[1]
-        
-        check = list()
-        rank = list()
-        for _ in range(0, len(students)):
-            check.append(True)
-            rank.append(0)
-        stt = 1
-        while stt <= len(student_scores):
-            max = 0
-            x = 0
-            record = 0
-            for i in student_scores.keys():
-                if student_scores[i]>=max and check[x]:
-                    max = student_scores[i]
-                    record = x
-                x+=1
-            rank[record] = stt
-            check[record] = False
-            stt+=1
-        stt = 0
-        for _ in student_scores.keys():
-            ui.Achievements_list.addItem(f"{rank[stt]}. {names[stt][0]}")
-            stt+=1
-
-    @staticmethod
-    def close_pg(ui):
-        import main_ui
-        main_ui.main(ui.role, ui.pg)
-        ui.close()
-
-if __name__ == "__main__":
-    connection = mysql.connector.connect(
-        host="remotemysql.com",
-        user="K63yMSwITl",
-        password="zRtA9VtyHq",
-        database="K63yMSwITl",
-    )
-    app = QApplication(sys.argv)
-    window = RoomWindow(1, None, "11")
-    # window = RoomWindow(0, None, '1')
-    window.show()
-    sys.exit(app.exec_())
+class StudentUIFunctions(UIFunctions):
+    def __init__(self, ui):
+        super().__init__(ui)
+        ui.student_list_frame.close()
+        ui.del_lesson_btn.close()
+        ui.add_btn.close()
+        ui.ButtonFrame.close()

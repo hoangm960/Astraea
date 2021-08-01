@@ -24,8 +24,9 @@ class Assignment:
 
 
 class EditWindow(QMainWindow):
-    def __init__(self, pg):
-        self.pg = pg
+    switch_window = QtCore.pyqtSignal()
+
+    def __init__(self):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(EDIT_FORM_PATH, self)
         self.setGeometry(
@@ -75,10 +76,11 @@ class UIFunctions(EditWindow):
         if os.path.exists(OPENED_ASSIGNMENT_PATH):
             self.check_empty(ui, open(OPENED_ASSIGNMENT_PATH,
                                   encoding='utf-8').readline().rstrip())
+
     def connect_btn(self, ui):
         ui.btn_maximize.clicked.connect(lambda: self.maximize_restore(ui))
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
-        ui.btn_quit.clicked.connect(lambda: self.reopen_main(ui))
+        ui.btn_quit.clicked.connect(lambda: self.return_main(ui))
         ui.confirm_btn.clicked.connect(
             lambda: self.check_empty_entry(ui))
         def check():
@@ -116,6 +118,9 @@ class UIFunctions(EditWindow):
         )
         ui.confirm_add_btn.clicked.connect(
             lambda: ui.stacked_widget.setCurrentIndex(1))
+    
+    def return_main(self, ui):
+        ui.switch_window.emit()
 
     def check_empty_entry(self, ui):
         self.CheckValue = True
@@ -250,13 +255,7 @@ class UIFunctions(EditWindow):
                 f.write(f"{file_path}\n0")
         if file_path:
             self.load_assignments(ui, file_path)
-            self.reopen_main(ui)
-
-    @staticmethod
-    def reopen_main(ui):
-        import main_ui
-        main_ui.main(1, ui.pg)
-        ui.close()
+            self.return_main(ui)
 
     class EditFrame(QWidget):
         deleted = False

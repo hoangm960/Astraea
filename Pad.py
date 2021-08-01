@@ -17,11 +17,11 @@ OPENED_DOC_CONTENT = "./data/Users/opened_doc_content.html"
 
 HTML_EXTENSIONS = ['.htm', '.html']
 
-class MainPad(QMainWindow):
-    def __init__(self, pg):
+class PadWindow(QMainWindow):
+    switch_window = QtCore.pyqtSignal()
+    def __init__(self):
         super(QMainWindow, self).__init__()
         uic.loadUi(PAD_UI, self)    
-        self.pg = pg
         def moveWindow(event):
             if UIFunction.GLOBAL_STATE == True:
                 UIFunction.maximize_restore(self)
@@ -36,7 +36,7 @@ class MainPad(QMainWindow):
     def mousePressEvent(self, event):
         self.dragPos = event.globalPos()
     
-class UIFunction(MainPad):
+class UIFunction(PadWindow):
     OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
     GLOBAL_STATE = False
     path = None
@@ -45,6 +45,7 @@ class UIFunction(MainPad):
     def __init__(self, ui):
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        ui.showMaximized()
         self.connect(ui)
         self.check_empty(ui)
         
@@ -141,11 +142,8 @@ class UIFunction(MainPad):
             ui.close()
             self.reopen_doc(ui)
 
-    @staticmethod
-    def reopen_doc(ui):
-        import doc
-        window = doc.DocWindow(1, ui.pg)
-        window.show()   
+    def reopen_doc(self, ui):
+        ui.switch_window.emit()  
             
     def maximize_restore(self, ui):
         status = self.GLOBAL_STATE
@@ -234,9 +232,3 @@ class UIFunction(MainPad):
             ui.editor.setText(text)
         except:
             pass
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    window = MainPad(None)
-    window.show()
-    sys.exit(app.exec_())

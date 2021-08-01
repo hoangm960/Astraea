@@ -6,12 +6,10 @@ from datetime import datetime
 import mysql.connector
 from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (QFileDialog, QMainWindow, QSizeGrip,
-                             QVBoxLayout, QWidget)
-                             
+from PyQt5.QtWidgets import QFileDialog, QMainWindow, QSizeGrip, QVBoxLayout, QWidget
+
 import Main
 import check_algorithm
-import main_ui
 
 RESULT_FORM_PATH = "./UI_Files/result_form.ui"
 RESULT_FRAME_PATH = "./UI_Files/result_frame.ui"
@@ -21,8 +19,8 @@ OPENED_RESULT_PATH = "./data/results/"
 
 
 class ResultWindow(QMainWindow):
-    def __init__(self, pg):
-        self.pg = pg
+    switch_window = QtCore.pyqtSignal()
+    def __init__(self):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(RESULT_FORM_PATH, self)
         self.setGeometry(
@@ -63,7 +61,7 @@ class UIFunctions(ResultWindow):
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 
         ui.stacked_widget.setCurrentIndex(1)
-        ui.return_btn.clicked.connect(lambda: self.reopen_main(ui))
+        ui.return_btn.clicked.connect(lambda: self.return_main(ui))
         ui.inform.hide()
         ui.Frame_close.hide()
         ui.ERROR_WINDOW.hide()
@@ -73,9 +71,8 @@ class UIFunctions(ResultWindow):
         ui.btn_maximize.clicked.connect(lambda: self.maximize_restore(ui))
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
         ui.Accept1.clicked.connect(lambda: ui.close())
-        ui.Accept1.clicked.connect(
-            lambda: main_ui.main(0, ui.pg))
-        
+        ui.Accept1.clicked.connect(lambda: self.return_main(ui))
+
         # Window size grip
         ui.sizegrip = QSizeGrip(ui.frame_grip)
         ui.sizegrip.setStyleSheet(
@@ -83,7 +80,8 @@ class UIFunctions(ResultWindow):
         )
         ui.sizegrip.setToolTip("Resize Window")
         self.load_assignments(
-            open(OPENED_LESSON_PATH, encoding='utf-8').readline().rstrip())
+            open(OPENED_LESSON_PATH, encoding="utf-8").readline().rstrip()
+        )
         self.check_empty(ui, len(self.assignments))
 
     @classmethod
@@ -131,15 +129,13 @@ class UIFunctions(ResultWindow):
 
             ui.ans_file_btn.clicked.connect(
                 lambda: ui.showDialog(
-                    ui.ans_file_entry, "Python (*.py);;Free Pascal (*.pas)")
+                    ui.ans_file_entry, "Python (*.py);;Free Pascal (*.pas)"
+                )
             )
 
         def showDialog(ui, entry, filter):
-            HOME_PATH = os.path.join(os.path.join(
-                os.environ["USERPROFILE"]), "Desktop")
-            file_name = QFileDialog.getOpenFileName(
-                ui, "Open file", HOME_PATH, filter
-            )
+            HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
+            file_name = QFileDialog.getOpenFileName(ui, "Open file", HOME_PATH, filter)
 
             if file_name[0]:
                 entry.setText(file_name[0])
@@ -150,11 +146,10 @@ class UIFunctions(ResultWindow):
             host="remotemysql.com",
             user="53K73q3Z6I",
             password="DpXgsUvOuu",
-            database="53K73q3Z6I"
+            database="53K73q3Z6I",
         )
 
         return connection
-
 
     def load_assignments(self, filename):
         self.assignments.clear()
@@ -168,16 +163,14 @@ class UIFunctions(ResultWindow):
     def check_empty(self, ui, num):
         if num == 0:
             ui.Out_btn.clicked.connect(lambda: ui.close())
-            ui.Out_btn.clicked.connect(lambda: self.reopen_main(ui))
+            ui.Out_btn.clicked.connect(lambda: self.return_main(ui))
             ui.Out_btn.setText("Thoát")
             ui.inform.show()
             ui.inform.move(340, 220)
         else:
             ui.Out_btn.clicked.connect(lambda: ui.OkCancelFrame.show())
-            ui.Accept.clicked.connect(
-                lambda: ui.stacked_widget.setCurrentIndex(0))
-            ui.Accept.clicked.connect(
-                lambda: self.check_true(ui))
+            ui.Accept.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(0))
+            ui.Accept.clicked.connect(lambda: self.check_true(ui))
             self.put_frame_in_list(ui, len(self.assignments))
 
     def put_frame_in_list(self, ui, num):
@@ -199,12 +192,14 @@ class UIFunctions(ResultWindow):
         return check_algorithm.main(
             filename=frame.ans_file_entry.text(),
             tests=assignment.tests,
-            infos=assignment.infos
+            infos=assignment.infos,
         )
 
     def get_results(self, ui, child, num):
-        with open(self.FILE_COMMENT, 'a+', encoding='utf-8', errors='ignore') as file_error:
-            file_error.write(f'\n{self.assignments[num].name}')
+        with open(
+            self.FILE_COMMENT, "a+", encoding="utf-8", errors="ignore"
+        ) as file_error:
+            file_error.write(f"\n{self.assignments[num].name}")
         correct = 0
         results = []
         errors = []
@@ -217,14 +212,17 @@ class UIFunctions(ResultWindow):
             return correct, results, errors
 
         elif ui.TestFrame.ans_file_entry.text():
-            with open(self.FILE_COMMENT, 'a+', encoding='utf-8', errors='ignore') as file_error:
+            with open(
+                self.FILE_COMMENT, "a+", encoding="utf-8", errors="ignore"
+            ) as file_error:
                 file_error.write(
-                    '\n>>> FileExistsERROR: Lỗi không tìm thấy file bài làm.')
+                    "\n>>> FileExistsERROR: Lỗi không tìm thấy file bài làm."
+                )
         else:
             return 0, [], []
 
     def check_true(self, ui):
-        open(self.FILE_COMMENT,'w', encoding='utf8').close()
+        open(self.FILE_COMMENT, "w", encoding="utf8").close()
         ui.btn_quit.close()
         children = ui.content_widgetT.children()
         del children[0:2]
@@ -242,38 +240,62 @@ class UIFunctions(ResultWindow):
             ui.content_widget.layout().addWidget(ui.ResultFrame)
             ui.ResultFrame.test_file_label.setText(self.assignments[i].name)
             ui.ResultFrame.correct_num.setText(
-                f'{str(correct)}/{str(len(self.assignments[i].tests))}')
+                f"{str(correct)}/{str(len(self.assignments[i].tests))}"
+            )
 
             if len(results) != 0:
-                ui.ResultFrame.Score_box.setText(str(
-                    round(correct / len(self.assignments[i].tests) * self.assignments[i].mark, 2)))
+                ui.ResultFrame.Score_box.setText(
+                    str(
+                        round(
+                            correct
+                            / len(self.assignments[i].tests)
+                            * self.assignments[i].mark,
+                            2,
+                        )
+                    )
+                )
                 for result in results:
                     try:
                         if result[0]:
-                            with open(self.FILE_COMMENT, 'a+', encoding='utf-8', errors='ignore') as f:
+                            with open(
+                                self.FILE_COMMENT,
+                                "a+",
+                                encoding="utf-8",
+                                errors="ignore",
+                            ) as f:
                                 f.write(
-                                    '\n>>> TimeoutExpired: Thuật toán vượt quá thời gian yêu cầu.')
+                                    "\n>>> TimeoutExpired: Thuật toán vượt quá thời gian yêu cầu."
+                                )
                     except ZeroDivisionError:
-                        with open(self.FILE_COMMENT, 'a+', encoding='utf-8', errors='ignore') as f:
+                        with open(
+                            self.FILE_COMMENT, "a+", encoding="utf-8", errors="ignore"
+                        ) as f:
                             f.write(
-                                '\n>>> ZeroDivisionError: Tồn tại phép tính chia cho 0.')
-                        
+                                "\n>>> ZeroDivisionError: Tồn tại phép tính chia cho 0."
+                            )
+
                 if errors:
                     for message in errors:
-                        with open(self.FILE_COMMENT, 'a+', encoding='utf-8', errors='ignore') as f:
-                            f.write(f'\n>>> {message}')
+                        with open(
+                            self.FILE_COMMENT, "a+", encoding="utf-8", errors="ignore"
+                        ) as f:
+                            f.write(f"\n>>> {message}")
 
             elif not ui.TestFrame.ans_file_entry.text():
-                with open(self.FILE_COMMENT, 'a+', encoding='utf-8', errors='ignore') as f:
-                    f.write('\n>>> Chưa làm bài')
+                with open(
+                    self.FILE_COMMENT, "a+", encoding="utf-8", errors="ignore"
+                ) as f:
+                    f.write("\n>>> Chưa làm bài")
 
-            with open(self.FILE_COMMENT, 'r', encoding='utf-8', errors='ignore') as f:
+            with open(self.FILE_COMMENT, "r", encoding="utf-8", errors="ignore") as f:
                 list_file = f.readlines()
-                if '>>>' not in list_file[-1]:
-                    with open(self.FILE_COMMENT, 'a+', encoding='utf-8', errors='ignore') as file_error_w:
-                        file_error_w.write('\n>>> Không xảy ra lỗi')
+                if ">>>" not in list_file[-1]:
+                    with open(
+                        self.FILE_COMMENT, "a+", encoding="utf-8", errors="ignore"
+                    ) as file_error_w:
+                        file_error_w.write("\n>>> Không xảy ra lỗi")
 
-            with open(self.FILE_COMMENT, 'r', encoding='utf-8', errors='ignore') as f:
+            with open(self.FILE_COMMENT, "r", encoding="utf-8", errors="ignore") as f:
                 ui.Error_text.setText(str(f.read()))
 
         totalScore = int()
@@ -285,7 +307,7 @@ class UIFunctions(ResultWindow):
         for child in children:
             self.TotalScore += float(child.Score_box.text())
         if self.TotalScore != 0:
-            ui.progressBar.setValue(int((self.TotalScore / totalScore)*100))
+            ui.progressBar.setValue(int((self.TotalScore / totalScore) * 100))
             ui.Score.setText(str(round(self.TotalScore, 2)))
         else:
             ui.progressBar.setValue(0)
@@ -297,34 +319,40 @@ class UIFunctions(ResultWindow):
                 f.write("\nBài làm vẫn đạt chuẩn.")
                 ui.Judge.setText("Bài làm đạt chuẩn")
 
-
         decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
-        name_account = open(self.USER_PATH, encoding='utf-8').readline().rstrip()
+        name_account = open(self.USER_PATH, encoding="utf-8").readline().rstrip()
         encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
 
         connection = self.get_connection()
         cursor = connection.cursor()
-        current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        lesson_id = int(open(OPENED_LESSON_PATH, encoding = 'utf-8').readlines()[1])
+        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        lesson_id = int(open(OPENED_LESSON_PATH, encoding="utf-8").readlines()[1])
         if lesson_id:
             try:
-                cursor.execute("INSERT INTO submission(Username, LessonId, SubmissionDate, Mark, Comment) VALUES(%s, %s, %s, %s, %s)", (name_account, lesson_id, current_time, round(self.TotalScore, 2), open(self.FILE_COMMENT, encoding = 'utf-8').read()))
+                cursor.execute(
+                    "INSERT INTO submission(Username, LessonId, SubmissionDate, Mark, Comment) VALUES(%s, %s, %s, %s, %s)",
+                    (
+                        name_account,
+                        lesson_id,
+                        current_time,
+                        round(self.TotalScore, 2),
+                        open(self.FILE_COMMENT, encoding="utf-8").read(),
+                    ),
+                )
             except mysql.connector.errors.IntegrityError:
-                cursor.execute("UPDATE submission SET Username = %s, LessonId = %s, SubmissionDate = %s, Mark = %s, Comment = %s", (name_account, lesson_id, current_time, round(self.TotalScore, 2), open(self.FILE_COMMENT, encoding='utf8').read()))
+                cursor.execute(
+                    "UPDATE submission SET Username = %s, LessonId = %s, SubmissionDate = %s, Mark = %s, Comment = %s",
+                    (
+                        name_account,
+                        lesson_id,
+                        current_time,
+                        round(self.TotalScore, 2),
+                        open(self.FILE_COMMENT, encoding="utf8").read(),
+                    ),
+                )
 
             connection.commit()
             connection.close()
 
-    @staticmethod
-    def reopen_main(ui):
-        main_ui.main(0, ui.pg)
-        ui.close()
-
-
-def main(pg):
-    window = ResultWindow(pg)
-    window.show()
-
-
-if __name__ == "__main__":
-    main(None)
+    def return_main(self, ui):
+        ui.switch_window.emit()

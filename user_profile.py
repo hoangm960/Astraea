@@ -1,19 +1,19 @@
-from encryption import decrypt, encrypt
-from PyQt5 import QtCore
-from PyQt5.QtWidgets import QMainWindow, QApplication
-from PyQt5 import uic
+from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
-import sys
+from PyQt5.QtWidgets import QMainWindow
+
+from encryption import decrypt, encrypt
+
 
 class ProfileWindow(QMainWindow):
     UI_PATH = './UI_Files/profile_form.ui'
+    switch_window_main = QtCore.pyqtSignal()
+    switch_window_login = QtCore.pyqtSignal()
 
-    def __init__(self, window, pg):
-        self.win = window
-        self.pg = pg
+    def __init__(self):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(self.UI_PATH, self)
-        UIFunctions(self, self.win)
+        UIFunctions(self)
 
         def moveWindow(event):
             if event.buttons() == Qt.LeftButton:
@@ -31,29 +31,24 @@ class UIFunctions(ProfileWindow):
     USER_PATH_ENCRYPTED = "data/Users/User.encrypted"
     KEY_PATH = "data/encryption/users.key"
 
-    def __init__(self, ui, win):
+    def __init__(self, ui):
         self.connect_btn(ui)
-        if win:
-            win.profile_btn.setDisabled(True)
-        ui.btn_quit.clicked.connect(lambda: win.profile_btn.setDisabled(False))
-    def connect_btn(self, ui):
-        def SignOut(ui):
-            if ui.win:
-                ui.win.close()
-            ui.close()
-            if ui.pg:
-                ui.pg.minimize()
-            import login_main
+        ui.btn_quit.clicked.connect(lambda: self.return_main(ui))
 
-            ui.main = login_main.LoginWindow(ui.pg)
-            ui.main.show()
-        ui.OutAccount.clicked.connect(lambda: SignOut(ui))
+    def connect_btn(self, ui):
+        ui.OutAccount.clicked.connect(lambda: self.SignOut(ui))
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         ui.btn_quit.clicked.connect(lambda: ui.close())
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
         self.Update(ui)
 
+    def return_main(self, ui):
+        ui.switch_window_main.emit()
+
+
+    def SignOut(self, ui):
+        ui.switch_window_login.emit()
     
     def Update(self, ui):
         decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
@@ -63,10 +58,3 @@ class UIFunctions(ProfileWindow):
             ui.NameBox.setText(name)
             ui.PassBox.setText(password)
         encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
-
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    window = ProfileWindow(None, None, None)
-    window.show()
-    sys.exit(app.exec_())

@@ -7,18 +7,19 @@ from PyQt5.QtWidgets import QApplication, QMainWindow
 from encryption import decrypt, encrypt
 
 
-class DownloadWindow(QMainWindow):
+class ConnectWindow(QMainWindow):
     CONNECT_UI = "./UI_Files/connect.ui"
+    switch_window_main = QtCore.pyqtSignal()
+    switch_window_room = QtCore.pyqtSignal(int)
 
-    def __init__(self, pg, role, *args, **kwargs):
-        self.pg = pg
+    def __init__(self, role):
         self.role = role
-        QMainWindow.__init__(self, *args, **kwargs)
+        QMainWindow.__init__(self)
         uic.loadUi(self.CONNECT_UI, self)
         UIFunctions(self)
 
 
-class UIFunctions(DownloadWindow):
+class UIFunctions(ConnectWindow):
     OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
     OPENED_ROOM_PATH = "./data/Users/opened_room.or"
     KEY_PATH = "data/encryption/users.key"
@@ -37,14 +38,14 @@ class UIFunctions(DownloadWindow):
         self.check_room(ui)
 
     def connect_btn(self, ui):
-        ui.btn_quit.clicked.connect(lambda: self.close_pg(ui))
+        ui.btn_quit.clicked.connect(lambda: self.return_main(ui))
         ui.In_btn.clicked.connect(lambda: self.enter_room(ui))
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
         if ui.role == 0:
             ui.room_btn.close()
         else:
             ui.room_btn.clicked.connect(lambda: self.create_room(ui))
-        ui.Go_Room.clicked.connect(lambda: self.Go_Room(ui))
+        ui.Go_Room.clicked.connect(lambda: self.open_room(ui))
         ui.Quit.clicked.connect(lambda: self.Quit(ui))
         ui.Quit.clicked.connect(lambda: open('./data/Users/opened_assignment.oa', 'w', encoding='utf8').close())
 
@@ -99,18 +100,15 @@ class UIFunctions(DownloadWindow):
                 ui.id_entry.close()
                 ui.label_2.setText('Đã vào được phòng\nid: {}'.format(room_id))
                 ui.timer = QtCore.QTimer()
-                ui.timer.singleShot(1000, lambda: self.close_pg(ui))
+                ui.timer.singleShot(1000, lambda: self.return_main(ui))
             connection.commit()
             connection.close()
 
 
-    def Go_Room(self, ui):
-        import room
+    def open_room(self, ui):
         room_id = open(self.OPENED_ROOM_PATH, encoding='utf8').read().rstrip()
         if room_id:
-            window = room.RoomWindow(ui.role, ui.pg, room_id)
-            window.show()
-            ui.close()
+            ui.switch_window_room.emit(int(room_id))
 
     def check_room(self, ui):
         decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
@@ -154,16 +152,6 @@ class UIFunctions(DownloadWindow):
         ui.Go_Room.hide()
         ui.Quit.hide()
 
-    @staticmethod
-    def close_pg(ui):
-        import main_ui
-        main_ui.main(ui.role, ui.pg)
-        ui.close()
+    def return_main(self, ui):
+        ui.switch_window_main.emit()
 
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    # window = DownloadWindow(None, 1)
-    window = DownloadWindow(None, 0)
-    window.show()
-    sys.exit(app.exec_())

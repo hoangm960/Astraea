@@ -1,20 +1,16 @@
-import subprocess
-import sys
 import time
-from random import randrange
 
 import mysql.connector
 from PyQt5 import QtCore, QtWidgets, uic
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QMainWindow
 
-import main_ui
-from quit import QuitFrame
 from encryption import *
 import Main
 
 FILE = ""
 QuitFrameUI = "./UI_Files/QuitFrame.ui"
+
 
 class User:
     def __init__(self, id, name, name_user, password, role):
@@ -27,13 +23,14 @@ class User:
 
 class LoginWindow(QMainWindow):
     UI_PATH = "UI_Files/Login_gui.ui"
+    switch_window_main = QtCore.pyqtSignal(int)
+    switch_window_quit = QtCore.pyqtSignal()
 
     def __init__(self, pg):
         self.pg = pg
-        QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
+        QMainWindow.__init__(self)
         uic.loadUi(self.UI_PATH, self)
         LoginFunctions(self)
-        
 
         def moveWindow(event):
             if LoginFunctions.GLOBAL_STATE == True:
@@ -44,10 +41,11 @@ class LoginWindow(QMainWindow):
                 event.accept()
 
         self.title_bar.mouseMoveEvent = moveWindow
-    
+
     def mousePressEvent(self, event):
         self.dragPos = event.globalPos()
-    
+
+
 class LoginFunctions(LoginWindow):
     enabled = "qwertyuiopasdfghjklzxcvbnm1234567890 @/._"
     GLOBAL_STATE = False
@@ -68,7 +66,7 @@ class LoginFunctions(LoginWindow):
             round((Main.SCREEN_WIDTH - ui.width()) / 2),
             round((Main.SCREEN_HEIGHT - ui.height()) / 2),
             ui.width(),
-            ui.height()
+            ui.height(),
         )
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
@@ -79,11 +77,11 @@ class LoginFunctions(LoginWindow):
         self.check_autosave(ui)
 
     def connect_btn(self, ui):
-        
+
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
         ui.btn_maximize.clicked.connect(lambda: self.maximize_restore(ui))
         ui.btn_quit.clicked.connect(lambda: self.openQuitFrame(ui))
-        
+
         ui.eyeHide_SI.clicked.connect(
             lambda: ui.PassBox_SI.setEchoMode(QtWidgets.QLineEdit.Password)
         )
@@ -98,27 +96,23 @@ class LoginFunctions(LoginWindow):
         )
         ui.SignIn_Bt.clicked.connect(lambda: self.check_SI(ui))
         ui.SignUp_Bt.clicked.connect(lambda: self.check_SU(ui))
-        ui.ConvertButton.clicked.connect(
-            lambda: ui.stacked_widget.setCurrentIndex(1)
-        )
-        
+        ui.ConvertButton.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(1))
+
         ui.ConvertButton_SU.clicked.connect(
             lambda: ui.stacked_widget.setCurrentIndex(0)
         )
-        ui.ConvertButton_4.clicked.connect(
-            lambda: ui.stacked_widget.setCurrentIndex(0)
-        )
-        ui.ConvertButton.clicked.connect(lambda: default())
-    
-        def default():
-            ui.STATE_ECHOPASS = True
-            ui.PassBox.clear()
-            ui.NameBox.clear()
-            ui.UserBox.clear()
-            ui.Note_Name.hide()
-            ui.Note_Pass.hide()
-            ui.Note_User.hide()
-            ui.student.setChecked(True)
+        ui.ConvertButton_4.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(0))
+        ui.ConvertButton.clicked.connect(lambda: self.default(ui))
+
+    def default(self, ui):
+        ui.STATE_ECHOPASS = True
+        ui.PassBox.clear()
+        ui.NameBox.clear()
+        ui.UserBox.clear()
+        ui.Note_Name.hide()
+        ui.Note_Pass.hide()
+        ui.Note_User.hide()
+        ui.student.setChecked(True)
 
     @staticmethod
     def get_connection():
@@ -126,19 +120,18 @@ class LoginFunctions(LoginWindow):
             host="remotemysql.com",
             user="53K73q3Z6I",
             password="DpXgsUvOuu",
-            database="53K73q3Z6I"
+            database="53K73q3Z6I",
         )
 
         return connection
 
     def openQuitFrame(self, ui):
-        ui_main = QuitFrame(ui)
-        ui_main.show()
+        ui.switch_window_quit.emit()
 
     def check_autosave(self, ui):
         decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
         time.sleep(1)
-        with open(self.USER_PATH, encoding='utf-8') as f:
+        with open(self.USER_PATH, encoding="utf-8") as f:
             lines = f.readlines()
         if lines:
             if bool(lines[-1]):
@@ -180,38 +173,44 @@ class LoginFunctions(LoginWindow):
         username = ui.NameBox_SI.text()[:31]
         password = ui.PassBox_SI.text()[:22]
 
-        if len(password)*len(username) == 0:
+        if len(password) * len(username) == 0:
             ui.frameError.show()
             ui.Error_Content.setText("Chưa điền đầy đủ thông tin đăng nhập")
         else:
-            cursor.execute("SELECT Username FROM user WHERE Username = %s", (username, ))
+            cursor.execute("SELECT Username FROM user WHERE Username = %s", (username,))
             if username not in [row[0] for row in cursor]:
                 ui.frameError.show()
-                ui.Error_Content.setText(
-                    "Tên tài khoản không tồn tại. Hãy nhập lại.")
+                ui.Error_Content.setText("Tên tài khoản không tồn tại. Hãy nhập lại.")
             else:
-                cursor.execute("SELECT Username, Password FROM user WHERE Username = %s AND Password = %s", (username, password))
+                cursor.execute(
+                    "SELECT Username, Password FROM user WHERE Username = %s AND Password = %s",
+                    (username, password),
+                )
                 if not [row[0] for row in cursor]:
                     ui.frameError.show()
-                    ui.Error_Content.setText(
-                        "Mật khẩu không chính xác. Hãy nhập lại.")
+                    ui.Error_Content.setText("Mật khẩu không chính xác. Hãy nhập lại.")
                 else:
-                    cursor.execute(f"SELECT ShowName, Password, Type FROM user WHERE Username = '{username}'")
-                    name, password, role = (row[i] for row in cursor for i in range(len(row)))
+                    cursor.execute(
+                        f"SELECT ShowName, Password, Type FROM user WHERE Username = '{username}'"
+                    )
+                    name, password, role = (
+                        row[i] for row in cursor for i in range(len(row))
+                    )
 
                     decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
-                    with open(self.USER_PATH, 'w', encoding='utf-8') as f:
-                        f.write(f'{username}\n')
-                        f.write(f'{name}\n')
-                        f.write(f'{password}\n')
-                        f.write('True' if ui.SavePass.isChecked() else 'False')
+                    with open(self.USER_PATH, "w", encoding="utf-8") as f:
+                        f.write(f"{username}\n")
+                        f.write(f"{name}\n")
+                        f.write(f"{password}\n")
+                        f.write("True" if ui.SavePass.isChecked() else "False")
                     encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
                     connection.close()
-                    
-                    ui.close()
-                    main_ui.main(role, ui.pg)
-                    
+                    self.open_main(ui, role)
+
                 QtCore.QTimer.singleShot(3000, lambda: ui.frameError.hide())
+
+    def open_main(self, ui, role):
+        ui.switch_window_main.emit(role)
 
     def check_SU(self, ui):
         connection = self.get_connection()
@@ -220,14 +219,14 @@ class LoginFunctions(LoginWindow):
         username = ui.NameBox.text()[:31]
         password = ui.PassBox.text()[:22]
         name = ui.UserBox.text()[:30]
-        
+
         if len(username) < 8 or list(
             set(False for i in username.lower() if i not in self.enabled)
         ) == [False]:
             ui.Note_Name.show()
             check = False
         else:
-            cursor.execute("SELECT Username FROM user WHERE Username = %s", (username, ))
+            cursor.execute("SELECT Username FROM user WHERE Username = %s", (username,))
             if [row for row in cursor]:
                 ui.Note_Name.show()
                 check = False
@@ -243,7 +242,7 @@ class LoginFunctions(LoginWindow):
             ui.Note_Pass.hide()
 
         if not "".join([i for i in name.lower() if i not in self.enabled]).isalnum():
-            if (not "".join([i for i in name.lower() if i not in self.enabled]) == ""):
+            if not "".join([i for i in name.lower() if i not in self.enabled]) == "":
                 ui.Note_User.show()
                 check = False
             else:
@@ -257,7 +256,10 @@ class LoginFunctions(LoginWindow):
 
         if check:
             role = 1 if ui.teacher.isChecked() else 0
-            cursor.execute("INSERT INTO user(Username, ShowName, Password, Type) VALUES(%s, %s, %s, %s)", (username, name, password, role))
+            cursor.execute(
+                "INSERT INTO user(Username, ShowName, Password, Type) VALUES(%s, %s, %s, %s)",
+                (username, name, password, role),
+            )
             connection.commit()
             connection.close()
 
@@ -265,132 +267,3 @@ class LoginFunctions(LoginWindow):
             ui.PassBox_SI.clear()
             ui.SavePass.setChecked(False)
             ui.stacked_widget.setCurrentIndex(2)
-            
-class Loading_Screen(QMainWindow):
-    counter = 0
-
-    def __init__(self, version):
-        self.version = version
-
-        QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
-        uic.loadUi("./UI_files/Loading_Screen.ui", self)
-        self.move(
-            round((Main.SCREEN_WIDTH - self.width()) / 2),
-            round((Main.SCREEN_HEIGHT - self.height()) / 2),
-        )
-        UILoadingFunctions(self, version)
-
-class UILoadingFunctions(Loading_Screen):
-    PG = None
-    def __init__(self, ui, version):
-        self.update_version(ui, str(version))
-
-        ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-        ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-        ui.frame.hide()
-        ui.Out.clicked.connect(lambda: ui.close())
-        ui.pushButton.clicked.connect(lambda: self.tryAgain(ui, version))
-        ui.timer = QtCore.QTimer()
-        ui.timer.timeout.connect(lambda: self.progress(ui))
-        ui.timer.start(20)
-        ui.show()
-
-    @staticmethod
-    def update_version(ui, version):
-        ui.version.setText(f'<html><head/><body><p align="right"><span style=" font-size:14pt; color:#ffffff;">v{version}</span></p></body></html>')
-
-    def delay(self, point, wait):
-        if self.counter == point:
-            time.sleep(wait)
-
-    def tryAgain(self, ui, version):
-        ui.close()
-        window = Loading_Screen(version)
-        window.show()
-
-    def progress(self, ui):
-        ui.progressBar.setValue(self.counter)
-        if self.counter > 100:
-            ui.timer.stop()
-            ui.main = LoginWindow(self.PG)
-            ui.main.setGeometry(
-                round((Main.SCREEN_WIDTH - ui.main.width()) / 2),
-                round((Main.SCREEN_HEIGHT - ui.main.height()) / 2),
-                ui.main.width(),
-                ui.main.height(),
-            )
-            ui.main.show()
-            ui.close()
-            
-        if self.counter == 6:
-            ui.timer.singleShot(
-                1500, lambda: ui.Loading_label.setText(
-                    "kiểm tra cài đặt ...")
-            )  
-            try:
-                import thonny
-            except ImportError:
-                ui.timer.singleShot(500, lambda: ui.Loading_label.setText("đang tải Thonny...")) 
-                subprocess.call('pip3 install thonny')
-                time.sleep(6)      
-        if self.counter == 14:
-            ui.timer.singleShot(
-                2905, lambda: ui.Loading_label.setText(
-                    "khởi động ...")
-            )
-            import pygetwindow as gw        
-            subprocess.Popen(['thonny'], shell=True)
-            time.sleep(2)
-            ide_title = ''
-            while not ide_title:
-                titles = gw.getAllTitles()
-                for title in titles:
-                    if "thonny" in title.lower():
-                        ide_title = title
-                        break
-            if gw.getWindowsWithTitle(ide_title):
-                self.PG = gw.getWindowsWithTitle(ide_title)[0]
-                self.PG.minimize()
-        if self.counter == 50:
-            ui.Loading_label.setText("đang kết nối...")
-        if self.counter == 73:
-            time.sleep(3)
-            try:
-                    mysql.connector.connect(
-                        host="remotemysql.com",
-                        user="53K73q3Z6I",
-                        password="DpXgsUvOuu",
-                        database="53K73q3Z6I"
-                    )
-            except:
-                ui.Loading_label.setText("kết nối thất bại. Đường truyền không ổn định.")
-                ui.frame.show()
-                ui.timer.stop()
-                ui.progressBar.hide()
-                self.PG.close()
-
-        self.delay(randrange(5, 10), 0.1)
-        self.delay(randrange(20, 30), 0.23)
-        self.delay(randrange(40, 50), 0.43)
-        self.delay(randrange(60, 70), 0.93)
-        self.delay(randrange(60, 70), 0.93)
-        self.delay(randrange(60, 70), 0.93)
-        self.delay(randrange(60, 70), 0.93)
-        self.delay(randrange(60, 70), 0.93)
-        self.delay(randrange(60, 70), 0.93)
-        self.delay(randrange(80, 90), 0.17)
-        self.delay(randrange(90, 99), 0.6)
-        self.delay(99, 1)
-        self.counter += 1
-        
-
-
-def main(version):
-    app = QApplication(sys.argv)
-    splash_window = Loading_Screen(version)
-    splash_window.show()
-    sys.exit(app.exec_())
-
-
-if __name__ == "__main__":
-    main('2.6')

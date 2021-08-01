@@ -5,22 +5,21 @@ QUIT_FILE = "./UI_Files/QuitFrame.ui"
 
 
 class QuitFrame(QMainWindow):
-    def __init__(self, ui):
+    close_window = QtCore.pyqtSignal()
+    reset_state = QtCore.pyqtSignal()
+
+    def __init__(self):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(QUIT_FILE, self)
-        ui.setDisabled(True)
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         
-        self.Accept.clicked.connect(lambda: self.AcceptQuit(ui))
-        self.Deny.clicked.connect(lambda: self.deny(ui))
+        self.Accept.clicked.connect(self.AcceptQuit)
+        self.Deny.clicked.connect(self.DenyQuit)
 
-    def AcceptQuit(self, ui):
-            if ui.pg:
-                ui.pg.close()
-            ui.close()
-            self.close()
+    def AcceptQuit(self):
+        self.close_window.emit()
 
-    def deny(self, ui):
+    def DenyQuit(self):
         self.close()
-        ui.setDisabled(False)
+        self.reset_state.emit()

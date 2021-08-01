@@ -68,4 +68,7 @@ Phần mềm hỗ trợ dạy và học lập trình
 + Sửa lỗi không sử dụng được Tiếng Việt trong nội dung bài học.
 #### v3.1.3 (12/6):
 + Sửa lỗi database sập.
+#### v3.2 (1/8):
++ Hệ thống lại cách quản lí các window + Sửa một số lỗi.
+
 

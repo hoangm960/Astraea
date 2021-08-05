@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+import sys
 
 from PyQt5.QtWidgets import QApplication
 
@@ -30,6 +31,15 @@ def init():
         create_dir(dir)
     for file in files:
         create_file(file)
+
+    associate_file()
+
+def associate_file():
+    OPENED_ASSIGNMENT_PATH = "./data/Users/opened_assignment.oa"
+    file = sys.argv[1] if len(sys.argv) >= 2 else None
+    if file:
+        with open(OPENED_ASSIGNMENT_PATH, "w", encoding="utf8") as f:
+            f.writelines([f"{file}\n", "0"])
 
 def screen_resolution():
     app = QApplication([])

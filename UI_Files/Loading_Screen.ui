@@ -433,7 +433,7 @@ QPushButton:hover {
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="version">
+        <widget class="QLabel" name="versionLabel">
          <property name="minimumSize">
           <size>
            <width>0</width>

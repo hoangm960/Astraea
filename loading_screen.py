@@ -40,7 +40,7 @@ class UIFunction(LoadingScreen):
     pg = None
 
     def __init__(self, ui):
-        self.update_version(ui, str(ui.version))
+        self.update_version(ui, )
         self.connect_btn(ui)
         ui.timer = QtCore.QTimer()
         ui.timer.timeout.connect(lambda: self.progress(ui))
@@ -51,10 +51,9 @@ class UIFunction(LoadingScreen):
         ui.pushButton.clicked.connect(lambda: self.tryAgain(ui, ui.version))
         
 
-    @staticmethod
-    def update_version(ui, version):
-        ui.version.setText(
-            f'<html><head/><body><p align="right"><span style=" font-size:14pt; color:#ffffff;">v{version}</span></p></body></html>'
+    def update_version(self, ui):
+        ui.versionLabel.setText(
+            f'<html><head/><body><p align="right"><span style=" font-size:14pt; color:#ffffff;">v{ui.version}</span></p></body></html>'
         )
 
     def delay(self, point, wait):

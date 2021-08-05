@@ -2,18 +2,20 @@ import sys
 
 from PyQt5 import QtWidgets
 
-import Main
 from connect import ConnectWindow
 from doc import DocWindow
 from edit_main import EditWindow
 from loading_screen import LoadingScreen
 from login_main import LoginWindow
+from Main import screen_resolution
 from main_ui import MainWindow
 from pad import PadWindow
 from quit import QuitFrame
 from result_main import ResultWindow
 from room import RoomWindow
 from user_profile import ProfileWindow
+
+SCREEN_WIDTH, SCREEN_HEIGHT = screen_resolution()
 
 
 class Controller:
@@ -43,7 +45,7 @@ class Controller:
 
         if not self.main:
             self.main = MainWindow(self.role, self.pg)
-            self.main.move(Main.SCREEN_WIDTH - self.main.width(), 0)
+            self.main.move(SCREEN_WIDTH - self.main.width(), 0)
             self.main.switch_window_edit.connect(self.show_edit)
             self.main.switch_window_doc.connect(self.show_doc)
             self.main.switch_window_connect.connect(self.show_connect)
@@ -124,7 +126,9 @@ class Controller:
         if self.login:
             self.login.setDisabled(state)
         if self.main:
-            self.main.setDisabled(state) if all_main else self.main.frame_func_btn.setDisabled(state)
+            self.main.setDisabled(
+                state
+            ) if all_main else self.main.frame_func_btn.setDisabled(state)
 
     def reset_main(self):
         self.main.close()

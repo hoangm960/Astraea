@@ -1,4 +1,3 @@
-from encryption import decrypt, encrypt
 import os
 import pickle
 from datetime import datetime
@@ -6,16 +5,19 @@ from datetime import datetime
 import mysql.connector
 from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QFileDialog, QMainWindow, QSizeGrip, QVBoxLayout, QWidget
+from PyQt5.QtWidgets import (QFileDialog, QMainWindow, QSizeGrip, QVBoxLayout,
+                             QWidget)
 
-import Main
 import check_algorithm
+from encryption import decrypt, encrypt
+from Main import screen_resolution
 
 RESULT_FORM_PATH = "./UI_Files/result_form.ui"
 RESULT_FRAME_PATH = "./UI_Files/result_frame.ui"
 TEST_FRAME_PATH = "./UI_Files/Test_frame.ui"
 OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
 OPENED_RESULT_PATH = "./data/results/"
+SCREEN_WIDTH, SCREEN_HEIGHT = screen_resolution()
 
 
 class ResultWindow(QMainWindow):
@@ -24,8 +26,8 @@ class ResultWindow(QMainWindow):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(RESULT_FORM_PATH, self)
         self.setGeometry(
-            round((Main.SCREEN_WIDTH - self.width()) / 2),
-            round((Main.SCREEN_HEIGHT - self.height()) / 2),
+            round((SCREEN_WIDTH - self.width()) / 2),
+            round((SCREEN_HEIGHT - self.height()) / 2),
             self.width(),
             self.height(),
         )

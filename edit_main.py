@@ -7,12 +7,14 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (QApplication, QFileDialog, QMainWindow,
                              QMessageBox, QSizeGrip, QVBoxLayout, QWidget)
 
+from Main import screen_resolution
+
 KEY_PATH = "./data/Lesson/assignments.key"
 EDIT_FORM_PATH = "./UI_Files/edit_form.ui"
 EDIT_FRAME_PATH = "./UI_Files/edit_frame.ui"
 OPENED_ASSIGNMENT_PATH = "./data/Users/opened_assignment.oa"
 HTML_CONVERT_PATH = "./data/html_convert"
-
+SCREEN_WIDTH, SCREEN_HEIGHT = screen_resolution()
 
 class Assignment:
     def __init__(self, name, details, mark, tests, infos):
@@ -30,8 +32,8 @@ class EditWindow(QMainWindow):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(EDIT_FORM_PATH, self)
         self.setGeometry(
-            round((QApplication.primaryScreen().size().width() - self.width()) / 2),
-            round((QApplication.primaryScreen().size().height() - self.height()) / 2),
+            round((SCREEN_WIDTH - self.width()) / 2),
+            round((SCREEN_HEIGHT - self.height()) / 2),
             self.width(),
             self.height(),
         )

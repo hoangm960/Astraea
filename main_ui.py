@@ -5,13 +5,12 @@ import pygetwindow
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QFileDialog, QMainWindow
 
-import Main
-from quit import QuitFrame
+from Main import screen_resolution
 from UI_Files import Resources
 
 UI_MAIN_PATH = "./UI_Files/ui_main.ui"
 OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
-
+SCREEN_WIDTH, SCREEN_HEIGHT = screen_resolution()
 
 class MainWindow(QMainWindow):
     switch_window_edit = QtCore.pyqtSignal()
@@ -27,13 +26,6 @@ class MainWindow(QMainWindow):
 
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(UI_MAIN_PATH, self)
-        try:
-            self.pg.restore()
-            self.pg.moveTo(-8, 0)
-            self.pg.resizeTo(Main.SCREEN_WIDTH - self.width() + 16, self.height() + 8)
-        except (pygetwindow.PyGetWindowException, AttributeError):
-            pass
-
         self.define_role()
 
     def define_role(self):
@@ -54,7 +46,7 @@ class MainWindow(QMainWindow):
                     self.pg.restore()
                     self.pg.moveTo(-8, 0)
                     self.pg.resizeTo(
-                        Main.SCREEN_WIDTH - self.width() + 16, self.height() + 8
+                        SCREEN_WIDTH - self.width() + 16, self.height() + 8
                     )
                 except:
                     pass
@@ -68,12 +60,14 @@ class UIFunctions(MainWindow):
         if ui.pg:
             ui.pg.restore()
             ui.pg.moveTo(-8, 0)
-            ui.pg.resizeTo(Main.SCREEN_WIDTH - ui.width() + 16, ui.height() + 8)
+            ui.pg.resizeTo(SCREEN_WIDTH - ui.width() + 16, ui.height() + 8)
+        
+
         ui.setGeometry(
-            Main.SCREEN_WIDTH,
-            Main.SCREEN_HEIGHT,
+            SCREEN_WIDTH,
+            SCREEN_HEIGHT,
             ui.width(),
-            Main.SCREEN_HEIGHT,
+            SCREEN_HEIGHT,
         )
         ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
@@ -119,7 +113,7 @@ class UIFunctions(MainWindow):
         if pg:
             pg.restore()
             pg.moveTo(-8, 0)
-            pg.resizeTo(Main.SCREEN_WIDTH - ui.width() + 16, ui.height() + 8)
+            pg.resizeTo(SCREEN_WIDTH - ui.width() + 16, ui.height() + 8)
 
     def check_opened_lesson(self, ui, filename):
         if os.path.exists(filename):

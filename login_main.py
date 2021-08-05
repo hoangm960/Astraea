@@ -6,10 +6,10 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMainWindow
 
 from encryption import *
-import Main
+from Main import screen_resolution
 
 FILE = ""
-QuitFrameUI = "./UI_Files/QuitFrame.ui"
+SCREEN_WIDTH, SCREEN_HEIGHT = screen_resolution()
 
 
 class User:
@@ -63,8 +63,8 @@ class LoginFunctions(LoginWindow):
         ui.Note_Pass.hide()
         ui.Note_User.hide()
         ui.setGeometry(
-            round((Main.SCREEN_WIDTH - ui.width()) / 2),
-            round((Main.SCREEN_HEIGHT - ui.height()) / 2),
+            round((SCREEN_WIDTH - ui.width()) / 2),
+            round((SCREEN_HEIGHT - ui.height()) / 2),
             ui.width(),
             ui.height(),
         )

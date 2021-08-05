@@ -7,10 +7,6 @@ from UI_Files import Resources
 
 VERSION = "3.2"
 
-app = QApplication([])
-screen_resolution = app.desktop().screenGeometry()
-SCREEN_WIDTH, SCREEN_HEIGHT = screen_resolution.width(), screen_resolution.height()*0.953
-
 def init():
     def create_file(file):
         if not os.path.exists(file):
@@ -34,6 +30,11 @@ def init():
         create_dir(dir)
     for file in files:
         create_file(file)
+
+def screen_resolution():
+    app = QApplication([])
+    screen_resolution = app.desktop().availableGeometry()
+    return screen_resolution.width(), screen_resolution.height()
 
 
 if __name__ == "__main__":

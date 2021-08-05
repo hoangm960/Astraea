@@ -7,8 +7,10 @@ from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QMainWindow
 import pyautogui as auto
 
-import Main
+from Main import screen_resolution
 from encryption import *
+
+SCREEN_WIDTH, SCREEN_HEIGHT = screen_resolution()
 
 
 class LoadingScreen(QMainWindow):
@@ -21,8 +23,8 @@ class LoadingScreen(QMainWindow):
         QMainWindow.__init__(self)
         uic.loadUi("./UI_files/Loading_Screen.ui", self)
         self.move(
-            round((Main.SCREEN_WIDTH - self.width()) / 2),
-            round((Main.SCREEN_HEIGHT - self.height()) / 2),
+            round((SCREEN_WIDTH - self.width()) / 2),
+            round((SCREEN_HEIGHT - self.height()) / 2),
         )
         UIFunction(self, version)
 

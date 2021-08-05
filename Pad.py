@@ -1,27 +1,29 @@
-import os
-import sys
-from PIL import ImageGrab
-import io
 import codecs
+import io
+import os
 
 import mysql.connector
-from PyQt5 import QtCore, uic, QtCore
+from PIL import ImageGrab
+from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QKeySequence
-from PyQt5.QtWidgets import (QApplication, QColorDialog, QFileDialog,
-                             QMainWindow, QMessageBox, QShortcut)
+from PyQt5.QtWidgets import (QColorDialog, QFileDialog, QMainWindow,
+                             QMessageBox, QShortcut)
 
-PAD_UI = './UI_Files/Pad.ui'
+PAD_UI = "./UI_Files/Pad.ui"
 OPENED_DOC = "./data/Users/opened_doc.od"
 OPENED_DOC_CONTENT = "./data/Users/opened_doc_content.html"
 
-HTML_EXTENSIONS = ['.htm', '.html']
+HTML_EXTENSIONS = [".htm", ".html"]
+
 
 class PadWindow(QMainWindow):
     switch_window = QtCore.pyqtSignal()
+
     def __init__(self):
         super(QMainWindow, self).__init__()
-        uic.loadUi(PAD_UI, self)    
+        uic.loadUi(PAD_UI, self)
+
         def moveWindow(event):
             if UIFunction.GLOBAL_STATE == True:
                 UIFunction.maximize_restore(self)
@@ -35,7 +37,8 @@ class PadWindow(QMainWindow):
 
     def mousePressEvent(self, event):
         self.dragPos = event.globalPos()
-    
+
+
 class UIFunction(PadWindow):
     OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
     GLOBAL_STATE = False
@@ -48,7 +51,7 @@ class UIFunction(PadWindow):
         ui.showMaximized()
         self.connect(ui)
         self.check_empty(ui)
-        
+
     def connect(self, ui):
         ui.btn_quit.clicked.connect(lambda: self.Quit(ui))
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
@@ -61,8 +64,12 @@ class UIFunction(PadWindow):
         ui.Right_Align.clicked.connect(lambda: ui.editor.setAlignment(Qt.AlignRight))
         ui.J_Align.clicked.connect(lambda: ui.editor.setAlignment(Qt.AlignJustify))
 
-        ui.Font.currentFontChanged.connect(lambda: ui.editor.setCurrentFont(ui.Font.currentFont()))
-        ui.Size.valueChanged.connect(lambda: ui.editor.setFontPointSize(ui.Size.value()))
+        ui.Font.currentFontChanged.connect(
+            lambda: ui.editor.setCurrentFont(ui.Font.currentFont())
+        )
+        ui.Size.valueChanged.connect(
+            lambda: ui.editor.setFontPointSize(ui.Size.value())
+        )
         ui.Bold.clicked.connect(lambda: self.setBold(ui))
         ui.Italic.clicked.connect(lambda: self.setItalic(ui))
         ui.Underline.clicked.connect(lambda: self.setUnderline(ui))
@@ -79,11 +86,11 @@ class UIFunction(PadWindow):
         if img:
             img_bytes = io.BytesIO()
 
-            img.save(img_bytes, format='PNG')
+            img.save(img_bytes, format="PNG")
 
-            base64_data = codecs.encode(img_bytes.getvalue(), 'base64')
+            base64_data = codecs.encode(img_bytes.getvalue(), "base64")
 
-            base64_text = codecs.decode(base64_data, 'ascii')
+            base64_text = codecs.decode(base64_data, "ascii")
 
             html_img_tag = '<img src="data:image/png;base64, %s" />' % base64_text
             document.setHtml(html_img_tag)
@@ -94,38 +101,42 @@ class UIFunction(PadWindow):
             host="remotemysql.com",
             user="53K73q3Z6I",
             password="DpXgsUvOuu",
-            database="53K73q3Z6I"
+            database="53K73q3Z6I",
         )
 
         return connection
 
-
     @staticmethod
     def check_empty(ui):
-        content = open(OPENED_DOC_CONTENT, encoding='utf8').read()
+        content = open(OPENED_DOC_CONTENT, encoding="utf8").read()
         if content:
             ui.editor.setText(content)
 
     def Save(self, ui):
         content = ui.editor.toHtml()
-        open(OPENED_DOC_CONTENT, 'w', encoding='utf8').write(content)
-        lesson_id = open(self.OPENED_LESSON_PATH, encoding='utf8').readlines()[1]
-        id = open(OPENED_DOC, encoding='utf8').readlines()[1]
+        open(OPENED_DOC_CONTENT, "w", encoding="utf8").write(content)
+        lesson_id = open(self.OPENED_LESSON_PATH, encoding="utf8").readlines()[1]
+        id = open(OPENED_DOC, encoding="utf8").readlines()[1]
         connection = self.get_connection()
         cursor = connection.cursor()
-        cursor.execute("UPDATE doc SET DocContent = %s WHERE DocId = %s AND LessonId = %s", (content, id, lesson_id))
+        cursor.execute(
+            "UPDATE doc SET DocContent = %s WHERE DocId = %s AND LessonId = %s",
+            (content, id, lesson_id),
+        )
         connection.commit()
         connection.close()
 
     def Quit(self, ui):
-        with open(OPENED_DOC_CONTENT, encoding='utf8') as f:
-            text = f.read() 
+        with open(OPENED_DOC_CONTENT, encoding="utf8") as f:
+            text = f.read()
         if text != ui.editor.toHtml():
             msg = QMessageBox(ui)
-            msg.setWindowTitle('Chú ý')
+            msg.setWindowTitle("Chú ý")
             msg.setText("Chưa lưu file. Đồng ý lưu file?")
             msg.setIcon(QMessageBox.Information)
-            msg.setStandardButtons(QMessageBox.Save | QMessageBox.No | QMessageBox.Cancel)
+            msg.setStandardButtons(
+                QMessageBox.Save | QMessageBox.No | QMessageBox.Cancel
+            )
             clicked = msg.exec_()
             if clicked == QMessageBox.Save:
                 self.Save(ui)
@@ -143,23 +154,27 @@ class UIFunction(PadWindow):
             self.reopen_doc(ui)
 
     def reopen_doc(self, ui):
-        ui.switch_window.emit()  
-            
+        ui.switch_window.emit()
+
     def maximize_restore(self, ui):
         status = self.GLOBAL_STATE
         if status == False:
             ui.showMaximized()
 
             self.GLOBAL_STATE = True
-            ui.centralwidget.setStyleSheet("""background-color: rgb(74, 74, 74);
-    border-radius: 0px;""")
+            ui.centralwidget.setStyleSheet(
+                """background-color: rgb(74, 74, 74);
+    border-radius: 0px;"""
+            )
             ui.btn_maximize.setToolTip("khôi phục")
         else:
             self.GLOBAL_STATE = False
             ui.showNormal()
             ui.resize(ui.width() + 1, ui.height() + 1)
-            ui.centralwidget.setStyleSheet("""background-color: rgb(74, 74, 74);
-    border-radius: 20px;""")
+            ui.centralwidget.setStyleSheet(
+                """background-color: rgb(74, 74, 74);
+    border-radius: 20px;"""
+            )
             ui.btn_maximize.setToolTip("Phóng to")
 
     def textColor(self, ui):
@@ -167,68 +182,95 @@ class UIFunction(PadWindow):
         if not col.isValid():
             return
         ui.editor.setTextColor(col)
-        ui.ColorText.setStyleSheet("""image: url(:/images/icons/edit-color.png);background: {};""".format(col.name()))
-    
+        ui.ColorText.setStyleSheet(
+            """image: url(:/images/icons/edit-color.png);background: {};""".format(
+                col.name()
+            )
+        )
+
     def textBackgroundColor(self, ui):
         col = QColorDialog.getColor(ui.editor.textBackgroundColor(), ui)
         if not col.isValid():
             return
         ui.editor.setTextBackgroundColor(col)
-        ui.Color.setStyleSheet("""background: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(255, 255, 255, 255), stop:0.227273 rgba(255, 255, 255, 255), stop:0.232955 {}, stop:0.727273 {}, stop:0.732955 rgba(255, 255, 255, 255), stop:1 rgba(255, 255, 255, 255))""".format(col.name(),col.name()))
-
+        ui.Color.setStyleSheet(
+            """background: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(255, 255, 255, 255), stop:0.227273 rgba(255, 255, 255, 255), stop:0.232955 {}, stop:0.727273 {}, stop:0.732955 rgba(255, 255, 255, 255), stop:1 rgba(255, 255, 255, 255))""".format(
+                col.name(), col.name()
+            )
+        )
 
     def setBold(self, ui):
         if self.Format[0]:
             self.Format[0] = False
             ui.editor.setFontWeight(700)
-            ui.Bold.setStyleSheet("""QPushButton {
+            ui.Bold.setStyleSheet(
+                """QPushButton {
                                     image: url(:/images/icons/edit-bold.png);
-                                    }""")
+                                    }"""
+            )
         else:
             self.Format[0] = True
             ui.editor.setFontWeight(500)
-            ui.Bold.setStyleSheet("""QPushButton {
+            ui.Bold.setStyleSheet(
+                """QPushButton {
                                     background: rgb(193,193,193);
                                     image: url(:/images/icons/edit-bold.png);
-                                    }""")
-    
+                                    }"""
+            )
+
     def setItalic(self, ui):
         if self.Format[1]:
             self.Format[1] = False
             ui.editor.setFontItalic(False)
-            ui.Italic.setStyleSheet("""QPushButton {
+            ui.Italic.setStyleSheet(
+                """QPushButton {
                                     image: url(:/images/icons/edit-italic.png);
-                                    }""")
+                                    }"""
+            )
         else:
             self.Format[1] = True
             ui.editor.setFontItalic(True)
-            ui.Italic.setStyleSheet("""QPushButton {
+            ui.Italic.setStyleSheet(
+                """QPushButton {
                                     background: rgb(193,193,193);
                                     image: url(:/images/icons/edit-italic.png);
-                                    }""")
-    
+                                    }"""
+            )
+
     def setUnderline(self, ui):
         if self.Format[2]:
             self.Format[2] = False
             ui.editor.setFontUnderline(False)
-            ui.Underline.setStyleSheet("""QPushButton {
+            ui.Underline.setStyleSheet(
+                """QPushButton {
                                     image: url(:/images/icons/edit-underline.png);
-                                    }""")
+                                    }"""
+            )
         else:
             self.Format[2] = True
             ui.editor.setFontUnderline(True)
-            ui.Underline.setStyleSheet("""QPushButton {
+            ui.Underline.setStyleSheet(
+                """QPushButton {
                                     background: rgb(193,193,193);
                                     image: url(:/images/icons/edit-underline.png);
-                                    }""")
-    
+                                    }"""
+            )
+
     def Function_Open(self, ui):
-        path = QFileDialog.getOpenFileName(ui, "Mở file", "", "HTML documents (*.html);;Text documents (*.txt);;All files (*.*)")
+        path = QFileDialog.getOpenFileName(
+            ui,
+            "Mở file",
+            "",
+            "HTML documents (*.html);;Text documents (*.txt);;All files (*.*)",
+        )
         try:
             self.path = str(path[0])
-            with open(self.path, 'r', encoding = 'utf8') as f:
+            with open(self.path, "r", encoding="utf8") as f:
                 text = f.read()
-            ui.Title.setText("%s - ASTRAEA Document" % (os.path.basename(self.path) if self.path else "Untitled"))
+            ui.Title.setText(
+                "%s - ASTRAEA Document"
+                % (os.path.basename(self.path) if self.path else "Untitled")
+            )
             ui.editor.setText(text)
         except:
             pass

@@ -4,23 +4,28 @@ from PyQt5.QtWidgets import QMainWindow
 
 from encryption import decrypt, encrypt
 
+UI_PATH = './UI_Files/profile_form.ui'
 
 class ProfileWindow(QMainWindow):
-    UI_PATH = './UI_Files/profile_form.ui'
     switch_window_main = QtCore.pyqtSignal()
     switch_window_login = QtCore.pyqtSignal()
 
     def __init__(self):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
-        uic.loadUi(self.UI_PATH, self)
+        uic.loadUi(UI_PATH, self)
+        self.init_UI()
         UIFunctions(self)
 
-        def moveWindow(event):
-            if event.buttons() == Qt.LeftButton:
-                self.move(self.pos() + event.globalPos() - self.dragPos)
-                self.dragPos = event.globalPos()
-                event.accept()
-        self.TitleBar.mouseMoveEvent = moveWindow
+    def init_UI(self):
+        self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        self.TitleBar.mouseMoveEvent = self.moveWindow
+
+    def moveWindow(self, event):
+        if event.buttons() == Qt.LeftButton:
+            self.move(self.pos() + event.globalPos() - self.dragPos)
+            self.dragPos = event.globalPos()
+            event.accept()
 
     def mousePressEvent(self, event):
         self.dragPos = event.globalPos()
@@ -33,19 +38,16 @@ class UIFunctions(ProfileWindow):
 
     def __init__(self, ui):
         self.connect_btn(ui)
-        ui.btn_quit.clicked.connect(lambda: self.return_main(ui))
+        self.Update(ui)
 
     def connect_btn(self, ui):
+        ui.btn_quit.clicked.connect(lambda: self.return_main(ui))
         ui.OutAccount.clicked.connect(lambda: self.SignOut(ui))
-        ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-        ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         ui.btn_quit.clicked.connect(lambda: ui.close())
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
-        self.Update(ui)
 
     def return_main(self, ui):
         ui.switch_window_main.emit()
-
 
     def SignOut(self, ui):
         ui.switch_window_login.emit()

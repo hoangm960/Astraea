@@ -5,8 +5,7 @@ from datetime import datetime
 import mysql.connector
 from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (QFileDialog, QMainWindow, QSizeGrip, QVBoxLayout,
-                             QWidget)
+from PyQt5.QtWidgets import QFileDialog, QMainWindow, QSizeGrip, QVBoxLayout, QWidget
 
 import check_algorithm
 from encryption import decrypt, encrypt
@@ -22,27 +21,42 @@ SCREEN_WIDTH, SCREEN_HEIGHT = screen_resolution()
 
 class ResultWindow(QMainWindow):
     switch_window = QtCore.pyqtSignal()
+
     def __init__(self):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(RESULT_FORM_PATH, self)
+        self.init_UI()
+        UIFunctions(self)
+
+    def init_UI(self):
         self.setGeometry(
             round((SCREEN_WIDTH - self.width()) / 2),
             round((SCREEN_HEIGHT - self.height()) / 2),
             self.width(),
             self.height(),
         )
+        self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        self.stacked_widget.setCurrentIndex(1)
+        self.inform.hide()
+        self.Frame_close.hide()
+        self.ERROR_WINDOW.hide()
+        self.OkCancelFrame.move(0, 0)
+        self.OkCancelFrame.move(280, 148)
+        self.sizegrip = QSizeGrip(self.frame_grip)
+        self.sizegrip.setStyleSheet(
+            "QSizeGrip { width: 20px; height: 20px; margin: 5px; border-radius: 10px; } QSizeGrip:hover { background-color: rgb(201, 21, 8) }"
+        )
+        self.sizegrip.setToolTip("Resize Window")
+        self.title_bar.mouseMoveEvent = self.moveWindow
 
-        def moveWindow(event):
-            if UIFunctions.GLOBAL_STATE == True:
-                UIFunctions.maximize_restore(self)
-            if event.buttons() == Qt.LeftButton:
-                self.move(self.pos() + event.globalPos() - self.dragPos)
-                self.dragPos = event.globalPos()
-                event.accept()
-
-        self.title_bar.mouseMoveEvent = moveWindow
-
-        UIFunctions(self)
+    def moveWindow(self, event):
+        if UIFunctions.GLOBAL_STATE == True:
+            UIFunctions.maximize_restore(self)
+        if event.buttons() == Qt.LeftButton:
+            self.move(self.pos() + event.globalPos() - self.dragPos)
+            self.dragPos = event.globalPos()
+            event.accept()
 
     def mousePressEvent(self, event):
         self.dragPos = event.globalPos()
@@ -58,33 +72,17 @@ class UIFunctions(ResultWindow):
     FILE_COMMENT = "./data/results/comment.txt"
 
     def __init__(self, ui):
-        # Delete title bar
-        ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-        ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-
-        ui.stacked_widget.setCurrentIndex(1)
-        ui.return_btn.clicked.connect(lambda: self.return_main(ui))
-        ui.inform.hide()
-        ui.Frame_close.hide()
-        ui.ERROR_WINDOW.hide()
-        # Button function
-        ui.OkCancelFrame.move(0, 0)
-        ui.OkCancelFrame.move(280, 148)
-        ui.btn_maximize.clicked.connect(lambda: self.maximize_restore(ui))
-        ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
-        ui.Accept1.clicked.connect(lambda: ui.close())
-        ui.Accept1.clicked.connect(lambda: self.return_main(ui))
-
-        # Window size grip
-        ui.sizegrip = QSizeGrip(ui.frame_grip)
-        ui.sizegrip.setStyleSheet(
-            "QSizeGrip { width: 20px; height: 20px; margin: 5px; border-radius: 10px; } QSizeGrip:hover { background-color: rgb(201, 21, 8) }"
-        )
-        ui.sizegrip.setToolTip("Resize Window")
         self.load_assignments(
             open(OPENED_LESSON_PATH, encoding="utf-8").readline().rstrip()
         )
         self.check_empty(ui, len(self.assignments))
+
+    def connect_btn(self, ui):
+        ui.return_btn.clicked.connect(lambda: self.return_main(ui))
+        ui.btn_maximize.clicked.connect(lambda: self.maximize_restore(ui))
+        ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
+        ui.Accept1.clicked.connect(lambda: ui.close())
+        ui.Accept1.clicked.connect(lambda: self.return_main(ui))
 
     @classmethod
     def returnStatus(self):
@@ -313,8 +311,8 @@ class UIFunctions(ResultWindow):
             ui.Score.setText(str(round(self.TotalScore, 2)))
         else:
             ui.progressBar.setValue(0)
-        with open(self.FILE_COMMENT, 'a', encoding='utf-8', errors='ignore') as f:
-            if float(self.TotalScore) < 0.7*totalScore:
+        with open(self.FILE_COMMENT, "a", encoding="utf-8", errors="ignore") as f:
+            if float(self.TotalScore) < 0.7 * totalScore:
                 f.write("\nBài làm vẫn chưa đạt chuẩn.")
                 ui.Judge.setText("Bài làm vẫn chưa đạt chuẩn.")
             else:

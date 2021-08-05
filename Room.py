@@ -7,16 +7,16 @@ import pandas
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QFileDialog, QMainWindow
 
+ROOM_UI = "./UI_Files/Room.ui"
 
 class RoomWindow(QMainWindow):
-    ROOM_UI = "./UI_Files/Room.ui"
     switch_window = QtCore.pyqtSignal()
 
     def __init__(self, role, id):
         self.role = role
         self.id = id
         super(RoomWindow, self).__init__()
-        uic.loadUi(self.ROOM_UI, self)
+        uic.loadUi(ROOM_UI, self)
         self.initUI()
         self.define_role()
 

@@ -9,6 +9,7 @@ from encryption import *
 from Main import screen_resolution
 
 FILE = ""
+UI_PATH = "UI_Files/Login_gui.ui"
 SCREEN_WIDTH, SCREEN_HEIGHT = screen_resolution()
 
 
@@ -22,25 +23,43 @@ class User:
 
 
 class LoginWindow(QMainWindow):
-    UI_PATH = "UI_Files/Login_gui.ui"
     switch_window_main = QtCore.pyqtSignal(int)
     switch_window_quit = QtCore.pyqtSignal()
 
     def __init__(self, pg):
         self.pg = pg
         QMainWindow.__init__(self)
-        uic.loadUi(self.UI_PATH, self)
+        uic.loadUi(UI_PATH, self)
+        self.init_UI()
         LoginFunctions(self)
+        
 
-        def moveWindow(event):
-            if LoginFunctions.GLOBAL_STATE == True:
-                LoginFunctions.maximize_restore(self)
-            if event.buttons() == Qt.LeftButton:
-                self.move(self.pos() + event.globalPos() - self.dragPos)
-                self.dragPos = event.globalPos()
-                event.accept()
+    def init_UI(self):
+        self.frameError.hide()
+        self.eyeHide_SI.hide()
+        self.eyeHide.hide()
+        self.stacked_widget.setCurrentIndex(0)
+        self.Note_Name.hide()
+        self.Note_Pass.hide()
+        self.Note_User.hide()
+        self.setGeometry(
+            round((SCREEN_WIDTH - self.width()) / 2),
+            round((SCREEN_HEIGHT - self.height()) / 2),
+            self.width(),
+            self.height(),
+        )
+        self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 
-        self.title_bar.mouseMoveEvent = moveWindow
+        self.title_bar.mouseMoveEvent = self.moveWindow
+
+    def moveWindow(self, event):
+        if LoginFunctions.GLOBAL_STATE == True:
+            LoginFunctions.maximize_restore(self)
+        if event.buttons() == Qt.LeftButton:
+            self.move(self.pos() + event.globalPos() - self.dragPos)
+            self.dragPos = event.globalPos()
+            event.accept()
 
     def mousePressEvent(self, event):
         self.dragPos = event.globalPos()
@@ -55,28 +74,13 @@ class LoginFunctions(LoginWindow):
     KEY_PATH = "data/encryption/users.key"
 
     def __init__(self, ui):
-        ui.frameError.hide()
-        ui.eyeHide_SI.hide()
-        ui.eyeHide.hide()
-        ui.stacked_widget.setCurrentIndex(0)
-        ui.Note_Name.hide()
-        ui.Note_Pass.hide()
-        ui.Note_User.hide()
-        ui.setGeometry(
-            round((SCREEN_WIDTH - ui.width()) / 2),
-            round((SCREEN_HEIGHT - ui.height()) / 2),
-            ui.width(),
-            ui.height(),
-        )
-        ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-        ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-        ui.btn_maximize.setToolTip("Phóng to")
-        ui.btn_minimize.setToolTip("Thu nhỏ")
-        ui.btn_quit.setToolTip("Đóng")
         self.connect_btn(ui)
         self.check_autosave(ui)
 
     def connect_btn(self, ui):
+        ui.btn_maximize.setToolTip("Phóng to")
+        ui.btn_minimize.setToolTip("Thu nhỏ")
+        ui.btn_quit.setToolTip("Đóng")
 
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
         ui.btn_maximize.clicked.connect(lambda: self.maximize_restore(ui))

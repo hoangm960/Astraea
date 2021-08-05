@@ -13,7 +13,6 @@ from PyQt5.QtWidgets import (QColorDialog, QFileDialog, QMainWindow,
 PAD_UI = "./UI_Files/Pad.ui"
 OPENED_DOC = "./data/Users/opened_doc.od"
 OPENED_DOC_CONTENT = "./data/Users/opened_doc_content.html"
-
 HTML_EXTENSIONS = [".htm", ".html"]
 
 
@@ -23,17 +22,23 @@ class PadWindow(QMainWindow):
     def __init__(self):
         super(QMainWindow, self).__init__()
         uic.loadUi(PAD_UI, self)
-
-        def moveWindow(event):
-            if UIFunction.GLOBAL_STATE == True:
-                UIFunction.maximize_restore(self)
-            if event.buttons() == Qt.LeftButton:
-                self.move(self.pos() + event.globalPos() - self.dragPos)
-                self.dragPos = event.globalPos()
-                event.accept()
-
-        self.title_bar.mouseMoveEvent = moveWindow
+        self.init_UI()
         UIFunction(self)
+
+    def init_UI(self):
+        self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        self.showMaximized()
+        self.title_bar.mouseMoveEvent = self.moveWindow
+
+    def moveWindow(self, event):
+        if UIFunction.GLOBAL_STATE == True:
+            UIFunction.maximize_restore(self)
+        if event.buttons() == Qt.LeftButton:
+            self.move(self.pos() + event.globalPos() - self.dragPos)
+            self.dragPos = event.globalPos()
+            event.accept()
+
 
     def mousePressEvent(self, event):
         self.dragPos = event.globalPos()
@@ -46,9 +51,6 @@ class UIFunction(PadWindow):
     Format = [False, False, False]
 
     def __init__(self, ui):
-        ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-        ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-        ui.showMaximized()
         self.connect(ui)
         self.check_empty(ui)
 

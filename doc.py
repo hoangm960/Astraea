@@ -4,12 +4,7 @@ import shutil
 
 import mysql.connector
 from PyQt5 import QtCore, uic
-from PyQt5.QtWidgets import (
-    QFileDialog,
-    QLabel,
-    QListWidgetItem,
-    QMainWindow,
-)
+from PyQt5.QtWidgets import QFileDialog, QLabel, QListWidgetItem, QMainWindow
 from win32com import client as wc
 
 DOC_UI = "./UI_Files/Doc.ui"

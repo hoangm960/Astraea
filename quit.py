@@ -11,6 +11,9 @@ class QuitFrame(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(QUIT_FILE, self)
+        self.init_UI()
+
+    def init_UI(self):
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         

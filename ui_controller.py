@@ -43,15 +43,14 @@ class Controller:
         if role is not None:
             self.role = role
 
-        if not self.main:
-            self.main = MainWindow(self.role, self.pg)
-            self.main.move(SCREEN_WIDTH - self.main.width(), 0)
-            self.main.switch_window_edit.connect(self.show_edit)
-            self.main.switch_window_doc.connect(self.show_doc)
-            self.main.switch_window_connect.connect(self.show_connect)
-            self.main.switch_window_profile.connect(self.show_profile)
-            self.main.switch_window_result.connect(self.show_result)
-            self.main.switch_window_quit.connect(self.show_quit)
+        self.main = MainWindow(self.role, self.pg)
+        self.main.move(SCREEN_WIDTH - self.main.width(), 0)
+        self.main.switch_window_edit.connect(self.show_edit)
+        self.main.switch_window_doc.connect(self.show_doc)
+        self.main.switch_window_connect.connect(self.show_connect)
+        self.main.switch_window_profile.connect(self.show_profile)
+        self.main.switch_window_result.connect(self.show_result)
+        self.main.switch_window_quit.connect(self.show_quit)
 
         self.main.show()
 
@@ -136,15 +135,20 @@ class Controller:
 
     def close_main(self):
         self.reset_main()
-        self.pg.minimize()
+        try:
+            self.pg.minimize()
+        except:
+            pass
 
     def reset_login(self):
         self.login.close()
         self.login = None
 
     def close_pg(self):
-        if self.pg:
+        try:
             self.pg.close()
+        except:
+            pass
         sys.exit()
 
 

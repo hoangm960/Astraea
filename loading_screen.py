@@ -10,6 +10,7 @@ import pyautogui as auto
 from Main import screen_resolution
 from encryption import *
 
+UI_PATH = "./UI_files/Loading_Screen.ui"
 SCREEN_WIDTH, SCREEN_HEIGHT = screen_resolution()
 
 
@@ -21,29 +22,34 @@ class LoadingScreen(QMainWindow):
         self.version = version
 
         QMainWindow.__init__(self)
-        uic.loadUi("./UI_files/Loading_Screen.ui", self)
+        uic.loadUi(UI_PATH, self)
+        self.initUI()
+        UIFunction(self)
+
+    def initUI(self):
         self.move(
             round((SCREEN_WIDTH - self.width()) / 2),
             round((SCREEN_HEIGHT - self.height()) / 2),
         )
-        UIFunction(self, version)
+        self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        self.frame.hide()
 
 
 class UIFunction(LoadingScreen):
     pg = None
 
-    def __init__(self, ui, version):
-        self.update_version(ui, str(version))
-
-        ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-        ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-        ui.frame.hide()
-        ui.Out.clicked.connect(lambda: ui.close())
-        ui.pushButton.clicked.connect(lambda: self.tryAgain(ui, version))
+    def __init__(self, ui):
+        self.update_version(ui, str(ui.version))
+        self.connect_btn(ui)
         ui.timer = QtCore.QTimer()
         ui.timer.timeout.connect(lambda: self.progress(ui))
         ui.timer.start(20)
-        ui.show()
+
+    def connect_btn(self, ui):
+        ui.Out.clicked.connect(lambda: ui.close())
+        ui.pushButton.clicked.connect(lambda: self.tryAgain(ui, ui.version))
+        
 
     @staticmethod
     def update_version(ui, version):

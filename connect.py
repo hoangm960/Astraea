@@ -6,17 +6,28 @@ from PyQt5.QtWidgets import QApplication, QMainWindow
 
 from encryption import decrypt, encrypt
 
+CONNECT_UI = "./UI_Files/connect.ui"
+
 
 class ConnectWindow(QMainWindow):
-    CONNECT_UI = "./UI_Files/connect.ui"
     switch_window_main = QtCore.pyqtSignal()
     switch_window_room = QtCore.pyqtSignal(int)
 
     def __init__(self, role):
         self.role = role
         QMainWindow.__init__(self)
-        uic.loadUi(self.CONNECT_UI, self)
+        uic.loadUi(CONNECT_UI, self)
+        self.initUI()
         UIFunctions(self)
+
+    def initUI(self):
+        self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        self.move(
+            round((QApplication.primaryScreen().size().width() - self.width()) / 2),
+            round((QApplication.primaryScreen().size().height() - self.height()) / 2),
+        )
+        self.label_2.hide()
 
 
 class UIFunctions(ConnectWindow):
@@ -27,13 +38,6 @@ class UIFunctions(ConnectWindow):
     USER_PATH_ENCRYPTED = "data/Users/User.encrypted"
 
     def __init__(self, ui):
-        ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-        ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-        ui.move(
-            round((QApplication.primaryScreen().size().width() - ui.width()) / 2),
-            round((QApplication.primaryScreen().size().height() - ui.height()) / 2),
-        )
-        ui.label_2.hide()
         self.connect_btn(ui)
         self.check_room(ui)
 
@@ -47,7 +51,11 @@ class UIFunctions(ConnectWindow):
             ui.room_btn.clicked.connect(lambda: self.create_room(ui))
         ui.Go_Room.clicked.connect(lambda: self.open_room(ui))
         ui.Quit.clicked.connect(lambda: self.Quit(ui))
-        ui.Quit.clicked.connect(lambda: open('./data/Users/opened_assignment.oa', 'w', encoding='utf8').close())
+        ui.Quit.clicked.connect(
+            lambda: open(
+                "./data/Users/opened_assignment.oa", "w", encoding="utf8"
+            ).close()
+        )
 
     @staticmethod
     def get_connection():
@@ -55,7 +63,7 @@ class UIFunctions(ConnectWindow):
             host="remotemysql.com",
             user="53K73q3Z6I",
             password="DpXgsUvOuu",
-            database="53K73q3Z6I"
+            database="53K73q3Z6I",
         )
 
         return connection
@@ -68,20 +76,22 @@ class UIFunctions(ConnectWindow):
         connection.commit()
         connection.close()
 
-        open(self.OPENED_ROOM_PATH, 'w', encoding='utf8').write(str(lesson_id))
+        open(self.OPENED_ROOM_PATH, "w", encoding="utf8").write(str(lesson_id))
         ui.label_2.show()
         ui.frame_2.hide()
         ui.id_entry.hide()
-        ui.label_2.setText('Hoàn tất tạo phòng\nid: {}'.format(lesson_id))
+        ui.label_2.setText("Hoàn tất tạo phòng\nid: {}".format(lesson_id))
         ui.room_btn.hide()
         timer = QtCore.QTimer()
+
         def complete():
             ui.label_2.hide()
             ui.frame_2.show()
             ui.id_entry.hide()
             ui.In_btn.hide()
             # self.check_room(ui)
-        timer.singleShot(2000, lambda: complete())  
+
+        timer.singleShot(2000, lambda: complete())
 
     def enter_room(self, ui):
         decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
@@ -91,22 +101,27 @@ class UIFunctions(ConnectWindow):
         connection = self.get_connection()
         if room_id:
             cursor = connection.cursor()
-            cursor.execute('SELECT RoomId FROM room WHERE RoomId = %s AND Status = %s', (room_id, 1))
+            cursor.execute(
+                "SELECT RoomId FROM room WHERE RoomId = %s AND Status = %s",
+                (room_id, 1),
+            )
             if [row for row in cursor]:
-                open(self.OPENED_ROOM_PATH, 'w', encoding='utf8').write(room_id)
-                cursor.execute("UPDATE user SET RoomId = %s WHERE Username = %s", (room_id, username))
+                open(self.OPENED_ROOM_PATH, "w", encoding="utf8").write(room_id)
+                cursor.execute(
+                    "UPDATE user SET RoomId = %s WHERE Username = %s",
+                    (room_id, username),
+                )
                 ui.frame_2.close()
                 ui.label_2.show()
                 ui.id_entry.close()
-                ui.label_2.setText('Đã vào được phòng\nid: {}'.format(room_id))
+                ui.label_2.setText("Đã vào được phòng\nid: {}".format(room_id))
                 ui.timer = QtCore.QTimer()
                 ui.timer.singleShot(1000, lambda: self.return_main(ui))
             connection.commit()
             connection.close()
 
-
     def open_room(self, ui):
-        room_id = open(self.OPENED_ROOM_PATH, encoding='utf8').read().rstrip()
+        room_id = open(self.OPENED_ROOM_PATH, encoding="utf8").read().rstrip()
         if room_id:
             ui.switch_window_room.emit(int(room_id))
 
@@ -116,37 +131,39 @@ class UIFunctions(ConnectWindow):
         encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
         connection = self.get_connection()
         cursor = connection.cursor()
-        cursor.execute("SELECT RoomId FROM user WHERE Username = %s", (username, ))
+        cursor.execute("SELECT RoomId FROM user WHERE Username = %s", (username,))
         room_ids = [row for row in cursor]
         connection.close()
         if room_ids:
             for room_id in room_ids:
-                open(self.OPENED_ROOM_PATH, 'w', encoding='utf8').write(str(room_id[0]) if room_id[0] else '')
+                open(self.OPENED_ROOM_PATH, "w", encoding="utf8").write(
+                    str(room_id[0]) if room_id[0] else ""
+                )
 
-        room_id = open(self.OPENED_ROOM_PATH, encoding='utf8').read().rstrip()
+        room_id = open(self.OPENED_ROOM_PATH, encoding="utf8").read().rstrip()
         if room_id:
-            ui.label.setText(f'ID Phòng: {room_id}')
+            ui.label.setText(f"ID Phòng: {room_id}")
             ui.room_btn.hide()
             ui.In_btn.hide()
             ui.id_entry.hide()
-            open('./data/Users/opened_assignment.oa', 'w', encoding='utf8').close()
+            open("./data/Users/opened_assignment.oa", "w", encoding="utf8").close()
         else:
             ui.Quit.hide()
             ui.Go_Room.hide()
 
     def Quit(self, ui):
         decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
-        username = open(self.USER_PATH, encoding = 'utf-8').readline().rstrip()
+        username = open(self.USER_PATH, encoding="utf-8").readline().rstrip()
         encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
 
         connection = self.get_connection()
-        open(self.OPENED_ROOM_PATH, 'w', encoding='utf8').close()
+        open(self.OPENED_ROOM_PATH, "w", encoding="utf8").close()
         cursor = connection.cursor()
-        cursor.execute("UPDATE user SET RoomId = NULL WHERE Username = %s", (username, ))
+        cursor.execute("UPDATE user SET RoomId = NULL WHERE Username = %s", (username,))
         connection.commit()
         connection.close()
-        
-        ui.label.setText('Nhập ID Phòng')
+
+        ui.label.setText("Nhập ID Phòng")
         if ui.role == 1:
             ui.room_btn.show()
         ui.Go_Room.hide()
@@ -154,4 +171,3 @@ class UIFunctions(ConnectWindow):
 
     def return_main(self, ui):
         ui.switch_window_main.emit()
-

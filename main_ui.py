@@ -26,7 +26,24 @@ class MainWindow(QMainWindow):
 
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(UI_MAIN_PATH, self)
+        self.init_UI()
         self.define_role()
+
+    def init_UI(self):
+        self.setGeometry(
+            SCREEN_WIDTH,
+            SCREEN_HEIGHT,
+            self.width(),
+            SCREEN_HEIGHT,
+        )
+        self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        self.profile_btn.setDisabled(False)
+        if self.pg:
+            self.pg.restore()
+            self.pg.moveTo(-8, 0)
+            self.pg.resizeTo(SCREEN_WIDTH - self.width() + 16, self.height() + 8)
+
 
     def define_role(self):
         if self.role == 1:
@@ -57,36 +74,16 @@ class UIFunctions(MainWindow):
     assignments = {}
 
     def __init__(self, ui):
-        if ui.pg:
-            ui.pg.restore()
-            ui.pg.moveTo(-8, 0)
-            ui.pg.resizeTo(SCREEN_WIDTH - ui.width() + 16, ui.height() + 8)
-        
-
-        ui.setGeometry(
-            SCREEN_WIDTH,
-            SCREEN_HEIGHT,
-            ui.width(),
-            SCREEN_HEIGHT,
-        )
-        ui.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-        ui.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-        self.resize_idle(ui, ui.pg)
-        ui.profile_btn.setDisabled(False)
-
-        ui.profile_btn.clicked.connect(lambda: self.open_profile(ui))
-
         self.check_opened_lesson(ui, OPENED_LESSON_PATH)
         self.connect_btn(ui)
 
     def connect_btn(self, ui):
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
-
         ui.btn_quit.clicked.connect(lambda: self.quit(ui))
-
         ui.load_btn.clicked.connect(
             lambda: self.show_file_dialog(ui, OPENED_LESSON_PATH)
         )
+        ui.profile_btn.clicked.connect(lambda: self.open_profile(ui))
 
         if (
             os.path.getsize(OPENED_LESSON_PATH) > 0
@@ -107,13 +104,6 @@ class UIFunctions(MainWindow):
 
     def open_connect(self, ui):
         ui.switch_window_connect.emit()
-
-    @staticmethod
-    def resize_idle(ui, pg):
-        if pg:
-            pg.restore()
-            pg.moveTo(-8, 0)
-            pg.resizeTo(SCREEN_WIDTH - ui.width() + 16, ui.height() + 8)
 
     def check_opened_lesson(self, ui, filename):
         if os.path.exists(filename):

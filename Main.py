@@ -9,6 +9,7 @@ from UI_Files import Resources
 VERSION = "3.2"
 
 def init():
+    os.chdir(os.path.dirname(sys.argv[0]))
     def create_file(file):
         if not os.path.exists(file):
             open(file, "w", encoding='utf8').close()

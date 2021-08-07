@@ -71,4 +71,4 @@ Phần mềm hỗ trợ dạy và học lập trình
 #### v3.2 (1/8):
 + Hệ thống lại cách quản lí các window + Sửa một số lỗi.
 #### v3.2.1 (6/8):
-+ Thêm tính năng load trước bằng file có đuôi *.list*.
++ Thêm tính năng mở bài học bằng file có đuôi *.list*.

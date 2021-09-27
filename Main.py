@@ -35,7 +35,7 @@ def init():
 
     associate_file()
 
-def associate_file():
+def associate_file():  # sourcery skip: move-assign
     OPENED_ASSIGNMENT_PATH = "./data/Users/opened_assignment.oa"
     file = sys.argv[1] if len(sys.argv) >= 2 else None
     if file:

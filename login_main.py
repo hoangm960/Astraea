@@ -32,7 +32,6 @@ class LoginWindow(QMainWindow):
         uic.loadUi(UI_PATH, self)
         self.init_UI()
         LoginFunctions(self)
-        
 
     def init_UI(self):
         self.frameError.hide()
@@ -120,14 +119,12 @@ class LoginFunctions(LoginWindow):
 
     @staticmethod
     def get_connection():
-        connection = mysql.connector.connect(
-            host="remotemysql.com",
-            user="53K73q3Z6I",
-            password="DpXgsUvOuu",
-            database="53K73q3Z6I",
+        return mysql.connector.connect(
+            host="sql6.freesqldatabase.com",
+            user="sql6440489",
+            password="HlJRC8dBST",
+            database="sql6440489",
         )
-
-        return connection
 
     def openQuitFrame(self, ui):
         ui.switch_window_quit.emit()
@@ -225,7 +222,7 @@ class LoginFunctions(LoginWindow):
         name = ui.UserBox.text()[:30]
 
         if len(username) < 8 or list(
-            set(False for i in username.lower() if i not in self.enabled)
+            {False for i in username.lower() if i not in self.enabled}
         ) == [False]:
             ui.Note_Name.show()
             check = False
@@ -238,22 +235,21 @@ class LoginFunctions(LoginWindow):
                 ui.Note_Name.hide()
 
         if len(password) < 8 or list(
-            set(False for i in password.lower() if i not in self.enabled)
+            {False for i in password.lower() if i not in self.enabled}
         ) == [False]:
             ui.Note_Pass.show()
             check = False
         else:
             ui.Note_Pass.hide()
 
-        if not "".join([i for i in name.lower() if i not in self.enabled]).isalnum():
-            if not "".join([i for i in name.lower() if i not in self.enabled]) == "":
-                ui.Note_User.show()
-                check = False
-            else:
-                ui.Note_User.hide()
-        else:
+        if "".join(i for i in name.lower() if i not in self.enabled).isalnum():
             ui.Note_User.hide()
 
+        elif "".join(i for i in name.lower() if i not in self.enabled) != "":
+            ui.Note_User.show()
+            check = False
+        else:
+            ui.Note_User.hide()
         if len(name) < 6:
             ui.Note_User.show()
             check = False

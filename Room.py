@@ -50,14 +50,12 @@ class UIFunctions(RoomWindow):
 
     @staticmethod
     def get_connection():
-        connection = mysql.connector.connect(
-            host="remotemysql.com",
-            user="53K73q3Z6I",
-            password="DpXgsUvOuu",
-            database="53K73q3Z6I",
+        return mysql.connector.connect(
+            host="sql6.freesqldatabase.com",
+            user="sql6440489",
+            password="HlJRC8dBST",
+            database="sql6440489",
         )
-
-        return connection
 
     @staticmethod
     def get_file_dialog(ui, filter):

@@ -67,7 +67,9 @@ class UIFunction(LoadingScreen):
 
     def install_ide(self):
         subprocess.call("pip3 install thonny")
+        time.sleep(5)
         subprocess.Popen(["thonny"], shell=True)
+        time.sleep(5)
         pg = self.find_ide()
         pg.activate()
         auto.press("enter")

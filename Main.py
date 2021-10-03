@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QApplication
 
 from UI_Files import Resources
 
-VERSION = "3.2.1"
+VERSION = "3.2.2"
 
 def init():
     os.chdir(os.path.dirname(sys.argv[0]))

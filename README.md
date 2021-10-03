@@ -72,3 +72,5 @@ Phần mềm hỗ trợ dạy và học lập trình
 + Hệ thống lại cách quản lí các window + Sửa một số lỗi.
 #### v3.2.1 (6/8):
 + Thêm tính năng mở bài học bằng file có đuôi *.list*.
+#### v3.2.2 (25/9):
++ Sửa lỗi không tải được thonny.

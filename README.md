@@ -74,3 +74,4 @@ Phần mềm hỗ trợ dạy và học lập trình
 + Thêm tính năng mở bài học bằng file có đuôi *.list*.
 #### v3.2.2 (25/9):
 + Sửa lỗi không tải được thonny.
++ Sửa lỗi database.

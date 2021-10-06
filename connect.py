@@ -1,6 +1,4 @@
-import sys
-
-import mysql.connector
+from connect_db import DBConnection
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
@@ -57,22 +55,12 @@ class UIFunctions(ConnectWindow):
             ).close()
         )
 
-    @staticmethod
-    def get_connection():
-        return mysql.connector.connect(
-            host="sql6.freesqldatabase.com",
-            user="sql6440489",
-            password="HlJRC8dBST",
-            database="sql6440489",
-        )
-
     def create_room(self, ui):
-        connection = self.get_connection()
+        connection = DBConnection()
         cursor = connection.cursor()
         cursor.execute("INSERT INTO room(Status) VALUES(1)")
         lesson_id = cursor.lastrowid
-        connection.commit()
-        connection.close()
+        connection.close_connection()
 
         open(self.OPENED_ROOM_PATH, "w", encoding="utf8").write(str(lesson_id))
         ui.label_2.show()
@@ -92,11 +80,9 @@ class UIFunctions(ConnectWindow):
         timer.singleShot(2000, lambda: complete())
 
     def enter_room(self, ui):
-        decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
-        username = open(self.USER_PATH, encoding="utf8").readline().rstrip()
-        encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
+        username = self._get_user("utf8")
         room_id = ui.id_entry.text()
-        connection = self.get_connection()
+        connection = DBConnection()
         if room_id:
             cursor = connection.cursor()
             cursor.execute(
@@ -115,8 +101,7 @@ class UIFunctions(ConnectWindow):
                 ui.label_2.setText("Đã vào được phòng\nid: {}".format(room_id))
                 ui.timer = QtCore.QTimer()
                 ui.timer.singleShot(1000, lambda: self.return_main(ui))
-            connection.commit()
-            connection.close()
+            connection.close_connection()
 
     def open_room(self, ui):
         room_id = open(self.OPENED_ROOM_PATH, encoding="utf8").read().rstrip()
@@ -124,10 +109,8 @@ class UIFunctions(ConnectWindow):
             ui.switch_window_room.emit(int(room_id))
 
     def check_room(self, ui):
-        decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
-        username = open(self.USER_PATH, encoding="utf8").readline().rstrip()
-        encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
-        connection = self.get_connection()
+        username = self._get_user("utf8")
+        connection = DBConnection()
         cursor = connection.cursor()
         cursor.execute("SELECT RoomId FROM user WHERE Username = %s", (username,))
         room_ids = [row for row in cursor]
@@ -150,22 +133,25 @@ class UIFunctions(ConnectWindow):
             ui.Go_Room.hide()
 
     def Quit(self, ui):
-        decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
-        username = open(self.USER_PATH, encoding="utf-8").readline().rstrip()
-        encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
-
-        connection = self.get_connection()
+        username = self._get_user("utf-8")
+        connection = DBConnection()
         open(self.OPENED_ROOM_PATH, "w", encoding="utf8").close()
         cursor = connection.cursor()
         cursor.execute("UPDATE user SET RoomId = NULL WHERE Username = %s", (username,))
-        connection.commit()
-        connection.close()
+        connection.close_connection()
 
         ui.label.setText("Nhập ID Phòng")
         if ui.role == 1:
             ui.room_btn.show()
         ui.Go_Room.hide()
         ui.Quit.hide()
+
+    # TODO Rename this here and in `enter_room`, `check_room` and `Quit`
+    def _get_user(self, encoding):
+        decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
+        result = open(self.USER_PATH, encoding=encoding).readline().rstrip()
+        encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
+        return result
 
     def return_main(self, ui):
         ui.switch_window_main.emit()

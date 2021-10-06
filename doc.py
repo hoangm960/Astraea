@@ -2,7 +2,7 @@ import os
 import pickle
 import shutil
 
-import mysql.connector
+from connect_db import DBConnection
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QFileDialog, QLabel, QListWidgetItem, QMainWindow
 from win32com import client as wc
@@ -58,8 +58,7 @@ class UIFunctions(DocWindow):
     @staticmethod
     def get_file_dialog(ui, filter):
         HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
-        file_path = QFileDialog.getOpenFileName(ui, "Open file", HOME_PATH, filter)[0]
-        return file_path
+        return QFileDialog.getOpenFileName(ui, "Open file", HOME_PATH, filter)[0]
 
     def return_main(self, ui):
         ui.switch_window_main.emit()
@@ -70,15 +69,6 @@ class UIFunctions(DocWindow):
             ui.deleteBox_frame.show()
             ui.text_entry.hide()
 
-    @staticmethod
-    def get_connection():
-        return mysql.connector.connect(
-            host="sql6.freesqldatabase.com",
-            user="sql6440489",
-            password="HlJRC8dBST",
-            database="sql6440489",
-        )
-
     def load_doc(self, ui):
         name = ui.titles.currentItem().text()
         for doc in self.docs:
@@ -88,7 +78,7 @@ class UIFunctions(DocWindow):
                 open(OPENED_DOC_CONTENT, "w", encoding="utf8").write(content)
 
     def Delete(self, ui):
-        connection = self.get_connection()
+        connection = DBConnection()
         selected_items = ui.titles.selectedItems()
         if selected_items:
             item = selected_items[0]
@@ -106,19 +96,18 @@ class UIFunctions(DocWindow):
                     )
                     del doc
                     break
-            connection.commit()
-            connection.close()
+            connection.close_connection()
 
             ui.titles.takeItem(ui.titles.row(item))
             ui.text_entry.clear()
             ui.deleteBox_frame.hide()
 
     def change_title(self, ui, text):
-        connection = self.get_connection()
+        connection = DBConnection()
         selected_items = ui.titles.selectedItems()
         cursor = connection.cursor()
         lesson_id = open(UIFunctions.OPENED_LESSON_PATH, encoding="utf8").readlines()[1]
-        if selected_items and not ui.Name_edit.text() in self.docs:
+        if selected_items and ui.Name_edit.text() not in self.docs:
             item = selected_items[0]
 
             for doc in self.docs:
@@ -135,8 +124,7 @@ class UIFunctions(DocWindow):
                     ui.Name_edit.clear()
                     break
 
-        connection.commit()
-        connection.close()
+        connection.close_connection()
 
         ui.titles.clear()
         for doc in self.docs:
@@ -144,7 +132,7 @@ class UIFunctions(DocWindow):
         ui.text_entry.clear()
 
     def get_doc(self):
-        connection = self.get_connection()
+        connection = DBConnection()
         cursor = connection.cursor()
 
         self.docs.clear()
@@ -181,14 +169,13 @@ class UIFunctions(DocWindow):
 
     def check_opened_doc(self, ui):
         doc_path = open(OPENED_DOC, encoding="utf8").readline()
-        if os.path.exists(doc_path):
-            if os.path.getsize(doc_path) > 0:
-                with open(doc_path, "rb") as f:
-                    unpickler = pickle.Unpickler(f)
-                    self.docs = unpickler.load()
-                    ui.titles.clear()
-                    for doc in self.docs:
-                        ui.titles.addItem(doc[1])
+        if os.path.exists(doc_path) and os.path.getsize(doc_path) > 0:
+            with open(doc_path, "rb") as f:
+                unpickler = pickle.Unpickler(f)
+                self.docs = unpickler.load()
+                ui.titles.clear()
+                for doc in self.docs:
+                    ui.titles.addItem(doc[1])
 
 
 class TeacherUIFunctions(UIFunctions):
@@ -210,7 +197,7 @@ class TeacherUIFunctions(UIFunctions):
         ui.switch_window_pad.emit()
 
     def open_doc(self, ui):
-        connection = UIFunctions.get_connection()
+        connection = DBConnection()
 
         if not ui.titles.currentItem().text():
             file_path = self.get_file_dialog(ui, "*.docx")
@@ -228,8 +215,7 @@ class TeacherUIFunctions(UIFunctions):
                     "INSERT INTO doc(LessonId, DocName, DocContent) VALUES(%s, %s, %s)",
                     (lesson_id, name, html_data),
                 )
-                connection.commit()
-                connection.close()
+                connection.close_connection()
 
                 self.delete_html_file(file_path)
 
@@ -238,17 +224,13 @@ class TeacherUIFunctions(UIFunctions):
     @staticmethod
     def get_file_dialog(ui, filter):
         HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
-        file_path = QFileDialog.getOpenFileName(ui, "Open file", HOME_PATH, filter)[0]
-        return file_path
+        return QFileDialog.getOpenFileName(ui, "Open file", HOME_PATH, filter)[0]
 
     @staticmethod
     def save_file_dialog(ui, filter):
         if ui.titles.count():
             HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
-            file_path = QFileDialog.getSaveFileName(ui, "Open file", HOME_PATH, filter)[
-                0
-            ]
-            return file_path
+            return QFileDialog.getSaveFileName(ui, "Open file", HOME_PATH, filter)[0]
 
     @staticmethod
     def convert_doc_to_html(filename):
@@ -272,10 +254,7 @@ class TeacherUIFunctions(UIFunctions):
         shutil.rmtree(f"{os.path.splitext(filename)[0]}_files")
 
     def check_empty_doc(self):
-        for doc in self.docs:
-            if doc[1] == "":
-                return True
-        return False
+        return any(doc[1] == "" for doc in self.docs)
 
     def add_titles(self, ui):
         if not self.check_empty_doc():
@@ -284,7 +263,7 @@ class TeacherUIFunctions(UIFunctions):
             ui.titles.addItem(title_item)
             ui.titles.setItemWidget(title_item, title)
 
-            connection = UIFunctions.get_connection()
+            connection = DBConnection()
             cursor = connection.cursor()
             lesson_id = open(
                 UIFunctions.OPENED_LESSON_PATH, encoding="utf8"
@@ -294,8 +273,7 @@ class TeacherUIFunctions(UIFunctions):
                 (lesson_id,),
             )
             self.docs.append((cursor.lastrowid, "", ""))
-            connection.commit()
-            connection.close()
+            connection.close_connection()
 
 
 class StudentUIFunctions(UIFunctions):

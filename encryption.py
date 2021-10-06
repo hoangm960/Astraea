@@ -7,9 +7,8 @@ from cryptography.fernet import Fernet, InvalidToken
 def get_key(path):
     key = Fernet.generate_key()
 
-    file = open(path, 'wb')  # Open the file as wb to write bytes
-    file.write(key)  # The key is type bytes still
-    file.close()
+    with open(path, 'wb') as file:
+        file.write(key) 
 
 
 def encrypt(input_file, output_file, key_file):
@@ -19,7 +18,7 @@ def encrypt(input_file, output_file, key_file):
         key = f.read() 
 
     with open(input_file, 'rb') as f:
-        data = f.read()  # Read the bytes of the input file
+        data = f.read()
 
     fernet = Fernet(key)
     encrypted = fernet.encrypt(data)
@@ -39,19 +38,16 @@ def decrypt(input_file, output_file, key_file):
             key = f.read() 
             
         with open(input_file, 'rb') as f:
-            data = f.read()  # Read the bytes of the encrypted file
-
+            data = f.read() 
         fernet = Fernet(key)
         try:
             decrypted = fernet.decrypt(data)
 
             with open(output_file, 'wb') as f:
-                f.write(decrypted)  # Write the decrypted bytes to the output file
+                f.write(decrypted) 
             
             os.remove(input_file)
-
-
-            # Note: You can delete input_file here if you want
+            
         except InvalidToken as e:
             print("Invalid Key - Unsuccessfully decrypted")
 

@@ -2,10 +2,11 @@ import os
 import pickle
 from datetime import datetime
 
-import mysql.connector
 import pandas
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QFileDialog, QMainWindow
+
+from connect_db import DBConnection
 
 ROOM_UI = "./UI_Files/Room.ui"
 
@@ -49,28 +50,17 @@ class UIFunctions(RoomWindow):
         ui.download_btn.clicked.connect(lambda: self.download_lesson(ui))
 
     @staticmethod
-    def get_connection():
-        return mysql.connector.connect(
-            host="sql6.freesqldatabase.com",
-            user="sql6440489",
-            password="HlJRC8dBST",
-            database="sql6440489",
-        )
-
-    @staticmethod
     def get_file_dialog(ui, filter):
         HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
-        file_path = QFileDialog.getOpenFileName(ui, "Open file", HOME_PATH, filter)[0]
-        return file_path
+        return QFileDialog.getOpenFileName(ui, "Open file", HOME_PATH, filter)[0]
 
     @staticmethod
     def get_lesson(filename):
-        if os.path.exists(filename):
-            if os.path.getsize(filename) > 0:
-                with open(filename, "rb") as f:
-                    unpickler = pickle.Unpickler(f)
-                    data = unpickler.load()
-                    return data[0], data[1]
+        if os.path.exists(filename) and os.path.getsize(filename) > 0:
+            with open(filename, "rb") as f:
+                unpickler = pickle.Unpickler(f)
+                data = unpickler.load()
+                return data[0], data[1]
 
     def download_lesson(self, ui):
         item = ui.lesson_list.currentItem()
@@ -83,7 +73,7 @@ class UIFunctions(RoomWindow):
     def download(self, ui, lesson_id):
         from edit_main import Assignment
 
-        connection = self.get_connection()
+        connection = DBConnection()
         cursor = connection.cursor()
         cursor.execute(f"SELECT Name FROM lesson WHERE LessonId = '{lesson_id}'")
         title = [row for row in cursor][0][0]
@@ -95,7 +85,7 @@ class UIFunctions(RoomWindow):
 
             file_assignments = []
             for assignment in assignments:
-                assignment_id, name, details, mark = (i for i in assignment)
+                assignment_id, name, details, mark = iter(assignment)
                 cursor.execute(
                     "SELECT TestId FROM test WHERE AssignmentId = %s", (assignment_id,)
                 )
@@ -144,7 +134,7 @@ class UIFunctions(RoomWindow):
 
     def add_lesson_list(self, ui):
         ui.lesson_list.clear()
-        connection = self.get_connection()
+        connection = DBConnection()
         cursor = connection.cursor()
         cursor.execute(
             "SELECT LessonId FROM lesson_in_room WHERE RoomId = %s", (ui.id,)
@@ -157,7 +147,7 @@ class UIFunctions(RoomWindow):
         connection.close()
 
     def get_student_list(self, ui, filter):
-        connection = self.get_connection()
+        connection = DBConnection()
         cursor = connection.cursor()
         cursor.execute(f"SELECT {filter} FROM user WHERE RoomId = {ui.id} AND Type = 0")
         student_list = [row for row in cursor]
@@ -167,14 +157,13 @@ class UIFunctions(RoomWindow):
     @staticmethod
     def save_file_dialog(ui, filter):
         HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
-        file_path = QFileDialog.getSaveFileName(ui, "Open file", HOME_PATH, filter)[0]
-        return file_path
+        return QFileDialog.getSaveFileName(ui, "Open file", HOME_PATH, filter)[0]
 
     def rank_student(self, ui):
         students = self.get_student_list(ui, "Username")
         names = self.get_student_list(ui, "ShowName")
         student_scores = tmp_scores = {i[0]: 0 for i in students}
-        connection = self.get_connection()
+        connection = DBConnection()
         cursor = connection.cursor()
         cursor.execute("SELECT Username, Mark FROM submission")
 
@@ -186,21 +175,19 @@ class UIFunctions(RoomWindow):
                 if student == mark[0]:
                     student_scores[student] += mark[1]
 
-        check = list()
-        rank = list()
-        for _ in range(0, len(students)):
+        check = []
+        rank = []
+        for _ in range(len(students)):
             check.append(True)
             rank.append(0)
         stt = 1
         while stt <= len(student_scores):
             max = 0
-            x = 0
             record = 0
-            for i in student_scores.keys():
+            for x, i in enumerate(student_scores.keys()):
                 if student_scores[i] >= max and check[x]:
                     max = student_scores[i]
                     record = x
-                x += 1
             rank[record] = stt
             check[record] = False
             stt += 1
@@ -228,7 +215,7 @@ class TeacherUIFunctions(UIFunctions):
 
     def del_lesson(self, ui):
         items = ui.lesson_list.selectedItems()
-        connection = self.get_connection()
+        connection = DBConnection()
         cursor = connection.cursor()
         if items:
             for item in items:
@@ -247,7 +234,7 @@ class TeacherUIFunctions(UIFunctions):
     def upload(self, ui):
         filename = self.get_file_dialog(ui, "*.list")
         if ui.id and filename:
-            connection = self.get_connection()
+            connection = DBConnection()
             cursor = connection.cursor()
             title, assignments = self.get_lesson(filename)
             current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -283,7 +270,7 @@ class TeacherUIFunctions(UIFunctions):
                             (test_id, output),
                         )
                 for info in assignment.infos:
-                    key, message, num = (i for i in info)
+                    key, message, num = iter(info)
                     cursor.execute(
                         "INSERT INTO info(AssignmentId, KeyWord, Message, Quantity) VALUES(%s, %s, %s, %s)",
                         (assignment_id, key, message, num),
@@ -310,7 +297,7 @@ class TeacherUIFunctions(UIFunctions):
 
     def get_students_submission(self, ui):
         try:
-            connection = self.get_connection()
+            connection = DBConnection()
             lesson_id = open(self.OPENED_LESSON_PATH, encoding="utf8").readlines()[1]
             submission = pandas.read_sql(
                 f"SELECT UserName, SubmissionDate, Mark, Comment FROM submission WHERE LessonId = {lesson_id}",
@@ -341,7 +328,7 @@ class TeacherUIFunctions(UIFunctions):
             )
             if username:
                 ui.student_list.takeItem(ui.student_list.row(item))
-                connection = self.get_connection()
+                connection = DBConnection()
                 cursor = connection.cursor()
                 cursor.execute(
                     "UPDATE user SET RoomId = Null WHERE Username = %s", (username,)

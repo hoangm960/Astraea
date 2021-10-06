@@ -2,13 +2,14 @@ import codecs
 import io
 import os
 
-import mysql.connector
 from PIL import ImageGrab
 from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import (QColorDialog, QFileDialog, QMainWindow,
                              QMessageBox, QShortcut)
+
+from connect_db import DBConnection
 
 PAD_UI = "./UI_Files/Pad.ui"
 OPENED_DOC = "./data/Users/opened_doc.od"
@@ -98,15 +99,6 @@ class UIFunction(PadWindow):
             document.setHtml(html_img_tag)
 
     @staticmethod
-    def get_connection():
-        return mysql.connector.connect(
-            host="sql6.freesqldatabase.com",
-            user="sql6440489",
-            password="HlJRC8dBST",
-            database="sql6440489",
-        )
-
-    @staticmethod
     def check_empty(ui):
         content = open(OPENED_DOC_CONTENT, encoding="utf8").read()
         if content:
@@ -117,14 +109,13 @@ class UIFunction(PadWindow):
         open(OPENED_DOC_CONTENT, "w", encoding="utf8").write(content)
         lesson_id = open(self.OPENED_LESSON_PATH, encoding="utf8").readlines()[1]
         id = open(OPENED_DOC, encoding="utf8").readlines()[1]
-        connection = self.get_connection()
+        connection = DBConnection()
         cursor = connection.cursor()
         cursor.execute(
             "UPDATE doc SET DocContent = %s WHERE DocId = %s AND LessonId = %s",
             (content, id, lesson_id),
         )
-        connection.commit()
-        connection.close()
+        connection.close_connection()
 
     def Quit(self, ui):
         with open(OPENED_DOC_CONTENT, encoding="utf8") as f:

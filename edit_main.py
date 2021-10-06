@@ -230,17 +230,16 @@ class UIFunctions(EditWindow):
             self.show_file_dialog(ui, OPENED_ASSIGNMENT_PATH)
 
     def check_empty(self, ui, filename):
-        if os.path.exists(filename):
-            if os.path.getsize(filename) > 0:
-                ui.stacked_widget.setCurrentIndex(1)
-                with open(filename, "rb") as f:
-                    unpickler = pickle.Unpickler(f)
-                    data = unpickler.load()
-                    title = data[0]
-                    assignments = data[1]
+        if os.path.exists(filename) and os.path.getsize(filename) > 0:
+            ui.stacked_widget.setCurrentIndex(1)
+            with open(filename, "rb") as f:
+                unpickler = pickle.Unpickler(f)
+                data = unpickler.load()
+                title = data[0]
+                assignments = data[1]
 
-                    self.put_frame_in_list(ui, len(assignments))
-                    self.setup_frame(ui, title, assignments)
+                self.put_frame_in_list(ui, len(assignments))
+                self.setup_frame(ui, title, assignments)
 
     def go_to_second(self, ui):
         self.change_lesson_title(ui, ui.name_entry.text())
@@ -331,21 +330,19 @@ class UIFunctions(EditWindow):
             msg.exec_()
 
         def popup_button(self, i):
-            self.deleted = True if i.text().lower() == "ok" else False
+            self.deleted = i.text().lower() == "ok"
 
     @staticmethod
     def change_lesson_title(ui, title):
-        ui.lesson_title.setText(title if title else "Bài học không tên")
+        ui.lesson_title.setText(title or "Bài học không tên")
 
     def setup_frame(self, ui, title, assignments):
         children = ui.content_widget.children()
-        i = 1
         self.change_lesson_title(ui, title)
-        for assignment in assignments:
+        for i, assignment in enumerate(assignments, start=1):
             children[i].title_entry.setText(assignment.name)
             children[i].details_entry.setText(assignment.details)
             children[i].Score_edit.setValue(assignment.mark)
-            i += 1
 
     def put_frame_in_list(self, ui, num):
         current_layout = ui.content_widget.layout()
@@ -380,25 +377,24 @@ class UIFunctions(EditWindow):
 
     @staticmethod
     def load_info(info_file):
-        if info_file:
-            with open(info_file, encoding="utf-8") as f:
-                lines = f.readlines()
-                sep = lines[0].rstrip()
-                del lines[0]
-                infos = []
-                for line in lines:
-                    key, message, nums = line.strip("\n\r").split(sep)
-                    infos.append([key, message, nums])
-                return infos
-        else:
+        if not info_file:
             return None
+        with open(info_file, encoding="utf-8") as f:
+            lines = f.readlines()
+            sep = lines[0].rstrip()
+            del lines[0]
+            infos = []
+            for line in lines:
+                key, message, nums = line.strip("\n\r").split(sep)
+                infos.append([key, message, nums])
+            return infos
 
     def load_assignments(self, ui, filename):
         children = ui.content_widget.children()
         del children[0]
         assignments = []
         for i in range(ui.content_widget.layout().count()):
-            if not children[i].title_entry.text() in [
+            if children[i].title_entry.text() not in [
                 assignment.name for assignment in assignments
             ]:
                 tests = self.load_io(children[i].test_file_entry.text())

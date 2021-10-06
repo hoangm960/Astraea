@@ -8,6 +8,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QFileDialog, QMainWindow, QSizeGrip, QVBoxLayout, QWidget
 
 import check_algorithm
+from connect_db import DBConnection
 from encryption import decrypt, encrypt
 from Main import screen_resolution
 
@@ -140,23 +141,13 @@ class UIFunctions(ResultWindow):
             if file_name[0]:
                 entry.setText(file_name[0])
 
-    @staticmethod
-    def get_connection():
-        return mysql.connector.connect(
-            host="sql6.freesqldatabase.com",
-            user="sql6440489",
-            password="HlJRC8dBST",
-            database="sql6440489",
-        )
-
     def load_assignments(self, filename):
         self.assignments.clear()
-        if os.path.exists(filename):
-            if os.path.getsize(filename) > 0:
-                with open(filename, "rb") as f:
-                    unpickler = pickle.Unpickler(f)
-                    data = unpickler.load()
-                    self.assignments = data[1]
+        if os.path.exists(filename) and os.path.getsize(filename) > 0:
+            with open(filename, "rb") as f:
+                unpickler = pickle.Unpickler(f)
+                data = unpickler.load()
+                self.assignments = data[1]
 
     def check_empty(self, ui, num):
         if num == 0:
@@ -219,7 +210,7 @@ class UIFunctions(ResultWindow):
         else:
             return 0, [], []
 
-    def check_true(self, ui):
+    def check_true(self, ui): 
         open(self.FILE_COMMENT, "w", encoding="utf8").close()
         ui.btn_quit.close()
         children = ui.content_widgetT.children()
@@ -238,8 +229,9 @@ class UIFunctions(ResultWindow):
             ui.content_widget.layout().addWidget(ui.ResultFrame)
             ui.ResultFrame.test_file_label.setText(self.assignments[i].name)
             ui.ResultFrame.correct_num.setText(
-                f"{str(correct)}/{str(len(self.assignments[i].tests))}"
+                f'{correct}/{len(self.assignments[i].tests)}'
             )
+
 
             if len(results) != 0:
                 ui.ResultFrame.Score_box.setText(
@@ -296,10 +288,7 @@ class UIFunctions(ResultWindow):
             with open(self.FILE_COMMENT, "r", encoding="utf-8", errors="ignore") as f:
                 ui.Error_text.setText(str(f.read()))
 
-        totalScore = int()
-        for assignment in self.assignments:
-            totalScore += assignment.mark
-
+        totalScore = int() + sum(assignment.mark for assignment in self.assignments)
         children = ui.content_widget.children()
         del children[0]
         for child in children:
@@ -321,7 +310,7 @@ class UIFunctions(ResultWindow):
         name_account = open(self.USER_PATH, encoding="utf-8").readline().rstrip()
         encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
 
-        connection = self.get_connection()
+        connection = DBConnection()
         cursor = connection.cursor()
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         lesson_id = int(open(OPENED_LESSON_PATH, encoding="utf-8").readlines()[1])
@@ -349,8 +338,7 @@ class UIFunctions(ResultWindow):
                     ),
                 )
 
-            connection.commit()
-            connection.close()
+            connection.close_connection()
 
     def return_main(self, ui):
         ui.switch_window.emit()

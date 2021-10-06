@@ -2,12 +2,12 @@ import subprocess
 import time
 from random import randrange
 
-import mysql.connector
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QMainWindow
 import pyautogui as auto
 
 from Main import screen_resolution
+from connect_db import DBConnection
 from encryption import *
 
 UI_PATH = "./UI_files/Loading_Screen.ui"
@@ -118,12 +118,7 @@ class UIFunction(LoadingScreen):
         if self.counter == 73:
             time.sleep(3)
             try:
-                mysql.connector.connect(
-                    host="sql6.freesqldatabase.com",
-                    user="sql6440489",
-                    password="HlJRC8dBST",
-                    database="sql6440489"
-                )
+                DBConnection
             except:
                 ui.Loading_label.setText(
                     "kết nối thất bại. Đường truyền không ổn định."

@@ -1,9 +1,9 @@
 import time
 
-import mysql.connector
 from PyQt5 import QtCore, QtWidgets, uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMainWindow
+from connect_db import DBConnection
 
 from encryption import *
 from Main import screen_resolution
@@ -117,15 +117,6 @@ class LoginFunctions(LoginWindow):
         ui.Note_User.hide()
         ui.student.setChecked(True)
 
-    @staticmethod
-    def get_connection():
-        return mysql.connector.connect(
-            host="sql6.freesqldatabase.com",
-            user="sql6440489",
-            password="HlJRC8dBST",
-            database="sql6440489",
-        )
-
     def openQuitFrame(self, ui):
         ui.switch_window_quit.emit()
 
@@ -134,11 +125,10 @@ class LoginFunctions(LoginWindow):
         time.sleep(1)
         with open(self.USER_PATH, encoding="utf-8") as f:
             lines = f.readlines()
-        if lines:
-            if bool(lines[-1]):
-                ui.NameBox_SI.setText(lines[0].rstrip())
-                ui.PassBox_SI.setText(lines[2].rstrip())
-                ui.SavePass.setChecked(True)
+        if lines and bool(lines[-1]):
+            ui.NameBox_SI.setText(lines[0].rstrip())
+            ui.PassBox_SI.setText(lines[2].rstrip())
+            ui.SavePass.setChecked(True)
         encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
 
     def maximize_restore(self, ui):
@@ -169,7 +159,7 @@ class LoginFunctions(LoginWindow):
             )
 
     def check_SI(self, ui):
-        connection = self.get_connection()
+        connection = DBConnection()
         cursor = connection.cursor()
         username = ui.NameBox_SI.text()[:31]
         password = ui.PassBox_SI.text()[:22]
@@ -214,7 +204,7 @@ class LoginFunctions(LoginWindow):
         ui.switch_window_main.emit(role)
 
     def check_SU(self, ui):
-        connection = self.get_connection()
+        connection = DBConnection()
         cursor = connection.cursor()
         check = True
         username = ui.NameBox.text()[:31]
@@ -260,8 +250,7 @@ class LoginFunctions(LoginWindow):
                 "INSERT INTO user(Username, ShowName, Password, Type) VALUES(%s, %s, %s, %s)",
                 (username, name, password, role),
             )
-            connection.commit()
-            connection.close()
+            connection.close_connection()
 
             ui.NameBox_SI.clear()
             ui.PassBox_SI.clear()

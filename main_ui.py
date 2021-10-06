@@ -1,7 +1,6 @@
 import os
 import pickle
 
-import pygetwindow
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QFileDialog, QMainWindow
 
@@ -40,9 +39,7 @@ class MainWindow(QMainWindow):
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.profile_btn.setDisabled(False)
         if self.pg:
-            self.pg.restore()
-            self.pg.moveTo(-8, 0)
-            self.pg.resizeTo(SCREEN_WIDTH - self.width() + 16, self.height() + 8)
+            self._init_pg()
 
 
     def define_role(self):
@@ -60,14 +57,16 @@ class MainWindow(QMainWindow):
                     pass
             elif event.oldState() & QtCore.Qt.WindowMinimized:
                 try:
-                    self.pg.restore()
-                    self.pg.moveTo(-8, 0)
-                    self.pg.resizeTo(
-                        SCREEN_WIDTH - self.width() + 16, self.height() + 8
-                    )
+                    self._init_pg()
                 except:
                     pass
         QMainWindow.changeEvent(self, event)
+
+    # TODO Rename this here and in `init_UI` and `changeEvent`
+    def _init_pg(self):
+        self.pg.restore()
+        self.pg.moveTo(-8, 0)
+        self.pg.resizeTo(SCREEN_WIDTH - self.width() + 16, self.height() + 8)
 
 
 class UIFunctions(MainWindow):
@@ -106,14 +105,13 @@ class UIFunctions(MainWindow):
         ui.switch_window_connect.emit()
 
     def check_opened_lesson(self, ui, filename):
-        if os.path.exists(filename):
-            if os.path.getsize(filename) > 0:
-                with open(filename, encoding="utf8") as f:
-                    file_path = f.readline().rstrip("\n")
-                    if os.path.exists(file_path):
-                        self.load_assignments(ui, file_path)
-                    else:
-                        open(filename, "w", encoding="utf8").write("\n0")
+        if os.path.exists(filename) and os.path.getsize(filename) > 0:
+            with open(filename, encoding="utf8") as f:
+                file_path = f.readline().rstrip("\n")
+                if os.path.exists(file_path):
+                    self.load_assignments(ui, file_path)
+                else:
+                    open(filename, "w", encoding="utf8").write("\n0")
 
     def show_file_dialog(self, ui, filename):
         HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
@@ -125,12 +123,11 @@ class UIFunctions(MainWindow):
 
     @staticmethod
     def get_assignments(filename):
-        if os.path.exists(filename):
-            if os.path.getsize(filename) > 0:
-                with open(filename, "rb") as f:
-                    unpickler = pickle.Unpickler(f)
-                    data = unpickler.load()
-                    return data[0], data[1]
+        if os.path.exists(filename) and os.path.getsize(filename) > 0:
+            with open(filename, "rb") as f:
+                unpickler = pickle.Unpickler(f)
+                data = unpickler.load()
+                return data[0], data[1]
 
     def load_assignments(self, ui, filename):
         ui.list_assignments.clear()

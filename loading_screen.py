@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import QMainWindow
 import pyautogui as auto
 
 from Main import screen_resolution
-from connect_db import DBConnection
+from connect_db import get_connection
 from encryption import *
 
 UI_PATH = "./UI_files/Loading_Screen.ui"
@@ -21,7 +21,7 @@ class LoadingScreen(QMainWindow):
     def __init__(self, version):
         self.version = version
 
-        QMainWindow.__init__(self)
+        QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(UI_PATH, self)
         self.initUI()
         UIFunction(self)
@@ -118,7 +118,7 @@ class UIFunction(LoadingScreen):
         if self.counter == 73:
             time.sleep(3)
             try:
-                DBConnection
+                get_connection()
             except:
                 ui.Loading_label.setText(
                     "kết nối thất bại. Đường truyền không ổn định."

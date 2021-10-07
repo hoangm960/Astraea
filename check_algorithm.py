@@ -10,8 +10,7 @@ def main(filename, tests, infos, time_limit=2):
 
     def get_command():
         program_langs = {".py": "python", ".pas": "fpc"}
-        command = [program_langs[os.path.splitext(filename)[1]], filename]
-        return command
+        return [program_langs[os.path.splitext(filename)[1]], filename]
 
     def get_output(command, input=''):
         output = ''
@@ -41,7 +40,7 @@ def main(filename, tests, infos, time_limit=2):
             os.remove(f'{base_file}.o')
             os.remove(f'{base_file}.exe')
 
-        check.result[1] = True if output.rstrip() == ans.rstrip() else False
+        check.result[1] = output.rstrip() == ans.rstrip()
         if not check.result[1]:
             with open('./data/results/comment.txt', 'r', encoding='utf-8', errors='ignore') as f:
                 list_file = f.readlines()
@@ -50,7 +49,7 @@ def main(filename, tests, infos, time_limit=2):
                         file_error_w.write('\n>>> SAI ĐÁP ÁN: "'+output.rstrip()+'" phải là "'+ans.rstrip()+'"...')
                         
     def check_info(info):
-        key, message, num = (i for i in info)
+        key, message, num = iter(info)
         data = open(filename, encoding='utf8').read()
         data = [i for i in re.split('[;()\s]\s*', data) if i]
         if data.count(key) < int(num):

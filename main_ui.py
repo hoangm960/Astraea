@@ -62,7 +62,6 @@ class MainWindow(QMainWindow):
                     pass
         QMainWindow.changeEvent(self, event)
 
-    # TODO Rename this here and in `init_UI` and `changeEvent`
     def _init_pg(self):
         self.pg.restore()
         self.pg.moveTo(-8, 0)

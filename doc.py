@@ -2,7 +2,7 @@ import os
 import pickle
 import shutil
 
-from connect_db import DBConnection
+from connect_db import get_connection
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QFileDialog, QLabel, QListWidgetItem, QMainWindow
 from win32com import client as wc
@@ -78,7 +78,7 @@ class UIFunctions(DocWindow):
                 open(OPENED_DOC_CONTENT, "w", encoding="utf8").write(content)
 
     def Delete(self, ui):
-        connection = DBConnection()
+        connection = get_connection()
         selected_items = ui.titles.selectedItems()
         if selected_items:
             item = selected_items[0]
@@ -96,14 +96,15 @@ class UIFunctions(DocWindow):
                     )
                     del doc
                     break
-            connection.close_connection()
+            connection.commit()
+            connection.close()
 
             ui.titles.takeItem(ui.titles.row(item))
             ui.text_entry.clear()
             ui.deleteBox_frame.hide()
 
     def change_title(self, ui, text):
-        connection = DBConnection()
+        connection = get_connection()
         selected_items = ui.titles.selectedItems()
         cursor = connection.cursor()
         lesson_id = open(UIFunctions.OPENED_LESSON_PATH, encoding="utf8").readlines()[1]
@@ -124,7 +125,8 @@ class UIFunctions(DocWindow):
                     ui.Name_edit.clear()
                     break
 
-        connection.close_connection()
+        connection.commit()
+        connection.close()
 
         ui.titles.clear()
         for doc in self.docs:
@@ -132,7 +134,7 @@ class UIFunctions(DocWindow):
         ui.text_entry.clear()
 
     def get_doc(self):
-        connection = DBConnection()
+        connection = get_connection()
         cursor = connection.cursor()
 
         self.docs.clear()
@@ -197,7 +199,7 @@ class TeacherUIFunctions(UIFunctions):
         ui.switch_window_pad.emit()
 
     def open_doc(self, ui):
-        connection = DBConnection()
+        connection = get_connection()
 
         if not ui.titles.currentItem().text():
             file_path = self.get_file_dialog(ui, "*.docx")
@@ -215,7 +217,8 @@ class TeacherUIFunctions(UIFunctions):
                     "INSERT INTO doc(LessonId, DocName, DocContent) VALUES(%s, %s, %s)",
                     (lesson_id, name, html_data),
                 )
-                connection.close_connection()
+                connection.commit()
+                connection.close()
 
                 self.delete_html_file(file_path)
 
@@ -263,7 +266,7 @@ class TeacherUIFunctions(UIFunctions):
             ui.titles.addItem(title_item)
             ui.titles.setItemWidget(title_item, title)
 
-            connection = DBConnection()
+            connection = get_connection()
             cursor = connection.cursor()
             lesson_id = open(
                 UIFunctions.OPENED_LESSON_PATH, encoding="utf8"
@@ -273,7 +276,8 @@ class TeacherUIFunctions(UIFunctions):
                 (lesson_id,),
             )
             self.docs.append((cursor.lastrowid, "", ""))
-            connection.close_connection()
+            connection.commit()
+            connection.close()
 
 
 class StudentUIFunctions(UIFunctions):

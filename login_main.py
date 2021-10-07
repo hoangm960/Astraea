@@ -3,7 +3,7 @@ import time
 from PyQt5 import QtCore, QtWidgets, uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMainWindow
-from connect_db import DBConnection
+from connect_db import get_connection
 
 from encryption import *
 from Main import screen_resolution
@@ -28,7 +28,7 @@ class LoginWindow(QMainWindow):
 
     def __init__(self, pg):
         self.pg = pg
-        QMainWindow.__init__(self)
+        QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(UI_PATH, self)
         self.init_UI()
         LoginFunctions(self)
@@ -159,7 +159,7 @@ class LoginFunctions(LoginWindow):
             )
 
     def check_SI(self, ui):
-        connection = DBConnection()
+        connection = get_connection()
         cursor = connection.cursor()
         username = ui.NameBox_SI.text()[:31]
         password = ui.PassBox_SI.text()[:22]
@@ -204,7 +204,7 @@ class LoginFunctions(LoginWindow):
         ui.switch_window_main.emit(role)
 
     def check_SU(self, ui):
-        connection = DBConnection()
+        connection = get_connection()
         cursor = connection.cursor()
         check = True
         username = ui.NameBox.text()[:31]
@@ -250,7 +250,8 @@ class LoginFunctions(LoginWindow):
                 "INSERT INTO user(Username, ShowName, Password, Type) VALUES(%s, %s, %s, %s)",
                 (username, name, password, role),
             )
-            connection.close_connection()
+            connection.commit()
+            connection.close()
 
             ui.NameBox_SI.clear()
             ui.PassBox_SI.clear()

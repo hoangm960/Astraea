@@ -1,4 +1,4 @@
-from connect_db import DBConnection
+from connect_db import get_connection
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
@@ -56,11 +56,12 @@ class UIFunctions(ConnectWindow):
         )
 
     def create_room(self, ui):
-        connection = DBConnection()
+        connection = get_connection()
         cursor = connection.cursor()
         cursor.execute("INSERT INTO room(Status) VALUES(1)")
         lesson_id = cursor.lastrowid
-        connection.close_connection()
+        connection.commit()
+        connection.close()
 
         open(self.OPENED_ROOM_PATH, "w", encoding="utf8").write(str(lesson_id))
         ui.label_2.show()
@@ -82,7 +83,7 @@ class UIFunctions(ConnectWindow):
     def enter_room(self, ui):
         username = self._get_user("utf8")
         room_id = ui.id_entry.text()
-        connection = DBConnection()
+        connection = get_connection()
         if room_id:
             cursor = connection.cursor()
             cursor.execute(
@@ -101,7 +102,8 @@ class UIFunctions(ConnectWindow):
                 ui.label_2.setText("Đã vào được phòng\nid: {}".format(room_id))
                 ui.timer = QtCore.QTimer()
                 ui.timer.singleShot(1000, lambda: self.return_main(ui))
-            connection.close_connection()
+            connection.commit()
+            connection.close()
 
     def open_room(self, ui):
         room_id = open(self.OPENED_ROOM_PATH, encoding="utf8").read().rstrip()
@@ -110,7 +112,7 @@ class UIFunctions(ConnectWindow):
 
     def check_room(self, ui):
         username = self._get_user("utf8")
-        connection = DBConnection()
+        connection = get_connection()
         cursor = connection.cursor()
         cursor.execute("SELECT RoomId FROM user WHERE Username = %s", (username,))
         room_ids = [row for row in cursor]
@@ -134,11 +136,12 @@ class UIFunctions(ConnectWindow):
 
     def Quit(self, ui):
         username = self._get_user("utf-8")
-        connection = DBConnection()
+        connection = get_connection()
         open(self.OPENED_ROOM_PATH, "w", encoding="utf8").close()
         cursor = connection.cursor()
         cursor.execute("UPDATE user SET RoomId = NULL WHERE Username = %s", (username,))
-        connection.close_connection()
+        connection.commit()
+        connection.close()
 
         ui.label.setText("Nhập ID Phòng")
         if ui.role == 1:

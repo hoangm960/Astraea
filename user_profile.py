@@ -32,6 +32,7 @@ class ProfileWindow(QMainWindow):
 
 
 class UIFunctions(ProfileWindow):
+    OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
     USER_PATH = "data/Users/User.txt"
     USER_PATH_ENCRYPTED = "data/Users/User.encrypted"
     KEY_PATH = "data/encryption/users.key"
@@ -50,6 +51,7 @@ class UIFunctions(ProfileWindow):
         ui.switch_window_main.emit()
 
     def SignOut(self, ui):
+        open(self.OPENED_LESSON_PATH, mode='w',encoding="utf8").write('')
         ui.switch_window_login.emit()
     
     def Update(self, ui):

@@ -9,7 +9,7 @@ from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import (QColorDialog, QFileDialog, QMainWindow,
                              QMessageBox, QShortcut)
 
-from connect_db import DBConnection
+from connect_db import get_connection
 
 PAD_UI = "./UI_Files/Pad.ui"
 OPENED_DOC = "./data/Users/opened_doc.od"
@@ -109,13 +109,14 @@ class UIFunction(PadWindow):
         open(OPENED_DOC_CONTENT, "w", encoding="utf8").write(content)
         lesson_id = open(self.OPENED_LESSON_PATH, encoding="utf8").readlines()[1]
         id = open(OPENED_DOC, encoding="utf8").readlines()[1]
-        connection = DBConnection()
+        connection = get_connection()
         cursor = connection.cursor()
         cursor.execute(
             "UPDATE doc SET DocContent = %s WHERE DocId = %s AND LessonId = %s",
             (content, id, lesson_id),
         )
-        connection.close_connection()
+        connection.commit()
+        connection.close()
 
     def Quit(self, ui):
         with open(OPENED_DOC_CONTENT, encoding="utf8") as f:

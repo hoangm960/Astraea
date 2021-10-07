@@ -2,13 +2,15 @@ import os
 import pickle
 from datetime import datetime
 
+import numpy as np
 import pandas
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QFileDialog, QMainWindow
 
-from connect_db import DBConnection
+from connect_db import get_connection
 
 ROOM_UI = "./UI_Files/Room.ui"
+
 
 class RoomWindow(QMainWindow):
     switch_window = QtCore.pyqtSignal()
@@ -73,7 +75,7 @@ class UIFunctions(RoomWindow):
     def download(self, ui, lesson_id):
         from edit_main import Assignment
 
-        connection = DBConnection()
+        connection = get_connection()
         cursor = connection.cursor()
         cursor.execute(f"SELECT Name FROM lesson WHERE LessonId = '{lesson_id}'")
         title = [row for row in cursor][0][0]
@@ -134,7 +136,7 @@ class UIFunctions(RoomWindow):
 
     def add_lesson_list(self, ui):
         ui.lesson_list.clear()
-        connection = DBConnection()
+        connection = get_connection()
         cursor = connection.cursor()
         cursor.execute(
             "SELECT LessonId FROM lesson_in_room WHERE RoomId = %s", (ui.id,)
@@ -147,7 +149,7 @@ class UIFunctions(RoomWindow):
         connection.close()
 
     def get_student_list(self, ui, filter):
-        connection = DBConnection()
+        connection = get_connection()
         cursor = connection.cursor()
         cursor.execute(f"SELECT {filter} FROM user WHERE RoomId = {ui.id} AND Type = 0")
         student_list = [row for row in cursor]
@@ -163,7 +165,7 @@ class UIFunctions(RoomWindow):
         students = self.get_student_list(ui, "Username")
         names = self.get_student_list(ui, "ShowName")
         student_scores = tmp_scores = {i[0]: 0 for i in students}
-        connection = DBConnection()
+        connection = get_connection()
         cursor = connection.cursor()
         cursor.execute("SELECT Username, Mark FROM submission")
 
@@ -215,7 +217,7 @@ class TeacherUIFunctions(UIFunctions):
 
     def del_lesson(self, ui):
         items = ui.lesson_list.selectedItems()
-        connection = DBConnection()
+        connection = get_connection()
         cursor = connection.cursor()
         if items:
             for item in items:
@@ -234,7 +236,7 @@ class TeacherUIFunctions(UIFunctions):
     def upload(self, ui):
         filename = self.get_file_dialog(ui, "*.list")
         if ui.id and filename:
-            connection = DBConnection()
+            connection = get_connection()
             cursor = connection.cursor()
             title, assignments = self.get_lesson(filename)
             current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -269,12 +271,13 @@ class TeacherUIFunctions(UIFunctions):
                             "INSERT INTO output(TestId, OutputContent) VALUES(%s, %s)",
                             (test_id, output),
                         )
-                for info in assignment.infos:
-                    key, message, num = iter(info)
-                    cursor.execute(
-                        "INSERT INTO info(AssignmentId, KeyWord, Message, Quantity) VALUES(%s, %s, %s, %s)",
-                        (assignment_id, key, message, num),
-                    )
+                if assignment.infos:
+                    for info in assignment.infos:
+                        key, message, num = iter(info)
+                        cursor.execute(
+                            "INSERT INTO info(AssignmentId, KeyWord, Message, Quantity) VALUES(%s, %s, %s, %s)",
+                            (assignment_id, key, message, num),
+                        )
 
             if lesson_id:
                 cursor = connection.cursor()
@@ -295,29 +298,47 @@ class TeacherUIFunctions(UIFunctions):
             username, name = student
             ui.student_list.addItem(f"Tên người dùng: {username}, Tên: {name}")
 
+
     def get_students_submission(self, ui):
-        try:
-            connection = DBConnection()
-            lesson_id = open(self.OPENED_LESSON_PATH, encoding="utf8").readlines()[1]
-            submission = pandas.read_sql(
-                f"SELECT UserName, SubmissionDate, Mark, Comment FROM submission WHERE LessonId = {lesson_id}",
-                connection,
-            )
-            filename = self.save_file_dialog(ui, "*.xlsx")
-            if filename:
-                submission.to_excel(filename)
-            connection.close()
-        except:
-            ui.download_info_btn.setText("Chưa có dữ liệu")
-            ui.download_info_btn.setDisabled(True)
-            timer = QtCore.QTimer()
-            timer.singleShot(1000, lambda: ui.download_info_btn.setDisabled(False))
-            timer.singleShot(
-                1000,
-                lambda: ui.download_info_btn.setText(
-                    "Tải xuống dữ liệu bài làm học sinh"
-                ),
-            )
+        connection = get_connection()
+        cursor = connection.cursor()
+        room_id = int(open(self.OPENED_ROOM_PATH, mode="r", encoding="utf8").read())
+        cursor.execute(f"SELECT LessonId FROM lesson_in_room WHERE RoomId = {room_id}")
+        lesson_ids = [row[0] for row in cursor]
+        filename = self.save_file_dialog(ui, "*.xlsx")
+
+        temp_names = []
+        for id in lesson_ids:
+            cursor.execute(f"SELECT Name FROM lesson WHERE LessonId = {id}")
+            temp_names.append(cursor.fetchone()[0])
+
+        lesson_names = [
+            f"{ele} {idx}" if (ele in temp_names[:idx]) else ele
+            for idx, ele in enumerate(temp_names)
+        ]
+
+        lessons = {id: name for id, name in zip(lesson_ids, lesson_names)}
+        if filename:
+            writer = pandas.ExcelWriter(filename, engine="xlsxwriter")
+            for id in lesson_ids:
+                lesson_name = lessons[id]
+                submission = pandas.read_sql(
+                    f"SELECT UserName, SubmissionDate, Mark, Comment FROM submission WHERE LessonId = {id}",
+                    connection,
+                )
+                submission.to_excel(writer, sheet_name=lesson_name, index=False)
+                wb = writer.book
+                ws = writer.sheets[lesson_name]
+                format = wb.add_format({'text_wrap': True})
+                for idx, col in enumerate(submission):
+                    series = submission[col]
+                    max_len = max((
+                        series.astype(str).map(len).max(),
+                        len(str(series.name))
+                        )) + 1
+                    ws.set_column(idx, idx, max_len, format)
+            writer.save()
+        connection.close()
 
     def kick_student(self, ui):
         item = ui.student_list.currentItem()
@@ -328,7 +349,7 @@ class TeacherUIFunctions(UIFunctions):
             )
             if username:
                 ui.student_list.takeItem(ui.student_list.row(item))
-                connection = DBConnection()
+                connection = get_connection()
                 cursor = connection.cursor()
                 cursor.execute(
                     "UPDATE user SET RoomId = Null WHERE Username = %s", (username,)

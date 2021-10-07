@@ -8,7 +8,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QFileDialog, QMainWindow, QSizeGrip, QVBoxLayout, QWidget
 
 import check_algorithm
-from connect_db import DBConnection
+from connect_db import get_connection
 from encryption import decrypt, encrypt
 from Main import screen_resolution
 
@@ -73,6 +73,7 @@ class UIFunctions(ResultWindow):
     FILE_COMMENT = "./data/results/comment.txt"
 
     def __init__(self, ui):
+        self.connect_btn(ui)
         self.load_assignments(
             open(OPENED_LESSON_PATH, encoding="utf-8").readline().rstrip()
         )
@@ -82,12 +83,7 @@ class UIFunctions(ResultWindow):
         ui.return_btn.clicked.connect(lambda: self.return_main(ui))
         ui.btn_maximize.clicked.connect(lambda: self.maximize_restore(ui))
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
-        ui.Accept1.clicked.connect(lambda: ui.close())
         ui.Accept1.clicked.connect(lambda: self.return_main(ui))
-
-    @classmethod
-    def returnStatus(self):
-        return self.GLOBAL_STATE
 
     def maximize_restore(self, ui):
         status = self.GLOBAL_STATE
@@ -104,7 +100,7 @@ class UIFunctions(ResultWindow):
                 round((ui.ScrollAreaT.width() - 280) / 2),
                 round((ui.ScrollAreaT.height() - 70) / 2),
             )
-            ui.btn_maximize.setToolTip("khôi phục")
+            ui.btn_maximize.setToolTip("Khôi phục")
         else:
             self.GLOBAL_STATE = False
             ui.showNormal()
@@ -189,15 +185,12 @@ class UIFunctions(ResultWindow):
             self.FILE_COMMENT, "a+", encoding="utf-8", errors="ignore"
         ) as file_error:
             file_error.write(f"\n{self.assignments[num].name}")
-        correct = 0
         results = []
         errors = []
         ui.TestFrame = child
         if os.path.exists(ui.TestFrame.ans_file_entry.text()):
             results, errors = self.check_result(ui.TestFrame, num)
-            for result in results:
-                if result[1]:
-                    correct += 1
+            correct = sum(bool(result[1]) for result in results)
             return correct, results, errors
 
         elif ui.TestFrame.ans_file_entry.text():
@@ -310,7 +303,7 @@ class UIFunctions(ResultWindow):
         name_account = open(self.USER_PATH, encoding="utf-8").readline().rstrip()
         encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
 
-        connection = DBConnection()
+        connection = get_connection()
         cursor = connection.cursor()
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         lesson_id = int(open(OPENED_LESSON_PATH, encoding="utf-8").readlines()[1])
@@ -338,7 +331,8 @@ class UIFunctions(ResultWindow):
                     ),
                 )
 
-            connection.close_connection()
+            connection.commit()
+            connection.close()
 
     def return_main(self, ui):
         ui.switch_window.emit()

@@ -10,10 +10,9 @@ from PyQt5.QtWidgets import (QColorDialog, QFileDialog, QMainWindow,
                              QMessageBox, QShortcut)
 
 from connect_db import get_connection
+from path import OPENED_ASSIGNMENT_PATH, OPENED_DOC, OPENED_DOC_CONTENT
 
 PAD_UI = "./UI_Files/Pad.ui"
-OPENED_DOC = "./data/Users/opened_doc.od"
-OPENED_DOC_CONTENT = "./data/Users/opened_doc_content.html"
 HTML_EXTENSIONS = [".htm", ".html"]
 
 
@@ -46,7 +45,6 @@ class PadWindow(QMainWindow):
 
 
 class UIFunction(PadWindow):
-    OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
     GLOBAL_STATE = False
     path = None
     Format = [False, False, False]
@@ -107,7 +105,7 @@ class UIFunction(PadWindow):
     def Save(self, ui):
         content = ui.editor.toHtml()
         open(OPENED_DOC_CONTENT, "w", encoding="utf8").write(content)
-        lesson_id = open(self.OPENED_LESSON_PATH, encoding="utf8").readlines()[1]
+        lesson_id = open(OPENED_ASSIGNMENT_PATH, encoding="utf8").readlines()[1]
         id = open(OPENED_DOC, encoding="utf8").readlines()[1]
         connection = get_connection()
         cursor = connection.cursor()

@@ -2,15 +2,14 @@ import os
 import pickle
 import shutil
 
-from connect_db import get_connection
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QFileDialog, QLabel, QListWidgetItem, QMainWindow
 from win32com import client as wc
 
-DOC_UI = "./UI_Files/Doc.ui"
-OPENED_DOC = "./data/Users/opened_doc.od"
-OPENED_DOC_CONTENT = "./data/Users/opened_doc_content.html"
+from connect_db import get_connection
+from path import OPENED_DOC, OPENED_DOC_CONTENT
 
+DOC_UI = "./UI_Files/Doc.ui"
 
 class DocWindow(QMainWindow):
     switch_window_main = QtCore.pyqtSignal()

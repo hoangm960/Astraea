@@ -3,12 +3,12 @@ import time
 from PyQt5 import QtCore, QtWidgets, uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMainWindow
-from connect_db import get_connection
 
+from connect_db import get_connection
 from encryption import *
 from Main import screen_resolution
+from path import KEY_PATH, USER_PATH, USER_PATH_ENCRYPTED
 
-FILE = ""
 UI_PATH = "UI_Files/Login_gui.ui"
 SCREEN_WIDTH, SCREEN_HEIGHT = screen_resolution()
 
@@ -59,9 +59,6 @@ class LoginFunctions(LoginWindow):
     enabled = "qwertyuiopasdfghjklzxcvbnm1234567890 @/._"
     GLOBAL_STATE = False
     STATE_ECHOPASS = True
-    USER_PATH = "data/Users/User.txt"
-    USER_PATH_ENCRYPTED = "data/Users/User.encrypted"
-    KEY_PATH = "data/encryption/users.key"
 
     def __init__(self, ui):
         self.connect_btn(ui)
@@ -112,15 +109,15 @@ class LoginFunctions(LoginWindow):
         ui.switch_window_quit.emit()
 
     def check_autosave(self, ui):
-        decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
+        decrypt(USER_PATH_ENCRYPTED, USER_PATH, KEY_PATH)
         time.sleep(1)
-        with open(self.USER_PATH, encoding="utf-8") as f:
+        with open(USER_PATH, encoding="utf-8") as f:
             lines = f.readlines()
         if lines and bool(lines[-1]):
             ui.NameBox_SI.setText(lines[0].rstrip())
             ui.PassBox_SI.setText(lines[2].rstrip())
             ui.SavePass.setChecked(True)
-        encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
+        encrypt(USER_PATH, USER_PATH_ENCRYPTED, KEY_PATH)
 
     def maximize_restore(self, ui):
         status = self.GLOBAL_STATE
@@ -179,13 +176,13 @@ class LoginFunctions(LoginWindow):
                         row[i] for row in cursor for i in range(len(row))
                     )
 
-                    decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
-                    with open(self.USER_PATH, "w", encoding="utf-8") as f:
+                    decrypt(USER_PATH_ENCRYPTED, USER_PATH, KEY_PATH)
+                    with open(USER_PATH, "w", encoding="utf-8") as f:
                         f.write(f"{username}\n")
                         f.write(f"{name}\n")
                         f.write(f"{password}\n")
                         f.write("True" if ui.SavePass.isChecked() else "False")
-                    encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
+                    encrypt(USER_PATH, USER_PATH_ENCRYPTED, KEY_PATH)
                     connection.close()
                     self.open_main(ui, role)
 

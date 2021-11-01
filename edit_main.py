@@ -16,12 +16,10 @@ from PyQt5.QtWidgets import (
 
 from Main import screen_resolution
 from models.assignment import Assignment
+from path import OPENED_ASSIGNMENT_PATH
 
-KEY_PATH = "./data/Lesson/assignments.key"
 EDIT_FORM_PATH = "./UI_Files/edit_form.ui"
 EDIT_FRAME_PATH = "./UI_Files/edit_frame.ui"
-OPENED_ASSIGNMENT_PATH = "./data/Users/opened_assignment.oa"
-HTML_CONVERT_PATH = "./data/html_convert"
 SCREEN_WIDTH, SCREEN_HEIGHT = screen_resolution()
 
 class EditWindow(QMainWindow):

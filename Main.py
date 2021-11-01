@@ -5,6 +5,7 @@ from pathlib import Path
 from PyQt5.QtWidgets import QApplication
 
 from UI_Files import Resources
+from path import *
 
 VERSION = "3.2.2"
 
@@ -16,16 +17,8 @@ def init():
     def create_dir(dir):
         Path(dir).mkdir(parents=True, exist_ok=True)
 
-    USER_PATH = "./data/Users/"
-    ENCRYPTION_PATH = "./data/encryption/"
-    OPENED_RESULT_PATH = "./data/results/"
-    OPENED_ASSIGNMENT_PATH = "./data/Users/opened_assignment.oa"
-    OPENED_DOC = "./data/Users/opened_doc.od"
-    OPENED_ROOM_PATH = "./data/Users/opened_room.or"
-    OPENED_DOC_CONTENT = "./data/Users/opened_doc_content.html"
 
-
-    paths = [USER_PATH, ENCRYPTION_PATH, OPENED_RESULT_PATH]
+    paths = [USER_DIR_PATH, ENCRYPTION_DIR_PATH, RESULT_DIR_PATH]
     files = [OPENED_DOC_CONTENT, OPENED_ROOM_PATH, OPENED_DOC, OPENED_ASSIGNMENT_PATH]
 
     for dir in paths:

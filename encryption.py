@@ -50,11 +50,3 @@ def decrypt(input_file, output_file, key_file):
             
         except InvalidToken as e:
             print("Invalid Key - Unsuccessfully decrypted")
-
-
-if __name__ == "__main__":
-    KEY_PATH = "data/encryption/users.key"
-    USER_PATH = "data/Users/User.txt"
-    USER_PATH_ENCRYPTED = "data/Users/User.encrypted"
-    encrypt(USER_PATH, USER_PATH_ENCRYPTED, KEY_PATH)
-    # decrypt(USER_PATH_ENCRYPTED, USER_PATH, KEY_PATH)

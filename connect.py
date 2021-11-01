@@ -149,7 +149,6 @@ class UIFunctions(ConnectWindow):
         ui.Go_Room.hide()
         ui.Quit.hide()
 
-    # TODO Rename this here and in `enter_room`, `check_room` and `Quit`
     def _get_user(self, encoding):
         decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
         result = open(self.USER_PATH, encoding=encoding).readline().rstrip()

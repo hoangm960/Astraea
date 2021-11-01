@@ -13,15 +13,6 @@ UI_PATH = "UI_Files/Login_gui.ui"
 SCREEN_WIDTH, SCREEN_HEIGHT = screen_resolution()
 
 
-class User:
-    def __init__(self, id, name, name_user, password, role):
-        self.id = id
-        self.name = name
-        self.name_user = name_user
-        self.password = password
-        self.role = role
-
-
 class LoginWindow(QMainWindow):
     switch_window_main = QtCore.pyqtSignal(int)
     switch_window_quit = QtCore.pyqtSignal()

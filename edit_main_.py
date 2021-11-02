@@ -35,8 +35,7 @@ class Assignment:
 
 class EditWindow(QMainWindow):
     switch_window = QtCore.pyqtSignal()
-    switch_window_test = QtCore.pyqtSignal()
-    
+
     def __init__(self):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(EDIT_FORM_PATH, self)
@@ -154,6 +153,43 @@ class UIFunctions(EditWindow):
                     border-radius: 12px;"""
                 )
 
+            if (
+                not os.path.exists(child.test_file_entry.text())
+                or child.test_file_entry.text()[-4:] != ".txt"
+                or "'" in child.test_file_entry.text()
+            ):
+                child.test_file_entry.setStyleSheet(
+                    """background-color: rgb(255, 255, 255); 
+                    border: 2px solid rgb(225, 0 , 0); 
+                    border-radius: 12px;"""
+                )
+                self.CheckValue = False
+            else:
+                child.test_file_entry.setStyleSheet(
+                    """background-color: rgb(255, 255, 255); 
+                    border: 0px solid black; 
+                    border-radius: 12px;"""
+                )
+
+            if child.info_file_entry.text():
+                if (
+                    not os.path.exists(child.info_file_entry.text())
+                    or child.info_file_entry.text()[-4:] != ".txt"
+                    or "'" in child.info_file_entry.text()
+                ):
+                    child.info_file_entry.setStyleSheet(
+                        """background-color: rgb(255, 255, 255); 
+                        border: 2px solid rgb(225, 0 , 0); 
+                        border-radius: 12px;"""
+                    )
+                    self.CheckValue = False
+                else:
+                    child.info_file_entry.setStyleSheet(
+                        """background-color: rgb(255, 255, 255); 
+                        border: 0px solid black; 
+                        border-radius: 12px;"""
+                    )
+
             if child.Score_edit.value() < 0:
                 child.Score_edit.setStyleSheet(
                     """background-color: rgb(255, 255, 255); 
@@ -260,13 +296,23 @@ class UIFunctions(EditWindow):
         def __init__(self, ui, *args, **kwargs):
             super().__init__(*args, **kwargs)
             uic.loadUi(EDIT_FRAME_PATH, self)
-            self.edit_btn.clicked.connect(
-                lambda: self.getData(ui)
+            self.test_file_btn.clicked.connect(
+                lambda: self.get_file(self.test_file_entry, "*.txt")
+            )
+            self.info_file_btn.clicked.connect(
+                lambda: self.get_file(self.info_file_entry, "*.txt")
             )
             self.close_btn.clicked.connect(lambda: self.closeFrame(ui))
-        
-        def getData(self, ui):
-            ui.switch_window_test.emit()
+
+        def get_file(self, entry, filter):
+            HOME_PATH = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
+            file_name = QFileDialog.getOpenFileName(
+                self, "Open file", HOME_PATH, filter
+            )
+
+            if file_name[0]:
+                entry.setText(file_name[0])
+
         def closeFrame(self, ui):
             self.warn_close_frame(ui)
             if self.deleted:
@@ -329,6 +375,19 @@ class UIFunctions(EditWindow):
                 tests.append([inputs, outputs])
             return tests
 
+    @staticmethod
+    def load_info(info_file):
+        if not info_file:
+            return None
+        with open(info_file, encoding="utf-8") as f:
+            lines = f.readlines()
+            sep = lines[0].rstrip()
+            del lines[0]
+            infos = []
+            for line in lines:
+                key, message, nums = line.strip("\n\r").split(sep)
+                infos.append([key, message, nums])
+            return infos
 
     def load_assignments(self, ui, filename):
         children = ui.content_widget.children()
@@ -338,8 +397,8 @@ class UIFunctions(EditWindow):
             if children[i].title_entry.text() not in [
                 assignment.name for assignment in assignments
             ]:
-                tests = ['']
-                infos = ['']
+                tests = self.load_io(children[i].test_file_entry.text())
+                infos = self.load_info(children[i].info_file_entry.text())
                 assignments.append(
                     Assignment(
                         children[i].title_entry.text(),
@@ -356,6 +415,6 @@ class UIFunctions(EditWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = EditWindow()
+    window = EditWindow(None, None)
     window.show()
     sys.exit(app.exec_())

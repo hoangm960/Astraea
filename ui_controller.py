@@ -14,6 +14,7 @@ from quit import QuitFrame
 from result_main import ResultWindow
 from room import RoomWindow
 from user_profile import ProfileWindow
+from test_info import TestWindow
 
 SCREEN_WIDTH, SCREEN_HEIGHT = screen_resolution()
 
@@ -55,10 +56,13 @@ class Controller:
         self.main.show()
 
     def show_edit(self):
+        self.pg.maximize()
         self.edit = EditWindow()
         self.edit.switch_window.connect(self.reset_main)
         self.edit.switch_window.connect(self.show_main)
         self.edit.switch_window.connect(self.edit.close)
+        self.edit.switch_window_test.connect(self.show_test)
+        self.main.hide()
         self.disable_windows(True)
         self.edit.show()
 
@@ -71,11 +75,18 @@ class Controller:
         self.main.hide()
         self.doc.show()
 
+    def show_test(self):
+        self.pg.maximize()
+        self.test = TestWindow()
+        self.test.switch_window.connect(lambda: self.edit.show())
+        self.edit.hide()
+        self.test.show()
+
     def show_pad(self):
         self.pg.maximize()
         self.pad = PadWindow()
         self.pad.switch_window.connect(self.show_doc)
-        self.doc.close()
+        self.doc.close(1)
         self.pad.show()
 
     def show_connect(self):
@@ -120,7 +131,7 @@ class Controller:
         self.quit.close_window.connect(self.close_pg)
         self.disable_windows(state=True, all_main=True)
         self.quit.show()
-
+    
     def disable_windows(self, state, all_main=False):
         if self.login:
             self.login.setDisabled(state)
@@ -128,7 +139,7 @@ class Controller:
             self.main.setDisabled(
                 state
             ) if all_main else self.main.frame_func_btn.setDisabled(state)
-
+        
     def reset_main(self):
         self.main.close()
         self.main = None

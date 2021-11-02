@@ -6,12 +6,10 @@ from PyQt5.QtWidgets import QMainWindow
 
 from connect_db import get_connection
 from encryption import *
-from Main import screen_resolution
 from path import KEY_PATH, USER_PATH, USER_PATH_ENCRYPTED
+from utils.config import SCREEN_HEIGHT, SCREEN_WIDTH
 
 UI_PATH = "UI_Files/Login_gui.ui"
-SCREEN_WIDTH, SCREEN_HEIGHT = screen_resolution()
-
 
 class LoginWindow(QMainWindow):
     switch_window_main = QtCore.pyqtSignal(int)

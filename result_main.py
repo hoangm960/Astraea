@@ -10,13 +10,12 @@ from PyQt5.QtWidgets import QFileDialog, QMainWindow, QSizeGrip, QVBoxLayout, QW
 import check_algorithm
 from connect_db import get_connection
 from encryption import decrypt, encrypt
-from Main import screen_resolution
 from path import FILE_COMMENT, KEY_PATH, OPENED_ASSIGNMENT_PATH, USER_PATH, USER_PATH_ENCRYPTED
+from utils.config import SCREEN_HEIGHT, SCREEN_WIDTH
 
 RESULT_FORM_PATH = "./UI_Files/result_form.ui"
 RESULT_FRAME_PATH = "./UI_Files/result_frame.ui"
 TEST_FRAME_PATH = "./UI_Files/Test_frame.ui"
-SCREEN_WIDTH, SCREEN_HEIGHT = screen_resolution()
 
 
 class ResultWindow(QMainWindow):

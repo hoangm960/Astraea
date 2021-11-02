@@ -2,7 +2,6 @@ import os
 import sys
 from pathlib import Path
 
-from PyQt5.QtWidgets import QApplication
 
 from UI_Files import Resources
 from path import *
@@ -34,12 +33,6 @@ def associate_file():  # sourcery skip: move-assign
     if file:
         with open(OPENED_ASSIGNMENT_PATH, "w", encoding="utf8") as f:
             f.writelines([f"{file}\n", "0"])
-
-def screen_resolution():
-    app = QApplication([])
-    screen_resolution = app.desktop().availableGeometry()
-    return screen_resolution.width(), screen_resolution.height()
-
 
 if __name__ == "__main__":
 

@@ -6,12 +6,11 @@ from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QMainWindow
 import pyautogui as auto
 
-from Main import screen_resolution
 from connect_db import get_connection
 from encryption import *
+from utils.config import SCREEN_HEIGHT, SCREEN_WIDTH
 
 UI_PATH = "./UI_files/Loading_Screen.ui"
-SCREEN_WIDTH, SCREEN_HEIGHT = screen_resolution()
 
 
 class LoadingScreen(QMainWindow):

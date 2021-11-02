@@ -14,13 +14,12 @@ from PyQt5.QtWidgets import (
     QWidget,
 )
 
-from Main import screen_resolution
 from models.assignment import Assignment
 from path import OPENED_ASSIGNMENT_PATH
+from utils.config import SCREEN_HEIGHT, SCREEN_WIDTH
 
 EDIT_FORM_PATH = "./UI_Files/edit_form.ui"
 EDIT_FRAME_PATH = "./UI_Files/edit_frame.ui"
-SCREEN_WIDTH, SCREEN_HEIGHT = screen_resolution()
 
 class EditWindow(QMainWindow):
     switch_window = QtCore.pyqtSignal()

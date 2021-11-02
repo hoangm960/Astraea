@@ -4,12 +4,11 @@ import pickle
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QFileDialog, QMainWindow
 
-from Main import screen_resolution
 from UI_Files import Resources
 from result_main import OPENED_ASSIGNMENT_PATH
+from utils.config import SCREEN_HEIGHT, SCREEN_WIDTH
 
 UI_MAIN_PATH = "./UI_Files/ui_main.ui"
-SCREEN_WIDTH, SCREEN_HEIGHT = screen_resolution()
 
 class MainWindow(QMainWindow):
     switch_window_edit = QtCore.pyqtSignal()

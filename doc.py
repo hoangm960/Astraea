@@ -2,15 +2,14 @@ import os
 import pickle
 import shutil
 
-from connect_db import get_connection
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QFileDialog, QLabel, QListWidgetItem, QMainWindow
 from win32com import client as wc
 
-DOC_UI = "./UI_Files/Doc.ui"
-OPENED_DOC = "./data/Users/opened_doc.od"
-OPENED_DOC_CONTENT = "./data/Users/opened_doc_content.html"
+from connect_db import get_connection
+from path import OPENED_ASSIGNMENT_PATH, OPENED_DOC, OPENED_DOC_CONTENT
 
+DOC_UI = "./UI_Files/Doc.ui"
 
 class DocWindow(QMainWindow):
     switch_window_main = QtCore.pyqtSignal()
@@ -38,8 +37,6 @@ class DocWindow(QMainWindow):
 
 
 class UIFunctions(DocWindow):
-    OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
-
     docs = []
 
     def __init__(self, ui):
@@ -83,7 +80,7 @@ class UIFunctions(DocWindow):
         if selected_items:
             item = selected_items[0]
             lesson_id = open(
-                UIFunctions.OPENED_LESSON_PATH, encoding="utf8"
+                OPENED_ASSIGNMENT_PATH, encoding="utf8"
             ).readlines()[1]
 
             cursor = connection.cursor()
@@ -107,7 +104,7 @@ class UIFunctions(DocWindow):
         connection = get_connection()
         selected_items = ui.titles.selectedItems()
         cursor = connection.cursor()
-        lesson_id = open(UIFunctions.OPENED_LESSON_PATH, encoding="utf8").readlines()[1]
+        lesson_id = open(OPENED_ASSIGNMENT_PATH, encoding="utf8").readlines()[1]
         if selected_items and ui.Name_edit.text() not in self.docs:
             item = selected_items[0]
 
@@ -139,7 +136,7 @@ class UIFunctions(DocWindow):
 
         self.docs.clear()
         lesson_path, lesson_id = open(
-            self.OPENED_LESSON_PATH, encoding="utf8"
+            OPENED_ASSIGNMENT_PATH, encoding="utf8"
         ).readlines()
         if lesson_id:
             cursor.execute(
@@ -210,7 +207,7 @@ class TeacherUIFunctions(UIFunctions):
                 ui.text_entry.setText(html_data)
 
                 lesson_id = open(
-                    UIFunctions.OPENED_LESSON_PATH, encoding="utf8"
+                    OPENED_ASSIGNMENT_PATH, encoding="utf8"
                 ).readlines()[1]
                 cursor = connection.cursor()
                 cursor.execute(
@@ -269,7 +266,7 @@ class TeacherUIFunctions(UIFunctions):
             connection = get_connection()
             cursor = connection.cursor()
             lesson_id = open(
-                UIFunctions.OPENED_LESSON_PATH, encoding="utf8"
+                OPENED_ASSIGNMENT_PATH, encoding="utf8"
             ).readlines()[1]
             cursor.execute(
                 "INSERT INTO doc(LessonId, DocName, DocContent) VALUES(%s, '', '')",

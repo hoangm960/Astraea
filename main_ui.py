@@ -4,12 +4,11 @@ import pickle
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QFileDialog, QMainWindow
 
-from Main import screen_resolution
 from UI_Files import Resources
+from result_main import OPENED_ASSIGNMENT_PATH
+from utils.config import SCREEN_HEIGHT, SCREEN_WIDTH
 
 UI_MAIN_PATH = "./UI_Files/ui_main.ui"
-OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
-SCREEN_WIDTH, SCREEN_HEIGHT = screen_resolution()
 
 class MainWindow(QMainWindow):
     switch_window_edit = QtCore.pyqtSignal()
@@ -72,20 +71,20 @@ class UIFunctions(MainWindow):
     assignments = {}
 
     def __init__(self, ui):
-        self.check_opened_lesson(ui, OPENED_LESSON_PATH)
+        self.check_opened_lesson(ui, OPENED_ASSIGNMENT_PATH)
         self.connect_btn(ui)
 
     def connect_btn(self, ui):
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
         ui.btn_quit.clicked.connect(lambda: self.quit(ui))
         ui.load_btn.clicked.connect(
-            lambda: self.show_file_dialog(ui, OPENED_LESSON_PATH)
+            lambda: self.show_file_dialog(ui, OPENED_ASSIGNMENT_PATH)
         )
         ui.profile_btn.clicked.connect(lambda: self.open_profile(ui))
 
         if (
-            os.path.getsize(OPENED_LESSON_PATH) > 0
-            and open(OPENED_LESSON_PATH, encoding="utf8").readlines()[1] != "0"
+            os.path.getsize(OPENED_ASSIGNMENT_PATH) > 0
+            and open(OPENED_ASSIGNMENT_PATH, encoding="utf8").readlines()[1] != "0"
         ):
             ui.LessonButton.clicked.connect(lambda: self.open_doc(ui))
         else:

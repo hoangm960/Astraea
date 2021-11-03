@@ -7,7 +7,6 @@ from doc import DocWindow
 from edit_main import EditWindow
 from loading_screen import LoadingScreen
 from login_main import LoginWindow
-from Main import screen_resolution
 from main_ui import MainWindow
 from Pad import PadWindow
 from quit import QuitFrame
@@ -15,8 +14,7 @@ from result_main import ResultWindow
 from Room import RoomWindow
 from user_profile import ProfileWindow
 from test_info import TestWindow
-
-SCREEN_WIDTH, SCREEN_HEIGHT = screen_resolution()
+from utils.config import SCREEN_WIDTH
 
 
 class Controller:

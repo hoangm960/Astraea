@@ -8,6 +8,7 @@ from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QFileDialog, QMainWindow
 
 from connect_db import get_connection
+from path import OPENED_ASSIGNMENT_PATH, OPENED_ROOM_PATH
 
 ROOM_UI = "./UI_Files/Room.ui"
 
@@ -37,9 +38,6 @@ class RoomWindow(QMainWindow):
 
 
 class UIFunctions(RoomWindow):
-    OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
-    OPENED_ROOM_PATH = "./data/Users/opened_room.or"
-
     def __init__(self, ui):
         self.add_lesson_list(ui)
         self.rank_student(ui)
@@ -117,11 +115,11 @@ class UIFunctions(RoomWindow):
                 )
             connection.close()
 
-            filename = self.show_file_dialog(self.OPENED_LESSON_PATH)
+            filename = self.show_file_dialog(OPENED_ASSIGNMENT_PATH)
             if filename:
                 with open(filename, "wb") as f:
                     pickle.dump([title, file_assignments], f, -1)
-                open(self.OPENED_LESSON_PATH, "w", encoding="utf8").write(
+                open(OPENED_ASSIGNMENT_PATH, "w", encoding="utf8").write(
                     f"{filename}\n{lesson_id}"
                 )
                 self.return_main(ui)
@@ -302,7 +300,7 @@ class TeacherUIFunctions(UIFunctions):
     def get_students_submission(self, ui):
         connection = get_connection()
         cursor = connection.cursor()
-        room_id = int(open(self.OPENED_ROOM_PATH, mode="r", encoding="utf8").read())
+        room_id = int(open(OPENED_ROOM_PATH, mode="r", encoding="utf8").read())
         cursor.execute(f"SELECT LessonId FROM lesson_in_room WHERE RoomId = {room_id}")
         lesson_ids = [row[0] for row in cursor]
         filename = self.save_file_dialog(ui, "*.xlsx")

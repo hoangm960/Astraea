@@ -10,14 +10,12 @@ from PyQt5.QtWidgets import QFileDialog, QMainWindow, QSizeGrip, QVBoxLayout, QW
 import check_algorithm
 from connect_db import get_connection
 from encryption import decrypt, encrypt
-from Main import screen_resolution
+from path import FILE_COMMENT, KEY_PATH, OPENED_ASSIGNMENT_PATH, USER_PATH, USER_PATH_ENCRYPTED
+from utils.config import SCREEN_HEIGHT, SCREEN_WIDTH
 
 RESULT_FORM_PATH = "./UI_Files/result_form.ui"
 RESULT_FRAME_PATH = "./UI_Files/result_frame.ui"
 TEST_FRAME_PATH = "./UI_Files/Test_frame.ui"
-OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
-OPENED_RESULT_PATH = "./data/results/"
-SCREEN_WIDTH, SCREEN_HEIGHT = screen_resolution()
 
 
 class ResultWindow(QMainWindow):
@@ -67,15 +65,11 @@ class UIFunctions(ResultWindow):
     GLOBAL_STATE = False
     assignments = {}
     TotalScore = int()
-    USER_PATH = "./data/Users/User.txt"
-    USER_PATH_ENCRYPTED = "./data/Users/User.encrypted"
-    KEY_PATH = "./data/encryption/users.key"
-    FILE_COMMENT = "./data/results/comment.txt"
 
     def __init__(self, ui):
         self.connect_btn(ui)
         self.load_assignments(
-            open(OPENED_LESSON_PATH, encoding="utf-8").readline().rstrip()
+            open(OPENED_ASSIGNMENT_PATH, encoding="utf-8").readline().rstrip()
         )
         self.check_empty(ui, len(self.assignments))
 
@@ -182,7 +176,7 @@ class UIFunctions(ResultWindow):
 
     def get_results(self, ui, child, num):
         with open(
-            self.FILE_COMMENT, "a+", encoding="utf-8", errors="ignore"
+            FILE_COMMENT, "a+", encoding="utf-8", errors="ignore"
         ) as file_error:
             file_error.write(f"\n{self.assignments[num].name}")
         results = []
@@ -195,7 +189,7 @@ class UIFunctions(ResultWindow):
 
         elif ui.TestFrame.ans_file_entry.text():
             with open(
-                self.FILE_COMMENT, "a+", encoding="utf-8", errors="ignore"
+                FILE_COMMENT, "a+", encoding="utf-8", errors="ignore"
             ) as file_error:
                 file_error.write(
                     "\n>>> FileExistsERROR: Lỗi không tìm thấy file bài làm."
@@ -203,8 +197,8 @@ class UIFunctions(ResultWindow):
         else:
             return 0, [], []
 
-    def check_true(self, ui): 
-        open(self.FILE_COMMENT, "w", encoding="utf8").close()
+    def check_true(self, ui):   # sourcery no-metrics
+        open(FILE_COMMENT, "w", encoding="utf8").close()
         ui.btn_quit.close()
         children = ui.content_widgetT.children()
         del children[0:2]
@@ -241,7 +235,7 @@ class UIFunctions(ResultWindow):
                     try:
                         if result[0]:
                             with open(
-                                self.FILE_COMMENT,
+                                FILE_COMMENT,
                                 "a+",
                                 encoding="utf-8",
                                 errors="ignore",
@@ -251,7 +245,7 @@ class UIFunctions(ResultWindow):
                                 )
                     except ZeroDivisionError:
                         with open(
-                            self.FILE_COMMENT, "a+", encoding="utf-8", errors="ignore"
+                            FILE_COMMENT, "a+", encoding="utf-8", errors="ignore"
                         ) as f:
                             f.write(
                                 "\n>>> ZeroDivisionError: Tồn tại phép tính chia cho 0."
@@ -260,25 +254,25 @@ class UIFunctions(ResultWindow):
                 if errors:
                     for message in errors:
                         with open(
-                            self.FILE_COMMENT, "a+", encoding="utf-8", errors="ignore"
+                            FILE_COMMENT, "a+", encoding="utf-8", errors="ignore"
                         ) as f:
                             f.write(f"\n>>> {message}")
 
             elif not ui.TestFrame.ans_file_entry.text():
                 with open(
-                    self.FILE_COMMENT, "a+", encoding="utf-8", errors="ignore"
+                    FILE_COMMENT, "a+", encoding="utf-8", errors="ignore"
                 ) as f:
                     f.write("\n>>> Chưa làm bài")
 
-            with open(self.FILE_COMMENT, "r", encoding="utf-8", errors="ignore") as f:
+            with open(FILE_COMMENT, "r", encoding="utf-8", errors="ignore") as f:
                 list_file = f.readlines()
                 if ">>>" not in list_file[-1]:
                     with open(
-                        self.FILE_COMMENT, "a+", encoding="utf-8", errors="ignore"
+                        FILE_COMMENT, "a+", encoding="utf-8", errors="ignore"
                     ) as file_error_w:
                         file_error_w.write("\n>>> Không xảy ra lỗi")
 
-            with open(self.FILE_COMMENT, "r", encoding="utf-8", errors="ignore") as f:
+            with open(FILE_COMMENT, "r", encoding="utf-8", errors="ignore") as f:
                 ui.Error_text.setText(str(f.read()))
 
         totalScore = int() + sum(assignment.mark for assignment in self.assignments)
@@ -291,7 +285,7 @@ class UIFunctions(ResultWindow):
             ui.Score.setText(str(round(self.TotalScore, 2)))
         else:
             ui.progressBar.setValue(0)
-        with open(self.FILE_COMMENT, "a", encoding="utf-8", errors="ignore") as f:
+        with open(FILE_COMMENT, "a", encoding="utf-8", errors="ignore") as f:
             if float(self.TotalScore) < 0.7 * totalScore:
                 f.write("\nBài làm vẫn chưa đạt chuẩn.")
                 ui.Judge.setText("Bài làm vẫn chưa đạt chuẩn.")
@@ -299,14 +293,14 @@ class UIFunctions(ResultWindow):
                 f.write("\nBài làm vẫn đạt chuẩn.")
                 ui.Judge.setText("Bài làm đạt chuẩn")
 
-        decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
-        name_account = open(self.USER_PATH, encoding="utf-8").readline().rstrip()
-        encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
+        decrypt(USER_PATH_ENCRYPTED, USER_PATH, KEY_PATH)
+        name_account = open(USER_PATH, encoding="utf-8").readline().rstrip()
+        encrypt(USER_PATH, USER_PATH_ENCRYPTED, KEY_PATH)
 
         connection = get_connection()
         cursor = connection.cursor()
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        lesson_id = int(open(OPENED_LESSON_PATH, encoding="utf-8").readlines()[1])
+        lesson_id = int(open(OPENED_ASSIGNMENT_PATH, encoding="utf-8").readlines()[1])
         if lesson_id:
             try:
                 cursor.execute(
@@ -316,7 +310,7 @@ class UIFunctions(ResultWindow):
                         lesson_id,
                         current_time,
                         round(self.TotalScore, 2),
-                        open(self.FILE_COMMENT, encoding="utf-8").read(),
+                        open(FILE_COMMENT, encoding="utf-8").read(),
                     ),
                 )
             except mysql.connector.errors.IntegrityError:
@@ -327,7 +321,7 @@ class UIFunctions(ResultWindow):
                         lesson_id,
                         current_time,
                         round(self.TotalScore, 2),
-                        open(self.FILE_COMMENT, encoding="utf8").read(),
+                        open(FILE_COMMENT, encoding="utf8").read(),
                     ),
                 )
 

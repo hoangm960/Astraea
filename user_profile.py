@@ -3,6 +3,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMainWindow
 
 from encryption import decrypt, encrypt
+from path import KEY_PATH, OPENED_ASSIGNMENT_PATH, USER_PATH, USER_PATH_ENCRYPTED
 
 UI_PATH = './UI_Files/profile_form.ui'
 
@@ -32,11 +33,6 @@ class ProfileWindow(QMainWindow):
 
 
 class UIFunctions(ProfileWindow):
-    OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
-    USER_PATH = "data/Users/User.txt"
-    USER_PATH_ENCRYPTED = "data/Users/User.encrypted"
-    KEY_PATH = "data/encryption/users.key"
-
     def __init__(self, ui):
         self.connect_btn(ui)
         self.Update(ui)
@@ -51,14 +47,14 @@ class UIFunctions(ProfileWindow):
         ui.switch_window_main.emit()
 
     def SignOut(self, ui):
-        open(self.OPENED_LESSON_PATH, mode='w',encoding="utf8").write('')
+        open(OPENED_ASSIGNMENT_PATH, mode='w',encoding="utf8").write('')
         ui.switch_window_login.emit()
     
     def Update(self, ui):
-        decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
-        with open(self.USER_PATH, 'r', encoding='utf-8') as f:
+        decrypt(USER_PATH_ENCRYPTED, USER_PATH, KEY_PATH)
+        with open(USER_PATH, 'r', encoding='utf-8') as f:
             username, name, password = (line.rstrip() for line in f.readlines()[:-1])
             ui.username_box.setText(username)
             ui.NameBox.setText(name)
             ui.PassBox.setText(password)
-        encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
+        encrypt(USER_PATH, USER_PATH_ENCRYPTED, KEY_PATH)

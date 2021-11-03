@@ -1,11 +1,11 @@
+import os
+import pickle
 from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (
-    QApplication,
-    QLineEdit,
-    QMainWindow,
-    QVBoxLayout
-)
+from PyQt5.QtWidgets import QApplication, QLineEdit, QMainWindow, QVBoxLayout
+
+from models.assignment import Test
+from path import OPENED_TEST_DATA
 
 TEST_PATH = "./UI_Files/Test_Info.ui"
 TEST_CASE_PATH = "./UI_Files/Test_Case.ui"
@@ -15,9 +15,10 @@ INFO_CASE_PATH = "./UI_Files/Info_Case.ui"
 class TestWindow(QMainWindow):
     switch_window = QtCore.pyqtSignal()
 
-    def __init__(self):
+    def __init__(self, index):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(TEST_PATH, self)
+        self.index = index
         self.init_UI()
         UIFunction(self)
 
@@ -26,6 +27,13 @@ class TestWindow(QMainWindow):
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.showMaximized()
         self.title_bar.mouseMoveEvent = self.moveWindow
+        self.Test_btn.setStyleSheet(
+            """QPushButton {
+                background-color: rgba(255, 255, 255,50);
+                border-radius: 10px;
+                color: black;
+            }"""
+        )
 
     def moveWindow(self, event):
         if UIFunction.GLOBAL_STATE == True:
@@ -52,20 +60,21 @@ class UIFunction(TestWindow):
         ui.btn_quit.clicked.connect(lambda: self.reopen_edit(ui))
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
         ui.btn_maximize.clicked.connect(lambda: self.maximize_restore(ui))
+        self.check_test(OPENED_TEST_DATA)
         self.put_frame_in_list(ui, 0)
         self.put_frame_in_list(ui, 1)
         ui.stacked_widget.setCurrentIndex(0)
-        ui.Test_btn.setStyleSheet(
-            """QPushButton {
-                background-color: rgba(255, 255, 255,50);
-                border-radius: 10px;
-                color: black;
-            }"""
-        )
         ui.Test_btn.clicked.connect(lambda: self.changed(ui, 0))
         ui.Info_btn.clicked.connect(lambda: self.changed(ui, 1))
         ui.add_test.clicked.connect(lambda: self.add_frame(ui))
         ui.add_info.clicked.connect(lambda: self.add_frame(ui))
+
+    def check_test(self, filename):
+        if os.path.exists(filename) and os.path.getsize(filename) > 0:
+            with open(filename, "rb") as f:
+                unpickler = pickle.Unpickler(f)
+                data = unpickler.load()
+                print(data)
 
     def changed(self, ui, k):
         if k == 0:
@@ -132,7 +141,7 @@ class UIFunction(TestWindow):
             ui.frame = Frame_Info(ui)
             ui.info.layout().addWidget(ui.frame)
 
-    def saveTest(self, ui):
+    def saveTest(self, ui, filename):
         tests = ui.test.children()
         tests.pop(0)
         results = []
@@ -140,11 +149,16 @@ class UIFunction(TestWindow):
             inputs, outputs = test.input.children(), test.output.children()
             inputs.pop(0)
             outputs.pop(0)
-            results.append([[i.text() for i in inputs], [i.text() for i in outputs]])
-        print(results)            
+            results.append(Test([i.text() for i in inputs], [i.text() for i in outputs]))
+        with open(filename, "rb") as f:
+                unpickler = pickle.Unpickler(f)
+                data = unpickler.load()
+        with open(filename, "wb") as f:
+            data[ui.index] = results 
+            pickle.dump(data, f, -1)     
 
     def reopen_edit(self, ui):
-        self.saveTest(ui)
+        self.saveTest(ui, OPENED_TEST_DATA)
         ui.switch_window.emit()
         ui.close()
 

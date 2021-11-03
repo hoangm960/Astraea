@@ -15,16 +15,17 @@ from PyQt5.QtWidgets import (
 )
 
 from models.assignment import Assignment
-from path import OPENED_ASSIGNMENT_PATH
+from path import OPENED_ASSIGNMENT_PATH, OPENED_TEST_DATA
 from utils.config import SCREEN_HEIGHT, SCREEN_WIDTH
 
 EDIT_FORM_PATH = "./UI_Files/edit_form.ui"
 EDIT_FRAME_PATH = "./UI_Files/edit_frame.ui"
 
+
 class EditWindow(QMainWindow):
-    switch_window = QtCore.pyqtSignal()
-    switch_window_test = QtCore.pyqtSignal()
-    
+    switch_window_main = QtCore.pyqtSignal()
+    switch_window_test = QtCore.pyqtSignal(int)
+
     def __init__(self):
         QMainWindow.__init__(self, None, QtCore.Qt.WindowStaysOnTopHint)
         uic.loadUi(EDIT_FORM_PATH, self)
@@ -121,7 +122,7 @@ class UIFunctions(EditWindow):
         ui.confirm_add_btn.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(1))
 
     def return_main(self, ui):
-        ui.switch_window.emit()
+        ui.switch_window_main.emit()
 
     def check_empty_entry(self, ui):
         self.CheckValue = True
@@ -248,14 +249,15 @@ class UIFunctions(EditWindow):
         def __init__(self, ui, *args, **kwargs):
             super().__init__(*args, **kwargs)
             uic.loadUi(EDIT_FRAME_PATH, self)
-            self.edit_btn.clicked.connect(
-                lambda: self.getData(ui)
-            )
+            self.edit_btn.clicked.connect(lambda: self.getData(ui, OPENED_TEST_DATA))
             self.close_btn.clicked.connect(lambda: self.closeFrame(ui))
-        
-        def getData(self, ui):
-            ui.switch_window_test.emit()
-            
+
+        def getData(self, ui, filename):
+            if not(os.path.exists(filename) and os.path.getsize(filename) > 0):
+                with open(filename, "wb") as f:
+                    pickle.dump([0]*(len(ui.content_widget.children()) - 1), f, -1)
+            ui.switch_window_test.emit(ui.content_widget.layout().indexOf(self))
+
         def closeFrame(self, ui):
             self.warn_close_frame(ui)
             if self.deleted:
@@ -313,8 +315,8 @@ class UIFunctions(EditWindow):
             if children[i].title_entry.text() not in [
                 assignment.name for assignment in assignments
             ]:
-                tests = ['']
-                infos = ['']
+                tests = [""]
+                infos = [""]
                 assignments.append(
                     Assignment(
                         children[i].title_entry.text(),

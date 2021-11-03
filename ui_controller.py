@@ -45,6 +45,7 @@ class Controller:
         self.main = MainWindow(self.role, self.pg)
         self.main.move(SCREEN_WIDTH - self.main.width(), 0)
         self.main.switch_window_edit.connect(self.show_edit)
+        self.main.switch_window_edit.connect(self.main.hide)
         self.main.switch_window_doc.connect(self.show_doc)
         self.main.switch_window_connect.connect(self.show_connect)
         self.main.switch_window_profile.connect(self.show_profile)
@@ -56,11 +57,11 @@ class Controller:
     def show_edit(self):
         self.pg.maximize()
         self.edit = EditWindow()
-        self.edit.switch_window.connect(self.reset_main)
-        self.edit.switch_window.connect(self.show_main)
-        self.edit.switch_window.connect(self.edit.close)
+        self.edit.switch_window_main.connect(self.reset_main)
+        self.edit.switch_window_main.connect(self.show_main)
+        self.edit.switch_window_main.connect(self.edit.close)
         self.edit.switch_window_test.connect(self.show_test)
-        self.main.hide()
+        self.edit.switch_window_test.connect(self.edit.hide)
         self.disable_windows(True)
         self.edit.show()
 
@@ -73,18 +74,17 @@ class Controller:
         self.main.hide()
         self.doc.show()
 
-    def show_test(self):
-        self.pg.maximize()
-        self.test = TestWindow()
-        self.test.switch_window.connect(lambda: self.edit.show())
-        self.edit.hide()
+    def show_test(self, index):
+        self.test = TestWindow(index)
+        self.test.switch_window.connect(self.test.close)
+        self.test.switch_window.connect(self.edit.show)
         self.test.show()
 
     def show_pad(self):
         self.pg.maximize()
         self.pad = PadWindow()
         self.pad.switch_window.connect(self.show_doc)
-        self.doc.close(1)
+        self.doc.close()
         self.pad.show()
 
     def show_connect(self):

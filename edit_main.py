@@ -267,6 +267,7 @@ class UIFunctions(EditWindow):
         
         def getData(self, ui):
             ui.switch_window_test.emit()
+            
         def closeFrame(self, ui):
             self.warn_close_frame(ui)
             if self.deleted:
@@ -315,20 +316,6 @@ class UIFunctions(EditWindow):
         for _ in range(num):
             ui.frame = self.EditFrame(ui)
             ui.content_widget.layout().addWidget(ui.frame)
-
-    @staticmethod
-    def load_io(test_file):
-        with open(test_file, encoding="utf-8") as f:
-            lines = f.readlines()
-            sep = lines[0].rstrip()
-            del lines[0]
-            tests = []
-            for line in lines:
-                inputs, outputs = line.strip("\n\r").split(sep)
-                inputs, outputs = inputs.split("&"), outputs.split("&")
-                tests.append([inputs, outputs])
-            return tests
-
 
     def load_assignments(self, ui, filename):
         children = ui.content_widget.children()

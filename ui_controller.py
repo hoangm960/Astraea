@@ -9,10 +9,10 @@ from loading_screen import LoadingScreen
 from login_main import LoginWindow
 from Main import screen_resolution
 from main_ui import MainWindow
-from pad import PadWindow
+from Pad import PadWindow
 from quit import QuitFrame
 from result_main import ResultWindow
-from room import RoomWindow
+from Room import RoomWindow
 from user_profile import ProfileWindow
 from test_info import TestWindow
 

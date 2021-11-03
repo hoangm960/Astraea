@@ -1,5 +1,6 @@
 import os
 import pickle
+
 from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QLineEdit, QMainWindow, QVBoxLayout
@@ -60,7 +61,7 @@ class UIFunction(TestWindow):
         ui.btn_quit.clicked.connect(lambda: self.reopen_edit(ui))
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
         ui.btn_maximize.clicked.connect(lambda: self.maximize_restore(ui))
-        self.check_test(OPENED_TEST_DATA)
+        self.check_test(ui, OPENED_TEST_DATA)
         self.put_frame_in_list(ui, 0)
         self.put_frame_in_list(ui, 1)
         ui.stacked_widget.setCurrentIndex(0)
@@ -69,12 +70,13 @@ class UIFunction(TestWindow):
         ui.add_test.clicked.connect(lambda: self.add_frame(ui))
         ui.add_info.clicked.connect(lambda: self.add_frame(ui))
 
-    def check_test(self, filename):
+    def check_test(self, ui, filename):
         if os.path.exists(filename) and os.path.getsize(filename) > 0:
             with open(filename, "rb") as f:
                 unpickler = pickle.Unpickler(f)
                 data = unpickler.load()
-                print(data)
+                for i in data:
+                    self.add_frame(ui, i)
 
     def changed(self, ui, k):
         if k == 0:
@@ -133,9 +135,9 @@ class UIFunction(TestWindow):
 
             ui.scroll_info.verticalScrollBar().setValue(1)
 
-    def add_frame(self, ui):
+    def add_frame(self, ui, test):
         if ui.stacked_widget.currentIndex() == 0:
-            ui.frame = Frame_Test(ui)
+            ui.frame = Frame_Test(ui, test)
             ui.test.layout().addWidget(ui.frame)
         else:
             ui.frame = Frame_Info(ui)
@@ -192,14 +194,14 @@ class Frame_Info(QMainWindow):
 
 
 class Frame_Test(QMainWindow):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, test=[], *args, **kwargs):
         super().__init__(*args, **kwargs)
         uic.loadUi(TEST_CASE_PATH, self)
-        UIFunction_(self)
-
+        UIFunction_(self, test)
 
 class UIFunction_(Frame_Test):
-    def __init__(self, ui):
+    #TODO: setup test có sẵn
+    def __init__(self, ui, test):
         self.connect(ui)
         self.setup(ui)
 

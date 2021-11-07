@@ -125,7 +125,7 @@ class Controller:
 
     def show_quit(self):
         self.quit = QuitFrame()
-        self.quit.reset_state.connect(lambda: self.disable_windows(False))
+        self.quit.reset_state.connect(lambda: self.disable_windows(state=False, all_main=True))
         self.quit.close_window.connect(self.close_pg)
         self.disable_windows(state=True, all_main=True)
         self.quit.show()

@@ -253,7 +253,7 @@ class UIFunctions(EditWindow):
             self.close_btn.clicked.connect(lambda: self.closeFrame(ui))
 
         def getData(self, ui, filename):
-            if not(os.path.exists(filename) and os.path.getsize(filename) > 0):
+            if os.path.exists(filename) and os.path.getsize(filename) <= 0:
                 with open(filename, "wb") as f:
                     pickle.dump([0]*(len(ui.content_widget.children()) - 1), f, -1)
             ui.switch_window_test.emit(ui.content_widget.layout().indexOf(self))

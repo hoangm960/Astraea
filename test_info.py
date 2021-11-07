@@ -67,8 +67,8 @@ class UIFunction(TestWindow):
         ui.stacked_widget.setCurrentIndex(0)
         ui.Test_btn.clicked.connect(lambda: self.changed(ui, 0))
         ui.Info_btn.clicked.connect(lambda: self.changed(ui, 1))
-        ui.add_test.clicked.connect(lambda: self.add_frame(ui))
-        ui.add_info.clicked.connect(lambda: self.add_frame(ui))
+        ui.add_test.clicked.connect(lambda: self.add_frame(ui=ui))
+        ui.add_info.clicked.connect(lambda: self.add_frame(ui=ui))
 
     def check_test(self, ui, filename):
         if os.path.exists(filename) and os.path.getsize(filename) > 0:
@@ -76,7 +76,8 @@ class UIFunction(TestWindow):
                 unpickler = pickle.Unpickler(f)
                 data = unpickler.load()
                 for i in data:
-                    self.add_frame(ui, i)
+                    if i != 0:
+                        self.add_frame(ui, i)
 
     def changed(self, ui, k):
         if k == 0:
@@ -135,9 +136,9 @@ class UIFunction(TestWindow):
 
             ui.scroll_info.verticalScrollBar().setValue(1)
 
-    def add_frame(self, ui, test):
+    def add_frame(self, ui, tests=[]):
         if ui.stacked_widget.currentIndex() == 0:
-            ui.frame = Frame_Test(ui, test)
+            ui.frame = Frame_Test(tests=tests)
             ui.test.layout().addWidget(ui.frame)
         else:
             ui.frame = Frame_Info(ui)
@@ -194,14 +195,14 @@ class Frame_Info(QMainWindow):
 
 
 class Frame_Test(QMainWindow):
-    def __init__(self, test=[], *args, **kwargs):
+    def __init__(self, tests=[], *args, **kwargs):
         super().__init__(*args, **kwargs)
         uic.loadUi(TEST_CASE_PATH, self)
-        UIFunction_(self, test)
+        UIFunction_(self, tests)
 
 class UIFunction_(Frame_Test):
     #TODO: setup test có sẵn
-    def __init__(self, ui, test):
+    def __init__(self, ui, tests):
         self.connect(ui)
         self.setup(ui)
 

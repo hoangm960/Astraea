@@ -244,8 +244,6 @@ class UIFunctions(EditWindow):
             self.return_main(ui)
 
     class EditFrame(QWidget):
-        deleted = False
-
         def __init__(self, ui, *args, **kwargs):
             super().__init__(*args, **kwargs)
             uic.loadUi(EDIT_FRAME_PATH, self)
@@ -255,27 +253,23 @@ class UIFunctions(EditWindow):
         def getData(self, ui, filename):
             if os.path.exists(filename) and os.path.getsize(filename) <= 0:
                 with open(filename, "wb") as f:
-                    pickle.dump([0]*(len(ui.content_widget.children()) - 1), f, -1)
+                    pickle.dump([0] * (len(ui.content_widget.children()) - 1), f, -1)
             ui.switch_window_test.emit(ui.content_widget.layout().indexOf(self))
 
         def closeFrame(self, ui):
-            self.warn_close_frame(ui)
-            if self.deleted:
+            if self.warn_close_frame(ui):
                 self.setParent(None)
                 ui.scrollArea.verticalScrollBar().setValue(1)
-                self.deleted = False
 
         def warn_close_frame(self, ui):
-            msg = QMessageBox(ui)
-            msg.setWindowTitle("Xóa bài tập")
-            msg.setText(f"'{self.title_entry.text()}' sẽ được xóa")
-            msg.setIcon(QMessageBox.Information)
-            msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-            msg.buttonClicked.connect(self.popup_button)
-            msg.exec_()
-
-        def popup_button(self, i):
-            self.deleted = i.text().lower() == "ok"
+            msg = QMessageBox.question(
+                ui,
+                "Xóa bài tập",
+                f'"{self.title_entry.text() if self.title_entry.text() else "Bai tap khong ten"}" sẽ được xóa',
+                QMessageBox.Yes | QMessageBox.Cancel,
+                QMessageBox.Cancel,
+            )
+            return msg == QMessageBox.Yes
 
     @staticmethod
     def change_lesson_title(ui, title):

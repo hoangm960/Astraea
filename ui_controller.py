@@ -45,7 +45,7 @@ class Controller:
         self.main = MainWindow(self.role, self.pg)
         self.main.move(SCREEN_WIDTH - self.main.width(), 0)
         self.main.switch_window_edit.connect(self.show_edit)
-        self.main.switch_window_edit.connect(self.main.hide)
+        self.main.switch_window_edit.connect(self.main.close)
         self.main.switch_window_doc.connect(self.show_doc)
         self.main.switch_window_connect.connect(self.show_connect)
         self.main.switch_window_profile.connect(self.show_profile)

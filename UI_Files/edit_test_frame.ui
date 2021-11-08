@@ -294,8 +294,8 @@ QScrollBar::add-page, QScrollBar::sub-page {
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>296</width>
-                 <height>85</height>
+                 <width>299</width>
+                 <height>90</height>
                 </rect>
                </property>
               </widget>
@@ -532,8 +532,8 @@ QScrollBar::add-page, QScrollBar::sub-page {
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>296</width>
-                 <height>85</height>
+                 <width>299</width>
+                 <height>90</height>
                 </rect>
                </property>
               </widget>

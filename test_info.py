@@ -61,10 +61,10 @@ class UIFunction(TestWindow):
         ui.btn_quit.clicked.connect(lambda: self.reopen_edit(ui))
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
         ui.btn_maximize.clicked.connect(lambda: self.maximize_restore(ui))
-        self.check_test(ui, OPENED_TEST_DATA)
         self.put_frame_in_list(ui, 0)
         self.put_frame_in_list(ui, 1)
         ui.stacked_widget.setCurrentIndex(0)
+        self.check_test(ui, OPENED_TEST_DATA)
         ui.Test_btn.clicked.connect(lambda: self.changed(ui, 0))
         ui.Info_btn.clicked.connect(lambda: self.changed(ui, 1))
         ui.add_test.clicked.connect(lambda: self.add_frame(ui=ui))
@@ -75,10 +75,9 @@ class UIFunction(TestWindow):
             with open(filename, "rb") as f:
                 unpickler = pickle.Unpickler(f)
                 data = unpickler.load()
-                for i in data:
-                    if i != 0:
-                        self.add_frame(ui, i)
-
+                for i in data[0]:
+                    self.add_frame(ui, 0)
+        
     def changed(self, ui, k):
         if k == 0:
             ui.stacked_widget.setCurrentIndex(0)
@@ -146,6 +145,7 @@ class UIFunction(TestWindow):
 
     def saveTest(self, ui, filename):
         tests = ui.test.children()
+        print(tests)
         tests.pop(0)
         results = []
         for test in tests:
@@ -209,6 +209,7 @@ class UIFunction_(Frame_Test):
     def connect(self, ui):
         ui.add_input.clicked.connect(lambda: self.add_frame(ui, 1))
         ui.add_output.clicked.connect(lambda: self.add_frame(ui, 0))
+        ui.close_btn.clicked.connect(lambda: ui.close())
 
     def setup(self, ui):
         current_layout = ui.input.layout()

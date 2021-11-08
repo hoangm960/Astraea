@@ -26,235 +26,167 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
     <property name="spacing">
-     <number>30</number>
+     <number>0</number>
     </property>
     <property name="leftMargin">
-     <number>15</number>
+     <number>0</number>
     </property>
     <property name="topMargin">
-     <number>15</number>
+     <number>0</number>
     </property>
     <property name="rightMargin">
-     <number>15</number>
+     <number>0</number>
     </property>
     <property name="bottomMargin">
-     <number>15</number>
+     <number>0</number>
     </property>
     <item>
-     <widget class="QFrame" name="frame">
-      <property name="styleSheet">
-       <string notr="true">#frame {
-border-radius: 10px;
-background: rgba(255,255,255,50);
-}</string>
-      </property>
+     <widget class="QFrame" name="frame_3">
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_5">
+      <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0">
        <property name="spacing">
-        <number>6</number>
+        <number>0</number>
        </property>
        <property name="leftMargin">
-        <number>6</number>
+        <number>0</number>
        </property>
        <property name="topMargin">
         <number>0</number>
        </property>
        <property name="rightMargin">
-        <number>6</number>
+        <number>9</number>
        </property>
        <property name="bottomMargin">
-        <number>6</number>
+        <number>0</number>
        </property>
        <item>
-        <widget class="QLabel" name="label">
-         <property name="font">
-          <font>
-           <family>Montserrat</family>
-           <pointsize>15</pointsize>
-          </font>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
          </property>
-         <property name="text">
-          <string>INPUT</string>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
          </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
+        </spacer>
        </item>
        <item>
-        <widget class="QScrollArea" name="area_in">
+        <widget class="QPushButton" name="close_btn">
+         <property name="minimumSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
          <property name="styleSheet">
-          <string notr="true">QScrollArea {
-	border-radius: 10px;
-	background: transparent;
-	outline: 0;
-} 
-QScrollArea::item { 
-	margin: 20px;
-	background-color: transparent;
-	border: 0px solid black;
-}
-
-QScrollBar{
-	background : rgb(255, 255, 255);	
-}
-
-QScrollBar::handle{
-	background : rgb(158, 158, 158);
+          <string notr="true">QPushButton {
+	background-color:transparent;
 	border-radius: 5px;
-	margin: 3px 3px 3px 3px;
 }
 
-QScrollBar::handle::pressed{
-	background : rgb(85, 85, 85);
+QPushButton:hover {
+	background-color: rgb(223, 223, 223);
 }
 
-QScrollBar::add-line {
-	height: 0px;
-}
-
-QScrollBar::sub-line {
-	height: 0px;
-}
-
-QScrollBar::add-page, QScrollBar::sub-page {
-	height: 0px;
+QPushButton:pressed {
+	background-color: rgb(207, 207, 207);
 }</string>
          </property>
-         <property name="widgetResizable">
-          <bool>true</bool>
+         <property name="text">
+          <string/>
          </property>
-         <widget class="QWidget" name="input">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>470</width>
-            <height>150</height>
-           </rect>
-          </property>
-         </widget>
-        </widget>
-       </item>
-       <item>
-        <widget class="QFrame" name="frame_input">
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
+         <property name="icon">
+          <iconset resource="Resources.qrc">
+           <normaloff>:/images/icons/close.png</normaloff>:/images/icons/close.png</iconset>
          </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
+         <property name="iconSize">
+          <size>
+           <width>8</width>
+           <height>8</height>
+          </size>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item>
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>365</width>
-              <height>18</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="add_input">
-            <property name="minimumSize">
-             <size>
-              <width>100</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
-	background-color: rgb(255, 255, 255);
-	border-radius: 10px;
-	color: black;
-	image: url(:/images/icons/plus.png);
-}
-</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-         </layout>
         </widget>
        </item>
       </layout>
      </widget>
     </item>
     <item>
-     <widget class="QFrame" name="frame_output">
-      <property name="styleSheet">
-       <string notr="true">#frame_output {
-border-radius: 10px;
-background: rgba(255,255,255,50);
-}</string>
-      </property>
+     <widget class="QFrame" name="frame_2">
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <property name="leftMargin">
-        <number>6</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>6</number>
-       </property>
-       <property name="bottomMargin">
-        <number>6</number>
-       </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QLabel" name="label_2">
-         <property name="font">
-          <font>
-           <family>Montserrat</family>
-           <pointsize>15</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>OUTPUT</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QScrollArea" name="area_out">
+        <widget class="QFrame" name="frame">
          <property name="styleSheet">
-          <string notr="true">QScrollArea {
+          <string notr="true">#frame {
+border-radius: 10px;
+background: rgba(255,255,255,50);
+}</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <property name="spacing">
+           <number>6</number>
+          </property>
+          <property name="leftMargin">
+           <number>6</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>6</number>
+          </property>
+          <property name="bottomMargin">
+           <number>6</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="font">
+             <font>
+              <family>Montserrat</family>
+              <pointsize>15</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>INPUT</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QScrollArea" name="area_in">
+            <property name="styleSheet">
+             <string notr="true">QScrollArea {
 	border-radius: 10px;
 	background: transparent;
 	outline: 0;
@@ -290,79 +222,245 @@ QScrollBar::sub-line {
 QScrollBar::add-page, QScrollBar::sub-page {
 	height: 0px;
 }</string>
-         </property>
-         <property name="widgetResizable">
-          <bool>true</bool>
-         </property>
-         <widget class="QWidget" name="output">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>471</width>
-            <height>151</height>
-           </rect>
-          </property>
-         </widget>
-        </widget>
-       </item>
-       <item>
-        <widget class="QFrame" name="frame_4">
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_6">
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item>
-           <spacer name="horizontalSpacer_5">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
             </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>398</width>
-              <height>20</height>
-             </size>
+            <property name="widgetResizable">
+             <bool>true</bool>
             </property>
-           </spacer>
+            <widget class="QWidget" name="input">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>475</width>
+               <height>139</height>
+              </rect>
+             </property>
+            </widget>
+           </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="add_output">
-            <property name="minimumSize">
-             <size>
-              <width>100</width>
-              <height>20</height>
-             </size>
+           <widget class="QFrame" name="frame_input">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
             </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <spacer name="horizontalSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>365</width>
+                 <height>18</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="add_input">
+               <property name="minimumSize">
+                <size>
+                 <width>100</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
 	background-color: rgb(255, 255, 255);
 	border-radius: 10px;
 	color: black;
 	image: url(:/images/icons/plus.png);
 }
 </string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="frame_output">
+         <property name="styleSheet">
+          <string notr="true">#frame_output {
+border-radius: 10px;
+background: rgba(255,255,255,50);
+}</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <property name="leftMargin">
+           <number>6</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>6</number>
+          </property>
+          <property name="bottomMargin">
+           <number>6</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="label_2">
+            <property name="font">
+             <font>
+              <family>Montserrat</family>
+              <pointsize>15</pointsize>
+             </font>
             </property>
             <property name="text">
-             <string/>
+             <string>OUTPUT</string>
             </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QScrollArea" name="area_out">
+            <property name="styleSheet">
+             <string notr="true">QScrollArea {
+	border-radius: 10px;
+	background: transparent;
+	outline: 0;
+} 
+QScrollArea::item { 
+	margin: 20px;
+	background-color: transparent;
+	border: 0px solid black;
+}
+
+QScrollBar{
+	background : rgb(255, 255, 255);	
+}
+
+QScrollBar::handle{
+	background : rgb(158, 158, 158);
+	border-radius: 5px;
+	margin: 3px 3px 3px 3px;
+}
+
+QScrollBar::handle::pressed{
+	background : rgb(85, 85, 85);
+}
+
+QScrollBar::add-line {
+	height: 0px;
+}
+
+QScrollBar::sub-line {
+	height: 0px;
+}
+
+QScrollBar::add-page, QScrollBar::sub-page {
+	height: 0px;
+}</string>
+            </property>
+            <property name="widgetResizable">
+             <bool>true</bool>
+            </property>
+            <widget class="QWidget" name="output">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>500</width>
+               <height>139</height>
+              </rect>
+             </property>
+            </widget>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="frame_4">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <spacer name="horizontalSpacer_5">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>398</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="add_output">
+               <property name="minimumSize">
+                <size>
+                 <width>100</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+	background-color: rgb(255, 255, 255);
+	border-radius: 10px;
+	color: black;
+	image: url(:/images/icons/plus.png);
+}
+</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>

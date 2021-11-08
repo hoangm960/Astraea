@@ -1,10 +1,6 @@
-import os
-import pickle
-
-from PyQt5 import QtCore, uic
+from PyQt5 import uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
-    QApplication,
     QLineEdit,
     QMainWindow,
     QMessageBox,

@@ -30,188 +30,265 @@
 border-radius: 10px;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QHBoxLayout" name="horizontalLayout_5">
     <property name="spacing">
-     <number>30</number>
+     <number>0</number>
     </property>
     <property name="leftMargin">
-     <number>15</number>
+     <number>0</number>
     </property>
     <property name="topMargin">
-     <number>15</number>
+     <number>0</number>
     </property>
     <property name="rightMargin">
-     <number>15</number>
+     <number>0</number>
     </property>
     <property name="bottomMargin">
-     <number>15</number>
+     <number>0</number>
     </property>
     <item>
-     <widget class="QLineEdit" name="keyword">
-      <property name="minimumSize">
-       <size>
-        <width>30</width>
-        <height>30</height>
-       </size>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="spacing">
+       <number>0</number>
       </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>30</height>
-       </size>
+      <property name="topMargin">
+       <number>0</number>
       </property>
-      <property name="font">
-       <font>
-        <family>iCiel Effra Regular</family>
-        <pointsize>15</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">border-radius: 10px;
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="close_btn">
+          <property name="minimumSize">
+           <size>
+            <width>16</width>
+            <height>16</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16</width>
+            <height>16</height>
+           </size>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+	background-color:transparent;
+	border-radius: 5px;
+}
+
+QPushButton:hover {
+	background-color: rgb(223, 223, 223);
+}
+
+QPushButton:pressed {
+	background-color: rgb(207, 207, 207);
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="Resources.qrc">
+            <normaloff>:/images/icons/close.png</normaloff>:/images/icons/close.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>8</width>
+            <height>8</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="info_area">
+        <item>
+         <widget class="QLineEdit" name="keyword">
+          <property name="minimumSize">
+           <size>
+            <width>30</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>iCiel Effra Regular</family>
+            <pointsize>15</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border-radius: 10px;
 color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-      <property name="placeholderText">
-       <string>từ khóa</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="Line" name="line">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(255,255,255);</string>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Plain</enum>
-      </property>
-      <property name="lineWidth">
-       <number>2</number>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLineEdit" name="info">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>100</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <property name="sizeIncrement">
-       <size>
-        <width>0</width>
-        <height>30</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <family>iCiel Effra Regular</family>
-        <pointsize>15</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">border-radius: 10px;
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="placeholderText">
+           <string>từ khóa</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="message">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>100</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="sizeIncrement">
+           <size>
+            <width>0</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>iCiel Effra Regular</family>
+            <pointsize>15</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border-radius: 10px;
 color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
-      </property>
-      <property name="locale">
-       <locale language="Vietnamese" country="Vietnam"/>
-      </property>
-      <property name="inputMask">
-       <string/>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="maxLength">
-       <number>32767</number>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-      <property name="placeholderText">
-       <string>Nhập lời nhắc nhở</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="Line" name="line_2">
-      <property name="styleSheet">
-       <string notr="true">color: rgb(255,255,255);</string>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Plain</enum>
-      </property>
-      <property name="lineWidth">
-       <number>2</number>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLineEdit" name="count">
-      <property name="maximumSize">
-       <size>
-        <width>300</width>
-        <height>30</height>
-       </size>
-      </property>
-      <property name="sizeIncrement">
-       <size>
-        <width>300</width>
-        <height>30</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <family>iCiel Effra Regular</family>
-        <pointsize>15</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">border-radius: 10px;
+          </property>
+          <property name="locale">
+           <locale language="Vietnamese" country="Vietnam"/>
+          </property>
+          <property name="inputMask">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="maxLength">
+           <number>32767</number>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="placeholderText">
+           <string>Nhập lời nhắc nhở</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line_2">
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255,255,255);</string>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="lineWidth">
+           <number>2</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255,255,255);</string>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="lineWidth">
+           <number>2</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="count">
+          <property name="maximumSize">
+           <size>
+            <width>300</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="sizeIncrement">
+           <size>
+            <width>300</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>iCiel Effra Regular</family>
+            <pointsize>15</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border-radius: 10px;
 color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
-      </property>
-      <property name="locale">
-       <locale language="Vietnamese" country="Vietnam"/>
-      </property>
-      <property name="inputMask">
-       <string/>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="maxLength">
-       <number>32767</number>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-      <property name="placeholderText">
-       <string>Số lượng từ khóa tối thiểu</string>
-      </property>
-     </widget>
+          </property>
+          <property name="locale">
+           <locale language="Vietnamese" country="Vietnam"/>
+          </property>
+          <property name="inputMask">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="maxLength">
+           <number>32767</number>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="placeholderText">
+           <string>Số lượng từ khóa tối thiểu</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>

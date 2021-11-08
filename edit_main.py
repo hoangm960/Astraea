@@ -15,7 +15,7 @@ from PyQt5.QtWidgets import (
 )
 
 from models.assignment import Assignment
-from path import OPENED_ASSIGNMENT_PATH, OPENED_TEST_DATA
+from path import OPENED_ASSIGNMENT_PATH, OPENED_INFO_DATA, OPENED_TEST_DATA
 from utils.config import SCREEN_HEIGHT, SCREEN_WIDTH
 
 EDIT_FORM_PATH = "./UI_Files/edit_form.ui"
@@ -247,13 +247,14 @@ class UIFunctions(EditWindow):
         def __init__(self, ui, *args, **kwargs):
             super().__init__(*args, **kwargs)
             uic.loadUi(EDIT_FRAME_PATH, self)
-            self.edit_btn.clicked.connect(lambda: self.getData(ui, OPENED_TEST_DATA))
+            self.edit_btn.clicked.connect(lambda: self.getData(ui, OPENED_TEST_DATA, OPENED_INFO_DATA))
             self.close_btn.clicked.connect(lambda: self.closeFrame(ui))
 
-        def getData(self, ui, filename):
-            if os.path.exists(filename) and os.path.getsize(filename) <= 0:
-                with open(filename, "wb") as f:
-                    pickle.dump([0] * (len(ui.content_widget.children()) - 1), f, -1)
+        def getData(self, ui, file_test, file_info):
+            for file in [file_test, file_info]:
+                if os.path.exists(file) and os.path.getsize(file) <= 0:
+                    with open(file, "wb") as f:
+                        pickle.dump([0] * (len(ui.content_widget.children()) - 1), f, -1)
             ui.switch_window_test.emit(ui.content_widget.layout().indexOf(self))
 
         def closeFrame(self, ui):

@@ -3,11 +3,11 @@ import pickle
 
 from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QLineEdit, QMainWindow, QVBoxLayout, QMessageBox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout
 from info_frame import Frame_Info
 
-from models.assignment import Test
-from path import OPENED_TEST_DATA
+from models.assignment import Info, Test
+from path import OPENED_INFO_DATA, OPENED_TEST_DATA
 from test_frame import Frame_Test
 
 TEST_PATH = "./UI_Files/Test_Info.ui"
@@ -63,21 +63,23 @@ class UIFunction(TestWindow):
         ui.btn_maximize.clicked.connect(lambda: self.maximize_restore(ui))
         self.put_frame_in_list(ui, 0)
         self.put_frame_in_list(ui, 1)
+        self.check_file(ui, OPENED_TEST_DATA, 0)
+        self.check_file(ui, OPENED_INFO_DATA, 1)
         ui.stacked_widget.setCurrentIndex(0)
-        self.check_test(ui, OPENED_TEST_DATA)
         ui.Test_btn.clicked.connect(lambda: self.changed(ui, 0))
         ui.Info_btn.clicked.connect(lambda: self.changed(ui, 1))
         ui.add_test.clicked.connect(lambda: self.add_frame(ui=ui))
         ui.add_info.clicked.connect(lambda: self.add_frame(ui=ui))
 
-    def check_test(self, ui, filename):
+    def check_file(self, ui, filename, mode):
+        ui.stacked_widget.setCurrentIndex(mode)
         if os.path.exists(filename) and os.path.getsize(filename) > 0:
             with open(filename, "rb") as f:
                 unpickler = pickle.Unpickler(f)
                 data = unpickler.load()
                 if data[0] != 0:
                     for i in data[0]:
-                        self.add_frame(ui, i)
+                        self.add_frame(ui, i if mode == 0 else [], i if mode == 1 else [])
 
     def changed(self, ui, k):
         if k == 0:
@@ -136,12 +138,12 @@ class UIFunction(TestWindow):
 
             ui.scroll_info.verticalScrollBar().setValue(1)
 
-    def add_frame(self, ui, test=[]):
+    def add_frame(self, ui, test=[], info=[]):
         if ui.stacked_widget.currentIndex() == 0:
             ui.frame = Frame_Test(ui_main=ui, test=test)
             ui.test.layout().addWidget(ui.frame)
         else:
-            ui.frame = Frame_Info(ui)
+            ui.frame = Frame_Info(ui_main=ui, info=info)
             ui.info.layout().addWidget(ui.frame)
 
     def saveTest(self, ui, filename):
@@ -160,8 +162,23 @@ class UIFunction(TestWindow):
             data[ui.index] = results 
             pickle.dump(data, f, -1)    
 
+    def saveInfo(self, ui, filename):
+        infos = ui.info.children()
+        infos.pop(0)
+        results = []
+        for info in infos:
+            keyword, msg, min_num = info.keyword.text(), info.message.text(), info.count.text()
+            results.append(Info(keyword, msg, min_num))
+        with open(filename, "rb") as f:
+                unpickler = pickle.Unpickler(f)
+                data = unpickler.load()
+        with open(filename, "wb") as f:
+            data[ui.index] = results 
+            pickle.dump(data, f, -1)    
+
     def reopen_edit(self, ui):
         self.saveTest(ui, OPENED_TEST_DATA)
+        self.saveInfo(ui, OPENED_INFO_DATA)
         ui.switch_window.emit()
         ui.close()
 

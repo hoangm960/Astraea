@@ -247,14 +247,10 @@ class UIFunctions(EditWindow):
         def __init__(self, ui, *args, **kwargs):
             super().__init__(*args, **kwargs)
             uic.loadUi(EDIT_FRAME_PATH, self)
-            self.edit_btn.clicked.connect(lambda: self.getData(ui, OPENED_TEST_DATA, OPENED_INFO_DATA))
+            self.edit_btn.clicked.connect(lambda: self.getData(ui))
             self.close_btn.clicked.connect(lambda: self.closeFrame(ui))
 
-        def getData(self, ui, file_test, file_info):
-            for file in [file_test, file_info]:
-                if os.path.exists(file) and os.path.getsize(file) <= 0:
-                    with open(file, "wb") as f:
-                        pickle.dump([0] * (len(ui.content_widget.children()) - 1), f, -1)
+        def getData(self, ui):
             ui.switch_window_test.emit(ui.content_widget.layout().indexOf(self))
 
         def closeFrame(self, ui):

@@ -77,8 +77,11 @@ class UIFunction(TestWindow):
             with open(filename, "rb") as f:
                 unpickler = pickle.Unpickler(f)
                 data = unpickler.load()
-                if data[0] != 0:
-                    for i in data[0]:
+                d = ui.index + 1 - len(data) 
+                if d > 0:
+                    data.extend([[0] for _ in range(d)])
+                for i in data[ui.index]:
+                    if i != 0:
                         self.add_frame(ui, i if mode == 0 else [], i if mode == 1 else [])
 
     def changed(self, ui, k):
@@ -155,12 +158,7 @@ class UIFunction(TestWindow):
             inputs.pop(0)
             outputs.pop(0)
             results.append(Test([i.text() for i in inputs], [i.text() for i in outputs]))
-        with open(filename, "rb") as f:
-                unpickler = pickle.Unpickler(f)
-                data = unpickler.load()
-        with open(filename, "wb") as f:
-            data[ui.index] = results 
-            pickle.dump(data, f, -1)    
+        self._saveData(ui, filename, results)    
 
     def saveInfo(self, ui, filename):
         infos = ui.info.children()
@@ -169,11 +167,21 @@ class UIFunction(TestWindow):
         for info in infos:
             keyword, msg, min_num = info.keyword.text(), info.message.text(), info.count.text()
             results.append(Info(keyword, msg, min_num))
-        with open(filename, "rb") as f:
+        self._saveData(ui, filename, results)    
+
+    def _saveData(self, ui, filename, results):
+        data = []
+        if os.path.getsize(filename) > 0:
+            with open(filename, 'rb') as f:
                 unpickler = pickle.Unpickler(f)
-                data = unpickler.load()
-        with open(filename, "wb") as f:
-            data[ui.index] = results 
+                data = unpickler.load() 
+
+        d = ui.index + 1 - len(data)
+        if d > 0:
+            data.extend([0 for _ in range(d)])
+
+        with open(filename, 'wb') as f:
+            data[ui.index] = results
             pickle.dump(data, f, -1)    
 
     def reopen_edit(self, ui):

@@ -75,9 +75,10 @@ class UIFunction(TestWindow):
             with open(filename, "rb") as f:
                 unpickler = pickle.Unpickler(f)
                 data = unpickler.load()
-                for i in data[0]:
-                    self.add_frame(ui, 0)
-        
+                if data[0] != 0:
+                    for i in data[0]:
+                        self.add_frame(ui, i)
+
     def changed(self, ui, k):
         if k == 0:
             ui.stacked_widget.setCurrentIndex(0)
@@ -145,7 +146,6 @@ class UIFunction(TestWindow):
 
     def saveTest(self, ui, filename):
         tests = ui.test.children()
-        print(tests)
         tests.pop(0)
         results = []
         for test in tests:
@@ -158,7 +158,7 @@ class UIFunction(TestWindow):
                 data = unpickler.load()
         with open(filename, "wb") as f:
             data[ui.index] = results 
-            pickle.dump(data, f, -1)     
+            pickle.dump(data, f, -1)    
 
     def reopen_edit(self, ui):
         self.saveTest(ui, OPENED_TEST_DATA)
@@ -201,14 +201,18 @@ class Frame_Test(QMainWindow):
         UIFunction_(self, tests)
 
 class UIFunction_(Frame_Test):
-    #TODO: setup test có sẵn
     def __init__(self, ui, tests):
+        if tests:
+            self.inputs = tests.inputs
+            self.outputs = tests.outputs
+        else:
+            self.inputs = self.outputs = ''
         self.connect(ui)
         self.setup(ui)
 
     def connect(self, ui):
-        ui.add_input.clicked.connect(lambda: self.add_frame(ui, 1))
-        ui.add_output.clicked.connect(lambda: self.add_frame(ui, 0))
+        ui.add_input.clicked.connect(lambda: self.add_frame(ui, 1, ''))
+        ui.add_output.clicked.connect(lambda: self.add_frame(ui, 0, ''))
         ui.close_btn.clicked.connect(lambda: ui.close())
 
     def setup(self, ui):
@@ -221,7 +225,7 @@ class UIFunction_(Frame_Test):
             current_layout.itemAt(i).widget().setParent(None)
 
         ui.area_in.verticalScrollBar().setValue(1)
-
+        
         current_layout = ui.output.layout()
         if not current_layout:
             current_layout = QVBoxLayout()
@@ -232,8 +236,16 @@ class UIFunction_(Frame_Test):
 
         ui.area_out.verticalScrollBar().setValue(1)
 
-    def add_frame(self, ui, num):
+        if self.inputs and self.outputs:
+            for i in self.inputs:
+                self.add_frame(ui, 1, i)        
+            for i in self.outputs:
+                self.add_frame(ui, 0, i)
+        
+        
+    def add_frame(self, ui, num, text):
         ui.frame = QLineEdit(ui)
+        ui.frame.setText(text)
         ui.frame.setStyleSheet(
             """background-color: rgb(255, 255, 255);
                                 border-radius: 10px;

@@ -49,14 +49,14 @@ def main(filename, tests, infos, time_limit=2):
                         file_error_w.write('\n>>> SAI ĐÁP ÁN: "'+output.rstrip()+'" phải là "'+ans.rstrip()+'"...')
                         
     def check_info(info):
-        key, message, num = iter(info)
+        key, message, num = info.keyword, info.message, info.min_num
         data = open(filename, encoding='utf8').read()
         data = [i for i in re.split('[;()\s]\s*', data) if i]
         if data.count(key) < int(num):
             check_info.info.append(message)
 
     for test in tests:
-        inputs, outputs = (test[i] for i in range(len(test)))
+        inputs, outputs = test.inputs, test.outputs
         input = '\n'.join(inputs) if inputs else ''
         if outputs:
             output = '\n'.join(outputs)

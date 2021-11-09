@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import QFileDialog, QMainWindow, QSizeGrip, QVBoxLayout, QW
 import check_algorithm
 from connect_db import get_connection
 from encryption import decrypt, encrypt
-from path import FILE_COMMENT, KEY_PATH, OPENED_ASSIGNMENT_PATH, USER_PATH, USER_PATH_ENCRYPTED
+from path import COMMENT_PATH, KEY_PATH, OPENED_ASSIGNMENT_PATH, USER_PATH, USER_PATH_ENCRYPTED
 from utils.config import SCREEN_HEIGHT, SCREEN_WIDTH
 
 RESULT_FORM_PATH = "./UI_Files/result_form.ui"
@@ -176,7 +176,7 @@ class UIFunctions(ResultWindow):
 
     def get_results(self, ui, child, num):
         with open(
-            FILE_COMMENT, "a+", encoding="utf-8", errors="ignore"
+            COMMENT_PATH, "a+", encoding="utf-8", errors="ignore"
         ) as file_error:
             file_error.write(f"\n{self.assignments[num].name}")
         results = []
@@ -189,7 +189,7 @@ class UIFunctions(ResultWindow):
 
         elif ui.TestFrame.ans_file_entry.text():
             with open(
-                FILE_COMMENT, "a+", encoding="utf-8", errors="ignore"
+                COMMENT_PATH, "a+", encoding="utf-8", errors="ignore"
             ) as file_error:
                 file_error.write(
                     "\n>>> FileExistsERROR: Lỗi không tìm thấy file bài làm."
@@ -198,7 +198,7 @@ class UIFunctions(ResultWindow):
             return 0, [], []
 
     def check_true(self, ui):   # sourcery no-metrics
-        open(FILE_COMMENT, "w", encoding="utf8").close()
+        open(COMMENT_PATH, "w", encoding="utf8").close()
         ui.btn_quit.close()
         children = ui.content_widgetT.children()
         del children[0:2]
@@ -235,7 +235,7 @@ class UIFunctions(ResultWindow):
                     try:
                         if result[0]:
                             with open(
-                                FILE_COMMENT,
+                                COMMENT_PATH,
                                 "a+",
                                 encoding="utf-8",
                                 errors="ignore",
@@ -245,7 +245,7 @@ class UIFunctions(ResultWindow):
                                 )
                     except ZeroDivisionError:
                         with open(
-                            FILE_COMMENT, "a+", encoding="utf-8", errors="ignore"
+                            COMMENT_PATH, "a+", encoding="utf-8", errors="ignore"
                         ) as f:
                             f.write(
                                 "\n>>> ZeroDivisionError: Tồn tại phép tính chia cho 0."
@@ -254,25 +254,25 @@ class UIFunctions(ResultWindow):
                 if errors:
                     for message in errors:
                         with open(
-                            FILE_COMMENT, "a+", encoding="utf-8", errors="ignore"
+                            COMMENT_PATH, "a+", encoding="utf-8", errors="ignore"
                         ) as f:
                             f.write(f"\n>>> {message}")
 
             elif not ui.TestFrame.ans_file_entry.text():
                 with open(
-                    FILE_COMMENT, "a+", encoding="utf-8", errors="ignore"
+                    COMMENT_PATH, "a+", encoding="utf-8", errors="ignore"
                 ) as f:
                     f.write("\n>>> Chưa làm bài")
 
-            with open(FILE_COMMENT, "r", encoding="utf-8", errors="ignore") as f:
+            with open(COMMENT_PATH, "r", encoding="utf-8", errors="ignore") as f:
                 list_file = f.readlines()
                 if ">>>" not in list_file[-1]:
                     with open(
-                        FILE_COMMENT, "a+", encoding="utf-8", errors="ignore"
+                        COMMENT_PATH, "a+", encoding="utf-8", errors="ignore"
                     ) as file_error_w:
                         file_error_w.write("\n>>> Không xảy ra lỗi")
 
-            with open(FILE_COMMENT, "r", encoding="utf-8", errors="ignore") as f:
+            with open(COMMENT_PATH, "r", encoding="utf-8", errors="ignore") as f:
                 ui.Error_text.setText(str(f.read()))
 
         totalScore = int() + sum(assignment.mark for assignment in self.assignments)
@@ -285,7 +285,7 @@ class UIFunctions(ResultWindow):
             ui.Score.setText(str(round(self.TotalScore, 2)))
         else:
             ui.progressBar.setValue(0)
-        with open(FILE_COMMENT, "a", encoding="utf-8", errors="ignore") as f:
+        with open(COMMENT_PATH, "a", encoding="utf-8", errors="ignore") as f:
             if float(self.TotalScore) < 0.7 * totalScore:
                 f.write("\nBài làm vẫn chưa đạt chuẩn.")
                 ui.Judge.setText("Bài làm vẫn chưa đạt chuẩn.")
@@ -310,7 +310,7 @@ class UIFunctions(ResultWindow):
                         lesson_id,
                         current_time,
                         round(self.TotalScore, 2),
-                        open(FILE_COMMENT, encoding="utf-8").read(),
+                        open(COMMENT_PATH, encoding="utf-8").read(),
                     ),
                 )
             except mysql.connector.errors.IntegrityError:
@@ -321,7 +321,7 @@ class UIFunctions(ResultWindow):
                         lesson_id,
                         current_time,
                         round(self.TotalScore, 2),
-                        open(FILE_COMMENT, encoding="utf8").read(),
+                        open(COMMENT_PATH, encoding="utf8").read(),
                     ),
                 )
 

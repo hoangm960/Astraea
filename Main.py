@@ -24,8 +24,15 @@ def init():
         create_dir(dir)
     for file in files:
         create_file(file)
-
+        
+    for filename in [OPENED_TEST_DATA, OPENED_INFO_DATA, OPENED_DOC_CONTENT, COMMENT_PATH]:
+        init_data(filename)
     associate_file()
+
+def init_data(filename):
+    if os.path.getsize(filename) > 0:
+        with open(filename, 'w') as f:
+            f.write('')
 
 def associate_file():  # sourcery skip: move-assign
     OPENED_ASSIGNMENT_PATH = "./data/Users/opened_assignment.oa"

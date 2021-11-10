@@ -8,6 +8,7 @@ from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QFileDialog, QMainWindow
 
 from connect_db import get_connection
+from models.assignment import Info, Test
 from path import OPENED_ASSIGNMENT_PATH, OPENED_ROOM_PATH
 
 ROOM_UI = "./UI_Files/Room.ui"
@@ -89,11 +90,9 @@ class UIFunctions(RoomWindow):
                 cursor.execute(
                     "SELECT TestId FROM test WHERE AssignmentId = %s", (assignment_id,)
                 )
-                tests = [row for row in cursor]
-
-                file_tests = []
-                for test in tests:
-                    test_id = test[0]
+                test_ids = [row[0] for row in cursor]
+                tests = []
+                for test_id in test_ids:
                     cursor.execute(
                         "SELECT InputContent FROM input WHERE TestId = %s", (test_id,)
                     )
@@ -102,17 +101,18 @@ class UIFunctions(RoomWindow):
                         "SELECT OutputContent FROM output WHERE TestId = %s", (test_id,)
                     )
                     outputs = [row[0] for row in cursor]
-                    file_tests.append([inputs, outputs])
+                    tests.append(Test(inputs, outputs))
 
                 cursor.execute(
                     "SELECT KeyWord, Message, Quantity FROM info WHERE AssignmentId = %s",
                     (assignment_id,),
                 )
-                infos = [row for row in cursor]
-
+                infos_data = [row for row in cursor]
+                infos = [Info(info[0], info[1], info[2]) for info in infos_data]
                 file_assignments.append(
-                    Assignment(name, details, mark, file_tests, infos)
+                    Assignment(name, details, mark, tests, infos)
                 )
+                print(file_assignments)
             connection.close()
 
             filename = self.show_file_dialog(OPENED_ASSIGNMENT_PATH)
@@ -259,19 +259,19 @@ class TeacherUIFunctions(UIFunctions):
                         "INSERT INTO test(AssignmentId) VALUES(%s)", (assignment_id,)
                     )
                     test_id = cursor.lastrowid
-                    for input in test[0]:
+                    for input in test.inputs:
                         cursor.execute(
                             "INSERT INTO input(TestId, InputContent) VALUES(%s, %s)",
                             (test_id, input),
                         )
-                    for output in test[1]:
+                    for output in test.outputs:
                         cursor.execute(
                             "INSERT INTO output(TestId, OutputContent) VALUES(%s, %s)",
                             (test_id, output),
                         )
                 if assignment.infos:
                     for info in assignment.infos:
-                        key, message, num = iter(info)
+                        key, message, num = info.keyword, info.message, info.min_num
                         cursor.execute(
                             "INSERT INTO info(AssignmentId, KeyWord, Message, Quantity) VALUES(%s, %s, %s, %s)",
                             (assignment_id, key, message, num),

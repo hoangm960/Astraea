@@ -56,6 +56,7 @@ def main(filename, tests, infos, time_limit=2):
             check_info.info.append(message)
 
     for test in tests:
+        print(test)        
         inputs, outputs = test.inputs, test.outputs
         input = '\n'.join(inputs) if inputs else ''
         if outputs:
@@ -72,9 +73,3 @@ def main(filename, tests, infos, time_limit=2):
     return main.results, check_info.info
 
 
-if __name__ == "__main__":
-    filename = "C:/Users/Admin/Desktop/test.py"
-    tests = [[["10", "20"], ["165"]]]
-    infos = [["int", "Chưa dùng hàm int() để chuyển sang số nguyên", ["2"]], [
-        "print", "Chưa in ra màn hình", ["1"]]]
-    print(main(filename, tests, infos))

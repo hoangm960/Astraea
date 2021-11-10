@@ -138,7 +138,7 @@ border-radius: 20px;</string>
 </string>
          </property>
          <property name="text">
-          <string>Trang cá nhân người dùng</string>
+          <string>Thông tin cá nhân người dùng</string>
          </property>
         </widget>
        </item>

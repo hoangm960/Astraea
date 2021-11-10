@@ -119,6 +119,18 @@ QPushButton:pressed {
       </item>
       <item>
        <layout class="QHBoxLayout" name="info_area">
+        <property name="spacing">
+         <number>20</number>
+        </property>
+        <property name="leftMargin">
+         <number>20</number>
+        </property>
+        <property name="rightMargin">
+         <number>20</number>
+        </property>
+        <property name="bottomMargin">
+         <number>20</number>
+        </property>
         <item>
          <widget class="QLineEdit" name="keyword">
           <property name="minimumSize">
@@ -149,6 +161,22 @@ background-color: rgb(255, 255, 255);</string>
           </property>
           <property name="placeholderText">
            <string>từ khóa</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line_2">
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255,255,255);</string>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="lineWidth">
+           <number>2</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
          </widget>
         </item>
@@ -200,22 +228,6 @@ background-color: rgb(255, 255, 255);</string>
           </property>
           <property name="placeholderText">
            <string>Nhập lời nhắc nhở</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="Line" name="line_2">
-          <property name="styleSheet">
-           <string notr="true">color: rgb(255,255,255);</string>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Plain</enum>
-          </property>
-          <property name="lineWidth">
-           <number>2</number>
-          </property>
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
           </property>
          </widget>
         </item>

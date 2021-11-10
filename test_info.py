@@ -27,7 +27,6 @@ class TestWindow(QMainWindow):
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.showMaximized()
-        self.title_bar.mouseMoveEvent = self.moveWindow
         self.Test_btn.setStyleSheet(
             """QPushButton {
                 background-color: rgba(255, 255, 255,50);
@@ -36,21 +35,8 @@ class TestWindow(QMainWindow):
             }"""
         )
 
-    def moveWindow(self, event):
-        if UIFunction.GLOBAL_STATE == True:
-            UIFunction.maximize_restore(ui=self)
-        if event.buttons() == Qt.LeftButton:
-            self.move(self.pos() + event.globalPos() - self.dragPos)
-            self.dragPos = event.globalPos()
-            event.accept()
-
-    def mousePressEvent(self, event):
-        self.dragPos = event.globalPos()
-
-
 class UIFunction(TestWindow):
     OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
-    GLOBAL_STATE = True
     path = None
     Format = [True, False]
 
@@ -60,7 +46,6 @@ class UIFunction(TestWindow):
     def connect(self, ui):
         ui.btn_quit.clicked.connect(lambda: self.reopen_edit(ui))
         ui.btn_minimize.clicked.connect(lambda: ui.showMinimized())
-        ui.btn_maximize.clicked.connect(lambda: self.maximize_restore(ui))
         self.put_frame_in_list(ui, 0)
         self.put_frame_in_list(ui, 1)
         self.check_file(ui, OPENED_TEST_DATA, 0)
@@ -190,26 +175,6 @@ class UIFunction(TestWindow):
         ui.switch_window.emit()
         ui.close()
 
-    def maximize_restore(self, ui):
-        status = self.GLOBAL_STATE
-        if status == False:
-            ui.showMaximized()
-
-            self.GLOBAL_STATE = True
-            ui.centralwidget.setStyleSheet(
-                """background-color: rgb(74, 74, 74);
-                    border-radius: 0px;"""
-            )
-            ui.btn_maximize.setToolTip("khôi phục")
-        else:
-            self.GLOBAL_STATE = False
-            ui.showNormal()
-            ui.resize(ui.width() + 1, ui.height() + 1)
-            ui.centralwidget.setStyleSheet(
-                """background-color: rgb(74, 74, 74);
-    border-radius: 20px;"""
-            )
-            ui.btn_maximize.setToolTip("Phóng to")
 
 if __name__ == "__main__":
     import sys

@@ -334,36 +334,6 @@ QPushButton:hover {
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="btn_maximize">
-               <property name="minimumSize">
-                <size>
-                 <width>30</width>
-                 <height>30</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>30</width>
-                 <height>30</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QPushButton {
-	padding: 5px;
-	image: url(:/images/icons/maxmin.png);
-	background: transparent;
-	border-radius: 15px;
-}
-QPushButton:hover {
-	background: rgb(108, 108, 108);
-}</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-             <item>
               <widget class="QPushButton" name="btn_quit">
                <property name="minimumSize">
                 <size>
@@ -883,8 +853,8 @@ QScrollBar::add-page, QScrollBar::sub-page {
                         <rect>
                          <x>0</x>
                          <y>0</y>
-                         <width>1040</width>
-                         <height>467</height>
+                         <width>100</width>
+                         <height>30</height>
                         </rect>
                        </property>
                       </widget>

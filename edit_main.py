@@ -298,16 +298,27 @@ class UIFunctions(EditWindow):
             ui.frame = self.EditFrame(ui)
             ui.content_widget.layout().addWidget(ui.frame)
 
+    @staticmethod
+    def get_data(filename):
+        if os.path.getsize(filename) > 0:
+            with open(filename, 'rb') as f:
+                unpickler = pickle.Unpickler(f)
+                data = unpickler.load()
+            with open(filename, 'w') as f:
+                f.write('')
+            return data
+
     def load_assignments(self, ui, filename):
         children = ui.content_widget.children()
         del children[0]
         assignments = []
+        tests_data, infos_data = self.get_data(OPENED_TEST_DATA), self.get_data(OPENED_INFO_DATA)
         for i in range(ui.content_widget.layout().count()):
             if children[i].title_entry.text() not in [
                 assignment.name for assignment in assignments
             ]:
-                tests = [""]
-                infos = [""]
+                tests = tests_data[i]
+                infos = infos_data[i]
                 assignments.append(
                     Assignment(
                         children[i].title_entry.text(),

@@ -112,7 +112,6 @@ class UIFunctions(RoomWindow):
                 file_assignments.append(
                     Assignment(name, details, mark, tests, infos)
                 )
-                print(file_assignments)
             connection.close()
 
             filename = self.show_file_dialog(OPENED_ASSIGNMENT_PATH)

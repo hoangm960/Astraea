@@ -48,5 +48,8 @@ def decrypt(input_file, output_file, key_file):
             
             os.remove(input_file)
             
-        except InvalidToken as e:
+        except InvalidToken:
             print("Invalid Key - Unsuccessfully decrypted")
+
+if __name__ == '__main__':
+    encrypt()

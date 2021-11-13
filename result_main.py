@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import QFileDialog, QMainWindow, QSizeGrip, QVBoxLayout, QW
 
 import check_algorithm
 from utils.connect_db import get_connection
-from encryption import decrypt, encrypt
+from utils.encryption import decrypt, encrypt
 from path import COMMENT_PATH, KEY_PATH, OPENED_ASSIGNMENT_PATH, USER_PATH, USER_PATH_ENCRYPTED
 from utils.config import SCREEN_HEIGHT, SCREEN_WIDTH
 

@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import QMainWindow
 import pyautogui as auto
 
 from utils.connect_db import get_connection
-from encryption import *
+from utils.encryption import *
 from utils.config import SCREEN_HEIGHT, SCREEN_WIDTH
 
 UI_PATH = "./UI_files/Loading_Screen.ui"

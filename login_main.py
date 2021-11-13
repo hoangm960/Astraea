@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QMainWindow
 from utils.hash_password import check_password, get_hashed_password
 
 from utils.connect_db import get_connection
-from encryption import *
+from utils.encryption import *
 from path import KEY_PATH, USER_PATH, USER_PATH_ENCRYPTED
 from utils.config import SCREEN_HEIGHT, SCREEN_WIDTH
 
@@ -170,9 +170,9 @@ class LoginFunctions(LoginWindow):
                     ui.Error_Content.setText("Mật khẩu không chính xác. Hãy nhập lại.")
                 else:
                     cursor.execute(
-                        f"SELECT ShowName, Password, Type FROM user WHERE Username = '{username}'"
+                        f"SELECT ShowName, Type FROM user WHERE Username = '{username}'"
                     )
-                    name, password, role = (
+                    name, role = (
                         row[i] for row in cursor for i in range(len(row))
                     )
 

@@ -2,7 +2,7 @@ from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMainWindow
 
-from encryption import decrypt, encrypt
+from utils.encryption import decrypt, encrypt
 from path import KEY_PATH, OPENED_ASSIGNMENT_PATH, USER_PATH, USER_PATH_ENCRYPTED
 
 UI_PATH = './UI_Files/profile_form.ui'

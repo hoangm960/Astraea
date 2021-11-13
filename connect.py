@@ -1,7 +1,7 @@
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
-from encryption import decrypt, encrypt
+from utils.encryption import decrypt, encrypt
 from path import (KEY_PATH, OPENED_ASSIGNMENT_PATH, OPENED_ROOM_PATH,
                   USER_PATH, USER_PATH_ENCRYPTED)
 from utils.connect_db import get_connection
@@ -72,7 +72,7 @@ class UIFunctions(ConnectWindow):
             ui.frame_2.show()
             ui.id_entry.hide()
             ui.In_btn.hide()
-            # self.check_room(ui)
+            self.check_room(ui)
 
         timer.singleShot(2000, lambda: complete())
 

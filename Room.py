@@ -2,12 +2,11 @@ import os
 import pickle
 from datetime import datetime
 
-import numpy as np
 import pandas
+from utils.connect_db import get_connection
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QFileDialog, QMainWindow
 
-from connect_db import get_connection
 from models.assignment import Info, Test
 from path import OPENED_ASSIGNMENT_PATH, OPENED_ROOM_PATH
 

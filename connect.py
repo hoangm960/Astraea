@@ -1,9 +1,10 @@
-from connect_db import get_connection
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
 from encryption import decrypt, encrypt
-from path import KEY_PATH, OPENED_ASSIGNMENT_PATH, OPENED_ROOM_PATH, USER_PATH, USER_PATH_ENCRYPTED
+from path import (KEY_PATH, OPENED_ASSIGNMENT_PATH, OPENED_ROOM_PATH,
+                  USER_PATH, USER_PATH_ENCRYPTED)
+from utils.connect_db import get_connection
 
 CONNECT_UI = "./UI_Files/connect.ui"
 

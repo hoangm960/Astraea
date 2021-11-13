@@ -9,7 +9,7 @@ from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import (QColorDialog, QFileDialog, QMainWindow,
                              QMessageBox, QShortcut)
 
-from connect_db import get_connection
+from utils.connect_db import get_connection
 from path import OPENED_ASSIGNMENT_PATH, OPENED_DOC, OPENED_DOC_CONTENT
 
 PAD_UI = "./UI_Files/Pad.ui"

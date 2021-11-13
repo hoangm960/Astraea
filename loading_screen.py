@@ -6,7 +6,7 @@ from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QMainWindow
 import pyautogui as auto
 
-from connect_db import get_connection
+from utils.connect_db import get_connection
 from encryption import *
 from utils.config import SCREEN_HEIGHT, SCREEN_WIDTH
 

@@ -6,7 +6,7 @@ from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QFileDialog, QLabel, QListWidgetItem, QMainWindow
 from win32com import client as wc
 
-from connect_db import get_connection
+from utils.connect_db import get_connection
 from path import OPENED_ASSIGNMENT_PATH, OPENED_DOC, OPENED_DOC_CONTENT
 
 DOC_UI = "./UI_Files/Doc.ui"

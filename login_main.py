@@ -3,8 +3,9 @@ import time
 from PyQt5 import QtCore, QtWidgets, uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMainWindow
+from utils.hash_password import check_password, get_hashed_password
 
-from connect_db import get_connection
+from utils.connect_db import get_connection
 from encryption import *
 from path import KEY_PATH, USER_PATH, USER_PATH_ENCRYPTED
 from utils.config import SCREEN_HEIGHT, SCREEN_WIDTH
@@ -160,10 +161,11 @@ class LoginFunctions(LoginWindow):
                 ui.Error_Content.setText("Tên tài khoản không tồn tại. Hãy nhập lại.")
             else:
                 cursor.execute(
-                    "SELECT Username, Password FROM user WHERE Username = %s AND Password = %s",
-                    (username, password),
+                    "SELECT Password FROM user WHERE Username = %s",
+                    (username,),
                 )
-                if not [row[0] for row in cursor]:
+                hashed_password = [row[0] for row in cursor][0]
+                if not check_password(password, hashed_password):
                     ui.frameError.show()
                     ui.Error_Content.setText("Mật khẩu không chính xác. Hãy nhập lại.")
                 else:
@@ -234,7 +236,7 @@ class LoginFunctions(LoginWindow):
             role = 1 if ui.teacher.isChecked() else 0
             cursor.execute(
                 "INSERT INTO user(Username, ShowName, Password, Type) VALUES(%s, %s, %s, %s)",
-                (username, name, password, role),
+                (username, name, get_hashed_password(password), role),
             )
             connection.commit()
             connection.close()

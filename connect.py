@@ -3,6 +3,7 @@ from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
 from encryption import decrypt, encrypt
+from path import KEY_PATH, OPENED_ASSIGNMENT_PATH, OPENED_ROOM_PATH, USER_PATH, USER_PATH_ENCRYPTED
 
 CONNECT_UI = "./UI_Files/connect.ui"
 
@@ -29,12 +30,6 @@ class ConnectWindow(QMainWindow):
 
 
 class UIFunctions(ConnectWindow):
-    OPENED_LESSON_PATH = "./data/Users/opened_assignment.oa"
-    OPENED_ROOM_PATH = "./data/Users/opened_room.or"
-    KEY_PATH = "data/encryption/users.key"
-    USER_PATH = "data/Users/User.txt"
-    USER_PATH_ENCRYPTED = "data/Users/User.encrypted"
-
     def __init__(self, ui):
         self.connect_btn(ui)
         self.check_room(ui)
@@ -51,7 +46,7 @@ class UIFunctions(ConnectWindow):
         ui.Quit.clicked.connect(lambda: self.Quit(ui))
         ui.Quit.clicked.connect(
             lambda: open(
-                "./data/Users/opened_assignment.oa", "w", encoding="utf8"
+                OPENED_ASSIGNMENT_PATH, "w", encoding="utf8"
             ).close()
         )
 
@@ -63,7 +58,7 @@ class UIFunctions(ConnectWindow):
         connection.commit()
         connection.close()
 
-        open(self.OPENED_ROOM_PATH, "w", encoding="utf8").write(str(lesson_id))
+        open(OPENED_ROOM_PATH, "w", encoding="utf8").write(str(lesson_id))
         ui.label_2.show()
         ui.frame_2.hide()
         ui.id_entry.hide()
@@ -91,7 +86,7 @@ class UIFunctions(ConnectWindow):
                 (room_id, 1),
             )
             if [row for row in cursor]:
-                open(self.OPENED_ROOM_PATH, "w", encoding="utf8").write(room_id)
+                open(OPENED_ROOM_PATH, "w", encoding="utf8").write(room_id)
                 cursor.execute(
                     "UPDATE user SET RoomId = %s WHERE Username = %s",
                     (room_id, username),
@@ -106,7 +101,7 @@ class UIFunctions(ConnectWindow):
             connection.close()
 
     def open_room(self, ui):
-        room_id = open(self.OPENED_ROOM_PATH, encoding="utf8").read().rstrip()
+        room_id = open(OPENED_ROOM_PATH, encoding="utf8").read().rstrip()
         if room_id:
             ui.switch_window_room.emit(int(room_id))
 
@@ -119,17 +114,17 @@ class UIFunctions(ConnectWindow):
         connection.close()
         if room_ids:
             for room_id in room_ids:
-                open(self.OPENED_ROOM_PATH, "w", encoding="utf8").write(
+                open(OPENED_ROOM_PATH, "w", encoding="utf8").write(
                     str(room_id[0]) if room_id[0] else ""
                 )
 
-        room_id = open(self.OPENED_ROOM_PATH, encoding="utf8").read().rstrip()
+        room_id = open(OPENED_ROOM_PATH, encoding="utf8").read().rstrip()
         if room_id:
             ui.label.setText(f"ID Phòng: {room_id}")
             ui.room_btn.hide()
             ui.In_btn.hide()
             ui.id_entry.hide()
-            open("./data/Users/opened_assignment.oa", "w", encoding="utf8").close()
+            open(OPENED_ASSIGNMENT_PATH, "w", encoding="utf8").close()
         else:
             ui.Quit.hide()
             ui.Go_Room.hide()
@@ -137,7 +132,7 @@ class UIFunctions(ConnectWindow):
     def Quit(self, ui):
         username = self._get_user("utf-8")
         connection = get_connection()
-        open(self.OPENED_ROOM_PATH, "w", encoding="utf8").close()
+        open(OPENED_ROOM_PATH, "w", encoding="utf8").close()
         cursor = connection.cursor()
         cursor.execute("UPDATE user SET RoomId = NULL WHERE Username = %s", (username,))
         connection.commit()
@@ -150,9 +145,9 @@ class UIFunctions(ConnectWindow):
         ui.Quit.hide()
 
     def _get_user(self, encoding):
-        decrypt(self.USER_PATH_ENCRYPTED, self.USER_PATH, self.KEY_PATH)
-        result = open(self.USER_PATH, encoding=encoding).readline().rstrip()
-        encrypt(self.USER_PATH, self.USER_PATH_ENCRYPTED, self.KEY_PATH)
+        decrypt(USER_PATH_ENCRYPTED, USER_PATH, KEY_PATH)
+        result = open(USER_PATH, encoding=encoding).readline().rstrip()
+        encrypt(USER_PATH, USER_PATH_ENCRYPTED, KEY_PATH)
         return result
 
     def return_main(self, ui):

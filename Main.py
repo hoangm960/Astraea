@@ -34,8 +34,7 @@ def init_data(filename):
         with open(filename, 'w') as f:
             f.write('')
 
-def associate_file():  # sourcery skip: move-assign
-    OPENED_ASSIGNMENT_PATH = "./data/Users/opened_assignment.oa"
+def associate_file():
     file = sys.argv[1] if len(sys.argv) >= 2 else None
     if file:
         with open(OPENED_ASSIGNMENT_PATH, "w", encoding="utf8") as f:

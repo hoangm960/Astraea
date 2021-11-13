@@ -3,6 +3,8 @@ import re
 from path import COMMENT_PATH
 from subprocess import PIPE, STDOUT, Popen, TimeoutExpired
 
+from path import COMMENT_PATH
+
 ANSWer = ''
 Cor = ''
 

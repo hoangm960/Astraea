@@ -72,8 +72,7 @@ class UIFunctions(ConnectWindow):
             ui.frame_2.show()
             ui.id_entry.hide()
             ui.In_btn.hide()
-            self.check_room(ui)
-
+            
         timer.singleShot(2000, lambda: complete())
 
     def enter_room(self, ui):
@@ -97,7 +96,7 @@ class UIFunctions(ConnectWindow):
                 ui.id_entry.close()
                 ui.label_2.setText("Đã vào được phòng\nid: {}".format(room_id))
                 ui.timer = QtCore.QTimer()
-                ui.timer.singleShot(1000, lambda: self.return_main(ui))
+                ui.timer.singleShot(1000, lambda: self.open_room(ui))
             connection.commit()
             connection.close()
 

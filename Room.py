@@ -109,9 +109,7 @@ class UIFunctions(RoomWindow):
                 )
                 infos_data = [row for row in cursor]
                 infos = [Info(info[0], info[1], info[2]) for info in infos_data]
-                file_assignments.append(
-                    Assignment(name, details, mark, tests, infos)
-                )
+                file_assignments.append(Assignment(name, details, mark, tests, infos))
             connection.close()
 
             filename = self.show_file_dialog(OPENED_ASSIGNMENT_PATH)
@@ -295,6 +293,18 @@ class TeacherUIFunctions(UIFunctions):
             username, name = student
             ui.student_list.addItem(f"Tên người dùng: {username}, Tên: {name}")
 
+    @staticmethod
+    def addToSubmissionFile(writer, submission, lesson_name):
+        submission.to_excel(writer, sheet_name=lesson_name, index=False)
+        wb = writer.book
+        ws = writer.sheets[lesson_name]
+        format = wb.add_format({"text_wrap": True})
+        for idx, col in enumerate(submission):
+            series = submission[col]
+            max_len = (
+                max((series.astype(str).map(len).max(), len(str(series.name)))) + 1
+            )
+            ws.set_column(idx, idx, max_len, format)
 
     def get_students_submission(self, ui):
         connection = get_connection()
@@ -323,18 +333,10 @@ class TeacherUIFunctions(UIFunctions):
                     f"SELECT UserName, SubmissionDate, Mark, Comment FROM submission WHERE LessonId = {id}",
                     connection,
                 )
-                submission.to_excel(writer, sheet_name=lesson_name, index=False)
-                wb = writer.book
-                ws = writer.sheets[lesson_name]
-                format = wb.add_format({'text_wrap': True})
-                for idx, col in enumerate(submission):
-                    series = submission[col]
-                    max_len = max((
-                        series.astype(str).map(len).max(),
-                        len(str(series.name))
-                        )) + 1
-                    ws.set_column(idx, idx, max_len, format)
+                self.addToSubmissionFile(writer, submission, lesson_name)
             writer.save()
+            writer.close()
+            os.startfile(filename)
         connection.close()
 
     def kick_student(self, ui):

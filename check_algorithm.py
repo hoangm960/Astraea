@@ -1,5 +1,6 @@
 import os
 import re
+from path import COMMENT_PATH
 from subprocess import PIPE, STDOUT, Popen, TimeoutExpired
 
 ANSWer = ''
@@ -42,10 +43,10 @@ def main(filename, tests, infos, time_limit=2):
 
         check.result[1] = output.rstrip() == ans.rstrip()
         if not check.result[1]:
-            with open('./data/results/comment.txt', 'r', encoding='utf-8', errors='ignore') as f:
+            with open(COMMENT_PATH, 'r', encoding='utf-8', errors='ignore') as f:
                 list_file = f.readlines()
                 if 'SAI' not in list_file[-1]:
-                    with open('./data/results/comment.txt', 'a+', encoding='utf-8', errors='ignore') as file_error_w:
+                    with open(COMMENT_PATH, 'a+', encoding='utf-8', errors='ignore') as file_error_w:
                         file_error_w.write('\n>>> SAI ĐÁP ÁN: "'+output.rstrip()+'" phải là "'+ans.rstrip()+'"...')
                         
     def check_info(info):
@@ -56,7 +57,6 @@ def main(filename, tests, infos, time_limit=2):
             check_info.info.append(message)
 
     for test in tests:
-        print(test)        
         inputs, outputs = test.inputs, test.outputs
         input = '\n'.join(inputs) if inputs else ''
         if outputs:

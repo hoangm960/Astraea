@@ -335,7 +335,6 @@ class TeacherUIFunctions(UIFunctions):
                 )
                 self.addToSubmissionFile(writer, submission, lesson_name)
             writer.save()
-            writer.close()
             os.startfile(filename)
         connection.close()
 

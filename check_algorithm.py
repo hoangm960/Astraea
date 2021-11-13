@@ -1,5 +1,6 @@
 import os
 import re
+from path import COMMENT_PATH
 from subprocess import PIPE, STDOUT, Popen, TimeoutExpired
 
 from path import COMMENT_PATH
@@ -58,7 +59,6 @@ def main(filename, tests, infos, time_limit=2):
             check_info.info.append(message)
 
     for test in tests:
-        print(test)        
         inputs, outputs = test.inputs, test.outputs
         input = '\n'.join(inputs) if inputs else ''
         if outputs:

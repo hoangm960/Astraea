@@ -75,3 +75,6 @@ Phần mềm hỗ trợ dạy và học lập trình
 #### v3.2.2 (25/9):
 + Sửa lỗi không tải được thonny.
 + Sửa lỗi database.
+#### v3.3.1 (13/11):
++ Sửa giao diện test thân thiện với giáo viên
++ Dọn dẹp xử lí file hệ thống

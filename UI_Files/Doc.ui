@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>880</width>
-    <height>673</height>
+    <height>693</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -404,45 +404,35 @@ QScrollBar::add-page, QScrollBar::sub-page {
          </property>
          <property name="styleSheet">
           <string notr="true">QTextBrowser {
-background-color: rgb(255,255,255);
-color: rgb(0, 0, 0);
-outline: 0;
+	background-color: rgb(255, 255, 255);
+	border-radius: 12px;
 }
-QScrollArea {
-	border-radius: 10px;
-	background-color: rgb(255,255,255);
-	outline: 0;
-	padding: 20px;
-} 
-QScrollArea::item { 
-	margin: 20px;
-	background-color: transparent;
-	border: 0px solid black;
-}
-
 QScrollBar{
-	background : rgb(255, 255, 255);	
+	background-color: transparent;	
 }
 
 QScrollBar::handle{
-	background : rgb(158, 158, 158);
+	background : rgb(255, 255, 255);
 	border-radius: 5px;
 	margin: 3px 3px 3px 3px;
 }
 
 QScrollBar::handle::pressed{
-	background : rgb(85, 85, 85);
+	background : rgb(158, 158, 158);
 }
 
 QScrollBar::add-line {
+	background : rgb(74, 74, 74);	
 	height: 0px;
 }
 
 QScrollBar::sub-line {
+	background : rgb(74, 74, 74);	
 	height: 0px;
 }
 
 QScrollBar::add-page, QScrollBar::sub-page {
+	background : rgb(74, 74, 74);	
 	height: 0px;
 }</string>
          </property>

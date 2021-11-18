@@ -49,7 +49,7 @@ def main(filename, tests, infos, time_limit=2):
                 list_file = f.readlines()
                 if 'SAI' not in list_file[-1]:
                     with open(COMMENT_PATH, 'a+', encoding='utf-8', errors='ignore') as file_error_w:
-                        file_error_w.write('\n>>> SAI ĐÁP ÁN: "'+output.rstrip()+'" phải là "'+ans.rstrip()+'"...')
+                        file_error_w.write('\n>>> SAI ĐÁP ÁN: "'+output.rstrip()+'" phải là "'+ans.rstrip()+'"')
                         
     def check_info(info):
         key, message, num = info.keyword, info.message, info.min_num

@@ -10,10 +10,16 @@
     <height>488</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="minimumSize">
    <size>
-    <width>0</width>
-    <height>0</height>
+    <width>786</width>
+    <height>460</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -93,9 +99,52 @@ border-radius: 12px;</string>
       </item>
       <item>
        <widget class="QTextBrowser" name="details_entry">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>756</width>
+          <height>370</height>
+         </size>
+        </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);
-border-radius: 12px;</string>
+         <string notr="true">QTextBrowser {
+	background-color: rgb(255, 255, 255);
+	border-radius: 12px;
+}
+
+QScrollBar{
+	background : rgb(255, 255, 255);
+}
+
+QScrollBar::handle{
+	background : rgb(158, 158, 158);
+	border-radius: 5px;
+	margin: 3px 3px 3px 3px;
+}
+
+QScrollBar::handle::pressed{
+	background : rgb(85, 85, 85);
+}
+
+QScrollBar::add-line {
+	background : rgb(255, 255, 255);
+	height: 0px;
+}
+
+QScrollBar::sub-line {
+	background : rgb(255, 255, 255);
+	height: 0px;
+}
+
+QScrollBar::add-page, QScrollBar::sub-page {
+	background : rgb(255, 255, 255);	
+	height: 0px;
+}</string>
         </property>
         <property name="horizontalScrollBarPolicy">
          <enum>Qt::ScrollBarAlwaysOff</enum>

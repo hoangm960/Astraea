@@ -293,7 +293,15 @@ class TeacherUIFunctions(UIFunctions):
             ui.student_list.addItem(f"Tên người dùng: {username}, Tên: {name}")
 
     @staticmethod
-    def addToSubmissionFile(writer, submission, lesson_name):
+    def checkLessonName(lesson_name):
+        invalid_char = ':*?/\[]'
+        for i in invalid_char:
+            if i in lesson_name:
+                lesson_name = lesson_name.replace(i, '-')
+        return lesson_name
+
+    def addToSubmissionFile(self, writer, submission, lesson_name):
+        lesson_name = self.checkLessonName(lesson_name)
         submission.to_excel(writer, sheet_name=lesson_name, index=False)
         wb = writer.book
         ws = writer.sheets[lesson_name]

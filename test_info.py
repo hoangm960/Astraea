@@ -150,7 +150,7 @@ class UIFunction(TestWindow):
         infos.pop(0)
         results = []
         for info in infos:
-            keyword, msg, min_num = info.keyword.text(), info.message.text(), info.count.text()
+            keyword, msg, min_num = info.keyword.text(), info.message.text(), info.count.value()
             results.append(Info(keyword, msg, min_num))
         self._saveData(ui, filename, results)    
 

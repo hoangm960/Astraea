@@ -1,14 +1,11 @@
-import subprocess
 import time
-from random import randrange
 
 from PyQt5 import QtCore, uic
 from PyQt5.QtWidgets import QMainWindow
-import pyautogui as auto
 
+from utils.config import SCREEN_HEIGHT, SCREEN_WIDTH, find_ide, install_ide
 from utils.connect_db import get_connection
 from utils.encryption import *
-from utils.config import SCREEN_HEIGHT, SCREEN_WIDTH
 
 UI_PATH = "./UI_files/Loading_Screen.ui"
 
@@ -64,31 +61,6 @@ class UIFunction(LoadingScreen):
         window = LoadingScreen(version)
         window.show()
 
-    def install_ide(self):
-        subprocess.call("pip3 install thonny")
-        time.sleep(5)
-        subprocess.Popen(["thonny"], shell=True)
-        time.sleep(5)
-        pg = self.find_ide()
-        pg.activate()
-        auto.press("enter")
-        pg.close()
-
-    def find_ide(self):
-        import pygetwindow as gw
-
-        subprocess.Popen(["thonny"], shell=True)
-        time.sleep(2)
-        ide_title = ""
-        while not ide_title:
-            titles = gw.getAllTitles()
-            for title in titles:
-                if "thonny" in title.lower():
-                    ide_title = title
-                    break
-        if gw.getWindowsWithTitle(ide_title):
-            return gw.getWindowsWithTitle(ide_title)[0]
-
     def progress(self, ui):
         ui.progressBar.setValue(self.counter)
         if self.counter >= 100:
@@ -105,11 +77,11 @@ class UIFunction(LoadingScreen):
                 ui.timer.singleShot(
                     500, lambda: ui.Loading_label.setText("đang tải Thonny...")
                 )
-                self.install_ide()
+                install_ide()
                 
         if self.counter == 14:
             ui.timer.singleShot(2905, lambda: ui.Loading_label.setText("khởi động ..."))
-            self.pg = self.find_ide()
+            self.pg = find_ide()
             self.pg.minimize()
 
         if self.counter == 50:

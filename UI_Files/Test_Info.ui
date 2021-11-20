@@ -383,11 +383,14 @@ QPushButton:hover {
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_11">
+          <property name="spacing">
+           <number>8</number>
+          </property>
           <item>
            <widget class="QPushButton" name="Test_btn">
             <property name="minimumSize">
              <size>
-              <width>200</width>
+              <width>508</width>
               <height>40</height>
              </size>
             </property>
@@ -415,7 +418,7 @@ QPushButton:hover {
            <widget class="QPushButton" name="Info_btn">
             <property name="minimumSize">
              <size>
-              <width>200</width>
+              <width>508</width>
               <height>40</height>
              </size>
             </property>
@@ -435,7 +438,7 @@ QPushButton:hover {
 }</string>
             </property>
             <property name="text">
-             <string>Bộ nhắc nhở</string>
+             <string>Bộ chú thích</string>
             </property>
            </widget>
           </item>

@@ -9,8 +9,8 @@ from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import (QColorDialog, QFileDialog, QMainWindow,
                              QMessageBox, QShortcut)
 
-from utils.connect_db import get_connection
 from path import OPENED_ASSIGNMENT_PATH, OPENED_DOC, OPENED_DOC_CONTENT
+from utils.connect_db import get_connection
 
 PAD_UI = "./UI_Files/Pad.ui"
 HTML_EXTENSIONS = [".htm", ".html"]
@@ -52,6 +52,7 @@ class UIFunction(PadWindow):
     def __init__(self, ui):
         self.connect(ui)
         self.check_empty(ui)
+        self.maximize_restore(ui)
 
     def connect(self, ui):
         ui.btn_quit.clicked.connect(lambda: self.Quit(ui))

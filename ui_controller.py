@@ -12,8 +12,8 @@ from Pad import PadWindow
 from quit import QuitFrame
 from result_main import ResultWindow
 from Room import RoomWindow
-from user_profile import ProfileWindow
 from test_info import TestWindow
+from user_profile import ProfileWindow
 from utils.config import SCREEN_WIDTH
 
 

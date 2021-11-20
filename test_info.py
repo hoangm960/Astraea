@@ -4,8 +4,8 @@ import pickle
 from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout
-from info_frame import Frame_Info
 
+from info_frame import Frame_Info
 from models.assignment import Info, Test
 from path import OPENED_INFO_DATA, OPENED_TEST_DATA
 from test_frame import Frame_Test
@@ -62,11 +62,8 @@ class UIFunction(TestWindow):
             with open(filename, "rb") as f:
                 unpickler = pickle.Unpickler(f)
                 data = unpickler.load()
-                d = ui.index + 1 - len(data) 
-                if d > 0:
-                    data.extend([[0] for _ in range(d)])
                 for i in data[ui.index]:
-                    if i != 0:
+                    if i:
                         self.add_frame(ui, i if mode == 0 else [], i if mode == 1 else [])
 
     def changed(self, ui, k):

@@ -470,7 +470,7 @@ QPushButton:hover {
 background-color: transparent;</string>
                </property>
                <property name="currentIndex">
-                <number>1</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="Edit_Main_Frame">
                 <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -949,7 +949,7 @@ QScrollBar::add-page, QScrollBar::sub-page {
                          <x>0</x>
                          <y>0</y>
                          <width>1046</width>
-                         <height>473</height>
+                         <height>466</height>
                         </rect>
                        </property>
                       </widget>

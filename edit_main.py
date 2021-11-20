@@ -4,15 +4,8 @@ import sys
 
 from PyQt5 import QtCore, uic
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (
-    QApplication,
-    QFileDialog,
-    QMainWindow,
-    QMessageBox,
-    QSizeGrip,
-    QVBoxLayout,
-    QWidget,
-)
+from PyQt5.QtWidgets import (QApplication, QFileDialog, QMainWindow,
+                             QMessageBox, QSizeGrip, QVBoxLayout, QWidget)
 
 from models.assignment import Assignment
 from path import OPENED_ASSIGNMENT_PATH, OPENED_INFO_DATA, OPENED_TEST_DATA
@@ -82,6 +75,8 @@ class UIFunctions(EditWindow):
         ui.confirm_btn.clicked.connect(lambda: self.check_empty_entry(ui))
 
         def check():
+            open(OPENED_TEST_DATA, 'w').write('')
+            open(OPENED_INFO_DATA, 'w').write('')
             if "'" in ui.name_entry.text():
                 ui.name_entry.setStyleSheet(
                     """border-radius: 10px;
@@ -113,6 +108,12 @@ class UIFunctions(EditWindow):
         ui.add_btn.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(2))
         ui.add_btn.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(2))
         ui.return_add_btn.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(1))
+        ui.confirm_add_btn.clicked.connect(
+            lambda: self.initTestInfo(OPENED_TEST_DATA, int(ui.num_entry_3.text()))
+        )
+        ui.confirm_add_btn.clicked.connect(
+            lambda: self.initTestInfo(OPENED_INFO_DATA, int(ui.num_entry_3.text()))
+        )
         ui.confirm_add_btn.clicked.connect(
             lambda: self.add_frame(ui, int(ui.num_entry_3.text()))
         )
@@ -175,7 +176,36 @@ class UIFunctions(EditWindow):
                     child.details_entry.setDisabled(False)
 
                 ui.timer.singleShot(2500, lambda: setDefault())
+            with open(OPENED_TEST_DATA, 'rb') as f:
+                unpickler = pickle.Unpickler(f)
+                data = unpickler.load()
+            check = []
+            for i in data:
+                for j in i:
+                    check.append(list(set(j.inputs)))
+                    check.append(list(set(j.outputs)))
+            if not len(data[children.index(child)]) or [i for i in check if '' in i or i == None]:
+                child.edit_btn.setStyleSheet("""QPushButton {
+                                                background-color: rgb(255, 255, 255);
+                                                border-radius: 5px;
+                                                border: 2px solid rgb(255, 0, 0);
+                                            }
 
+                                            QPushButton:hover {
+                                                background-color: rgba(255, 255, 255, 150)
+                                            }""")
+                self.CheckValue = False
+            else:
+                child.edit_btn.setStyleSheet("""QPushButton {
+                                            background-color: rgb(255, 255, 255);
+                                            border-radius: 5px;
+                                        }
+
+                                        QPushButton:hover {
+                                            background-color: rgba(255, 255, 255, 150)
+                                        }""")
+                self.CheckValue = True
+            
         if self.CheckValue:
             self.show_file_dialog(ui, OPENED_ASSIGNMENT_PATH)
 
@@ -297,6 +327,15 @@ class UIFunctions(EditWindow):
         ui.scrollArea.verticalScrollBar().setValue(1)
 
         self.add_frame(ui, num)
+
+    @staticmethod
+    def initTestInfo(filename, num):
+        with open(filename, 'rb') as f:
+            unpickler = pickle.Unpickler(f)
+            data = unpickler.load()
+        with open(filename, 'wb') as f:
+            data.extend([[]]*num)
+            pickle.dump(data, f, -1)
 
     def add_frame(self, ui, num):
         for _ in range(num):

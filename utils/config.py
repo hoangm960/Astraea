@@ -13,7 +13,7 @@ def screen_resolution():
 def find_ide():
     import pygetwindow as gw
 
-    subprocess.Popen(["thonny"], shell=True)
+    subprocess.Popen(["thonny"])
     time.sleep(2)
     ide_title = ""
     while not ide_title:
@@ -26,11 +26,14 @@ def find_ide():
         return gw.getWindowsWithTitle(ide_title)[0]
     
 def install_ide():
-    p = subprocess.run("pip3 install thonny")
+    p = subprocess.run("pip install thonny")
     if p.returncode == 0:
-        subprocess.Popen(["thonny"], shell=True)
+        subprocess.Popen(["thonny"])
         time.sleep(3)
-        auto.click('utils/click.png')
+        try:
+            auto.click('utils/click.png')
+        except:
+            pass
         
 
 SCREEN_WIDTH, SCREEN_HEIGHT = screen_resolution()

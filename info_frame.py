@@ -48,4 +48,7 @@ class UIFunction(Frame_Info):
         ui_dict = {ui.keyword: self.keyword, ui.message: self.message, ui.count: self.min_num}
         for x, y in ui_dict.items():
             if y:
-                x.setValue(y)
+                if x == ui.count:
+                    x.setValue(y)
+                else:
+                    x.setText(y)

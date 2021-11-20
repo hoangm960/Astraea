@@ -110,9 +110,6 @@ class UIFunctions(EditWindow):
 
         ui.confirm_button.clicked.connect(lambda: check())
         ui.return_btn.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(0))
-        ui.return_btn.clicked.connect(
-            lambda: open(OPENED_ASSIGNMENT_PATH, "w", encoding="utf8").write("")
-        )
         ui.add_btn.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(2))
         ui.add_btn.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(2))
         ui.return_add_btn.clicked.connect(lambda: ui.stacked_widget.setCurrentIndex(1))
@@ -193,6 +190,14 @@ class UIFunctions(EditWindow):
 
                 self.put_frame_in_list(ui, len(assignments))
                 self.setup_frame(ui, title, assignments)
+                self.setupTestInfo(assignments)
+
+    @staticmethod
+    def setupTestInfo(assignments):
+        with open(OPENED_TEST_DATA, 'wb') as f:
+            pickle.dump([assignment.tests for assignment in assignments], f, -1)
+        with open(OPENED_INFO_DATA, 'wb') as f:
+            pickle.dump([assignment.infos for assignment in assignments], f, -1)
 
     def go_to_second(self, ui):
         self.change_lesson_title(ui, ui.name_entry.text())

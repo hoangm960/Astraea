@@ -98,18 +98,7 @@ class UIFunction(LoadingScreen):
                 ui.timer.stop()
                 ui.progressBar.hide()
                 self.pg.close()
-
-        # self.delay(randrange(5, 10), 0.1)
-        # self.delay(randrange(20, 30), 0.23)
-        # self.delay(randrange(40, 50), 0.43)
-        # self.delay(randrange(60, 70), 0.93)
-        # self.delay(randrange(60, 70), 0.93)
-        # self.delay(randrange(60, 70), 0.93)
-        # self.delay(randrange(60, 70), 0.93)
-        # self.delay(randrange(60, 70), 0.93)
-        # self.delay(randrange(60, 70), 0.93)
-        # self.delay(randrange(80, 90), 0.17)
-        # self.delay(randrange(90, 99), 0.6)
+                
         self.delay(99, 1)
         self.counter += 1
         

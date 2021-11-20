@@ -124,7 +124,6 @@ class UIFunctions(ConnectWindow):
             ui.room_btn.hide()
             ui.In_btn.hide()
             ui.id_entry.hide()
-            open(OPENED_ASSIGNMENT_PATH, "w", encoding="utf8").close()
         else:
             ui.Quit.hide()
             ui.Go_Room.hide()

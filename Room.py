@@ -298,7 +298,7 @@ class TeacherUIFunctions(UIFunctions):
         for i in invalid_char:
             if i in lesson_name:
                 lesson_name = lesson_name.replace(i, '-')
-        return lesson_name
+        return lesson_name[:31]
 
     def addToSubmissionFile(self, writer, submission, lesson_name):
         lesson_name = self.checkLessonName(lesson_name)

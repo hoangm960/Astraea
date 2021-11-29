@@ -80,3 +80,13 @@ Phần mềm hỗ trợ dạy và học lập trình
 + Dọn dẹp xử lí file hệ thống
 #### v3.3.2 (15/11/2021)
 + Sửa lỗi lý thuyết, lỗi test
+
+## Contributor:
+- Hoàng Nhật Minh
+- Hoàng Công Huân
+- Huỳnh Việt Tiến
+
+## License & copyright:
+© BugCore
+
+Licensed under the [MIT License](LICENSE).

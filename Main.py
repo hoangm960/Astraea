@@ -6,7 +6,7 @@ from pathlib import Path
 from UI_Files import Resources
 from path import *
 
-VERSION = "3.3.2"
+VERSION = "3.3.3"
 
 
 def init():

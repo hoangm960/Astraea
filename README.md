@@ -80,6 +80,8 @@ Phần mềm hỗ trợ dạy và học lập trình
 + Dọn dẹp xử lí file hệ thống
 #### v3.3.2 (15/11/2021)
 + Sửa lỗi lý thuyết, lỗi test
+#### v3.3.3 (02/12/2021)
++ Thay host cho database.
 
 ## Contributor:
 - Hoàng Nhật Minh

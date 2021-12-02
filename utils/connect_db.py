@@ -3,10 +3,10 @@ import mysql.connector
 
 def get_connection():
     return mysql.connector.connect(
-            host="sql6.freesqldatabase.com",
-            user="sql6442582",
-            password="DMd7vFtXQs",
-            database="sql6442582",
+            host="khktdb.ddns.net",
+            user="minh",
+            password="nhatminhb5/2901",
+            database="astraea_sql",
         )
 
 if __name__ == "__main__":
